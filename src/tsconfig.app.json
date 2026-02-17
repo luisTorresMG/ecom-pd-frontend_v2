@@ -1,6 +1,7 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
+    "moduleResolution": "bundler",
     "baseUrl": "./",
     "paths": {
       "@shared/*": ["app/shared/*"],
@@ -11,5 +12,5 @@
     "types": ["node", "jquery"]
   },
   "files": ["main.ts", "polyfills.ts"],
-  "include": ["**/*.d.ts"]
+  "include": ["**/*.ts","**/*.d.ts"]
 }
