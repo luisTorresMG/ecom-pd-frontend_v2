@@ -1,0 +1,220 @@
+<div class="soat-container-outline soat-summary"
+     [ngClass]="{ 'no-form': summary }">
+  <div class="row align-items-center">
+    <div class="col-12">
+      <div class="soat-header-icon">
+        <div class="icon-title">
+          <img src="assets/soat/img/ico-5.png"
+               alt="Car"
+               height="55" />
+        </div>
+        <div class="soat-header space-bottom">
+          <div class="title">Datos de la cotización</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="soat-list">
+    <div class="row">
+      <div class="col-5 key">
+        <b>Tipo de periodo:</b>
+      </div>
+      <div class="col-7 data">{{ user.termDescription }}</div>
+    </div>
+    <div class="row">
+      <div class="col-5 key">
+        <b>Vigencia:</b>
+      </div>
+      <div class="col-7 data">{{ dates.startDate }} - {{ dates.endDate }}</div>
+    </div>
+    <div class="row">
+      <div class="col-5 key">
+        <b>Actividad:</b>
+      </div>
+      <div class="col-7 data">{{ user.activityDescription }}</div>
+    </div>
+    <!--     <div class="row">
+      <div class="col-5 key">
+        <b>Sub-Actividad:</b>
+      </div>
+      <div class="col-7 data">{{ user.subActivityDescription }}</div>
+    </div> -->
+    <div class="row">
+      <div class="col-5 key">
+        <b>Cant. de trabajadores:</b>
+      </div>
+      <div class="col-7 data">{{ user.totalWorkers }}</div>
+    </div>
+    <div class="row">
+      <div class="col-5 key">
+        <b>Monto de planilla:</b>
+      </div>
+      <div class="col-7 data">S/ {{ user.totalAmount | number: "1.2-2" }}</div>
+    </div>
+    <!-- <div class="row" *ngIf="user.healthRate !== -1 && !summary">
+      <div class="col-5 key">
+        <b>Tasa Salud:</b>
+      </div>
+      <div class="col-7 data">{{ user.healthRate }}%</div>
+    </div>
+    <div class="row" *ngIf="user.allowanceRate !== -1 && !summary">
+      <div class="col-5 key">
+        <b>Tasa Pension:</b>
+      </div>
+      <div class="col-7 data">{{ user.allowanceRate }}%</div>
+    </div> -->
+    <div class="row">
+      <div class="col-5 key">
+        <b>Sede:</b>
+      </div>
+      <div class="col-7 data">{{ user.sede }}</div>
+    </div>
+
+    <h4 class="title"
+        *ngIf="!summary">
+      El costo estimado de tu seguro
+      <!-- <span>{{ user.totalWorkers === 1 ? "individual" : "grupal" }}</span> -->SCTR
+      es de:
+    </h4>
+
+    <app-insurance-types [user]="user"
+                         (insuranceChange)="insuranceChange($event)"
+                         *ngIf="!summary"></app-insurance-types>
+
+    <p *ngIf="summary"
+       class="legal-text">
+      * Esta promoción del Seguro SCTR será válida sólo por el
+      periodo de 30 días calendario, contados a partir de la fecha de la emisión
+      de la presente cotización
+    </p>
+  </div>
+
+  <form [formGroup]="validateForm"
+        (ngSubmit)="validate()"
+        *ngIf="!user.showEmployeeForm">
+    <div *ngIf="!summary">
+      <div class="col align-items-center">
+        <div class="dmessage">
+          De estar de acuerdo con la cotización inicial, descarga el formato de
+          planilla y adjúntalo con los datos requeridos.
+        </div>
+      </div>
+
+      <div class="col download">
+        <a class="descarga"
+           href="https://plataformadigital.protectasecurity.pe/ecommercereports/formato_sctr.xlsx"
+           target="_blank"
+           (click)="setAction()">
+          <i title="Descargar tu cotización"
+             style="cursor: pointer; margin-right: 7px; color: #ff6e00"
+             class="fa fa-download fa-lg"></i>
+          <span class="descarga-text">Descarga el formato de planilla de Protecta Security</span></a>
+      </div>
+
+      <!--       <div class="col file">
+        <div class="soat-input-form-container">
+          <div class="soat-input-container">
+            <input type="file"
+                   formControlName="file"
+                   (change)="onFileUpload($event.target.files)"
+                   [ngClass]="{
+                error: showError('file')
+              }" />
+          </div>
+          <div class="soat-error-message"
+               *ngIf="showError('file')">
+            <i></i><span>El archivo es requerido</span>
+          </div>
+        </div>
+      </div> -->
+
+      <div class="col file">
+        <div class="upload-btn-wrapper">
+          <button #btnfileInput
+                  class="btn btntipoupload">
+            Adjuntar formato planilla
+          </button>
+          <!-- <div class="filenamewrapper"> -->
+          <span class="filename"
+                title="{{ fileName }}">{{ fileName }}</span>
+          <!-- </div> -->
+          <input type="file"
+                 formControlName="file"
+                 (change)="onFileUpload($event.target.files)"
+                 [ngClass]="{
+              error: showError('file')
+            }" />
+        </div>
+      </div>
+
+      <div class="row justify-content-center"
+           [ngClass]="{ 'space-btn': summary }">
+        <div class="col soat-text-align-center space">
+          <button class="soat-button ripple stretch"
+                  [disabled]="loading"
+                  [ngClass]="{ loading: loading }"
+                  type="submit">
+            <i class="fa fa-circle-o-notch fa-spin"
+               *ngIf="loading"></i>
+            Validar
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <app-employee-info *ngIf="user.showEmployeeForm && step === 4"
+                     [user]="user"
+                     (formSubmitted)="onEmployeeSubmit($event)"></app-employee-info>
+</div>
+
+<div class="soat-container-outline soat-summary"
+     [ngClass]="{ 'no-form': summary }"
+     *ngIf="summary">
+  <div class="row align-items-center">
+    <div class="col-12">
+      <div class="soat-header-icon">
+        <div class="icon-title">
+          <img src="assets/soat/img/user-ico.png"
+               alt="User"
+               height="55" />
+        </div>
+        <div class="soat-header space-bottom">
+          <div class="title">Datos del contratante</div>
+          <div class="sub-title">
+            <span>Nro. de ruc {{ user.ruc }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="soat-list">
+    <div class="row">
+      <div class="col-5 key">
+        <b>Razón social:</b>
+      </div>
+      <div class="col-7 data">
+        {{ user.businessName || user.name + " " + user.lastName }}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-5 key">
+        <b>Correo:</b>
+      </div>
+      <div class="col-7 data">{{ user.email }}</div>
+    </div>
+    <div class="row">
+      <div class="col-5 key">
+        <b>Nro. de celular:</b>
+      </div>
+      <div class="col-7 data">{{ user.phoneNumber }}</div>
+    </div>
+  </div>
+
+  <p class="extraInfo">
+    Si deseas realizar un cambio sobre esta cotización, haz
+    <a (click)="showMoreInfo()">click aquí</a>
+  </p>
+</div>

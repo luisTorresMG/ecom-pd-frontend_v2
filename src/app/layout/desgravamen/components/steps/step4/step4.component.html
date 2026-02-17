@@ -1,0 +1,395 @@
+<div class="content background">
+  <app-steps-generic [NSTEPS]="5"
+                     [NSTEP]="4"></app-steps-generic>
+  <div class="content__item">
+    <h1 class="title">Valida los datos de <b>cotización.</b></h1>
+    <h3 class="subtitle">Cotización <b>Protecta Security</b></h3>
+    <div class="plan_selected">
+      <p class="plan_selected--desc">
+        Costo de la prima de tu seguro Desgravamen
+      </p>
+      <div class="plan_selected--price">
+        <span>S/</span>
+        <span>160</span>
+        <div>
+          <span>Plan 1</span>
+          <small>mensual</small>
+        </div>
+      </div>
+    </div>
+    <h3 class="subtitle">Datos del <b>Asegurado</b></h3>
+    <p class="info-extra">Es importante que registres la <b>DPS(Declaración Personal de Salud)</b> al dar click en el
+      botón <b>DPS.</b></p>
+    <div class="content_insurance_info">
+      <span class="insurance_names">James Cooper Fox</span>
+      <div class="insurance_info">
+        <span class="insurance_info--price"><small>S/</small>160</span>
+        <label for="ocupacion"
+               class="content-input-u placeholder"
+               aria-placeholder="Ocupación">
+          <select id="ocupacion"
+                  class="opacupacion input-u">
+            <option value="1"></option>
+          </select>
+        </label>
+        <button class="btn-default btn-dps"
+                [class.dps-valid]="!!dps"
+                (click)="showModalDps()">
+          <svg [class.dps-valid]="!!dps"
+               width="24"
+               height="24"
+               xmlns="http://www.w3.org/2000/svg"
+               fill-rule="evenodd"
+               clip-rule="evenodd">
+            <path d="M21 6.285l-11.16 12.733-6.84-6.018 1.319-1.49 5.341 4.686 9.865-11.196 1.475 1.285z" />
+          </svg>DPS</button>
+        <button class="btn-default btn-edit"
+                (click)="showModalInsurance()"><i class="fa fa-pencil"
+             aria-hidden="true"></i></button>
+      </div>
+    </div>
+    <button class="btn-default btn-cotizacion"
+            (click)="showModalFinancial()">Cotización con entidad financiera</button>
+    <span class="acept">
+      Si está de acuerdo con la cotización de Protecta Security, haga click en el botón "Siguiente"
+    </span>
+    <div class="frm__footer">
+      <button class="input-u btn-back input_submit-u"
+              type="button"
+              (click)="backStep()">
+        <i class="fa fa-angle-left fa-left"
+           aria-hidden="true"></i>
+        <span>Anterior</span></button>
+      <button class="input-u input_submit-u"
+              type="button"
+              (click)="submit()">
+        <span>Siguiente</span>
+        <i class="fa fa-angle-right fa-right"
+           aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</div>
+<ng-template #modalAsegurado>
+  <div id="modal-u">
+    <div class="modal-u">
+      <div class="modal__header">
+        <button class="modal__header--close"
+                (click)="hideModal()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <h2 class="title">Editar datos del asegurado</h2>
+        <form class="frm frm_dbl"
+              [formGroup]="form">
+          <div class="grid1">
+            <h4 class="subtitle">
+              Datos personales
+            </h4>
+            <div for="documentType"
+                 class="content_dbl_input-u">
+              <label for="documentType"
+                     class="content_input-u"
+                     [class.no-editable]="f['documentType'].disabled">
+                <select id="documentType"
+                        class="input-u"
+                        formControlName="documentType">
+                  <option value="2">DNI</option>
+                </select>
+              </label>
+              <label for="documentNumber"
+                     class="content_input-u placeholder"
+                     [class.no-editable]="f['documentNumber'].disabled"
+                     [class.placeholder-active]="f.documentNumber.value"
+                     aria-placeholder="Número de documento">
+                <input type="text"
+                       id="documentNumber"
+                       class="input-u"
+                       [class.placeholder-active]="f.documentNumber.value"
+                       formControlName="documentNumber">
+              </label>
+            </div>
+            <label for="apellidoPaterno"
+                   class="content_input-u placeholder"
+                   [class.no-editable]="f['apellidoPaterno'].disabled"
+                   [class.placeholder-active]="f.apellidoPaterno.value"
+                   aria-placeholder="Apellido Paterno">
+              <input type="text"
+                     id="apellidoPaterno"
+                     class="input-u"
+                     [class.placeholder-active]="f.apellidoPaterno.value"
+                     formControlName="apellidoPaterno">
+            </label>
+            <label for="apellidoMaterno"
+                   class="content_input-u placeholder"
+                   [class.no-editable]="f['apellidoMaterno'].disabled"
+                   [class.placeholder-active]="f.apellidoMaterno.value"
+                   aria-placeholder="Apellido Materno">
+              <input type="text"
+                     id="apellidoMaterno"
+                     class="input-u"
+                     [class.placeholder-active]="f.apellidoMaterno.value"
+                     formControlName="apellidoMaterno">
+            </label>
+            <label for="names"
+                   class="content_input-u placeholder"
+                   [class.no-editable]="f['names'].disabled"
+                   [class.placeholder-active]="f.names.value"
+                   aria-placeholder="Nombres">
+              <input type="text"
+                     id="names"
+                     class="input-u"
+                     [class.placeholder-active]="f.names.value"
+                     formControlName="names">
+            </label>
+            <label for="sex"
+                   class="content_input-u placeholder"
+                   [class.no-editable]="f['sex'].disabled"
+                   [class.placeholder-active]="f.sex.value"
+                   aria-placeholder="Género">
+              <select id="sex"
+                      class="input-u"
+                      [class.placeholder-active]="f.sex.value"
+                      formControlName="sex">
+                <option value="2">Masculino</option>
+                <option value="1">Femenino</option>
+                <option value="3">No informado</option>
+              </select>
+            </label>
+            <label for="birthDate"
+                   class="content_input-u placeholder"
+                   [class.no-editable]="f['birthDate'].disabled"
+                   [class.placeholder-active]="f.birthDate.value"
+                   aria-placeholder="Fecha de Nacimiento">
+              <input type="text"
+                     id="birthDate"
+                     class="input-u"
+                     [class.placeholder-active]="f.birthDate.value"
+                     formControlName="birthDate">
+            </label>
+            <label for="country"
+                   class="content_input-u placeholder"
+                   [class.placeholder-active]="f.country.value"
+                   aria-placeholder="Nacionalidad">
+              <select type="text"
+                      id="country"
+                      class="input-u"
+                      [class.placeholder-active]="f.country.value"
+                      formControlName="country">
+                <option *ngFor="let data of nacionalidades$"
+                        [value]="data.id">{{ data.descripcion }}</option>
+              </select>
+            </label>
+          </div>
+          <div class="grid2">
+            <div class="grid1">
+              <h4 class="subtitle">
+                Lugar de residencia
+              </h4>
+              <label for="department"
+                     class="content_input-u placeholder"
+                     [class.placeholder-active]="f.department.value"
+                     aria-placeholder="Departamento">
+                <select id="department"
+                        class="input-u"
+                        [class.placeholder-active]="f.department.value"
+                        formControlName="department">
+                  <option *ngFor="let data of departamentos$"
+                          [value]="data.id">{{ data.descripcion }}</option>
+                </select>
+              </label>
+              <label for="province"
+                     class="content_input-u placeholder"
+                     [class.placeholder-active]="f.province.value"
+                     aria-placeholder="Provincia">
+                <select id="province"
+                        class="input-u"
+                        [class.placeholder-active]="f.province.value"
+                        formControlName="province">
+                  <option *ngFor="let data of provincias$"
+                          [value]="data.idProvincia">{{ data.provincia }}</option>
+                </select>
+              </label>
+              <label for="district"
+                     class="content_input-u placeholder"
+                     [class.placeholder-active]="f.district.value"
+                     aria-placeholder="Distrito">
+                <select id="district"
+                        class="input-u"
+                        [class.placeholder-active]="f.district.value"
+                        formControlName="district">
+                  <option *ngFor="let data of distritos$"
+                          [value]="data.idDistrito">{{ data.distrito }}</option>
+                </select>
+              </label>
+              <label for="address"
+                     class="content_input-u placeholder"
+                     [class.placeholder-active]="f.address.value"
+                     aria-placeholder="Dirección">
+                <input type="text"
+                       id="address"
+                       class="input-u"
+                       [class.placeholder-active]="f.address.value"
+                       formControlName="address">
+              </label>
+            </div>
+            <div class="grid1">
+              <h4 class="subtitle">
+                Datos de contacto
+              </h4>
+              <label for="email"
+                     class="content_input-u placeholder"
+                     [class.placeholder-active]="f.email.value"
+                     aria-placeholder="Correo Electrónico">
+                <input type="text"
+                       id="email"
+                       class="input-u"
+                       [class.placeholder-active]="f.email.value"
+                       formControlName="email">
+              </label>
+              <label for="phone"
+                     class="content_input-u placeholder"
+                     [class.placeholder-active]="f.phone.value"
+                     aria-placeholder="Número de Celular">
+                <input type="text"
+                       id="phone"
+                       class="input-u"
+                       [class.placeholder-active]="f.phone.value"
+                       formControlName="phone">
+              </label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal__footer">
+        <button class="input-u btn-back input_submit-u"
+                (click)="hideModal()">Cancelar</button>
+        <button class="input-u input_submit-u"
+                (click)="submitInsurance()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #modalDps>
+  <div id="modal-u">
+    <div class="modal-u modal-dps">
+      <div class="modal__header">
+        <button class="modal__header--close"
+                (click)="hideModal()">&times;</button>
+      </div>
+      <div class="modal__body">
+        <app-dps (dataChange)="dpsEmit($event)"
+                 [data]="dps"></app-dps>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #modalFinancialEntity>
+  <div id="modal-u">
+    <div class="modal-u modal-financial-entity">
+      <div class="modal__header">
+        <h4 class="modal__header--title">
+          Calcule el precio del seguro de la <b>entidad financiera</b> completando los siguientes datos
+        </h4>
+        <button class="modal__header--close"
+                (click)="hideModal()">&times;</button>
+      </div>
+      <div class="modal__body">
+        <form class="entity-financial"
+              [formGroup]="formFinancialEntity">
+          <label for="interesCompensatorio"
+                 class="content_input-u placeholder"
+                 [class.placeholder-active]="ff['interesCompensatorio'].value"
+                 aria-placeholder="Tasa anual de interés compensatorio">
+            <input type="text"
+                   id="interesCompensatorio"
+                   class="input-u"
+                   [class.placeholder-active]="ff['interesCompensatorio'].value"
+                   formControlName="interesCompensatorio">
+          </label>
+          <label for="gastosAdministrativos"
+                 class="content_input-u placeholder"
+                 [class.placeholder-active]="ff['gastosAdministrativos'].value"
+                 aria-placeholder="Tasa anual de gastos administrativos">
+            <input type="text"
+                   id="gastosAdministrativos"
+                   class="input-u"
+                   [class.placeholder-active]="ff['gastosAdministrativos'].value"
+                   formControlName="gastosAdministrativos">
+          </label>
+          <label for="seguroDesgravamen"
+                 class="content_input-u placeholder"
+                 [class.placeholder-active]="ff['seguroDesgravamen'].value"
+                 aria-placeholder="Tasa anual del seguro desgravamen">
+            <input type="text"
+                   id="seguroDesgravamen"
+                   class="input-u"
+                   [class.placeholder-active]="ff['seguroDesgravamen'].value"
+                   formControlName="seguroDesgravamen">
+          </label>
+          <label for="saldoPrestamo"
+                 class="content_input-u placeholder no-editable"
+                 [class.placeholder-active]="ff['saldoPrestamo'].value"
+                 aria-placeholder="Importe saldo préstamo">
+            <input type="text"
+                   id="saldoPrestamo"
+                   class="input-u"
+                   [class.placeholder-active]="ff['saldoPrestamo'].value"
+                   formControlName="saldoPrestamo">
+          </label>
+          <label for="nCuotas"
+                 class="content_input-u placeholder no-editable"
+                 [class.placeholder-active]="ff['nCuotas'].value"
+                 aria-placeholder="Número de cuotas">
+            <input type="text"
+                   id="nCuotas"
+                   class="input-u"
+                   [class.placeholder-active]="ff['nCuotas'].value"
+                   formControlName="nCuotas">
+          </label>
+        </form>
+        <div class="cotizacion_financial">
+          <div class="cotizacion_financial--entity">
+            <h3>S/ {{ ff['cotizacionEntidadFinanciera'].value }}</h3>
+            <small>Cotización con</small>
+            <span>entidad financiera</span>
+            <br>
+            <small>importe de cuota</small>
+            <h6>S/ {{ ff['importeCuota'].value }}</h6>
+          </div>
+          <div class="cotizacion_financial--protecta">
+            <h3>S/ {{ ff['cotizacionEntidadFinanciera'].value }}</h3>
+            <small>Cotización con</small>
+            <span>Protecta Security</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="input-u input_submit-u">
+          <svg xmlns="http://www.w3.org/2000/svg"
+               width="24"
+               height="24"
+               viewBox="0 0 24 24">
+            <path
+                  d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-17 5c0-1.654 1.346-3 3-3h6v9h-9v-6zm0 14v-6h9v9h-6c-1.654 0-3-1.346-3-3zm20 0c0 1.654-1.346 3-3 3h-6v-9h9v6zm0-8h-9v-9h6c1.654 0 3 1.346 3 3v6zm-2 6h-5v-1h5v1zm-5-11h5v1h-5v-1zm0 13v-1h5v1h-5zm-6-2v1h-2v2h-1v-2h-2v-1h2v-2h1v2h2zm-1.793-10.5l1.414 1.414-.707.707-1.414-1.414-1.414 1.414-.708-.707 1.414-1.414-1.414-1.414.707-.707 1.415 1.414 1.415-1.415.708.708-1.416 1.414zm9.793-2c0-.276.224-.5.5-.5s.5.224.5.5-.224.5-.5.5-.5-.224-.5-.5zm1 4c0 .276-.224.5-.5.5s-.5-.224-.5-.5.224-.5.5-.5.5.224.5.5z" />
+          </svg>
+          <span>
+            Calcular
+          </span>
+        </button>
+        <div class="content_actions_financial">
+          <button class="input-u input_submit-u">
+            <i class="fa fa-download"
+               aria-hidden="true"></i>
+            Descargar cotización simulada
+          </button>
+          <button class="input-u input_default-u"
+                  (click)="hideModal()">
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

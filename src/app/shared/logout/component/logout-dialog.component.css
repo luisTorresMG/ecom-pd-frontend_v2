@@ -1,0 +1,34 @@
+.modal {
+  height: fit-content;
+}
+
+.btn-orange {
+  text-decoration: none;
+  color: #ffffff;
+  font-family: "Bliss Pro";
+  font-size: 15px;
+  font-weight: bold;
+  padding: 8px;
+  border-radius: 6px;
+  background-color: #ed6e00;
+  cursor: pointer;
+  width: 120px;
+}
+
+.modal-body-font {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.modal-footer-font {
+  font-size: 0.9em;
+}
+
+.modal-dialog {
+  overflow-y: initial;
+}
+
+.modal-body {
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}

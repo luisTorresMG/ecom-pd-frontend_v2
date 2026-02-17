@@ -1,0 +1,132 @@
+<div id="bigface">
+  <div class="card"
+       id="cardmen"
+       class="d-none">
+    <div class="card-body d-none"
+         id="cardbody">
+      <div class="alert-info d-none text-center"
+           id="res2">
+        <h3 id="title2"
+            class="d-none text-justify-center">
+          Ok <span id="fullname"></span>, por favor
+          <span id="feel"
+                class="text-primary">SONRIE</span> mirando hacia la
+          cámara.
+        </h3>
+      </div>
+      <div id="info"
+           class="d-none text-left mr-2">
+        <p class="text-justify-left">Por favor espera un momento</p>
+        <div id="info-loading"
+             class="spinner-border text-primary"
+             role="status"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row my-2 d-none"
+       id="video-player">
+    <div id="reko">
+      <div class="main img-responsive"
+           id="main">
+        <video id="video"
+               class="img-fluid"
+               autoplay
+               muted
+               playsinline></video>
+      </div>
+    </div>
+    <div id="pics"
+         class="col-sm-12 col-md-12 col-xl-4 d-flex flex-sm-row justify-content-end">
+      <div class="card mt-1 content_pics">
+        <div class="card-body item__pics">
+          <div class="p-1 text-center position-relative text-pic">
+            <div id="pic-happy"
+                 class="pic"
+                 *ngIf="false"></div>
+            Feliz
+            <div id="pic-happy-spinner"
+                 class="spinner-border text-info d-none"
+                 role="status"
+                 style="display: none !important"></div>
+            <img src="https://big-rekognition.s3.amazonaws.com/images/happy.png"
+                 class="rounded mx-auto d-block" />
+            <span id="pic-happy-similarity"> </span>
+          </div>
+          <br />
+
+          <div class="p-1 text-center position-relative text-pic">
+            <div id="pic-neutral"
+                 class="pic"
+                 *ngIf="false"></div>
+            neutral
+            <div id="pic-neutral-spinner"
+                 class="spinner-border text-info d-none"
+                 role="status"
+                 style="display: none !important"></div>
+            <img src="https://big-rekognition.s3.amazonaws.com/images/neutral.png"
+                 class="rounded mx-auto d-block" />
+            <span id="pic-neutral-similarity"> </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12 col-xl-12">
+      <div class="container">
+        <div class="mt-4 text-center mx-auto d-flex">
+          <div class="card"
+               id="cardT">
+            <div class="card-header text-justify-center"
+                 id="cardH">
+              <h3 id="title"
+                  class="text-justify">
+                ¡Hola!, vamos a iniciar el proceso de validación de identidad,
+                por favor retírese los lentes y mire fijamente a la cámara
+                cuando se le indique. También realice las expresiones
+                solicitadas!
+              </h3>
+            </div>
+            <small class="disclaimer">*Es necesario que otra aplicación no esté usando su cámara para
+              evitar errores en el proceso.</small>
+            <div class="card-body text-center"
+                 id="cardB">
+              <div>
+                <button class="btn btn-primary d-flex align-items-center justify-content-center mx-auto my-auto"
+                        onclick="startProcess()">
+                  <img class="face-ia"
+                       [src]="'assets/vidaindividual/biometric/face-ia.png'"
+                       alt="face ia icon" />
+                  Iniciar
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- mensaje -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-none">
+    <canvas id="canvas"
+            height="480"
+            width="640"></canvas>
+    <form action=""
+          [formGroup]="form"
+          id="formUpload"
+          enctype="multipart/form-data">
+      <input type="hidden"
+             id="estado"
+             value="0"
+             name="estado"
+             formControlName="estado" />
+      <input type="hidden"
+             formControlName="dni"
+             id="dni"
+             value=""
+             name="dni" />
+    </form>
+  </div>
+</div>

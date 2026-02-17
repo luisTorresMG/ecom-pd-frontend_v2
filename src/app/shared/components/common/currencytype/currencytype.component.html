@@ -1,0 +1,8 @@
+<select id="currencyTypeSelect" (change)="onSelectCurrencyType($event)">
+  <option value="0" selected>Seleccionar</option>
+  <option
+    *ngFor="let currencytype of ListCurrencyType"
+    value="{{ currencytype.nidcurrency }}"
+    >{{ currencytype.sdescript }}</option
+  >
+</select>

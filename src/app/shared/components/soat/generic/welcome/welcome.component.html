@@ -1,0 +1,68 @@
+<ng-container>
+  <div class="container-fluid px-0">
+    <div class="row">
+      <div class="col-lg-3">
+        <app-nav-menuprod></app-nav-menuprod>
+      </div>
+      <div class="col-lg-9">
+        <div class="cont"
+             [@fade]=true>
+          <div class="cont__item">
+            <h1 class="item__title">
+              Bienvenido(a) <span class="item__name">{{ names }}</span>
+            </h1>
+          </div>
+          <p class="cont__item cont__description">
+            Ahora podrás gestionar tus productos de forma inmediata desde nuestra plataforma digital.
+          </p>
+          <img class="cont__background"
+               [src]="'assets/images/welcome.svg'">
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-template #modalProducts>
+  <div class="content-modal-u"
+       tabindex="1"
+       #vModalProducts
+       (keyup.esc)="closeModal()">
+    <input type="text"
+           id="fcmp"
+           autofocus
+           (keyup.esc)="closeModal()">
+    <div class="modal-u modalProducts">
+      <button class="modal__header--close"
+              (click)="closeModal()">
+        <i class="fa fa-times"></i>
+      </button>
+      <div class="modal__body">
+        <div class="modal__carousel">
+          <div class="carousel__item"
+               *ngFor="let data of imagesProducts">
+            <img class="image-product"
+                 [src]="'assets/popup/'+data.path"
+                 [attr.alt]="data.desc"
+                 [hidden]="imageFocus !== data">
+          </div>
+        </div>
+        <ng-container *ngIf="imagesProducts.length > 1">
+          <div class="carousel_controls">
+            <button class="control-carousel control-left"
+                    [disabled]="indexCarousel === 0"
+                    (click)="previousImage()">
+              <i class="fa fa-angle-left"
+                 aria-hidden="true"></i>
+            </button>
+            <button class="control-carousel control-right"
+                    [disabled]="indexCarousel === this.imagesProducts?.length - 1"
+                    (click)="nextImage()">
+              <i class="fa fa-angle-right"
+                 aria-hidden="true"></i>
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</ng-template>

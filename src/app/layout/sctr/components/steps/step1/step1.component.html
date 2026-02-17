@@ -1,0 +1,40 @@
+<div class="soat-header-main"
+     *ngIf="!rucdeuda">
+  <h2 class="title">
+    <span class="orange">></span> Necesitamos conocer algunos datos para cotizar tu Seguro SCTR.
+  </h2>
+</div>
+
+<div class="container-fluid soat-container"
+     *ngIf="!rucdeuda">
+  <div class="soat-header">
+    <h2 class="title">
+      1. Ingresa tu ruc
+    </h2>
+  </div>
+
+  <app-ruc-form (formSubmitted)="onSubmit($event)"
+                [loading]="loading"
+                [user]="vidaleyUser"
+                (rucvalidate)="validateruc($event)"></app-ruc-form>
+</div>
+<ng-template #informationModal>
+  <app-information-sctr (closeaction)="closeInformationModal()"></app-information-sctr>
+</ng-template>
+<div class="content-no-apto text-center"
+     *ngIf="rucdeuda">
+  <h2 class="title-no-apto text-center">
+    Hola. Tu solicitud ha sido recepcionada por un asesor de Protecta Security, nos estaremos comunicando contigo en
+    un máximo de 2 días laborables.
+  </h2>
+  <p class="desc-no-apto text-center">
+    Contáctanos en:<br>
+    Correo Electrónico: <b>vidadevolucion@protectasecurity.pe</b><br>
+    Estamos a tu disposición de lunes a viernes de <b>9:00 a.m. a 6:00 p.m.</b>, a excepción de feriados.
+  </p>
+  <button type="button"
+          (click)="refreshPage()"
+          class="button-home-deuda ripple stretch big">
+    Volver al inicio
+  </button>
+</div>

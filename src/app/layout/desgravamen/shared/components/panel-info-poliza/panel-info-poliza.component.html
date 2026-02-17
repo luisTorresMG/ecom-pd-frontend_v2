@@ -1,0 +1,219 @@
+<div class="panel-info-poliza">
+  <panel-widget title="Datos de la póliza">
+    <div class="row">
+      <div class="col-sm-3">
+        <form-input-select label="Tipo de credito" [service]="accPersonalesService" method="getProductListForBranch"
+          [params]="{
+            branch: CONSTANTS.RAMO
+          }" fieldCodigo="COD_PRODUCT" fieldValor="DES_PRODUCT" [firstSelect]="true"
+          [(value)]="poliza.tipoPerfil" [detail]="detail" (onSelect)="cambiarTipoPerfil();" [required]="true">
+        </form-input-select>
+      </div>
+      <div class="col-sm-3">
+      <!-- Inicio Alex Gallozo 23/03/2023 Indicando campo obligatorio "número de crédito" cuando sea necesario. -->
+        <form-input-text
+          label="Nro de credito"
+          [(value)]="poliza.nroCredito"
+          [patternPrevent]="CONSTANTS.REGEX.NUMBER"
+          maxCaracter="10"
+          [required]="true"
+          [disabled]="validarDeshabilitarNroCredito()"
+          [detail]="detail"
+        ></form-input-text>
+      </div>
+
+      <div class="col-sm-3">
+        <form-input-text
+        label="¿En cuántos meses finaliza tu crédito?"
+        [(value)]="poliza.nroCuotas"
+        [required]="true"
+        [disabled]="detail"
+        [patternPrevent]="CONSTANTS.REGEX.NUMBER"
+        maxCaracter="3"
+        (onFocusOut)="CambiarCuotas();"
+      ></form-input-text>
+      <!-- Fin Alex Gallozo 14/03/2023 Indicando campo obligatorio "número de crédito" cuando sea necesario. -->
+      </div>
+      <div class="col-sm-3">
+        <form-input-date label="Fecha de otorgamiento" [(value)]="poliza.fechaOtorgamiento"
+        [disabled]="validarDeshabilitarFechaVigenciaInicio()" [today]="true" (onSelect)="emitirCambiarDatoPoliza()"
+        [required]="true"></form-input-date>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <form-input-text
+        label="Capital asegurado"
+        [(value)]="poliza.capitalCredito"
+        [patternPrevent]="CONSTANTS.REGEX.HUNDREDS_NUMBER"
+        maxCaracter="13"
+        [required]="true"
+        [disabled]="detail"
+        (valueChange)="changeStyleCredit()"
+      ></form-input-text>
+      </div>
+      <div class="col-sm-3">
+        <form-input-select label="Moneda" [service]="accPersonalesService" method="getCurrency" [params]="{
+          nbranch: CONSTANTS.RAMO,
+          nproduct: poliza.tipoPerfil?.COD_PRODUCT || 0
+        }" fieldCodigo="NCODIGINT" fieldValor="SDESCRIPT" [(value)]="poliza.moneda"
+        (onSelect)="cambiarMoneda()" [detail]="detail"></form-input-select>
+      </div>
+   
+      <!--Inicio Alex Gallozo 13/03/2023 Ocultando los campos “Tipo de Facturación, Renovable, Tipo renovación" al Usuario -->
+      <div class="col-sm-3" [hidden]="true">
+        <form-input-select label="Tipo facturación" [service]="clientInformationService" method="getTypesFactura"
+        clear="clear" [params]="codProducto" fieldCodigo="id" fieldValor="descripcion" [(value)]="poliza.tipoFacturacion"
+          [detail]="detail" [disabled]="true" (onSelect)="getSegmento()"></form-input-select>
+      </div>
+      <div class="col-sm-3" [hidden]="true">
+        <form-input-select label="Renovable" [service]="desgravamenService" method="getListaTipoRenovacion" [params]="" fieldCodigo="ID" fieldValor="DESCRIPCION"
+          [(value)]="poliza.renovacion" [detail]="detail" [defaultValue]="{codigo:2}" [firstSelect]="!detail" [alwaysSelect]="!detail"
+          (onSelect)="cambiarRenovacion();" [required]="true" [firstSelect]="true" [disabled]="true" [alwaysSelect]="true"
+          ></form-input-select>
+       </div>
+      <!--Fin Alex Gallozo 13/03/2023 Ocultando los campos “Tipo de Facturación, Renovable, Tipo renovación" al Usuario -->
+      <!--Inicio Alex Gallozo 14/03/2023 Reorganizando ubicacion de los campos de Datos de Póliza para VCF -->
+      <div class="col-sm-3">
+        <form-input-select label="Frecuencia pago" [service]="policyemitService" method="getFrecuenciaPagoGraph" [params]="{
+                      nbranch: CONSTANTS.RAMO,
+                      channel:
+                          cotizacion.brokers.length > 0
+                            ? cotizacion.brokers[0].COD_CANAL
+                            : null,
+                      currency: poliza.moneda?.NCODIGINT || null,
+                      renewalType: poliza.renovacion?.codigo,
+                      policyType: CONSTANTS.TIPO_POLIZA.INDIVIDUAL || null,
+                      creditType: poliza.tipoPerfil?.COD_PRODUCT || null,
+                      billingType: poliza.tipoFacturacion?.codigo || null,
+                      renovationType: poliza.tipoRenovacion?.COD_TIPO_RENOVACION || null,
+                      codRenovacion: poliza.tipoRenovacion?.COD_TIPO_RENOVACION || null,
+                      producto: codProducto
+                      }" fieldCodigo="COD_TIPO_FRECUENCIA" fieldValor="DES_TIPO_FRECUENCIA" [(value)]="poliza.frecuenciaPago"
+          [detail]="detail && (cotizacion.modoRenovacionEditar !== true) && cotizacion.PolizaEditAsegurados != 0"
+          (onSelect)="cambiarTipoFreq();" [required]="true"></form-input-select>
+      </div>
+    </div>
+
+    <div class="row">
+
+            <div class="col-sm-3">
+              <form-input-date label="Inicio vigencia póliza" [today]="true" [disabled]="!flagRenovacion"
+                [(value)]="poliza.fechaInicioPolizaShow" (valueChange)="poliza.fechaInicioAsegurado = poliza.fechaInicioPoliza"
+                [disabled]="validarDeshabilitarFechaVigenciaInicio()" (onSelect)="emitirCambiarDatoPoliza()"
+                [required]="true"></form-input-date>
+            </div>
+            <div class="col-sm-3">
+              <form-input-date label="Fin vigencia póliza" [(value)]="poliza.fechaFinPoliza" (onSelect)="emitirCambiarDatoPoliza()"
+                [todayNextMonth]="!detail" [transac]="cotizacion.tipoTransaccion" [minDateSup]="poliza.fechaFinPoliza"
+                [baseDateValue]="poliza.fechaInicioPolizaShow" [baseDatePeriod]="poliza.tipoRenovacion?.COD_TIPO_RENOVACION"
+                [baseCuotas]="numcuotas" [disabled]="!flagRenovacion">
+              </form-input-date>
+            </div>
+      <div class="col-sm-3" >
+        <!--[disabled]="!flagRenovacion"-->
+      <!--Inicio Alex Gallozo 13/03/2023 Ocultando los campos “Tipo de Facturación, Renovable, Tipo renovación" al Usuario -->
+        <form-input-select  [hidden]="true" label="Tipo renovación" [service]="policyemitService" method="GetTipoRenovacionGraph" [params]="{
+          nbranch: CONSTANTS.RAMO,
+          channel:
+              cotizacion.brokers.length > 0
+                ? cotizacion.brokers[0].COD_CANAL
+                : null,
+          currency: poliza.moneda?.NCODIGINT || null,
+          renewalType: poliza.renovacion?.codigo || 2,
+          policyType: CONSTANTS.TIPO_POLIZA.INDIVIDUAL || null,
+          creditType: poliza.tipoPerfil?.COD_PRODUCT || null,
+          billingType: poliza.tipoFacturacion?.codigo || null,
+          neps: epsItem.STYPE,
+          nproduct_channel: codProducto,
+          nusercode: userId,
+          ntype_transac: cotizacion.tipoTransaccion
+          }" fieldCodigo="COD_TIPO_RENOVACION" fieldValor="DES_TIPO_RENOVACION" 
+          [(value)]="poliza.tipoRenovacion" [detail]="detail && (cotizacion.modoRenovacionEditar !== true) || poliza.tipoPerfil?.NIDPLAN == '4' || poliza.tipoPerfil?.NIDPLAN == '8'"
+          (onSelect)="cambiarTipoRenovacion();" [required]="true" [order]="poliza.renovacion?.codigo == 2? true : false"
+          ></form-input-select>
+      <!--Fin Alex Gallozo 13/03/2023 Ocultando los campos “Tipo de Facturación, Renovable, Tipo renovación" al Usuario -->
+      </div>
+      
+      <!--[disabled]="!flagRenovacion" [hidden]="true"-->
+      <div class="col-sm-3" >
+        <form-input-date label="Inicio vigencia póliza" [hidden]="true" [disabled]="!flagRenovacion" [(value)]="poliza.fechaInicioPoliza"
+          (valueChange)="poliza.fechaInicioAsegurado = poliza.fechaInicioPoliza"
+          [disabled]="validarDeshabilitarFechaVigenciaInicio()" (onSelect)="emitirCambiarDatoPoliza()"
+          [required]="true"></form-input-date>
+          <!--[today]="true"-->
+      </div>
+      <!--[hidden]="true"-->
+    
+
+        <div class="col-sm-3">
+          <form-input-date label="Fin vigencia póliza" [hidden]="true" [(value)]="poliza.fechaFinPoliza"
+            (valueChange)="poliza.fechaFinAsegurado = poliza.fechaFinPoliza" (onSelect)="emitirCambiarDatoPoliza()"
+            [todayNextMonth]="!detail" [transac]="cotizacion.tipoTransaccion" [minDateSup]="poliza.fechaInicioPoliza"
+            [baseDateValue]="poliza.fechaInicioPoliza" [baseDatePeriod]="poliza.tipoRenovacion?.COD_TIPO_RENOVACION"
+            [baseCuotas]="numcuotas" [disabled]="!flagRenovacion">
+          </form-input-date>
+        </div>
+    </div>
+    <div class="row">
+
+<!--       <div class="col-sm-3">
+        <form-input-select label="Ocupación" [service]="clientInformationService"
+          method="getOccupationsList" [params]="codProducto" fieldCodigo="Id" fieldValor="Name" [firstSelect]="!detail" [alwaysSelect]="!detail"
+          [(value)]="poliza.tipoActividad" [detail]="detail" (onSelect)="emitirCambiarDatoPoliza()" [required]="true">
+        </form-input-select>
+      </div> -->
+
+      <!-- --------------------------------------------------------------------------- -->
+      <div class="col-sm-3">
+        <form-input-select label="Actividad" [service]="clientInformationService"
+          method="GetActivityDesgravamenList" [params]="codProducto" fieldCodigo="Id" fieldValor="Name" [firstSelect]="!detail" [alwaysSelect]="!detail"
+          [(value)]="poliza.actividad" [detail]="detail" (onSelect)="emitirCambiarDatoPoliza()" [required]="true">
+        </form-input-select>
+      </div>
+       <div class="col-sm-3">
+        <form-input-select   label="Tipo plan" [items]="poliza.listPlanes" [itemsArray]="true"  fieldCodigo="ID_PLAN" fieldValor="TIPO_PLAN" [(value)]="poliza.tipoPlan" [detail]="detail"
+          [required]="true" (onSelect)="CambioPlan()"></form-input-select>
+      </div>
+      <div class="col-sm-3">
+       <form-input-checkbox [inlineInput]="true" [items]="[{codigo: 'isAsegContra', valor: 'EL ASEGURADO Y EL CONTRATANTE SON LAS MISMAS PERSONAS',isSelected:true, disabled:true }]" [isAsegurado]="false"></form-input-checkbox>
+      </div>
+
+       <!-- --------------------------------------------------------------------------- -->
+      <!--
+      <div class="col-sm-3">
+        <form-input-select label="Actividad Económica" [service]="clientInformationService"
+          method="getTechnicalActivityList" [params]="codProducto" fieldCodigo="Id" fieldValor="Name" [firstSelect]="!detail" [alwaysSelect]="!detail"
+          [(value)]="poliza.tipoActividad" [detail]="detail" (onSelect)="emitirCambiarDatoPoliza()" [required]="true">
+        </form-input-select>
+      </div>
+      
+     <div class="col-sm-3">
+        <form-input-select label="CIIU" [service]="clientInformationService"
+          method="getEconomicActivityList" [params]="poliza.tipoActividad?.Id" fieldCodigo="Id" fieldValor="Name" [firstSelect]="!detail" [alwaysSelect]="!detail"
+          [(value)]="poliza.CodCiiu" [detail]="detail" (onSelect)="emitirCambiarDatoPoliza()" [required]="true"> 
+        </form-input-select>
+      </div> 
+      -->
+      <div class="col-sm-3" [hidden]="true">
+        <form-input-date label="Inicio vigencia asegurado" [(value)]="poliza.fechaInicioPolizaMes"
+          (valueChange)="poliza.fechaInicioAseguradoMes = poliza.fechaInicioPolizaMes"
+          [disabled]="validarDeshabilitarFechaVigenciaInicio()" [today]="true" (onSelect)="emitirCambiarDatoPoliza()"
+          [required]="true"></form-input-date>
+      </div>
+
+      <div class="col-sm-3" [hidden]="true">
+        <form-input-date label="Fin vigencia asegurado" [(value)]="poliza.fechaFinPolizaMes"
+          (valueChange)="poliza.fechaFinAseguradoMes = poliza.fechaFinPolizaMes" (onSelect)="emitirCambiarDatoPoliza()"
+          [todayNextMonth]="!detail" [transac]="cotizacion.tipoTransaccion" [minDateSup]="poliza.fechaInicioPolizaMes"
+          [baseDateValue]="poliza.fechaInicioPolizaMes" [baseDatePeriod]="poliza.frecuenciaPago?.COD_TIPO_FRECUENCIA"
+          [disabled]="validarDeshabilitarFechaVigenciaInicio()">
+        </form-input-date>
+      </div>
+    </div>
+    
+    <div class="row"></div>
+<!--Fin Alex Gallozo 14/03/2023 Reorganizando ubicacion de los campos de Datos de Póliza para VCF -->
+  </panel-widget>
+</div>

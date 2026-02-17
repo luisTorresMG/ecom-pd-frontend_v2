@@ -1,0 +1,1117 @@
+<section>
+  <div class="container-fluid px-0">
+    <div class="row">
+      <div class="col-md-12 contenedor">
+        <div class="container-fluid">
+          <div class="header-content">
+            <div class="containt-item">
+              <h2 class="header-item">Carga Masiva General</h2>
+            </div>
+            <div class="containt-item">
+              <div class="header-item rigth-item content-buttons-add">
+                <button
+                  class="full-color btn-add-planilla mx-0"
+                  (click)="openAndCloseModalCliente()"
+                >
+                  <img alt="" src="assets/icons/add.png" />
+                  <span>Crear Contratante</span>
+                </button>
+                <button
+                  class="full-color btn-add-planilla mx-0"
+                  (click)="showModalUploadCargaMasiva()"
+                >
+                  <img alt="" src="assets/icons/add.png" />
+                  <span>Agregar Carga Masiva</span>
+                </button>
+                <button
+                  class="full-color btn-export-excel mx-0"
+                  (click)="exportarExcel()"
+                >
+                  <img src="assets/icons/download2.png" />
+                  Exportar Excel
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <form
+            class="filter"
+            [formGroup]="formCargaMasivaSearch"
+            (ngSubmit)="buscarCargaMasiva()"
+            class="form-search"
+          >
+            <div class="form-group row filter-row d-flex align-items-end">
+              <div class="col-lg-8">
+                <app-channel-point
+                  (CANAL_VENTA_DATA_OUT)="CanalVentaData($event)"
+                  (PUNTO_VENTA_DATA_OUT)="PuntoVentaData($event)"
+                  [OPTIONS_CONF]="'TODOS'"
+                ></app-channel-point>
+              </div>
+              <div class="col-lg-2 pr-0 filter-row-cell">
+                <label for="" class="filter-text">FECHA DE CARGA:</label>
+                <input
+                  type="text"
+                  class="form-control date-search input-date"
+                  #dp="bsDatepicker"
+                  [bsConfig]="bsConfig"
+                  bsDatepicker
+                  formControlName="fechaInicio"
+                  [(bsValue)]="bsValueIni"
+                  value="{{ bsValueIni | date : 'dd/MM/yyyy' }}"
+                />
+              </div>
+              <div class="col-lg-2 filter-row-cell">
+                <label
+                  for=""
+                  class="filter-text"
+                  style="color: rgba(0, 0, 0, 0) !important"
+                  >FECHA DE CARGA</label
+                >
+                <input
+                  type="text"
+                  class="form-control date-search input-date"
+                  #dp="bsDatepicker"
+                  [bsConfig]="bsConfig"
+                  bsDatepicker
+                  formControlName="fechaFin"
+                  [(bsValue)]="bsValueFin"
+                  value="{{ bsValueFin | date : 'dd/MM/yyyy' }}"
+                />
+              </div>
+            </div>
+            <div
+              class="row d-flex align-items-end justify-content-between flex-row"
+            >
+              <div class="filters-id-state col-lg-6 d-flex">
+                <div class="col-lg-6 filter-row-cell px-0 pr-3">
+                  <label for="" class="filter-text">ID PROCESO</label>
+                  <input
+                    type="number"
+                    formControlName="idProceso"
+                    class="form-control date-search input-date"
+                  />
+                </div>
+                <div class="col-lg-6 filter-row-cell px-0">
+                  <label for="" class="filter-text">ESTADO</label>
+                  <select
+                    class="form-control date-search input-date"
+                    formControlName="estado"
+                  >
+                    <option value="0">TODOS</option>
+                    <option value="3">EMITIDO</option>
+                    <option value="4">FACTURADO</option>
+                  </select>
+                </div>
+              </div>
+              <div
+                class="d-flex justify-content-between align-items-center mr-3"
+              >
+                <button class="full-color btn-search mx-0">
+                  <span>Buscar</span>
+                </button>
+              </div>
+            </div>
+            <a
+              (click)="descargarFormatoExcelCargaMasiva()"
+              role="button"
+              class="download-manual d-flex align-items-center mx-0"
+            >
+              <i class="fa fa-download mr-2"></i>
+              <span>Descargar Formato</span>
+            </a>
+          </form>
+          <div class="grid form-group row">
+            <div class="table-responsive" id="table-scroll">
+              <table class="table">
+                <thead>
+                  <tr class="grid-title">
+                    <td class="grid-title-item">ID Proceso</td>
+                    <td class="grid-title-item">Canal de Venta</td>
+                    <td class="grid-title-item">Fecha de Carga</td>
+                    <td class="grid-title-item">Cantidad de Registros</td>
+                    <td class="grid-title-item">Prima Total</td>
+                    <td class="grid-title-item">Usuario</td>
+                    <td class="grid-title-item">Estado</td>
+                    <td class="grid-title-item actions">Acciones</td>
+                  </tr>
+                </thead>
+                <tbody
+                  *ngIf="
+                    DATA_CARGA_MASIVA.success == true &&
+                    DATA_CARGA_MASIVA.cargaMasivaDetail.length == 0
+                  "
+                >
+                  <tr>
+                    <td colspan="8" class="no-registers">
+                      <label for="">No hay registros</label>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody #skeletonLoading>
+                  <tr
+                    class="grid-body skeleton-loading"
+                    *ngFor="let skeletons of NSKELETON"
+                  >
+                    <td class="grid-title-item">
+                      <div class="skel"></div>
+                    </td>
+                    <td class="grid-title-item">
+                      <div class="skel"></div>
+                    </td>
+                    <td class="grid-title-item">
+                      <div class="skel"></div>
+                    </td>
+                    <td class="grid-title-item">
+                      <div class="skel"></div>
+                    </td>
+                    <td class="grid-title-item">
+                      <div class="skel"></div>
+                    </td>
+                    <td class="grid-title-item">
+                      <div class="skel"></div>
+                    </td>
+                    <td class="grid-title-item">
+                      <div class="skel"></div>
+                    </td>
+                    <td class="grid-title-item">
+                      <div class="skel"></div>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="DATA_CARGA_MASIVA.success == true">
+                  <tr
+                    class="grid-body"
+                    *ngFor="
+                      let result of DATA_CARGA_MASIVA.cargaMasivaDetail
+                        | paginate
+                          : {
+                              id: 'grid-table',
+                              itemsPerPage: 10,
+                              totalItems:
+                                DATA_CARGA_MASIVA.cargaMasivaDetail.length || 0,
+                              currentPage: currentPage
+                            };
+                      let index = index
+                    "
+                    [id]="'row' + result.idProceso"
+                  >
+                    <td class="grid-title-item">{{ result.idProceso }}</td>
+                    <td class="grid-title-item">{{ result.canal }}</td>
+                    <td class="grid-title-item">{{ result.fechaProceso }}</td>
+                    <td class="grid-title-item">
+                      {{ result.cantidadRegistro }}
+                    </td>
+                    <td class="grid-title-item">
+                      S/. {{ result.primaTotal | number : "1.2-2" }}
+                    </td>
+                    <td class="grid-title-item">{{ result.usuario }}</td>
+                    <td class="grid-title-item">{{ result.estado }}</td>
+                    <td class="grid-title-item col-actions-masiva">
+                      <button
+                        class="showActionsCargaMasiva"
+                        (click)="
+                          showActionsCargaMasiva(result.idProceso, index + 1)
+                        "
+                      >
+                        <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                      </button>
+                      <div
+                        class="cotent-actions-masiva"
+                        [id]="'actions' + result.idProceso"
+                        hidden
+                      >
+                        <a
+                          (click)="GoUploadFileViewDetail(result.idProceso)"
+                          class="op-action-masiva"
+                        >
+                          <i
+                            title="Ver detalle de carga"
+                            style="cursor: pointer"
+                            class="fa fa-eye fa-lg"
+                          ></i>
+                          Ver Detalle
+                        </a>
+                        <a
+                          role="button"
+                          class="op-action-masiva"
+                          *ngIf="result.facturado == 0"
+                          (click)="
+                            showModal(
+                              result.idProceso,
+                              result.cantidadContratantes
+                            )
+                          "
+                        >
+                          <i
+                            title="Generar factura"
+                            class="fa fa-file-text fa-lg ml-1"
+                          ></i>
+                          Generar Factura
+                        </a>
+                        <a
+                          role="button"
+                          class="op-action-masiva"
+                          (click)="historialCargaMasiva(result.idProceso)"
+                        >
+                          <i
+                            title="Ver historial"
+                            class="fa fa-search fa-lg ml-1"
+                          ></i>
+                          Ver Historial
+                        </a>
+                        <a
+                          role="button"
+                          class="op-action-masiva"
+                          (click)="descargarExcel(result.idProceso)"
+                        >
+                          <i
+                            title="Descargar Excel"
+                            class="fa fa-file-excel-o fa-lg ml-1"
+                          ></i>
+                          Descargar Reporte
+                        </a>
+                        <a
+                          role="button"
+                          class="op-action-masiva"
+                          (click)="descargarFactura(result.idProceso)"
+                          *ngIf="result.estado == 'FACTURADO'"
+                        >
+                          <i
+                            title="Descargar factura"
+                            class="fa fa-download fa-lg ml-1"
+                          ></i>
+                          Descargar Factura
+                        </a>
+                        <a
+                          role="button"
+                          class="op-action-masiva"
+                          *ngIf="
+                            (result.estado == 'EMITIDO' ||
+                              result.estado == 'FACTURADO') &&
+                            result.estadoZip == '1'
+                          "
+                          [id]="'option-' + result.idProceso"
+                          (click)="descargarConstancias(result.idProceso)"
+                        >
+                          <i
+                            title="Descargar factura"
+                            class="fa fa-file-archive-o fa-lg ml-1"
+                          ></i>
+                          Descargar Constancias
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <pagination-controls
+              id="grid-table"
+              [autoHide]="true"
+              responsive="true"
+              nextLabel="Siguiente"
+              previousLabel="Anterior"
+              (pageChange)="currentPage = $event"
+            ></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="modal fade" bsModal #modal="bs-modal">
+  <div class="modal-dialog" role="document">
+    <form
+      class="modal-content"
+      [formGroup]="formGenerarFactura"
+      (ngSubmit)="generarFactura()"
+    >
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Generación de Comprobantes
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="closeModal()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Se realizará la generación de comprobante(s) de tipo:
+        <div class="radio-btns d-flex flex-row mt-3 align-items-center">
+          <label for="ind" class="mb-0 mr-3">
+            <input
+              type="radio"
+              value="true"
+              formControlName="typeFactura"
+              [checked]="
+                this.formGenerarFactura.get('typeFactura').value == true
+              "
+              id="ind"
+            />
+            Individual
+          </label>
+          <label for="group" *ngIf="NCONTRATANTES == 1" class="mb-0">
+            <input
+              type="radio"
+              value="false"
+              [checked]="
+                this.formGenerarFactura.get('typeFactura').value == false
+              "
+              formControlName="typeFactura"
+              id="group"
+            />
+            Grupal
+          </label>
+        </div>
+        <br />
+        <span class="modal-question mt-0"> ¿Desea continuar? </span>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button
+          type="button"
+          class="btn btn-secondary btn-close-modal"
+          data-dismiss="modal"
+          (click)="closeModal()"
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          class="btn full-color btn-aceptar-modal"
+          [disabled]="formGenerarFactura.invalid"
+        >
+          Aceptar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="modal fade" bsModal #modalUploadFile="bs-modal">
+  <div class="modal-dialog" role="document">
+    <form
+      class="modal-content"
+      [formGroup]="formAddCarga"
+      (ngSubmit)="validarArchivoCargaMasiva()"
+      enctype="multipart/form-data"
+    >
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar Carga Masiva</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="hideModalUploadCargaMasiva()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row mb-2">
+          <div class="col-12">
+            <label for="chanel-venta-modal" class="filter-text"
+              >CANAL DE VENTA:</label
+            >
+            <ng-select
+              [items]="CANAL_VENTA_ADD_CARGA"
+              bindLabel="sdescript"
+              bindValue="nchannel"
+              notFoundText="NO HAY RESULTADOS"
+              formControlName="canalVenta"
+              [clearable]="true"
+              (change)="PuntoVentaDataAddCarga($event)"
+            >
+            </ng-select>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-12">
+            <label for="chanel-venta-modal" class="filter-text"
+              >PUNTO DE VENTA:</label
+            >
+            <ng-select
+              [items]="PUNTO_VENTA_ADD_CARGA.PRO_SALE_POINT"
+              bindLabel="SDESCRIPT"
+              bindValue="NNUMPOINT"
+              notFoundText="NO HAY RESULTADOS"
+              formControlName="puntoVenta"
+              [clearable]="true"
+            >
+            </ng-select>
+          </div>
+        </div>
+        <div class="row d-flex align-items-center">
+          <div class="col-4">
+            <label for="upload-file-modal" class="filter-text upload_file"
+              >Adjuntar archivo</label
+            >
+            <input
+              type="file"
+              id="upload-file-modal"
+              (change)="uploadFile($event)"
+              formControlName="file"
+              hidden
+            />
+          </div>
+          <div class="col-8 px-0">
+            <span
+              >{{ NAME_FILE.substring(0, 28)
+              }}<small *ngIf="NAME_FILE.length > 28">...</small></span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button
+          type="button"
+          class="btn btn-secondary btn-close-modal"
+          data-dismiss="modal"
+          (click)="hideModalUploadCargaMasiva()"
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          class="btn full-color btn-aceptar-modal"
+          [disabled]="formAddCarga.invalid || ARCHIVO_CARGA_MASIVA == null"
+        >
+          Cotizar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="modal fade" bsModal #modalHistorialCarga="bs-modal">
+  <div class="modal-dialog modal-ver-detalle" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Historial de Carga Masiva: {{ ID_CARGA_MASIVA }}
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="hideModalHistorialCarga()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3 px-0 mb-3 py-0">
+        <table
+          class="table table-info-soat table-group-soat mx-0 mt-3 table-history"
+        >
+          <thead class="thead">
+            <tr class="grid-title">
+              <td class="grid-title-item">Secuencia</td>
+              <td class="grid-title-item">Estado</td>
+              <td class="grid-title-item">Fecha</td>
+              <td class="grid-title-item">Usuario</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class="grid-body"
+              *ngIf="DATA_HISTORIAL_CARGA_MASIVA.success == false"
+            >
+              <td class="grid-body-item" colspan="4">
+                No se encontraron registros
+              </td>
+            </tr>
+            <tr
+              class="grid-body"
+              *ngFor="
+                let data of DATA_HISTORIAL_CARGA_MASIVA.cargaMasivaDetail;
+                let index = index
+              "
+            >
+              <td class="grid-body-item">{{ index + 1 }}</td>
+              <td class="grid-body-item">{{ data.idEstado }}</td>
+              <td class="grid-body-item">{{ data.fechaRegistro }}</td>
+              <td class="grid-body-item">{{ data.usuario }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button
+          class="full-color btn-export-excel mx-0"
+          (click)="hideModalHistorialCarga()"
+        >
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" bsModal #modalMessage="bs-modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{ titleModal }}</h5>
+        <button
+          type="button"
+          (click)="hideModalMessage()"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label for="">
+          {{ messageModal }}
+        </label>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          (click)="hideModalMessage()"
+          class="btn full-color btn-aceptar-modal btn-aceptar-message-modal"
+        >
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" bsModal #modalError="bs-modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          {{ titleModalError }}
+        </h5>
+        <button
+          type="button"
+          class="close"
+          (click)="hideModalError()"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-body-error">
+        <img src="assets/backoffice/check-error.png" alt="" />
+        <label for="">
+          {{ messageModalError }}
+        </label>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          (click)="hideModalError()"
+          class="btn full-color btn-aceptar-modal btn-aceptar-message-modal"
+        >
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" bsModal #modalSuccessFacturacion="bs-modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="hideModalSuccessFacturacion()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <div class="check-emitido">
+          <img src="assets/backoffice/check-success.png" class="icon-check" />
+        </div>
+        <h2>Mensaje de Facturación</h2>
+        Se facturó correctamente.
+      </div>
+      <div class="modal-footer modal-foot-confirm">
+        <button
+          type="button"
+          class="btn full-color btn-aceptar-modal"
+          (click)="hideModalSuccessFacturacion()"
+        >
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-container *ngIf="modalCliente">
+  <div id="u-modal">
+    <section class="u-modal" [@modal]="true">
+      <div class="u-modal__header">
+        <h2 class="u-modal__header--title">Crear Contratante</h2>
+        <button
+          class="u-modal__header--close"
+          (click)="openAndCloseModalCliente()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="u-modal__body">
+        <form class="u-modal__body--form" [formGroup]="formCliente">
+          <div class="dbl-in">
+            <label
+              class="ctn-in"
+              for="documentType"
+              [class.in-disabled]="fc['documentType'].disabled"
+            >
+              <select
+                class="ctn-in--item"
+                id="documentType"
+                formControlName="documentType"
+              >
+                <option value="1">RUC</option>
+                <!-- <option value=2>DNI</option>
+                <option value=4>CE</option> -->
+              </select>
+            </label>
+            <label
+              class="ctn-in placeholder"
+              for="numeroDocumento"
+              aria-placeholder="Número de documento"
+              [class.placeholder-active]="fc.documentNumber.value"
+              [class.in-disabled]="fc['documentNumber'].disabled"
+            >
+              <input
+                type="text"
+                class="ctn-in--item"
+                id="numeroDocumento"
+                [class.placeholder-active]="fc.documentNumber.value"
+                formControlName="documentNumber"
+                [minlength]="documentLimit.min"
+                [maxlength]="documentLimit.max"
+                (blur)="requestClientInfo()"
+              />
+              <small
+                class="inputHasError"
+                *ngIf="hasErrorNumberDocument !== null"
+                >{{ hasErrorNumberDocument }}</small
+              >
+            </label>
+          </div>
+          <label
+            class="ctn-in placeholder"
+            for="nacionalidad"
+            aria-placeholder="Nacionalidad"
+            [class.placeholder-active]="fc.nacionalidad.value"
+            [class.in-disabled]="fc['nacionalidad'].disabled"
+          >
+            <ng-select
+              class="ctn-in--item u-modal-select"
+              id="nacionalidad"
+              [class.placeholder-active]="fc.nacionalidad.value"
+              [items]="nationalities"
+              bindLabel="descripcion"
+              bindValue="id"
+              notFoundText="No hay resultados"
+              formControlName="nacionalidad"
+              [clearable]="true"
+            >
+            </ng-select>
+            <small class="inputHasError" *ngIf="hasErrorNacionalidad !== null">
+              {{ hasErrorNacionalidad }}
+            </small>
+          </label>
+          <label
+            class="ctn-in placeholder"
+            for="razonSocial"
+            aria-placeholder="Razón Social"
+            [class.placeholder-active]="fc.razonSocial.value"
+            [class.in-disabled]="fc['razonSocial'].disabled"
+            *ngIf="clienteEmpresa"
+          >
+            <input
+              type="text"
+              class="ctn-in--item"
+              id="razonSocial"
+              [class.placeholder-active]="fc.razonSocial.value"
+              [maxlength]="60"
+              formControlName="razonSocial"
+            />
+            <small class="inputHasError" *ngIf="hasErrorRazonSocial !== null">
+              {{ hasErrorRazonSocial }}
+            </small>
+          </label>
+          <label
+            class="ctn-in placeholder"
+            for="nombresCliente"
+            aria-placeholder="Nombres"
+            [class.placeholder-active]="fc.nombres.value"
+            [class.in-disabled]="fc['nombres'].disabled"
+            *ngIf="!clienteEmpresa"
+          >
+            <input
+              type="text"
+              id="nombresCliente"
+              class="ctn-in--item"
+              [class.placeholder-active]="fc.nombres.value"
+              formControlName="nombres"
+              [maxlength]="20"
+            />
+            <small class="inputHasError" *ngIf="hasErrorNombres !== null">
+              {{ hasErrorNombres }}
+            </small>
+          </label>
+          <label
+            class="ctn-in placeholder"
+            for="departamento"
+            aria-placeholder="Departamento"
+            [class.placeholder-active]="fc.departamento.value"
+            [class.in-disabled]="fc['departamento'].disabled"
+          >
+            <ng-select
+              class="ctn-in--item u-modal-select"
+              id="departamento"
+              [class.placeholder-active]="fc.departamento.value"
+              [items]="departments"
+              bindLabel="descripcion"
+              bindValue="id"
+              notFoundText="No hay resultados"
+              formControlName="departamento"
+              [clearable]="true"
+            >
+            </ng-select>
+            <small class="inputHasError" *ngIf="hasErrorDepartamento !== null">
+              {{ hasErrorDepartamento }}
+            </small>
+          </label>
+          <label
+            class="ctn-in placeholder"
+            for="apellidoPaterno"
+            aria-placeholder="Apellido Paterno"
+            [class.placeholder-active]="fc.apellidoPaterno.value"
+            [class.in-disabled]="fc['apellidoPaterno'].disabled"
+            *ngIf="!clienteEmpresa"
+          >
+            <input
+              type="text"
+              class="ctn-in--item"
+              id="apellidoPaterno"
+              [class.placeholder-active]="fc.apellidoPaterno.value"
+              formControlName="apellidoPaterno"
+              [maxlength]="20"
+            />
+            <small
+              class="inputHasError"
+              *ngIf="hasErrorApellidoPaterno !== null"
+            >
+              {{ hasErrorApellidoPaterno }}
+            </small>
+          </label>
+          <label
+            class="ctn-in placeholder"
+            for="email"
+            aria-placeholder="Correo Electrónico"
+            [class.placeholder-active]="fc.email.value"
+            [class.in-disabled]="fc['email'].disabled"
+          >
+            <input
+              type="text"
+              id="email"
+              class="ctn-in--item"
+              [class.placeholder-active]="fc.email.value"
+              formControlName="email"
+              [maxlength]="60"
+            />
+            <small class="inputHasError" *ngIf="hasErrorEmail !== null">
+              {{ hasErrorEmail }}
+            </small>
+          </label>
+          <label
+            class="ctn-in placeholder"
+            for="apellidoMaterno"
+            aria-placeholder="Apellido Materno"
+            [class.placeholder-active]="fc.apellidoMaterno.value"
+            [class.in-disabled]="fc['apellidoMaterno'].disabled"
+            *ngIf="!clienteEmpresa"
+          >
+            <input
+              type="text"
+              class="ctn-in--item"
+              id="apellidoMaterno"
+              [class.placeholder-active]="fc.apellidoMaterno.value"
+              formControlName="apellidoMaterno"
+              [maxlength]="20"
+            />
+            <small
+              class="inputHasError"
+              *ngIf="hasErrorApellidoMaterno !== null"
+            >
+              {{ hasErrorApellidoMaterno }}
+            </small>
+          </label>
+          <label
+            class="ctn-in placeholder"
+            for="provincia"
+            aria-placeholder="Provincia"
+            [class.placeholder-active]="fc.provincia.value"
+            [class.in-disabled]="fc['provincia'].disabled"
+          >
+            <ng-select
+              class="ctn-in--item u-modal-select"
+              id="provincia"
+              [class.placeholder-active]="fc.provincia.value"
+              [items]="provinces"
+              bindLabel="provincia"
+              bindValue="idProvincia"
+              notFoundText="No hay resultados"
+              formControlName="provincia"
+              [clearable]="true"
+            >
+            </ng-select>
+            <small class="inputHasError" *ngIf="hasErrorProvincia !== null">
+              {{ hasErrorProvincia }}
+            </small>
+          </label>
+          <label
+            class="ctn-in placeholder"
+            for="numeroCelular"
+            aria-placeholder="Número de Celular"
+            [class.placeholder-active]="fc.celular.value"
+            [class.in-disabled]="fc['celular'].disabled"
+          >
+            <input
+              type="text"
+              id="numeroCelular"
+              class="ctn-in--item"
+              [class.placeholder-active]="fc.celular.value"
+              [minlength]="9"
+              [maxlength]="9"
+              formControlName="celular"
+            />
+            <small class="inputHasError" *ngIf="hasErrorCelular !== null">
+              {{ hasErrorCelular }}
+            </small>
+          </label>
+          <label
+            class="ctn-in placeholder"
+            for="distrito"
+            aria-placeholder="Distrito"
+            [class.placeholder-active]="fc.distrito.value"
+            [class.in-disabled]="fc['distrito'].disabled"
+          >
+            <ng-select
+              class="ctn-in--item u-modal-select"
+              id="distrito"
+              [class.placeholder-active]="fc.distrito.value"
+              [items]="districts"
+              bindLabel="distrito"
+              bindValue="idDistrito"
+              notFoundText="No hay resultados"
+              formControlName="distrito"
+              [clearable]="true"
+            >
+            </ng-select>
+            <small class="inputHasError" *ngIf="hasErrorDistrito !== null">
+              {{ hasErrorDistrito }}
+            </small>
+          </label>
+          <label
+            class="ctn-in placeholder"
+            for="direccion"
+            aria-placeholder="Dirección"
+            [class.placeholder-active]="fc.direccion.value"
+            [class.in-disabled]="fc['direccion'].disabled"
+          >
+            <input
+              type="text"
+              id="direccion"
+              class="ctn-in--item"
+              [class.placeholder-active]="fc.direccion.value"
+              formControlName="direccion"
+              [maxlength]="80"
+            />
+            <small class="inputHasError" *ngIf="hasErrorDireccion !== null">
+              {{ hasErrorDireccion }}
+            </small>
+          </label>
+          <label
+            class="ctn-in placeholder"
+            for="fechaNacimiento"
+            aria-placeholder="Fecha de Nacimiento"
+            [class.placeholder-active]="fc.fechaNacimiento.value"
+            [class.in-disabled]="fc['fechaNacimiento'].disabled"
+            *ngIf="!clienteEmpresa"
+          >
+            <input
+              type="text"
+              id="fechaNacimiento"
+              class="ctn-in--item"
+              #dp="bsDatepicker"
+              [bsConfig]="bsConfigCliente"
+              bsDatepicker
+              [class.placeholder-active]="fc.fechaNacimiento.value"
+              formControlName="fechaNacimiento"
+            />
+            <small
+              class="inputHasError"
+              *ngIf="hasErrorFechaNacimiento !== null"
+            >
+              {{ hasErrorFechaNacimiento }}
+            </small>
+          </label>
+          <label
+            class="ctn-in placeholder"
+            for="sexoCliente"
+            aria-placeholder="Sexo"
+            [class.placeholder-active]="fc.sexo.value"
+            [class.in-disabled]="fc['sexo'].disabled"
+            *ngIf="!clienteEmpresa"
+          >
+            <select
+              class="ctn-in--item"
+              id="sexoCliente"
+              formControlName="sexo"
+              [class.placeholder-active]="fc.sexo.value"
+            >
+              <option value="2">Masculino</option>
+              <option value="1">Femenino</option>
+              <option value="3">No informado</option>
+            </select>
+            <small class="inputHasError" *ngIf="hasErrorSexo !== null">
+              {{ hasErrorSexo }}
+            </small>
+          </label>
+          <div class="u-modal-aditional">
+            <input
+              type="checkbox"
+              id="checkbox-style"
+              formControlName="clientState"
+              hidden
+            />
+            <label for="checkbox-style" class="u-modal__body--checkbox">
+              <span class="u-modal__body--checkbox-desc">
+                ¿Es cliente del estado?
+              </span>
+            </label>
+          </div>
+        </form>
+        <small class="hasError" #formClienteError></small>
+      </div>
+      <div class="u-modal__footer">
+        <button
+          role="buton"
+          class="u-modal__footer--btn-secondary modal--button"
+          (click)="openAndCloseModalCliente()"
+        >
+          Cancelar
+        </button>
+        <button
+          role="button"
+          class="u-modal__footer--btn-primary modal--button"
+          [class.in-disabled]="formCliente.invalid || disabledFormClienteSubmit"
+          [disabled]="formCliente.invalid || disabledFormClienteSubmit"
+          (click)="submitFormCliente()"
+        >
+          Guardar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-container>
+<ng-container *ngIf="modalConfirmacion">
+  <div id="u-modal">
+    <section class="u-modal u-modal-confirm" [@modal]="true">
+      <div class="u-modal__header u-modal-confirm__header">
+        <h2 class="u-modal__header--title">
+          {{ modalConfirmacionTitle }}
+        </h2>
+        <button
+          class="u-modal__header--close"
+          (click)="openAndCloseModalConfirm()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="u-modal__body">
+        <div class="u-modal__body--confirm">
+          <p class="u-modal__body--confirm-desc">
+            {{ modalConfirmacionDesc }}
+          </p>
+        </div>
+      </div>
+      <div class="u-modal__footer">
+        <button
+          class="u-modal__footer--btn-secondary modal--button"
+          (click)="openAndCloseModalConfirm()"
+        >
+          Cancelar
+        </button>
+        <button
+          class="u-modal__footer--btn-primary modal--button"
+          (click)="modalConfirmTypeSubmit()"
+        >
+          Aceptar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-container>
+<ng-container *ngIf="modalSuccess">
+  <div id="u-modal">
+    <section class="u-modal u-modal-confirm" [@modal]="true">
+      <div class="u-modal__header u-modal-success__header">
+        <button
+          class="u-modal__header--close"
+          (click)="openAndCloseModalSuccess()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="u-modal__body">
+        <div class="u-modal__body--success">
+          <img
+            [src]="'assets/backoffice/check-success.png'"
+            alt="Icon success"
+            class="u-modal__body--success-img"
+            *ngIf="modalSuccessIsTrue"
+          />
+          <img
+            [src]="'assets/backoffice/check-error.png'"
+            alt="Icon error"
+            class="u-modal__body--success-img"
+            *ngIf="!modalSuccessIsTrue"
+          />
+          <p class="u-modal__body--success-desc">
+            {{ modalSuccessDesc }}
+          </p>
+        </div>
+      </div>
+      <div class="u-modal__footer">
+        <button
+          class="u-modal__footer--btn-primary modal--button"
+          (click)="openAndCloseModalSuccess()"
+        >
+          Aceptar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-container>
+
+<div class="captcha">
+  <re-captcha
+    #recaptchaRef="reCaptcha"
+    (resolved)="resolved($event)"
+    siteKey="{{ siteKey }}"
+    badge="bottomleft"
+    size="invisible"
+  >
+  </re-captcha>
+</div>

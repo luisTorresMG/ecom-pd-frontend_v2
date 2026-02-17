@@ -1,0 +1,154 @@
+@import "standard"
+@import "modal"
+@import "variables"
+
+
+.section
+  display: flex
+  flex-direction: column
+  gap: 1rem
+  padding: 10px
+
+  &__subheader
+    display: flex
+    align-items: center
+    justify-content: space-between
+    gap: 1rem
+    flex-wrap: wrap
+    h2
+      font-weight: bold
+
+    &--right
+      display: flex
+      align-items: center
+      justify-content: flex-end
+      gap: 1rem
+      flex-wrap: wrap
+
+  .form-filters
+    display: grid
+    gap: 1rem
+
+    @media (min-width: 580px)
+      grid-template-columns: repeat(2, 1fr)
+
+    @media (min-width: 840px)
+      grid-template-columns: repeat(4, 1fr)
+
+.table-responsive
+  height: 400px
+  max-height: 600px
+  overflow-y: auto
+  td
+    padding: 3px !important
+  tr
+    padding: 3px !important
+
+
+.modal-load
+  section
+    width: 520px
+    max-width: 600px
+  h5
+    font-weight: bold
+  .form-modal
+    display: grid
+    gap: 1rem
+
+.modal-confirm
+  text-align: center
+  .title
+    text-align: center !important
+  .modal-body
+    font-size: 18px
+
+.modal-confirmTrue
+  padding: 1rem 2rem !important
+  font-size: 18px
+  img
+    margin: 0
+  h5
+    font-weight: bold
+    margin-bottom: 0.5rem
+
+.modal-history
+  section
+    max-width: 600px
+
+.modal-generate
+  font-size: 18px !important
+  text-align: center
+  section
+    width: 500px
+  h6
+    text-align: center !important
+  .parraf
+    margin: 1rem
+  .radio-btns
+    display: flex
+    justify-content: center
+    text-align: center
+  .modal-question
+    margin: 1.5rem
+    text-align: center
+    font-weight: bold
+
+.modal-success
+  text-align: center
+  h6
+    text-align: center
+  .modal-emitido
+    margin: 1rem
+  .icon-check
+    width: 120px
+    height: 120px
+    margin-bottom: 1rem
+
+.state
+  display: flex
+  justify-content: center
+
+.status
+  display: flex
+  align-items: center
+  justify-content: center
+  width: fit-content
+  height: 28px
+  padding: 4px 12px
+  background-color: #0066FF
+  color: #fff
+  font-size: 12px
+  border-radius: 50px
+
+.color3
+  background-color: #0066FF
+
+.color4
+  background-color: #1EB224
+
+.fa-angle-down
+  position: absolute
+  right: 15px
+  bottom: 20%
+  font-size: 18px
+
+.fa-calendar
+  position: absolute
+  right: 15px
+  bottom: 20%
+  font-size: 18px
+
+.fa-file-excel-o
+  color: #008000
+
+.fa-file-archive-o
+  color: #e65100
+
+.download-manual
+  i
+    font-size: 20px
+  span
+    color: #553d81
+    font-weight: bold
+    font-family: "Bliss Pro"
+

@@ -1,0 +1,18 @@
+<div class="container soat-container">
+  <div class="soat-navigation">
+    <i class="fa fa-caret-left arrow"></i>
+    <a routerLink="/sctr/step-1" class="soat-link">Regresar al paso 1</a>
+  </div>
+
+  <div class="soat-header">
+    <h2 class="title">
+      2. Datos del contratante
+    </h2>
+  </div>
+
+  <app-contractor
+    [loading]="loading"
+    [user]="vidaleyUser"
+    (formSubmitted)="onSubmit($event)"
+  ></app-contractor>
+</div>

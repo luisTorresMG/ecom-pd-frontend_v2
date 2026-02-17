@@ -1,0 +1,158 @@
+.soat-container-outline {
+  border: 1px solid #fff;
+  margin-bottom: 1px;
+}
+
+.soat-summary {
+  padding: 32px;
+  color: #999;
+  background-color: #f2f2f2 !important;
+}
+
+.soat-summary .key {
+  font-weight: bold;
+  color: gray;
+}
+
+.soat-summary .soat-header-icon {
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.soat-summary .soat-header-icon .icon-title {
+  margin-right: 15px;
+}
+
+.soat-summary .sub-title {
+  color: #2e0563;
+}
+
+.edit-form-title {
+  margin-bottom: 10px !important;
+}
+
+.edit-form {
+  margin-bottom: 30px;
+}
+
+.data {
+  text-transform: uppercase;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.download {
+  font-weight: bold;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.download > a {
+  color: #300764;
+}
+
+.file {
+  font-weight: bold;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.title {
+  margin-bottom: 0;
+}
+
+.space-btn {
+  margin-top: 20px;
+}
+
+.extraInfo {
+  text-align: center;
+  margin: 18px 9px 0px 5px;
+  font-weight: bold;
+  color: rgb(91, 91, 91);
+}
+
+.extraInfo a {
+  color: rgb(91, 91, 91);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.big {
+  font-size: 40px;
+}
+
+.descarga {
+  color: #2e0563;
+  text-decoration: underline;
+}
+
+.descarga-text {
+  font-size: 17px !important;
+  cursor: pointer;
+}
+
+.btntipoupload {
+  /* width: 87px; */
+  height: 26px;
+  line-height: 2px;
+  background-color: #300764;
+  color: #fff;
+  font-size: 13px;
+}
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  padding-top: 5px;
+}
+
+.upload-btn-wrapper input[type="file"] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+::-webkit-file-upload-button {
+  cursor: pointer;
+}
+.filename {
+  font-size: 12px;
+  color: #320764;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 4px;
+}
+
+.dmessage {
+  color: #ff6e00;
+  text-align: center;
+  font-size: 14px;
+  margin-top: 22px;
+}
+
+.legal-text {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: -22px;
+}
+
+.details {
+  margin: 30px 0;
+  color: #999;
+  text-align: center;
+}
+
+.title {
+  color: #300764;
+  text-align: center;
+  margin: 30px 15px 0;
+  font-weight: bold;
+}

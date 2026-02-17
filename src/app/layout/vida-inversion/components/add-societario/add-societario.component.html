@@ -1,0 +1,150 @@
+<div class="container-title-modal"
+     style="position: relative;">
+    <h3 class="p-0 m-0">{{titleModal}}</h3>
+    <i class="fa fa-close"
+       style="position: absolute; top: 25%; right: 2%; cursor: pointer; color: #fff;"
+       aria-hidden="true"
+       (click)="reference.close()"></i>
+</div>
+<div class="p-3">
+    <div class="row mx-2" *ngIf="!isView">
+
+        <div class="col-lg-6 my-0">
+            <!-- <form-input-text text_label="Rol(*)"
+                             [onlyInput]="true"
+                             maxCaracter="100"
+                             [patternPrevent]="CONSTANTS.REGEX.LETRAS"
+                             [(value)]="societario.SROL"
+                             ></form-input-text> -->
+
+            <form-input-select text_label="Rol(*)"
+                                [firstSelect]="true"
+                                [large]="false"
+                                fieldCodigo="Id"
+                                fieldValor="Name"
+                                [(value)]="societario.SROL"
+                                [updateModelOnChange]="true"
+                                [items]="list_roles"></form-input-select>
+        </div>
+
+        <div class="col-lg-6 my-0">
+            <form-input-text text_label="Razón Social (Denominación)(*)"
+                             [onlyInput]="true"
+                             maxCaracter="250"
+                             [(value)]="societario.SRAZON_SOCIAL"
+                             ></form-input-text>
+        </div>
+
+        <div class="col-lg-6 my-0">
+            <form-input-text text_label="Ruc (Registro Equivalente)(*)"
+                             [onlyInput]="true"
+                             maxCaracter="11"
+                             [(value)]="societario.SRUC"
+                             [patternPrevent]="CONSTANTS.REGEX.NUMBER"
+                             ></form-input-text>
+        </div>
+
+
+        <div class="col-lg-6 my-0">
+            <form-input-text text_label="% de Participación(*)"
+                             [(value)]="societario.NPORCENTAJE"
+                             [patternPrevent]="CONSTANTS.REGEX.RANGO_1_100_DECIMAL"
+                             maxCaracter="5"
+                             [onlyInput]="true"></form-input-text>
+            <!-- [patternPrevent]="CONSTANTS.REGEX.PORCENTAJE" -->
+
+        </div>
+
+        <div class="col-lg-12 my-0 d-flex justify-content-start" *ngIf="societario.NID == null">
+            <form-button label="Agregar"
+                        btnClass="btn-primary-VI text-nowrap"
+                        (click)="addSocietario()"></form-button>
+        </div>
+
+        <div class="col-lg-12 my-0 d-flex justify-content-start" *ngIf="societario.NID != null">
+            <form-button label="Actualizar"
+                        btnClass="btn-primary-VI text-nowrap"
+                        (click)="actualizarSocietario()"></form-button>
+
+            <form-button label="Cancelar"
+                        class="ml-2"
+                        btnClass="btn-primary-VI text-nowrap"
+                        (click)="resetSocietario()"></form-button>
+        </div>
+
+
+    </div>
+
+    <div class="row mx-4 mt-3">
+        <div class="table-responsive"
+                id="table-scroll">
+            <table class="table-u">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Rol</th>
+                        <th>Razón Social (Denominación)</th>
+                        <th>RUC (Registro Equivalente)</th>
+                        <th>% de Participación</th>
+                        <th *ngIf="!isView">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody style="color: #553d81;">
+                    <ng-container *ngIf="!list_societarios.length">
+                        <tr>
+                            <td colspan="6">No hay información para mostrar</td>
+                        </tr>
+                    </ng-container>
+
+                    <ng-container *ngIf="list_societarios.length">
+                        <tr class="grid-body"
+                            *ngFor=" let item of list_societarios let index = index "
+                            [id]="'row' + index"
+                        >    
+                            <td class="grid-title-item p-1">{{ index + 1 }}</td>
+                            <td class="grid-title-item p-1">{{ item.SROL }}</td>
+                            <td class="grid-title-item p-1">{{ resolveTextRs(item.SRAZON_SOCIAL) }}</td>
+                            <td class="grid-title-item p-1">{{ item.SRUC }}</td>
+                            <td class="grid-title-item p-1">{{ resolveTextPorcentaje(item.NPORCENTAJE) }} %</td>
+                            <td *ngIf="!isView">
+                                <i class="fa fa-trash"
+                                   style="color: #553d81; cursor: pointer;"
+                                   (click)="eliminarSocietario(index)"
+                                   aria-hidden="true"></i>
+                                
+                                <i class="fa fa-edit"
+                                   style="color: #553d81; cursor: pointer; margin-left: 10px;"
+                                   (click)="editarSocietario(item, index)"
+                                   aria-hidden="true"></i>
+
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row mx-4 mt-4 flex justify-content-between" >
+        <form-button 
+            *ngIf="!isView"
+            label="Guardar"
+            btnClass="btn-primary-VI"
+            (click)="enviarSocietarios()"
+        ></form-button>
+
+        <form-button 
+            label="Cerrar"
+            btnClass="btn-primary-VI"
+            (click)="reference.close()"
+        ></form-button>
+    </div>
+
+    <div [hidden]="!isLoading"
+        class="loadingScreen">
+        <div style="display: flex; height: 100%; width: 100%">
+            <i style="margin: auto; font-size: 50px"
+            class="fa fa-spinner fa-spin"></i>
+        </div>
+    </div>
+</div>

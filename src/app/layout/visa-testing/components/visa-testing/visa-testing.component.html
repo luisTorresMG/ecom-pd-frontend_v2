@@ -1,0 +1,190 @@
+<div class="content">
+  <h1 class="title-u">Prueba de pago VISA</h1>
+  <form class="form" [formGroup]="form">
+    <label for="f-branch" class="placeholder" aria-placeholder="Ramo (*)">
+      <input type="text" id="f-branch" formControlName="branch" title="ramo" />
+    </label>
+
+    <label for="f-product" class="placeholder" aria-placeholder="Producto (*)">
+      <input
+        type="text"
+        id="f-product"
+        formControlName="product"
+        title="producto"
+      />
+    </label>
+
+    <label class="placeholder select" aria-placeholder="Tipo de pago (*)">
+      <select formControlName="channel">
+        <option value="web">web</option>
+        <option value="paycard">paycard</option>
+        <option value="callcenter">Tele Pago</option>
+      </select>
+    </label>
+
+    <label
+      for="f-merchant-id"
+      class="placeholder"
+      aria-placeholder="Código de comercio (*)"
+    >
+      <input
+        type="text"
+        id="f-merchant-id"
+        formControlName="merchantId"
+        title="Código de comercio"
+      />
+    </label>
+
+    <label class="placeholder select" aria-placeholder="Generar (*)">
+      <select formControlName="generate">
+        <option value="0">NO</option>
+        <option value="1">SI</option>
+      </select>
+    </label>
+
+    <ng-container *ngIf="formControl['generate'].value == 0">
+      <label class="placeholder" aria-placeholder="Código de proceso (*)">
+        <input
+          type="text"
+          id="f-process-id"
+          formControlName="processId"
+          title="Código de proceso"
+        />
+      </label>
+    </ng-container>
+
+    <label class="placeholder select" aria-placeholder="Tipo de documento (*)">
+      <select formControlName="documentType">
+        <option value="1">RUC</option>
+        <option value="2">DNI</option>
+        <option value="4">C.E</option>
+      </select>
+    </label>
+
+    <label
+      for="f-document-number"
+      class="placeholder"
+      aria-placeholder="Número de documento (*)"
+    >
+      <input
+        type="text"
+        id="f-document-number"
+        formControlName="documentNumber"
+        title="Número de documento"
+      />
+    </label>
+
+    <ng-container *ngIf="formControl['documentType'].value == 1">
+      <label
+        for="f-clientname"
+        class="placeholder"
+        aria-placeholder="Razón Social (*)"
+      >
+        <input
+          type="text"
+          id="f-clientname"
+          formControlName="clientName"
+          title="Razón social"
+        />
+      </label>
+    </ng-container>
+
+    <ng-container *ngIf="formControl['documentType'].value != 1">
+      <label for="f-names" class="placeholder" aria-placeholder="Nombres (*)">
+        <input
+          type="text"
+          id="f-names"
+          formControlName="names"
+          title="nombres"
+        />
+      </label>
+
+      <label
+        for="f-apepat"
+        class="placeholder"
+        aria-placeholder="Apellido Paterno (*)"
+      >
+        <input
+          type="text"
+          id="f-apepat"
+          formControlName="apePat"
+          title="Apellido paterno"
+        />
+      </label>
+
+      <label
+        for="f-apemat"
+        class="placeholder"
+        aria-placeholder="Apellido Materno (*)"
+      >
+        <input
+          type="text"
+          id="f-apemat"
+          formControlName="apeMat"
+          title="Apellido materno"
+        />
+      </label>
+    </ng-container>
+
+    <label
+      for="f-email"
+      class="placeholder"
+      aria-placeholder="Correo electrónico (*)"
+    >
+      <input
+        type="text"
+        id="f-email"
+        formControlName="email"
+        title="Correo electrónico"
+      />
+    </label>
+
+    <label
+      for="f-phone"
+      class="placeholder"
+      aria-placeholder="Número de celular (*)"
+    >
+      <input
+        type="text"
+        id="f-phone"
+        formControlName="phoneNumber"
+        title="Número de celular"
+      />
+    </label>
+
+    <label class="placeholder select" aria-placeholder="Moneda (*)">
+      <select formControlName="currencyType">
+        <option value="1">Soles</option>
+        <option value="2">Dólares</option>
+      </select>
+    </label>
+
+    <label for="f-ammount" class="placeholder" aria-placeholder="Monto (*)">
+      <input
+        type="text"
+        id="f-ammount"
+        formControlName="ammount"
+        title="monto"
+      />
+    </label>
+
+    <button
+      type="button"
+      class="button-default primary orange"
+      [disabled]="form.invalid"
+      (click)="getVisaToken()"
+      *ngIf="!sessionVisa?.niubiz"
+    >
+      Enviar
+    </button>
+    <img
+      class="visa-image"
+      role="button"
+      title="visa logo"
+      src="assets/soat/img/visa-logo.png"
+      #visaPay
+      (click)="insertVisaScript()"
+      *ngIf="sessionVisa"
+    />
+  </form>
+</div>

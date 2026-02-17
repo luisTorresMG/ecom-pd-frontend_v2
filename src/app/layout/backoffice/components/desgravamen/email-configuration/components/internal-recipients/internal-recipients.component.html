@@ -1,0 +1,148 @@
+<div class="recipients">
+  <section class="recipients__header">
+    <h3 class="subtitle">Agregar destinatarios internos</h3>
+    <button class="button primary orange fit" (click)="showModalRecipient('create')">
+      <i class="fa fa-plus" aria-hidden="true"></i>
+      Agregar
+    </button>
+  </section>
+
+  <section class="recipients__filter">
+    <div class="content-input">
+      <i class="fa fa-search" aria-hidden="true"></i>
+      <label class="placeholder">
+        <input type="text" placeholder="Buscar" [formControl]="searchFilterControl">
+      </label>
+      <button class="button fit button-filter" hidden>
+        <i class="fa fa-sliders" aria-hidden="true"></i>
+      </button>
+    </div>
+  </section>
+
+  <section class="recipients__table">
+    <div class="content-table">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Nombre y apellidos</th>
+          <th>Correo</th>
+          <th>Celular</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngIf="!recipientFiltering$.length">
+          <td colspan="4">No se encontraron resultados</td>
+        </tr>
+        <ng-container *ngIf="recipientFiltering$.length">
+          <tr *ngFor="let obj of recipientFiltering$ | paginate: {
+              totalItems: recipientFiltering$.length,
+              itemsPerPage: 10,
+              currentPage: currentPage
+            }; let index = index">
+            <td>{{obj.nombres}}</td>
+            <td>{{obj.correo}}</td>
+            <td>{{obj.telefono}}</td>
+            <td class="actions">
+              <button class="button-icon" aria-label="editar" (click)="showModalRecipient('update', obj)">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+              </button>
+              <button class="button-icon" aria-label="eliminar" (click)="showModalConfirmDeleteRecipient(obj)">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+    </div>
+    <pagination-controls [autoHide]="true" previousLabel="Anterior" nextLabel="Siguiente"
+                         (pageChange)="currentPage = $event"></pagination-controls>
+  </section>
+</div>
+
+<ng-template #modalRecipient>
+  <div class="content-modal modal-recipient">
+    <section>
+      <div class="modal-header">
+        <h6>{{ recipientFormMode == 'create' ? 'Agregar' : 'Editar' }}</h6>
+        <button aria-label="cerrar modal" (click)="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form class="form" [formGroup]="recipientForm">
+          <label class="placeholder" aria-placeholder="Nombre y apellido">
+            <input type="text" placeholder="Ingresar nombre y apellido" formControlName="names">
+          </label>
+
+          <label class="placeholder" aria-placeholder="Correo electrónico">
+            <input type="text" placeholder="Ingresar correo" formControlName="email">
+          </label>
+
+          <label class="placeholder" aria-placeholder="Celular">
+            <input type="text" placeholder="Ingresar celular" formControlName="cellPhone" maxlength="9">
+          </label>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="button secondary orange fit" (click)="closeModal()">
+          Cancelar
+        </button>
+        <button class="button primary orange fit" [disabled]="recipientForm.invalid"
+                (click)="onSubmitRecipient()">
+          {{ recipientFormMode == 'create' ? 'Agregar' : 'Guardar' }}
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalConfirmDeleteRecipient>
+  <div class="content-modal modal-confirm-delete-recipient">
+    <section>
+      <div class="modal-header">
+        <h6>Eliminar</h6>
+        <button aria-label="cerrar modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="paragraph">¿Está seguro de eliminar este correo? </p>
+      </div>
+      <div class="modal-footer">
+        <button class="button secondary orange fit" (click)="closeModal()">
+          Cancelar
+        </button>
+        <button class="button primary orange fit" (click)="deleteRecipient()">
+          Eliminar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalResponse>
+  <div class="content-modal modal-response">
+    <section>
+      <div class="modal-header">
+        <h6>Mensaje</h6>
+        <button aria-label="cerrar modal" (click)="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <ng-container *ngIf="response$.showImage">
+          <ng-container *ngIf="response$.success">
+            <img src="./assets/backoffice/check-success.png">
+          </ng-container>
+          <ng-container *ngIf="!response$.success">
+            <img src="./assets/backoffice/check-error.png">
+          </ng-container>
+        </ng-container>
+        <p class="paragraph">
+          {{response$.message}}
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="button primary orange fit" (click)="closeModal()">
+          Aceptar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>

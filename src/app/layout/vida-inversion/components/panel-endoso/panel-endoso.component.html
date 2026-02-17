@@ -1,0 +1,511 @@
+<div class="container-modal">
+    <div class="container-title-modal">
+        <h3>ENDOSO</h3>
+    </div>
+
+    <div class="container-opcion-endoso">
+        <form-input-select text_label="TIPO DE ENDOSO"
+                           [updateModelOnChange]="true"
+                           fieldCodigo="Id"
+                           fieldValor="Name"
+                           [firstSelect]="true"
+                           [items]="list_endoso_type"
+                           [(value)]="endoso_type"
+                           (onSelect)="changeTypeEndoso()"
+                           [large]="true"></form-input-select>
+
+        <form-button *ngIf="!endoso_type.Id"
+                     label="Cerrar"
+                     btnClass="btn-primary-VI m-auto"
+                     (click)="reference.close()"></form-button>
+
+
+    </div>
+
+    <div *ngIf="endoso_type.Id == 1"
+         class="container-form-data">
+        <div class="container-title-modal">
+            <h4>Datos del contratante</h4>
+        </div>
+        <div class="form-grid">
+            <div class="inputs-document">
+                <form-input-select text_label="Tipo de documento:"
+                                   [service]="clientInformationService"
+                                   method="getDocumentTypeList"
+                                   [updateModelOnChange]="true"
+                                   (onSelect)="changeDocumentType(1)"
+                                   [(value)]="data_contractor.type_document"
+                                   [params]="codProducto"
+                                   fieldCodigo="Id"
+                                   fieldValor="Name"
+                                   [firstSelect]="true"
+                                   [large]="true"
+                                   [disabled]="data_contractor.type_document_disabled"></form-input-select>
+                <form-input-text text_label="NUMERO DE DOCUMENTO"
+                                 [(value)]="data_contractor.document_number"
+                                 [onlyInput]="true"
+                                 [patternPrevent]="CONSTANTS.REGEX.NUMBER"
+                                 [large]="true"
+                                 [disabled]="data_contractor.document_number_disabled"></form-input-text>
+            </div>
+            <form-input-select text_label="NACIONALIDAD"
+                               [service]="clientInformationService"
+                               method="getNationalityList"
+                               [params]="CONSTANTS.WITHOUT_PARAMS"
+                               fieldCodigo="NNATIONALITY"
+                               fieldValor="SDESCRIPT"
+                               [firstSelect]="true"
+                               [(value)]="data_contractor.nationality"
+                               [updateModelOnChange]="true"
+                               [disabled]="data_contractor.nationality_disabled"
+                               [large]="true"></form-input-select>
+            <form-input-text text_label="NOMBRES:"
+                             [(value)]="data_contractor.names"
+                             [onlyInput]="true"
+                             [large]="true"
+                             [disabled]="data_contractor.names_disabled"></form-input-text>
+            <form-input-text text_label="APELLIDO PATERNO:"
+                             [(value)]="data_contractor.last_name"
+                             [onlyInput]="true"
+                             [disabled]="data_contractor.last_name_disabled"
+                             [large]="true"></form-input-text>
+            <form-input-text text_label="APELLIDO MATERNO:"
+                             [disabled]="data_contractor.last_name2_disabled"
+                             [(value)]="data_contractor.last_name2"
+                             [onlyInput]="true"
+                             [large]="true"></form-input-text>
+            <form-input-date [large]="true"
+                             [disabled]="data_contractor.birthday_date_disabled"
+                             text_label="FECHA DE NACIMIENTO"
+                             [(value)]="data_contractor.birthday_date"></form-input-date>
+            <form-input-select text_label="GENERO"
+                               [disabled]="data_contractor.gender_disabled"
+                               [(value)]="data_contractor.gender"
+                               [service]="clientInformationService"
+                               [params]="CONSTANTS.WITHOUT_PARAMS"
+                               [updateModelOnChange]="true"
+                               method="getGenderList"
+                               fieldCodigo="SSEXCLIEN"
+                               fieldValor="SDESCRIPT"
+                               [firstSelect]="true"
+                               [large]="true"></form-input-select>
+            <form-input-text text_label="CORREO ELECTRONICO:"
+                             [disabled]="data_contractor.email_disabled"
+                             [(value)]="data_contractor.email"
+                             maxCaracter="60"
+                             (focusout)="validEmail(1)"
+                             [onlyInput]="true"
+                             [large]="true"></form-input-text>
+            <form-input-text text_label="CELULAR:"
+                             [disabled]="data_contractor.phone_disabled"
+                             [(value)]="data_contractor.phone"
+                             [onlyInput]="true"
+                             [patternPrevent]="CONSTANTS.REGEX.NUMBER"
+                             maxCaracter="9"
+                             (focusout)="validNumber(1)"
+                             [large]="true"></form-input-text>
+        </div>
+        <form-input-text text_label="DIRECCION:"
+                         [(value)]="data_contractor.address"
+                         [disabled]="data_contractor.address_disabled"
+                         [onlyInput]="true"
+                         maxCaracter="80"
+                         [large]="true"></form-input-text>
+        <div class="form-selects">
+            <form-input-select text_label="DEPARTAMENTO"
+                               [(value)]="data_contractor.department"
+                               [disabled]="data_contractor.department_disabled"
+                               fieldCodigo="Id"
+                               fieldValor="Name"
+                               [firstSelect]="true"
+                               [large]="false"
+                               [updateModelOnChange]="true"
+                               (onSelect)="onSelectDepartament()"
+                               [items]="list_data_contractor_department"></form-input-select>
+            <form-input-select text_label="PROVINCIA"
+                               [(value)]="data_contractor.province"
+                               [disabled]="data_contractor.province_disabled"
+                               fieldCodigo="Id"
+                               fieldValor="Name"
+                               [firstSelect]="true"
+                               [large]="false"
+                               (onSelect)="onSelectProvince()"
+                               [items]="list_data_contractor_province"
+                               [updateModelOnChange]="true"></form-input-select>
+            <form-input-select text_label="DISTRITO"
+                               [(value)]="data_contractor.district"
+                               [disabled]="data_contractor.district_disabled"
+                               fieldCodigo="Id"
+                               fieldValor="Name"
+                               [firstSelect]="true"
+                               [large]="false"
+                               [items]="list_data_contractor_district"
+                               [updateModelOnChange]="true"></form-input-select>
+        </div>
+        <div class="container-buttons">
+            <form-button label="Guardar"
+                         btnClass="btn-primary-VI m-auto"
+                         (click)="guardar(1)"></form-button>
+            <form-button label="Cerrar"
+                         btnClass="btn-primary-VI m-auto"
+                         (click)="reference.close()"></form-button>
+        </div>
+    </div>
+    <div *ngIf="endoso_type.Id == 2"
+         class="container-form-data">
+        <div class="container-title-modal">
+            <h4>Datos del Asegurado</h4>
+        </div>
+        <div class="form-grid">
+            <div class="inputs-document">
+                <form-input-select text_label="Tipo de documento:"
+                                   [service]="clientInformationService"
+                                   method="getDocumentTypeList"
+                                   [updateModelOnChange]="true"
+                                   (onSelect)="changeDocumentType(1)"
+                                   [(value)]="data_insured.type_document"
+                                   [params]="codProducto"
+                                   fieldCodigo="Id"
+                                   fieldValor="Name"
+                                   [firstSelect]="true"
+                                   [large]="true"
+                                   [disabled]="data_insured.type_document_disabled"></form-input-select>
+                <form-input-text text_label="NUMERO DE DOCUMENTO"
+                                 [(value)]="data_insured.document_number"
+                                 [onlyInput]="true"
+                                 [patternPrevent]="CONSTANTS.REGEX[data_insured.type_document?.Id]"
+                                 [large]="true"
+                                 [disabled]="data_insured.document_number_disabled"></form-input-text>
+            </div>
+            <form-input-select text_label="NACIONALIDAD"
+                               [service]="clientInformationService"
+                               method="getNationalityList"
+                               [params]="CONSTANTS.WITHOUT_PARAMS"
+                               fieldCodigo="NNATIONALITY"
+                               fieldValor="SDESCRIPT"
+                               [firstSelect]="true"
+                               [(value)]="data_insured.nationality"
+                               [updateModelOnChange]="true"
+                               [disabled]="data_insured.nationality_disabled"
+                               [large]="true"></form-input-select>
+            <form-input-text text_label="NOMBRES:"
+                             [(value)]="data_insured.names"
+                             [onlyInput]="true"
+                             [large]="true"
+                             [disabled]="data_insured.names_disabled"></form-input-text>
+            <form-input-text text_label="APELLIDO PATERNO:"
+                             [(value)]="data_insured.last_name"
+                             [onlyInput]="true"
+                             [disabled]="data_insured.last_name_disabled"
+                             [large]="true"></form-input-text>
+            <form-input-text text_label="APELLIDO MATERNO:"
+                             [disabled]="data_insured.last_name2_disabled"
+                             [(value)]="data_insured.last_name2"
+                             [onlyInput]="true"
+                             [large]="true"></form-input-text>
+            <form-input-date [disabled]="data_insured.birthday_date_disabled"
+                             text_label="FECHA DE NACIMIENTO"
+                             [large]="true"
+                             [(value)]="data_insured.birthday_date"></form-input-date>
+            <form-input-select text_label="GENERO"
+                               [disabled]="data_insured.gender_disabled"
+                               [(value)]="data_insured.gender"
+                               [service]="clientInformationService"
+                               [params]="CONSTANTS.WITHOUT_PARAMS"
+                               [updateModelOnChange]="true"
+                               method="getGenderList"
+                               fieldCodigo="SSEXCLIEN"
+                               fieldValor="SDESCRIPT"
+                               [firstSelect]="true"
+                               [large]="true"></form-input-select>
+            <form-input-text text_label="CORREO ELECTRONICO:"
+                             [disabled]="data_insured.email_disabled"
+                             [(value)]="data_insured.email"
+                             maxCaracter="60"
+                             (focusout)="validEmail(2)"
+                             [onlyInput]="true"
+                             [large]="true"></form-input-text>
+            <form-input-text text_label="CELULAR:"
+                             [disabled]="data_insured.phone_disabled"
+                             [(value)]="data_insured.phone"
+                             [onlyInput]="true"
+                             [patternPrevent]="CONSTANTS.REGEX.NUMBER"
+                             maxCaracter="9"
+                             (focusout)="validNumber(2)"
+                             [large]="true"></form-input-text>
+        </div>
+        <form-input-text text_label="DIRECCION:"
+                         [(value)]="data_insured.address"
+                         [disabled]="data_insured.address_disabled"
+                         [onlyInput]="true"
+                         maxCaracter="80"
+                         [large]="true"></form-input-text>
+        <div class="form-selects">
+            <form-input-select text_label="DEPARTAMENTO"
+                               [(value)]="data_insured.department"
+                               [disabled]="data_insured.department_disabled"
+                               fieldCodigo="Id"
+                               fieldValor="Name"
+                               [firstSelect]="true"
+                               [large]="false"
+                               (onSelect)="onSelectDepartamentInsured()"
+                               [updateModelOnChange]="true"
+                               [items]="list_data_insured_department"></form-input-select>
+            <form-input-select text_label="PROVINCIA"
+                               [(value)]="data_insured.province"
+                               [disabled]="data_insured.province_disabled"
+                               fieldCodigo="Id"
+                               fieldValor="Name"
+                               (onSelect)="onSelectProvinceInsured()"
+                               [firstSelect]="true"
+                               [large]="false"
+                               [items]="list_data_insured_province"
+                               [updateModelOnChange]="true"></form-input-select>
+            <form-input-select text_label="DISTRITO"
+                               [(value)]="data_insured.district"
+                               [disabled]="data_insured.district_disabled"
+                               fieldCodigo="Id"
+                               fieldValor="Name"
+                               [firstSelect]="true"
+                               [large]="false"
+                               [items]="list_data_insured_district"
+                               [updateModelOnChange]="true"></form-input-select>
+        </div>
+        <div class="container-buttons">
+            <form-button label="Guardar"
+                         btnClass="btn-primary-VI m-auto"
+                         (click)="guardar(2)"></form-button>
+            <form-button label="Cerrar"
+                         btnClass="btn-primary-VI m-auto"
+                         (click)="reference.close()"></form-button>
+        </div>
+    </div>
+    <div *ngIf="endoso_type.Id == 3"
+         class="container-form-data">
+        <div class="container-title-modal">
+            <h4>Datos de los Beneficiarios</h4>
+        </div>
+        <div class="form-grid">
+            <div class="inputs-document">
+                <form-input-select text_label="Tipo de documento:"
+                                   [service]="clientInformationService"
+                                   method="getDocumentTypeList"
+                                   [updateModelOnChange]="true"
+                                   (onSelect)="changeDocumentType(3)"
+                                   [(value)]="data_beneficiary.type_document"
+                                   [params]="codProducto"
+                                   fieldCodigo="Id"
+                                   fieldValor="Name"
+                                   [firstSelect]="true"
+                                   [large]="true"
+                                   [disabled]="data_beneficiary.type_document_disabled"></form-input-select>
+                <form-input-text text_label="NUMERO DE DOCUMENTO"
+                                 [(value)]="data_beneficiary.document_number"
+                                 [onlyInput]="true"
+                                 [patternPrevent]="CONSTANTS.REGEX[data_beneficiary.type_document?.Id]"
+                                 [large]="true"
+                                 [disabled]="data_beneficiary.document_number_disabled"></form-input-text>
+            </div>
+            <form-input-select text_label="NACIONALIDAD"
+                               [service]="clientInformationService"
+                               method="getNationalityList"
+                               [params]="CONSTANTS.WITHOUT_PARAMS"
+                               fieldCodigo="NNATIONALITY"
+                               fieldValor="SDESCRIPT"
+                               [firstSelect]="true"
+                               [(value)]="data_beneficiary.nationality"
+                               [updateModelOnChange]="true"
+                               [disabled]="data_beneficiary.nationality_disabled"
+                               [large]="true"></form-input-select>
+            <form-input-text text_label="NOMBRES:"
+                             [(value)]="data_beneficiary.names"
+                             [onlyInput]="true"
+                             [large]="true"
+                             [disabled]="data_beneficiary.names_disabled"></form-input-text>
+            <form-input-text text_label="APELLIDO PATERNO:"
+                             [(value)]="data_beneficiary.last_name"
+                             [onlyInput]="true"
+                             [disabled]="data_beneficiary.last_name_disabled"
+                             [large]="true"></form-input-text>
+            <form-input-text text_label="APELLIDO MATERNO:"
+                             [disabled]="data_beneficiary.last_name2_disabled"
+                             [(value)]="data_beneficiary.last_name2"
+                             [onlyInput]="true"
+                             [large]="true"></form-input-text>
+            <form-input-date [disabled]="data_beneficiary.birthday_date_disabled"
+                             text_label="FECHA DE NACIMIENTO"
+                             [large]="true"
+                             [(value)]="data_beneficiary.birthday_date"></form-input-date>
+            <form-input-select text_label="GENERO"
+                               [disabled]="data_beneficiary.gender_disabled"
+                               [(value)]="data_beneficiary.gender"
+                               [service]="clientInformationService"
+                               [params]="CONSTANTS.WITHOUT_PARAMS"
+                               [updateModelOnChange]="true"
+                               method="getGenderList"
+                               fieldCodigo="SSEXCLIEN"
+                               fieldValor="SDESCRIPT"
+                               [firstSelect]="true"
+                               [large]="true"></form-input-select>
+            <form-input-select text_label="VÍNCULO"
+                               [service]="quotationService"
+                               [disabled]="data_beneficiary.relation_disabled"
+                               method="getRelationBenefeciaries"
+                               [params]="CONSTANTS.WITHOUT_PARAMS"
+                               fieldCodigo="COD_ELEMENTO"
+                               [large]="true"
+                               fieldValor="GLS_ELEMENTO"
+                               [firstSelect]="true"
+                               [(value)]="data_beneficiary.relation"
+                               [updateModelOnChange]="true"></form-input-select>
+        </div>
+        <div class="form-selects">
+            <form-input-text text_label="ASIGNACIÓN:"
+                             [disabled]="data_beneficiary.assignment_disabled"
+                             [(value)]="data_beneficiary.assignment"
+                             [onlyInput]="true"
+                             [patternPrevent]="CONSTANTS.REGEX.PORCENTAJE"
+                             maxCaracter="6"
+                             [large]="true"></form-input-text>
+            <form-input-text text_label="CORREO ELECTRONICO:"
+                             [disabled]="data_beneficiary.email_disabled"
+                             [(value)]="data_beneficiary.email"
+                             maxCaracter="60"
+                             (focusout)="validEmail(3)"
+                             [onlyInput]="true"
+                             [large]="true"></form-input-text>
+            <form-input-text text_label="CELULAR:"
+                             [disabled]="data_beneficiary.phone_disabled"
+                             [(value)]="data_beneficiary.phone"
+                             [onlyInput]="true"
+                             [patternPrevent]="CONSTANTS.REGEX.NUMBER"
+                             maxCaracter="9"
+                             (focusout)="validNumber(3)"
+                             [large]="true"></form-input-text>
+        </div>
+        <form-input-text text_label="DIRECCION:"
+                         [(value)]="data_beneficiary.address"
+                         [disabled]="data_beneficiary.address_disabled"
+                         [onlyInput]="true"
+                         maxCaracter="80"
+                         [large]="true"></form-input-text>
+        <div class="form-selects">
+            <form-input-select text_label="DEPARTAMENTO"
+                               [(value)]="data_beneficiary.department"
+                               [disabled]="data_beneficiary.department_disabled"
+                               fieldCodigo="Id"
+                               fieldValor="Name"
+                               [firstSelect]="true"
+                               [large]="false"
+                               [updateModelOnChange]="true"
+                               [service]="addressService"
+                               method="getDepartmentList"
+                               [params]="CONSTANTS.WITHOUT_PARAMS"></form-input-select>
+            <form-input-select text_label="PROVINCIA"
+                               [(value)]="data_beneficiary.province"
+                               [disabled]="data_beneficiary.province_disabled"
+                               fieldCodigo="Id"
+                               fieldValor="Name"
+                               [firstSelect]="true"
+                               [large]="false"
+                               [updateModelOnChange]="true"
+                               method="getProvinceList"
+                               [service]="addressService"
+                               [params]="data_beneficiary?.department?.Id"></form-input-select>
+            <form-input-select text_label="DISTRITO"
+                               [(value)]="data_beneficiary.district"
+                               [disabled]="data_beneficiary.district_disabled"
+                               fieldCodigo="Id"
+                               fieldValor="Name"
+                               [firstSelect]="true"
+                               [large]="false"
+                               [updateModelOnChange]="true"
+                               [disabled]="data_beneficiary.district_disabled"
+                               [service]="addressService"
+                               method="getDistrictList"
+                               [params]="data_beneficiary?.province?.Id == 0 ? null:data_beneficiary?.province?.Id"></form-input-select>
+        </div>
+        <div class="button-add">
+            <form-button label="Agregar"
+                         btnClass="btn-primary-VI m-auto"
+                         *ngIf="toggle_add_beneficiary"
+                         (click)="addBeneficiary()"></form-button>
+            <form-button label="Grabar"
+                         btnClass="btn-primary-VI"
+                         *ngIf="toggle_edit_beneficiary"
+                         (click)="updateBeneficiary()"></form-button>
+            <form-button label="Cancelar"
+                         btnClass="btn-primary-VI"
+                         *ngIf="toggle_edit_beneficiary"
+                         (click)="cancelBeneficiary()"></form-button>
+        </div>
+        <div class="table-responsive TableMargin_short div-tableban"
+             id="table-scroll">
+            <table class="table-u"
+                   style="margin-bottom: 4px;">
+                <thead>
+                    <tr>
+                        <th>Nro Documento</th>
+                        <th>Nombres</th>
+                        <th>Parentesco</th>
+                        <th>Asignación(%)</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngIf="!beneficiariesListBD?.length">
+                        <tr class="grid-body">
+                            <td class="grid-body-item"
+                                colspan="12"
+                                style="text-align: center">
+                                No hay informacion para mostrar
+                            </td>
+                        </tr>
+                    </ng-container>
+                    <ng-container *ngIf="!!beneficiariesListBD?.length">
+                        <tr class="grid-body"
+                            *ngFor="
+                     let item of beneficiariesListBD
+                     let index = index
+                   "
+                            [id]="'row' + index">
+                            <td class="hovert">{{ item.documento }}</td>
+                            <td class="hovert">{{ item.nombre }} {{ item.apePaterno }} {{ item.apeMaterno }}
+                            </td>
+                            <td class="hovert">{{ item.srelation }}</td>
+                            <td class="hovert">{{ item.porcentaParticipacion }}</td>
+                            <td>
+                                <div style="display: flex; justify-content: center; text-transform: capitalize;">
+                                    <div class="p-2"
+                                         (click)="editBeneficiary(item)">
+                                        <i class="fa fa-edit"
+                                           style=" margin-right: 2px; color: #553d81;"></i>
+                                        <span>Editar</span>
+                                    </div>
+
+                                    <div class="p-2"
+                                         (click)="deleteBeneficiary(item.documento)">
+                                        <i class="fa fa-trash"
+                                           style=" margin-right: 2px; color:red"></i>
+                                        <span>Eliminar</span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+
+
+                </tbody>
+            </table>
+        </div>
+        <div class="container-buttons">
+            <form-button label="Guardar"
+                         btnClass="btn-primary-VI m-auto"
+                         (click)="guardar(3)"></form-button>
+            <form-button label="Cerrar"
+                         btnClass="btn-primary-VI m-auto"
+                         (click)="reference.close()"></form-button>
+        </div>
+
+    </div>
+</div>

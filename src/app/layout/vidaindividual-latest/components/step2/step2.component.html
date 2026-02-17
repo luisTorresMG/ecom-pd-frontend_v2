@@ -1,0 +1,352 @@
+<div class="row mx-0 my-0 px-0 py-0">
+  <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+    <app-show-steps [NSTEP]="2"></app-show-steps>
+  </div>
+</div>
+<div class="container-fluid mx-0 my-0 px-0 py-0"
+     *ngIf="canContinue">
+  <div class="content-in-back col-lg-12 mx-0 my-0 px-0 py-0 d-flex flex-row align-items-center justify-content-center mb-3"
+       [@fade]="true">
+    <div class="col-lg-6 mx-0 my-0 px-0 py-0">
+      <form [formGroup]="formPlan"
+            class="row mx-0 my-0 px-0 py-0 form-plan">
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0 pb-4"
+             *ngIf="msgDX == ''">
+          <h4 class="title-plan">
+            Elige el plan ideal según tu proyección de ahorro
+          </h4>
+
+        </div>
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0 pb-4"
+             *ngIf="!msgDX == ''">
+
+          <h4 class="title-plan">
+
+            Elige el plan ideal para {{ this.msgDX | titlecase}}
+
+          </h4>
+          <h4 class="title-plan">
+            según su proyección de ahorro
+          </h4>
+
+        </div>
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <span class="title-span">
+            ¿Por cuánto tiempo vas a ahorrar y proteger a tu familia?
+          </span>
+          <div class="content-btns">
+            <button [disabled]="quotationGeneratedOfAssesor"
+                    class="btn-plan"
+                    *ngFor="let year of AGES$"
+                    (click)="changeYearPlan(year)"
+                    [ngClass]="{
+                'btn-plan-active': fp['cantidadAnio'].value == year.edad
+              }">
+              {{ year.edad }} años
+            </button>
+          </div>
+        </div>
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <span class="title-span"> ¿En qué moneda quieres ahorrar? </span>
+          <div class="content-btns">
+            <button [disabled]="quotationGeneratedOfAssesor"
+                    class="btn-plan"
+                    *ngFor="let money of MONEY$"
+                    (click)="changeTypeMoneyPlan(money)"
+                    [ngClass]="{
+                'btn-plan-active': fp['moneda'].value == money.idMoneda
+              }">
+              {{ money.simbolo }}
+            </button>
+          </div>
+        </div>
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <span class="title-span">
+            Quiero proteger a los que más valoro por:
+          </span>
+          <div class="content-btns">
+            <select class="btn-plan select-plan"
+                    formControlName="capital">
+              <option *ngFor="let capital of SUMA_ASEGURADA$"
+                      [value]="capital.montoSumaAsegurada">
+                {{ capital.montoSumaAsegurada | number: "1.0-0" }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <span class="title-span">¿Con qué frecuencia deseas pagar?</span>
+          <div class="content-btns">
+            <select class="btn-plan select-plan"
+                    formControlName="idFrecuencia"
+                    (change)="changeFrecuency($event.target.value)">
+              <option *ngFor="let percent of FRECUENCIA$"
+                      [value]="percent.idFrecuencia">
+                {{ percent.frecuencia }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <span class="title-span"> Quiero recibir una devolución del: </span>
+          <div class="content-btns">
+            <select class="btn-plan select-plan"
+                    formControlName="porcentajeRetorno">
+              <option *ngFor="let percent of PERCENTS$"
+                      [value]="percent.montoPorcentaje">
+                {{ percent.montoPorcentaje }}%
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <span class="title-span"> Cuota {{ periodo }}: </span>
+          <div class="content-btns">
+            <div style="color: #544473">
+              <label>Precio Regular</label><br />
+              <label class="primeText">
+                <del>{{ simboloMoneda
+                  }}{{ fp["primaMensualTotal"].value | number: "1.2-2" }}</del></label>
+            </div>
+            <div style="color: #544473">
+              <label>Precio con descuento</label><br />
+              <label class="primeText">
+                {{ simboloMoneda
+                }}{{ fp["primaMensual"].value | number: "1.2-2" }}</label>
+            </div>
+            <!-- <h3 class="btn-plan select-plan">
+              {{ simboloMoneda
+              }}{{ fp["primaInicial"].value | number: "1.2-2" }}
+            </h3> -->
+          </div>
+        </div>
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <span class="title-span"> Primera cuota: </span>
+          <div class="content-btns">
+            <div style="color: #544473">
+              <label>Precio Regular</label><br />
+              <label class="primeText">
+                <del>{{ simboloMoneda
+                  }}{{ fp["primeraTotal"].value | number: "1.2-2" }}</del></label>
+            </div>
+            <div style="color: #544473">
+              <label>Precio con descuento</label><br />
+              <label class="primeText">
+                {{ simboloMoneda
+                }}{{ fp["primeraCuota"].value | number: "1.2-2" }}</label>
+            </div>
+            <!-- <h3 class="btn-plan select-plan">
+              {{ simboloMoneda
+              }}{{ fp["primaInicial"].value | number: "1.2-2" }}
+            </h3> -->
+          </div>
+        </div>
+        <!-- div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <span class="title-span"> Cuota {{periodo}}: </span>
+          <div class="content-btns">
+            <h3 class="btn-plan select-plan">
+              {{ simboloMoneda
+              }}{{ fp["primaMensual"].value | number: "1.2-2" }}
+            </h3>
+          </div>
+        </div> -->
+        <!-- <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <span class="title-span"> Primera cuota: </span>
+          <div class="content-btns">
+            <h3 class="btn-plan select-plan">
+              {{ simboloMoneda
+              }}{{ fp["primaInicial"].value | number: "1.2-2" }}
+            </h3>
+          </div>
+        </div> -->
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <small class="slip">
+            Monto de dinero que reciben tus beneficiarios si falleces.
+            <b class="premium-big">{{ simboloMoneda }}
+              {{ fp["primaFallecimiento"].value | number: "1.0-0" }}</b>
+            Monto de dinero que te devolvemos al finalizar los
+            {{ fp["cantidadAnio"].value }} años.
+            <b class="premium-big">{{ simboloMoneda }}
+              {{ fp["primaRetorno"].value | number: "1.2-2" }}</b>
+            Descarga y recibe tu <b>cotización </b><a role="button"
+               (click)="sendSlip()"
+               class="slip-link">aquí</a>
+          </small>
+        </div>
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0 benf d-flex flex-column content_checks">
+          <div class="exclusiones">
+            <label class="benf-content mx-auto"
+                   for="chk-readExclusion"
+                   role="button">
+              <input type="checkbox"
+                     class="chk-benf"
+                     id="chk-readExclusion"
+                     formControlName="terms" />
+              <div class="chk-benf-style chk-transform"></div>
+            </label>
+            <div class="desc-benf"
+                 [ngClass]="{ active_orange: fp.terms.value }">
+              <span class="title-benf-desc">
+                He leído y acepto los
+                <a role="button"
+                   class="download-link"
+                   (click)="descargarTerminos()">
+                  términos y condiciones.
+                </a>
+              </span>
+            </div>
+          </div>
+          <label class="benf-content mx-auto"
+                 for="chk-benf"
+                 role="button">
+            <input type="checkbox"
+                   class="chk-benf"
+                   id="chk-benf"
+                   checked="true"
+                   formControlName="beneficiarioLegal"
+                   (change)="changeCheckBox($event.target.checked)" />
+            <div class="chk-benf-style chk-transform"></div>
+            <div class="desc-benf"
+                 [ngClass]="{ active_orange: beneficiarioLegal }">
+              <span class="title-benf-desc">
+                Mis beneficiarios serán mis herederos legales
+              </span>
+              <small class="desc-benf-small orange-benf-small">
+                Se considerarán a los hijos, padres, cónyuge, entre otros
+              </small>
+            </div>
+          </label>
+          <div class="benf-content mx-auto benf-content2">
+            <div class="desc-benf">
+              <span class="title-benf-desc">
+                <button class="benf-content"
+                        (click)="showAddBenf()">
+                  <div class="btn-add-benf"
+                       [ngClass]="{ active_orange_btn: isAddBenf }">
+                    <i class="fa fa-plus"
+                       aria-hidden="true"></i>
+                  </div>
+                  <div class="desc-benf"
+                       [ngClass]="{ active_orange: isAddBenf }">
+                    <span class="title-benf-desc">
+                      Quiero elegir otros beneficiarios
+                    </span>
+                    <small class="desc-benf-small">
+                      Puedes elegir libremente hasta 4 personas para que reciban
+                      el beneficio
+                    </small>
+                  </div>
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div #formBeneficiario>
+    <div class="row-add-benf row mx-0 my-0 px-0 py-0 d-flex align-items-center justify-content-center flex-column"
+         *ngIf="isAddBenf">
+      <span class="restante">{{ porcentajePorAsignar }}</span>
+      <app-beneficiario-form *ngFor="let data of dataBeneficiarios; let index = index"
+                             [(dataBeneficiario)]="data"
+                             [parameters$]="parameters$"
+                             (formSubmitted)="saveBeneficiario($event)"
+                             (dataFormForDrop)="eliminarBeneficiario($event)"
+                             [index]="index + 1"
+                             [disableField]="quotationGeneratedOfAssesor">
+      </app-beneficiario-form>
+      <button class="btn-add-benfi mb-3"
+              (click)="addNewBeneficiario()"
+              type="button"
+              *ngIf="!quotationGeneratedOfAssesor">
+        <i class="fa fa-plus-square-o"
+           aria-hidden="true"></i>
+        <span>Agregar más beneficiarios</span>
+      </button>
+      <!--<app-beneficiario-form *ngIf="showFormBeneficiarios"
+                             [dataBeneficiario]="data"
+                             [index]="dataBeneficiarios?.length + 1"
+                             [isForUpdate]="false"
+                             (dataForm)="getDataBeneficiario($event)"
+                             (sumaPorcentajeParticipacionBeneficiarios)="validarSumaPorcentajeParticipacionBeneficiarios($event)">
+      </app-beneficiario-form>-->
+      <small class="error errorNextStep"
+             *ngIf="!!errorForm">{{
+        errorForm
+        }}</small>
+    </div>
+  </div>
+  <div class="row mx-0 px-0 py-0 my-4 form-plan">
+    <div class="col-lg-12 mx-0 my-0 px-0 py-0 content-buttons-actions">
+      <button class="btn-back d-inline-flex align-items-center justify-content-center"
+              (click)="backStep()">
+        <i class="fa fa-chevron-left mr-2"
+           aria-hidden="true"></i>Anterior
+      </button>
+      <div
+           class="content-next-step">
+        <button class="btn-next d-inline-flex align-items-center justify-content-center"
+                (click)="nextStep()"
+                [disabled]="!validBtnNextStep">
+          Siguiente<i class="fa fa-chevron-right ml-2"
+             aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade"
+     bsModal
+     #modalSlip="bs-modal">
+  <div class="modal-dialog"
+       role="document">
+    <div class="modal-content px-0 py-0">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                (click)="showHideModalSlip(false)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <div class="check-emitido">
+          <img src="assets/backoffice/check-success.png"
+               class="icon-check" />
+        </div>
+        <p class="desc-modal-slip">
+          Se envió la cotización a su correo electrónico
+        </p>
+      </div>
+      <button type="button"
+              class="btn full-color btn-next-modal"
+              (click)="showHideModalSlip(false)">
+        Ok
+      </button>
+    </div>
+  </div>
+</div>
+
+<ng-template #notContinue>
+  <div class="content-no-apto text-center">
+    <h2 class="title-no-apto text-center">
+      Hola. Tu solicitud ha sido recepcionada por un asesor de Protecta
+      Security, nos estaremos comunicando contigo en un máximo de 2 días
+      laborables.
+    </h2>
+    <p class="desc-no-apto text-center">
+      Contáctanos en:<br />
+      Correo Electrónico: <b>vidadevolucion@protectasecurity.pe</b><br />
+      Estamos a tu disposición de lunes a viernes de
+      <b>9:00 a.m. a 6:00 p.m.</b>, a excepción de feriados.
+    </p>
+    <button class="btn-back d-flex align-items-center justify-content-center"
+            (click)="backToInitReset()">
+      <i class="fa fa-chevron-left mr-2"
+         aria-hidden="true"></i>Volver al inicio
+    </button>
+  </div>
+</ng-template>

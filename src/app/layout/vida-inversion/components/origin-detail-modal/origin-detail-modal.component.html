@@ -1,0 +1,381 @@
+<div class="container-modal">
+
+  <div class="container-title-modal mb-2">
+    <h3>Detalle de Origen de Fondo</h3>
+  </div>
+
+  <div class="container-form d-flex flex-wrap">
+
+    <div class="d-flex align-items-center col-lg-6 pl-0">
+      <div class="col-lg-6">
+        <div>Sistema Privado de Pensiones</div>
+      </div>
+      <div class="col-lg-6 pl-0">
+        <form-input-select [large]="false"
+                           [updateModelOnChange]="true"
+                           [hasItems]="true"
+                           [items]="LIST_AFP"
+                           fieldCodigo="id"
+                           fieldValor="value"
+                           [(value)]="origin_detail.private_pension_system"></form-input-select>
+      </div>
+    </div>
+
+
+
+    <div class="d-flex align-items-center col-lg-6 ">
+      <!-- <div class="col-lg-6">
+                <div>Código CUSPP</div>
+            </div>
+            <div class="col-lg-6 pl-0">
+                <form-input-text [large]="false"
+                                 [maxCaracter]="22"
+                                 [(value)]="origin_detail.cuspp_code"></form-input-text>
+            </div> -->
+    </div>
+
+    <div class="d-flex align-items-center col-lg-6 pl-0">
+      <div class="col-lg-6">
+        <div>Ahorro en Institución Financiera</div>
+      </div>
+      <div class="col-lg-6 pl-0">
+        <form-input-select [large]="false"
+                           [updateModelOnChange]="true"
+                           [firstSelect]="true"
+                           [items]="saving_financial_institution_list_1"
+                           fieldCodigo="cod_proveedor"
+                           fieldValor="nombre_legal"
+                           [(value)]="origin_detail.saving_financial_institution_1"
+                           (onSelect)="valOrigin()"></form-input-select>
+      </div>
+    </div>
+
+
+    <div class="d-flex align-items-center col-lg-6 ">
+      <div class="col-lg-6">
+        <div>Número de Cuenta</div>
+      </div>
+      <div class="col-lg-6 pl-0">
+        <form-input-text [large]="false"
+                         [(value)]="origin_detail.account_number_1"
+                         [patternPrevent]="CONSTANTS.REGEX.NUMBER"
+                         (valueChange)="valOrigin()"
+                         maxCaracter="20"></form-input-text>
+      </div>
+    </div>
+
+    <div class="d-flex align-items-center col-lg-6 pl-0">
+      <div class="col-lg-6">
+        <div>Ahorro en Institución Financiera 2</div>
+      </div>
+      <div class="col-lg-6 pl-0">
+        <form-input-select [(value)]="origin_detail.saving_financial_institution_2"
+                           [items]="saving_financial_institution_list_2"
+                           [firstSelect]="true"
+                           fieldValor="nombre_legal"
+                           fieldCodigo="cod_proveedor"
+                           [updateModelOnChange]="true"
+                           [large]="false"
+                           (onSelect)="valOrigin()"></form-input-select>
+      </div>
+    </div>
+
+    <div class="d-flex align-items-center col-lg-6 ">
+      <div class="col-lg-6">
+        <div>Número de Cuenta 2</div>
+      </div>
+      <div class="col-lg-6 pl-0">
+        <form-input-text [large]="false"
+                         [(value)]="origin_detail.account_number_2"
+                         [patternPrevent]="CONSTANTS.REGEX.NUMBER"
+                         (valueChange)="valOrigin()"
+                         maxCaracter="20"></form-input-text>
+      </div>
+    </div>
+
+
+    <div class="d-flex align-items-center col-lg-6 pl-0">
+      <div class="col-lg-6">
+        <div>Ahorro en Institución Financiera 3</div>
+      </div>
+      <div class="col-lg-6 pl-0">
+        <form-input-select [large]="false"
+                           [updateModelOnChange]="true"
+                           [firstSelect]="true"
+                           fieldCodigo="cod_proveedor"
+                           fieldValor="nombre_legal"
+                           [items]="saving_financial_institution_list_3"
+                           [(value)]="origin_detail.saving_financial_institution_3"
+                           (onSelect)="valOrigin()"></form-input-select>
+      </div>
+    </div>
+
+
+    <div class="d-flex align-items-center col-lg-6">
+      <div class="col-lg-6">
+        <div>Número de Cuenta 3</div>
+      </div>
+      <div class="col-lg-6 pl-0">
+        <form-input-text [large]="false"
+                         [(value)]="origin_detail.account_number_3"
+                         [patternPrevent]="CONSTANTS.REGEX.NUMBER"
+                         (valueChange)="valOrigin()"
+                         maxCaracter="20"></form-input-text>
+      </div>
+    </div>
+
+
+    <div class="d-flex align-items-center col-lg-6 pl-0">
+      <div class="col-lg-6">
+        <div>Ahorro en Institución Financiera 4</div>
+      </div>
+      <div class="col-lg-6 pl-0">
+        <form-input-select [large]="false"
+                           [updateModelOnChange]="true"
+                           [firstSelect]="true"
+                           [items]="saving_financial_institution_list_4"
+                           fieldCodigo="cod_proveedor"
+                           fieldValor="nombre_legal"
+                           [(value)]="origin_detail.saving_financial_institution_4"
+                           (onSelect)="valOrigin()"></form-input-select>
+      </div>
+    </div>
+
+
+    <div class="d-flex align-items-center col-lg-6">
+      <div class="col-lg-6">
+        <div>Número de Cuenta 4</div>
+      </div>
+      <div class="col-lg-6 pl-0">
+        <form-input-text [large]="false"
+                         [(value)]="origin_detail.account_number_4"
+                         [patternPrevent]="CONSTANTS.REGEX.NUMBER"
+                         (valueChange)="valOrigin()"
+                         maxCaracter="20"></form-input-text>
+      </div>
+    </div>
+
+
+    <div class="d-flex align-items-center col-lg-12  mt-4 px-0">
+      <p class="col-lg-12 mb-1">Si los fondos provienen de ahorros en una institución
+        financiera, a continuación detalle su origen: </p>
+    </div>
+
+
+    <div class="row pl-0 m-0">
+
+      <div class="d-flex align-items-center col-lg-6 pl-0 mb-3">
+        <div class="col-lg-6">
+          <div>Ingreso por negocio unipersonal</div>
+        </div>
+
+        <div class="col-lg-6 pl-0">
+          <app-input-number [(value)]="funds_financial_institution.business_income"
+                            [maxLength]="5"
+                            [disabled]="percentBool"
+                            decorator="%">
+          </app-input-number>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center col-lg-6 mb-3">
+        <div class="col-lg-6">
+          <div>Ingreso por honorarios personales</div>
+        </div>
+
+        <div class="col-lg-6 pl-0">
+          <app-input-number [(value)]="funds_financial_institution.income_personal_fees"
+                            [maxLength]="5"
+                            [disabled]="percentBool"
+                            decorator="%">
+          </app-input-number>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center col-lg-6 pl-0 mb-3">
+        <div class="col-lg-6">
+          <div>Remuneraciones</div>
+        </div>
+
+        <div class="col-lg-6 pl-0">
+          <app-input-number [(value)]="funds_financial_institution.remunerations"
+                            [maxLength]="5"
+                            [disabled]="percentBool"
+                            decorator="%">
+          </app-input-number>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center col-lg-6 mb-3">
+        <div class="col-lg-6">
+          <div>Compensación por Tiempo de Servicios</div>
+        </div>
+        <div class="col-lg-6 pl-0">
+          <app-input-number [(value)]="funds_financial_institution.compensation_service_time"
+                            [maxLength]="5"
+                            [disabled]="percentBool"
+                            decorator="%">
+          </app-input-number>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center col-lg-6 pl-0 mb-3">
+        <div class="col-lg-6">
+          <div>Gratificaciones</div>
+        </div>
+        <div class="col-lg-6 pl-0">
+          <app-input-number [(value)]="funds_financial_institution.gratifications"
+                            [maxLength]="5"
+                            [disabled]="percentBool"
+                            decorator="%">
+          </app-input-number>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center col-lg-6 mb-3">
+        <div class="col-lg-6">
+          <div>Utilidades Laborales</div>
+        </div>
+
+        <div class="col-lg-6 pl-0">
+          <app-input-number [(value)]="funds_financial_institution.labor_profits"
+                            [maxLength]="5"
+                            [disabled]="percentBool"
+                            decorator="%">
+          </app-input-number>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center col-lg-6 pl-0 mb-3">
+        <div class="col-lg-6">
+          <div>Dividendos empresariales</div>
+        </div>
+        <div class="col-lg-6 pl-0">
+          <app-input-number [(value)]="funds_financial_institution.business_dividens"
+                            [maxLength]="5"
+                            [disabled]="percentBool"
+                            decorator="%">
+          </app-input-number>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center col-lg-6 mb-3">
+        <div class="col-lg-6">
+          <div>Ventas de Inmuebles</div>
+        </div>
+        <div class="col-lg-6 pl-0">
+          <app-input-number [(value)]="funds_financial_institution.sales_estates"
+                            [maxLength]="5"
+                            [disabled]="percentBool"
+                            decorator="%">
+          </app-input-number>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center col-lg-6 pl-0 mb-3">
+        <div class="col-lg-6">
+          <div>Venta de Valores</div>
+        </div>
+        <div class="col-lg-6 pl-0">
+          <app-input-number [(value)]="funds_financial_institution.sale_securities"
+                            [maxLength]="5"
+                            [disabled]="percentBool"
+                            decorator="%">
+          </app-input-number>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center col-lg-6 mb-3">
+        <div class="col-lg-6">
+          <div>Herencia</div>
+        </div>
+        <div class="col-lg-6 pl-0">
+          <app-input-number [(value)]="funds_financial_institution.inheritance"
+                            [maxLength]="5"
+                            [disabled]="percentBool"
+                            decorator="%">
+          </app-input-number>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center col-lg-6 pl-0 mb-3">
+        <div class="col-lg-6">
+          <div>Cancelación de Certificados Bancarios</div>
+        </div>
+        <div class="col-lg-6 pl-0">
+          <app-input-number [(value)]="funds_financial_institution.canceled_bank_certificates"
+                            [maxLength]="5"
+                            [disabled]="percentBool"
+                            decorator="%">
+          </app-input-number>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center col-lg-6 mb-3">
+        <div class="col-lg-6">
+          <div>Cancelación de Depósitos a Plazo</div>
+        </div>
+
+        <div class="col-lg-6 pl-0">
+          <app-input-number [(value)]="funds_financial_institution.cancellation_term_deposits"
+                            [maxLength]="5"
+                            [disabled]="percentBool"
+                            decorator="%">
+          </app-input-number>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center col-lg-6 pl-0 mb-3">
+        <div class="col-lg-6">
+          <div>Préstamo</div>
+        </div>
+        <div class="col-lg-6 pl-0">
+          <app-input-number [(value)]="funds_financial_institution.loan"
+                            [maxLength]="5"
+                            [disabled]="percentBool"
+                            decorator="%">
+          </app-input-number>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center col-lg-6 mb-3">
+        <div class="col-lg-6">
+          <div>Otros</div>
+        </div>
+
+        <div class="col-lg-6 pl-0">
+          <app-input-number [(value)]="funds_financial_institution.others"
+                            [maxLength]="5"
+                            [disabled]="percentBool"
+                            decorator="%">
+          </app-input-number>
+        </div>
+      </div>
+
+      <div class="col-lg-8 d-flex flex-column mt-2"
+           style="padding-right: 10px;">
+        <label for="">Detalle</label>
+        <textarea cols="10"
+                  rows="2"
+                  maxlength="200"
+                  placeholder="Comentario"
+                  [(ngModel)]="origin_detail.comment"
+                  class="p-2"
+                  style="border: 1px solid #a99dbf; color: #553d81; border-radius: 10px;outline: none; resize: none;"></textarea>
+      </div>
+
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center col-lg-12 mt-3 mb-2">
+      <form-button label="Guardar"
+                   btnClass="btn-primary-VI"
+                   (click)="addOriginDetail()"></form-button>
+      <form-button label="Cerrar"
+                   btnClass="btn-primary-VI"
+                   (click)="reference.close({cancel:'true'})"></form-button>
+
+    </div>
+
+  </div>
+
+</div>

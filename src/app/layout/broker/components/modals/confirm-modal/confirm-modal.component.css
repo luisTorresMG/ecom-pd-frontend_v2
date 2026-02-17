@@ -1,0 +1,65 @@
+.border-none {
+  border: none !important;
+  display: flex;
+  justify-content: center;
+}
+
+.button-cancelar {
+  border: 1px solid #27246d;
+  border-radius: 5px;
+  font: normal normal bold 14px/16px "Bliss Pro", sans-serif;
+  letter-spacing: 0px;
+  color: #27246d;
+  text-align: center;
+  width: 135px;
+  height: 45px;
+  background-color: transparent;
+}
+
+.button-Guardar {
+  background: #79cb33 0% 0% no-repeat padding-box;
+  border-radius: 5px;
+  text-align: center;
+  font: normal normal bold 14px/16px "Bliss Pro", sans-serif;
+  letter-spacing: 0px;
+  color: #ffffff;
+  width: 135px;
+  height: 45px;
+  border: none;
+}
+
+.padding-modal {
+  padding: 0 10px;
+}
+
+.img-help {
+  height: 100px;
+}
+
+.content-modal {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+input:disabled {
+  background-color: rgb(222, 222, 222);
+}
+
+.title-re {
+  color: #2b0d61;
+  font-size: 24px;
+  text-align: center;
+}
+
+.text-re {
+  color: #aa9ec0;
+  font-size: 16px;
+  text-align: center;
+}

@@ -1,0 +1,511 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="container-fluid">
+        <div class="header-content">
+          <span class="title">{{ titleOfPage }}</span>
+          <button class="full-color mx-0" (click)="showModalBackToPage()">
+            Regresar
+          </button>
+        </div>
+        <div class="filter" *ngIf="pageViewDetail == false">
+          <div class="form-group row filter-row">
+            <div class="col-md-8"></div>
+            <div class="col-lg-4 btn-actions mt-2">
+              <button
+                class="btn-emitir-carga"
+                (click)="showModalConfirmEmision()"
+                *ngIf="amountErrors == 0"
+              >
+                Emitir Carga Masiva
+              </button>
+              <button
+                class="btn-export-excel ml-3"
+                *ngIf="amountErrors == 0"
+                (click)="exportarExcelCotizacion()"
+              >
+                <img src="assets/icons/download2.png" />
+                Exportar Excel
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="grid row" *ngIf="amountErrors == 0">
+          <div class="col-5 px-0 mx-3 mb-3">
+            <div class="table-responsive table-scroll">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <td class="td-total-title">PRIMA TOTAL</td>
+                    <td class="td-total-title">COMISIÓN BROKER</td>
+                    <td class="td-total-title">COMISIÓN INTERMEDIARIO</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="td-total-desc">
+                      S/. {{ primaTotal | number : "1.2-2" }}
+                    </td>
+                    <td class="td-total-desc">
+                      S/. {{ comisionTotalBroker | number : "1.2-2" }}
+                    </td>
+                    <td class="td-total-desc">
+                      S/. {{ comisionTotalIntermediario | number : "1.2-2" }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="grid row">
+          <div class="options">
+            <button
+              *ngIf="amountErrors == 0"
+              [ngClass]="{ active: EmisionSoatPageFocus == 1 }"
+              (click)="GoResumen()"
+            >
+              Resumen
+            </button>
+            <button
+              *ngIf="amountErrors == 0"
+              [ngClass]="{ active: EmisionSoatPageFocus == 2 }"
+              (click)="GoEmisionSoat()"
+            >
+              Detalle de la Trama
+            </button>
+            <button
+              [ngClass]="{ active: EmisionSoatPageFocus == 3 }"
+              *ngIf="pageViewDetail == false && amountErrors > 0"
+              (click)="GoErrores()"
+            >
+              Errores
+            </button>
+          </div>
+          <div
+            class="table_scroll table-resumen"
+            *ngIf="EmisionSoatPageFocus == 1 && amountErrors == 0"
+          >
+            <table class="table table-info-soat">
+              <thead>
+                <tr class="grid-title">
+                  <td class="grid-title-item"></td>
+                  <td class="grid-title-item"></td>
+                  <td class="grid-title-item"></td>
+                  <td class="grid-title-item"></td>
+                  <td class="grid-title-item" colspan="2">Comisión Broker</td>
+                  <td class="grid-title-item" colspan="2">
+                    Comisión Comercializador
+                  </td>
+                </tr>
+                <tr class="grid-title">
+                  <td class="grid-title-item">Uso</td>
+                  <td class="grid-title-item">Clase</td>
+                  <td class="grid-title-item">Cantidad de Registros</td>
+                  <td class="grid-title-item">Prima</td>
+                  <td class="grid-title-item">Directa</td>
+                  <td class="grid-title-item">GrossUp</td>
+                  <td class="grid-title-item">Directa</td>
+                  <td class="grid-title-item">GrossUp</td>
+                </tr>
+              </thead>
+              <tbody *ngIf="dataCargaMasivaEstado?.success">
+                <tr
+                  class="grid-body"
+                  *ngFor="
+                    let data of dataCargaMasivaEstado?.cargaMasivaModelGroup
+                  "
+                >
+                  <td class="grid-body-item">{{ data.uso }}</td>
+                  <td class="grid-body-item">{{ data.clase }}</td>
+                  <td class="grid-body-item">{{ data.cantidad }}</td>
+                  <td class="grid-body-item">S/. {{ data.prima }}</td>
+                  <td class="grid-body-item">
+                    S/. {{ data.montoComisionBroker }}
+                  </td>
+                  <td class="grid-body-item">
+                    S/. {{ data.montoComisionGrossup }}
+                  </td>
+                  <td class="grid-body-item">
+                    S/. {{ data.montoComisionIntermediario }}
+                  </td>
+                  <td class="grid-body-item">
+                    S/. {{ data.montoComisionGrossupIntermediario }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div
+            class="table_scroll"
+            *ngIf="EmisionSoatPageFocus == 2 && amountErrors == 0"
+          >
+            <table class="table table-info-soat" style="min-width: 2750px">
+              <thead>
+                <tr class="grid-title">
+                  <td class="grid-title-item" colspan="24"></td>
+                  <td
+                    class="grid-title-item"
+                    *ngIf="pageWithParam == true"
+                    colspan="1"
+                  ></td>
+                  <td class="grid-title-item" colspan="3">Comisión Broker</td>
+                  <td class="grid-title-item" colspan="3">
+                    Comisión Comercializador
+                  </td>
+                </tr>
+                <tr class="grid-title">
+                  <td class="grid-title-item">Nro. Fila</td>
+                  <td class="grid-title-item">Fecha Inicio</td>
+                  <td class="grid-title-item">Fecha Fin</td>
+                  <td class="grid-title-item">Prima</td>
+                  <td class="grid-title-item" *ngIf="pageWithParam == true">
+                    Póliza
+                  </td>
+                  <td class="grid-title-item" *ngIf="pageWithParam == true">
+                    Comprobante
+                  </td>
+                  <td class="grid-title-item">Placa</td>
+                  <td class="grid-title-item">Uso</td>
+                  <td class="grid-title-item">Clase</td>
+                  <td class="grid-title-item">Marca</td>
+                  <td class="grid-title-item">Modelo</td>
+                  <td class="grid-title-item">Asientos</td>
+                  <td class="grid-title-item">Serie</td>
+                  <td class="grid-title-item">Año</td>
+                  <td class="grid-title-item">Documento</td>
+                  <td class="grid-title-item">Nombres</td>
+                  <td class="grid-title-item">Apellido Paterno</td>
+                  <td class="grid-title-item">Apellido Materno</td>
+                  <td class="grid-title-item">Razón Social</td>
+                  <td class="grid-title-item">Dirección</td>
+                  <td class="grid-title-item">Departamento</td>
+                  <td class="grid-title-item">Provincia</td>
+                  <td class="grid-title-item">Distrito</td>
+                  <td class="grid-title-item">Celular</td>
+                  <td class="grid-title-item">Correo</td>
+                  <td class="grid-title-item">% Comisión</td>
+                  <td class="grid-title-item">Comisión</td>
+                  <td class="grid-title-item">Grossup</td>
+                  <td class="grid-title-item">% Comisión</td>
+                  <td class="grid-title-item">Comisión</td>
+                  <td class="grid-title-item">Grossup</td>
+                </tr>
+              </thead>
+              <tbody *ngIf="dataCargaMasivaEstado?.success">
+                <tr
+                  class="grid-body"
+                  *ngFor="
+                    let data of dataCargaMasivaEstado?.cargaMasivaModelDetail
+                  "
+                >
+                  <td class="grid-body-item">{{ data.indice }}</td>
+                  <td class="grid-body-item">{{ data.fechaInicio }}</td>
+                  <td class="grid-body-item">{{ data.fechaFin }}</td>
+                  <td class="grid-body-item">S/. {{ data.prima }}</td>
+                  <td class="grid-body-item" *ngIf="pageWithParam == true">
+                    {{ data.numeroPoliza }}
+                  </td>
+                  <td class="grid-body-item" *ngIf="pageWithParam == true">
+                    {{ data.comprobante }}
+                  </td>
+                  <td class="grid-body-item">{{ data.placa }}</td>
+                  <td class="grid-body-item">{{ data.uso }}</td>
+                  <td class="grid-body-item">{{ data.clase }}</td>
+                  <td class="grid-body-item">{{ data.marca }}</td>
+                  <td class="grid-body-item">{{ data.modelo }}</td>
+                  <td class="grid-body-item">{{ data.asientos }}</td>
+                  <td class="grid-body-item">{{ data.serie }}</td>
+                  <td class="grid-body-item">{{ data.anio }}</td>
+                  <td class="grid-body-item">{{ data.tipoDocumento }}</td>
+                  <td class="grid-body-item">{{ data.nombre }}</td>
+                  <td class="grid-body-item">{{ data.apellidoPaterno }}</td>
+                  <td class="grid-body-item">{{ data.apellidoMaterno }}</td>
+                  <td class="grid-body-item">{{ data.razonSocial }}</td>
+                  <td class="grid-body-item">{{ data.direccion }}</td>
+                  <td class="grid-body-item">{{ data.departamento }}</td>
+                  <td class="grid-body-item">{{ data.provincia }}</td>
+                  <td class="grid-body-item">{{ data.distrito }}</td>
+                  <td class="grid-body-item">{{ data.telefono }}</td>
+                  <td class="grid-body-item">{{ data.correo }}</td>
+                  <td class="grid-body-item">
+                    {{ data.porcentajeComisionBroker }}
+                  </td>
+                  <td class="grid-body-item">
+                    S/. {{ data.montoComisionBroker }}
+                  </td>
+                  <td class="grid-body-item">
+                    S/. {{ data.montoComisionGrossup }}
+                  </td>
+                  <td class="grid-body-item">
+                    {{ data.porcentajeComisionIntermediario }}
+                  </td>
+                  <td class="grid-body-item">
+                    S/. {{ data.montoComisionIntermediario }}
+                  </td>
+                  <td class="grid-body-item">
+                    S/. {{ data.montoComisionGrossupIntermediario }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div
+            class="table-responsive table-skeleton"
+            #skeletonLoading
+            *ngIf="
+              amountErrors == 0 && titleOfPage !== 'Carga Masiva del Estado'
+            "
+          >
+            <table class="table">
+              <tbody>
+                <tr
+                  class="grid-body skeleton-loading"
+                  *ngFor="let skeletons of NSKELETON"
+                >
+                  <td class="grid-title-item">
+                    <div class="skel"></div>
+                  </td>
+                  <td class="grid-title-item">
+                    <div class="skel"></div>
+                  </td>
+                  <td class="grid-title-item">
+                    <div class="skel"></div>
+                  </td>
+                  <td class="grid-title-item">
+                    <div class="skel"></div>
+                  </td>
+                  <td class="grid-title-item">
+                    <div class="skel"></div>
+                  </td>
+                  <td class="grid-title-item">
+                    <div class="skel"></div>
+                  </td>
+                  <td class="grid-title-item">
+                    <div class="skel"></div>
+                  </td>
+                  <td class="grid-title-item">
+                    <div class="skel"></div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div
+            class="table_scroll tbl-errors"
+            *ngIf="EmisionSoatPageFocus == 3 && pageViewDetail == false"
+          >
+            <table class="table table-info-soat table-erros">
+              <thead>
+                <tr class="grid-title grid-errors">
+                  <td class="grid-title-item nfila-error">
+                    N° de Fila (Excel)
+                  </td>
+                  <td class="grid-title-item">Campo</td>
+                  <td class="grid-title-item">Descripción de error</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="grid-body grid-errors"
+                  *ngFor="
+                    let data of dataCargaMasivaEstado?.cargaMasivaModelError
+                  "
+                >
+                  <td class="grid-body-item">{{ data.indice }}</td>
+                  <td class="grid-body-item">{{ data.campo }}</td>
+                  <td class="grid-body-item">{{ data.descripcion }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalConfirmEmision>
+  <div class="content-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <section>
+          <div class="modal-header">
+            <button
+              type="button"
+              class="close"
+              role="button"
+              aria-label="Cerrar modal"
+              (click)="hideModal()"
+            >
+              &times;
+            </button>
+            <h5 class="modal-title">Mensaje de confirmación</h5>
+          </div>
+          <div class="modal-body">
+            Usted va realizar una carga masiva del estado con
+            <strong>{{ amountPolizas }}</strong> pólizas por el monto total de
+            S/.
+            {{ primaTotalPoliza | number : "1.2-2" }}
+            <span class="modal-question">
+              ¿Desea emitir la carga masiva del estado?
+            </span>
+          </div>
+          <div
+            class="modal-footer d-flex align-items-center justify-content-center"
+          >
+            <button
+              type="button"
+              role="button"
+              class="btn btn-secondary btn-close-modal"
+              (click)="hideModal()"
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              role="button"
+              class="btn full-color btn-aceptar-modal"
+              (click)="emisionStateLoad()"
+            >
+              Aceptar
+            </button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalConfirmBackToPage>
+  <div class="content-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <section>
+          <div class="modal-header">
+            <button
+              type="button"
+              class="close"
+              role="button"
+              aria-label="Cerrar modal"
+              (click)="hideModalBackToPage()"
+            >
+              &times;
+            </button>
+            <h5 class="modal-title">Mensaje de Advertencia</h5>
+          </div>
+          <div class="modal-body">
+            Al regresar tendrá que volver a realizar el proceso de cotización.
+            <span class="modal-question">
+              ¿Está seguro que desea regresar al menú principal de carga masiva
+              del estado?
+            </span>
+          </div>
+          <div
+            class="modal-footer d-flex align-items-center justify-content-center"
+          >
+            <button
+              type="button"
+              role="button"
+              class="btn btn-secondary btn-close-modal"
+              (click)="hideModalBackToPage()"
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              role="button"
+              class="btn full-color btn-aceptar-modal"
+              (click)="backToPage()"
+            >
+              Aceptar
+            </button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalConfirmEmisionResult>
+  <div class="content-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <section class="modal-emisionResult">
+          <div class="modal-header">
+            <button
+              type="button"
+              class="close"
+              role="button"
+              aria-label="Cerrar modal"
+              (click)="hideModalEmisionLoad()"
+            >
+              &times;
+            </button>
+          </div>
+          <div class="modal-body modal-emitido">
+            <div class="check-emitido">
+              <img
+                src="assets/backoffice/check-success.png"
+                class="icon-check"
+              />
+            </div>
+            Carga masiva del estado emitida con éxito.
+          </div>
+          <div
+            class="modal-footer d-flex align-items-center justify-content-center"
+          >
+            <button
+              type="button"
+              role="button"
+              class="btn full-color btn-aceptar-modal"
+              (click)="hideModalEmisionLoad()"
+            >
+              OK
+            </button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalConfirmfalse>
+  <div class="content-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <section class="modal-emisionResult">
+          <div class="modal-header">
+            <button
+              type="button"
+              class="close"
+              role="button"
+              aria-label="Cerrar modal"
+              (click)="hideModalEmisionLoad()"
+            >
+              &times;
+            </button>
+          </div>
+          <div class="modal-body modal-emitido">
+            <div class="check-emitido">
+              <img src="assets/backoffice/check-error.png" class="icon-check" />
+            </div>
+            Ocurrió un problema en la emisión, favor intentar nuevamente.
+          </div>
+          <div
+            class="modal-footer d-flex align-items-center justify-content-center"
+          >
+            <button
+              type="button"
+              role="button"
+              class="btn full-color btn-aceptar-modal"
+              (click)="hideModalEmisionLoad()"
+            >
+              OK
+            </button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</ng-template>

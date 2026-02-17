@@ -1,0 +1,169 @@
+<div class="content">
+  <!-- *Navegación -->
+  <section class="content__breadcrumb">
+    <app-breadcrumb>
+      <a>
+        <i class="fa fa-home" aria-hidden="true"></i>
+        Desgravamen
+      </a>
+      <a routerLink="/backoffice/sia/carga-masiva/bandeja">
+        Bandeja de carga masiva
+      </a>
+      <a> Historial de reproceso </a>
+    </app-breadcrumb>
+  </section>
+
+  <!-- *Cabecera -->
+  <section class="content__header">
+    <h1 class="title">Historial de reproceso</h1>
+  </section>
+
+  <div class="content-table">
+    <table class="table-u">
+      <thead>
+        <tr>
+          <th>ID Proceso</th>
+          <th>Transacción</th>
+          <th>Contratante</th>
+          <th>Producto/Póliza</th>
+          <th>Canal de venta</th>
+          <th>Moneda/Monto de prima</th>
+          <th>Asegurados</th>
+          <th>Periodo de declaración</th>
+          <th>Fecha y hora de carga</th>
+          <th>Fase</th>
+          <th>Resultado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>123456</td>
+          <td>Venta 1000</td>
+          <td>Caja arequipa</td>
+          <td>Producto CORE 1 10000</td>
+          <td>Redes y asociados</td>
+          <td>S/ 1000.00</td>
+          <td>10000</td>
+          <td>22/11/2022</td>
+          <td>22/11/2022 11:46 AM</td>
+          <td>
+            <span class="phase-migrate">Migrar</span>
+          </td>
+          <td>
+            <div class="result">
+              <div class="result__success">
+                <span>
+                  <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                  95%
+                </span>
+                <small>9500 éxitos</small>
+              </div>
+              <div class="result__errors">
+                <span>
+                  <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+                  95%
+                </span>
+                <small>9500 éxitos</small>
+              </div>
+            </div>
+          </td>
+          <td>
+            <pro-dropdown>
+              <button>
+                <i class="fa fa-eye"></i>
+                Visualizar carga
+              </button>
+              <button>
+                <i class="fa fa-file-o" aria-hidden="true"></i>
+                Ver detalle
+              </button>
+              <button>
+                <i class="fa fa-upload" aria-hidden="true"></i>
+                Reprocesar
+              </button>
+              <button>
+                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                Historial de reprocesos
+              </button>
+            </pro-dropdown>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="content-table">
+    <table class="table-u">
+      <thead>
+        <tr>
+          <th>ID Proceso</th>
+          <th>Transacción</th>
+          <th>Contratante</th>
+          <th>Producto/Póliza</th>
+          <th>Canal de venta</th>
+          <th>Moneda/Monto de prima</th>
+          <th>Asegurados</th>
+          <th>Periodo de declaración</th>
+          <th>Fecha y hora de carga</th>
+          <th>Fase</th>
+          <th>Resultado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>123456</td>
+          <td>Venta 1000</td>
+          <td>Caja arequipa</td>
+          <td>Producto CORE 1 10000</td>
+          <td>Redes y asociados</td>
+          <td>S/ 1000.00</td>
+          <td>10000</td>
+          <td>22/11/2022</td>
+          <td>22/11/2022 11:46 AM</td>
+          <td>
+            <span class="phase-migrate">Migrar</span>
+          </td>
+          <td>
+            <div class="result">
+              <div class="result__success">
+                <span>
+                  <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                  95%
+                </span>
+                <small>9500 éxitos</small>
+              </div>
+              <div class="result__errors">
+                <span>
+                  <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+                  95%
+                </span>
+                <small>9500 éxitos</small>
+              </div>
+            </div>
+          </td>
+          <td>
+            <pro-dropdown>
+              <button>
+                <i class="fa fa-eye"></i>
+                Visualizar carga
+              </button>
+              <button>
+                <i class="fa fa-file-o" aria-hidden="true"></i>
+                Ver detalle
+              </button>
+              <button>
+                <i class="fa fa-upload" aria-hidden="true"></i>
+                Reprocesar
+              </button>
+              <button>
+                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                Historial de reprocesos
+              </button>
+            </pro-dropdown>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

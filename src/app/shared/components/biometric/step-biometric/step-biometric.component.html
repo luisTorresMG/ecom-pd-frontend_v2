@@ -1,0 +1,49 @@
+<div #biometric></div>
+<section class="steps-biometrico" [@fade]="true" *ngIf="showBiometric">
+  <div class="content-form">
+    <div class="header-modal-biom">
+      <button class="close-modal-biom" (click)="closeModalBiometric(true)">
+        &times;
+      </button>
+    </div>
+    <div class="body-modal-biom">
+      <ng-container *ngIf="stepBiom == 1" [@fade]="fade">
+        <div class="step1-biom">
+          <form [formGroup]="formBiometric" class="form-file-biom">
+            <h2 class="title-bio">Validación biométrica</h2>
+            <p class="description-biom">
+              {{ descriptionBiometric }}
+            </p>
+            <input
+              type="file"
+              formControlName="file"
+              id="file-bio"
+              hidden
+              (change)="saveFileBiometric($event)"
+            />
+            <label
+              for="file-bio"
+              role="button"
+              class="lbl-fileBio mt-2"
+              (click)="uploadFile()"
+            >
+              <i class="fa fa-upload mr-2" aria-hidden="true"></i>
+              Adjuntar documento de identidad
+            </label>
+            <small class="warning-biom">{{ descriptionSmallBiometric }}</small>
+            <small class="warning-biom"
+              >**Si tu DNI se encuentra caducado, igualmente podrás contratar
+              este producto pero sólo hasta el 31 de diciembre de 2021. A partir
+              de dicha fecha, para adquirir la póliza y/o hacer uso de los
+              derechos establecidos en ella, tu DNI deberá encontrarse
+              vigente.</small
+            >
+          </form>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="stepBiom == 2" [@fade]="fade">
+        <app-biometric (estado)="changeStateBiometric($event)"> </app-biometric>
+      </ng-container>
+    </div>
+  </div>
+</section>

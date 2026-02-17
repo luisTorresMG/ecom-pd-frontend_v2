@@ -1,0 +1,17 @@
+<div class="number-input-container">
+  <label *ngIf="label"
+         class="number-input-label">{{ label }}</label>
+  <div class="number-input-wrapper"
+       [class.disabled]="disabled">
+    <input type="text"
+           [placeholder]="placeholder || ''"
+           class="number-input-field"
+           (blur)="onBlur($event)"
+           (focus)="onFocus()"
+           (input)="onInput($event)"
+           [value]="displayValue"
+           [disabled]="disabled" />
+    <span *ngIf="decorator"
+          class="number-input-decorator">{{ decorator }}</span>
+  </div>
+</div>

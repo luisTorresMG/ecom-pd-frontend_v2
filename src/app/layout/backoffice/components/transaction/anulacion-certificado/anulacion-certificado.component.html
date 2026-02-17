@@ -1,0 +1,619 @@
+<div class="container-fluid">
+  <div class="row content-all">
+    <div class="col-md-12 content">
+      <div class="container-fluid content-page">
+        <div class="row r1-head">
+          <div class="col-12 head-title">
+            <h1 class="title">Anulación de Certificados</h1>
+          </div>
+        </div>
+        <form class="row r2-head"
+              [formGroup]="form">
+          <div class="col-md-2 content-actions">
+            <div class="content-input">
+              <label for="state"
+                     class="lbl-in filter-text">CERTIFICADO:</label>
+              <input type="text"
+                     class="form-control date-search input-date in-action"
+                     formControlName="certificado"
+                     [maxlength]="10"
+                     [minlength]="10" />
+            </div>
+          </div>
+          <div class="col-md-10 cont-btn-generar">
+            <button type="submit"
+                    class="full-color"
+                    (click)="validar()"
+                    [disabled]="form.invalid">
+              Buscar
+            </button>
+            <button type="button"
+                    class="full-color"
+                    (click)="limpiar()">
+              Limpiar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-12 content"
+         style="padding-left: 0px; padding-right: 0px">
+      <form [formGroup]="formCertificado">
+        <div class="col-md-12 content">
+          <div class="container-fluid content-page">
+            <div class="row r3-head">
+              <div class="col-md-12 grid-title table-head">
+                <span class="grid-title-item">Datos de la Póliza</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 content">
+          <div class="container-fluid content-page">
+            <div class="row r3-head">
+              <div class="col-md-4 px-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">CANAL:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="canal"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">MODEDA:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="moneda"
+                         readonly="readonly" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 content">
+          <div class="container-fluid content-page">
+            <div class="row r3-head">
+              <div class="col-md-4 px-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">FECHA DE EMISIÓN:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="fecha_emision"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">HORA DE EMISIÓN:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="hora_emision"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-4 px-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">PRIMA:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="tarifa"
+                         readonly="readonly" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 content">
+          <div class="container-fluid content-page">
+            <div class="row r3-head">
+              <div class="col-md-12 grid-title table-head">
+                <span class="grid-title-item">Datos de Vehículo</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 content">
+          <div class="container-fluid content-page">
+            <div class="row r3-head">
+              <div class="col-md-4 px-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">PLACA:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="placa"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">CLASE:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="clase"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">USO:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="uso"
+                         readonly="readonly" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 content">
+          <div class="container-fluid content-page">
+            <div class="row r3-head">
+              <div class="col-md-3 px-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">MARCA:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="marca"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">MODELO:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="modelo"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-3 px-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">NRO DE SERIE:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="serie"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">ASIENTOS:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="asientos"
+                         readonly="readonly" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 content">
+          <div class="container-fluid content-page">
+            <div class="row r3-head">
+              <div class="col-md-3 px-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">ZONA DE CIRCULACIÓN:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="zona_circulacion"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">AÑO:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="año"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-3 px-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">FECHA INICIO VIGENCIA:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="fecha_inicio_vigencia"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">FECHA FIN VIGENCIA:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="fecha_fin_vigencia"
+                         readonly="readonly" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 content">
+          <div class="container-fluid content-page">
+            <div class="row r3-head">
+              <div class="col-md-12 grid-title table-head">
+                <span class="grid-title-item">Datos del Contratante</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 content">
+          <div class="container-fluid content-page">
+            <div class="row r3-head">
+              <div class="col-md-3 px-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">T. DOCUMENTO:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="tipo_documento"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">NRO DOCUMENTO:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="numero_documento"
+                         readonly="readonly" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 content"
+             *ngIf="!showSelected">
+          <div class="container-fluid content-page">
+            <div class="row r3-head">
+              <div class="col-md-7 px-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">RAZÓN SOCIAL:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="razon_social"
+                         readonly="readonly" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 content"
+             *ngIf="showSelected">
+          <div class="container-fluid content-page">
+            <div class="row r3-head">
+              <div class="col-md-4 px-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">NOMBRES:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="nombres"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">APELLIDO PATERNO:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="apellido_paterno"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-4 px-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">APELLIDO MATERNO:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="apellido_materno"
+                         readonly="readonly" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 content">
+          <div class="container-fluid content-page">
+            <div class="row r3-head">
+              <div class="col-md-4 px-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">DEPARTAMENTO:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="departamento"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">PROVINCIA:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="provincia"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-4 px-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">DISTRITO:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="distrito"
+                         readonly="readonly" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 content">
+          <div class="container-fluid content-page">
+            <div class="row r3-head">
+              <div class="col-md-6 px-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">DIRECCIÓN:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="direccion"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">CORREO:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="correo"
+                         readonly="readonly" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <form class="row r2-head"
+              [formGroup]="formAnularCertificado"
+              style="border-bottom: 0px solid #2b0d61">
+          <div class="col-md-12 content">
+            <div class="container-fluid content-page">
+              <div class="row r3-head">
+                <div class="col-md-6 content-actions">
+                  <div class="content-input">
+                    <label for="state"
+                           class="lbl-in filter-text">MOTIVO:</label>
+                    <select class="in-action"
+                            formControlName="motivo"
+                            (selectionChange)="onChange($event.value)">
+                      <option disabled
+                              selected>SELECCIONE</option>
+                      <option *ngFor="let data of dataMotivo?.PRO_MOTIVE"
+                              [value]="data?.NNULLCODE">
+                        {{ data?.SDESCRIPT }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="content-input">
+                    <label for="state"
+                           class="lbl-in filter-text">FECHA ANULACIÓN:</label>
+                    <input type="text"
+                           class="form-control date-search input-date in-action"
+                           id="fecha"
+                           #dp="bsDatepicker"
+                           [bsConfig]="bsConfig"
+                           readonly
+                           autocomplete="nope"
+                           placeholder="DD/MM/YYYY"
+                           bsDatepicker
+                           formControlName="fechaAnulacion" />
+                  </div>
+                </div>
+                <div class="col-md-6 cont-btn-generar">
+                  <button type="submit"
+                          class="full-color"
+                          (click)="anular()"
+                          [disabled]="!dataAnulacionCertificado?.PRO_CERTIF?.length || formAnularCertificado.invalid">
+                    ANULAR
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade"
+     bsModal
+     #modalAnular1="bs-modal"
+     [config]="{
+    backdrop: 'static'
+  }">
+  <div class="modal-dialog"
+       role="document">
+    <div class="modal-content anular">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                (click)="ocultarModalAnular1()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <h4 class="textanular"
+            style="font-size: 15px">
+          {{ P_AREA3 }}
+        </h4>
+      </div>
+      <div class="
+          modal-footer modal-foot-confirm
+          d-flex
+          align-items-center
+          justify-content-center
+        ">
+        <button type="button"
+                class="btn full-color btn-aceptar-modal"
+                (click)="ocultarModalAnular1()">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade"
+     bsModal
+     #modalAnular="bs-modal"
+     [config]="{
+    backdrop: 'static'
+  }">
+  <div class="modal-dialog"
+       role="document">
+    <div class="modal-content anular">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                (click)="ocultarModalAnular()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <h4 class="textanular text-justify"
+            style="font-size: 15px">
+          {{ P_AREA }}
+        </h4>
+      </div>
+      <div class="
+          modal-footer modal-foot-confirm
+          d-flex
+          align-items-center
+          justify-content-center
+        ">
+        <button type="button"
+                class="btn full-color btn-aceptar-modal"
+                (click)="procesoAnular()"
+                style="margin-right: 10px">
+          OK
+        </button>
+        <button type="button"
+                class="btn full-color btn-aceptar-modal"
+                (click)="ocultarModalAnular()"
+                style="margin-left: 10px">
+          CANCELAR
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade"
+     bsModal
+     #modalValidar="bs-modal"
+     [config]="{
+    backdrop: 'static'
+  }">
+  <div class="modal-dialog"
+       role="document">
+    <div class="modal-content anular">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                (click)="ocultarModalValidar()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <h4 class="textanular"
+            style="font-size: 15px">
+          {{ P_AREA2 }}
+        </h4>
+      </div>
+      <div class="
+          modal-footer modal-foot-confirm
+          d-flex
+          align-items-center
+          justify-content-center
+        ">
+        <button type="button"
+                class="btn full-color btn-aceptar-modal"
+                (click)="ocultarModalValidar()">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade"
+     bsModal
+     #modalAnularCertifi="bs-modal"
+     [config]="{
+    backdrop: 'static'
+  }">
+  <div class="modal-dialog"
+       role="document">
+    <div class="modal-content anular">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                (click)="ocultarModalAnularCertifi()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <h4 class="textanular"
+            style="font-size: 15px">
+          {{ P_MENSAJE_ANULACION }}
+        </h4>
+      </div>
+      <div class="
+          modal-footer modal-foot-confirm
+          d-flex
+          align-items-center
+          justify-content-center
+        ">
+        <button type="button"
+                class="btn full-color btn-aceptar-modal"
+                (click)="ocultarModalAnularCertifi()">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

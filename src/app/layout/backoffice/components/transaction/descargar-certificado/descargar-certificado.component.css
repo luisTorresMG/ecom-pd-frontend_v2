@@ -1,0 +1,262 @@
+.head-title,
+.content-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.content-page {
+  margin: 1rem 0;
+  padding: 0 1rem;
+}
+
+.r1-head {
+  border-bottom: 1px solid #2b0d61;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.r2-head {
+  border-bottom: 1px solid #2b0d61;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.head-title {
+  padding: 0;
+}
+
+.title {
+  color: #553d81;
+  font-size: 32px;
+  font-weight: bold;
+  line-height: 31px;
+  display: block;
+  margin-top: 8px;
+  margin-right: 18px;
+  font-family: "Bliss Pro";
+}
+
+.full-color {
+  display: flex;
+  justify-content: center;
+  border: 1px solid rgb(129, 118, 157);
+  border-radius: 2px;
+  margin: 0 5px;
+  background: #553d81;
+  color: #fff;
+  padding: 10px 15px;
+  min-width: 177px;
+  height: 45px;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+.fa-trash {
+  color: #e60d2e;
+}
+
+.fa-trash:before {
+  color: #e60d2e;
+}
+
+.cont-btn-generar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.content-actions,
+.cont-btn-generar {
+  padding: 0;
+}
+
+.content-input {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-right: 1rem;
+}
+
+.content-input:last-child {
+  margin: 0;
+}
+
+.lbl-in {
+  display: block;
+  width: 100%;
+  color: #2b0d61;
+  font-size: 14px;
+  font-family: "Bliss Pro";
+  margin: 0 !important;
+}
+
+.in-action {
+  border-radius: 2px;
+  padding: 7px 5px;
+  font-size: 14px;
+  width: 100%;
+  border: 1px solid #aa9ec0;
+  margin-bottom: 10px;
+  color: #aa9ec0;
+  height: 45px;
+  font-weight: 300;
+  padding-left: 12px;
+  outline: none;
+}
+
+.table-head {
+  background-color: #553d81;
+}
+
+.table-head .grid-title-item {
+  color: #fff;
+  font-family: "Bliss Pro";
+  text-align: center;
+  font-size: 14px;
+  padding: 5px;
+}
+
+.table-body-item {
+  font-family: "Bliss Pro";
+  text-align: center;
+  font-size: 14px;
+  padding: 5px;
+}
+
+.table-body-item-actions a {
+  display: inline-block;
+}
+
+.table-body-item-actions a i {
+  color: #2b0d61;
+}
+
+.form-group {
+  margin: 0 0.05rem;
+  padding: 0;
+}
+
+/* MODAL */
+
+.modal-title {
+  color: #553d81;
+  font-weight: 600;
+  font-size: 26px;
+  letter-spacing: 1px;
+}
+
+.modal-body {
+  display: grid;
+  grid-gap: 1rem;
+}
+
+.modal-body {
+  font-family: "Bliss Pro", Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  color: #aa9ec0;
+  font-weight: 300;
+}
+
+.modal-body .row:last-child {
+  margin-top: 0.5rem;
+}
+
+.lbl-modal-form {
+  margin-left: 0.5rem;
+}
+
+.modal-question {
+  display: block;
+  margin-top: 0.5rem;
+  width: 100%;
+  text-align: left;
+}
+
+.btn-close-modal,
+.btn-aceptar-modal {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.btn-aceptar-modal {
+  background: #553d81;
+}
+
+.btn-close-modal {
+  border: 1px solid #553d81 !important;
+  background: #fff !important;
+  color: #553d81 !important;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: center;
+}
+
+.modal-footer-actions-in-body {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+@media (max-width: 1220px) {
+  .content-actions {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 1024px) {
+  .content-actions {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .r2-head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .content-input,
+  .content-actions {
+    width: 100%;
+    max-width: 100%;
+    display: block;
+  }
+
+  .cont-btn-generar {
+    width: 100%;
+    max-width: 100%;
+    display: block;
+  }
+
+  .full-color {
+    display: block;
+    margin: 1rem 0;
+    width: 100%;
+    min-width: 100%;
+  }
+}
+
+input:disabled,
+select:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.success-text {
+  font-size: 18px !important;
+  color: #553d81;
+  text-align: center;
+}

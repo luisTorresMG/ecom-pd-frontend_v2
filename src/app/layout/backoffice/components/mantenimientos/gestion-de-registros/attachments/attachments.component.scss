@@ -1,0 +1,61 @@
+@import "variables";
+@import "backoffice";
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+.btn-action {
+  height: 35px;
+  background-color: $purple;
+  color: #fff;
+  font-size: 15px;
+  min-width: 110px;
+  border: none;
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  &:first-child {
+    margin-right: 1rem;
+  }
+  &[disabled] {
+    opacity: 0.5;
+  }
+}
+.lbl-file {
+  cursor: pointer;
+  min-width: 100px;
+  height: 30px;
+  margin: 0;
+  padding: 5px;
+  color: #fff;
+  background-color: $purple;
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+}
+.input-u {
+  width: 100%;
+  padding: 7px 5px;
+  font-weight: 300;
+  box-shadow: none;
+  background: none;
+  padding-left: 12px;
+  outline: none;
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+}
+
+.input-u[disabled] {
+  background-color: rgba(0, 0, 0, 0.025);
+  cursor: auto;
+  border: 1px solid rgba(0, 0, 0, 0.035);
+}

@@ -1,0 +1,194 @@
+<div
+  class="fab-container"
+  *ngIf="!isVidaDevolucion && showChat && !isAccidentesPersonales"
+>
+  <div class="fab-form" [@fadein]="true" *ngIf="showForm">
+    <form action="" [formGroup]="frmChat" (ngSubmit)="onSubmit()">
+      <div class="title">
+        <h2 class="main-title">¡Hola no soy un robot!</h2>
+        <h4 class="sub-title">
+          Chatea con uno de nuestros ejecutivos de servicio.
+        </h4>
+        <h4 class="sub-title2">
+          Es importante que nuestros clientes sepan que estamos a su servicio.
+          <br />A través de este live chat, te ayudaremos con la compra online
+          de tu SOAT y tu seguro de Vida Ley de lunes a viernes de 9 a.m. a 6
+          p.m. a excepción de los días feriado. <br /><br />
+          Para otras consultas llámanos al 391-3000 en Lima, 0801 1 1278 en
+          provincias o escríbenos a nuestro correo electrónico
+          clientes@protectasecurity.pe
+        </h4>
+      </div>
+      <div class="form-group">
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          formControlName="email"
+          name="email"
+          placeholder="Ingresa tu correo"
+          required
+          email
+          [ngClass]="{ error: showError('email') }"
+        />
+      </div>
+      <div class="chat-error-message" *ngIf="showError('email')">
+        <ng-container *ngIf="cForm['email'].errors.required">
+          <i></i><span>Necesitamos conocer tu correo</span>
+        </ng-container>
+        <ng-container *ngIf="cForm['email'].errors.email">
+          <i></i><span>Formato de correo inválido</span>
+        </ng-container>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block btn-protecta">
+        <i class="fa fa-comments-o"></i>
+        Conversemos
+      </button>
+    </form>
+  </div>
+  <div class="pull-right">
+    <button
+      type="button"
+      class="btn btn-circle btn-xl"
+      aria-label="button comment"
+      (click)="showFormClick()"
+    >
+      <i
+        class="fa"
+        [ngClass]="{
+          'fa-comments-o': !showForm,
+          'fa-close': showForm
+        }"
+      ></i>
+    </button>
+  </div>
+</div>
+
+<!--  *ROBOT VIDAINDIVIDUAL-->
+<div class="fab-container" *ngIf="isVidaDevolucion">
+  <div class="fab-form" *ngIf="showForm">
+    <form
+      action=""
+      *ngIf="!modalSucess"
+      [@fadein]="true"
+      [formGroup]="frmChat"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="title">
+        <h2 class="main-title">¡Hola no soy un robot!</h2>
+        <h4 class="sub-title">Estamos gustosos de atenderte.</h4>
+        <h4 class="sub-title2">
+          Elige el horario de atención de tu preferencia para que un asesor
+          comercial pueda contactarte:
+        </h4>
+      </div>
+      <select class="horario" formControlName="horario">
+        <option value="9 a.m. - 11 a.m.">9 a.m. - 11 a.m.</option>
+        <option value="11 a.m. - 1 p.m.">11 a.m. - 1 p.m.</option>
+        <option value="3 p.m. - 5 p.m.">3 p.m. - 5 p.m.</option>
+        <option value="5 p.m. - 7 p.m.">5 p.m. - 7 p.m.</option>
+      </select>
+      <div class="title">
+        <span class="description"> Y déjanos tu información de contacto </span>
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="names"
+          placeholder="Nombres"
+        />
+      </div>
+      <div class="chat-error-message" *ngIf="showError('names')">
+        <ng-container *ngIf="cForm['names'].errors.required">
+          <i></i><span>Este campo es obligatorio</span>
+        </ng-container>
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          id="phone"
+          formControlName="telefono"
+          placeholder="Ingresa tu número de contacto"
+          (keyup)="validPhone()"
+          [minlength]="limitNumberPhone.min"
+          [maxlength]="limitNumberPhone.max"
+        />
+      </div>
+      <div class="chat-error-message" *ngIf="showError('telefono')">
+        <ng-container *ngIf="cForm['telefono'].errors.required">
+          <i></i><span>Necesitamos conocer tu número de contacto</span>
+        </ng-container>
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="email"
+          placeholder="Correo electrónico"
+        />
+      </div>
+      <div class="chat-error-message" *ngIf="showError('email')">
+        <ng-container *ngIf="cForm['email'].errors.required">
+          <i></i><span>Necesitamos conocer tu correo electrónico</span>
+        </ng-container>
+        <ng-container *ngIf="cForm['email'].errors.pattern">
+          <i></i><span>El correo electrónico no es válido</span>
+        </ng-container>
+      </div>
+      <div class="info-mail">
+        <small class="aditional">
+          Puedes dejarnos un comentario adicional o si deseas nos puedes
+          escribir al correo
+        </small>
+        <a href="mailto:vidadevolucion@protectasecurity.pe" class="link-mail"
+          >vidadevolucion@protectasecurity.pe</a
+        >
+      </div>
+      <div class="form-group">
+        <textarea
+          class="form-control"
+          placeholder="Déjanos un comentario"
+          formControlName="comentario"
+          cols="30"
+          rows="2"
+        ></textarea>
+      </div>
+      <button
+        type="submit"
+        [disabled]="frmChat.invalid"
+        class="btn btn-primary btn-block btn-protecta"
+      >
+        <i class="fa fa-send mr-1"></i>
+        Enviar
+      </button>
+    </form>
+    <ng-container *ngIf="isVidaDevolucion && modalSucess">
+      <div class="content_sucess" [@fadein]="true">
+        <img src="assets/backoffice/check-success.png" class="icon-check" />
+        <span class="desc-modal-sucess">{{ descriptionModal }}</span>
+        <button class="closeModalSucess" (click)="showFormClick()">
+          Cerrar
+        </button>
+      </div>
+    </ng-container>
+  </div>
+  <div class="pull-right">
+    <button
+      *ngIf="showButtonChat"
+      type="button"
+      class="btn btn-circle btn-xl"
+      aria-label="button comment"
+      (click)="showFormClick()"
+    >
+      <i
+        class="fa"
+        [ngClass]="{
+          'fa-comments-o': !showForm,
+          'fa-close': showForm
+        }"
+      ></i>
+    </button>
+  </div>
+</div>

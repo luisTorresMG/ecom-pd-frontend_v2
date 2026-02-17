@@ -1,0 +1,2059 @@
+<div class="content">
+  <!-- *HEADER -->
+  <section class="content__item content__header">
+    <h1 class="title-u">Registro de Usuarios</h1>
+  </section>
+
+  <!-- TODO: FILTERS -->
+  <form class="content__item form" [formGroup]="form">
+    <section class="form__item form__filters">
+      <!-- CANAL -->
+      <label
+        for="form-profile-type"
+        class="lbl-input-u"
+        aria-label="Canal de Venta:"
+      >
+        <select
+          class="input-u"
+          id="form-profile-type"
+          formControlName="canalVenta"
+        >
+          <option [value]="0" selected>TODOS</option>
+          <option
+            *ngFor="let data of this.canalVentaList$"
+            [value]="data.idCanalVenta"
+          >
+            {{ data.nombreCanal }}
+          </option>
+        </select>
+      </label>
+      <!-- NOMBRE -->
+      <label for="form-name" class="lbl-input-u" aria-label="Nombre:">
+        <input
+          type="text"
+          id="form-name"
+          class="input-u"
+          [maxlength]="20"
+          formControlName="nombreFiltro"
+        />
+      </label>
+      <!-- USUARIO -->
+      <label for="form-name" class="lbl-input-u" aria-label="Usuario:">
+        <input
+          type="text"
+          id="form-name"
+          class="input-u"
+          [maxlength]="20"
+          formControlName="usuarioFiltro"
+        />
+      </label>
+      <!--DNI-->
+      <label
+        for="form-name"
+        class="lbl-input-u"
+        aria-label="Número de Documento:"
+      >
+        <input
+          type="text"
+          id="form-name"
+          class="input-u"
+          [maxlength]="9"
+          formControlName="dniFiltro"
+        />
+      </label>
+    </section>
+    <section class="filters-group">
+      <!-- Tipo de sistema -->
+      <label
+        for="form-profile-type"
+        class="lbl-input-u"
+        aria-label="Tipo de Sistema:"
+      >
+        <select
+          class="input-u"
+          id="form-profile-type"
+          formControlName="profileType"
+        >
+          <option [value]="0" selected>TODOS</option>
+          <option [value]="1">PLATAFORMA DIGITAL</option>
+          <option [value]="2">CLIENTE 360</option>
+          <option [value]="3">CONCILIACIÓN</option>
+          <!--<option *ngFor="let data of systemTypes$?.items" [value]="data.id">
+              {{ data.description }}
+            </option> -->
+        </select>
+      </label>
+
+      <!-- Estado -->
+      <label
+        for="form-profile-type"
+        class="lbl-input-u"
+        aria-label="Estado PD:"
+      >
+        <select
+          class="input-u"
+          id="form-profile-type"
+          formControlName="estadoFiltro"
+        >
+          <option [value]="2" selected>TODOS</option>
+          <option [value]="1">ACTIVO</option>
+          <option [value]="0">INACTIVO</option>
+        </select>
+      </label>
+
+      <!-- *ACTIONS -->
+      <section class="form__item form__actions">
+        <button
+          class="btn-primary-u"
+          type="button"
+          role="button"
+          (click)="openModalProfile()"
+        >
+          Nuevo
+        </button>
+        <button
+          class="btn-primary-u"
+          type="button"
+          role="button"
+          (click)="filtros(false)"
+        >
+          <!-- (click)="search(false)"   -->
+          Buscar
+        </button>
+
+        <button
+          class="btn-secondary-u"
+          type="button"
+          role="button"
+          (click)="limpiarFormulario()"
+        >
+          <!-- (click)="clearForm()" -->
+          <i class="fa fa-trash" aria-hidden="true"></i>
+          Limpiar
+        </button>
+      </section>
+    </section>
+  </form>
+
+  <div class="divider"></div>
+  <!-- TODO: LIST -->
+
+  <!-- Nueva Grilla -->
+
+  <section class="content__item content__table" style="padding-bottom: 0px">
+    <table class="tbl">
+      <thead class="tbl__head">
+        <tr class="tbl__head--row">
+          <th class="tbl__head--row-item tbl__head--row-channelSale">
+            Canal de Venta
+          </th>
+          <th class="tbl__head--row-item tbl__head--row-user">Usuario</th>
+
+          <th class="tbl__head--row-item tbl__head--row-name">Nombre</th>
+
+          <th class="tbl__head--row-item tbl__head--row-documentNumber">
+            Nro. de Documento
+          </th>
+          <th class="tbl__head--row-item tbl__head--row-profileType">
+            Sistema
+          </th>
+          <th class="tbl__head--row-item tbl__head--row-documentNumber">
+            Fecha de Registro
+          </th>
+          <th class="tbl__head--row-item tbl__head--row-status">Estado PD</th>
+          <th class="tbl__head--row-item tbl__head--row-status">Estado 360</th>
+          <th class="tbl__head--row-item tbl__head--row-actions">Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="tbl__body">
+        <ng-container
+          *ngIf="listUserPro$?.listaUsuario?.length == 0 ? true : false"
+        >
+          <tr class="tbl__body--row">
+            <td class="tbl__body--row-item" colspan="10">
+              No se han encontraron registros
+            </td>
+          </tr>
+        </ng-container>
+
+        <ng-container *ngIf="listUserPro$.success">
+          <tr
+            class="tbl__body--row"
+            [id]="'tbl-row-' + index"
+            *ngFor="
+              let data of listUserPro$.listaUsuario
+                | paginate
+                  : {
+                      id: 'pfilters',
+                      itemsPerPage: 11,
+                      currentPage: currentPage,
+                      totalItems: listUserPro$?.totalItems
+                    };
+              let index = index
+            "
+          >
+            <td
+              class="tbl__body--row-item tbl__body--row-channelSale"
+              [attr.title]="data.canalVenta"
+              [innerHTML]="data.canalVenta"
+            ></td>
+            <td class="tbl__body--row-item tbl__body--row-user">
+              {{ data.nombreUsuarioSistema }}
+            </td>
+
+            <td class="tbl__body--row-item tbl__body--row-name">
+              {{ data.nombreCompleto }}
+            </td>
+
+            <td class="tbl__body--row-item tbl__body--row-documentNumber">
+              {{ data.numeroDocumento }}
+            </td>
+            <td class="tbl__body--row-item tbl__body--row-profileType">
+              {{ data.sistema }}
+            </td>
+            <td class="tbl__body--row-item tbl__body--row-documentNumber">
+              {{ data.fechaRegistro }}
+            </td>
+            <td
+              class="tbl__body--row-item tbl__body--row-status"
+              *ngIf="data.estadoPD"
+            >
+              {{ data.estadoPD == "1" ? "ACTIVO" : "INACTIVO" }}
+            </td>
+            <td
+              class="tbl__body--row-item tbl__body--row-status"
+              *ngIf="!data.estadoPD"
+            >
+              -
+            </td>
+            <td
+              class="tbl__body--row-item tbl__body--row-status"
+              *ngIf="data.estado360"
+            >
+              {{ data.estado360 == "1" ? "ACTIVO" : "INACTIVO" }}
+            </td>
+            <td
+              class="tbl__body--row-item tbl__body--row-status"
+              *ngIf="!data.estado360"
+            >
+              -
+            </td>
+            <td
+              class="tbl__body--row-item tbl__body--row-actions"
+              ngbDropdown
+              [placement]="index > 4 ? 'top-right' : 'bottom-right'"
+            >
+              <button
+                class="btn-dropdown-u"
+                tabindex="0"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+                ngbDropdownToggle
+              >
+                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+              </button>
+              <ul
+                class="dropdown-u content-acction"
+                [id]="'tbl-menu' + index"
+                ngbDropdownMenu
+              >
+                <li class="dropdown-item-u">
+                  <button
+                    class="dropdown-item-btn-u"
+                    (click)="showModalResumen(data)"
+                  >
+                    <i class="fa fa-eye fa-lg" aria-hidden="true"></i>
+                    Ver detalle
+                  </button>
+
+                  <ng-container
+                    *ngIf="
+                      (data.estado360 === '1' && data.estadoPD === '1') ||
+                      data.estadoPD === '1' ||
+                      data.estado360 === '1'
+                    "
+                  >
+                    <button
+                      class="dropdown-item-btn-u"
+                      (click)="openModalEditar(data)"
+                    >
+                      <!-- (click)="openModalEditar(data)" -->
+                      <i class="fa fa-edit" aria-hidden="true"></i>
+                      Editar
+                    </button>
+                  </ng-container>
+
+                  <!--
+                    <ng-container *ngIf="data.estado360 !== '2'">
+                      <button
+                        class="dropdown-item-btn-u"
+                        (click)="openModalEditarCliente360(data)"
+                        *ngIf="
+                          data.sistema == 'CLIENTE 360' || data.sistema == 'AMBOS'
+                        "
+                      >
+                        <i class="fa fa-edit" aria-hidden="true"></i>
+                        Editar 360
+                      </button>
+                    </ng-container>-->
+
+                  <ng-container
+                    *ngIf="
+                      (data.estado360 === '1' && data.estadoPD === '1') ||
+                      data.estadoPD === '1' ||
+                      data.estado360 === '1'
+                    "
+                  >
+                    <button
+                      class="dropdown-item-btn-u"
+                      (click)="showModalchangePasswordModal(data, true)"
+                    >
+                      <i class="fa fa-edit" aria-hidden="true"></i>
+                      Cambiar contraseña
+                    </button>
+                  </ng-container>
+
+                  <!--
+                    <ng-container
+                      *ngIf="
+                        (data.estado360 === '1' && data.estadoPD === '1') ||
+                        data.estado360 === '1'
+                      "
+                    >
+                      <button
+                        class="dropdown-item-btn-u"
+                        (click)="showModalchangePasswordModal(data, false)"
+                      >
+                        <i class="fa fa-edit" aria-hidden="true"></i>
+                        Cambiar contraseña 360
+                      </button>
+                    </ng-container> -->
+
+                  <ng-container *ngIf="data.estado !== '0'">
+                    <!-- DESHABILITAR PD -->
+                    <button
+                      class="dropdown-item-btn-u"
+                      (click)="showModalDisableUser(data)"
+                      *ngIf="data.estadoPD == '1'"
+                    >
+                      <i class="fa fa-ban disable-user" aria-hidden="true"></i>
+                      Deshabilitar usuario PD
+                    </button>
+
+                    <!-- DESHBABILITAR CLIENTE 360-->
+                    <button
+                      class="dropdown-item-btn-u"
+                      (click)="showModalDisableCliente(data)"
+                      *ngIf="data.estado360 == '1'"
+                    >
+                      <i class="fa fa-ban disable-user" aria-hidden="true"></i>
+                      Deshabilitar usuario 360
+                    </button>
+                  </ng-container>
+
+                  <!-- HABILITAR CLIENTE - PRO USERS-->
+                  <ng-container *ngIf="data.estado360 === '2'">
+                    <button
+                      class="dropdown-item-btn-u"
+                      (click)="showModalEnableCliente(data)"
+                      *ngIf="
+                        data.sistema == 'C360' || data.sistema == 'PD/C360'
+                      "
+                    >
+                      <i
+                        class="fa fa-check-square enable-user"
+                        aria-hidden="true"
+                      ></i>
+                      Habilitar usuario 360
+                    </button>
+                  </ng-container>
+                  <ng-container *ngIf="data.estadoPD !== '1'">
+                    <button
+                      class="dropdown-item-btn-u"
+                      (click)="showModalEnableUser(data)"
+                      *ngIf="data.sistema == 'PD' || data.sistema == 'PD/C360'"
+                    >
+                      <i
+                        class="fa fa-check-square enable-user"
+                        aria-hidden="true"
+                      ></i>
+                      Habilitar usuario PD
+                    </button>
+                  </ng-container>
+                </li>
+              </ul>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </section>
+  <ng-container *ngIf="!!profiles$.items.length">
+    <pagination-controls
+      class="my-pagination"
+      (pageChange)="currentPage = $event"
+      id="pfilters"
+      autoHide="true"
+      responsive="true"
+      previousLabel="Anterior"
+      nextLabel="Siguiente"
+      screenReaderPaginationLabel="Paginación"
+      screenReaderPageLabel="pagina"
+      screenReaderCurrentLabel="Estás en la pagina"
+    >
+    </pagination-controls>
+  </ng-container>
+</div>
+
+<!-- MODAL DE NUEVO Y EDITAR-->
+<ng-template #modalProfile>
+  <div class="content-modal-u" tabindex="1" autofocus>
+    <div class="modal-u modalUser">
+      <div class="modal__header">
+        <h6 class="modal__header--title">{{ tituloModal$ }}</h6>
+        <button class="modal__header--close" (click)="closeModals()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <!-- *USER FORM -->
+        <form
+          class="modalUser__form userForm"
+          [formGroup]="userForm"
+          style="margin-right: 5px"
+        >
+          <!-- CONTRASEÑA Y SISTEMA -->
+
+          <ng-container *ngIf="disablePassword()">
+            <div class="userForm__group group3">
+              <label
+                for="userForm-system"
+                class="lbl-input-u"
+                aria-label="Sistema (*)"
+              >
+                <select
+                  formControlName="systemType"
+                  id="userForm-system"
+                  class="input-u"
+                  (blur)="validarUserName()"
+                >
+                  <option [value]="0" selected disabled>SELECCIONE</option>
+
+                  <option [value]="1">PLATAFORMA DIGITAL</option>
+                  <option [value]="2">CLIENTE 360</option>
+                  <option [value]="3">CONCILIACIÓN</option>
+                </select>
+              </label>
+
+              <label
+                for="userForm-user"
+                class="lbl-input-u"
+                aria-label="Usuario (*)"
+              >
+                <input
+                  type="text"
+                  id="userForm-user"
+                  class="input-u"
+                  autocomplete="nope"
+                  [maxlength]="20"
+                  formControlName="user"
+                  [disabled]="
+                    userForm.get('systemType').value == 0 ? true : false
+                  "
+                  (click)="blockUserName()"
+                /><!--(blur)="validarUserName()" -->
+              </label>
+              <ng-container *ngIf="!nCode$">
+                <ng-container
+                  *ngIf="userForm.get('systemType').value != 0 ? true : false"
+                >
+                  <label class="lbl-input-u multiple-select-u" aria-label=".">
+                    <button
+                      class="btn-primary-u"
+                      type="button"
+                      role="button"
+                      [disabled]="
+                        userForm.get('user').value == null
+                          ? true
+                          : false || userForm.get('user').value.trim() === ''
+                          ? true
+                          : false
+                      "
+                      (click)="validarUserName()"
+                    >
+                      Validar Usuario
+                    </button>
+                  </label>
+                </ng-container>
+              </ng-container>
+
+              <ng-container *ngIf="nCode$">
+                <ng-container *ngIf="isNewClient360$">
+                  <label
+                    for="userForm-password"
+                    class="lbl-input-u"
+                    aria-label="Contraseña (*)"
+                  >
+                    <input
+                      type="password"
+                      id="userForm-password"
+                      class="input-u"
+                      autocomplete="nope"
+                      formControlName="password"
+                      [maxlength]="18"
+                    />
+                  </label>
+                </ng-container>
+              </ng-container>
+            </div>
+          </ng-container>
+
+          <!--CONTRASEÑA Y USUARIO
+            <ng-container *ngIf="disablePassword()">
+              <div class="userForm__group userForm__credentials group1-5">
+                <label
+                  for="userForm-user"
+                  class="lbl-input-u"
+                  aria-label="Usuario (*)"
+                >
+                  <input
+                    type="text"
+                    id="userForm-user"
+                    class="input-u"
+                    autocomplete="nope"
+                    [maxlength]="20"
+                    formControlName="user"
+                    (blur)="validarUserName()"
+                  />
+                </label>
+                <ng-container *ngIf="isNewClient360$">
+                  <label
+                    for="userForm-password"
+                    class="lbl-input-u"
+                    aria-label="Contraseña (*)"
+                  >
+                    <input
+                      type="password"
+                      id="userForm-password"
+                      class="input-u"
+                      autocomplete="nope"
+                      formControlName="password"
+                      [maxlength]="18"
+                    />
+                  </label>
+                </ng-container>
+              </div>
+            </ng-container>
+            -->
+          <ng-container *ngIf="enablePassword()">
+            <div class="userForm__group group2">
+              <label
+                for="userForm-user"
+                class="lbl-input-u"
+                aria-label="Usuario (*)"
+              >
+                <input
+                  type="text"
+                  id="userForm-user"
+                  class="input-u"
+                  autocomplete="nope"
+                  [maxlength]="20"
+                  formControlName="user"
+                  [disabled]="
+                    userForm.get('systemType').value == 0 ? true : false
+                  "
+                  (click)="blockUserName()"
+                />
+              </label>
+
+              <label
+                for="userForm-system"
+                class="lbl-input-u"
+                aria-label="Sistema (*)"
+              >
+                <select
+                  formControlName="systemType"
+                  id="userForm-system"
+                  class="input-u"
+                  (click)="validateClienteData()"
+                >
+                  <option [value]="0" selected disabled>SELECCIONE</option>
+                  <option [value]="1">PLATAFORMA DIGITAL</option>
+                  <option [value]="2">CLIENTE 360</option>
+                  <option [value]="3">CONCILIACIÓN</option>
+                </select>
+              </label>
+            </div>
+          </ng-container>
+          <!--TIPO DE SISTEMA -->
+
+          <ng-container *ngIf="nCode$">
+            <!-- SITEMA PARA CUANDO CREAS-->
+            <ng-container *ngIf="disablePassword()">
+              <div class="userForm__group group1">
+                <ng-container *ngIf="userForm.get('systemType').value == 2 || userForm.get('systemType').value == 3">
+                  <label
+                    for="userForm-rol-usuario"
+                    class="lbl-input-u"
+                    aria-label="Rol Usuario (*)"
+                  >
+                    <select
+                      class="input-u"
+                      id="userForm-rol-usuario"
+                      formControlName="rolUsuario"
+                    >
+                      <option [value]="null" disabled selected hidden>
+                        Seleccione
+                      </option>
+                      <option
+                        *ngFor="let data of rolesClientes$.items"
+                        [value]="+data.iD_ROL"
+                      >
+                        {{ data.nombre }}
+                      </option>
+                    </select>
+                  </label>
+                </ng-container>
+              </div>
+              <div class="userForm__group group1-5 sin-bordes-margin">
+                <ng-container *ngIf="userForm.get('systemType').value == 1">
+                  <ng-container *ngIf="maxProductsAdd()">
+                    <label class="lbl-input-u multiple-select-u">
+                      <button
+                        class="btn-primary-u"
+                        type="button"
+                        role="button"
+                        [disabled]="disableBtnAdd()"
+                        (click)="addProductProfile()"
+                      >
+                        Añadir producto
+                      </button>
+                    </label>
+                  </ng-container>
+                </ng-container>
+              </div>
+            </ng-container>
+            <!--SISTEMA PARA CUANDO EDITAS-->
+            <ng-container *ngIf="enablePassword()">
+              <div class="userForm__group userForm__credentials group1-5">
+                <ng-container *ngIf="userForm.get('systemType').value == 1">
+                  <ng-container *ngIf="maxProductsAdd()">
+                    <label
+                      class="lbl-input-u multiple-select-u"
+                      aria-label="Añadir producto (*)"
+                    >
+                      <button
+                        class="btn-primary-u"
+                        type="button"
+                        role="button"
+                        [disabled]="disableBtnAdd()"
+                        (click)="addProductProfile()"
+                      >
+                        Añadir producto
+                      </button>
+                    </label>
+                  </ng-container>
+                </ng-container>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!!!isNewClient360$">
+              <ng-container *ngIf="userForm.get('systemType').value == 2 || userForm.get('systemType').value == 3">
+                <label
+                  for="userForm-rol-usuario"
+                  class="lbl-input-u"
+                  aria-label="Rol Usuario (*)"
+                >
+                  <select
+                    class="input-u"
+                    id="userForm-rol-usuario"
+                    formControlName="rolUsuario"
+                  >
+                    <option [value]="null" disabled selected hidden>
+                      SELECCIONE
+                    </option>
+                    <option
+                      *ngFor="let data of rolesClientes$.items"
+                      [value]="data.iD_ROL"
+                    >
+                      {{ data.nombre }}
+                    </option>
+                  </select>
+                </label>
+              </ng-container>
+            </ng-container>
+
+            <div class="userForm__group group2">
+              <!-- SISTEMA PLATAFORMA DIGITAL ANTIGUO-->
+              <ng-container *ngIf="userForm.get('systemType').value == 4">
+                <label
+                  class="lbl-input-u multiple-select-u"
+                  for="modalUser-products"
+                  aria-label="Productos (*)"
+                >
+                  <input
+                    type="text"
+                    class="input-u selectedProducts"
+                    readonly
+                    [value]="selectedProducts"
+                    tabindex="1"
+                    (click)="showHideListProducts()"
+                  />
+                  <button
+                    class="close-list"
+                    [class.close-list-active]="showListProducts"
+                    (click)="showHideListProducts()"
+                  >
+                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                  </button>
+
+                  <ng-container formArrayName="products">
+                    <ng-container *ngIf="showListProducts">
+                      <ul
+                        class="list-options-u"
+                        @enter
+                        (scroll)="eventListProduct($event)"
+                      >
+                        <ng-container *ngIf="!userProducts.controls.length">
+                          <li class="list-options-item-u">No hay resultados</li>
+                        </ng-container>
+                        <ng-container *ngIf="!!userProducts.controls.length">
+                          <li
+                            class="list-options-item-u"
+                            *ngFor="
+                              let fa of userProducts.controls;
+                              let i = index
+                            "
+                          >
+                            <ng-container [formGroup]="fa">
+                              <div class="item__group content-chk-u">
+                                <input
+                                  type="checkbox"
+                                  class="chk-u"
+                                  [id]="'ufp-' + fa.get('description').value"
+                                  formControlName="active"
+                                  (change)="
+                                    eventListProduct();
+                                    pushFormProfileProducts(
+                                      fa.controls,
+                                      $event.target.checked
+                                    )
+                                  "
+                                />
+                                <label
+                                  class="lbl-chk-u"
+                                  [for]="'ufp-' + fa.get('description').value"
+                                  role="button"
+                                >
+                                  {{ fa.get("description").value }}
+                                </label>
+                              </div>
+                            </ng-container>
+                          </li>
+                        </ng-container>
+                      </ul>
+                    </ng-container>
+                  </ng-container>
+                </label>
+
+                <ng-container *ngIf="showProfileSoat">
+                  <label
+                    for="userForm-profile-soat"
+                    class="lbl-input-u"
+                    aria-label="Perfil Soat (*)"
+                  >
+                    <select
+                      class="input-u"
+                      id="userForm-profile-soat"
+                      formControlName="soatProfile"
+                    >
+                      <option [value]="null" disabled selected hidden>
+                        Seleccione
+                      </option>
+                      <option
+                        *ngFor="let data of productsProfileSOAT$.items"
+                        [value]="data.id"
+                      >
+                        {{ data.description }}
+                      </option>
+                    </select>
+                  </label>
+                </ng-container>
+                <!-- PRUEBA -->
+
+                <ng-container *ngIf="showProfilesSCTR">
+                  <label
+                    for="userForm-profile-sctr"
+                    class="lbl-input-u"
+                    aria-label="Perfil SCTR (*)"
+                  >
+                    <select
+                      class="input-u"
+                      id="userForm-profile-sctr"
+                      formControlName="sctrProfile"
+                    >
+                      <option [value]="null" disabled selected hidden>
+                        Seleccione
+                      </option>
+                      <option
+                        *ngFor="let data of productsProfileSCTR$.items"
+                        [value]="data.id"
+                      >
+                        {{ data.description }}
+                      </option>
+                    </select>
+                  </label>
+                </ng-container>
+
+                <!-- Vida Ley-->
+                <ng-container *ngIf="showProfileVidaLey">
+                  <label
+                    for="userForm-profile-vidaLey"
+                    class="lbl-input-u"
+                    aria-label="Perfil VidaLey (*)"
+                  >
+                    <select
+                      class="input-u"
+                      id="userForm-profile-vidaLey"
+                      formControlName="vidaLeyProfile"
+                    >
+                      <option [value]="null" disabled selected hidden>
+                        Seleccione
+                      </option>
+                      <option
+                        *ngFor="let data of productsProfileVIDALEY$.items"
+                        [value]="data.id"
+                      >
+                        {{ data.description }}
+                      </option>
+                    </select>
+                  </label>
+                </ng-container>
+
+                <!-- Desgravamen -->
+                <ng-container *ngIf="showProfileDesgravamen">
+                  <label
+                    for="userForm-profile-desgravamen"
+                    class="lbl-input-u"
+                    aria-label="Perfil Desgravamen (*)"
+                  >
+                    <select
+                      class="input-u"
+                      id="userForm-profile-desgravamen"
+                      formControlName="desgravamenProfile"
+                    >
+                      <option [value]="null" disabled selected hidden>
+                        Seleccione
+                      </option>
+                      <option
+                        *ngFor="let data of productsProfileDESGRAVAMEN$.items"
+                        [value]="data.id"
+                      >
+                        {{ data.description }}
+                      </option>
+                    </select>
+                  </label>
+                </ng-container>
+
+                <!-- OTros Ramos-->
+                <ng-container *ngIf="showProfileOtrosRamos">
+                  <label
+                    for="userForm-profile-otros-ramos"
+                    class="lbl-input-u"
+                    aria-label="Perfil Otros Ramos (*)"
+                  >
+                    <select
+                      class="input-u"
+                      id="userForm-profile-otros-ramos"
+                      formControlName="otrosRamosProfile"
+                    >
+                      <option [value]="null" disabled selected hidden>
+                        Seleccione
+                      </option>
+                      <option
+                        *ngFor="let data of productsProfileOTROSRAMOS$.items"
+                        [value]="data.id"
+                      >
+                        {{ data.description }}
+                      </option>
+                    </select>
+                  </label>
+                </ng-container>
+
+                <!-- Accidentes PErsonales-->
+                <ng-container *ngIf="showProfileAccidentePersonales">
+                  <label
+                    for="userForm-profile-accidentes-personales"
+                    class="lbl-input-u"
+                    aria-label="Perfil Accidentes Personales (*)"
+                  >
+                    <select
+                      class="input-u"
+                      id="userForm-profile-accidentes-personales"
+                      formControlName="accidentesPersonalesProfile"
+                    >
+                      <option [value]="null" disabled selected hidden>
+                        Seleccione
+                      </option>
+                      <option
+                        *ngFor="
+                          let data of productsProfileACCIDENTESPERSONALES$.items
+                        "
+                        [value]="data.id"
+                      >
+                        {{ data.description }}
+                      </option>
+                    </select>
+                  </label>
+                </ng-container>
+
+                <!-- Covid Gruapl-->
+                <ng-container *ngIf="showProfileCovidGrupal">
+                  <label
+                    for="userForm-profile-covid-grupal"
+                    class="lbl-input-u"
+                    aria-label="Perfil Covid Grupal (*)"
+                  >
+                    <select
+                      class="input-u"
+                      id="userForm-profile-covid-grupal"
+                      formControlName="covidGrupalProfile"
+                    >
+                      <option [value]="null" disabled selected hidden>
+                        Seleccione
+                      </option>
+                      <option
+                        *ngFor="let data of productsProfileCOVIDGRUPAL$.items"
+                        [value]="data.id"
+                      >
+                        {{ data.description }}
+                      </option>
+                    </select>
+                  </label>
+                </ng-container>
+
+                <!-- Vida Grupo-->
+                <ng-container *ngIf="showProfileVidaGrupo">
+                  <label
+                    for="userForm-profile-vida-grupo"
+                    class="lbl-input-u"
+                    aria-label="Perfil Vida Grupo (*)"
+                  >
+                    <select
+                      class="input-u"
+                      id="userForm-profile-vida-grupo"
+                      formControlName="vidaGrupoProfile"
+                    >
+                      <option [value]="null" disabled selected hidden>
+                        Seleccione
+                      </option>
+                      <option
+                        *ngFor="let data of productsProfileVIDAGRUPO$.items"
+                        [value]="data.id"
+                      >
+                        {{ data.description }}
+                      </option>
+                    </select>
+                  </label>
+                </ng-container>
+
+                <!-- Vida Devolucion Protecta-->
+                <ng-container *ngIf="showProfileVidaDevolucionProtecta">
+                  <label
+                    for="userForm-profile-vida-devolucion-protecta"
+                    class="lbl-input-u"
+                    aria-label="Perfil Vida Devolucion Protecta (*)"
+                  >
+                    <select
+                      class="input-u"
+                      id="userForm-profile-vida-devolucion-protecta"
+                      formControlName="vidaDevolucionProtectaProfile"
+                    >
+                      <option [value]="null" disabled selected hidden>
+                        Seleccione
+                      </option>
+                      <option
+                        *ngFor="
+                          let data of productsProfileVIDADEVOLUCIONPROTECTA$.items
+                        "
+                        [value]="data.id"
+                      >
+                        {{ data.description }}
+                      </option>
+                    </select>
+                  </label>
+                </ng-container>
+
+                <!-- Back Office-->
+                <ng-container *ngIf="showProfileBackOffice">
+                  <label
+                    for="userForm-profile-back-office"
+                    class="lbl-input-u"
+                    aria-label="Perfil Back Office (*)"
+                  >
+                    <select
+                      class="input-u"
+                      id="userForm-profile-back-office"
+                      formControlName="backOfficeProfile"
+                    >
+                      <option [value]="null" disabled selected hidden>
+                        Seleccione
+                      </option>
+                      <option
+                        *ngFor="let data of productsProfileBACKOFFICE$.items"
+                        [value]="data.id"
+                      >
+                        {{ data.description }}
+                      </option>
+                    </select>
+                  </label>
+                </ng-container>
+
+                <!-- Qr-->
+                <ng-container *ngIf="showProfileQr">
+                  <label
+                    for="userForm-profile-qr"
+                    class="lbl-input-u"
+                    aria-label="Perfil QR (*)"
+                  >
+                    <select
+                      class="input-u"
+                      id="userForm-profile-qr"
+                      formControlName="qrProfile"
+                    >
+                      <option [value]="null" disabled selected hidden>
+                        Seleccione
+                      </option>
+                      <option
+                        *ngFor="let data of productsProfileQR$.items"
+                        [value]="data.id"
+                      >
+                        {{ data.description }}
+                      </option>
+                    </select>
+                  </label>
+                </ng-container>
+
+                <!-- Vida Individual Largo Plazo-->
+                <ng-container *ngIf="showProfileVidaIndividualLargoPlazo">
+                  <label
+                    for="userForm-profile-vida-indivual-largo-plazo"
+                    class="lbl-input-u"
+                    aria-label="Perfil Vida Individual Largo Plazo (*)"
+                  >
+                    <select
+                      class="input-u"
+                      id="userForm-profile-vida-indivual-largo-plazo"
+                      formControlName="vidaIndividualLargoPlazoProfile"
+                    >
+                      <option [value]="null" disabled selected hidden>
+                        Seleccione
+                      </option>
+                      <option
+                        *ngFor="
+                          let data of productsProfileVIDAINDIVIDUALLARGOPLAZO$.items
+                        "
+                        [value]="data.id"
+                      >
+                        {{ data.description }}
+                      </option>
+                    </select>
+                  </label>
+                </ng-container>
+
+                <!-- VDP-->
+                <ng-container *ngIf="showProfileVdp">
+                  <label
+                    for="userForm-profile-vdp"
+                    class="lbl-input-u"
+                    aria-label="Perfil VDP (*)"
+                  >
+                    <select
+                      class="input-u"
+                      id="userForm-profile-vdp"
+                      formControlName="vdpProfile"
+                    >
+                      <option [value]="null" disabled selected hidden>
+                        Seleccione
+                      </option>
+                      <option
+                        *ngFor="let data of productsProfileVDP$.items"
+                        [value]="data.id"
+                      >
+                        {{ data.description }}
+                      </option>
+                    </select>
+                  </label>
+                </ng-container>
+
+                <!-- Desgravamen Devolucion-->
+                <ng-container *ngIf="showProfileDesgravamenDevolucion">
+                  <label
+                    for="userForm-profile-desgravamen-devolucion"
+                    class="lbl-input-u"
+                    aria-label="Perfil Desgravamen Devolucion(*)"
+                  >
+                    <select
+                      class="input-u"
+                      id="userForm-profile-desgravamen-devolucion"
+                      formControlName="desgravamenDevolucionProfile"
+                    >
+                      <option [value]="null" disabled selected hidden>
+                        Seleccione
+                      </option>
+                      <option
+                        *ngFor="
+                          let data of productsProfileDESGRAVAMENDEVOLUCION$.items
+                        "
+                        [value]="data.id"
+                      >
+                        {{ data.description }}
+                      </option>
+                    </select>
+                  </label>
+                </ng-container>
+
+                <!-- Operaciones-->
+                <ng-container *ngIf="showProfileOperaciones">
+                  <label
+                    for="userForm-profile-operaciones"
+                    class="lbl-input-u"
+                    aria-label="Perfil Operaciones (*)"
+                  >
+                    <select
+                      class="input-u"
+                      id="userForm-profile-operaciones"
+                      formControlName="operacionesProfile"
+                    >
+                      <option [value]="null" disabled selected hidden>
+                        Seleccione
+                      </option>
+                      <option
+                        *ngFor="let data of productsProfileOPERACIONES$.items"
+                        [value]="data.id"
+                      >
+                        {{ data.description }}
+                      </option>
+                    </select>
+                  </label>
+                </ng-container>
+
+                <!-- Devolcuiones-->
+                <ng-container *ngIf="showProfileDevoluciones">
+                  <label
+                    for="userForm-profile-devoluciones"
+                    class="lbl-input-u"
+                    aria-label="Perfil Devoluciones (*)"
+                  >
+                    <select
+                      class="input-u"
+                      id="userForm-profile-devoluciones"
+                      formControlName="devolucionesProfile"
+                    >
+                      <option [value]="null" disabled selected hidden>
+                        Seleccione
+                      </option>
+                      <option
+                        *ngFor="let data of productsProfileDEVOLUCIONES$.items"
+                        [value]="data.id"
+                      >
+                        {{ data.description }}
+                      </option>
+                    </select>
+                  </label>
+                </ng-container>
+              </ng-container>
+
+              <!-- CLIENTE 360 -->
+              <ng-container *ngIf="userForm.get('systemType').value == 2 || userForm.get('systemType').value == 3">
+                <!-- FECHAS -->
+
+                <label class="lbl-input-u" aria-label="Fecha Inicio(*)">
+                  <input
+                    class="input-u"
+                    type="text"
+                    #dp="bsDatepicker"
+                    [bsConfig]="bsConfig"
+                    bsDatepicker
+                    formControlName="fechaInicio"
+                    [(maxDate)]="bsValueFinMax"
+                    readonly
+                  />
+                </label>
+                <label class="lbl-input-u" aria-label="Fecha Final(*)">
+                  <input
+                    class="input-u"
+                    type="text"
+                    #dp="bsDatepicker"
+                    [bsConfig]="bsConfig"
+                    bsDatepicker
+                    formControlName="fechaFinal"
+                    [(maxDate)]="bsValueFinMax"
+                    readonly
+                  />
+                </label>
+              </ng-container>
+            </div>
+          </ng-container>
+
+          <!--NUEVO PLATAFORMA DIGITAL-->
+          <div
+            class="userForm__group userForm__address group1 sin-bordes-margin con-border-bottom"
+          >
+            <ng-container *ngIf="nCode$">
+              <ng-container *ngIf="userForm.get('systemType').value == 1">
+                <ng-container *ngIf="profileProductos.controls.length">
+                  <table class="table profile-product">
+                    <thead>
+                      <tr>
+                        <th>N°</th>
+                        <th class="product-profile-line">Producto</th>
+                        <th class="product-profile-line">Perfil</th>
+                        <th>Eliminar</th>
+                      </tr>
+                    </thead>
+
+                    <ng-container
+                      *ngFor="
+                        let form of profileProductos.controls;
+                        let i = index
+                      "
+                    >
+                      <tbody [formGroup]="form">
+                        <tr class="border-row">
+                          <td>{{ i + 1 }}</td>
+                          <td>
+                            <select
+                              class="input-collapse"
+                              formControlName="productId"
+                            >
+                              <ng-container
+                                *ngFor="
+                                  let data of listProductos$;
+                                  let index = index
+                                "
+                              >
+                                <ng-container
+                                  *ngIf="
+                                    !limitArrayProduct(i).includes(
+                                      +data.idProducto
+                                    )
+                                  "
+                                >
+                                  <option
+                                    [innerHTML]="data.nombreProducto"
+                                    [value]="data.idProducto"
+                                  ></option>
+                                </ng-container>
+                              </ng-container>
+                            </select>
+                          </td>
+                          <td>
+                            <select
+                              class="input-collapse"
+                              formControlName="profileId"
+                            >
+                              <ng-container
+                                *ngFor="
+                                  let data of listProfileProductos(
+                                    form.get('productId').value
+                                  )
+                                "
+                              >
+                                <option [value]="data.idPerfil">
+                                  {{ data.nombrePerfil }}
+                                </option>
+                              </ng-container>
+                            </select>
+                          </td>
+                          <td>
+                            <button
+                              class="dropdown-item-btn-u btn-modal-productor-perfil"
+                              (click)="deleteProductProfile(i)"
+                            >
+                              <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </ng-container>
+                  </table>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+          </div>
+
+          <!--Forumulario Datos del Cliente *ngIf="userForm.get('systemType').value != 0" nCode$-->
+          <ng-container *ngIf="nCode$">
+            <ng-container>
+              <div class="userForm__grou sin-bordes-margin">
+                <app-channel-point
+                  [data]="dataChannels"
+                  (CANAL_VENTA_DATA_OUT)="channelSale = $event"
+                  (PUNTO_VENTA_DATA_OUT)="pointSale = $event"
+                ></app-channel-point>
+              </div>
+              <div *ngIf="showlist" style="margin-top: 10px">
+                <label for="other" class="lbl-input-u" aria-label="Ejecutivo">
+                  <select class="input-u" id="other" formControlName="other">
+                    <option [value]="null" disabled selected hidden>
+                      Seleccione
+                    </option>
+                    <option
+                      *ngFor="let data of listado$"
+                      [value]="data.documento"
+                    >
+                      {{ data.ejecutivo }}
+                    </option>
+                  </select>
+                </label>
+              </div>
+              <div class="userForm__group userForm__document group3">
+                <label
+                  for="userForm-document-type"
+                  class="lbl-input-u"
+                  aria-label="Tipo de Documento (*)"
+                >
+                  <select
+                    class="input-u"
+                    id="userForm-document-type"
+                    formControlName="documentType"
+                  >
+                    <option [value]="null" selected disabled hidden>
+                      Seleccione
+                    </option>
+                    <option value="1">DNI</option>
+                    <option value="2">C.E.</option>
+                    <option value="3">OTRO</option>
+                  </select>
+                </label>
+                <label
+                  for="userForm-document-number"
+                  class="lbl-input-u"
+                  aria-label="Número de Documento (*)"
+                >
+                  <input
+                    type="text"
+                    formControlName="documentNumber"
+                    id="userForm-document-number"
+                    class="input-u"
+                    [maxlength]="limitRangeDocumentNumber.max"
+                  />
+                  <ng-container
+                    *ngIf="
+                      (!this.isNewClient360$ &&
+                        this.uf['documentNumber'].invalid) ||
+                      (this.isNewClient360$ &&
+                        this.uf['documentNumber'].touched &&
+                        this.uf['documentNumber'].invalid)
+                    "
+                  >
+                    <ng-container
+                      *ngIf="
+                        this.uf['documentNumber'].value === '' ||
+                        this.uf['documentNumber'].value === null
+                      "
+                    >
+                      <p class="error-form">Este campo es obligatorio</p>
+                    </ng-container>
+                    <ng-container
+                      *ngIf="
+                        !(this.uf['documentNumber'].value === '') &&
+                        !(this.uf['documentNumber'].value === null)
+                      "
+                    >
+                      <p class="error-form">Este campo es inválido</p>
+                    </ng-container>
+                  </ng-container>
+                </label>
+                <div class="lbl-input-u" role="group" aria-label="Sexo (*)">
+                  <div class="group__sex">
+                    <div class="content-radio-u">
+                      <input
+                        type="radio"
+                        class="radio-u"
+                        id="userForm-sex1"
+                        formControlName="sex"
+                        value="1"
+                      />
+                      <label class="lbl-radio-u" for="userForm-sex1"
+                        >Masculino</label
+                      >
+                    </div>
+                    <div class="content-radio-u">
+                      <input
+                        type="radio"
+                        class="radio-u"
+                        id="userForm-sex2"
+                        formControlName="sex"
+                        value="2"
+                      />
+                      <label class="lbl-radio-u" for="userForm-sex2"
+                        >Femenino</label
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style="text-align: center" *ngIf="intermedClient != null">
+                <label *ngIf="interExtra && intermedClient"
+                  >Intermediario existe y coincide</label
+                >
+                <label *ngIf="!interExtra && intermedClient"
+                  >Intermediario existe y no coincide</label
+                >
+                <label *ngIf="!intermedClient" style="color: red"
+                  >Intermediario no existe</label
+                >
+              </div>
+            </ng-container>
+            <div class="userForm__group group3">
+              <label
+                for="userForm-name"
+                class="lbl-input-u"
+                aria-label="Nombre (*)"
+              >
+                <input
+                  type="text"
+                  id="userForm-name"
+                  class="input-u"
+                  formControlName="name"
+                  [maxlength]="20"
+                />
+                <ng-container
+                  *ngIf="
+                    (!this.isNewClient360$ && this.uf['name'].invalid) ||
+                    (this.isNewClient360$ &&
+                      this.uf['name'].touched &&
+                      this.uf['name'].invalid)
+                  "
+                >
+                  <ng-container
+                    *ngIf="
+                      this.uf['name'].value === '' ||
+                      this.uf['name'].value === null
+                    "
+                  >
+                    <p class="error-form">Este campo es obligatorio</p>
+                  </ng-container>
+                  <ng-container
+                    *ngIf="
+                      !(this.uf['name'].value === '') &&
+                      !(this.uf['name'].value === null)
+                    "
+                  >
+                    <p class="error-form">Este campo es inválido</p>
+                  </ng-container>
+                </ng-container>
+              </label>
+              <label
+                for="userForm-ape-pat"
+                class="lbl-input-u"
+                aria-label="Apellido Paterno (*)"
+              >
+                <input
+                  type="text"
+                  id="userForm-ape-pat"
+                  class="input-u"
+                  formControlName="apePat"
+                  [maxlength]="20"
+                />
+                <ng-container
+                  *ngIf="
+                    (!this.isNewClient360$ && this.uf['apePat'].invalid) ||
+                    (this.isNewClient360$ &&
+                      this.uf['apePat'].touched &&
+                      this.uf['apePat'].invalid)
+                  "
+                >
+                  <ng-container
+                    *ngIf="
+                      this.uf['apePat'].value === '' ||
+                      this.uf['apePat'].value === null
+                    "
+                  >
+                    <p class="error-form">Este campo es obligatorio</p>
+                  </ng-container>
+                  <ng-container
+                    *ngIf="
+                      !(this.uf['apePat'].value === '') &&
+                      !(this.uf['apePat'].value === null)
+                    "
+                  >
+                    <p class="error-form">Este campo es inválido</p>
+                  </ng-container>
+                </ng-container>
+              </label>
+              <label
+                for="userForm-ape-mat"
+                class="lbl-input-u"
+                aria-label="Apellido Materno (*)"
+              >
+                <input
+                  type="text"
+                  id="userForm-ape-mat"
+                  class="input-u"
+                  formControlName="apeMat"
+                  [maxlength]="20"
+                />
+                <ng-container
+                  *ngIf="
+                    (!this.isNewClient360$ && this.uf['apeMat'].invalid) ||
+                    (this.isNewClient360$ &&
+                      this.uf['apeMat'].touched &&
+                      this.uf['apeMat'].invalid)
+                  "
+                >
+                  <ng-container
+                    *ngIf="
+                      this.uf['apeMat'].value === '' ||
+                      this.uf['apeMat'].value === null
+                    "
+                  >
+                    <p class="error-form">Este campo es obligatorio</p>
+                  </ng-container>
+                  <ng-container
+                    *ngIf="
+                      !(this.uf['apeMat'].value === '') &&
+                      !(this.uf['apeMat'].value === null)
+                    "
+                  >
+                    <p class="error-form">Este campo es inválido</p>
+                  </ng-container>
+                </ng-container>
+              </label>
+            </div>
+            <ng-container>
+              <div class="userForm__group userForm__locations">
+                <app-locations
+                  [showCountries]="false"
+                  [data]="dataLocation"
+                  (locations)="locations($event)"
+                ></app-locations>
+              </div>
+              <div class="userForm__group userForm__contact group1-5">
+                <label
+                  for="userForm-phone"
+                  class="lbl-input-u"
+                  aria-label="Celular (*):"
+                >
+                  <input
+                    type="text"
+                    id="userForm-phone"
+                    class="input-u"
+                    formControlName="phone"
+                    [maxlength]="9"
+                  />
+                  <ng-container
+                    *ngIf="
+                      (!this.isNewClient360$ && this.uf['phone'].invalid) ||
+                      (this.isNewClient360$ &&
+                        this.uf['phone'].touched &&
+                        this.uf['phone'].invalid)
+                    "
+                  >
+                    <ng-container
+                      *ngIf="
+                        this.uf['phone'].value === '' ||
+                        this.uf['phone'].value === null
+                      "
+                    >
+                      <p class="error-form">Este campo es obligatorio</p>
+                    </ng-container>
+                    <ng-container
+                      *ngIf="
+                        !(this.uf['phone'].value === '') &&
+                        !(this.uf['phone'].value === null)
+                      "
+                    >
+                      <p class="error-form">Este campo es inválido</p>
+                    </ng-container>
+                  </ng-container>
+                </label>
+                <label
+                  for="userForm-email"
+                  class="lbl-input-u"
+                  aria-label="Correo Electrónico (*):"
+                >
+                  <input
+                    type="text"
+                    id="userForm-email"
+                    class="input-u"
+                    autocomplete="nope"
+                    [maxlength]="60"
+                    formControlName="email"
+                  />
+                  <ng-container
+                    *ngIf="
+                      (!this.isNewClient360$ && this.uf['email'].invalid) ||
+                      (this.isNewClient360$ &&
+                        this.uf['email'].touched &&
+                        this.uf['email'].invalid)
+                    "
+                  >
+                    <ng-container
+                      *ngIf="
+                        this.uf['email'].value === '' ||
+                        this.uf['email'].value === null
+                      "
+                    >
+                      <p class="error-form">Este campo es obligatorio</p>
+                    </ng-container>
+                    <ng-container
+                      *ngIf="
+                        !(this.uf['email'].value === '') &&
+                        !(this.uf['email'].value === null)
+                      "
+                    >
+                      <p class="error-form">Este campo es inválido</p>
+                    </ng-container>
+                  </ng-container>
+                </label>
+              </div>
+              <div class="userForm__group userForm__address group1">
+                <label
+                  for="userForm-address"
+                  class="lbl-input-u"
+                  aria-label="Dirección (*)"
+                >
+                  <input
+                    type="text"
+                    id="userForm-address"
+                    class="input-u"
+                    [maxlength]="100"
+                    formControlName="address"
+                  />
+                  <ng-container
+                    *ngIf="
+                      (!this.isNewClient360$ && this.uf['address'].invalid) ||
+                      (this.isNewClient360$ &&
+                        this.uf['address'].touched &&
+                        this.uf['address'].invalid)
+                    "
+                  >
+                    <ng-container
+                      *ngIf="
+                        this.uf['address'].value === '' ||
+                        this.uf['address'].value === null
+                      "
+                    >
+                      <p class="error-form">Este campo es obligatorio</p>
+                    </ng-container>
+                    <ng-container
+                      *ngIf="
+                        !(this.uf['address'].value === '') &&
+                        !(this.uf['address'].value === null)
+                      "
+                    >
+                      <p class="error-form">Este campo es inválido</p>
+                    </ng-container>
+                  </ng-container>
+                </label>
+              </div>
+            </ng-container>
+          </ng-container>
+        </form>
+      </div>
+      <!--BOTONES DEL FORMULARIO-->
+      <div class="modal__footer">
+        <button
+          class="btn-secondary-u mr-3"
+          type="button"
+          role="button"
+          (click)="closeModals()"
+        >
+          Cancelar
+        </button>
+        <button
+          class="btn-primary-u"
+          type="button"
+          role="button"
+          [disabled]="
+            userForm.invalid ||
+            (uf['systemType'].value == 1 && profileProductos.invalid) ||
+            (uf['channelSale'].value == 0 && uf['pointSale'].value == 0)
+          "
+          (click)="submit()"
+        >
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- MODAL DESHABILITAR USUARIO -->
+<ng-template #modalDisableUser>
+  <div class="content-modal-u">
+    <div class="modal-u">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Deshabilitar Usuario</h6>
+        <button class="modal__header--close" (click)="closeModals()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <p class="modal__body--desc">
+          ¿Seguro que desea deshabilitar el usuario?
+        </p>
+      </div>
+      <div class="modal__footer">
+        <button
+          class="btn-secondary-u mr-3"
+          role="button"
+          (click)="closeModals()"
+        >
+          Cancelar
+        </button>
+        <button class="btn-primary-u" (click)="disableUser()">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- MODAL HABILITAR USUARIO -->
+<ng-template #modalEnableUser>
+  <div class="content-modal-u">
+    <div class="modal-u">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Habilitar Usuario</h6>
+        <button class="modal__header--close" (click)="closeModals()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <p class="modal__body--desc">¿Seguro que desea habilitar el usuario?</p>
+      </div>
+      <div class="modal__footer">
+        <button
+          class="btn-secondary-u mr-3"
+          role="button"
+          (click)="closeModals()"
+        >
+          Cancelar
+        </button>
+        <button class="btn-primary-u" (click)="enableUser()">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- MODAL DESHABILITAR CLIENTE -->
+<ng-template #modalDisableCliente>
+  <div class="content-modal-u">
+    <div class="modal-u">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Deshabilitar Cliente</h6>
+        <button class="modal__header--close" (click)="closeModals()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <p class="modal__body--desc">
+          ¿Seguro que desea deshabilitar el cliente?
+        </p>
+      </div>
+      <div class="modal__footer">
+        <button
+          class="btn-secondary-u mr-3"
+          role="button"
+          (click)="closeModals()"
+        >
+          Cancelar
+        </button>
+        <button class="btn-primary-u" (click)="disableClient()">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- MODAL HABILITAR CLIENTE -->
+<ng-template #modalEnableCliente>
+  <div class="content-modal-u">
+    <div class="modal-u">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Habilitar Cliente</h6>
+        <button class="modal__header--close" (click)="closeModals()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <p class="modal__body--desc">¿Seguro que desea habilitar el cliente?</p>
+      </div>
+      <div class="modal__footer">
+        <button
+          class="btn-secondary-u mr-3"
+          role="button"
+          (click)="closeModals()"
+        >
+          Cancelar
+        </button>
+        <button class="btn-primary-u" (click)="enableClient360()">
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Mensaje Modal -->
+<ng-template #modalMessage>
+  <div class="content-modal-u">
+    <div class="modal-u">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Mensaje</h6>
+        <button class="modal__header--close" (click)="closeModals()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <p class="modal__body--desc">{{ message$ }}</p>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-primary-u" (click)="closeModals()">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Modal de Existe Usuario -->
+<ng-template #modalExistUser>
+  <div class="content-modal-u">
+    <div class="modal-u">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Mensaje</h6>
+        <button class="modal__header--close" (click)="closeLastModal()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <p class="modal__body--desc">{{ message$ }}</p>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-primary-u" (click)="closeLastModal()">
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- VER RESUMEN MODAL -->
+<ng-template #modalVerResumen>
+  <div class="content-modal-u">
+    <div class="modal-u modal-ver-resumen">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Detalle del usuario</h6>
+        <button class="modal__header--close" (click)="closeLastModal()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <div class="subtitulo-modal-ver">
+          <h5>Datos del Canal</h5>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="product-profile-abstract">Canal de Venta</th>
+              <th class="product-profile-abstract">Punto de Venta</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td [innerHTML]="dataUsuarioModal$?.nombreCanalVenta"></td>
+              <td>{{ dataUsuarioModal$?.nombrePuntoVenta }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="subtitulo-modal-ver">
+          <h5>Datos del Usuario</h5>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="product-profile-abstract">Usuario</th>
+              <th class="product-profile-abstract">Nombre</th>
+              <th class="product-profile-abstract">Sexo</th>
+              <th class="product-profile-abstract">Nro. documento</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ dataUsuarioModal$?.nombreUsuarioSistema }}</td>
+              <td>{{ dataUsuarioModal$?.nombreCompleto }}</td>
+              <td>
+                {{ dataUsuarioModal$?.sexo == "1" ? "MASCULINO" : "FEMENINO" }}
+              </td>
+              <td>
+                {{ dataUsuarioModal$?.nombreTipoDocumento }} -
+                {{ dataUsuarioModal$?.numeroDocumento }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="product-profile-abstract">Departamento</th>
+              <th class="product-profile-abstract">Provincia</th>
+              <th class="product-profile-abstract">Distrito</th>
+              <th class="product-profile-abstract">Dirección</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ dataUsuarioModal$?.nombreDepartamento }}</td>
+              <td>{{ dataUsuarioModal$?.nombreProvincia }}</td>
+              <td>{{ dataUsuarioModal$?.nombreDistrito }}</td>
+              <td>{{ dataUsuarioModal$?.direccion }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="product-profile-abstract">Correo</th>
+              <th class="product-profile-abstract">Celular</th>
+              <th class="product-profile-abstract">Estado PD</th>
+              <th class="product-profile-abstract">Estado 360</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ dataUsuarioModal$?.correo }}</td>
+              <td>{{ dataUsuarioModal$?.celular }}</td>
+              <td *ngIf="estadoUsuarioPD$">
+                {{ estadoUsuarioPD$ == "1" ? "ACTIVO" : "INACTIVO" }}
+              </td>
+              <td *ngIf="!estadoUsuarioPD$">-</td>
+              <td *ngIf="estadoCliente360$">
+                {{ estadoCliente360$ == "1" ? "ACTIVO" : "INACTIVO" }}
+              </td>
+              <td *ngIf="!estadoCliente360$">-</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="subtitulo-modal-ver">
+          <h5>Productos y Perfiles</h5>
+        </div>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="product-profile-abstract">Sistema</th>
+              <th class="product-profile-abstract">Producto</th>
+              <th class="product-profile-abstract">Perfil</th>
+              <th class="product-profile-abstract">Rol</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container
+              *ngFor="let data of productosPerfilesModal$; let index = index"
+            >
+              <ng-container *ngIf="systemaModal$ == 0 || systemaModal$ == 1">
+                <tr class="grid-body">
+                  <td class="grid-body-item">
+                    {{ "PLATAFORMA DIGITAL" }}
+                  </td>
+                  <td
+                    class="grid-body-item"
+                    [innerHTML]="data.nombreProducto"
+                  ></td>
+                  <td class="grid-body-item">
+                    {{ data.nombrePerfil }}
+                  </td>
+                  <td class="grid-body-item">-</td>
+                </tr>
+              </ng-container>
+            </ng-container>
+
+            <ng-container *ngIf="systemaModal$ === 0 || systemaModal$ === 2 || systemaModal$ === 3">
+              <tr>
+                <td>CLIENTE 360</td>
+                <td>-</td>
+                <td>-</td>
+                <td>{{ nombreRol$ }}</td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+      <p class="modal__body--desc"></p>
+
+      <div class="modal__footer">
+        <button
+          class="button-default primary espacio-btn-table"
+          (click)="closeLastModal()"
+        >
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Modal Cambiar contraseña -->
+<ng-template #modalChangePassword>
+  <div class="content-modal-u">
+    <div class="modal-u modal-ver-resumen">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Cambio de Contraseña</h6>
+        <button class="modal__header--close" (click)="closeLastModal()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <form class="content__item form" [formGroup]="formModal">
+          <div class="userForm__group group1-5">
+            <label for="" class="lbl-input-u" aria-label="Usuario">
+              <input
+                type="text"
+                class="input-u usuario-nueva-contraseña"
+                autocomplete="nope"
+                formControlName="userChange"
+                disabled
+              />
+            </label>
+
+            <label
+              for="userForm-password"
+              class="lbl-input-u"
+              aria-label="Nueva Contraseña "
+            >
+              <input
+                type="password"
+                class="input-u contraseña-nueva-input"
+                autocomplete="nope"
+                formControlName="passwordChange"
+                [maxlength]="18"
+              />
+            </label>
+          </div>
+        </form>
+      </div>
+      <div class="modal__footer">
+        <button
+          class="btn-secondary-u mr-3"
+          type="button"
+          role="button"
+          (click)="closeModals()"
+        >
+          Cancelar
+        </button>
+        <button
+          class="btn-primary-u"
+          type="button"
+          role="button"
+          [disabled]="formModal.invalid"
+          (click)="submitChangePassword()"
+        >
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

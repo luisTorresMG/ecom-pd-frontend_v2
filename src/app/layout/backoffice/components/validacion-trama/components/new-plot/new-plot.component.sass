@@ -1,0 +1,194 @@
+@import "variables"
+@import "standard"
+@import "modal"
+
+.content
+  padding: 1.5rem
+
+.form,
+.arguments
+  display: flex
+  flex-direction: column
+  gap: 1rem
+
+.content-inputs
+  display: grid
+  grid-gap: 1rem
+  grid-template-columns: 1fr
+
+.content-actions
+  display: flex
+  align-items: center
+  justify-content: flex-end
+  flex-direction: column
+  gap: 1rem
+
+  .file-u
+    margin-bottom: 1rem
+
+.success-icon,
+.error-icon
+  text-align: center
+  display: block
+  margin: auto
+
+  &::after
+    display: block
+    font-size: 21px
+    font-weight: bold
+
+.success-icon::after
+  content: "✓"
+  color: $success-color
+
+.error-icon::after
+  content: "×"
+  color: $error-color
+
+.table-actions
+  display: flex
+  gap: 1rem
+  align-items: center
+  justify-content: space-between
+  flex-direction: column
+  margin-bottom: 1rem
+
+  &-left
+    display: flex
+    align-items: center
+    justify-content: flex-start
+    flex-direction: column
+    gap: 1rem
+    width: 100%
+
+label.email-channel
+  max-width: 240px
+
+.arguments-divider
+  margin: .5rem 0
+
+.table-arguments
+  width: fit-content
+
+  thead
+    th:nth-child(1)
+      width: 130px
+
+    th:nth-child(2)
+      width: 130px
+
+  td
+    border: 1px solid #ccc
+
+  tbody
+    td
+      text-align: left
+
+.content-args-file
+  display: flex
+  align-items: flex-end
+  justify-content: space-between
+  gap: 1rem
+  flex-wrap: wrap
+  flex-direction: row
+
+.plot-success
+  margin-top: 4rem
+  &-info
+    display: flex
+    align-items: center
+    justify-content: center
+    gap: 1rem
+    max-width: 420px
+    margin: auto
+    flex-wrap: wrap
+
+    img
+      width: 160px
+      height: 160px
+
+    .paragraph
+      font-size: 22px
+      text-align: center
+
+.plot-actions
+  display: flex
+  align-items: center
+  justify-content: center
+  flex-direction: row
+  gap: 1rem
+  margin-top: 3rem
+
+.cell-actions
+  display: flex
+  align-items: stretch
+  justify-content: center
+  flex-direction: row
+  flex-wrap: nowrap
+
+  .button-cell-action
+    background-color: #fff
+    width: 30px
+    height: 22px
+    display: inline-flex
+    align-items: center
+    justify-content: center
+
+.content-upload-file
+  width: 100%
+  display: flex
+  align-items: center
+  justify-content: flex-end
+  margin-top: 1rem
+
+.modal-submit
+  .modal
+    &-header h6,
+    &-body .paragraph
+      text-align: center !important
+
+    &-body
+      gap: 1rem
+
+      img
+        width: 160px
+        margin: auto
+
+      .paragraph
+        font-size: 18px
+
+@media (min-width: 460px)
+  .table-actions
+    &-left
+      flex-direction: row
+
+    &-right
+      width: 100%
+      display: flex
+      flex-direction: row
+      justify-content: flex-end
+      flex-wrap: wrap
+      gap: 1rem
+
+  .content-actions
+    flex-direction: row
+
+    .file-u
+      margin-right: 1rem
+      margin-bottom: 0
+
+@media (min-width: 620px)
+  .table-actions
+    flex-direction: row
+
+@media (min-width: 460px) and (max-width: 669px)
+  .content-inputs
+    grid-template-columns: repeat(2, 1fr)
+
+@media (min-width: 670px) and (max-width: 879px)
+  .content-inputs
+    grid-template-columns: repeat(3, 1fr)
+
+@media (min-width: 880px)
+  .content-inputs
+    grid-template-columns: repeat(4, 1fr)

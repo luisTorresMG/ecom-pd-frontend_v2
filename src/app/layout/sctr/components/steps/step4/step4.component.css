@@ -1,0 +1,45 @@
+.title {
+  color: #300764;
+  text-align: center;
+  margin: 20px 15px;
+  font-weight: bold;
+}
+
+.title > span {
+  color: #ff6e00;
+  font-size: 50px;
+}
+
+.code {
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+.code span {
+  font-size: 16px;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.ref {
+  font-weight: bold;
+  color: #ff6e00;
+  text-align: center;
+  margin-bottom: 48px;
+  font-size: 14px;
+}
+.soat-container {
+  padding-bottom: 5px !important;
+}
+.modal-errors-title {
+  color: #ff6e00;
+  font-size: 16px;
+}
+.modal-item-error {
+  font-size: 13px;
+  margin-left: -20px;
+}

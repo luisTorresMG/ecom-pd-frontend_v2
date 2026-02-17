@@ -1,0 +1,148 @@
+@import "standard"
+@import "modal"
+@import "variables"
+
+.placeholder
+  select,
+  input
+    border: 1px solid $purple
+
+.content
+  .button-back
+    min-width: fit-content
+    padding: 0
+
+  &__navigation,
+  &__header,
+  .body__filter
+    margin-bottom: 1rem
+
+  &__navigation
+    display: flex
+    justify-content: space-between
+    align-items: center
+    gap: 1rem
+    flex-wrap: wrap
+
+  &__header
+    gap: 1rem
+    flex-wrap: wrap
+
+  .filter-search
+    display: flex
+    align-items: center
+
+    input
+      padding-left: 45px
+      padding-right: 50px
+
+    button
+      position: absolute
+      right: 0
+      display: flex
+      align-items: center
+      justify-content: center
+      width: 50px
+      height: 100%
+      background: none
+      border: none
+
+      &:hover
+        background-color: rgba(0,0,0,0.075)
+
+    .fa-search
+      left: 20px
+      position: absolute
+
+  .table-structures
+    min-height: 500px
+
+    .status-ellipse
+      display: flex
+      align-items: center
+      justify-content: center
+      gap: 7px
+      color: #8C8B92
+
+      &::before
+        content: ""
+        display: block
+        min-width: 5px
+        width: 8px
+        height: 8px
+        border-radius: 50%
+        background-color: #8C8B92
+
+      &.active
+        color: #00CF3E
+
+        &::before
+          background-color: #00CF3E
+
+    .dropdown-toggle
+      .fa
+        color: $orange
+
+.modal-filters
+  .modal-body
+    overflow: visible !important
+
+  .form-filter
+    display: flex
+    gap: 1rem
+    flex-direction: column
+
+    .fa-search,
+    .fa-calendar
+      position: absolute
+      right: 1rem
+
+    .form-policy,
+    .form-contractor,
+    .form-sales-channel
+      display: flex
+      align-items: center
+
+    ::ng-deep pro-select .placeholder,
+    .placeholder
+      display: flex
+      align-items: center
+      flex-direction: row
+      gap: 1rem
+
+      &::before
+        min-width: 140px
+
+      input
+        padding-right: 2.5rem
+
+    ::ng-deep pro-select
+      .content-input
+        width: 100%
+
+      .fa-angle-right
+        display: none
+
+.modal-delete,
+.modal-disable
+  section
+    .paragraph
+      font-size: 18px !important
+
+.modal-message
+  .modal
+    &-header h6,
+    &-body .paragraph
+      text-align: center !important
+
+    &-body
+      display: flex
+      justify-content: center
+      align-items: center
+      gap: 1rem
+
+      img
+        max-width: 160px
+
+      .paragraph
+        font-size: 18px !important

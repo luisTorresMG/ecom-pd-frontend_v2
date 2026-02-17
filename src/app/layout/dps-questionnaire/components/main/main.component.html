@@ -1,0 +1,28 @@
+<app-header-ecommerce [title]="title"
+                      [banner]="'./assets/dps/bannerVC.svg'"></app-header-ecommerce>
+
+<ng-container *ngIf="tokenIsValid">
+  <div class="steps">
+    <router-outlet></router-outlet>
+  </div>
+</ng-container>
+<ng-container *ngIf="!tokenIsValid">
+  <div class="content-no-apto text-center"
+       [@fade]="true">
+    <h2 class="title-no-apto text-center">
+      Hola. Tu cotización ya no se encuentra vigente o completaste el proceso.
+    </h2>
+    <h2 class="title-no-apto text-center mt-3">
+      Por favor, solicita una nueva
+      cotización a tu asesor.
+    </h2>
+    <p class="desc-no-apto text-center">
+      Contáctanos en:<br>
+      Correo Electrónico: <b>vidadevolucion@protectasecurity.pe</b><br>
+      Estamos a tu disposición de lunes a viernes de <b>9:00 a.m. a 6:00 p.m.</b>, a excepción de feriados.
+    </p>
+  </div>
+</ng-container>
+
+
+<app-footer></app-footer>

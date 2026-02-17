@@ -1,0 +1,70 @@
+<main class="container-fluid px-0 py-0 mx-0 my-0">
+  <div class="max-width-to-center">
+    <div class="bc-1"></div>
+    <div class="row px-0 py-0 mx-0 my-0">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+        <app-show-steps [NSTEP]="3"></app-show-steps>
+      </div>
+    </div>
+    <!-- PASO 3 - 2 -->
+    <div class="paso-3BA">
+      <div class="row px-0 py-0 mx-0 my-0">
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0 content-back-step">
+          <a class="back-step"
+             [routerLink]="'../step2'">
+            <i class="fa fa-caret-left fa-lg mr-2"
+               aria-hidden="true"></i>
+            Regresar al paso 3</a>
+          <button class="btn-backstep"><i class="fa fa-caret-left mr-2"
+               aria-hidden="true"></i>Compare y elija un plan</button>
+        </div>
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <h1 class="title-step">
+            Compare y elige un plan
+          </h1>
+        </div>
+      </div>
+      <div class="row px-0 py-0 mx-0 my-0 content-select-plan">
+        <div
+             class="col-lg-12 mx-0 my-0 px-0 py-0 content-type-plan d-flex flex-row align-items-center justify-content-center">
+          <div class="type-plan">
+            <input type="radio"
+                   class="check-tplan"
+                   id="tplan-1"
+                   hidden>
+            <label for="tplan-1"
+                   class="lbl-tplan">
+              <span>PLAN 1</span>
+              <div class="price-tplan">
+                <small>S/<span>100</span>/mensual</small>
+              </div>
+              <a href="">Ver detalle</a>
+            </label>
+          </div>
+          <div class="type-plan">
+            <input type="radio"
+                   class="check-tplan"
+                   id="tplan-2"
+                   hidden>
+            <label for="tplan-2"
+                   class="lbl-tplan">
+              <span>PLAN 1</span>
+              <div class="price-tplan">
+                <small>S/<span>100</span>/mensual</small>
+              </div>
+              <a href="">Ver detalle</a>
+            </label>
+          </div>
+        </div>
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0 text-center mt-4">
+          <button class="btn-comparar-planes"
+                  [routerLink]="'/accidentes-personales/step3/compare-plan'">Comparar planes</button>
+          <button class="btn-next-planes"
+                  [routerLink]="'/accidentes-personales/step4'">Siguiente <i class="fa fa-angle-right ml-2"
+               aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-questions></app-questions>
+</main>

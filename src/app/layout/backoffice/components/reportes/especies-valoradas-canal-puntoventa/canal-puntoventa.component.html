@@ -1,0 +1,248 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="container-fluid">
+        <div class="header-content">
+          <div class="containt-item">
+            <div class="header-item">
+              <span class="title">Reporte de Especies Valoradas Por Canal y Punto de Venta</span>
+            </div>
+          </div>
+          <div class="containt-item">
+            <div class="header-item right-item">
+              <button class="full-color btn-export-excel mx-0"
+                      (click)="exportar()"
+                      [disabled]="!dataBusqueda?.entities?.length">
+                <img alt=""
+                     src="assets/icons/download2.png" />
+                <span>Exportar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter">
+          <form [formGroup]="form">
+            <div class="form-group row filter-row">
+              <div class="col-lg-5 filter-row-cell"
+                   style="padding-right: 0px">
+                <label for=""
+                       class="lbl-in filter-text">CANAL DE VENTA</label>
+                <select (change)="onChangeCanal($event.target.value)"
+                        [(ngModel)]="canalSelected"
+                        class="in-action"
+                        formControlName="canal">
+                  <option value="null"
+                          selected
+                          disabled>SELECCIONE</option>
+                  <option *ngFor="let canal of canales"
+                          value="{{ canal.nchannel }}">
+                    {{ canal.sdescript }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-lg-5 filter-row-cell"
+                   style="padding-right: 0px">
+                <!-- <app-channel-point (CANAL_VENTA_DATA_OUT)="CanalVentaData($event)"
+                                 (PUNTO_VENTA_DATA_OUT)="PuntoVentaData($event)"
+                                 [OPTIONS_CONF]="'TODOS'"></app-channel-point> -->
+
+                <label for=""
+                       class="lbl-in filter-text">PUNTO DE VENTA</label>
+                <select id="ChannelSalesSelect"
+                        [disabled]="blockfilter"
+                        class="in-action"
+                        formControlName="puntov"
+                        (change)="onChangePuntoVenta($event.target.value)">
+                  <option value="null"
+                          selected
+                          disabled>SELECCIONE</option>
+                  <ng-container *ngIf="!!ListChannelPoint?.length">
+                    <option *ngFor="let channelpoint of ListChannelPoint"
+                            value="{{ channelpoint.nnumpoint }}">
+                      {{ channelpoint.sdescript }}
+                    </option>
+                  </ng-container>
+                  <ng-container *ngIf="!ListChannelPoint?.length">
+                    <option disabled>NO HAY RESULTADOS</option>
+                  </ng-container>
+                </select>
+              </div>
+              <div class="col-lg-2 filter-row-cell">
+                <span class="lbl-in filter-text">ESTADO</span>
+                <select (change)="onSelectState($event.target.value)"
+                        class="in-action"
+                        formControlName="estado">
+                  <option value="null"
+                          selected
+                          disabled>SELECCIONE</option>
+                  <option *ngFor="let data of dataEstado?.PA_SEL_STATE"
+                          [value]="data.NSTATUSPOL">
+                    {{ data.SDESCRIPT }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </form>
+          <div class="form-group row fila-search">
+            <div class="col-lg-12">
+              <div class="float-right">
+                <button class="full-color btn-export-excel"
+                        (click)="onEventClear($event)"
+                        style="margin-right: 0px">
+                  <img alt=""
+                       src="assets/icons/delete.png" />
+                  <span>Limpiar</span>
+                </button>
+              </div>
+              <div class="float-right">
+                <button class="full-color mx-0"
+                        (click)="busqueda()">
+                  <span>Buscar</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid form-group row">
+          <div class="table-responsive"
+               style="max-height: 542px; margin-right: 15px">
+            <table class="table">
+              <thead>
+                <tr class="grid-title">
+                  <td class="grid-title-item">Canal de venta</td>
+                  <td class="grid-title-item">Punto de Ventas</td>
+                  <td class="grid-title-item">N° Lote</td>
+                  <td class="grid-title-item">N° Certificado</td>
+                  <td class="grid-title-item">Tipo Certificado</td>
+                  <td class="grid-title-item">Estado</td>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="!dataBusqueda?.entities?.length">
+                  <tr class="grid-body">
+                    <td class="grid-body-item"
+                        colspan="8"
+                        style="text-align: center">
+                      No hay informacion para mostrar
+                    </td>
+                  </tr>
+                </ng-container>
+                <ng-container *ngIf="!!dataBusqueda?.entities?.length">
+                  <tr class="table-body"
+                      *ngFor="
+                      let data of dataBusqueda?.entities
+                        | paginate: { itemsPerPage: 10, currentPage: p }
+                    ">
+                    <td class="table-body-item">{{ data.SPOLICY }}</td>
+                    <td class="table-body-item">{{ data.SNUMPOINT }}</td>
+                    <td class="table-body-item">{{ data.NNUMLOT }}</td>
+                    <td class="table-body-item">{{ data.NPOLESP_COMP }}</td>
+                    <td class="table-body-item">{{ data.SCERTIFICATE }}</td>
+                    <td class="table-body-item">{{ data.SSTATUS }}</td>
+                  </tr>
+                </ng-container>
+              </tbody>
+              <!-- <div
+                *ngIf="fExistRegistro; then ocultarGrilla; else mostrarGrilla"
+              ></div> -->
+            </table>
+            <!-- <ng-template #mostrarGrilla>
+              <tbody>
+                <tr>
+                  <td colspan="6">{{ msgErrorLista }}</td>
+                </tr>
+              </tbody>
+            </ng-template>
+            <ng-template #ocultarGrilla>
+              <tbody *ngFor="let result of ListRateReport">
+                <tr>
+                  <td class="data-table-tr-td">{{ result.sdeschannel }}</td>
+                  <td class="data-table-tr-td">{{ result.nnumlot }}</td>
+                  <td class="data-table-tr-td">{{ result.npolicy }}</td>
+                  <td class="data-table-tr-td">{{ result.dissuedat }}</td>
+                  <td class="data-table-tr-td">{{ result.diferencia }}</td>
+                  <td class="data-table-tr-td">{{ result.sdescript }}</td>
+                </tr>
+              </tbody>
+            </ng-template> -->
+          </div>
+          <pagination-controls style="margin-top: 20px"
+                               *ngIf="!!dataBusqueda?.entities?.length"
+                               class="my-pagination"
+                               (pageChange)="p = $event"
+                               autoHide="true"
+                               responsive="true"
+                               previousLabel="Anterior"
+                               nextLabel="Siguiente"
+                               screenReaderPaginationLabel="Paginación"
+                               screenReaderPageLabel="pagina"
+                               screenReaderCurrentLabel="Estás en la pagina">
+          </pagination-controls>
+        </div>
+        <!--  <div
+          *ngIf="fExistRegistro; then ocultarPaginado; else mostrarPaginado"
+        ></div>
+        <ng-template #mostrarPaginado>
+          <div></div>
+        </ng-template> -->
+
+        <!-- ng-template #ocultarPaginado>
+          <div class="row">
+            <div class="col-xs-12 col-12">
+              <pagination
+                [totalItems]="totalItems"
+                [itemsPerPage]="itemsPerPage"
+                [rotate]="rotate"
+                [maxSize]="maxSize"
+                [(ngModel)]="currentPage"
+                (pageChanged)="pageChanged($event)"
+              >
+              </pagination>
+            </div>
+          </div>
+        </ng-template> -->
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade"
+     bsModal
+     #modal="bs-modal"
+     [config]="{
+    backdrop: 'static'
+  }">
+  <div class="modal-dialog"
+       role="document">
+    <div class="modal-content anular">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                (click)="ocultarModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <h4 class="textanular"
+            style="font-size: 15px">
+          {{ MENSAJE }}
+        </h4>
+      </div>
+      <div class="
+          modal-footer modal-foot-confirm
+          d-flex
+          align-items-center
+          justify-content-center
+        ">
+        <button type="button"
+                class="btn full-color btn-aceptar-modal"
+                (click)="ocultarModal()">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

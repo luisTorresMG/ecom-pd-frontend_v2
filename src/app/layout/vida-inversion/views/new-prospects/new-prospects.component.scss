@@ -1,0 +1,410 @@
+input[type="radio"] {
+    display: none;
+}
+
+.nav-menu-prospects {
+    padding: 0px;
+    margin: 5px 0;
+}
+
+
+.subtitle {
+    margin-right: 22px;
+    color: #553d81;
+}
+
+.navigation {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* margin-bottom: 1rem; */
+}
+
+.subtitle-perfil {
+    text-align: right;
+    /* color: rgb(146, 138, 163); */
+    color: rgb(84, 61, 129);
+}
+
+.form-filters {
+    display: grid;
+    grid-gap: 1rem;
+    align-items: flex-start;
+    justify-content: center;
+    grid-template-columns: 1fr;
+}
+
+.content-checkbox-u .checkbox-u[disabled]:checked+.checkbox-label-u.orange::before {
+    border: rgba(0, 0, 0, 0.15);
+    background-color: rgba(0, 0, 0, 0.25);
+    cursor: default;
+}
+
+
+
+// Check Desmarcado
+input[type="radio"].mark-u {
+    &+label {
+        &::before {
+            content: "";
+            border: 1px solid rgb(84, 61, 129);
+            color: rgb(84, 61, 129);
+            width: 20px;
+            height: 19px;
+            border-radius: 50px;
+            top: 5px;
+            left: -1px;
+            position: relative;
+            display: inline-block;
+            margin-top: 0px;
+            padding-left: 4.5px;
+            padding-bottom: -18px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+    }
+
+    &.fit+label {
+        width: fit-content;
+    }
+
+    &.orange {
+        &+label {
+            &::before {
+                content: "";
+                border: 1px solid #ed6e00;
+                color: #ed6e00;
+                width: 20px;
+                height: 19px;
+                border-radius: 50px;
+                top: 5px;
+                left: -1px;
+                position: relative;
+                display: inline-block;
+                margin-top: 0;
+                padding-left: 4.5px;
+                padding-bottom: -18px;
+                font-size: 12px;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+// Check Marcado
+input[type="radio"].mark-u:checked {
+    &+label {
+        &::before {
+            content: "✓";
+            width: 20px;
+            height: 19px;
+            border-radius: 10px;
+            top: 0px;
+            left: -1px;
+            position: relative;
+            display: inline-block;
+            // background-color: #ed6e00;
+            border: 1px solid rgb(84, 61, 129);
+            margin-top: -0.5px;
+            padding-left: 2.5px;
+            padding-top: -1px;
+            color: rgb(84, 61, 129);
+            font-size: 12px;
+            cursor: pointer;
+        }
+    }
+
+    &.fit+label {
+        width: fit-content;
+    }
+
+    &.orange {
+        &+label {
+            &::before {
+                border: 1px solid #ed6e00;
+                content: "✓";
+                width: 20px;
+                height: 19px;
+                border-radius: 50px;
+                top: 1px;
+                left: -1px;
+                position: relative;
+                display: inline-block;
+                margin-top: 0;
+                padding-left: 4.5px;
+                padding-bottom: -18px;
+                color: #ed6e00;
+                font-size: 12px;
+                cursor: pointer;
+
+            }
+        }
+    }
+}
+
+
+
+.container-subtittle-panel {
+    text-transform: uppercase;
+    background-color: #aa9ec0;
+    margin-bottom: 18px;
+}
+
+.subtittle-panel {
+    padding-left: 20px;
+    color: #fff;
+}
+
+
+.return-link {
+    color: #ed6e00;
+}
+
+.g-1 {
+    grid-gap: 0.25rem;
+}
+
+.g-2 {
+    grid-gap: 0.5rem;
+}
+
+.g-3 {
+    grid-gap: 1rem;
+}
+
+.g-4 {
+    grid-gap: 1.5rem;
+}
+
+
+.container_button_next {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-right: 10px;
+}
+
+
+.sub-container1 {
+    // max-width: 350px;
+    padding: 1rem;
+    background-color: #f7f6ff;
+    border-radius: 15px;
+    display: flex;
+    gap: 1.125rem;
+    height: max-content;
+    padding-left: 20px;
+    flex-direction: column;
+}
+
+.item {
+    white-space: nowrap;
+    color: #aa9ec0;
+}
+
+.item-response {
+    white-space: nowrap;
+    color: #aa9ec0;
+    margin-right: 28px;
+}
+
+.sub-title {
+    color: #553d81;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.sub-title-a {
+    padding-top: 1rem;
+}
+
+
+.label {
+    color: rgb(84, 61, 129);
+    // display: grid;
+    // grid-column-gap: 1rem;
+    // grid-row-gap: 0.25rem;
+    // grid-template-columns: 1fr 1fr;
+    // align-items: flex-start;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+// INI Para Checkbox select Contratante Asegurado
+/* TABS */
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    width: 100%;
+    font-weight: normal;
+}
+
+.tabs label:not(.mark-u) {
+    color: #553d81;
+    order: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px 0rem;
+    cursor: pointer;
+    border: 1px solid #553d81;
+    border-bottom: none;
+    transition: background ease-in-out 0.1s;
+}
+
+.tab-disabled {
+    background-color: rgb(235, 235, 228);
+    opacity: 1 !important;
+    cursor: not-allowed !important;
+}
+
+.tabs .tab {
+    order: 9;
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+    display: none;
+    background: #fff;
+    padding: 0;
+    margin: 0;
+    margin-top: 2rem;
+}
+
+.tabs input[type="radio"]:checked+label:not(.mark-u) {
+    background-color: #553d81;
+    color: #fff !important;
+}
+
+.tabs input[type="radio"]:checked+label+.tab {
+    display: block;
+}
+
+
+.tab-label {
+    width: 14%;
+}
+
+.tab-label-one {
+    width: 18%;
+}
+
+
+@media (max-width: 1602px) {
+    .tabs input[type="radio"]:checked+label+.tab {
+        width: 90%;
+    }
+}
+
+@media (max-width: 465px) {
+
+    .tabs .tab,
+    .tabs label {
+        order: initial;
+    }
+
+    .tabs label {
+        width: 100%;
+        margin-left: 50px;
+    }
+}
+
+// FIN Para Checkbox select Contratante Asegurado
+
+
+@media (min-width: 480px) {
+    .form-filters {
+        grid-template-columns: repeat(2, 1fr);
+
+        .form-actions {
+            grid-row: 7;
+            grid-column-start: 1;
+            grid-column-end: 3;
+            flex-direction: row;
+        }
+    }
+}
+
+@media (min-width: 640px) {
+    .form-filters {
+        grid-template-columns: repeat(3, 1fr);
+
+        .form-actions {
+            grid-row: 5;
+            grid-column-start: 1;
+            grid-column-end: 3;
+            flex-direction: row;
+        }
+    }
+}
+
+@media (min-width: 1080px) {
+    .form-filters {
+        grid-template-columns: repeat(3, 1fr);
+
+        .form-actions {
+            grid-row: 4;
+            grid-column-start: 1;
+            grid-column-end: 5;
+            flex-direction: row;
+            justify-content: space-between;
+
+            button {
+                width: fit-content;
+            }
+        }
+    }
+}
+
+@media (min-width: 1800px) {
+    .form-filters {
+        grid-template-columns: repeat(4, 1fr); // view desktop-L with 3 inputs
+
+        .form-actions {
+            grid-row: 3;
+            grid-column-start: 4;
+            grid-column-end: 6;
+            flex-direction: row;
+            justify-content: flex-end;
+        }
+    }
+
+    .sub-container1 {
+        max-width: 550px;
+        padding: 1rem;
+        background-color: #f7f6ff;
+        border-radius: 15px;
+        display: flex;
+        gap: 1.5rem;
+        height: max-content;
+        margin: 0 auto;
+        font-size: 16px;
+    }
+}
+
+
+.toast-button-style {
+    display: flex;
+    -ms-flex-pack: center;
+    justify-content: center;
+    border: 1px solid rgb(129, 118, 157) !important;
+    border-radius: 7px;
+    margin: 0 10px;
+    background: #fff !important;
+    padding: 8px 0px;
+    max-width: 180px;
+    min-width: 180px;
+    width: 100% !important;
+    height: 42px !important;
+    outline: none;
+    font-family: "Bliss Pro";
+    font-size: 1rem !important;
+}
+
+.visibility__hidden {
+    visibility: hidden;
+    display: none !important;
+}

@@ -1,0 +1,376 @@
+<link href="http://cdn-na.infragistics.com/igniteui/2021.2/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+<link href="http://cdn-na.infragistics.com/igniteui/2021.2/latest/css/structure/infragistics.css" rel="stylesheet" />
+<script src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.8.3.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+<script src="http://cdn-na.infragistics.com/igniteui/2021.2/latest/js/infragistics.core.js"></script>
+<script src="http://cdn-na.infragistics.com/igniteui/2021.2/latest/js/infragistics.lob.js"></script>
+<script type="text/javascript">function metchec(nom) { alert(nom); nom.checked = checked; }</script>
+<main class="content">
+  <!-- *Navigacion -->
+  <nav class="content__navigation">
+    <app-breadcrumb>
+      <a>
+        <i class="fa fa-home" aria-hidden="true"></i>
+        Desgravamen
+      </a>
+      <a> Configuración de estructuras y reglas </a>
+    </app-breadcrumb>
+    <!-- <button
+      class="button-default secondary no-outline button-back"
+      type="button"
+      role="button"
+      aria-label="regresar página"
+    >
+      <i class="fa fa-angle-left" aria-hidden="true"></i>
+      Regresar
+    </button> -->
+  </nav>
+
+  <!-- *Cabecera -->
+  <section class="content__header df aic jcsb" >
+    <h1 class="title">Configuración de estructuras y reglas</h1>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+    <button class="button-default orange" (click)="configurationHorario()">
+        Horarios de migración
+      </button>
+    <button class="button-default orange" (click)="configurationPage()">
+      <i class="fa fa-plus" aria-hidden="true"></i>
+      Crear estructura
+    </button>
+  </section>
+
+  <section class="content__body">
+    <div class="body__filter">
+      <label class="placeholder filter-search">
+        <i class="fa fa-search" aria-hidden="true"></i>
+        <input type="text" placeholder="Buscar" [formControl]="controlSearch" />
+        <button (click)="showModalAdvancedFilters()">
+          <i class="fa fa-sliders" aria-hidden="true"></i>
+        </button>
+      </label>
+    </div>
+
+    <div class="content-table table-structures">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre de estructura</th>
+            <th>Transacción</th>
+            <th>Ramo</th>
+            <th>Datos de cabecera</th>
+            <th>Certificado por rol</th>
+            <th>Filas ordenadas</th>
+            <th>Formato</th>
+            <th>Fecha de creación</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="!structuresFiltered.length">
+            <tr>
+              <td colspan="11">No se encontraron resultados</td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="structuresFiltered.length">
+            <tr
+              *ngFor="
+                let obj of structuresFiltered
+                  | paginate
+                    : {
+                        id: 'lista-estructuras',
+                        itemsPerPage: 10,
+                        totalItems: structuresFiltered.length,
+                        currentPage: currentPage
+                      };
+                let index = index
+              "
+            >
+              <td>{{ index + 1 }}</td>
+              <td>{{ obj.nombreEstructura }}</td>
+              <td>{{ obj.transaccion }}</td>
+              <td>{{ obj.ramo }}</td>
+              <td>{{ obj.aplicaCabecera }}</td>
+              <td>{{ obj.certificadoPorRol }}</td>
+              <td>{{ obj.filaOrdenadaPorRol }}</td>
+              <td>{{ obj.tipoArchivo }}</td>
+              <td>{{ obj.fechaCreacion | date : "dd/MM/yyyy" }}</td>
+              <td>
+                <span
+                  class="status-ellipse"
+                  [class.active]="obj.estado == 'Activo'"
+                  >{{ obj.estado }}</span
+                >
+              </td>
+              <td class="dropdown">
+                <div
+                  ngbDropdown
+                  [placement]="index >= 6 ? 'top-right' : 'bottom-right'"
+                >
+                  <button ngbDropdownToggle class="dropdown__button">
+                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                  </button>
+                  <ul ngbDropdownMenu class="dropdown__list">
+                    <li>
+                      <button (click)="showDetail(obj.idEstructura, 'detalle')">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                        Ver detalle
+                      </button>
+                    </li>
+                    <li *ngIf="obj.estado == 'Activo'">
+                      <button
+                        (click)="showDetail(obj.idEstructura, 'actualizar')"
+                      >
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                        Editar
+                      </button>
+                    </li>
+                    <li>
+                      <button (click)="showDetail(obj.idEstructura, 'clonar')">
+                        <i class="fa fa-clone" aria-hidden="true"></i>
+                        Clonar
+                      </button>
+                    </li>
+                    <li *ngIf="obj.estado == 'Activo'">
+                      <button
+                        (click)="showModalAction(obj, 'modalConfirmDisable')"
+                      >
+                        <i class="fa fa-power-off" aria-hidden="true"></i>
+                        Desactivar
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        (click)="showModalAction(obj, 'modalConfirmDelete')"
+                      >
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                        Eliminar
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      <div class="pagination-controls">
+        <pagination-controls
+          id="lista-estructuras"
+          [autoHide]="true"
+          previousLabel="Anterior"
+          nextLabel="Siguiente"
+          (pageChange)="currentPage = $event"
+          *ngIf="structuresFiltered.length"
+        ></pagination-controls>
+      </div>
+    </div>
+  </section>
+</main>
+
+<ng-template #modalAdvancedFilters>
+  <div class="content-modal modal-filters">
+    <section>
+      <div class="modal-body">
+        <form class="form-filter" [formGroup]="formFilters">
+          <div class="form-policy">
+            <pro-select
+              placeholder="N° de póliza"
+              [clearable]="false"
+              value="id"
+              label="label"
+              [items]="policies$"
+              formControlName="policy"
+            ></pro-select>
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </div>
+          <div class="form-contractor">
+            <pro-select
+              placeholder="Contratante"
+              [clearable]="false"
+              value="id"
+              label="label"
+              [items]="contractors$"
+              formControlName="contractor"
+            ></pro-select>
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </div>
+          <div class="form-sales-channel">
+            <pro-select
+              placeholder="Canal de venta"
+              [clearable]="false"
+              value="id"
+              label="label"
+              [items]="salesChannel$"
+              formControlName="salesChannel"
+            ></pro-select>
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </div>
+          <label
+            for="form-created-at"
+            class="placeholder"
+            aria-placeholder="Fecha de creación"
+          >
+            <input
+              type="text"
+              id="form-created-at"
+              placeholder="Ejm: 02/08/2022"
+              #dp="bsDatepicker"
+              bsDatepicker
+              readonly
+              [bsConfig]="filterDatePickerConfig"
+              formControlName="createdAt"
+            />
+            <i class="fa fa-calendar" aria-hidden="true"></i>
+          </label>
+        </form>
+      </div>
+      <div class="modal-footer jce">
+        <button
+          class="button-default secondary orange"
+          (click)="resetFormFilters()"
+        >
+          Limpiar
+        </button>
+        <button class="button-default orange" (click)="submitFilters()">
+          Filtrar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalConfirmDelete>
+  <div class="content-modal modal-delete">
+    <section>
+      <div class="modal-header">
+        <h6>Eliminar</h6>
+        <button
+          type="button"
+          role="button"
+          aria-label="cerrar modal"
+          (click)="closeModal()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="paragraph">
+          ¿Está seguro de eliminar la estructura ? Al eliminarlo, no podrá ser
+          recuperado.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button
+          class="button-default secondary orange"
+          type="button"
+          role="button"
+          (click)="closeModal()"
+        >
+          Cancelar
+        </button>
+        <button
+          class="button-default orange"
+          type="button"
+          role="button"
+          (click)="deleteStructure()"
+        >
+          Eliminar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalConfirmDisable>
+  <div class="content-modal modal-disable">
+    <section>
+      <div class="modal-header">
+        <h6>Desactivar</h6>
+        <button
+          type="button"
+          role="button"
+          aria-label="cerrar modal"
+          (click)="closeModal()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="paragraph">
+          ¿Está seguro de desactivar la estructura? Al desactivarlo, no podrá
+          volver a activarlo.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button
+          class="button-default secondary orange"
+          type="button"
+          role="button"
+          (click)="closeModal()"
+        >
+          Cancelar
+        </button>
+        <button
+          class="button-default orange"
+          type="button"
+          role="button"
+          (click)="disableStructure()"
+        >
+          Desactivar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalMessage>
+  <div class="content-modal modal-message">
+    <section>
+      <div class="modal-header">
+        <h6>Mensaje</h6>
+        <button
+          type="button"
+          role="button"
+          aria-label="cerrar modal"
+          (click)="closeModal()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <ng-container *ngIf="messageInfo.showImage">
+          <ng-container *ngIf="messageInfo.success">
+            <img src="../../../../../../assets/backoffice/check-success.png" alt="succes image" />
+          </ng-container>
+          <ng-container *ngIf="!messageInfo.success">
+            <img src="../../../../../../assets/backoffice/check-error.png" alt="error image" />
+          </ng-container>
+        </ng-container>
+
+        <p class="paragraph">
+          {{ messageInfo.message }}
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          role="button"
+          class="button-default orange"
+          (click)="closeModal()"
+        >
+          Aceptar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+<div [hidden]="isLoading==false"
+     class="loadingScreen">
+  <div style="display:flex;height: 100%;width:100%">
+        <i style="margin:auto;font-size: 50px"
+           class="fa fa-spinner fa-spin"></i>
+  </div>
+</div>

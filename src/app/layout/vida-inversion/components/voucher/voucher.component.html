@@ -1,0 +1,52 @@
+<div class="p-2">
+    <div class="container-title-modal"
+         style="position: relative;">
+        <h4 class="p-0 m-0">ABONO</h4>
+        <i class="fa fa-close"
+           style="position: absolute; top: 20%; right: 2%; cursor: pointer; color: #fff;"
+           aria-hidden="true"
+           (click)="reference.close()"></i>
+    </div>
+
+    <div class="voucher-container">
+        <div class="d-flex align-items-center">
+            <div class="col-lg-6">
+                <P>Banco destino:</P>
+            </div>
+            <div class="col-lg-6">
+                <form-input-select [firstSelect]="true"
+                                   [params]="CONSTANTS.WITHOUT_PARAMS"
+                                   [large]="false"
+                                   [service]="vidaInversionService"
+                                   method="getBanksVigp"
+                                   fieldCodigo="Id_entidad"
+                                   fieldValor="Entidad_descript"
+                                   [(value)]="bank_selected"
+                                   [updateModelOnChange]="true"
+                                   [disabled]="bank_selected_disabled"></form-input-select>
+                <!-- [items]="banks_list" -->
+            </div>
+        </div>
+        <!-- <div class="d-flex align-items-center"> -->
+        <div class="d-flex justify-content-between">
+            <div class="col-lg-6">
+                <label>
+                    <input type="checkbox"
+                           [(ngModel)]="payment_status"
+                           [disabled]="payment_status_disabled"
+                           name="payment_status">
+                    Pago total
+                </label>
+            </div>
+            <div class="col-lg-6 d-flex justify-content-end">
+                <form-button label="Guardar"
+                             [slim]="true"
+                             [disabled]="save_btn_disabled"
+                             (click)="onUpdateTotalPaymentStatus()"
+                             btnClass="btn-primary-VI text-nowrap"></form-button>
+            </div>
+
+        </div>
+    </div>
+
+</div>

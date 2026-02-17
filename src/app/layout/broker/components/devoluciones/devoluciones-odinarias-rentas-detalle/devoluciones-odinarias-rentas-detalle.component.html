@@ -1,0 +1,1801 @@
+<div class="row">
+  <div class="col-lg-3">
+    <app-nav-menuprod></app-nav-menuprod>
+  </div>
+  <div class="col-lg-9">
+    <div class="header-content mb-3 mt-3">
+      <div class="containt-item">
+        <div class="headiter-em">
+          <span
+            class="atras-re"
+            (click)="atras()"
+            (keydown)="handleKeyDown($event)"
+          >
+            <img
+              src="assets/rentas/arrow_back_20dp_FILL1_wght400_GRAD0_opsz20.svg"
+              alt="autorenew"
+            />
+            Atrás
+          </span>
+        </div>
+        <div class="container-buttons">
+          <button
+            (click)="updStatusTicket(ticket.SCODE_JIRA, 'ASIGNAR', ticket)"
+            [class.disabled]="items.ASIGNAR !== 'TRUE'"
+            [style.background]="
+              items.ASIGNAR == 'TRUE' && listActions.ASIGNAR == 'TRUE'
+                ? ColorActions.ASIGNAR
+                : ColorActions.COLOR_DISABLED
+            "
+            class="button-re button-violet"
+          >
+            <img src="assets/rentas/visibility_white_.svg" alt="autorenew" />
+            <span>Asignar</span>
+          </button>
+          <button
+            (click)="calcular()"
+            [class.disabled]="items.CALCULAR !== 'TRUE'"
+            [style.background]="
+              items.CALCULAR == 'TRUE' && listActions.CALCULAR == 'TRUE'
+                ? ColorActions.CALCULAR
+                : ColorActions.COLOR_DISABLED
+            "
+            class="button-re button-violet"
+          >
+            <img
+              src="assets/rentas/autorenew_FILL1_wght400_GRAD0_opsz24.svg"
+              alt="autorenew"
+            />
+            <span>Calcular</span>
+          </button>
+          <button
+            (click)="updStatusTicket(ticket.SCODE_JIRA, 'CONFIRMAR', ticket)"
+            [class.disabled]="items.CONFIRMAR !== 'TRUE'"
+            [style.background]="
+              items.CONFIRMAR == 'TRUE' && listActions.CONFIRMAR == 'TRUE'
+                ? ColorActions.CONFIRMAR
+                : ColorActions.COLOR_DISABLED
+            "
+            class="button-re button-green"
+          >
+            <img
+              src="assets/rentas/recommend_20dp_FILL1_wght400_GRAD0_opsz20.svg"
+              alt="autorenew"
+            />
+            <span>Confirmar</span>
+          </button>
+
+          <button
+            (click)="updStatusTicket(ticket.SCODE_JIRA, 'DERIVAR', ticket)"
+            [class.disabled]="items.DERIVAR !== 'TRUE'"
+            [style.background]="
+              items.DERIVAR == 'TRUE' && listActions.DERIVAR == 'TRUE'
+                ? ColorActions.DERIVAR
+                : ColorActions.COLOR_DISABLED
+            "
+            class="button-re button-red"
+          >
+            <img
+              src="assets/rentas/mode_comment_20dp_FILL1_wght400_GRAD0_opsz20.svg"
+              alt="autorenew"
+            />
+            <span>Derivar</span>
+          </button>
+          <button
+            (click)="updStatusTicket(ticket.SCODE_JIRA, 'OBSERVAR', ticket)"
+            [class.disabled]="items.OBSERVAR !== 'TRUE'"
+            [style.background]="
+              items.OBSERVAR == 'TRUE' && listActions.OBSERVAR == 'TRUE'
+                ? ColorActions.OBSERVAR
+                : ColorActions.COLOR_DISABLED
+            "
+            class="button-re button-violet"
+          >
+            <img src="assets/rentas/visibility_white_.svg" alt="autorenew" />
+            <span>Observar</span>
+          </button>
+
+          <button
+            (click)="updStatusTicket(ticket.SCODE_JIRA, 'CANCELAR', ticket)"
+            [class.disabled]="items.CANCELAR !== 'TRUE'"
+            [style.background]="
+              items.CANCELAR == 'TRUE' && listActions.CANCELAR == 'TRUE'
+                ? ColorActions.CANCELAR
+                : ColorActions.COLOR_DISABLED
+            "
+            class="button-re button-red"
+          >
+            <img
+              src="assets/rentas/block_20dp_FILL1_wght400_GRAD0_opsz20.svg"
+              alt="autorenew"
+            />
+            <span>Cancelar</span>
+          </button>
+          <button
+            (click)="updStatusTicket(ticket.SCODE_JIRA, 'APROBAR', ticket)"
+            [class.disabled]="items.APROBAR !== 'TRUE'"
+            [style.background]="
+              items.APROBAR == 'TRUE' && listActions.APROBAR == 'TRUE'
+                ? ColorActions.APROBAR
+                : ColorActions.COLOR_DISABLED
+            "
+            class="button-re"
+          >
+            <img
+              src="assets/rentas/check_circle_20dp_FILL1_wght400_GRAD0_opsz20.svg"
+              alt="more_vert"
+            />
+            <span>Aprobar</span>
+          </button>
+          <button
+            (click)="updStatusTicket(ticket.SCODE_JIRA, 'RECHAZAR', ticket)"
+            [class.disabled]="items.RECHAZAR !== 'TRUE'"
+            [style.background]="
+              items.RECHAZAR == 'TRUE' && listActions.RECHAZAR == 'TRUE'
+                ? ColorActions.RECHAZAR
+                : ColorActions.COLOR_DISABLED
+            "
+            class="button-re button-red"
+          >
+            <img
+              src="assets/rentas/cancel_20dp_FILL1_wght400_GRAD0_opsz20.svg"
+              alt="autorenew"
+            />
+            <span>Rechazar</span>
+          </button>
+          <div class="button-re label-button">
+            <img src="assets/rentas/today.svg" alt="today" />
+            <span>{{ today }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pestanas">
+      <ul>
+        <li
+          (keypress)="handleKeyDown($event)"
+          class="tab-title"
+          [class.active]="pestaActiva === 1"
+          (click)="cambiarPestana(1)"
+        >
+          Detalle del ticket
+        </li>
+        <li
+          (keypress)="handleKeyDown($event)"
+          class="tab-title"
+          [class.active]="pestaActiva === 2"
+          (click)="cambiarPestana(2)"
+        >
+          Detalle de la póliza/ contratante
+        </li>
+        <li
+          (keypress)="handleKeyDown($event)"
+          class="tab-title"
+          [class.active]="pestaActiva === 3"
+          (click)="cambiarPestana(3)"
+        >
+          Datos del pago
+        </li>
+        <li
+          (keypress)="handleKeyDown($event)"
+          class="tab-title"
+          [class.active]="pestaActiva === 4"
+          (click)="cambiarPestana(4)"
+        >
+          Historial de estados
+        </li>
+      </ul>
+      <div class="contenido">
+        <div *ngIf="pestaActiva == 1">
+          <div>
+            <input class="collapse-open" type="checkbox" id="detalle" />
+            <label
+              class="collapse-btn container-button-collapse subtitle-re"
+              for="detalle"
+              >Detalle del ticket
+              <i
+                class="fa fa-angle-down pull-right icon-collapse"
+                style="position: relative; top: 4px"
+              ></i>
+              <i
+                class="fa fa-angle-up pull-right icon-expand"
+                style="position: relative; top: 4px"
+              ></i>
+            </label>
+            <div class="collapse-panel">
+              <div class="campos uppercase">
+                <div>
+                  <h5 class="h-text">Ticket Jira</h5>
+                  <p class="b-text">{{ ticket.SCODE_JIRA }}</p>
+                </div>
+                <div>
+                  <h5 class="h-text">Usuario</h5>
+                  <p class="b-text">{{ ticket.USUARIO_REGISTRO }}</p>
+                </div>
+                <div>
+                  <h5 class="h-text">Estado</h5>
+                  <p class="b-text">{{ ticket.ESTADO }}</p>
+                </div>
+                  <!--<INI - 26/06/2025  | NUEVO CAMPO DE FECHA DE SOLICITUD >-->
+               <!---- <div>
+                  <h5 class="h-text">Canal</h5>
+                  <p class="b-text">{{ ticket.CANAL }}</p>
+                </div>-->
+                <!--<FIN - 26/06/2025  | NUEVO CAMPO DE FECHA DE SOLICITUD >-->
+
+                <div>
+                  <h5 class="h-text">Fecha de Recepción</h5>
+                  <p class="b-text">{{ ticket.FECHA_RECEPCION }}</p>
+                </div>
+                <div>
+                  <h5 class="h-text">Fecha de Registro</h5>
+                  <p class="b-text">{{ ticket.FECHA_REGISTRO }}</p>
+                </div>
+                                <!--<INI - 26/06/2025  | NUEVO CAMPO DE FECHA DE SOLICITUD >-->
+                <div>
+                  <h5 class="h-text">Fecha de Solicitud</h5>
+                  <form-input-date-re
+                    [minDate]="FechaInicioSol"
+                    [maxDate]="FechaFinSol"
+                    *ngIf="editfs"
+                    [disabled]="
+                      listActions.FECHA_SOL == 'TRUE' ? false : true
+                    "
+                    [(value)]="inputs.FECHA_SOLICITUD"
+                  ></form-input-date-re>
+                  <p *ngIf="!editfs" class="b-text">{{ fechaSol }}</p>
+                </div>
+                <!--<FIN - 26/06/2025  | NUEVO CAMPO DE FECHA DE SOLICITUD >-->
+                <div>
+                  <h5 class="h-text">Vía de recepción</h5>
+                  <p class="b-text">{{ ticket.VIA_RECEPCION }}</p>
+                </div>
+                <div>
+                    <h5 class="h-text">Plazo de atención SLA</h5>
+                    <p class="b-text">{{ ticket.ATENCION_SLA }}</p>
+                  </div>
+                  <div>
+                    <h5 class="h-text">Forma de cálculo</h5>
+                    <p class="b-text">{{ ticket.FORM_CALCULO }}</p>
+                  </div>
+                  <div>
+                    <h5 class="h-text">Motivo</h5>
+                    <p *ngIf="!edit2" class="b-text">{{ ticket.MOTIVO }}</p>
+                    <form-input-select-re
+                      *ngIf="edit2"
+                      [items]="opcionesMotivos"
+                      [itemsArray]="true"
+                      fieldCodigo="codigo"
+                      fieldValor="valor"
+                      [defaultValue]="{ codigo: ticket.NMOTIVO }"
+                      (onSelect)="changeMotivo(inputs.P_NMOTIVO)"
+                      [firstSelect]="true"
+                      [disabled]="listActions.MOTIVO_DET == 'TRUE' ? false : true"
+                      [(value)]="inputs.P_NMOTIVO"
+                    ></form-input-select-re>
+                  </div>
+                  <div>
+                    <h5 class="h-text">Detalle de ubigeo</h5>
+                    <p class="b-text">{{ ticket.DET_UBIGEO }}</p>
+                  </div>
+                  <div>
+                    <h5 class="h-text">Código de reclamo</h5>
+                    <p class="b-text">{{ ticket.COD_RECLAMO }}</p>
+                  </div>
+                  <!--<INI - 26/06/2025  | NUEVO CAMPO DE FECHA DE SOLICITUD >-->
+                  <div>
+                   <h5 class="h-text">Canal</h5>
+                   <p class="b-text">{{ ticket.CANAL }}</p>
+                 </div>
+                  <!--<FIN - 26/06/2025  | NUEVO CAMPO DE FECHA DE SOLICITUD >-->
+
+                  <div>
+                    <h5 class="h-text">Canal de operación</h5>
+                    <p class="b-text">{{ ticket.CANAL_OPERACION }}</p>
+                  </div>
+                  <div>
+                    <h5 class="h-text">Submotivo</h5>
+                    <p *ngIf="!edit2" class="b-text">{{ ticket.SUBMOTIVO }}</p>
+                    <form-input-select-re
+                      *ngIf="edit2"
+                      [items]="opcionesSubMotivos"
+                      [itemsArray]="true"
+                      fieldCodigo="codigo"
+                      fieldValor="valor"
+                      [disabled]="
+                        listActions.SUBMOTIVO_DET == 'TRUE' ? false : true
+                      "
+                      [defaultValue]="{ codigo: inputs.P_SSUBMOTIVO }"
+                      [(value)]="inputs.P_SSUBMOTIVO"
+                      [firstSelect]="true"
+                    ></form-input-select-re>
+                  </div>
+                  <div>
+                    <h5 class="h-text">Imp. Devolución</h5>
+                    <p class="b-text">
+                      {{ ticket.SYM_MONEDA }} {{ ticket.IMP_DEVOLUCION }}
+                    </p>
+                    <!--<INI - 26/06/2025  | NUEVO CAMPO DE FECHA DE SOLICITUD >-->
+                  </div>
+                   <div *ngIf="listActions.FECHA_PROVISIONA == 'TRUE'">
+                    <h5 class="h-textFA">Fecha de Provisión</h5>
+                    <p class="b-textFA">
+                     {{ ticket.FECHA_PROVISIONA }}
+                    </p>
+                  </div>
+                <!--<FIN - 26/06/2025  | NUEVO CAMPO DE FECHA DE SOLICITUD >-->
+                  </div>
+                                <!--<INI - 26/06/2025  | NUEVO CAMPO DE FECHA DE SOLICITUD >-->
+              <!--<div class="edit">
+                <img
+                  (keypress)="handleKeyDown($event)"
+                  [ngClass]="{ disabled: listActions?.EDITAR_MOT !== 'TRUE' }"
+                  *ngIf="!edit2"
+                  class="clickable"
+                  (click)="edit_fields2()"
+                  title="Editar"
+                  [src]="listActions?.EDITAR_MOT=='TRUE'?'assets/rentas/edit.svg':'assets/rentas/edit_disabled.svg'"
+                  alt="autorenew"
+                />
+                <img
+                  (keypress)="handleKeyDown($event)"
+                  [ngClass]="{
+                    disabled: listActions?.EDITAR_MOT_OK !== 'TRUE'
+                  }"
+                  *ngIf="edit2"
+                  class="clickable"
+                  (click)="confirm_edit_fields2()"
+                  title="Confirmar"
+                  src="assets/rentas/check_circle.svg"
+                  alt="autorenew"
+                />
+                <img
+                  (keypress)="handleKeyDown($event)"
+                  [ngClass]="{ disabled: listActions?.EDITAR_MOT_X !== 'TRUE' }"
+                  *ngIf="edit2"
+                  class="clickable"
+                  (click)="cancel_edit_fields2()"
+                  title="Cancelar"
+                  src="assets/rentas/cancel.svg"
+                  alt="autorenew"
+                />
+              </div>-->
+              <div class="edit">
+                <img
+                  [ngClass]="{
+                    disabled: listActions?.EDITAR_FECHA_SOL !== 'TRUE'
+                  }"
+                  (keypress)="handleKeyDown($event)"
+                  *ngIf="!editfs"
+                  class="clickable"
+                  (click)="edit_fieldsfs()"
+                  title="Editar"
+                  src="assets/rentas/edit.svg"
+                  [src]="listActions?.EDITAR_FECHA_SOL=='TRUE'?'assets/rentas/edit.svg':'assets/rentas/edit_disabled.svg'"
+                  alt="autorenew"
+                />
+                <img
+                  [ngClass]="{
+                    disabled: listActions?.EDITAR_FECHA_SOL_OK !== 'TRUE'
+                  }"
+                  (keypress)="handleKeyDown($event)"
+                  *ngIf="editfs"
+                  class="clickable"
+                  (click)="confirm_edit_fieldsfs()"
+                  title="Confirmar"
+                  src="assets/rentas/check_circle.svg"
+                  alt="autorenew"
+                />
+                <img
+                  [ngClass]="{
+                    disabled: listActions?.EDITAR_FECHA_SOL_X !== 'TRUE'
+                  }"
+                  (keypress)="handleKeyDown($event)"
+                  *ngIf="editfs"
+                  class="clickable"
+                  (click)="cancel_edit_fieldsfs()"
+                  title="Cancelar"
+                  src="assets/rentas/cancel.svg"
+                  alt="autorenew"
+                />
+              </div>
+              <!--<FIN - 26/06/2025  | NUEVO CAMPO DE FECHA DE SOLICITUD >-->
+            </div>
+          </div>
+          <div>
+            <input class="collapse-open" type="checkbox" id="datoscontacto" />
+            <label
+              class="collapse-btn container-button-collapse subtitle-re"
+              for="datoscontacto"
+              >Datos del contacto
+              <i
+                class="fa fa-angle-down pull-right icon-collapse"
+                style="position: relative; top: 4px"
+              ></i>
+              <i
+                class="fa fa-angle-up pull-right icon-expand"
+                style="position: relative; top: 4px"
+              ></i>
+            </label>
+            <div class="collapse-panel">
+              <div class="campos uppercase">
+                <div>
+                  <h5 class="h-text">Documento</h5>
+                  <p class="b-text">{{ ticket.DOCUMENTO_CONT }}</p>
+                </div>
+                <div>
+                  <h5 class="h-text">Nombre</h5>
+                  <p class="b-text">{{ ticket.NOMBRE_CONT }}</p>
+                </div>
+                <div>
+                  <h5 class="h-text">Correo electrónico</h5>
+                  <p *ngIf="!edit4" class="b-text">
+                    {{ ticket.CORREO_ELECTRONICO_CONT }}
+                  </p>
+                  <form-input-text-re
+                    *ngIf="edit4"
+                    [(value)]="inputs.CORREO_ELECTRONICO_CONT"
+                  ></form-input-text-re>
+                </div>
+              </div>
+              <div class="edit">
+                <img
+                  (keypress)="handleKeyDown($event)"
+                  [ngClass]="{ disabled: listActions?.EDITAR_EMAIL !== 'TRUE' }"
+                  *ngIf="!edit4"
+                  class="clickable"
+                  (click)="edit_fields4()"
+                  title="Editar"
+                  [src]="listActions?.EDITAR_EMAIL=='TRUE'?'assets/rentas/edit.svg':'assets/rentas/edit_disabled.svg'"
+                  alt="autorenew"
+                />
+                <img
+                  (keypress)="handleKeyDown($event)"
+                  [ngClass]="{
+                    disabled: listActions?.EDITAR_EMAIL_OK !== 'TRUE'
+                  }"
+                  *ngIf="edit4"
+                  class="clickable"
+                  (click)="confirm_edit_fields4()"
+                  title="Confirmar"
+                  src="assets/rentas/check_circle.svg"
+                  alt="autorenew"
+                />
+                <img
+                  (keypress)="handleKeyDown($event)"
+                  [ngClass]="{
+                    disabled: listActions?.EDITAR_EMAIL_X !== 'TRUE'
+                  }"
+                  *ngIf="edit4"
+                  class="clickable"
+                  (click)="cancel_edit_fields4()"
+                  title="Cancelar"
+                  src="assets/rentas/cancel.svg"
+                  alt="autorenew"
+                />
+              </div>
+            </div>
+          </div>
+          <div>
+            <input class="collapse-open" type="checkbox" id="datostramites" />
+            <label
+              class="collapse-btn container-button-collapse subtitle-re"
+              for="datostramites"
+              >Datos del trámites de renta
+              <i
+                class="fa fa-angle-down pull-right icon-collapse"
+                style="position: relative; top: 4px"
+              ></i>
+              <i
+                class="fa fa-angle-up pull-right icon-expand"
+                style="position: relative; top: 4px"
+              ></i>
+            </label>
+            <div class="collapse-panel">
+              <div class="campos uppercase">
+                <div>
+                  <h5 class="h-text">Tipo de trámite de renta</h5>
+                  <p class="b-text">{{ ticket.TIPO_TRAMITE }}</p>
+                </div>
+                <div>
+                  <h5 class="h-text">Tipo de pensión</h5>
+                  <p class="b-text">{{ ticket.TIPO_PENSION_TCK }}</p>
+                </div>
+                <div>
+                  <h5 class="h-text">Tipo de prestación</h5>
+                  <p class="b-text">{{ ticket.TIPO_PRESTACION }}</p>
+                </div>
+                <div>
+                  <h5 class="h-text">Canal de ingreso del trámite</h5>
+                  <p class="b-text">{{ ticket.CANAL_INGRESO }}</p>
+                </div>
+                <div>
+                  <h5 class="h-text">Descripción</h5>
+                  <p *ngIf="!edit" class="b-text">{{ ticket.DESCRIPCION }}</p>
+                  <form-input-textarea-re
+                    [disabled]="
+                      listActions.DESCRIPCION_DET == 'TRUE' ? false : true
+                    "
+                    rows="6"
+                    *ngIf="edit"
+                    [(value)]="ticket.DESCRIPCION"
+                  ></form-input-textarea-re>
+                </div>
+              </div>
+              <div class="edit">
+                <img
+                  (keypress)="handleKeyDown($event)"
+                  [ngClass]="{
+                    disabled: listActions?.EDITAR_DESCRIPCION !== 'TRUE'
+                  }"
+                  *ngIf="!edit"
+                  class="clickable"
+                  (click)="edit_fields()"
+                  title="Editar"
+                  [src]="listActions?.EDITAR_DESCRIPCION=='TRUE'?'assets/rentas/edit.svg':'assets/rentas/edit_disabled.svg'"
+                  alt="autorenew"
+                />
+                <img
+                  [ngClass]="{
+                    disabled: listActions?.EDITAR_DESCRIPCION_OK !== 'TRUE'
+                  }"
+                  *ngIf="edit"
+                  class="clickable"
+                  (click)="confirm_edit_fields()"
+                  title="Confirmar"
+                  src="assets/rentas/check_circle.svg"
+                  alt="autorenew"
+                  (keypress)="handleKeyDown($event)"
+                />
+                <img
+                  [ngClass]="{
+                    disabled: listActions?.EDITAR_DESCRIPCION_X !== 'TRUE'
+                  }"
+                  *ngIf="edit"
+                  class="clickable"
+                  (click)="cancel_edit_fields()"
+                  title="Cancelar"
+                  src="assets/rentas/cancel.svg"
+                  alt="autorenew"
+                  (keypress)="handleKeyDown($event)"
+                />
+              </div>
+            </div>
+          </div>
+          <div>
+            <input class="collapse-open" type="checkbox" id="documentos" />
+            <label
+              class="collapse-btn container-button-collapse subtitle-re"
+              for="documentos"
+              >Documentos registrados
+              <i
+                class="fa fa-angle-down pull-right icon-collapse"
+                style="position: relative; top: 4px"
+              ></i>
+              <i
+                class="fa fa-angle-up pull-right icon-expand"
+                style="position: relative; top: 4px"
+              ></i>
+            </label>
+            <div class="collapse-panel-table">
+              <div class="table-responsive">
+                <table class="table mb-none">
+                  <thead class="t-head">
+                    <tr class="grid-title">
+                      <th class="grid-title-item">Documento</th>
+                      <th class="grid-title-item">Fecha de carga</th>
+                      <th class="grid-title-item">Usuario</th>
+                      <th class="grid-title-item">Adjunto en Proceso de Pago</th>
+                      <th class="grid-title-item">Tamaño</th>
+                      <th class="grid-title-item">Acciones</th>
+                      <th class="grid-title-item">Edición</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                  <tbody>
+                    <ng-container *ngFor="let doc of doc_registrados">
+                      <tr class="grid-title row-item">
+                        <td class="grid-item">{{ doc.SNAME }}</td>
+                        <td class="grid-item">{{ doc.DUPLOAD }}</td>
+                        <td class="grid-item">{{ doc.SUSER }}</td>
+                        <td class="grid-item">
+                            <ng-container *ngIf="doc.isEditing; else showValue">
+                              <form-input-select-re
+                                [items]="opcionesTipoDocumento"
+                                [itemsArray]="true"
+                                fieldCodigo="codigo"
+                                fieldValor="valor"
+                                [defaultValue]="{ codigo: doc.NTYPEATTACHMENT }"
+                                [firstSelect]="true"
+                                [(value)]="inputs.NTYPEATTACHMENT"
+                              ></form-input-select-re>
+                            </ng-container>
+                            <ng-template #showValue>{{ doc.NTYPEATTACHMENT?.valor || doc.STYPEATTACHMENT }}</ng-template>
+                          </td>
+                        <td class="grid-item">{{ doc.SSIZE }}</td>
+
+                        <td class="grid-item">
+                          <a
+                            [ngClass]="{
+                              disabled: listActions?.SUBIR_ADJ !== 'TRUE'
+                            }"
+                            class="clickable"
+                            (click)="uploadFile2(doc.file, doc.NTYPEATTACHMENT); uploadFile(doc)"
+                          >
+                            <img
+                              *ngIf="doc.isNew"
+                              title="Cargar"
+                              src="assets/rentas/cloud_upload.svg"
+                              alt="autorenew"
+                            />
+                          </a>
+
+                          <a
+                            [ngClass]="{
+                              disabled: listActions?.DESCARJAR_ADJ !== 'TRUE'
+                            }"
+                            *ngIf="!doc.isNew"
+                            class="clickable"
+                            (click)="downloadFile(doc.SPATH)"
+                          >
+                            <img
+                              title="Descargar"
+                              src="assets/rentas/cloud_download_20dp_FILL1_wght400_GRAD0_opsz20.svg"
+                              alt="autorenew"
+                            />
+                          </a>
+                          <a
+                            [ngClass]="{
+                              disabled: listActions?.ELIMINAR_ADJ !== 'TRUE'
+                            }"
+                            class="clickable"
+                            (click)="
+                              !doc.isNew
+                                ? valTblAttachedfile(doc)
+                                : deleteFile(doc)
+                            "
+                          >
+                            <img
+                              title="Eliminar"
+                              src="assets/rentas/delete.svg"
+                              alt="autorenew"
+                            />
+                          </a>
+                        </td>
+                        <td class="grid-item">
+                            <ng-container *ngIf="doc.isEditing; else editIcons">
+                              <img
+                                (click)="saveChanges(doc)"
+                                class="clickable"
+                                title="Confirmar"
+                                src="assets/rentas/check_circle.svg"
+                                alt="Confirmar"
+                                [ngClass]="{
+                                    disabled: listActions?.EDITAR_TIPO_ADJ_OK !== 'TRUE'
+                                  }"
+                              />
+                              <img
+                                (click)="cancelEdit(doc)"
+                                class="clickable"
+                                title="Cancelar"
+                                src="assets/rentas/cancel.svg"
+                                alt="Cancelar"
+                                [ngClass]="{
+                                    disabled: listActions?.EDITAR_TIPO_ADJ_X !== 'TRUE'
+                                  }"
+                              />
+                            </ng-container>
+                            <ng-template #editIcons>
+                              <img
+                                (click)="setEditMode(doc)"
+                                class="clickable"
+                                title="Editar"
+                                [src]="listActions?.EDITAR_TIPO_ADJ=='TRUE'?'assets/rentas/edit.svg':'assets/rentas/edit_disabled.svg'"
+                                alt="Editar"
+                                [ngClass]="{
+                                    disabled: listActions?.EDITAR_TIPO_ADJ !== 'TRUE'
+                                  }"
+                              />
+                            </ng-template>
+                          </td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+                <div
+                  (keypress)="handleKeyDown($event)"
+                  [ngClass]="{
+                    disabled: listActions?.ADJUNTAR_ARCHIVO !== 'TRUE'
+                  }"
+                  [style.background]="
+                    listActions?.ADJUNTAR_ARCHIVO == 'TRUE'
+                      ? '#79cb33'
+                      : '#8385B4'
+                  "
+                  class="new-document clickable"
+                  (click)="fileInput.click()"
+                >
+                  Añadir documento
+                </div>
+                <p>Formatos permitidos: {{ getDisplayFileFormats() }}</p>
+                <input
+                  type="file"
+                  #fileInput
+                  (change)="onFileSelected($event, P_SCODE)"
+                  style="display: none"
+                  [accept]="getAcceptedFileFormats()"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="pestaActiva == 2">
+          <div class="button-re label-button">
+            <span>{{ ticket.STYPE_SYSTEM }}</span>
+          </div>
+          <div>
+            <input
+              class="collapse-open"
+              type="checkbox"
+              id="datoscontratante"
+            />
+            <label
+              class="collapse-btn container-button-collapse subtitle-re"
+              for="datoscontratante"
+              >Datos contratante/ asegurado
+              <i
+                class="fa fa-angle-down pull-right icon-collapse"
+                style="position: relative; top: 4px"
+              ></i>
+              <i
+                class="fa fa-angle-up pull-right icon-expand"
+                style="position: relative; top: 4px"
+              ></i>
+            </label>
+            <div class="collapse-panel">
+              <div class="campos">
+                <div *ngIf="ticket.NTYPE_SYSTEM == 2">
+                  <h5 class="h-text">Nº solicitud</h5>
+                  <p class="b-text">{{ detallePoliza.NUM_SOLICITUD }}</p>
+                </div>
+                <div>
+                  <h5 class="h-text">Póliza</h5>
+                  <p class="b-text">{{ detallePoliza.NUM_POLIZA }}</p>
+                </div>
+                <div>
+                  <h5 class="h-text">Contratante</h5>
+                  <p class="b-text">{{ detallePoliza.NOMBRE_CONTRATANTE }}</p>
+                </div>
+                <div>
+                  <h5 class="h-text">Asegurado</h5>
+                  <p class="b-text">{{ detallePoliza.NOMBRE_ASEGURADO }}</p>
+                </div>
+                <div>
+                  <h5 class="h-text">Nº Identidad Asegurado</h5>
+                  <p class="b-text">{{ detallePoliza.NUM_TIPO_IDEN_ASE }}</p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 1">
+                  <h5 class="h-text">Endoso</h5>
+                  <p class="b-text">{{ detallePoliza.NUM_ENDOSO }}</p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 1">
+                  <h5 class="h-text">Consultor Referente</h5>
+                  <p class="b-text">{{ informacionPoliza.CONSULTOR }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <input class="collapse-open" type="checkbox" id="datospoliza" />
+            <label
+              class="collapse-btn container-button-collapse subtitle-re"
+              for="datospoliza"
+              >Datos de la póliza
+              <i
+                class="fa fa-angle-down pull-right icon-collapse"
+                style="position: relative; top: 4px"
+              ></i>
+              <i
+                class="fa fa-angle-up pull-right icon-expand"
+                style="position: relative; top: 4px"
+              ></i>
+            </label>
+            <div class="collapse-panel">
+              <div class="campos">
+                <div>
+                  <h5 class="h-text">Ramo</h5>
+                  <p class="b-text">{{ ticket.RAMO }}</p>
+                </div>
+                <div>
+                  <h5 class="h-text">Producto</h5>
+                  <p class="b-text">{{ ticket.PRODUCTO }}</p>
+                </div>
+                <div>
+                  <h5 class="h-text">Póliza</h5>
+                  <p class="b-text">{{ ticket.POLIZA }}</p>
+                </div>
+                <div>
+                  <h5 class="h-text">Estado de la póliza</h5>
+                  <p class="b-text">{{ informacionPoliza.ESTADO_POL }}</p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 1">
+                  <h5 class="h-text">Frecuencia de pago</h5>
+                  <p class="b-text">
+                    {{ informacionPoliza.FRECUENCIA_PAGO_RENTA }}
+                  </p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 1">
+                  <h5 class="h-text">Prima</h5>
+                  <p class="b-text">{{ informacionPoliza.PRIMA | number: '1.2-2'}}</p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 1">
+                  <h5 class="h-text">Moneda</h5>
+                  <p class="b-text">{{ informacionPoliza.MONEDA }}</p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 1">
+                  <h5 class="h-text">Pensión Escalonada</h5>
+                  <p class="b-text">
+                    {{ informacionPoliza.PENSION_ESCALONADA | number: '1.2-2'}}
+                  </p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 1">
+                  <h5 class="h-text">% devolución</h5>
+                  <p class="b-text">{{ informacionPoliza.PRC_DEVOLUCION }}</p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 1">
+                  <h5 class="h-text">F. Inicio Vigencia</h5>
+                  <p class="b-text">{{ informacionPoliza.FEC_INIVIGENCIA }}</p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 1">
+                  <h5 class="h-text">F. Fin Vigencia</h5>
+                  <p class="b-text">{{ informacionPoliza.FEC_FINVIGENCIA }}</p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 1">
+                  <h5 class="h-text">Fecha de abono</h5>
+                  <p class="b-text">{{ informacionPoliza.FEC_ABONO }}</p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 2">
+                  <h5 class="h-text">Periodo de vigencia</h5>
+                  <p class="b-text">{{ informacionPoliza.PER_VIG }}</p>
+                </div>
+                <div>
+                  <h5 class="h-text">Fecha de devengue</h5>
+                  <p class="b-text">{{ informacionPoliza.FEC_DEV }}</p>
+                </div>
+                <!-- <div *ngIf="ticket.NSUBMOTIVO == 395">
+                    <h5 class="h-text">Fecha de fallecimiento</h5>
+                    <p class="b-text">{{ informacionPoliza.FEC_FALLE }}</p>
+                  </div>
+                <div *ngIf="ticket.NSUBMOTIVO == 395">
+                    <h5 class="h-text">Fecha del último pago</h5>
+                    <p class="b-text">{{ informacionPoliza.FEC_ULT_PAGO }}</p>
+                </div> -->
+                <div *ngIf="ticket.NTYPE_SYSTEM == 1">
+                  <h5 class="h-text">Diferimiento (años)</h5>
+                  <p class="b-text">{{ informacionPoliza.DIFERIMIENTO }}</p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 1">
+                  <h5 class="h-text">Años tmp</h5>
+                  <p class="b-text">{{ informacionPoliza.TMP }}</p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 1">
+                  <h5 class="h-text">Años garantiza</h5>
+                  <p class="b-text">{{ informacionPoliza.GARANTIZADO }}</p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 1">
+                  <h5 class="h-text">Pensión</h5>
+                  <p class="b-text">{{ informacionPoliza.PENSION | number: '1.2-2'}}</p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 1">
+                  <h5 class="h-text">% de seguro de vida</h5>
+                  <p class="b-text">{{ informacionPoliza.PRC_SEG_VIDA }}</p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 1">
+                  <h5 class="h-text">% seguro accidentes</h5>
+                  <p class="b-text">{{ informacionPoliza.PRC_SEG_ACC }}</p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 1">
+                  <h5 class="h-text">% ajuste anual</h5>
+                  <p class="b-text">{{ informacionPoliza.PRC_AJUSTE_ANUAL }}</p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 1">
+                    <h5 class="h-text">Gasto de sepelio</h5>
+                    <p class="b-text" *ngIf="ticket.COD_PRODUCTO === 'RT'">
+                      {{ informacionPoliza.SEPELIO }}
+                    </p>
+                    <p class="b-text" *ngIf="ticket.COD_PRODUCTO == 'AT'">
+                      {{ informacionPoliza.IND_GASSEP }}
+                    </p>
+                  </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 1">
+                  <h5 class="h-text">Gratificación</h5>
+                        <p class="b-text" *ngIf="ticket.COD_PRODUCTO === 'RT'">
+                    {{ informacionPoliza.GRATIFICACION }}
+                  </p>
+                  <p class="b-text" *ngIf="ticket.COD_PRODUCTO == 'AT'">
+                    {{ informacionPoliza.IND_GRATIF }}
+                  </p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 1">
+                  <h5 class="h-text">Póliza menor de edad</h5>
+                  <p class="b-text">{{ informacionPoliza.MENOR_EDAD }}</p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 2">
+                  <h5 class="h-text">Nº endoso</h5>
+                  <p class="b-text">{{ informacionPoliza.NUM_ENDOSO }}</p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 2">
+                  <h5 class="h-text">Tipo de pensión</h5>
+                  <p class="b-text">{{ informacionPoliza.TIPOPEN }}</p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 2">
+                  <h5 class="h-text">Tipo de renta</h5>
+                  <p class="b-text">{{ informacionPoliza.RENTA }}</p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 2">
+                  <h5 class="h-text">Modalidad</h5>
+                  <p class="b-text">{{ informacionPoliza.MODALIDAD }}</p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 2">
+                  <h5 class="h-text">AFP</h5>
+                  <p class="b-text">{{ informacionPoliza.AFP }}</p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 2">
+                  <h5 class="h-text">Monto de prima</h5>
+                  <p class="b-text">{{ informacionPoliza.PRIMA }}</p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 2">
+                    <h5 class="h-text">Moneda</h5>
+                    <p class="b-text">{{ informacionPoliza.MONEDA }}</p>
+                  </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 2">
+                  <h5 class="h-text">Meses diferidos</h5>
+                  <p class="b-text">{{ informacionPoliza.NUM_MESDIF }}</p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 2">
+                  <h5 class="h-text">Meses garantizados</h5>
+                  <p class="b-text">{{informacionPoliza.NUM_MESGAR}}</p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 2">
+                  <h5 class="h-text">Solicitud del dev</h5>
+                  <p class="b-text">{{ informacionPoliza.FEC_DEV_SOL }}</p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 2">
+                  <h5 class="h-text">Tasa de venta</h5>
+                  <p class="b-text">{{ informacionPoliza.PRC_TAS_VENTA }}</p>
+                </div>
+                <div>
+                    <h5 class="h-text">Fecha de fallecimiento</h5>
+                    <p class="b-text">{{ informacionPoliza.FEC_FALLE }}</p>
+                  </div>
+                <div>
+                    <h5 class="h-text">Fecha del último pago</h5>
+                    <p class="b-text">{{ informacionPoliza.FEC_ULT_PAGO }}</p>
+                </div>
+                <div *ngIf="ticket.NSUBMOTIVO == 399 || ticket.NSUBMOTIVO == 234">
+                    <h5 class="h-text">Nº CUSPP</h5>
+                    <p class="b-text">{{ informacionPoliza.CUSPP }}</p>
+                </div>
+               <!--<INI - 26/06/2025  | NUEVO CAMPO DE FECHA DE SOLICITUD >-->
+                <div *ngIf="ticket.NTYPE_SYSTEM == 2">
+                  <h5 class="h-text">Monto de Pensión</h5>
+                  <p class="b-text">{{ informacionPoliza.MTO_PENSION }}</p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 2">
+                  <h5 class="h-text">Monto de Pensión Garantizado</h5>
+                  <p class="b-text">{{ informacionPoliza.MTO_PENSIONGAR }}</p>
+                </div>
+                <!--<FIN - 26/06/2025  | NUEVO CAMPO DE FECHA DE SOLICITUD >-->
+
+              </div>
+            </div>
+          </div>
+          <div>
+            <input
+              class="collapse-open"
+              type="checkbox"
+              id="datosbeneficiarios"
+            />
+            <label
+              class="collapse-btn container-button-collapse subtitle-re"
+              for="datosbeneficiarios"
+              >Datos Beneficiarios
+              <i
+                class="fa fa-angle-down pull-right icon-collapse"
+                style="position: relative; top: 4px"
+              ></i>
+              <i
+                class="fa fa-angle-up pull-right icon-expand"
+                style="position: relative; top: 4px"
+              ></i>
+            </label>
+            <div class="collapse-panel-table">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead class="t-head">
+                    <tr class="grid-title">
+                      <th class="grid-title-item">Nombres</th>
+                      <th class="grid-title-item">Nº identidad</th>
+                      <th class="grid-title-item">Parentesco</th>
+                      <th class="grid-title-item">% pensión</th>
+                      <th class="grid-title-item">Estado</th>
+                      <th class="grid-title-item" *ngIf="ticket.NTYPE_SYSTEM == 2">D' Pensión</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                  <tbody>
+                    <ng-container *ngFor="let beneficiary of beneficiaries">
+                      <tr class="grid-title row-item">
+                        <td class="grid-item">{{ beneficiary.NOMBRE }}</td>
+                        <td class="grid-item">
+                          {{ beneficiary.NUM_TIPO_IDEN }}
+                        </td>
+                        <td class="grid-item">{{ beneficiary.PARENTESCO }}</td>
+                        <td class="grid-item">
+                          {{ beneficiary.PRC_PENSION }} %
+                        </td>
+                        <td class="grid-item">
+                            <span *ngIf="ticket.NTYPE_SYSTEM == 1">{{ beneficiary.ESTADO }}</span>
+                            <span *ngIf="ticket.NTYPE_SYSTEM == 2">{{ beneficiary.ESTADO_EXCLU }}</span>
+                        <td class="grid-item" *ngIf="ticket.NTYPE_SYSTEM == 2">{{ beneficiary.ESTADO }}</td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div>
+            <input
+              class="collapse-open"
+              type="checkbox"
+              id="detallemovimientopoliza"
+            />
+            <label
+              class="collapse-btn container-button-collapse subtitle-re"
+              for="detallemovimientopoliza"
+              >Detalle movimiento de la poliza
+              <i
+                class="fa fa-angle-down pull-right icon-collapse"
+                style="position: relative; top: 4px"
+              ></i>
+              <i
+                class="fa fa-angle-up pull-right icon-expand"
+                style="position: relative; top: 4px"
+              ></i>
+            </label>
+            <div class="collapse-panel-table">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead class="t-head">
+                    <tr class="grid-title">
+                      <th class="grid-title-item">Numero de endoso</th>
+                      <th class="grid-title-item">Fecha de creación</th>
+                      <th class="grid-title-item">Causa</th>
+                      <th class="grid-title-item">Usuario</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                  <tbody>
+                    <ng-container *ngFor="let history of history_pol">
+                      <tr class="grid-title row-item">
+                        <td class="grid-item">{{ history.NUM_ENDOSO }}</td>
+                        <td class="grid-item">{{ history.FECHA_CREA }}</td>
+                        <td class="grid-item">{{ history.CAUSA }}</td>
+                        <td class="grid-item">{{ history.USUARIO_CREA }}</td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="pestaActiva == 3">
+          <div>
+            <input class="collapse-open" type="checkbox" id="datospago" />
+            <label
+              class="collapse-btn container-button-collapse subtitle-re"
+              for="datospago"
+              >Datos para el pago
+              <i
+                class="fa fa-angle-down pull-right icon-collapse"
+                style="position: relative; top: 4px"
+              ></i>
+              <i
+                class="fa fa-angle-up pull-right icon-expand"
+                style="position: relative; top: 4px"
+              ></i>
+            </label>
+            <div class="collapse-panel margin-botton">
+              <div class="campos uppercase">
+                <div>
+                  <h5 class="h-text">Póliza</h5>
+                  <p class="b-text">{{ ticket.POLIZA_CONTR }}</p>
+                </div>
+                <div>
+                  <h5 class="h-text">Fecha de pago</h5>
+                  <form-input-date-re
+                    [minDate]="date"
+                    [maxDate]="FechaFin"
+                    *ngIf="edit3"
+                    [disabled]="
+                      listActions.FECHA_PAGO_DET == 'TRUE' ? false : true
+                    "
+                    [(value)]="inputs.FECHA_PAGO"
+                  ></form-input-date-re>
+                  <p *ngIf="!edit3" class="b-text">{{ fechaPago }}</p>
+                </div>
+                <div>
+                  <h5 class="h-text">Imp. Devolución</h5>
+                  <p class="b-text">
+                    {{ ticket.SYM_MONEDA }} {{ ticket.IMP_DEVOLUCION }}
+                  </p>
+                </div>
+                <!-- <div *ngIf="ticket.NTYPE_SYSTEM == 2">
+                  <h5 class="h-text">Pensiones no pagadas</h5>
+                  <p class="b-text">
+                    {{ ticket.SYM_MONEDA }} {{ ticket.NNOPAY_PENSIONS | number: '1.2-2'}}
+                  </p>
+                </div>
+                <div *ngIf="ticket.NTYPE_SYSTEM == 2">
+                  <h5 class="h-text">Pensiones futuras no pagadas</h5>
+                  <p class="b-text">
+                    {{ ticket.SYM_MONEDA }} {{ ticket.NFUTURENOPAY_PENSIONS | number: '1.2-2'}}
+                  </p>
+                </div> -->
+                <div *ngIf="listActions.PORC_ANTICIPO == 'TRUE'">
+                  <h5 class="h-text">% Anticipo</h5>
+                   <!--<INI - 26/06/2025  | NUEVO CAMPO DE FECHA DE SOLICITUD >-->
+                  <!--<form-input-text-re
+                    *ngIf="edit3"
+                    [disabled]="
+                      listActions.FECHA_PAGO_DET == 'TRUE' ? false : true
+                    "
+                    [(value)]="inputs.POR_ANTICIPO"
+                    [todayPreviousMonth]="true"
+                    [patternPrevent]="porcentajeRegex"
+                  ></form-input-text-re>-->
+                <input
+                        class="form-control"
+                        style="height: 45px; margin-top: 5px;"
+                        type="number"
+                        *ngIf="edit3 && !mostrarComboAnticipo"
+                        [disabled]="listActions.CELL_PORCANTICIPO == 'TRUE' ? false : true"
+                        [(ngModel)]="inputs.POR_ANTICIPO"
+                        [min]="porcentajeMin"
+                        [max]="porcentajeMax"
+                        step="1"
+                        placeholder="Ingrese %Anticipo"
+                        (blur)="validarRango()"
+                        (keypress)="soloEnterosYRango($event)"/>
+                      <form-input-select-re
+                      *ngIf="edit3 && mostrarComboAnticipo"
+                      [items]="opcionesAnticipos"
+                      [itemsArray]="true"
+                      fieldCodigo="codigo"
+                      fieldValor="valor"
+                      [disabled]="listActions.CELL_PORCANTICIPO == 'TRUE' ? false : true"
+                      [defaultValue]="{ codigo: inputs.POR_ANTICIPO }"
+                    [(value)]="inputs.POR_ANTICIPO"
+                      [firstSelect]="true"
+                    ></form-input-select-re>
+                  <!--<FIN - 26/06/2025  | NUEVO CAMPO DE FECHA DE SOLICITUD >-->
+
+                  <p *ngIf="!edit3" class="b-text">{{ ticket.POR_ANTICIPO }}</p>
+                  <p *ngIf="listActions.PORC_ANTICIPO == 'TRUE' && !mostrarComboAnticipo && listActions.CELL_PORCANTICIPO == 'TRUE'" style="color: red; font-weight: bold;">
+                        El %Anticipo debe estar entre {{ porcentajeMin }} y {{ porcentajeMax }}
+                  </p>
+                </div>
+                <div>
+                    <h5 class="h-text">Tipo de pago</h5>
+                    <p class="b-text">
+                        {{ ticket.DES_PAGO }}
+                    </p>
+                </div>
+                <!-- <div *ngIf="listActions.TIPO_PAGO == 'TRUE'">
+                  <h5 class="h-text">Tipo de pago</h5>
+                  <p *ngIf="!edit3" class="b-text">{{ ticket.DES_PAGO }}</p>
+                  <form-input-select-re
+                    *ngIf="edit3"
+                    [items]="opcionesTipoPago"
+                    [itemsArray]="true"
+                    fieldCodigo="codigo"
+                    fieldValor="valor"
+                    [defaultValue]="{ codigo: ticket.COD_PAGO }"
+                    (onSelect)="changeTypePayment(inputs.P_TYPE_SEARCH)"
+                    [firstSelect]="true"
+                    [disabled]="listActions.MOTIVO_DET == 'TRUE' ? false : true"
+                    [(value)]="inputs.P_TYPE_SEARCH"
+                  ></form-input-select-re>
+                </div> -->
+              </div>
+              <div class="edit">
+                <img
+                  [ngClass]="{
+                    disabled: listActions?.EDITAR_DATOS_PAGO !== 'TRUE'
+                  }"
+                  (keypress)="handleKeyDown($event)"
+                  *ngIf="!edit3"
+                  class="clickable"
+                  (click)="edit_fields3()"
+                  title="Editar"
+                  src="assets/rentas/edit.svg"
+                  [src]="listActions?.EDITAR_DATOS_PAGO=='TRUE'?'assets/rentas/edit.svg':'assets/rentas/edit_disabled.svg'"
+                  alt="autorenew"
+                />
+                <img
+                  [ngClass]="{
+                    disabled: listActions?.EDITAR_DATOS_PAGO_OK !== 'TRUE'
+                  }"
+                  (keypress)="handleKeyDown($event)"
+                  *ngIf="edit3"
+                  class="clickable"
+                  (click)="confirm_edit_fields3()"
+                  title="Confirmar"
+                  src="assets/rentas/check_circle.svg"
+                  alt="autorenew"
+                />
+                <img
+                  [ngClass]="{
+                    disabled: listActions?.EDITAR_DATOS_PAGO_X !== 'TRUE'
+                  }"
+                  (keypress)="handleKeyDown($event)"
+                  *ngIf="edit3"
+                  class="clickable"
+                  (click)="cancel_edit_fields3()"
+                  title="Cancelar"
+                  src="assets/rentas/cancel.svg"
+                  alt="autorenew"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <input
+              class="collapse-open"
+              type="checkbox"
+              id="datosbeneficiarios"
+            />
+            <label
+              class="collapse-btn container-button-collapse subtitle-re"
+              for="datosbeneficiarios"
+              >Receptores del pago
+              <div>
+              <img
+                class="clickable"
+                  title="Confirmado"
+                  src="assets/rentas/check_circle.svg"
+                  alt="autorenew"
+                  *ngIf="confirmPaymentFlag == 1"
+                />
+                <i
+                  class="fa fa-angle-down pull-right icon-collapse"
+                  style="position: relative; top: 4px"
+                ></i>
+                <i
+                  class="fa fa-angle-up pull-right icon-expand"
+                  style="position: relative; top: 4px"
+                ></i>
+              </div>
+            </label>
+            <div class="collapse-panel-table">
+              <div class="table-responsive mb-none">
+                <table class="table">
+                  <thead class="t-head">
+                    <tr class="grid-title">
+                      <th class="grid-title-item">Tipo Receptor</th>
+                      <th class="grid-title-item">Documento de identidad</th>
+                      <th class="grid-title-item">Nombres</th>
+                      <th class="grid-title-item">Parentesco</th>
+                      <th class="grid-title-item">% pensión</th>
+                      <th class="grid-title-item">Tipo de Pago</th>
+                      <th class="grid-title-item">Banco de origen</th>
+                      <th class="grid-title-item">Banco de destino</th>
+                      <th class="grid-title-item">Tipo de cuenta</th>
+                      <th class="grid-title-item">Cuenta Bancaria</th>
+                      <th class="grid-title-item">CCI</th>
+                      <th class="grid-title-item">Titular de la cuenta</th>
+                      <th class="grid-title-item">Nº identidad Titular</th>
+                      <th class="grid-title-item">Importe</th>
+                      <th class="grid-title-item" *ngIf="ticket.NSTATE == 92 || ticket.NSTATE == 93">Estado de pago</th>
+                      <th class="grid-title-item" *ngIf="listActions?.EDITAR_RECEPTOR_PAGO == 'TRUE' || listActions?.ADD_RECEPTOR_EDITAR == 'TRUE'">Acciones</th>
+                      <th class="grid-title-item" *ngIf="listActions.ADD_RECEPTOR == 'TRUE' && confirmPaymentFlag != 1">
+                        <img
+                            class="clickable add_receptor"
+                            title="Agregar Beneficiario"
+                            src="assets/rentas/add_circle.svg"
+                            alt="autorenew"
+
+                            (click)="agregarBeneficiario($event)"
+                        />
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let receiver of receivers; let i = index">
+                      <tr class="grid-title row-item">
+                        <td class="grid-item">{{ receiver.RECEPTOR }}</td>
+                        <td class="grid-item">
+                          {{ receiver.TIPO_IDEN }} -
+                          {{ receiver.NUM_TIPO_IDEN }}
+                        </td>
+                        <td class="grid-item">{{ receiver.NOMBRE }}</td>
+                        <td class="grid-item">{{ receiver.PARENTESCO }}</td>
+                        <td class="grid-item">{{ receiver.PRC_PENSION }}%</td>
+                        <td class="grid-item min-w">
+                          <form-input-select-re
+                            [items]="opcionesTipoPagoReceptor"
+                            [itemsArray]="true"
+                            fieldCodigo="codigo"
+                            fieldValor="valor"
+                            [firstSelect]="true"
+                            (onSelect)="
+                              changeTypePaymentReceptor(receiver, i)
+                            "
+                            [(value)]="receiver.tipoPagoReceptor"
+                            [ngClass]="{
+                                disabled: confirmPaymentFlag == 1 || listActions?.CONFIRM_DATOS_PAY != 'TRUE' || flagAfp == 1 || (ticket.NSUBMOTIVO == 399 || ticket.NSUBMOTIVO == 234 && !receiver.isEditing)
+                              }"
+                          ></form-input-select-re>
+                        </td>
+                        <td class="grid-item">
+                            <span *ngIf="receiver.tipoPagoReceptor?.codigo == 1">{{ receiver.BANCO_ORIGEN }}</span>
+                          </td>
+
+                        <td class="grid-item">
+                            <form-input-select-re
+                            *ngIf="(receiver.isEditing && (receiver.PERMISSION_BTN == 'TRUE' || (listActions?.ADD_RECEPTOR_EDITAR == 'TRUE' && receiver.tipoPagoReceptor?.codigo == 2)) )|| (flagAfp == 1 && confirmPaymentFlag != 1) "
+                            [items]="opcionesBanco"
+                            [itemsArray]="true"
+                            fieldCodigo="codigo"
+                            fieldValor="valor"
+                            [ngClass]="{
+                                disabled: flagAfp == 1 && listActions?.EDITAR_RECEPTOR_PAGO != 'TRUE'
+                              }"
+                            [(value)]="inputs.COD_BANCO"
+                            [firstSelect]="true"
+
+                          ></form-input-select-re>
+                          <span *ngIf="receiver.tipoPagoReceptor?.codigo == 2 && !(receiver.isEditing && ((receiver.PERMISSION_BTN == 'TRUE' && listActions?.EDITAR_RECEPTOR_PAGO == 'TRUE')|| listActions?.ADD_RECEPTOR_EDITAR == 'TRUE'))">{{
+                            receiver.BANCO
+                          }}</span>
+                        </td>
+                        <td class="grid-item">
+                            <form-input-select-re
+                            *ngIf="(receiver.isEditing && (receiver.PERMISSION_BTN == 'TRUE' || (listActions?.ADD_RECEPTOR_EDITAR == 'TRUE' && receiver.tipoPagoReceptor?.codigo == 2))  )|| (flagAfp == 1 && confirmPaymentFlag != 1) "
+                            [items]="opcionesTipoCuenta"
+                            [itemsArray]="true"
+                            fieldCodigo="codigo"
+                            fieldValor="valor"
+                            [ngClass]="{
+                                disabled: flagAfp == 1 && listActions?.EDITAR_RECEPTOR_PAGO != 'TRUE'
+                              }"
+                            [(value)]="inputs.TIPO_CUENTA"
+                            [firstSelect]="true"
+                          ></form-input-select-re>
+                          <span *ngIf="receiver.tipoPagoReceptor?.codigo == 2 && !(receiver.isEditing && ((receiver.PERMISSION_BTN == 'TRUE' && listActions?.EDITAR_RECEPTOR_PAGO == 'TRUE')|| (listActions?.ADD_RECEPTOR_EDITAR == 'TRUE' && receiver.tipoPagoReceptor.codigo == 2)))">{{
+                            receiver.TIPO_CUENTA
+                          }}</span>
+                        </td>
+                        <td class="grid-item itemCCI">
+                            <form-input-text-re
+                            *ngIf="receiver.isEditing && ((receiver.PERMISSION_BTN == 'TRUE' && listActions?.EDITAR_RECEPTOR_PAGO == 'TRUE')|| (listActions?.ADD_RECEPTOR_EDITAR == 'TRUE' && receiver.tipoPagoReceptor?.codigo == 2))"
+                            [(value)]="inputs.NUM_CUENTA"
+                            (valueChange)="inputs.NUM_CUENTA = $event.trim()"
+                          ></form-input-text-re>
+                          <span *ngIf="receiver.tipoPagoReceptor?.codigo == 2 && !(receiver.isEditing && ((receiver.PERMISSION_BTN == 'TRUE' && listActions?.EDITAR_RECEPTOR_PAGO == 'TRUE')|| (listActions?.ADD_RECEPTOR_EDITAR == 'TRUE' && receiver.tipoPagoReceptor?.codigo == 2)))" >{{
+                            receiver.NUM_CUENTA
+                          }}</span>
+                        </td>
+                        <td class="grid-item itemCCI">
+                            <form-input-text-re
+                            *ngIf="receiver.isEditing && ((receiver.PERMISSION_BTN == 'TRUE' && listActions?.EDITAR_RECEPTOR_PAGO == 'TRUE')|| (listActions?.ADD_RECEPTOR_EDITAR == 'TRUE' && receiver.tipoPagoReceptor?.codigo == 2))"
+                            [(value)]="inputs.NUM_CUENTA_CCI"
+                            (valueChange)="inputs.NUM_CUENTA_CCI = $event.trim()"
+                          ></form-input-text-re>
+                          <span *ngIf="receiver.tipoPagoReceptor?.codigo == 2 && !(receiver.isEditing && ((receiver.PERMISSION_BTN == 'TRUE' && listActions?.EDITAR_RECEPTOR_PAGO == 'TRUE')|| (listActions?.ADD_RECEPTOR_EDITAR == 'TRUE' && receiver.tipoPagoReceptor?.codigo == 2)))" >{{
+                            receiver.NUM_CUENTA_CCI
+                          }}</span>
+                        </td>
+                        <td class="grid-item">
+                          <span *ngIf="receiver.tipoPagoReceptor?.codigo == 2">{{
+                            receiver.NOMBRE_MAC
+                          }}</span>
+                        </td>
+                        <td class="grid-item">
+                          <span *ngIf="receiver.tipoPagoReceptor?.codigo == 2">
+                          {{ receiver.tipoPagoReceptor.codigo == 2 && receiver.TIPO_IDEN_MAC.trim() !== "" && receiver.NUM_TIPO_IDEN_MAC.trim() !== ""
+                            ? (receiver.TIPO_IDEN_MAC + ' - ' + receiver.NUM_TIPO_IDEN_MAC)
+                            : '' }}</span>
+                        </td>
+                        <td class="grid-item">{{ ticket.SYM_MONEDA }} {{ receiver.MONTO_DEVOLUCION | number: '1.2-2'}}</td>
+                        <td class="grid-item" *ngIf="ticket.NSTATE == 92 || ticket.NSTATE == 93">{{ receiver.SDESCRIPT }}</td>
+                        <td class="grid-item"> <div class="edit">
+                            <img
+                              (keypress)="handleKeyDown($event)"
+                              [ngClass]="{ disabled: listActions?.EDITAR_RECEPTOR_PAGO !== 'TRUE' }"
+                              *ngIf="listActions?.EDITAR_RECEPTOR_PAGO == 'TRUE' && !(receiver.isEditing && receiver.PERMISSION_BTN == 'TRUE') && receiver.tipoPagoReceptor?.codigo == 2"
+                              class="clickable"
+                              (click)="edit_fields5(receiver)"
+                              title="Editar"
+                              [src]="listActions?.EDITAR_RECEPTOR_PAGO=='TRUE'?'assets/rentas/edit.svg':'assets/rentas/edit_disabled.svg'"
+                              alt="autorenew"
+                            />
+                            <img
+                              (keypress)="handleKeyDown($event)"
+                              [ngClass]="{
+                                disabled: listActions?.EDITAR_RECEPTOR_PAGO_OK !== 'TRUE'
+                              }"
+                              *ngIf="(receiver.isEditing && receiver.PERMISSION_BTN == 'TRUE')"
+                              class="clickable"
+                              (click)="confirm_edit_fields5(i)"
+                              title="Confirmar"
+                              src="assets/rentas/check_circle.svg"
+                              alt="autorenew"
+                            />
+                            <img
+                              (keypress)="handleKeyDown($event)"
+                              [ngClass]="{ disabled: listActions?.EDITAR_RECEPTOR_PAGO_X !== 'TRUE' }"
+                              *ngIf="(receiver.isEditing && receiver.PERMISSION_BTN == 'TRUE')"
+                              class="clickable"
+                              (click)="cancel_edit_fields5()"
+                              title="Cancelar"
+                              src="assets/rentas/cancel.svg"
+                              alt="autorenew"
+                            />
+                            <img
+                              (keypress)="handleKeyDown($event)"
+                              [ngClass]="{ disabled: listActions?.ADD_RECEPTOR_EDITAR !== 'TRUE' }"
+                              *ngIf="(!receiver.isEditing && listActions?.ADD_RECEPTOR_EDITAR == 'TRUE' && !(confirmPaymentFlag == 2 && nuevoBeneficiario?.length > 0))  && (confirmPaymentFlag != 1)"
+                              class="clickable"
+                              (click)="edit_fields6(receiver)"
+                              title="Editar"
+                              [src]="listActions?.ADD_RECEPTOR_EDITAR=='TRUE'?'assets/rentas/edit.svg':'assets/rentas/edit_disabled.svg'"
+                              alt="autorenew"
+                            />
+                            <img
+                              (keypress)="handleKeyDown($event)"
+                              [ngClass]="{
+                                disabled: listActions?.ADD_RECEPTOR_OK !== 'TRUE'
+                              }"
+                              *ngIf="(receiver.isEditing && listActions?.ADD_RECEPTOR_OK == 'TRUE') && !(confirmPaymentFlag == 2 && nuevoBeneficiario?.length > 0)"
+                              class="clickable"
+                              (click)="confirm_edit_fields6(i)"
+                              title="Confirmar"
+                              src="assets/rentas/check_circle.svg"
+                              alt="autorenew"
+                            />
+                            <img
+                              (keypress)="handleKeyDown($event)"
+                              [ngClass]="{ disabled: listActions?.ADD_RECEPTOR_X !== 'TRUE' }"
+                              *ngIf="(receiver.isEditing && listActions?.ADD_RECEPTOR_X == 'TRUE') && !(confirmPaymentFlag == 2 && nuevoBeneficiario?.length > 0)"
+                              class="clickable"
+                              (click)="cancel_edit_fields6(receiver)"
+                              title="Cancelar"
+                              src="assets/rentas/cancel.svg"
+                              alt="autorenew"
+                            />
+                            <img
+                            (click)="eliminarHeredero(receiver)"
+                            [ngClass]="{ disabled: listActions?.ADD_RECEPTOR_EDITAR !== 'TRUE' }"
+                            *ngIf="((listActions?.ADD_RECEPTOR_DEL == 'TRUE') && !(confirmPaymentFlag == 2 && nuevoBeneficiario?.length > 0) && confirmPaymentFlag != 1)"
+                            src="assets/rentas/delete.svg"
+                            alt="autorenew"
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                    </ng-container>
+                    <tr *ngFor="let beneficiario of nuevoBeneficiario; let i = index; trackBy: trackByFn" class="grid-title row-item">
+                        <td class="grid-item">
+                          <form-input-select-re
+                            [items]="opcionesTipoBeneficiarios"
+                            [itemsArray]="true"
+                            fieldCodigo="codigo"
+                            fieldValor="valor"
+                            [(value)]="beneficiario.RECEPTOR"
+                            [defaultValue]="{ codigo: 'HEREDERO'}"
+                            disabled
+                            [firstSelect]="true"
+                          ></form-input-select-re>
+                        </td>
+                        <td class="grid-item doble">
+                          <form-input-select-re
+                            [items]="opcionesTipoDocumentos"
+                            [itemsArray]="true"
+                            fieldCodigo="codigo"
+                            fieldValor="valor"
+                            [(value)]="beneficiario.TIPO_IDEN"
+                            (onSelect)="onTipoIdenChange(i)"
+                          ></form-input-select-re>
+                          <form-input-text-re
+                            [(value)]="beneficiario.NUM_TIPO_IDEN"
+                            (keydown.enter)="valAddReceiverPayment(beneficiario, i)"
+                          ></form-input-text-re>
+                        </td>
+                        <td class="grid-item" *ngIf="beneficiario.activo">{{ beneficiario.NOMBRE }}</td>
+                        <td class="grid-item" *ngIf="beneficiario.activo">{{ beneficiario.PARENTESCO }}</td>
+                        <td class="grid-item" *ngIf="beneficiario.activo">{{ beneficiario.PRC_PENSION }}</td>
+                        <td class="grid-item" *ngIf="beneficiario.activo">
+                          <form-input-select-re
+                            [items]="opcionesTipoPagoReceptor"
+                            [itemsArray]="true"
+                            fieldCodigo="codigo"
+                            fieldValor="valor"
+                            [(value)]="beneficiario.tipoPagoReceptor"
+                          ></form-input-select-re>
+                        </td>
+                        <td class="grid-item" *ngIf="beneficiario.activo">
+                          <span *ngIf="beneficiario.tipoPagoReceptor.codigo == 1">{{ beneficiario.BANCO_ORIGEN }}</span>
+                        </td>
+                        <td class="grid-item" *ngIf="beneficiario.activo">
+                          <form-input-select-re
+                            *ngIf="beneficiario.tipoPagoReceptor.codigo == 2"
+                            [items]="opcionesBanco"
+                            [itemsArray]="true"
+                            fieldCodigo="codigo"
+                            fieldValor="valor"
+                            [(value)]="beneficiario.COD_BANCO"
+                            [firstSelect]="true"
+                          ></form-input-select-re>
+                        </td>
+                        <td class="grid-item" *ngIf="beneficiario.activo">
+                          <form-input-select-re
+                            *ngIf="beneficiario.tipoPagoReceptor.codigo == 2"
+                            [items]="opcionesTipoCuenta"
+                            [itemsArray]="true"
+                            fieldCodigo="codigo"
+                            fieldValor="valor"
+                            [(value)]="beneficiario.COD_TIPO_CUENTA"
+                          ></form-input-select-re>
+                        </td>
+                        <td class="grid-item itemCCI" *ngIf="beneficiario.activo">
+                          <form-input-text-re [(value)]="beneficiario.NUM_CUENTA" *ngIf="beneficiario.tipoPagoReceptor.codigo == 2"></form-input-text-re>
+                        </td>
+                        <td class="grid-item itemCCI" *ngIf="beneficiario.activo">
+                          <form-input-text-re [(value)]="beneficiario.NUM_CUENTA_CCI" *ngIf="beneficiario.tipoPagoReceptor.codigo == 2"></form-input-text-re>
+                        </td>
+                        <td class="grid-item" *ngIf="beneficiario.activo">{{ beneficiario.NOMBRE_MAC }}</td>
+                        <td class="grid-item" *ngIf="beneficiario.activo">{{ beneficiario.NUM_TIPO_IDEN_MAC }}</td>
+                        <td class="grid-item" *ngIf="beneficiario.activo">{{ beneficiario.MONTO_DEVOLUCION }}</td>
+                        <td class="grid-item"> <div class="edit">
+                            <img
+                            (click)="eliminarNuevoHeredero(beneficiario)"
+                            [ngClass]="{ disabled: listActions?.ADD_RECEPTOR_EDITAR !== 'TRUE' }"
+                            src="assets/rentas/delete.svg"
+                            alt="autorenew"
+                            />
+                          </div>
+                        </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div
+            (keypress)="handleKeyDown($event)"
+            class="new-document clickable"
+            (click)="guardarHerederos()"
+            [ngClass]="{
+                disabled:
+              listActions?.CONFIRM_DATOS_PAY !== 'TRUE' || !(receivers?.length > 0 || nuevoBeneficiario?.length > 0)
+            }"
+            [style.background]="
+            (listActions?.CONFIRM_DATOS_PAY == 'TRUE' && (receivers?.length > 0 || nuevoBeneficiario?.length > 0))
+                ? '#ff7b00'
+                : '#8385B4'
+            "
+            *ngIf="confirmPaymentFlag == 2 && nuevoBeneficiario?.length > 0"
+          >
+            Guardar herederos
+          </div>
+          <div
+            (keypress)="handleKeyDown($event)"
+            class="new-document clickable"
+            (click)="confirmarReceptor()"
+            [ngClass]="{
+                disabled:
+              listActions?.CONFIRM_DATOS_PAY !== 'TRUE' || !(receivers?.length > 0 || nuevoBeneficiario?.length > 0)
+            }"
+            [style.background]="
+            (listActions?.CONFIRM_DATOS_PAY == 'TRUE' && (receivers?.length > 0 || nuevoBeneficiario?.length > 0))
+                ? '#79cb33'
+                : '#8385B4'
+            "
+            *ngIf="confirmPaymentFlag == 2 && nuevoBeneficiario?.length <= 0"
+          >
+            Confirmar datos de pago
+          </div>
+
+          <div
+            (keypress)="handleKeyDown($event)"
+            class="new-document clickable"
+            (click)="comparePayments()"
+            [ngClass]="{
+            disabled: listActions?.CONFIRM_DATOS_PAY !== 'TRUE' || !(receivers?.length > 0 || nuevoBeneficiario?.length > 0)
+            }"
+            [style.background]="
+            listActions?.CONFIRM_DATOS_PAY == 'TRUE' && (receivers?.length > 0 || nuevoBeneficiario?.length > 0)
+              ? '#27246D'
+              : '#8385B4'
+            "
+            *ngIf="confirmPaymentFlag == 1"
+          >
+            Verificar datos de pago
+          </div>
+
+        </div>
+        <div *ngIf="pestaActiva == 4">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="t-head">
+                <tr class="grid-title">
+                  <th class="grid-title-item">
+                    Nro secuencia
+                    <img
+                      alt="swap_vert"
+                      (keypress)="onKeyPress($event)"
+                      (click)="
+                        setSortField('NTRANSAC'); $event.stopPropagation()
+                      "
+                      src="assets/rentas/swap_vert_FILL1_wght400_GRAD0_opsz24.svg"
+                    />
+                  </th>
+                  <th class="grid-title-item">
+                    Accion
+                    <img
+                      alt="swap_vert"
+                      (keypress)="onKeyPress($event)"
+                      (click)="
+                        setSortField('SACTION'); $event.stopPropagation()
+                      "
+                      src="assets/rentas/swap_vert_FILL1_wght400_GRAD0_opsz24.svg"
+                    />
+                  </th>
+                  <th class="grid-title-item">
+                    Estado
+                    <img
+                      alt="swap_vert"
+                      (keypress)="onKeyPress($event)"
+                      (click)="setSortField('ESTADO'); $event.stopPropagation()"
+                      src="assets/rentas/swap_vert_FILL1_wght400_GRAD0_opsz24.svg"
+                    />
+                  </th>
+                  <th class="grid-title-item">
+                    Fecha de registro
+                    <img
+                      alt="swap_vert"
+                      (keypress)="onKeyPress($event)"
+                      (click)="
+                        setSortField('FECHA_REGISTO'); $event.stopPropagation()
+                      "
+                      src="assets/rentas/swap_vert_FILL1_wght400_GRAD0_opsz24.svg"
+                    />
+                  </th>
+                  <th class="grid-title-item">
+                    Usuario
+                    <img
+                      alt="swap_vert"
+                      (keypress)="onKeyPress($event)"
+                      (click)="
+                        setSortField('USUARIO'); $event.stopPropagation()
+                      "
+                      src="assets/rentas/swap_vert_FILL1_wght400_GRAD0_opsz24.svg"
+                    />
+                  </th>
+                  <th class="grid-title-item">
+                    Tipo de comentario
+                    <img
+                      alt="swap_vert"
+                      (keypress)="onKeyPress($event)"
+                      (click)="
+                        setSortField('STYPECOMMENT'); $event.stopPropagation()
+                      "
+                      src="assets/rentas/swap_vert_FILL1_wght400_GRAD0_opsz24.svg"
+                    />
+                  </th>
+                  <th class="grid-title-item">
+                    Comentario
+                    <img
+                      alt="swap_vert"
+                      (keypress)="onKeyPress($event)"
+                      (click)="
+                        setSortField('SCOMMETS'); $event.stopPropagation()
+                      "
+                      src="assets/rentas/swap_vert_FILL1_wght400_GRAD0_opsz24.svg"
+                    />
+                  </th>
+                  <th class="grid-title-item">
+                    Intervalo días
+                    <img
+                      alt="swap_vert"
+                      (keypress)="onKeyPress($event)"
+                      (click)="
+                        setSortField('INTER_DAYS'); $event.stopPropagation()
+                      "
+                      src="assets/rentas/swap_vert_FILL1_wght400_GRAD0_opsz24.svg"
+                    />
+                  </th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+              <tbody>
+                <ng-container *ngFor="let history of displayedStatusHistory">
+                  <tr class="grid-title row-item">
+                    <td class="grid-item">{{ history.NTRANSAC }}</td>
+                    <td class="grid-item">{{ history.SACTION }}</td>
+                    <td class="grid-item">{{ history.ESTADO }}</td>
+                    <td class="grid-item">
+                      {{ history.FECHA_REGISTO | date : "dd/MM/yyyy HH:mm:ss" }}
+                    </td>
+                    <td class="grid-item">{{ history.USUARIO }}</td>
+                    <td class="grid-item">{{ history.STYPECOMMENT }}</td>
+                    <td class="grid-item">{{ history.SCOMMETS }}</td>
+                    <td class="grid-item">{{ history.INTER_DAYS }}</td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+            <div class="container-pagination" *ngIf="showPagination">
+              <label class="labelPagination" for="itemsPerPage"
+                >Registros por página:</label
+              >
+              <input
+                class="paginationInput"
+                type="number"
+                id="itemsPerPage"
+                min="1"
+                [(ngModel)]="itemsPerPage"
+                (change)="changeItemsPerPage()"
+              />
+              <span class="labelPagination" [title]="hintHistory"
+                >{{ startRecord }} - {{ endRecord }} de
+                {{ totalStatusHistory }} &nbsp;&nbsp;&nbsp;&nbsp;</span
+              >
+              <span class="labelPagination" [title]="hintPagination">
+                {{ currentPage }} de {{ totalPage }}
+              </span>
+
+              <button
+                class="containerArrow"
+                (click)="changePage(currentPage - 1)"
+                [disabled]="currentPage === 1"
+                [style.background]="currentPage === 1 ? '#E6E7FF' : '#27246D'"
+              >
+                <img
+                  src="assets/rentas/arrow_back_ios_24dp_FILL0_wght400_GRAD0_opsz24.svg"
+                  alt="more_vert"
+                />
+              </button>
+              <button
+                class="containerArrow"
+                (click)="changePage(currentPage + 1)"
+                [disabled]="currentPage * pageSize >= totalStatusHistory"
+                [style.background]="
+                  currentPage * pageSize >= totalStatusHistory
+                    ? '#E6E7FF'
+                    : '#27246D'
+                "
+              >
+                <img
+                  src="assets/rentas/arrow_forward_ios_24dp_FILL0_wght400_GRAD0_opsz24.svg"
+                  alt="more_vert"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Pantalla de carga -->
+<div [hidden]="!isLoading" class="loadingScreen">
+  <div style="display: flex; height: 100%; width: 100%">
+    <i style="margin: auto; font-size: 50px" class="fa fa-spinner fa-spin"></i>
+  </div>
+</div>

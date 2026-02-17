@@ -1,0 +1,103 @@
+<div class="container-fluid mx-0 my-0 px-0 py-0">
+  <div class="row mx-0 my-0 px-0 py-0">
+    <div class="col-lg-12 mx-0 my-0 px-0 py-0 steps">
+      <app-show-steps [NSTEP]="1"></app-show-steps>
+    </div>
+    <div class="bc-1 col-lg-6 mx-0 my-0 px-0 py-0"></div>
+    <div class="col-lg-6 mx-0 my-0 px-0 py-0 content-form">
+      <form class="form-cotizacion">
+        <span class="frm-title">Cotiza tu <b>seguro aquí</b></span>
+        <div class="frm-inputs">
+          <div class="double-inputs">
+            <select class="input" formControlName="typeDoc">
+              <option value="1" selected>DNI</option>
+            </select>
+            <div class="content-input">
+              <label class="mini-placeholder">Número de Documento</label>
+              <input
+                type="number"
+                class="input input-wp"
+                formControlName="nDoc"
+              />
+            </div>
+          </div>
+          <div class="content-input">
+            <label class="mini-placeholder">Correo Electrónico</label>
+            <input
+              type="email"
+              class="input input-wp"
+              formControlName="email"
+            />
+          </div>
+          <div class="content-input">
+            <label class="mini-placeholder">Celular</label>
+            <input
+              type="number"
+              class="input input-wp"
+              formControlName="cellphone"
+            />
+          </div>
+        </div>
+        <div class="checkboxes mt-4">
+          <div class="checkbox-accept px-0">
+            <input type="checkbox" id="terms" />
+            <label for="terms" class="checkbox-personalizado">
+              Acepto los
+              <button role="button" type="button" class="policy">
+                Términos y condiciones
+              </button>
+            </label>
+          </div>
+          <div class="checkbox-accept px-0">
+            <input type="checkbox" id="policy" />
+            <label for="policy" class="checkbox-personalizado">
+              Acepto las
+              <button role="button" type="button" class="policy">
+                Políticas de privacidad
+              </button>
+            </label>
+          </div>
+        </div>
+        <input
+          type="submit"
+          [routerLink]="'/accidentes-personales/step2'"
+          class="submit-form"
+          value="Cotiza aquí"
+        />
+      </form>
+    </div>
+    <img
+      src="assets/vidaindividual/resources/Elementos-06.png"
+      class="background-step1-reverse"
+      alt=""
+    />
+  </div>
+  <app-questions></app-questions>
+</div>
+<div class="modal fade" bsModal #modalBeneficios="bs-modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content px-0 py-0">
+      <div class="modal-header text-center">
+        <h5 class="title-modal">¿Que necesito para adquirir el seguro?</h5>
+      </div>
+      <div class="modal-body modal-emitido">
+        <p class="desc-modal-body">
+          Debe acceder al seguro Vida Ley todo empleado, trabajador u obrero que
+          haya iniciado una relación laboral con una empresa. <br />
+          No obstante, el empleado, trabajador u obrero asegurado perderá la
+          condición de Asegurado cuando cese el vínculo laboral con su entidad
+          empleadora.<br />
+          El trabajador cesante puede continuar con una póliza de seguro de Vida
+          Ley, debiendo para ello, comunicar su intención a Protecta Security en
+          un plazo no mayor a 30 días calendarios de producido el cese laboral y
+          prima establecida por la Compañia. La modalidad de seguro de su nueva
+          póliza será individual renovable anual, la cual será emitida bajo
+          nuevas condiciones según lo acordado entre el Asegurado y la Compañía.
+        </p>
+      </div>
+      <button type="button" class="btn full-color btn-next-modal">
+        Siguiente
+      </button>
+    </div>
+  </div>
+</div>

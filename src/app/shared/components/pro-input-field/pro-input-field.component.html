@@ -1,0 +1,55 @@
+<label
+  class="placeholder"
+  [class.selectable]="type == 'select'"
+  [class.inside]="inside"
+  [attr.aria-placeholder]="placeholder"
+  [attr.for]="'pro-input-field:' + randomValue"
+  [formGroup]="form"
+>
+  <!-- *Campo de entrada de texto -->
+  <ng-container *ngIf="type == 'text'">
+    <div>
+      <input
+        type="text"
+        [id]="'pro-input-field:' + randomValue"
+        [attr.placeholder]="inputPlaceholder"
+        formControlName="value"
+        *ngIf="type == 'text'"
+      />
+      <i [class]="'fa' + faIcon" aria-hidden="true" *ngIf="faIcon"></i>
+    </div>
+  </ng-container>
+
+  <!-- *Campo de entrada de texto -->
+  <ng-container *ngIf="type == 'select'">
+    <div>
+      <select
+        [id]="'pro-input-field:' + randomValue"
+        formControlName="value"
+        [attr.placeholder]="inputPlaceholder"
+      >
+        <ng-content select="[option]"></ng-content>
+      </select>
+      <i class="fa fa-angle-down"></i>
+    </div>
+  </ng-container>
+
+  <!-- *Campo de entrada de fecha -->
+  <ng-container *ngIf="type == 'date'">
+    <div>
+      <input
+        type="text"
+        [id]="'pro-input-field:' + randomValue"
+        [attr.placeholder]="inputPlaceholder"
+        #dp="bsDatepicker"
+        bsDatepicker
+        [bsConfig]="dateOptions"
+        readonly
+        formControlName="value"
+      />
+      <i class="fa fa-calendar"></i>
+    </div>
+  </ng-container>
+
+  <ng-content select="[extra]"></ng-content>
+</label>

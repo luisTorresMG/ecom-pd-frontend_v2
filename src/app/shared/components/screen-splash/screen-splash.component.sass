@@ -1,0 +1,35 @@
+@import "variables"
+
+.screen-splash
+  position: fixed
+  top: 0
+  left: 0
+  display: flex
+  align-items: center
+  justify-content: center
+  width: 100vw
+  height: 100vh
+  background-color: #fff
+  z-index: 999999
+
+  &__item
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    gap: 1.5rem
+    margin: 1.5rem
+
+    &--image
+      transition: 1s
+      animation: pulse 1s infinite linear alternate
+
+    &--message
+      color: $purple
+
+@keyframes pulse
+  from
+    transform: scale(1)
+
+  to
+    transform: scale(1.1)

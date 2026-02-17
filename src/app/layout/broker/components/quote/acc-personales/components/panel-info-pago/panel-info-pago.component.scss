@@ -1,0 +1,58 @@
+@import "modal";
+
+.title {
+    position: absolute; /* Posiciona el título de manera absoluta respecto al contenedor */
+    top: -12px;      
+    font-size: 15px;    
+    color: #553d81 !important;
+    background: white;  
+    padding-left: 5px;
+    padding-right: 5px
+  }
+
+.container-kushi {
+    display: flex;
+    justify-content: center; 
+    align-items: center;   
+  }
+
+
+  .box-kushki {
+    border: #8d75b9 solid !important;
+    padding-top: 10px;          
+    display: flex;
+    gap: 10px;              
+  }
+
+
+
+.container-fluid .col-sm-12{
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  padding-bottom: 20px;
+}
+
+.visa-image {
+  width: 100%;
+  max-width: 215px;
+  margin: auto;
+  margin-top: 1rem; }
+  @media (min-width: 440px) {
+    .visa-image {
+      grid-column-end: 3;
+      grid-column-start: 1; } }
+
+
+/* .panel-info-pago .btn-visa input {
+  position: relative;
+  top: -20px;
+}
+
+.panel-info-pago .btn-visa form {
+  display: inline-block;
+}
+
+.panel-info-pago .btn-visa form button{
+  background-size: contain;
+  display: inline-block;
+} */

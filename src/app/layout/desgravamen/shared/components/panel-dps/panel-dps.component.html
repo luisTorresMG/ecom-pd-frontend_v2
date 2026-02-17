@@ -1,0 +1,247 @@
+<div class="panel-info-evaluacion">
+  <panel-widget title="DPS">
+
+    <div class="row">
+      <div class="col-sm-3">
+        <form-input-text label="Talla (mts)"
+                         [(value)]="cotizacion.poliza.dps.talla"
+                         [patternPrevent]="CONSTANTS.REGEX.DECIMAL"
+                         maxCaracter="4"
+                         [required]="true"
+                         [disabled]="detail">
+        </form-input-text>
+      </div>
+      <div class="col-sm-3">
+        <form-input-text label="peso (kg)"
+                         [(value)]="cotizacion.poliza.dps.peso"
+                         [patternPrevent]="CONSTANTS.REGEX.NUMBER"
+                         maxCaracter="3"
+                         [required]="true"
+                         [disabled]="detail">
+        </form-input-text>
+      </div>
+      <div class="col-sm-2  mt-4">
+        <form-input-radio label="FUMA"
+                          [items]="CONSTANTS.RESPUESTA_DPS"
+                          [(value)]="cotizacion.poliza.dps.fuma.resp"
+                          (onSelect)="onClear();"
+                          [disabled]="detail"></form-input-radio>
+      </div>
+      <div class="col-sm-3">
+        <form-input-text label="CONSUMO DIARIO"
+                         [(value)]="cotizacion.poliza.dps.fuma.consumo"
+                         [patternPrevent]="CONSTANTS.REGEX.NUMBER"
+                         maxCaracter="30"
+                         [required]="true"
+                         [disabled]="detail || cotizacion.poliza.dps.fuma.resp == 'NO'">
+        </form-input-text>
+      </div>
+    </div>
+
+    <div class="row mt-2">
+      <div class="col-sm-6">
+        <form-input-radio label="¿Se ha medido la presión arterial en los últimos 2 años?"
+                          [items]="CONSTANTS.RESPUESTA_DPS"
+                          [(value)]="cotizacion.poliza.dps.presion.resp"
+                          (onSelect)="onClear();"
+                          [disabled]="detail">
+        </form-input-radio>
+      </div>
+      <div class="col-sm-6">
+        <form-input-radio label="¿Cuál fue el resultado?"
+                          [items]="CONSTANTS.RESPUESTA_PRESION"
+                          [disabled]="detail || cotizacion.poliza.dps.presion.resp == 'NO'"
+                          [(value)]="cotizacion.poliza.dps.presion.resultado"
+                          (onSelect)="onClear();"
+                          [disabled]="detail">
+        </form-input-radio>
+      </div>
+    </div>
+
+    <div class="my-5 font-bold col-sm-11">
+      <p>¿Usted tiene,o ha tenido, o se encuentra en tratamiento, o en proceso de diagnóstico, alguna de las siguientes
+        enfermedades, dolencias o situaciones de salud?
+      </p>
+    </div>
+
+    <div class="row mt-2">
+      <div class="col-sm-8">
+        <form-input-radio label="¿Cáncer, Tumores, V.I.H positivo, SIDA, Linfomas, Leucemia, Enfermedades Hematológicas, Enfermedades
+          del Pulmón, Enfermedades al Riñon, Insuficiencia Renal Crónica? En caso afirmativo, favor detallar"
+                          [items]="CONSTANTS.RESPUESTA_DPS"
+                          [(value)]="cotizacion.poliza.dps.cancer.resp"
+                          (onSelect)="onClear();"
+                          [disabled]="detail">
+        </form-input-radio>
+      </div>
+      <div class="col-sm-3">
+        <form-input-textarea label="detallar"
+                             [rows]="2"
+                             [(value)]="cotizacion.poliza.dps.cancer.detalle"
+                             [disabled]="detail || cotizacion.poliza.dps.cancer.resp == 'NO'"
+                             [patternPrevent]="CONSTANTS.REGEX.LEGALNAME"
+                             style="height: 50px !important;">
+        </form-input-textarea>
+      </div>
+    </div>
+
+    <div class="row mt-2">
+      <div class="col-sm-8">
+        <form-input-radio label="¿Infarto al Miocardio, Infarto Cerebral, Enfermedades Cardíacas, Hipertensión Arterial, Enfermedades
+        Coronarias, Soplos Cardíacos, Arritmias, Aneurismas, Accidentes Cerebrovasculares, Displidemia,
+        Hipercolesterolemia, Sobrepeso, Obesidad, Diabetes Mellitus? En caso afirmativo, favor detallar"
+                          [items]="CONSTANTS.RESPUESTA_DPS"
+                          [(value)]="cotizacion.poliza.dps.infarto.resp"
+                          (onSelect)="onClear();"
+                          [disabled]="detail">
+        </form-input-radio>
+      </div>
+      <div class="col-sm-3">
+        <form-input-textarea label="detallar"
+                             [rows]="2"
+                             [(value)]="cotizacion.poliza.dps.infarto.detalle"
+                             [disabled]="detail ||cotizacion.poliza.dps.infarto.resp == 'NO'"
+                             [patternPrevent]="CONSTANTS.REGEX.LEGALNAME"
+                             style="height: 50px !important;">
+        </form-input-textarea>
+      </div>
+    </div>
+
+    <div class="row mt-2">
+      <div class="col-sm-8">
+        <form-input-radio label="¿Enfermedades Gastrointestinales, Hepatitis (B o C), Cirrosis Hepática, Úlcera Gástrica, Colitis Ulcerosa,
+        Epilepsia, Enfermedad de Alzheimer, Depresión, Enfermedades Psiquiátricas? En caso afirmativo, favor
+        detallar"
+                          [items]="CONSTANTS.RESPUESTA_DPS"
+                          [(value)]="cotizacion.poliza.dps.gastro.resp"
+                          (onSelect)="onClear();"
+                          [disabled]="detail">
+        </form-input-radio>
+      </div>
+      <div class="col-sm-3">
+        <form-input-textarea label="detallar"
+                             [rows]="2"
+                             [(value)]="cotizacion.poliza.dps.gastro.detalle"
+                             [disabled]="detail || cotizacion.poliza.dps.gastro.resp == 'NO'"
+                             [patternPrevent]="CONSTANTS.REGEX.LEGALNAME"
+                             style="height: 50px !important;">
+        </form-input-textarea>
+      </div>
+    </div>
+
+    <div class="row mt-2">
+      <div class="col-sm-8">
+        <form-input-radio label="¿Tiene que ser hospitalizado o recibir tratamiento médico próximamente?"
+                          [items]="CONSTANTS.RESPUESTA_DPS"
+                          [(value)]="cotizacion.poliza.dps.hospitalizado.resp"
+                          (onSelect)="onClear();"
+                          [disabled]="detail">
+        </form-input-radio>
+      </div>
+      <div class="col-sm-3">
+        <form-input-textarea label="detallar"
+                             [rows]="2"
+                             [(value)]="cotizacion.poliza.dps.hospitalizado.detalle"
+                             [disabled]="detail || cotizacion.poliza.dps.hospitalizado.resp == 'NO'"
+                             [patternPrevent]="CONSTANTS.REGEX.LEGALNAME"
+                             style="height: 50px !important;">
+        </form-input-textarea>
+      </div>
+    </div>
+
+    <div class="my-5 font-bold col-sm-11">
+      <p>¿Realiza o participa en actividades o deportes riesgosos? Se consideran como tales actividades o deportes,
+        aquellos que constituyan una clara agravación del
+        riesgo o en el que se ponga en peligro su vida.
+      </p>
+    </div>
+
+
+    <div class="row mt-2">
+      <div class="col-sm-8">
+        <form-input-radio label="¿Viaja en helicópteros, aviones militares, de instrucción o avionetas particulares, vuelos como piloto o
+        estudiante? En caso afirmativo, favor detallar."
+                          [items]="CONSTANTS.RESPUESTA_DPS"
+                          [(value)]="cotizacion.poliza.dps.viaje.resp"
+                          (onSelect)="onClear();"
+                          [disabled]="detail">
+        </form-input-radio>
+      </div>
+      <div class="col-sm-3">
+        <form-input-textarea label="detallar"
+                             [rows]="2"
+                             [(value)]="cotizacion.poliza.dps.viaje.detalle"
+                             [disabled]="detail || cotizacion.poliza.dps.viaje.resp == 'NO'"
+                             [patternPrevent]="CONSTANTS.REGEX.LEGALNAME"
+                             style="height: 50px !important;">
+        </form-input-textarea>
+      </div>
+    </div>
+
+    <div class="row mt-2">
+      <div class="col-sm-8">
+        <form-input-radio label="¿Practica paracaidismo, andinismo, automovilismo, buceo, motociclismo o afines, bungee jumping (caída
+        libre con cuerda), pesca submarina, ala delta, planeador, rodeo, surf o cualquier otro deporte o actividad
+        obviamente peligrosa? En caso afirmativo, favor detallar"
+                          [items]="CONSTANTS.RESPUESTA_DPS"
+                          [(value)]="cotizacion.poliza.dps.practicaExtrema.resp"
+                          (onSelect)="onClear();"
+                          [disabled]="detail">
+        </form-input-radio>
+      </div>
+      <div class="col-sm-3">
+        <form-input-textarea label="detallar"
+                             [rows]="2"
+                             [(value)]="cotizacion.poliza.dps.practicaExtrema.detalle"
+                             [disabled]="detail  || cotizacion.poliza.dps.practicaExtrema.resp == 'NO'"
+                             [patternPrevent]="CONSTANTS.REGEX.LEGALNAME"
+                             style="height: 50px !important;">
+        </form-input-textarea>
+      </div>
+    </div>
+
+    <div class="mt-2 row"
+         [hidden]="true">
+      <div class="font-bold col-lg-8">
+        <p>¿Tiene alguna otra enfermedad o antecedentes médicos no consignados en la lista (si usted padece o ha
+          padecido
+          alguna enfermedad no mencionada líneas
+          arriba, por favor detallar abajo).
+        </p>
+      </div>
+
+      <div class="col-sm-3">
+        <form-input-textarea label="detallar"
+                             [rows]="2"
+                             [(value)]="cotizacion.poliza.dps.enfermedadAdi.detalle"
+                             [disabled]="detail"
+                             [patternPrevent]="CONSTANTS.REGEX.LEGALNAME"
+                             style="height: 50px !important;">
+        </form-input-textarea>
+      </div>
+    </div>
+    <div class="my-5"
+         style="text-align: justify;">
+      <small>
+        Mediante el presente documento, declaro que la información proporcionada en esta DPS es exacta, veraz,
+        completa,
+        precisa y que no he ocultado u omitido información. Asimismo, es de mi conocimiento
+        que la DPS constituye un elemento indispensable para la apreciación del riesgo por parte de PROTECTA SECURITY y
+        que una declaración falsa o inexacta de mi parte, implica la nulidad de la póliza a
+        contratar. De otro lado, autorizo expresamente a PROTECTA SECURITY para que pueda acceder a mis antecedentes
+        médicos en las entidades médicas del país que considere pertinentes para verificar todos
+        los datos o antecedentes clínicos que tenga o haya tenido con motivo de haber recibido alguna prestación de
+        salud.
+        Finalmente, declaro expresamente conocer que el haber suscrito la presente DPS así como la solicitud de seguro,
+        no implica necesariamente la aceptación de la cobertura por parte PROTECTA SECURITY.
+        PROTECTA SECURITY comunicará al contratante de la póliza dentro de los 15 días calendario de presentada la
+        solicitud, si esta ha sido rechazada, salvo que haya requerido información adicional al
+        contratante dentro de dicho plazo.
+        <p><b>PROTECTA SECURITY se reserva el derecho de solicitar exámenes médicos y/o documentación médica, en caso lo
+            estime conveniente para la correcta evaluación y estimación del riesgo, por lo
+            que el Asegurado se compromete a brindar las facilidades del caso a PROTECTA SECURITY.</b></p>
+      </small>
+    </div>
+
+  </panel-widget>
+</div>

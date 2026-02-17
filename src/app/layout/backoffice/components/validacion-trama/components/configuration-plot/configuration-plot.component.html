@@ -1,0 +1,1063 @@
+<div class="content" [formGroup]="formPlot">
+  <div class="header-u">
+    <div class="header-left">
+      <h1 class="title-u">Configuración de estructura</h1>
+    </div>
+    <div class="header-right">
+      <button
+        class="button primary fit button-tab"
+        (click)="goToPage('bandeja')"
+      >
+        <i class="fa fa-angle-left" aria-hidden="true"></i>
+        Regresar
+      </button>
+    </div>
+  </div>
+  <!-- *DATOS GENERALES -->
+  <form
+    class="section section-structure form__structure"
+    formGroupName="structure"
+  >
+    <div class="content-subtitle">
+      <h2 class="subtitle-u">Datos de estructura</h2>
+    </div>
+    <div class="form__structure__inputs">
+      <!-- *Descripción -->
+      <label
+        for="f-description"
+        class="placeholder upper"
+        aria-placeholder="Descripción:"
+      >
+        <input type="text" id="f-description" formControlName="description" />
+      </label>
+
+      <!-- *Ramo -->
+      <label for="f-branch" class="placeholder upper" aria-placeholder="Ramo:">
+        <select formControlName="branch">
+          <option value="" selected disabled hidden>SELECCIONE</option>
+          <option *ngFor="let item of branches$" [value]="item.id">
+            {{ item.description }}
+          </option>
+        </select>
+      </label>
+
+      <!-- *Producto -->
+      <label
+        for="f-product"
+        class="placeholder upper"
+        aria-placeholder="Producto:"
+      >
+        <select formControlName="product">
+          <option value="" selected disabled hidden>SELECCIONE</option>
+          <option *ngFor="let item of products$" [value]="item.id">
+            {{ item.description }}
+          </option>
+        </select>
+      </label>
+
+      <!-- *Tipo de archivo -->
+      <label
+        for="f-file-type"
+        class="placeholder upper"
+        aria-placeholder="Tipo de archivo:"
+      >
+        <select formControlName="fileType">
+          <option [value]="" disable selected hidden>SELECCIONE</option>
+          <option [value]="1">EXCEL</option>
+          <!-- <option [value]="2">TXT</option>
+          <option [value]="3">CSV</option> -->
+        </select>
+      </label>
+
+      <!-- *Tiene cabecera -->
+      <label
+        for="f-has-header"
+        class="placeholder upper"
+        aria-placeholder="Tiene cabecera:"
+      >
+        <select formControlName="hasHeader">
+          <option value="" disable selected hidden>SELECCIONE</option>
+          <option [value]="0">NO</option>
+          <option [value]="1">SI</option>
+        </select>
+      </label>
+
+      <!-- *Fila de inicio -->
+      <label
+        for="f-start-row"
+        class="placeholder upper"
+        aria-placeholder="Fila de inicio:"
+      >
+        <input type="text" id="f-start-row" formControlName="startRow" />
+      </label>
+
+      <!-- *Columna de inicio -->
+      <label
+        for="f-start-column"
+        class="placeholder upper"
+        aria-placeholder="Columna de inicio:"
+      >
+        <input type="text" id="f-start-column" formControlName="startColumn" />
+      </label>
+
+      <!-- *Indice de pestaña -->
+      <label
+        for="f-index"
+        class="placeholder upper"
+        aria-placeholder="Índice de pestaña:"
+      >
+        <input type="text" id="f-index" formControlName="tabIndex" />
+      </label>
+
+      <!-- *Formato de fecha -->
+      <label
+        for="f-index"
+        class="placeholder upper"
+        aria-placeholder="Formato de fecha:"
+      >
+        <select formControlName="dateFormat">
+          <option value="yyyymmdd">yyyymmdd</option>
+          <option value="yyyyMMdd">yyyyMMdd</option>
+          <option value="dd/MM/yyyy">dd/MM/yyyy</option>
+          <option value="yyyy/MM/dd">yyyy/MM/dd</option>
+        </select>
+      </label>
+
+      <!-- *Delimitador -->
+      <label
+        for="f-separator"
+        class="placeholder upper"
+        aria-placeholder="Delimitador:"
+      >
+        <input type="text" id="f-separator" formControlName="separator" />
+      </label>
+
+      <!-- *Aplica RENIEC -->
+      <label
+        for="f-reniec-apply"
+        class="placeholder upper"
+        aria-placeholder="Aplica RENIEC:"
+      >
+        <select formControlName="reniecApply">
+          <option value="" disable selected hidden>SELECCIONE</option>
+          <option [value]="0">NO</option>
+          <option [value]="1">SI</option>
+        </select>
+      </label>
+    </div>
+  </form>
+  <div class="divider"></div>
+  <section
+    class="section section-detail"
+    [class.args]="fieldDetailTypeSelected == 'args'"
+  >
+    <div class="content-subtitle">
+      <h2 class="subtitle-u">
+        {{
+          fieldDetailTypeSelected == "args"
+            ? "Argumentos generales"
+            : fieldDetailTypeSelected == "read"
+            ? "Detalle/Campos de lectura"
+            : "Detalle/Campos de salida"
+        }}
+      </h2>
+    </div>
+    <div class="content-subtitle">
+      <div class="left">
+        <button
+          class="button-tab"
+          [class.active]="fieldDetailTypeSelected == 'args'"
+          (click)="fieldDetailTypeSelected = 'args'"
+        >
+          Argumentos generales
+        </button>
+        <button
+          class="button-tab"
+          [class.active]="fieldDetailTypeSelected == 'read'"
+          (click)="fieldDetailTypeSelected = 'read'"
+        >
+          Lectura
+        </button>
+        <button
+          class="button-tab"
+          [class.active]="fieldDetailTypeSelected == 'output'"
+          (click)="fieldDetailTypeSelected = 'output'"
+        >
+          Salida
+        </button>
+      </div>
+      <div class="actions">
+        <button
+          class="button primary fit"
+          [disabled]="!validFormArguments"
+          (click)="addRowArgument()"
+          *ngIf="fieldDetailTypeSelected == 'args' && formArguments.enabled"
+        >
+          Agregar
+        </button>
+        <button
+          class="button primary fit"
+          (click)="addRowField()"
+          [disabled]="formFields.invalid"
+          *ngIf="fieldDetailTypeSelected == 'read' && formFields.enabled"
+        >
+          Agregar campo
+        </button>
+        <button
+          class="button primary fit"
+          (click)="addRowOutputField()"
+          [disabled]="formOutputFields.invalid"
+          *ngIf="
+            fieldDetailTypeSelected == 'output' && formOutputFields.enabled
+          "
+        >
+          Agregar campo
+        </button>
+      </div>
+    </div>
+    <div class="content-table">
+      <ng-container *ngIf="fieldDetailTypeSelected == 'args'">
+        <table class="table-u table-field-u" @fade formArrayName="arguments">
+          <thead>
+            <tr>
+              <th>Argumento</th>
+              <th>Tipo de dato</th>
+              <th>Valor por defecto</th>
+              <th *ngIf="formArguments.enabled">Acción</th>
+            </tr>
+          </thead>
+          <ng-container *ngIf="formArguments.length">
+            <tbody class="no-hover">
+              <tr
+                *ngFor="let form of formArguments.controls; let index = index"
+                [formGroup]="form"
+              >
+                <td>
+                  <input
+                    type="text"
+                    class="input-collapse"
+                    formControlName="name"
+                  />
+                </td>
+                <td>
+                  <select class="input-collapse" formControlName="dataType">
+                    <option [value]="null" selected disabled>Seleccione</option>
+                    <ng-container *ngFor="let item of parameters$?.tipoDato">
+                      <option [value]="item.idTipoDato">
+                        {{ item.tipoDato }}
+                      </option>
+                    </ng-container>
+                  </select>
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    class="input-collapse"
+                    formControlName="defaultValue"
+                  />
+                </td>
+                <td *ngIf="formArguments.enabled">
+                  <button
+                    class="button-action"
+                    (click)="removeRowArgument(index)"
+                  >
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </ng-container>
+        </table>
+      </ng-container>
+      <ng-container *ngIf="fieldDetailTypeSelected == 'read'">
+        <table
+          class="table-u table-field-u table-read"
+          @fade
+          formArrayName="fields"
+        >
+          <thead>
+            <tr>
+              <th class="table-head-field index">Índice</th>
+              <th class="table-head-field input-data">Datos de entrada</th>
+              <th class="table-head-field data-type">Tipo de dato</th>
+              <th class="table-head-field target-field">Campo destino</th>
+              <th class="table-head-field required">Obligatorio</th>
+              <th class="table-head-field unique-value">Valor único</th>
+              <th class="col-mw function">Función adicional</th>
+              <th class="col-mw function-parameter">Parámetro de función</th>
+              <th class="col-mw value-type">Tipo de valor</th>
+              <th class="col-mw value">Valor</th>
+              <th class="table-head-field remove" *ngIf="formFields.enabled">
+                Eliminar campo
+              </th>
+            </tr>
+          </thead>
+          <ng-container *ngIf="formFields.length">
+            <tbody class="no-hover">
+              <tr
+                *ngFor="let form of formFields.controls; let index = index"
+                [formGroup]="form"
+              >
+                <td class="table-body-field index">{{ index + 1 }}</td>
+                <td>
+                  <input
+                    type="text"
+                    class="input-collapse"
+                    formControlName="inputData"
+                  />
+                </td>
+                <td>
+                  <select class="input-collapse" formControlName="dataType">
+                    <option [value]="" selected disabled hidden>Ninguno</option>
+                    <option
+                      [value]="item.idTipoDato"
+                      *ngFor="let item of parameters$?.tipoDato"
+                    >
+                      {{ item.tipoDato }}
+                    </option>
+                  </select>
+                </td>
+                <td>
+                  <select class="input-collapse" formControlName="targetField">
+                    <option [value]="null" selected>Ninguno</option>
+                    <option
+                      *ngFor="let item of parameters$?.campoDestino"
+                      [value]="item.idCampoDestino"
+                    >
+                      {{ item.campoDestino }}
+                    </option>
+                  </select>
+                </td>
+                <td>
+                  <input
+                    type="checkbox"
+                    class="mark-u center orange"
+                    [id]="'input-required' + index"
+                    formControlName="required"
+                  />
+                  <label
+                    [attr.for]="'input-required' + index"
+                    class="center"
+                  ></label>
+                </td>
+                <td>
+                  <input
+                    type="checkbox"
+                    class="mark-u center orange"
+                    [id]="'unique-value' + index"
+                    formControlName="uniqueValue"
+                  />
+                  <label
+                    [attr.for]="'unique-value' + index"
+                    class="center"
+                  ></label>
+                </td>
+                <td colspan="4" class="field-function">
+                  <ng-container
+                    *ngFor="
+                      let ff of form.get('functions').controls;
+                      let indexf = index
+                    "
+                  >
+                    <tr>
+                      <td [formGroup]="ff">
+                        <tr>
+                          <td class="field-action col-mw function">
+                            <select
+                              class="input-collapse"
+                              formControlName="type"
+                            >
+                              <option [value]="null" selected disabled>
+                                Ninguno
+                              </option>
+                              <ng-container
+                                *ngFor="let item of parameters$?.funciones"
+                              >
+                                <option
+                                  [value]="item.idFuncion"
+                                  *ngIf="
+                                    item.idTipoFuncion == 1 &&
+                                    form.get('dataType').value ==
+                                      item.idTipoDato &&
+                                    !hideItem(
+                                      form,
+                                      'functions',
+                                      indexf,
+                                      'type',
+                                      item.idFuncion
+                                    )
+                                  "
+                                >
+                                  {{ item.funcion }}
+                                </option>
+                              </ng-container>
+                            </select>
+                            <div
+                              class="field-actions-buttons"
+                              *ngIf="formFields.enabled"
+                            >
+                              <button
+                                (click)="addRowFunction(form)"
+                                *ngIf="
+                                  indexf + 1 ==
+                                    form.get('functions').controls.length ||
+                                  form.get('functions').controls.length == 1
+                                "
+                                [disabled]="
+                                  disableAddFunction(
+                                    form.get('dataType').value,
+                                    form.get('functions').controls
+                                  )
+                                "
+                              >
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                              </button>
+                              <button (click)="removeRowFunction(form, indexf)">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      </td>
+                      <td class="content-parameters">
+                        <ng-container
+                          *ngFor="
+                            let fp of ff.get('parameters').controls;
+                            let indexp = index
+                          "
+                        >
+                          <tr [formGroup]="fp" class="row-parameters">
+                            <td class="field-action col-mw function-parameter">
+                              <select
+                                class="input-collapse"
+                                formControlName="parameter"
+                              >
+                                <option [value]="null" selected disabled>
+                                  Ninguno
+                                </option>
+                                <ng-container
+                                  *ngFor="let item of parameters$?.parametros"
+                                >
+                                  <option
+                                    [value]="item.idParametro"
+                                    *ngIf="
+                                      ff.get('type').value == item.idFuncion
+                                    "
+                                  >
+                                    {{ item.parametro }}
+                                  </option>
+                                </ng-container>
+                              </select>
+                              <div
+                                class="field-actions-buttons"
+                                *ngIf="formFields.enabled"
+                              >
+                                <button
+                                  (click)="addRowFunctionParameter(ff)"
+                                  *ngIf="
+                                    indexp + 1 ==
+                                      ff.get('parameters').controls.length ||
+                                    ff.get('parameters').controls.length == 1
+                                  "
+                                  [disabled]="
+                                    !ff.get('type').value ||
+                                    disableAddFunctionParameter(
+                                      ff.get('type').value,
+                                      ff.get('parameters').controls
+                                    )
+                                  "
+                                >
+                                  <i class="fa fa-plus" aria-hidden="true"></i>
+                                </button>
+                                <button
+                                  (click)="
+                                    removeRowFunctionParameter(ff, indexp)
+                                  "
+                                  [disabled]="!ff.get('type').value"
+                                >
+                                  <i class="fa fa-trash" aria-hidden="true"></i>
+                                </button>
+                              </div>
+                            </td>
+                            <td class="col-mw value-type">
+                              <select
+                                class="input-collapse"
+                                formControlName="parameterType"
+                              >
+                                <option [value]="null" selected disabled>
+                                  Ninguno
+                                </option>
+                                <ng-container
+                                  *ngFor="
+                                    let item of parameters$?.tipoValorParametro
+                                  "
+                                >
+                                  <option
+                                    [value]="item.idTipoValor"
+                                    *ngIf="
+                                      item.idTipoEstructura == 1 &&
+                                      (!includesValueTypesOfParameter(
+                                        ff.get('parameters')
+                                      ).includes(
+                                        +fp.get('parameterType').value
+                                      ) ||
+                                        +fp.get('parameterType').value ==
+                                          item.idTipoValor ||
+                                        item.idTipoValor != 2 ||
+                                        (item.idTipoValor == 2 &&
+                                          argumentsList.length > 0))
+                                    "
+                                  >
+                                    {{ item.tipoValor }}
+                                  </option>
+                                </ng-container>
+                              </select>
+                            </td>
+                            <td class="col-mw value">
+                              <ng-container
+                                [ngSwitch]="fp.get('parameterType').value"
+                              >
+                                <!-- <ng-container *ngSwitchCase="4">
+                                  <span
+                                    class="input-cp"
+                                    type="button"
+                                    (click)="openModalFormula(fp, 'detail')"
+                                  >
+                                    {{ fp.get("detail").value }}
+                                  </span>
+                                </ng-container> -->
+                                <ng-container *ngSwitchCase="0">
+                                  <select
+                                    formControlName="detail"
+                                    class="input-cp"
+                                  >
+                                    <option [value]="null">Ninguno</option>
+                                    <option
+                                      *ngFor="let item of readingFieldList"
+                                      [value]="
+                                        'CAMPO[' +
+                                        '`' +
+                                        item.inputData +
+                                        '`' +
+                                        ']'
+                                      "
+                                    >
+                                      {{
+                                        "CAMPO[" +
+                                          "'" +
+                                          item.inputData +
+                                          "'" +
+                                          "]"
+                                      }}
+                                    </option>
+                                  </select>
+                                </ng-container>
+                                <ng-container *ngSwitchCase="2">
+                                  <select
+                                    formControlName="detail"
+                                    class="input-cp"
+                                  >
+                                    <option [value]="null">Ninguno</option>
+                                    <option
+                                      *ngFor="let item of argumentsList"
+                                      [value]="
+                                        'ARG[' + '`' + item.name + '`' + ']'
+                                      "
+                                    >
+                                      {{ "ARG[" + "'" + item.name + "'" + "]" }}
+                                    </option>
+                                  </select>
+                                </ng-container>
+                                <ng-container *ngSwitchDefault>
+                                  <input
+                                    type="text"
+                                    class="input-cp"
+                                    formControlName="detail"
+                                    [title]="fp.get('detail').value"
+                                  />
+                                </ng-container>
+                              </ng-container>
+                            </td>
+                          </tr>
+                        </ng-container>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </td>
+                <td
+                  class="field-action table-body-field remove"
+                  *ngIf="formFields.enabled"
+                >
+                  <div class="field-actions-buttons">
+                    <button (click)="removeRowField(index)">
+                      <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </ng-container>
+        </table>
+      </ng-container>
+      <ng-container *ngIf="fieldDetailTypeSelected == 'output'">
+        <table
+          class="table-u table-field-u table-read"
+          formArrayName="outputFields"
+          @fade
+        >
+          <thead>
+            <tr>
+              <th class="table-head-field index">Índice</th>
+              <th class="table-head-field output-data">Datos de salida</th>
+              <th class="table-head-field data-type">Tipo de dato de campo</th>
+              <th class="table-head-field field-value-type">
+                Tipo de valor de campo
+              </th>
+              <th class="table-head-field field-value">Valor de campo</th>
+              <th class="col-mw function">Función adicional</th>
+              <th class="col-mw function-parameter">Parámetro de función</th>
+              <th class="col-mw value-type-parameter">
+                Tipo de valor del parámetro
+              </th>
+              <th class="col-mw value">Valor</th>
+              <th class="table-head-field remove" *ngIf="formFields.enabled">
+                Eliminar campo
+              </th>
+            </tr>
+          </thead>
+          <ng-container *ngIf="formOutputFields.length">
+            <tbody class="no-hover">
+              <tr
+                *ngFor="
+                  let form of formOutputFields.controls;
+                  let index = index
+                "
+                [formGroup]="form"
+              >
+                <td class="table-body-field index">{{ index + 1 }}</td>
+                <td>
+                  <input
+                    type="text"
+                    class="input-collapse"
+                    formControlName="outputData"
+                  />
+                </td>
+                <td>
+                  <select
+                    class="input-collapse"
+                    formControlName="dataTypeField"
+                  >
+                    <option [value]="null" selected disabled>Ninguno</option>
+                    <option
+                      [value]="item.idTipoDato"
+                      *ngFor="let item of parameters$?.tipoDato"
+                    >
+                      {{ item.tipoDato }}
+                    </option>
+                  </select>
+                </td>
+                <td>
+                  <select
+                    class="input-collapse"
+                    formControlName="valueTypeField"
+                  >
+                    <option [value]="null" selected disabled>Ninguno</option>
+                    <ng-container
+                      *ngFor="let item of parameters$?.tipoValorParametro"
+                    >
+                      <option
+                        [value]="item.idTipoValor"
+                        *ngIf="
+                          (item.idTipoValor == 2 && argumentsList.length) ||
+                          item.idTipoValor != 2
+                        "
+                      >
+                        {{ item.tipoValor }}
+                      </option>
+                    </ng-container>
+                  </select>
+                </td>
+                <td>
+                  <ng-container [ngSwitch]="form.get('valueTypeField').value">
+                    <ng-container *ngSwitchCase="0">
+                      <select formControlName="fieldValue" class="input-cp">
+                        <option [value]="null">Ninguno</option>
+                        <option
+                          *ngFor="let item of outputFieldList"
+                          [value]="'CAMPO[' + '`' + item.outputData + '`' + ']'"
+                        >
+                          {{ "CAMPO[" + "'" + item.outputData + "'" + "]" }}
+                        </option>
+                      </select>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="2">
+                      <select formControlName="fieldValue" class="input-cp">
+                        <option [value]="null">Ninguno</option>
+                        <option
+                          *ngFor="let item of argumentsList"
+                          [value]="'ARG[' + '`' + item.name + '`' + ']'"
+                        >
+                          {{ "ARG[" + "'" + item.name + "'" + "]" }}
+                        </option>
+                      </select>
+                    </ng-container>
+                    <ng-container *ngSwitchDefault="">
+                      <input
+                        type="text"
+                        class="input-cp"
+                        formControlName="fieldValue"
+                      />
+                    </ng-container>
+                  </ng-container>
+                </td>
+                <td colspan="4" class="field-function">
+                  <ng-container
+                    *ngFor="
+                      let ff of form.get('functions').controls;
+                      let indexf = index
+                    "
+                  >
+                    <tr>
+                      <td [formGroup]="ff">
+                        <tr>
+                          <td class="field-action col-mw function">
+                            <select
+                              class="input-collapse"
+                              formControlName="functionType"
+                            >
+                              <option [value]="null" selected disabled>
+                                Ninguno
+                              </option>
+                              <ng-container
+                                *ngFor="let item of parameters$?.funciones"
+                              >
+                                <option
+                                  [value]="item.idFuncion"
+                                  *ngIf="
+                                    item.idTipoFuncion == 2 &&
+                                    form.get('dataTypeField').value ==
+                                      item.idTipoDato
+                                  "
+                                >
+                                  {{ item.funcion }}
+                                </option>
+                              </ng-container>
+                            </select>
+                            <div
+                              class="field-actions-buttons"
+                              *ngIf="formFields.enabled"
+                            >
+                              <button
+                                (click)="addRowOutputFunction(form)"
+                                *ngIf="
+                                  indexf + 1 ==
+                                    form.get('functions').controls.length ||
+                                  form.get('functions').controls.length == 1
+                                "
+                                [disabled]="
+                                  disableAddFunction(
+                                    form.get('dataTypeField').value,
+                                    form.get('functions').controls
+                                  )
+                                "
+                              >
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                              </button>
+                              <button
+                                (click)="removeRowOutputFunction(form, indexf)"
+                              >
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      </td>
+                      <td class="content-parameters">
+                        <ng-container
+                          *ngFor="
+                            let fp of ff.get('parameters').controls;
+                            let indexp = index
+                          "
+                        >
+                          <tr [formGroup]="fp" class="row-parameters">
+                            <td class="field-action col-mw function-parameter">
+                              <select
+                                class="input-collapse"
+                                formControlName="functionParameter"
+                              >
+                                <option [value]="null" selected disabled>
+                                  Ninguno
+                                </option>
+                                <ng-container
+                                  *ngFor="let item of parameters$?.parametros"
+                                >
+                                  <option
+                                    [value]="item.idParametro"
+                                    *ngIf="
+                                      ff.get('functionType').value ==
+                                      item.idFuncion
+                                    "
+                                  >
+                                    {{ item.parametro }}
+                                  </option>
+                                </ng-container>
+                              </select>
+                              <div
+                                class="field-actions-buttons"
+                                *ngIf="formOutputFields.enabled"
+                              >
+                                <button
+                                  (click)="addRowOutputFunctionParameter(ff)"
+                                  *ngIf="
+                                    indexp + 1 ==
+                                      ff.get('parameters').controls.length ||
+                                    ff.get('parameters').controls.length == 1
+                                  "
+                                  [disabled]="
+                                    !ff.get('functionType').value ||
+                                    disableAddFunctionParameter(
+                                      ff.get('functionType').value,
+                                      ff.get('parameters').controls
+                                    )
+                                  "
+                                >
+                                  <i class="fa fa-plus" aria-hidden="true"></i>
+                                </button>
+                                <button
+                                  (click)="
+                                    removeRowOutputFunctionParameter(ff, indexp)
+                                  "
+                                  [disabled]="!ff.get('functionType').value"
+                                >
+                                  <i class="fa fa-trash" aria-hidden="true"></i>
+                                </button>
+                              </div>
+                            </td>
+                            <td class="col-mw value-type-parameter">
+                              <select
+                                class="input-collapse"
+                                formControlName="valueTypeParameter"
+                              >
+                                <option [value]="null">Ninguno</option>
+                                <ng-container
+                                  *ngFor="
+                                    let item of parameters$?.tipoValorParametro
+                                  "
+                                >
+                                  <option
+                                    [value]="item.idTipoValor"
+                                    *ngIf="
+                                      (item.idTipoValor == 2 &&
+                                        argumentsList.length) ||
+                                      item.idTipoValor != 2
+                                    "
+                                  >
+                                    {{ item.tipoValor }}
+                                  </option>
+                                </ng-container>
+                              </select>
+                            </td>
+                            <td class="col-mw value">
+                              <ng-container
+                                [ngSwitch]="fp.get('valueTypeParameter').value"
+                              >
+                                <ng-container *ngSwitchCase="0">
+                                  <select
+                                    formControlName="parameterValue"
+                                    class="input-cp"
+                                  >
+                                    <option [value]="null">Ninguno</option>
+                                    <option
+                                      *ngFor="let item of outputFieldList"
+                                      [value]="
+                                        'CAMPO[' +
+                                        '`' +
+                                        item.outputData +
+                                        '`' +
+                                        ']'
+                                      "
+                                    >
+                                      {{
+                                        "CAMPO[" +
+                                          "'" +
+                                          item.outputData +
+                                          "'" +
+                                          "]"
+                                      }}
+                                    </option>
+                                  </select>
+                                </ng-container>
+                                <ng-container *ngSwitchCase="2">
+                                  <select
+                                    formControlName="parameterValue"
+                                    class="input-cp"
+                                  >
+                                    <option [value]="null">Ninguno</option>
+                                    <option
+                                      *ngFor="let item of argumentsList"
+                                      [value]="
+                                        'ARG[' + '`' + item.name + '`' + ']'
+                                      "
+                                    >
+                                      {{ "ARG[" + "'" + item.name + "'" + "]" }}
+                                    </option>
+                                  </select>
+                                </ng-container>
+                                <ng-container *ngSwitchDefault="">
+                                  <input
+                                    type="text"
+                                    class="input-cp"
+                                    formControlName="parameterValue"
+                                  />
+                                </ng-container>
+                              </ng-container>
+                            </td>
+                          </tr>
+                        </ng-container>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </td>
+                <td
+                  class="field-action table-body-field remove"
+                  *ngIf="formOutputFields.enabled"
+                >
+                  <div class="field-actions-buttons">
+                    <button (click)="removeRowOutputField(index)">
+                      <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </ng-container>
+        </table>
+      </ng-container>
+    </div>
+  </section>
+  <section class="section section-actions">
+    <span class="has-error">
+      {{ messageInfo }}
+    </span>
+    <button
+      class="button primary fit orange"
+      (click)="openModalConfirmSave()"
+      *ngIf="formPlot.enabled"
+    >
+      Grabar todo
+    </button>
+  </section>
+</div>
+
+<ng-template #modalConfirmSave>
+  <div class="content-modal modal-confirm-save">
+    <section>
+      <div class="modal-header">
+        <h6>Mensaje de confirmación</h6>
+        <button type="button" aria-label="cerrar modal" (click)="closeModals()">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="paragraph">
+          ¿Estás seguro que desea guardar los datos ingresados?
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button
+          class="button-default secondary"
+          type="button"
+          aria-label="cerrar modal"
+          (click)="closeModals()"
+        >
+          Cancelar
+        </button>
+        <button
+          class="button-default primary"
+          type="button"
+          aria-label=""
+          (click)="onSubmit()"
+        >
+          Aceptar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalMessage>
+  <div class="content-modal modal-message">
+    <section>
+      <div class="modal-header">
+        <h6>Mensaje</h6>
+        <button (click)="closeModals()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <ng-container *ngIf="responseInfo.showSuccessImage">
+          <ng-container *ngIf="responseInfo.success">
+            <img src="assets/backoffice/check-success.png" alt="succes image" />
+          </ng-container>
+          <ng-container *ngIf="!responseInfo.success">
+            <img src="assets/backoffice/check-error.png" alt="error image" />
+          </ng-container>
+        </ng-container>
+
+        <p class="paragraph">{{ responseInfo.message }}</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          class="button-default primary"
+          type="button"
+          aria-label="cerrar modal"
+          (click)="closeModals()"
+        >
+          Aceptar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalFormula>
+  <div class="content-modal modal-formula">
+    <section>
+      <div class="modal-header">
+        <h6>Definir fórmula</h6>
+        <button (click)="closeModals()">&times;</button>
+      </div>
+      <div class="modal-body" [formGroup]="formFormula">
+        <div class="suggest-buttons">
+          <button
+            aria-label="CAMPO['']"
+            (click)="addSuggestForForumula('CAMPO[]')"
+          >
+            Campo
+          </button>
+          <button aria-label="ARG['']" (click)="addSuggestForForumula('ARG[]')">
+            Argumento
+          </button>
+        </div>
+        <label
+          for="mf-in-formula"
+          class="placeholder"
+          aria-placeholder="Digite la fórmula"
+        >
+          <textarea
+            rows="5"
+            id="mf-in-formula"
+            formControlName="formula"
+            #inputFormula
+          ></textarea>
+        </label>
+      </div>
+      <div class="modal-footer">
+        <button class="button-default secondary" (click)="closeModals()">
+          Cancelar
+        </button>
+        <button class="button-default primary" (click)="saveFormula()">
+          Aceptar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>

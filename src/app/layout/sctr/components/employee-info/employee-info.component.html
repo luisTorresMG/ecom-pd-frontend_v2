@@ -1,0 +1,264 @@
+<form [formGroup]="employeeForm"
+      (ngSubmit)="onSubmit()">
+  <h4 class="title">Completa la información del asegurado</h4>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="soat-input-form-container">
+        <div class="soat-input-container">
+          <ng-select [items]="documentTypes"
+                     [selectOnTab]="true"
+                     bindValue="value"
+                     bindLabel="label"
+                     placeholder="Tipo de Documento"
+                     formControlName="documentType"
+                     [ngClass]="{ error: showError('documentType') }">
+          </ng-select>
+        </div>
+        <div class="soat-error-message"
+             *ngIf="showError('documentType')">
+          <i></i><span>Necesitamos conocer tu tipo de documento</span>
+        </div>
+      </div>
+
+      <div class="soat-input-form-container">
+        <div class="soat-input-container icon">
+          <input type="text"
+                 placeholder="Número doc."
+                 class="soat-input"
+                 formControlName="documentNumber"
+                 [ngClass]="{ error: showError('documentNumber') }"
+                 minlength="{{ documentNumberLimit.min }}"
+                 maxlength="{{ documentNumberLimit.max }}"
+                 (blur)="getPersonalInfo()" />
+          <i class="fa fa-pencil"></i>
+        </div>
+        <div class="soat-error-message"
+             *ngIf="showError('documentNumber')">
+          <ng-container *ngIf="eForm['documentNumber'].errors.required">
+            <i></i><span> Necesitamos conocer el número de tu documento</span>
+          </ng-container>
+          <ng-container *ngIf="eForm['documentNumber'].errors.pattern">
+            <i></i><span>Formato de documento inválido</span>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="soat-input-form-container">
+        <div class="soat-input-container icon"
+             [ngClass]="{ loading: loaders.userInfo }">
+          <input type="text"
+                 placeholder="Apellido Paterno"
+                 class="soat-input"
+                 formControlName="lastname"
+                 [ngClass]="{ error: showError('lastname') }"
+                 minlength="2"
+                 AllowOnlyTextDirective
+                 maxlength="30" />
+          <i class="fa fa-pencil"
+             *ngIf="!loaders.userInfo"></i>
+          <i class="fa fa-circle-o-notch fa-spin"
+             *ngIf="loaders.userInfo"></i>
+        </div>
+        <div class="soat-error-message"
+             *ngIf="showError('lastname')">
+          <ng-container *ngIf="eForm['lastname'].errors.required">
+            <i></i><span> Necesitamos conocer tu apellido paterno </span>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="soat-input-form-container">
+        <div class="soat-input-container icon"
+             [ngClass]="{ loading: loaders.userInfo }">
+          <input type="text"
+                 placeholder="Apellido Materno"
+                 class="soat-input"
+                 formControlName="surname"
+                 AllowOnlyTextDirective
+                 [ngClass]="{ error: showError('surname') }"
+                 minlength="2"
+                 maxlength="30" />
+          <i class="fa fa-pencil"
+             *ngIf="!loaders.userInfo"></i>
+          <i class="fa fa-circle-o-notch fa-spin"
+             *ngIf="loaders.userInfo"></i>
+        </div>
+        <div class="soat-error-message"
+             *ngIf="showError('surname')">
+          <ng-container *ngIf="eForm['surname'].errors.required">
+            <i></i><span>Necesitamos conocer tu apellido materno</span>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="soat-input-form-container">
+        <div class="soat-input-container icon"
+             [ngClass]="{ loading: loaders.userInfo }">
+          <input type="text"
+                 placeholder="Nombre"
+                 class="soat-input"
+                 formControlName="name"
+                 AllowOnlyTextDirective
+                 [ngClass]="{ error: showError('name') }"
+                 minlength="2"
+                 maxlength="50" />
+          <i class="fa fa-pencil"
+             *ngIf="!loaders.userInfo"></i>
+          <i class="fa fa-circle-o-notch fa-spin"
+             *ngIf="loaders.userInfo"></i>
+        </div>
+        <div class="soat-error-message"
+             *ngIf="showError('name')">
+          <ng-container *ngIf="eForm['name'].errors.required">
+            <i></i><span>Necesitamos conocer tus nombres</span>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="soat-input-form-container">
+        <div class="soat-input-container">
+          <ng-select [items]="sexTypes"
+                     [selectOnTab]="true"
+                     bindValue="value"
+                     bindLabel="label"
+                     placeholder="Sexo"
+                     formControlName="sex"
+                     [ngClass]="{ error: showError('sex') }">
+          </ng-select>
+        </div>
+        <div class="soat-error-message"
+             *ngIf="showError('sex')">
+          <i></i><span>Necesitamos conocer tu sexo</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="soat-input-form-container">
+        <div class="soat-input-container icon">
+          <input type="text"
+                 placeholder="Fecha de Nacimiento"
+                 class="soat-input"
+                 formControlName="birthdate"
+                 [ngClass]="{ error: showError('birthdate') }"
+                 #dp="bsDatepicker"
+                 bsDatepicker
+                 readonly
+                 [bsConfig]="datePickerConfig" />
+        </div>
+        <div class="soat-error-message"
+             *ngIf="showError('birthdate')">
+          <ng-container *ngIf="
+              eForm['birthdate'].errors.required ||
+              eForm['birthdate'].errors.date
+            ">
+            <i></i>
+            <span> Ingresa tu fecha de nacimiento </span>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="soat-input-form-container">
+        <div class="soat-input-container">
+          <ng-select [items]="employeeTypes"
+                     [selectOnTab]="true"
+                     bindValue="value"
+                     bindLabel="label"
+                     placeholder="Tipo de Trabajador"
+                     formControlName="workerType"
+                     [ngClass]="{ error: showError('workerType') }">
+          </ng-select>
+        </div>
+        <div class="soat-error-message"
+             *ngIf="showError('workerType')">
+          <i></i><span>Necesitamos conocer el tipo de trabajador</span>
+        </div>
+      </div>
+
+      <div class="soat-input-form-container">
+        <div class="soat-input-container icon"
+             [ngClass]="{ loading: loaders.userInfo }">
+          <input type="text"
+                 placeholder="Correo Electrónico"
+                 class="soat-input"
+                 formControlName="email"
+                 AllowOnlyTextDirective
+                 [ngClass]="{ error: showError('email') }"
+                 minlength="2"
+                 maxlength="50" />
+          <i class="fa fa-pencil"
+             *ngIf="!loaders.userInfo"></i>
+          <i class="fa fa-circle-o-notch fa-spin"
+             *ngIf="loaders.userInfo"></i>
+        </div>
+        <div class="soat-error-message"
+             *ngIf="showError('email')">
+          <ng-container *ngIf="eForm['email'].errors.required">
+            <i></i><span>Necesitamos conocer tu correo electrónico</span>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="soat-input-form-container">
+        <div class="soat-input-container icon"
+             [ngClass]="{ loading: loaders.userInfo }">
+          <input type="text"
+                 placeholder="Celular"
+                 class="soat-input"
+                 formControlName="phoneNumber"
+                 AllowOnlyTextDirective
+                 [ngClass]="{ error: showError('phoneNumber') }"
+                 minlength="2"
+                 maxlength="50" />
+          <i class="fa fa-pencil"
+             *ngIf="!loaders.userInfo"></i>
+          <i class="fa fa-circle-o-notch fa-spin"
+             *ngIf="loaders.userInfo"></i>
+        </div>
+        <div class="soat-error-message"
+             *ngIf="showError('phoneNumber')">
+          <ng-container *ngIf="eForm['phoneNumber'].errors.required">
+            <i></i><span>Necesitamos conocer tu celular</span>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="soat-input-form-container">
+        <div class="soat-input-container icon"
+             [ngClass]="{ loading: loaders.userInfo }">
+          <input type="text"
+                 placeholder="País de nacimiento"
+                 class="soat-input"
+                 formControlName="country"
+                 AllowOnlyTextDirective
+                 [ngClass]="{ error: showError('country') }"
+                 minlength="2"
+                 maxlength="50" />
+          <i class="fa fa-pencil"
+             *ngIf="!loaders.userInfo"></i>
+          <i class="fa fa-circle-o-notch fa-spin"
+             *ngIf="loaders.userInfo"></i>
+        </div>
+        <div class="soat-error-message"
+             *ngIf="showError('country')">
+          <ng-container *ngIf="eForm['country'].errors.required">
+            <i></i><span>Necesitamos conocer tu país de nacimiento</span>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col soat-text-align-center space">
+      <button class="soat-button ripple stretch"
+              type="submit"
+              [disabled]="loading"
+              [ngClass]="{ loading: loading }">
+        <i class="fa fa-circle-o-notch fa-spin"
+           *ngIf="loading"></i>
+        Siguiente
+      </button>
+    </div>
+  </div>
+</form>

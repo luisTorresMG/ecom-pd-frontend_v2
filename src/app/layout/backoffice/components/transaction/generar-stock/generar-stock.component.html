@@ -1,0 +1,425 @@
+<div class="container-fluid">
+  <div class="row content-all">
+    <div class="col-md-12 content">
+      <div class="container-fluid content-page">
+        <div class="row r1-head">
+          <div class="col-12 head-title">
+            <h1 class="title">Generación de Stock</h1>
+            <button
+              class="full-color btn-with-icon btn-download"
+              (click)="exportar()"
+            >
+              <img class="icon-btn" src="assets/icons/download2.png" />
+              Exportar
+            </button>
+          </div>
+        </div>
+        <form
+          class="row r2-head"
+          [formGroup]="formSearchData"
+          (ngSubmit)="polizaDataWithParams()"
+        >
+          <div class="col-md-12 content-actions">
+            <div class="content-input">
+              <label for="state" class="lbl-in filter-text"
+                >FECHA INICIO:</label
+              >
+              <input
+                type="text"
+                class="form-control date-search input-date in-action"
+                id="fecha"
+                #dp="bsDatepicker"
+                [bsConfig]="bsConfig"
+                bsDatepicker
+                autocomplete="off"
+                formControlName="fechaIni"
+                [maxDate]="bsValueFin"
+              />
+            </div>
+            <div class="content-input">
+              <label for="chanel" class="lbl-in filter-text">FECHA FIN:</label>
+              <input
+                type="text"
+                class="form-control date-search input-date in-action"
+                formControlName="fechaFin"
+                #dp="bsDatepicker"
+                [bsConfig]="bsConfig"
+                autocomplete="off"
+                bsDatepicker
+                [(bsValue)]="bsValueFin"
+                value="{{ bsValueFin | date: 'dd/MM/yyyy' }}"
+                [maxDate]="bsValueFin"
+              />
+            </div>
+            <div class="content-input">
+              <label for="chanel" class="lbl-in filter-text"
+                >TIPO DE CERTIFICADO:</label
+              >
+              <select class="in-action" formControlName="tipoPoliza">
+                <option value="-1" selected>SELECCIONE</option>
+                <option
+                  *ngFor="let data of tipoPolizaData.Entity"
+                  [value]="data.SITEM"
+                >
+                  {{ data.SDECRIPTION }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-12 cont-btn-generar">
+            <button type="submit" class="full-color">Buscar</button>
+            <button
+              class="full-color"
+              type="button"
+              (click)="showModalNuevoPoliza()"
+            >
+              <img class="icon-btn" src="assets/icons/add.png" />
+              Nuevo Stock
+            </button>
+            <button
+              type="button"
+              class="full-color"
+              (click)="setFormValuesDefault()"
+            >
+              Limpiar
+            </button>
+          </div>
+        </form>
+        <div class="grid form-group row content-table">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr class="grid-title table-head">
+                  <td class="grid-title-item">Nro. Pedido</td>
+                  <td class="grid-title-item">Producto</td>
+                  <td class="grid-title-item">Fec. Creación</td>
+                  <td class="grid-title-item">Cantidad</td>
+                  <td class="grid-title-item">Almacén Protecta</td>
+                  <td class="grid-title-item">Almacén Proveedor</td>
+                  <td class="grid-title-item">Estado</td>
+                  <td class="grid-title-item">Fec. Estado</td>
+                  <td class="grid-title-item">Acciones</td>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="!dataPolizas?.entities?.length">
+                  <tr class="grid-body">
+                    <td
+                      class="grid-body-item"
+                      colspan="9"
+                      style="text-align: center"
+                    >
+                      No hay informacion para mostrar
+                    </td>
+                  </tr>
+                </ng-container>
+                <ng-container *ngIf="!!dataPolizas?.entities?.length">
+                  <tr
+                    class="table-body"
+                    *ngFor="
+                      let data of dataPolizas.entities
+                        | paginate: { itemsPerPage: 10, currentPage: p }
+                    "
+                  >
+                    <td class="table-body-item">{{ data.NNUMREG }}</td>
+                    <td class="table-body-item">{{ data.S_PRODUCTO }}</td>
+                    <td class="table-body-item">
+                      {{ data.D_FCREACION | date: "dd-MM-yyyy HH:mm:ss" }}
+                    </td>
+                    <td class="table-body-item">{{ data.NQUANTITY }}</td>
+                    <td class="table-body-item">
+                      {{ data.N_ALMACENPROTECTA }}
+                    </td>
+                    <td class="table-body-item">
+                      {{ data.N_ALMACENPROVEEDOR }}
+                    </td>
+                    <td class="table-body-item">{{ data.S_ESTADO }}</td>
+                    <td class="table-body-item">
+                      {{ data.D_FESTADO | date: "dd-MM-yyyy HH:mm:ss" }}
+                    </td>
+                    <td class="table-body-item">
+                      <a (click)="editarPoliza(data)">
+                        <i
+                          title="Editar"
+                          style="cursor: pointer"
+                          class="fa fa-edit fa-lg"
+                        ></i>
+                      </a>
+                      <a>
+                        <i
+                          title="Descargar"
+                          style="cursor: pointer; margin-left: 3px"
+                          class="fa fa-download fa-lg"
+                          (click)="descargar(data)"
+                        ></i>
+                      </a>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+            <pagination-controls
+              *ngIf="!!dataPolizas?.entities?.length"
+              class="my-pagination"
+              (pageChange)="p = $event"
+              autoHide="true"
+              responsive="true"
+              previousLabel="Anterior"
+              nextLabel="Siguiente"
+              screenReaderPaginationLabel="Paginación"
+              screenReaderPageLabel="pagina"
+              screenReaderCurrentLabel="Estás en la pagina"
+            >
+            </pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  bsModal
+  #modal="bs-modal"
+  [config]="{
+    backdrop: 'static'
+  }"
+>
+  <div class="modal-dialog" role="document">
+    <form
+      class="modal-content"
+      [formGroup]="formPoliza"
+      (ngSubmit)="generarPoliza()"
+    >
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Generación de Certificados
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="hideModalNuevoPoliza()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="content-input">
+              <label for="tipoPoliza" class="lbl-in filter-text"
+                >TIPO CERTIFICADO:</label
+              >
+              <select
+                class="in-action"
+                formControlName="tipoPoliza"
+                id="tipoPoliza"
+              >
+                <option
+                  *ngFor="let data of tipoPolizaData.Entity"
+                  [value]="data.SITEM"
+                >
+                  {{ data.SDECRIPTION }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="content-input">
+              <label for="chanel-point-modal-form" class="lbl-in filter-text"
+                >CANTIDAD:</label
+              >
+              <input
+                type="number"
+                formControlName="cantidad"
+                class="in-action"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer modal-footer-actions-in-body">
+          <button
+            type="button"
+            (click)="generarRangoPoliza()"
+            class="btn full-color btn-aceptar-modal"
+            [disabled]="
+              formPoliza.get('tipoPoliza').value === null ||
+              formPoliza.get('cantidad').value === null ||
+              formPoliza.get('cantidad').value <= 0
+            "
+          >
+            Generar
+          </button>
+
+          <button
+            type="button"
+            class="btn full-color btn-aceptar-modal"
+            (click)="clearForm()"
+          >
+            Limpiar
+          </button>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="content-input">
+              <label class="lbl-in filter-text">RANGO INICIAL:</label>
+              <input
+                type="number"
+                formControlName="rango_inicial"
+                class="in-action"
+              />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="content-input">
+              <label class="lbl-in filter-text">RANGO FINAL:</label>
+              <input
+                type="number"
+                formControlName="rango_final"
+                class="in-action"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn full-color btn-secondary btn-close-modal"
+          data-dismiss="modal"
+          (click)="hideModalNuevoPoliza()"
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          class="btn full-color btn-aceptar-modal"
+          [disabled]="
+            formPoliza.invalid ||
+            formPoliza.get('rango_inicial').value <= 0 ||
+            formPoliza.get('rango_final').value <= 0
+          "
+        >
+          Aceptar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL EDITAR -->
+<div
+  class="modal fade"
+  bsModal
+  #modalEditar="bs-modal"
+  [config]="{
+    backdrop: 'static'
+  }"
+>
+  <div class="modal-dialog" role="document">
+    <form
+      class="modal-content"
+      [formGroup]="formChangeStatusPoliza"
+      (ngSubmit)="cambiarStatusPoliza()"
+    >
+      <div class="modal-header">
+        <h5 class="modal-title">Cambiar el Estado</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="cancelarEditarPoliza()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="content-input">
+              <label class="lbl-in filter-text">N° de Pedido:</label>
+              <label
+                ><b style="font-size: 20px">{{
+                  formChangeStatusPoliza.get("P_NNUMREG").value
+                }}</b></label
+              >
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="content-input">
+              <label class="lbl-in filter-text">ESTADO:</label>
+              <select class="in-action" formControlName="P_NSTATUSPOL">
+                <option
+                  *ngFor="let data of STATUS_POLIZA.Entity"
+                  [value]="data.NSTATUSPOL"
+                >
+                  {{ data.SDESCRIPT }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn full-color btn-secondary btn-close-modal"
+          data-dismiss="modal"
+          (click)="cancelarEditarPoliza()"
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          class="btn full-color btn-aceptar-modal"
+          [disabled]="
+            formChangeStatusPoliza.get('P_NSTATUSPOL').value == -1 ||
+            formChangeStatusPoliza.get('P_NSTATUSPOL').value == null
+          "
+        >
+          Aceptar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<div
+  class="modal fade"
+  bsModal
+  #modalMessage="bs-modal"
+  [config]="{
+    backdrop: 'static'
+  }"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Mensaje</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="hideMessageModal()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label>{{ messageModal }}</label>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn full-color btn-aceptar-modal"
+          (click)="hideMessageModal()"
+        >
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

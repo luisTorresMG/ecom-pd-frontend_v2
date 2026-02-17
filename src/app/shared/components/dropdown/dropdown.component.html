@@ -1,0 +1,8 @@
+<section class="dropdown" (clickOutside)="showDropdownList = false">
+  <button class="dropdown__toggle" (click)="showDropdownList = true">
+    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+  </button>
+  <div [class]="'dropdown__list ' + placement" *ngIf="showDropdownList">
+    <ng-content></ng-content>
+  </div>
+</section>

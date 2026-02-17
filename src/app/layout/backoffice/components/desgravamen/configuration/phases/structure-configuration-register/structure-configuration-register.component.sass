@@ -1,0 +1,20 @@
+@import "standard"
+@import "modal"
+.section
+  &__title
+    font-size: 20px
+    font-weight: 600
+
+td.required
+  position: relative
+
+  &::before
+    content: "*"
+    position: absolute
+    top: 5px
+    right: 20px
+    display: block
+    color: red
+    font-size: 16px
+    font-weight: bold
+    z-index: 9

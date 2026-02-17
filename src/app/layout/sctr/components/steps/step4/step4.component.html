@@ -1,0 +1,57 @@
+<div *ngIf="vidaleyUser.insurance && !businessRules">
+  <div class="container soat-container">
+    <div class="soat-navigation">
+      <i class="fa fa-caret-left arrow"></i>
+      <a routerLink="/sctr/step-3" class="soat-link">Regresar al paso 3</a>
+    </div>
+
+    <h6 class="title code">
+      Cod. transacción <span>{{ vidaleyUser.idProcess }}</span>
+    </h6>
+
+    <app-summary
+      [user]="vidaleyUser"
+      (formSubmitted)="onSubmit($event)"
+    ></app-summary>
+  </div>
+
+  <h6 class="ref">*Valor referencial, puede variar según planilla</h6>
+</div>
+
+<app-error-message
+  *ngIf="!vidaleyUser.insurance && !businessRules"
+  moreInfo="true"
+  step="3"
+></app-error-message>
+
+<app-error-message
+  *ngIf="businessRules"
+  moreInfo="true"
+  step="4"
+></app-error-message>
+
+<ng-template #errorModal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left modal-errors-title">
+      Error en la Cotización
+    </h4>
+    <button
+      type="button"
+      class="close pull-right"
+      aria-label="Close"
+      (click)="modalRef.hide()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="terminos-texto">
+      <ul>
+        <li class="modal-item-error" *ngFor="let item of vidaleyUser.errorText">
+          <span *ngIf="item.registro > 0">Fila {{ item.registro }} -</span>
+          {{ item.mensaje }}
+        </li>
+      </ul>
+    </div>
+  </div>
+</ng-template>

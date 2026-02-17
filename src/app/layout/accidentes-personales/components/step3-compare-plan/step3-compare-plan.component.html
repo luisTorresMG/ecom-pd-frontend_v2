@@ -1,0 +1,223 @@
+<main class="container-fluid px-0 py-0 mx-0 my-0">
+  <div class="max-width-to-center">
+    <div class="bc-1"></div>
+    <div class="row px-0 py-0 mx-0 my-0">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+        <app-show-steps [NSTEP]="3"></app-show-steps>
+      </div>
+    </div>
+    <!-- PASO 3 - 3 COMPARE LOS PLANES-->
+    <div class="paso-3B">
+      <div class="row px-0 py-0 mx-0 my-0">
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <a class="back-step"
+             [routerLink]="'../step2'">
+            <i class="fa fa-caret-left fa-lg mr-2"
+               aria-hidden="true"></i>
+            Regresar al paso 3</a>
+          <a class="back-step mx-2"
+             [routerLink]="'../step2'">
+            <i class="fa fa-caret-left fa-lg mr-2"
+               aria-hidden="true"></i>
+            Compare y elija un plan</a>
+          <button class="btn-backstep"><i class="fa fa-caret-left mr-2"
+               aria-hidden="true"></i>Compare planes</button>
+        </div>
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <h1 class="title-step">
+            Compare los planes
+          </h1>
+        </div>
+      </div>
+      <div class="row mx-0 my-0 px-0 py-0 content-info-compare-plan">
+        <div class="content-menu-plan col-lg-12 mx-0 my-0 px-0 py-0">
+          <!-- ngClass "menu_plan_selected" -->
+          <button class="menu_plan">
+            Coberturas
+          </button>
+          <button class="menu_plan">
+            Asistencias
+          </button>
+          <button class="menu_plan menu_plan_selected">
+            Beneficios
+          </button>
+        </div>
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <div class="content-info-compare-planes table-responsive">
+            <table class="table">
+              <thead>
+                <tr class="grid-title">
+                  <td></td>
+                  <td class="content-tipo-plan"
+                      colspan="2">
+                    <span>PLAN 1</span>
+                    <small>S/ <span>160</span>/mensual</small>
+                  </td>
+                  <td class="content-tipo-plan"
+                      colspan="2">
+                    <span>PLAN 2</span>
+                    <small>S/ <span>200</span>/mensual</small>
+                  </td>
+                </tr>
+                <!-- IF COBERTURAS SELECT -->
+                <tr class="title-tbl-plan grid-title"
+                    hidden>
+                  <td class="content-tipo-plan text-center">
+                    COBERTURAS
+                  </td>
+                  <td class="content-tipo-plan text-center">
+                    APLICA COBERTURA
+                  </td>
+                  <td class="content-tipo-plan text-center">
+                    SUMA COBERTURA
+                  </td>
+                  <td class="content-tipo-plan text-center">
+                    APLICA COBERTURA
+                  </td>
+                  <td class="content-tipo-plan text-center">
+                    SUMA COBERTURA
+                  </td>
+                </tr>
+                <!-- IF ASISTENCIAS SELECT -->
+                <tr class="title-tbl-plan grid-title"
+                    hidden>
+                  <td class="content-tipo-plan text-center">
+                    ASISTENCIAS
+                  </td>
+                  <td class="content-tipo-plan text-center"
+                      colspan="2">
+                    APLICA ASISTENCIA
+                  </td>
+                  <td class="content-tipo-plan text-center"
+                      colspan="2">
+                    APLICA ASISTENCIA
+                  </td>
+                </tr>
+                <!-- IF BENEFICIOS SELECT -->
+                <tr class="title-tbl-plan grid-title">
+                  <td class="content-tipo-plan text-center">
+                    BENEFICIOS
+                  </td>
+                  <td class="content-tipo-plan text-center"
+                      colspan="2">
+                    APLICA BENEFICIOS
+                  </td>
+                  <td class="content-tipo-plan text-center"
+                      colspan="2">
+                    APLICA BENEFICIOS
+                  </td>
+                </tr>
+              </thead>
+              <!-- IF COBERTURAS SELECT -->
+              <tbody hidden>
+                <tr class="grid-body"
+                    hidden>
+                  <td>
+                    Gasto de sepelio por accidente
+                  </td>
+                  <td class="text-center">
+                    <i class="fa fa-check"
+                       aria-hidden="true"></i>
+                  </td>
+                  <td class="text-center">
+                    S/1,000.00
+                  </td>
+                  <td class="text-center">
+                    <i class="fa fa-check"
+                       aria-hidden="true"></i>
+                  </td>
+                  <td class="text-center">
+                    S/2,000.00
+                  </td>
+                </tr>
+                <tr class="grid-body">
+                  <td>
+                    Gasto de sepelio por accidente
+                  </td>
+                  <td class="text-center">
+                    <i class="fa fa-times"
+                       aria-hidden="true"></i>
+                  </td>
+                  <td class="text-center">
+                    S/1,000.00
+                  </td>
+                  <td class="text-center">
+                    <i class="fa fa-check"
+                       aria-hidden="true"></i>
+                  </td>
+                  <td class="text-center">
+                    S/2,000.00
+                  </td>
+                </tr>
+              </tbody>
+              <!-- IF ASISTENCIAS SELECT -->
+              <tbody hidden>
+                <tr class="grid-body">
+                  <td>
+                    Asistencia 1
+                  </td>
+                  <td class="text-center"
+                      colspan="2">
+                    <i class="fa fa-check"
+                       aria-hidden="true"></i>
+                  </td>
+                  <td class="text-center"
+                      colspan="2">
+                    <i class="fa fa-times"
+                       aria-hidden="true"></i>
+                  </td>
+                </tr>
+              </tbody>
+              <!-- IF BENEFICIOS SELECT -->
+              <tbody>
+                <tr class="grid-body">
+                  <td>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam tempora voluptas vitae, inventore
+                    illo repudiandae est, quod amet at, commodi atque et soluta illum. Officia sunt labore dolor
+                    blanditiis in!
+                  </td>
+                  <td class="text-center"
+                      colspan="2">
+                    <i class="fa fa-check"
+                       aria-hidden="true"></i>
+                  </td>
+                  <td class="text-center"
+                      colspan="2">
+                    <i class="fa fa-times"
+                       aria-hidden="true"></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="row mx-0 my-0 px-0 py-0 mt-5 text-center">
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0 content-check-cobertura">
+          <div class="content-chk">
+            <input type="checkbox"
+                   id="chk-cob-obligatoria"
+                   hidden
+                   checked
+                   disabled>
+            <label for="chk-cob-obligatoria"
+                   class="lbl-chk-cob-ob">Cobertura obligatoria</label>
+          </div>
+          <div class="content-chk">
+            <input type="checkbox"
+                   hidden
+                   id="chk-cob-op1">
+            <label for="chk-cob-op1"
+                   class="lbl-chk-cob-op"></label>
+            <input type="checkbox"
+                   hidden
+                   id="chk-cob-op2">
+            <label for="chk-cob-op2"
+                   class="lbl-chk-cob-op">Cobertura opcional</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-questions></app-questions>
+</main>

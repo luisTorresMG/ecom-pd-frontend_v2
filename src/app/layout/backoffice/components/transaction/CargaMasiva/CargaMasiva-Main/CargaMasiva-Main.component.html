@@ -1,0 +1,38 @@
+<div class="form-group">
+  <div class="col-sm-12 col-lg-9">
+    <!-- *HEADER -->
+    <main class="content">
+      <div class="content__tabs">
+        <div>
+          <a
+            class="button-default tab"
+            routerLink="/backoffice/transaccion/CargaMasiva"
+          >
+            <div
+              routerLinkActive="bg-active"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <i class="fa fa-signal" aria-hidden="true"></i>
+              Carga masiva general
+            </div>
+          </a>
+        </div>
+        <div>
+          <a
+            class="button-default tab"
+            routerLink="/backoffice/transaccion/CargaMasiva/estado"
+          >
+            <div
+              routerLinkActive="bg-active"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <i class="fa fa-cog" aria-hidden="true"></i>
+              Carga masiva del estado
+            </div>
+          </a>
+        </div>
+      </div>
+    </main>
+  </div>
+  <router-outlet></router-outlet>
+</div>

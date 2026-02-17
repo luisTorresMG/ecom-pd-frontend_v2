@@ -1,0 +1,149 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="container-fluid">
+        <div class="header-content">
+          <div class="containt-item">
+            <div class="header-item">
+              <span class="title">Reporte de Arqueo</span>
+            </div>
+          </div>
+          <div class="containt-item">
+            <div class="header-item right-item">
+              <button class="full-color btn-export-excel mx-0"
+                      [disabled]="!ListArqueoReport?.length"
+                      (click)="exportar()">
+                <img alt=""
+                     src="assets/icons/download2.png" />
+                <span> Exportar Excel</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter">
+          <div class="
+              form-group
+              row
+              filter-row
+              d-flex
+              align-items-end
+              justify-content-between
+              flex-row
+            ">
+            <div class="col-lg-3 filter-row-cell">
+              <span class="filter-text">CANAL DE VENTA:</span>
+              <select class="form-control date-search input-date"
+                      (change)="onChangeCanal($event.target.value)"
+                      [(ngModel)]="canalSelected">
+                <option value="0"
+                        disabled
+                        selected>SELECCIONE</option>
+                <option *ngFor="let canal of canales"
+                        value="{{ canal.nchannel }}">
+                  {{ canal.sdescript }}
+                </option>
+              </select>
+            </div>
+            <div class="col-lg-9 margin-top-20">
+              <div class="
+                  row
+                  float-right
+                  mx-0
+                  d-flex
+                  justify-content-between
+                  align-items-center
+                ">
+                <div class="lg-6">
+                  <button class="full-color"
+                          [disabled]="canalSelected == '0'"
+                          (click)="onEventSearch($event)">
+                    <span>Buscar</span>
+                  </button>
+                </div>
+                <div class="lg-6">
+                  <button class="full-color btn-export-excel  margin-right-0"
+                          (click)="onEventClear($event)">
+                    <img alt=""
+                         src="assets/icons/delete.png" />
+                    <span> Limpiar</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="grid form-group row margin-right-0">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr class="grid-title">
+                  <td class="grid-title-item">N° Certificado</td>
+                  <td class="grid-title-item">Fecha de entrega</td>
+                  <td class="grid-title-item">D.Pdtes</td>
+                  <td class="grid-title-item">Tipo de uso</td>
+                  <td class="grid-title-item">Canal de venta</td>
+                  <td class="grid-title-item">Punto de venta</td>
+                  <td class="grid-title-item">Estado real</td>
+                </tr>
+              </thead>
+              <div *ngIf="fExistRegistro; then ocultarGrilla; else mostrarGrilla"></div>
+            </table>
+            <ng-template #mostrarGrilla>
+              <tbody>
+                <tr>
+                  <td colspan="7"
+                      style="text-align: center">
+                    {{ msgErrorLista }}
+                  </td>
+                </tr>
+              </tbody>
+            </ng-template>
+            <ng-template #ocultarGrilla>
+              <tbody *ngFor="
+                  let result of ListArqueoReport
+                    | paginate: { itemsPerPage: 10, currentPage: p }
+                ">
+                <tr>
+                  <td class="data-table-tr-td">{{ result.certificado }}</td>
+                  <td class="data-table-tr-td">
+                    {{ result.fE_ENTREGA | date: "dd-MM-yyyy HH:mm:ss" }}
+                  </td>
+                  <td class="data-table-tr-td">{{ result.dptes }}</td>
+                  <td class="data-table-tr-td">{{ result.tipO_USO }}</td>
+                  <td class="data-table-tr-td">{{ result.canaL_VENTA }}</td>
+                  <td class="data-table-tr-td">{{ result.puntO_VENTA }}</td>
+                  <td class="data-table-tr-td">{{ result.estadO_REAL }}</td>
+                </tr>
+              </tbody>
+            </ng-template>
+          </div>
+
+          <div *ngIf="fExistRegistro; then ocultarPaginado; else mostrarPaginado"></div>
+          <ng-template #mostrarPaginado>
+            <div></div>
+          </ng-template>
+
+          <ng-template #ocultarPaginado>
+            <div class="row"
+                 style="margin-top: 20px; margin-left: -40px">
+              <div class="col-xs-12 col-12">
+                <pagination-controls *ngIf="!!ListArqueoReport.length"
+                                     class="my-pagination"
+                                     (pageChange)="p = $event"
+                                     autoHide="true"
+                                     responsive="true"
+                                     previousLabel="Anterior"
+                                     nextLabel="Siguiente"
+                                     screenReaderPaginationLabel="Paginación"
+                                     screenReaderPageLabel="pagina"
+                                     screenReaderCurrentLabel="Estás en la pagina">
+                </pagination-controls>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

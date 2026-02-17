@@ -1,0 +1,362 @@
+@import "variables"
+@import "standard"
+@import "modal"
+
+.content
+  overflow: auto
+  display: flex
+  flex-direction: column
+  margin-bottom: 5rem
+  padding: 1.5rem
+
+  .section
+    &-structure
+      .form__structure
+
+        &__inputs
+          display: grid
+          grid-gap: 1rem
+
+          @media (min-width: 520px)
+            grid-template-columns: repeat(2, 1fr)
+
+            .placeholder[for="f-description"]
+              grid-column-start: 1
+              grid-column-end: 3
+
+          @media (min-width: 680px)
+            grid-template-columns: repeat(3, 1fr)
+
+          @media (min-width: 890px)
+            grid-template-columns: repeat(4, 1fr)
+
+          @media (min-width: 1420px)
+            grid-template-columns: repeat(5, 1fr)
+
+          @media (min-width: 1560px)
+            grid-template-columns: repeat(6, 1fr)
+
+    &-args
+      width: fit-content
+
+    &-file
+      table
+        width: fit-content
+
+    &-detail
+      width: 100%
+
+      &.args
+        width: fit-content
+
+      .content-subtitle
+        .button-tab
+          display: inline-flex
+          align-items: center
+          justify-content: center
+          height: 50px
+          width: fit-content
+          min-width: 130px
+          padding: 1rem .5rem
+          font-size: 16px
+          background-color: #fff
+          position: relative
+          transition: .3s
+
+          &::after
+            content: ""
+            width: 100%
+            height: 3px
+            border-radius: 2px
+            position: absolute
+            bottom: 0
+            left: 0
+            background-color: #fff
+            transition: .3s
+
+          &.active,
+          &:hover
+            &::after
+              background-color: $purple
+
+          &.active
+            background-color: #fff !important
+            cursor: default !important
+
+          &:hover
+            background-color: rgba(0,0,0,.05)
+
+          &[disabled]
+            background-color: #fff !important
+            &::after
+              background-color: #fff !important
+
+    &-actions
+      margin-top: 1rem
+
+  .content-subtitle
+    display: flex
+    align-items: center
+    justify-content: space-between
+    gap: 2rem
+    margin-bottom: 1rem
+
+  .content-table
+    max-height: 600px
+    padding-bottom: 1rem
+    overflow: auto
+
+    &::-webkit-scrollbar
+      width: 8px
+      height: 8px
+
+      &-thumb
+        border-radius: 0px
+        background-color: $purple_low
+
+    *[disabled]
+      opacity: 1 !important
+      appearance: none !important
+
+.header-right
+  display: flex
+  align-items: center
+  gap: 1rem
+  flex-wrap: wrap
+  flex-direction: row
+
+.button-action
+  width: 100%
+  height: 100%
+  background-color: transparent
+
+  .fa
+    font-size: 19px
+
+.field-action
+  display: flex
+
+  select,
+  input
+    width: 100%
+
+  button
+    display: inline-flex
+    align-items: center
+    justify-content: center
+    width: 30px
+    height: 30px
+    background: #fff
+    border-left: #ccc
+
+    .fa
+      font-size: 18px
+
+    &:hover
+      background: rgba(0,0,0,0.05)
+
+.col-mw
+
+  &.function
+    width: 245px
+    min-width: 245px
+    max-width: 245px
+
+  &.function-parameter
+    width: 220px
+    min-width: 220px
+    max-width: 220px
+
+  &.value-type
+    width: 150px
+    min-width: 150px
+    max-width: 150px
+
+  &.value
+    width: 197px
+    min-width: 197px
+    max-width: 197px
+
+  &.value-type-parameter
+    width: 190px
+    min-width: 190px
+    max-width: 190px
+
+.table-head-field
+  background-color: $purple !important
+
+  &.target-field
+    min-width: 160px
+
+  &.input-data,
+  &.output-data
+    min-width: 130px
+    width: 130px
+    max-width: 130px
+
+  &.data-type
+    min-width: 105px
+    width: 105px
+    max-width: 105px
+
+  &.required
+    min-width: 100px
+    width: 100px
+    max-width: 100px
+
+  &.unique-value
+    min-width: 95px
+    width: 95px
+    max-width: 95px
+
+  &.field-value-type,
+  &.field-value
+    min-width: 180px
+    width: 180px
+    max-width: 180px
+
+.table-head-field,
+.table-body-field
+  &.remove
+    display: table-cell
+    position: sticky
+    right: 0
+
+    .field-actions-buttons,
+    .field-actions-buttons button
+      width: 100% !important
+
+      &:hover
+        background-color: #f1f1f1
+
+.table-body-field
+  background-color: #fff !important
+
+.table-u
+  &.table-field-u
+    width: 100%
+
+    thead,
+    tbody
+      &>tr
+        &>td
+          padding: 0
+          background-color: transparent
+
+          tr:not(:last-child)
+            border-bottom: 1px solid #ccc
+
+        .field-function
+          &>tr
+            &>td
+              border-right: 1px solid #ccc
+
+        .field-actions-buttons
+          display: inline-flex
+          width: fit-content
+
+        &>th,
+        &>td
+
+          input,
+          select
+            background-color: #fff
+            border: none
+            width: 100%
+            min-height: 30px
+            height: 30px
+            padding: 5px 10px
+
+          tr
+            background-color: transparent !important
+        &>td
+          border: 1px solid #ccc
+
+      tr
+        &>td
+          background-color: transparent
+          padding: 0
+
+        input,
+        select
+          &[disabled]
+            cursor: not-allowed !important
+
+      .row-parameters
+        td:not(:last-child)
+          border-right: 1px solid #ccc
+
+      .content-parameters
+        width: 100%
+
+.has-error
+  display: block
+  margin-bottom: 1rem
+  color: red
+
+span.input-cp
+  display: block
+  width: 100%
+  height: 30px
+
+.modal-confirm-save,
+.modal-message
+  .modal
+    &-header h6,
+    &-body .paragraph
+      text-align: center !important
+
+    &-body
+      .paragraph
+        font-size: 18px !important
+
+.modal-message
+  .modal-body
+    display: flex
+    justify-content: center
+    align-items: center
+    gap: 1rem
+
+    img
+      max-width: 160px
+
+.modal-formula
+  .modal-body
+    .suggest-buttons
+      display: flex
+      align-items: center
+      justify-content: flex-start
+      flex-wrap: wrap
+      gap: 1rem
+      margin-bottom: 1rem
+
+      button
+        height: 30px
+        background-color: #f1f1f1
+        border-radius: 3px
+        min-width: 100px
+        font-size: 15px
+        padding: 5px 10px
+        position: relative
+
+        &::after
+          content: attr(aria-label)
+          position: absolute
+          left: 0
+          bottom: 10px
+          display: none
+          width: 100%
+          padding: 7px
+          font-size: 14px
+          color: #fff
+          background-color: rgba(0,0,0,.8)
+          border-radius: 4px
+
+        &:hover
+          &::after
+            display: block
+
+    textarea
+      min-height: 120px
+      resize: none
+      font-family: monospace

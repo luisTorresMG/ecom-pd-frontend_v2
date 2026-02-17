@@ -1,0 +1,507 @@
+<section class="section"
+         [formGroup]="form">
+  <span class="section__title">Entidades</span>
+
+  <!-- *Entidades -->
+  <ng-container formGroupName="entities">
+    <!-- *Dropdown Cliente -->
+    <button
+      class="button-dropdown"
+      [class.active]="dropdownSelected == 'entity:client'"
+      (click)="selectDropdown = 'entity:client'"
+    >
+      <i class="fa fa-angle-right"
+         aria-hidden="true"></i>
+      Cliente
+    </button>
+    <ng-container *ngIf="dropdownSelected == 'entity:client'">
+      <div class="content-table"
+           @fade>
+        <table class="table-u table-fields">
+          <thead>
+            <tr>
+              <th>Atributo</th>
+              <th>Descripción</th>
+              <th>Origen</th>
+              <th>Valor</th>
+              <th>Equivalencia</th>
+            </tr>
+          </thead>
+          <tbody formArrayName="clients">
+            <ng-container
+              *ngFor="let group of clients.controls; let index = index"
+            >
+              <tr [formGroup]="group"
+                  *ngIf="group.get('show').value">
+                <td>
+                  <span>
+                    {{ group.get("attribute").value }}
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    {{ group.get("description").value }}
+                  </span>
+                </td>
+                <td>
+                  <select formControlName="origin">
+                    <option value=""
+                            disabled
+                            selected>Seleccione
+                    </option>
+                    <option value="Trama">Trama</option>
+                  </select>
+                </td>
+                <td [class.required]="group.get('required').value">
+                  <select formControlName="value">
+                    <option [value]="''"
+                            selected>Seleccione
+                    </option>
+                    <ng-container *ngFor="let value of readFields">
+                      <option
+                        [value]="value"
+                        *ngIf="
+                          !readFieldInUse(group.get('entityId').value, value)
+                        "
+                      >
+                        {{ value }}
+                      </option>
+                    </ng-container>
+                  </select>
+                </td>
+                <td
+                  [class.required]="
+                    group.get('required').value &&
+                    group.get('equivalences').controls.length
+                  "
+                >
+                  <button
+                    class="button-icon"
+                    (click)="
+                      showModalEquivalence(group, 'entities:clients', index)
+                    "
+                    [disabled]="!group.get('equivalences').length"
+                  >
+                    <i class="fa fa-cog"
+                       aria-hidden="true"></i>
+                  </button>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+
+    <!-- *Dropdown Certificado -->
+    <button
+      class="button-dropdown"
+      [class.active]="dropdownSelected == 'entity:certificate'"
+      (click)="selectDropdown = 'entity:certificate'"
+    >
+      <i class="fa fa-angle-right"
+         aria-hidden="true"></i>
+      Certificado
+    </button>
+    <ng-container *ngIf="dropdownSelected == 'entity:certificate'">
+      <div class="content-table"
+           @fade>
+        <table class="table-u table-fields">
+          <thead>
+            <tr>
+              <th>Atributo</th>
+              <th>Descripción</th>
+              <th>Origen</th>
+              <th>Valor</th>
+              <th>Equivalencia</th>
+            </tr>
+          </thead>
+          <tbody formArrayName="certificates">
+            <ng-container
+              *ngFor="let group of certificates.controls; let index = index"
+            >
+              <tr [formGroup]="group"
+                  *ngIf="group.get('show').value">
+                <td>
+                  {{ group.get("attribute").value }}
+                </td>
+                <td>
+                  <input type="text"
+                         formControlName="description"/>
+                </td>
+                <td>
+                  <select formControlName="origin">
+                    <option value=""
+                            disabled
+                            selected>Seleccione
+                    </option>
+                    <option value="Trama">Trama</option>
+                  </select>
+                </td>
+                <td [class.required]="group.get('required').value">
+                  <select formControlName="value">
+                    <option [value]="''"
+                            selected>Seleccione
+                    </option>
+                    <ng-container *ngFor="let value of readFields">
+                      <option
+                        [value]="value"
+                        *ngIf="
+                          !readFieldInUse(group.get('entityId').value, value)
+                        "
+                      >
+                        {{ value }}
+                      </option>
+                    </ng-container>
+                  </select>
+                </td>
+                <td
+                  [class.required]="
+                    group.get('required').value &&
+                    group.get('equivalences').controls.length
+                  "
+                >
+                  <button
+                    class="button-icon"
+                    (click)="
+                      showModalEquivalence(
+                        group,
+                        'entities:certificates',
+                        index
+                      )
+                    "
+                    [disabled]="!group.get('equivalences').length"
+                  >
+                    <i class="fa fa-cog"
+                       aria-hidden="true"></i>
+                  </button>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+
+    <!-- *Dropdown Rol -->
+    <button
+      class="button-dropdown"
+      [class.active]="dropdownSelected == 'entity:rol'"
+      (click)="selectDropdown = 'entity:rol'"
+    >
+      <i class="fa fa-angle-right"
+         aria-hidden="true"></i>
+      Rol
+    </button>
+    <ng-container *ngIf="dropdownSelected == 'entity:rol'">
+      <div class="content-table"
+           @fade>
+        <table class="table-u table-fields">
+          <thead>
+            <tr>
+              <th>Atributo</th>
+              <th>Descripción</th>
+              <th>Origen</th>
+              <th>Valor</th>
+              <th>Equivalencia</th>
+            </tr>
+          </thead>
+          <tbody formArrayName="roles">
+            <ng-container
+              *ngFor="let group of roles.controls; let index = index"
+            >
+              <tr [formGroup]="group"
+                  *ngIf="group.get('show').value">
+                <td>
+                  {{ group.get("attribute").value }}
+                </td>
+                <td>
+                  <input type="text"
+                         formControlName="description"/>
+                </td>
+                <td>
+                  <select formControlName="origin">
+                    <option value=""
+                            disabled
+                            selected>Seleccione
+                    </option>
+                    <option value="Trama">Trama</option>
+                  </select>
+                </td>
+                <td [class.required]="group.get('required').value">
+                  <select formControlName="value">
+                    <option [value]="''"
+                            selected>Seleccione
+                    </option>
+                    <ng-container *ngFor="let value of readFields">
+                      <option
+                        [value]="value"
+                        *ngIf="
+                          !readFieldInUse(group.get('entityId').value, value)
+                        "
+                      >
+                        {{ value }}
+                      </option>
+                    </ng-container>
+                  </select>
+                </td>
+                <td
+                  [class.required]="
+                    group.get('required').value &&
+                    group.get('equivalences').controls.length
+                  "
+                >
+                  <button
+                    class="button-icon"
+                    (click)="
+                      showModalEquivalence(group, 'entities:roles', index)
+                    "
+                    [disabled]="!group.get('equivalences').length"
+                  >
+                    <i class="fa fa-cog"
+                       aria-hidden="true"></i>
+                  </button>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="false">
+      <!-- *Dropdown Póliza -->
+      <button
+        class="button-dropdown"
+        [class.active]="dropdownSelected == 'entity:policy'"
+        (click)="selectDropdown = 'entity:policy'"
+      >
+        <i class="fa fa-angle-right"
+           aria-hidden="true"></i>
+        Póliza
+      </button>
+      <ng-container *ngIf="dropdownSelected == 'entity:policy'">
+        <div class="content-table"
+             @fade>
+          <table class="table-u table-fields">
+            <thead>
+              <tr>
+                <th>Atributo</th>
+                <th>Descripción</th>
+                <th>Origen</th>
+                <th>Valor</th>
+                <th>Equivalencia</th>
+              </tr>
+            </thead>
+            <tbody formArrayName="policies">
+              <ng-container
+                *ngFor="let group of policies.controls; let index = index"
+              >
+                <tr [formGroup]="group"
+                    *ngIf="group.get('show').value">
+                  <td>
+                    {{ group.get("attribute").value }}
+                  </td>
+                  <td>
+                    <input type="text"
+                           formControlName="description"/>
+                  </td>
+                  <td>
+                    <select formControlName="origin">
+                      <option value=""
+                              disabled
+                              selected>Seleccione
+                      </option>
+                      <option value="Trama">Trama</option>
+                    </select>
+                  </td>
+                  <td [class.required]="group.get('required').value">
+                    <select formControlName="value">
+                      <option [value]="''"
+                              selected>Seleccione
+                      </option>
+                      <ng-container *ngFor="let value of readFields">
+                        <option
+                          [value]="value"
+                          *ngIf="
+                            !readFieldInUse(group.get('entityId').value, value)
+                          "
+                        >
+                          {{ value }}
+                        </option>
+                      </ng-container>
+                    </select>
+                  </td>
+                  <td
+                    [class.required]="
+                      group.get('required').value &&
+                      group.get('equivalences').controls.length
+                    "
+                  >
+                    <button
+                      class="button-icon"
+                      (click)="
+                        showModalEquivalence(group, 'entities:policies', index)
+                      "
+                      [disabled]="!group.get('equivalences').length"
+                    >
+                      <i class="fa fa-cog"
+                         aria-hidden="true"></i>
+                    </button>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <!-- *Dropdown Crédito -->
+    <button
+      class="button-dropdown"
+      [class.active]="dropdownSelected == 'entity:credit'"
+      (click)="selectDropdown = 'entity:credit'"
+    >
+      <i class="fa fa-angle-right"
+         aria-hidden="true"></i>
+      Crédito
+    </button>
+    <ng-container *ngIf="dropdownSelected == 'entity:credit'">
+      <div class="content-table"
+           @fade>
+        <table class="table-u table-fields">
+          <thead>
+            <tr>
+              <th>Atributo</th>
+              <th>Descripción</th>
+              <th>Origen</th>
+              <th>Valor</th>
+              <th>Equivalencia</th>
+            </tr>
+          </thead>
+          <tbody formArrayName="credits">
+            <ng-container
+              *ngFor="let group of credits.controls; let index = index"
+            >
+              <tr [formGroup]="group"
+                  *ngIf="group.get('show').value">
+                <td>
+                  {{ group.get("attribute").value }}
+                </td>
+                <td>
+                  <input type="text"
+                         formControlName="description"/>
+                </td>
+                <td>
+                  <select formControlName="origin">
+                    <option value=""
+                            disabled
+                            selected>Seleccione
+                    </option>
+                    <option value="Trama">Trama</option>
+                  </select>
+                </td>
+                <td [class.required]="group.get('required').value">
+                  <select formControlName="value">
+                    <option [value]="''"
+                            selected>Seleccione
+                    </option>
+                    <ng-container *ngFor="let value of readFields">
+                      <option
+                        [value]="value"
+                        *ngIf="
+                          !readFieldInUse(group.get('entityId').value, value)
+                        "
+                      >
+                        {{ value }}
+                      </option>
+                    </ng-container>
+                  </select>
+                </td>
+                <td
+                  [class.required]="
+                    group.get('required').value &&
+                    group.get('equivalences').controls.length
+                  "
+                >
+                  <button
+                    class="button-icon"
+                    (click)="
+                      showModalEquivalence(group, 'entities:credits', index)
+                    "
+                    [disabled]="!group.get('equivalences').length"
+                  >
+                    <i class="fa fa-cog"
+                       aria-hidden="true"></i>
+                  </button>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+  </ng-container>
+</section>
+
+<ng-template #modalEquivalence>
+  <div class="content-modal">
+    <section>
+      <div class="modal-header">
+        <h6>Configurar equivalencia</h6>
+        <button
+          type="button"
+          role="button"
+          aria-label="cerrar modal"
+          (click)="hideModalEquivalence()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="content-table">
+          <table class="table-u table-fields">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Valor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let form of equivalenceForm.controls"
+                [formGroup]="form"
+              >
+                <td>{{ form.get("field").value }}</td>
+                <td>
+                  <input type="text"
+                         formControlName="value"/>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer"
+           *ngIf="storage?.params?.action != 'detalle'">
+        <button
+          class="button-default secondary orange"
+          type="button"
+          role="button"
+          (click)="hideModalEquivalence()"
+        >
+          Cancelar
+        </button>
+        <button
+          class="button-default orange"
+          type="button"
+          role="button"
+          (click)="saveEquivalence()"
+        >
+          Guardar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>

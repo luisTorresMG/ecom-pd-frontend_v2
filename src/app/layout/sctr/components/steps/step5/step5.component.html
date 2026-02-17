@@ -1,0 +1,155 @@
+<div class="container soat-container"
+     *ngIf="!moreInfo">
+  <div class="soat-navigation">
+    <i class="fa fa-caret-left arrow"></i>
+    <a routerLink="/sctr/step-4"
+       class="soat-link">Regresar al paso 4</a>
+  </div>
+
+  <h6 class="title code">
+    Cod. Transacción
+    <span>{{ vidaleyUser.idProcess }}-{{ vidaleyUser.idCotizacion }}</span>
+  </h6>
+
+  <h4 class="title">
+    El costo de tu seguro SCTR es de:
+    <span>S/{{ vidaleyUser.amount | number: "1.2-2" }}</span>
+    (Incluye IGV)
+  </h4>
+
+  <app-summary [summary]="true"
+               [user]="vidaleyUser"
+               (moreInfo)="showMoreInfo()"
+               [step]="5"></app-summary>
+
+  <div class="soat-container-outline soat-summary">
+    <!--  <div class="row align-items-center">
+      <div class="col-12">
+        <div class="soat-header-icon planvidaley">
+          <div class="align-items-center">
+             <div class="title big">Plan: {{ vidaleyUser.plan }}</div>
+            <div class="dmessage"> De estar de acuerdo con la cotización inicial, descarga el formato de planilla y
+              adjúntalo con los datos
+              requeridos.</div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="row align-items-center">
+      <div class="col">
+        <div class="soat-header-icon planvidaley">
+          <div class="soat-header space-bottom">
+            <div class="title">
+              <span class="descarga-text"
+                    *ngIf="loadingDownload"><i style="cursor: progress; color: #ff6e00"
+                   class="fa fa-cog fa-spin"></i>
+                Generando cotización...
+              </span>
+              <a *ngIf="!loadingDownload"
+                 class="descarga"
+                 href=""
+                 (click)="downloadPdf($event)">
+                <i title="Descargar tu cotización"
+                   style="cursor: pointer; margin-right: 7px; color: #ff6e00"
+                   class="fa fa-download fa-lg"></i>
+                <span class="descarga-text">Descarga tu cotización</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="soat-container-outline soat-summary">
+    <ng-container *ngIf="!ecommerce">
+      <p class="legal-text">
+        Mediante la elección de cualquiera de los métodos de pago que se
+        muestran a continuación, el Contratante acepta la promoción del Seguro
+        SCTR brindado mediante cotización N°
+        {{ vidaleyUser.idCotizacion }}
+      </p>
+      <div class="row align-items-center">
+        <div class="col-12">
+          <div class="soat-header-icon">
+            <div class="soat-header space-bottom">
+              <div class="title big metodo-pago">
+                Para finalizar tu compra, escoge tu método de pago:
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row justify-content-center text-center">
+        <div class="col-lg-5 col-sm-12">Depósitos y transferencias</div>
+        <!-- <div class="col-lg-2 col-sm-12 separador-pe">&nbsp;</div> -->
+        <div class="col-lg-5 col-sm-12"></div>
+      </div>
+
+      <div class="row justify-content-center text-center">
+        <div class="col-lg-5 col-sm-12">
+          <img src="./assets/soat/img/pago-efectivo.png"
+               alt="PagoEfectivo"
+               height="42"
+               (click)="onPayment()"
+               class="cursor" />
+          <img src="./assets/soat/img/info.png"
+               alt="PagoEfectivo"
+               height="12"
+               (click)="openPagoEfectivoInfo()"
+               class="cursor info" />
+        </div>
+        <!-- <div class="col-lg-2 col-sm-12">&nbsp;</div> -->
+        <div class="col-lg-5 col-sm-12 separador-visa">
+          <img src="./assets/soat/img/visa-border.png"
+               alt="Visa"
+               height="50"
+               *ngIf="!!visaSessionToken"
+               appVisaButton
+               [config]="visaSessionToken"
+               [amount]="vidaleyUser.amount"
+               (myClick)="visaClick()" />
+          <div *ngIf="!visaSessionToken"
+               style="display:flex;height: 100%;width:100%">
+            <i style="margin:auto;font-size: 25px;color: #ff6e00; "
+               class="fa fa-spinner fa-pulse"></i>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="button-container"
+         *ngIf="ecommerce">
+      <button class="soat-button ripple stretch"
+              type="button"
+              (click)="showEcommerceModal()">
+        Agregar al carrito
+      </button>
+    </div>
+  </div>
+</div>
+
+<app-error-message *ngIf="moreInfo"
+                   [moreInfo]="true"></app-error-message>
+
+<ng-template #peModal>
+  <div class="modal-body">
+    <img src="./assets/soat/img/pago-efectivo-info.png"
+         height="250"
+         alt="PagoEfectivo" />
+  </div>
+  <div class="modal-footer footer-pe">
+    <div class="row align-self-center mx-auto">
+      <button class="soat-button ripple btn-pe"
+              (click)="modalRef.hide()">
+        Cerrar
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #shoppingCart>
+  <app-shopping-cart-modal (closeaction)="closeModal()"></app-shopping-cart-modal>
+</ng-template>

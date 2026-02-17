@@ -1,0 +1,324 @@
+<div class="container-modal">
+
+    <div class="container-title-modal">
+        <h3>Datos del PEP</h3>
+    </div>
+
+    <div class="container-form d-flex flex-wrap">
+
+        <div class="d-flex align-items-center col-lg-6 mb-0  px-0">
+            <div class="col-lg-4 mb-0 px-0">
+                <div>Familiar PEP</div>
+            </div>
+            <div class="col-lg-8 mb-0 px-0"  style="margin-bottom: -8px !important;">
+                <form-input-select 
+                    [extra_large]="true"
+                    [items]="TYPE_PEP"
+                    [firstSelect]="true"
+                    [updateModelOnChange]="true"
+                    fieldCodigo="id"
+                    fieldValor="value"
+                    [itemsArray]="true"
+                    [(value)]="familys.pnconditionpep"
+                    [disabled]="profile_id == 192 || edit_id == 1"
+                ></form-input-select>
+
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center col-lg-6 mb-0">
+            <div class="col-lg-4 mb-0 px-0">
+                <div>Parentesco</div>
+            </div>
+            <div class="col-lg-8 mb-0 px-0">
+                <!-- INI KAFG 07/02/2025 -->
+               
+                <form-input-select 
+                    [items]="list_relationship_type"
+                    [itemsArray]="true"
+                    fieldCodigo="COD_ELEMENTO"
+                    [hasItems]="true"
+                    fieldValor="GLS_ELEMENTO"
+                    [(value)]="familys.pnrelation"
+                    [updateModelOnChange]="true" 
+                    [firstSelect]="true"
+                    [disabled]="profile_id == 192  || edit_id == 1"
+                ></form-input-select>
+                <!-- FIN KAFG 07/02/2025 -->
+                <!-- [items]="PARENTS"-->
+            </div>
+        </div>
+        <div class="d-flex align-items-center col-lg-6 mb-0  px-0">
+            <div class="col-lg-4 mb-0 px-0">
+                <div>Tipo de documento</div>
+            </div>
+            <div class="col-lg-8 mb-0 px-0">
+                <form-input-select [extra_large]="true"
+                                   [items]="list_document_type"
+                                   [firstSelect]="true"
+                                   [updateModelOnChange]="true"
+                                   fieldCodigo="Id"
+                                   fieldValor="Name"
+                                   [itemsArray]="true"
+                                   [(value)]="familys.pntypedoc"
+                                   (onSelect)="changeDocumentType()"
+                                   [disabled]="profile_id == 192  || edit_id == 1"></form-input-select>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center col-lg-6 mb-0">
+            <div class="col-lg-4 mb-0 px-0">
+                <div>Número de documento</div>
+            </div>
+            <div class="col-lg-8 mb-0 px-0"
+                 style="margin-bottom: -8px !important;">
+                <form-input-text [(value)]="familys.psnumdoc"
+                [patternPrevent]="CONSTANTS.REGEX[familys.pntypedoc?.Id]"
+                [disabled]="profile_id == 192  || edit_id == 1"></form-input-text>
+            </div>
+        </div>
+       <div class="d-flex align-items-center col-lg-6 mb-0  px-0">
+            <div class="col-lg-4 mb-0 px-0">
+                <div>Nombres</div>
+            </div>
+            <div class="col-lg-8 mb-0 px-0"
+                 style="margin-bottom: -8px !important;">
+                <form-input-text [(value)]="familys.psnames"
+                [patternPrevent]="CONSTANTS.REGEX.LETRAS"
+                [disabled]="profile_id == 192  || edit_id == 1 || disableInputsforDataQuality()"></form-input-text>
+
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center col-lg-6 mb-0">
+            <div class="col-lg-4 mb-0 px-0">
+                <div>Apellidos</div>
+            </div>
+            <div class="col-lg-8 mb-0 px-0"
+                 style="margin-bottom: -8px !important;">
+                <form-input-text [(value)]="familys.pslastnames"
+                [patternPrevent]="CONSTANTS.REGEX.LETRAS"
+                [disabled]="profile_id == 192  || edit_id == 1 || disableInputsforDataQuality()"></form-input-text>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center col-lg-6 mb-0 px-0">
+            <div class="col-lg-4 mb-0 px-0">
+                <div>Cargo que lo hizo PEP</div>
+            </div>
+            <div class="col-lg-8 mb-0 px-0"
+                 style="margin-bottom: -8px !important;">
+                <form-input-text [(value)]="familys.pspostpep" [patternPrevent]="CONSTANTS.REGEX.LETRAS"
+                [disabled]="profile_id == 192"></form-input-text>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center col-lg-6 mb-0">
+            <div class="col-lg-4 mb-0 px-0">
+                <div>Tipo organización</div>
+            </div>
+            <div class="col-lg-8 mb-0 px-0"
+                 style="margin-bottom: -8px !important;">
+                 <form-input-select 
+                    [extra_large]="true"
+                    [(value)]="familys.name_type_organization"
+                    [items]="ORGANIZATION"
+                    [firstSelect]="true"
+                    fieldCodigo="id"
+                    fieldValor="value"
+                    [updateModelOnChange]="true"
+                    [disabled]="profile_id == 192"
+                    [itemsArray]="true"
+                ></form-input-select>
+                
+            </div>
+        </div>
+
+        <!-- INI VIGP-KAFG 16/07/2025 -->
+        <div class="d-flex align-items-center col-lg-6 mb-0  px-0">
+            <div class="col-lg-4 mb-0 px-0">
+                <div>Fecha de inicio</div>
+            </div>
+            <div class="col-lg-8 mb-0 px-0"
+                 style="margin-bottom: -8px !important;">
+                <form-input-date [(value)]="familys.ini_date"
+                [disabled]="profile_id == 192"></form-input-date>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center col-lg-6 mb-0">
+            <div class="col-lg-4 mb-0 px-0">
+                <div>Fecha de cese</div>
+            </div>
+            <div class="col-lg-8 mb-0 px-0"
+                 style="margin-bottom: -8px !important;">
+                <form-input-date [(value)]="familys.fin_date"
+                [disabled]="profile_id == 192 || fin_date_disabled"></form-input-date>
+            </div>
+        </div>
+        <!-- FIN VIGP-KAFG 16/07/2025 -->
+
+        
+        <div class="d-flex align-items-center col-lg-6 mb-0  px-0">
+            <div class="col-lg-4 mb-0 px-0">
+                <div>Código</div>
+            </div>
+            <div class="col-lg-8 mb-0 px-0">
+                <form-input-select [extra_large]="true"
+                                   [items]="list_codes_type"
+                                   [firstSelect]="true"
+                                   [updateModelOnChange]="true"
+                                   fieldCodigo="SDESCRIPT"
+                                   fieldValor="NCODES"
+                                   [itemsArray]="true"
+                                   [(value)]="familys.codes"
+                                   [disabled]="profile_id == 192"
+                                   (onSelect)="changeCodeType($event)"></form-input-select>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center col-lg-6 mb-0">
+            <div class="col-lg-4 mb-0 px-0">
+                <div></div>
+            </div>
+            <div class="d-flex align-items-center col-lg-8 mb-0 px-0"
+                 style="margin-bottom: -8px !important;">
+                 <input
+                 type="checkbox"
+                 name="check_laboral"
+                 id="check_laboral"
+                 [(ngModel)]="familys.check_laboral"
+                 (change)="changeCheckLab()"
+                 />
+                 <label for="check_laboral" class="ml-2 mt-2">Actualmente laborando</label>
+            </div>
+        </div>
+   
+        <div class="d-flex align-items-center col-lg-12 mb-0  px-0">
+            <div class="col-lg-2 mb-0 px-0" >
+                <div style="padding-top: -8px  !important;">Descripción del Código</div>
+            </div>
+            <div class="col-lg-10 mb-0 px-0"
+                 style="margin-bottom: -6px !important;">
+                 <textarea cols="123"
+                 rows="3"
+                 [(ngModel)]="familys.description_codes"
+                 class="p-2"
+                 disabled="true"
+                 style="border: 1px solid #a99dbf; color: #553d81; border-radius: 10px;outline: none; resize: none;"></textarea>
+                
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center col-lg-6 mb-0  px-0">
+            <div class="col-lg-4 px-0">
+                <div></div>
+            </div>
+            <div class="col-lg-8 px-0"
+                 style="display: flex;flex-direction: row; gap: 4px; justify-content: space-evenly;">
+                <form-button label="Grabar"
+                             btnClass="btn-primary-VI"
+                             *ngIf="toggle_edit_famp && profile_id == 191"
+                             (click)="updateFampep()"></form-button>
+                <form-button label="Cancelar"
+                             btnClass="btn-primary-VI"
+                             *ngIf="toggle_edit_famp && profile_id == 191"
+                             (click)="cancelFampep()"></form-button>
+            </div>
+
+        </div>
+
+        <div class="d-flex align-items-center col-lg-12 mb-1 px-0">
+            <form-button label="Agregar"
+                         btnClass="btn-primary-VI"
+                         *ngIf="toggle_add_famp && profile_id == 191"
+                         (click)="addFamp()"></form-button>
+        </div>
+
+        <div class="grid form-group col-lg-12 mb-3 px-0">
+            <div class="table-responsive "
+                 id="table-scroll"
+                 style="margin-top: 9px;">
+                <table class="table-u">
+                    <thead class="grid-title">
+                        <th class="grid-title-item">Tipo de PEP</th>
+                        <th class="grid-title-item">Parentesco</th>
+                        <th class="grid-title-item">Apellidos y Nombres</th>
+                        <th class="grid-title-item">Doc Identidad</th>
+                        <th class="grid-title-item">Cargo PEP</th>
+                        <th class="grid-title-item">Tipo Organización</th>
+                        <th class="grid-title-item">Fecha de inicio</th>
+                        <th class="grid-title-item">Fecha de cese</th>
+                        <th class="grid-title-item">Código</th>
+                        <th class="grid-title-item">Acciones</th>
+                    </thead>
+                    <tbody style="text-transform: uppercase;">
+                        <ng-container *ngIf="!fam_list?.length">
+                            <tr class="grid-body">
+                                <td class="grid-body-item"
+                                    colspan="12"
+                                    style="text-align: center">
+                                    No hay informacion para mostrar
+                                </td>
+                            </tr>
+                        </ng-container>
+                        <ng-container *ngIf="!!fam_list?.length">
+                            <tr class="grid-body"
+                                *ngFor="let item of fam_list">
+                                <td class="grid-title-item">{{ item.pntypepep }}</td>
+                                <td class="grid-title-item">{{ item.pnomrelation }}</td>
+                                <td class="grid-title-item">{{ item.pscliename}} </td>
+                                <td class="grid-title-item">{{ item.pntnumdoc }}</td>
+                                <td class="grid-title-item">{{ item.pspostpep}}</td>
+                                <td class="grid-title-item">{{ item.name_type_organization}}</td>
+                                <td class="grid-title-item">{{ item.ini_date}}</td>
+                                <td class="grid-title-item">{{ item.check_laboral == 1 ? 'Actualmente laborando' : item.fin_date }}</td>
+                                <td class="grid-title-item">{{ item.codes}}</td>
+                                <td>
+                                    <div style="display: flex; justify-content: center; text-transform: capitalize;" >
+                                        <div class="p-2"
+                                             (click)="editFampep(item)">
+                                            <i class="fa fa-edit"
+                                               style=" margin-right: 2px; color: #553d81;"></i>
+                                            <span>Editar</span>
+                                        </div>
+
+                                        <div class="p-2" *ngIf="item.pntypeclient == 3 && profile_id == 191"
+                                             (click)="deleteFampep(item.id)">
+                                            <i class="fa fa-trash"
+                                               style=" margin-right: 2px; color:red"></i>
+                                            <span>Eliminar</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center col-lg-12 mt-0 px-0" >
+            <form-button label="Guardar"
+                         btnClass="btn-primary-VI"
+                         (click)="SaveFamPep()"
+                         *ngIf="profile_id == 191"></form-button>
+            <form-button label="Cerrar"
+                         btnClass="btn-primary-VI"
+                         (click)="reference.close()"></form-button>
+        </div>
+
+
+
+
+    </div>
+
+    <div [hidden]="!isLoading"
+        class="loadingScreen">
+        <div style="display: flex; height: 100%; width: 100%">
+            <i style="margin: auto; font-size: 50px"
+            class="fa fa-spinner fa-spin"></i>
+        </div>
+    </div>
+
+</div>

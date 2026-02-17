@@ -1,0 +1,22 @@
+@import "modal";
+@import "variables";
+
+.mua {
+  padding: 2rem;
+
+  .modal__body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 1rem;
+    margin: 0;
+
+    .paragraph {
+      font-size: 18px;
+      text-align: justify;
+      margin: 0;
+      color: $purple;
+    }
+  }
+}

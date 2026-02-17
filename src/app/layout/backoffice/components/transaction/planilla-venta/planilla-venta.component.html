@@ -1,0 +1,122 @@
+<div class="container-fluid">
+  <div class="row content-all">
+    <div class="col-md-12 content">
+      <div class="container-fluid content-page">
+        <div class="row r1-head">
+          <div class="col-12 head-title">
+            <h1 class="title">Planilla de Venta</h1>
+          </div>
+        </div>
+        <div class="row r2-head">
+          <div class="col-md-4 content-actions">
+            <div class="content-input">
+              <label for="state"
+                     class="lbl-in filter-text">INGRESAR LOTE DE DESCARGO:</label>
+              <input type="number"
+                     class="in-action">
+            </div>
+            <div class="content-input">
+              <button class="full-color"
+                      (click)="searchData()">
+                Buscar
+              </button>
+            </div>
+          </div>
+          <div class="col-md-8 content-actions">
+            <span class="nplanilla">El número de planilla es: {{ nPlanilla }}</span>
+          </div>
+        </div>
+        <div class="grid form-group row content-table">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr class="grid-title table-head">
+                  <td class="grid-title-item">N°</td>
+                  <td class="grid-title-item">N° Certificado</td>
+                  <td class="grid-title-item">Canal de Venta</td>
+                  <td class="grid-title-item">Estado</td>
+                  <td class="grid-title-item">Prima Protecta</td>
+                  <td class="grid-title-item">Prima Manual</td>
+                  <td class="grid-title-item">Proforma</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table-body"
+                    *ngFor="let data of dataPlanillaVenta | paginate: { itemsPerPage: 10, currentPage: p }">
+                  <td class="table-body-item">{{ data.id }}</td>
+                  <td class="table-body-item">{{ data.ncertificado }}</td>
+                  <td class="table-body-item">{{ data.canalVenta }}</td>
+                  <td class="table-body-item">{{ data.state }}</td>
+                  <td class="table-body-item">{{ data.tarifaProtecta }}</td>
+                  <td class="table-body-item">{{ data.tarifaManual }}</td>
+                  <td class="table-body-item">{{ data.proforma }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls class="my-pagination"
+                                 (pageChange)="p = $event"
+                                 autoHide="true"
+                                 responsive="true"
+                                 previousLabel="Anterior"
+                                 nextLabel="Siguiente"
+                                 screenReaderPaginationLabel="Paginación"
+                                 screenReaderPageLabel="pagina"
+                                 screenReaderCurrentLabel="Estás en la pagina">
+            </pagination-controls>
+          </div>
+          <div class="row align-right">
+            <div class="col-md-3">
+              <div>
+                <span>Total Emitidos: {{ totalEmitidos }}</span>
+              </div>
+              <div>
+                <span>Total Vendidos: {{ totalVendidos }}</span>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div>
+                <span>Total: {{ total }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="grid form-group row content-table">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr class="grid-title table-head">
+                  <td class="grid-title-item">Moneda</td>
+                  <td class="grid-title-item">Tipo de Pago</td>
+                  <td class="grid-title-item">Banco</td>
+                  <td class="grid-title-item">Cuenta</td>
+                  <td class="grid-title-item">N° Operación</td>
+                  <td class="grid-title-item">Fecha</td>
+                  <td class="grid-title-item">Monto</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table-body"
+                    *ngFor="let data of dataFormasPagoPlanillaVenta">
+                  <td class="table-body-item">{{ data.moneda }}</td>
+                  <td class="table-body-item">{{ data.tipoPago }}</td>
+                  <td class="table-body-item">{{ data.banco }}</td>
+                  <td class="table-body-item">{{ data.cuenta }}</td>
+                  <td class="table-body-item">{{ data.nOperacion }}</td>
+                  <td class="table-body-item">{{ data.fecha }}</td>
+                  <td class="table-body-item">{{ data.monto }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="row align-right">
+            <div class="col-md-3">
+              <div>
+                <span>Total: {{ total }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

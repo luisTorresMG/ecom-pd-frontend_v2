@@ -1,0 +1,1588 @@
+<div class="form-group row">
+    <div class="col-lg-3">
+        <app-nav-menuprod></app-nav-menuprod>
+    </div>
+    <div class="col-lg-9">
+        <div class="container-fluid p-0">
+            <div class="header-content mb-3">
+                <div class="containt-item">
+                    <div class="header-item">
+                        <span class="title">{{ title }}</span>
+                    </div>
+                </div>
+                <p class="eps-title">
+                    {{ lblProducto }}<span>{{ lblFecha }}</span>
+                </p>
+            </div>
+            <div class="collapse-list">
+                <div>
+                    <input class="collapse-open"
+                           type="checkbox"
+                           id="contratante" />
+                    <label class="collapse-btn title"
+                           for="contratante">
+                        Datos de Póliza
+                        <i class="fa fa-angle-down pull-right"
+                           style="position: relative; top: 4px"></i>
+                    </label>
+                    <div class="collapse-panel">
+                        <div class="collapse-inner collapse-border">
+                            <div class="row">
+                                <input [(ngModel)]="nrocotizacion"
+                                       name="nrocotizacion"
+                                       type="hidden" />
+                                <div class="col-sm-3"
+                                     *ngIf="nroSalud != ''">
+                                    <span>NRO. PÓLIZA SCTR SALUD</span>
+                                    <input type="text"
+                                           [(ngModel)]="nroSalud"
+                                           name="nroSalud"
+                                           disabled />
+                                </div>
+                                <div class="col-sm-3"
+                                     *ngIf="nroPension != ''">
+                                    <span>NRO. PÓLIZA SCTR PENSIÓN</span>
+                                    <input type="text"
+                                           [(ngModel)]="nroPension"
+                                           name="nroPension"
+                                           disabled />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="collapse-list">
+                <div>
+                    <input class="collapse-open"
+                           type="checkbox"
+                           id="dcontratante" />
+                    <label class="collapse-btn title"
+                           for="dcontratante">Datos del Contratante
+                        <i class="fa fa-angle-down pull-right"
+                           style="position: relative; top: 4px"></i>
+                    </label>
+                    <div class="collapse-panel">
+                        <div class="collapse-inner collapse-border">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <span>TIPO DOCUMENTO (*)</span>
+                                    <select disabled
+                                            [(ngModel)]="polizaEmitCab.TIPO_DOCUMENTO"
+                                            name="TIPO_DOCUMENTO"
+                                            class="minimal">
+                                        <option [value]="polizaEmitCab.TIPO_DOCUMENTO">
+                                            {{ polizaEmitCab.TIPO_DES_DOCUMENTO }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <span>NRO DE DOCUMENTO (*)</span>
+                                    <input type="text"
+                                           [(ngModel)]="polizaEmitCab.NUM_DOCUMENTO"
+                                           name="NUM_DOCUMENTO"
+                                           placeholder="Nro De Documento"
+                                           disabled />
+                                </div>
+                                <div class="col-sm-3"
+                                     [hidden]="perfil == perfilActual"
+                                     *ngIf="creditHistory != null && !this.variable.var_isBroker">
+                                    <span>TIPO RIESGO</span>
+                                    <input type="text"
+                                           [(ngModel)]="creditHistory.sdescript"
+                                           name="sdescript"
+                                           [ngClass]="creditHistory.nflag == 0 ? 'riesgo-alto' : 'riesgo-bajo'"
+                                           disabled />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-9">
+                                    <span>NOMBRES Y APELLIDOS / RAZÓN SOCIAL</span>
+                                    <input type="text"
+                                           [(ngModel)]="polizaEmitCab.NOMBRE_RAZON"
+                                           name="NOMBRE_RAZON"
+                                           placeholder="Nombres"
+                                           disabled />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <span>DIRECCIÓN</span>
+                                    <input type="text"
+                                           [(ngModel)]="polizaEmitCab.DIRECCION"
+                                           name="DIRECCION"
+                                           placeholder="Dirección"
+                                           disabled />
+                                </div>
+                                <div class="col-sm-3">
+                                    <span>CORREO ELECTRÓNICO</span>
+                                    <input type="text"
+                                           [(ngModel)]="polizaEmitCab.CORREO"
+                                           name="CORREO"
+                                           placeholder="Correo Electrónico"
+                                           [disabled]="!flagEmail" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Agregar Contacto -->
+            <div class="collapse-list"
+                 *ngIf="contractingdata != null && flagContact && template.ins_addContact">
+                <div>
+                    <input class="collapse-open"
+                           type="checkbox"
+                           id="contactos" />
+                    <label class="collapse-btn title"
+                           for="contactos">Datos de contacto del cliente
+                        <i class="fa fa-angle-down pull-right"
+                           style="position: relative; top: 4px"></i>
+                    </label>
+                    <div class="collapse-panel">
+                        <div class="collapse-inner collapse-border">
+                            <div class="row">
+                                <div class="col-sm-12 mt-15">
+                                    <button *ngIf="contactList.length == 0"
+                                            class="pull-right"
+                                            (click)="openModal('add-contact')"
+                                            style="margin: 0">
+                                        <span>Agregar Contacto</span>
+                                    </button>
+                                    <table class="table table-borderless riesgo tblbroker"
+                                           style="margin-top: 60px">
+                                        <thead>
+                                            <tr class="d-flex">
+                                                <td class="col-sm text-center">N°</td>
+                                                <td class="col-sm text-center">Parentesco</td>
+                                                <td class="col-sm text-center">Nombres y Apellidos</td>
+                                                <td class="col-sm text-center">Teléfono</td>
+                                                <td class="col-sm text-center">Correo Electrónico</td>
+                                                <td class="col-sm text-center">Acciones</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngFor="let contacto of contactList; let row = index">
+                                            <tr class="d-flex">
+                                                <td class="col-sm text-center">{{ row + 1 }}</td>
+                                                <td class="col-sm text-center">
+                                                    {{ contacto.P_DESTICONTACTO }}
+                                                </td>
+                                                <td class="col-sm text-center">
+                                                    {{ contacto.P_SNOMBRES }}
+                                                    {{ contacto.P_SAPEPAT }}
+                                                    {{ contacto.P_SAPEMAT }}
+                                                </td>
+                                                <td class="col-sm text-center">
+                                                    {{ contacto.P_SPHONE }}
+                                                </td>
+                                                <td class="col-sm text-center">
+                                                    {{ contacto.P_SE_MAIL }}
+                                                </td>
+                                                <td class="col-sm text-center">
+                                                    <img *ngIf="contacto.P_CLASS == ''"
+                                                         src="assets/icons/editar.png"
+                                                         (click)="editContact(contacto.P_NROW)"
+                                                         title="Editar"
+                                                         alt="Editar" />
+                                                    &nbsp;
+                                                    <img *ngIf="contacto.P_CLASS == ''"
+                                                         src="assets/icons/anular.png"
+                                                         (click)="deleteContact(row)"
+                                                         title="Eliminar"
+                                                         alt="Eliminar" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody *ngIf="contactList.length == 0">
+                                            <tr class="d-flex">
+                                                <td class="col-sm text-center">No tiene Contactos</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Fin Agregar Contacto -->
+            <div class="collapse-list">
+                <div>
+                    <input class="collapse-open"
+                           type="checkbox"
+                           id="comercializador" />
+                    <label class="collapse-btn title"
+                           for="comercializador">
+                        Datos Brokers
+                        <i class="fa fa-angle-down pull-right"
+                           style="position: relative; top: 4px">
+                        </i>
+                    </label>
+                    <div class="collapse-panel">
+                        <div class="collapse-inner collapse-border">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div *ngIf="!editFlag && !(this.mode == 'include' || this.mode =='exclude' || this.mode == 'netear')">
+                                        <div [hidden]="!canAddSecondaryBroker"
+                                         *ngIf="(mode == 'broker' && polizaEmitComer.length == 0) || (mode != 'broker' && polizaEmitComer.length < 3)">
+                                        <button class="pull-right"
+                                                (click)="addBroker($event.preventDefault())"
+                                                style="margin: 10px 0 20px 0">
+                                            <span>Agregar</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <table class="table table-borderless riesgo tblbroker"
+                                       style="margin-top: 10px">
+                                    <thead>
+                                        <tr class="d-flex">
+                                            <th class="col-sm text-center">
+                                                <label>Tipo Documento</label>
+                                            </th>
+                                            <th class="col-sm text-center">
+                                                <label>Nro Documento</label>
+                                            </th>
+                                            <th class="col-sm text-center">
+                                                <label>Nombres y Apellidos / Razón Social</label>
+                                            </th>
+                                            <th class="col-sm text-center"
+                                                *ngIf="!isUserOp && nTransac == 4">
+                                                <label>Oficina de Producción</label>
+                                            </th>
+                                            <th class="col-sm text-center"
+                                                *ngIf="mode == 'broker'">
+                                                <label>Tipo de intermediario</label>
+                                            </th>
+                                            <th class="col-sm text-center"
+                                                *ngIf="mode == 'broker'">
+                                                <label>Código SBS</label>
+                                            </th>
+                                            <th class="col-sm text-center"
+                                                *ngIf="saludList?.length > 0">
+                                                <label>{{ variable.var_desComisionSalud }}</label>
+                                            </th>
+                                            <th class="col-sm text-center ctasa"
+                                                *ngIf="saludList?.length > 0 && !editFlag">
+                                                <label>
+                                                    <input type="checkbox"
+                                                           class="checkbox"
+                                                           [(ngModel)]="comPropuestaSalud"
+                                                           *ngIf="template.ins_comSaludProCheck"
+                                                           [disabled]="editFlag || !canProposeComission "
+                                                           (change)="resetearPropuesto(3)"
+                                                           name="comPropuestaSalud" />
+                                                    <span class="schk">
+                                                        {{ variable.var_desComisionSaludPro }}
+                                                    </span>
+                                                </label>
+                                            </th>
+                                            <th class="col-sm text-center"
+                                                *ngIf="pensionList?.length > 0">
+                                                <label>{{ variable.var_desComisionPension }}</label>
+                                            </th>
+                                            <th class="col-sm text-center ctasa"
+                                                *ngIf="pensionList?.length > 0 && !editFlag">
+                                                <label>
+                                                    <input type="checkbox"
+                                                           class="checkbox"
+                                                           [(ngModel)]="comPropuestaPension"
+                                                           [disabled]="editFlag || !canProposeComission"
+                                                           *ngIf="template.ins_comPensionProCheck"
+                                                           (change)="resetearPropuesto(4)"
+                                                           name="comPropuestaPension" />
+                                                    <span class="schk">
+                                                        {{ variable.var_desComisionPensionPro }}
+                                                    </span>
+                                                </label>
+                                            </th>
+                                            <th *ngIf="!editFlag"><label>Acción</label></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="d-flex"
+                                            *ngIf="polizaEmitComer.length == 0">
+                                            <td class="col-sm text-center">No hay brokers</td>
+                                        </tr>
+                                        <tr class="d-flex"
+                                            *ngFor="let comer of polizaEmitComer; let i = index">
+                                            <td class="col-sm text-center">
+                                                <span>{{ comer.DES_DOC_COMER }}</span>
+                                            </td>
+                                            <td class="col-sm text-center">
+                                                <span>{{ comer.DOC_COMER }}</span>
+                                            </td>
+                                            <td class="col-sm text-center">
+                                                <span>{{ comer.COMERCIALIZADOR }}</span>
+                                            </td>
+                                            <!-- Dep Broker-->
+                                            <td class="col-sm text-center"
+                                                *ngIf="!isUserOp && nTransac == 4">
+                                                <ng-select [items]="BrokerDep"
+                                                           bindLabel="SDESCRIPT"
+                                                           [ngClass]="{ 'error-validate': inputsValidate[1] }"
+                                                           bindValue="NLOCAL"
+                                                           [(ngModel)]="selectedDep[i]"
+                                                           class="dep-ng"
+                                                           (click)="clearValidate(1)"
+                                                           [clearable]="true"
+                                                           placeholder="Seleccionar Oficina"
+                                                           dropdownPosition="bottom"
+                                                           notFoundText="No hay resultados">
+                                                    <ng-template ng-option-tmp
+                                                                 let-item="item">
+                                                        <div title="{{ item.SDESCRIPT }}">
+                                                            {{ item.SDESCRIPT }}
+                                                        </div>
+                                                    </ng-template>
+                                                </ng-select>
+                                            </td>
+                                            <!-- Dep Broker-->
+                                            <th class="col-sm text-center"
+                                                *ngIf="mode == 'broker'">
+                                                <label>{{ comer.TYPE_INTERMEDIARY }}</label>
+                                            </th>
+                                            <th class="col-sm text-center"
+                                                *ngIf="mode == 'broker'">
+                                                <label>{{ comer.CODE_SBS }}</label>
+                                            </th>
+                                            <td class="col-sm text-center"
+                                                *ngIf="saludList.length > 0">
+                                                <span>{{ comer.COMISION_SALUD_AUT }}</span>
+                                            </td>
+                                            <td class="col-sm"
+                                                *ngIf="saludList.length > 0 && !editFlag">
+                                                <input type="text"
+                                                       class="text-center"
+                                                       name="comisionProSalud{{ i }}"
+                                                       maxlength="5"
+                                                       [ngClass]="{ 'error-validate': comer.valItemSal }"
+                                                       [disabled]="stateBrokerTasaSalud"
+                                                       placeholder="0"
+                                                       [(ngModel)]="comer.COMISION_SALUD_PRO"
+                                                       (ngModelChange)="comisionPropuesta(comer.COMISION_SALUD_PRO, i, 2)"
+                                                       (keypress)="onKey($event, 'decimal');"
+                                                       (keydown)="onKeydown($event);"
+                                                       (paste)="onPaste($event, 'porcentaje')" />
+                                            </td>
+                                            <td class="col-sm text-center"
+                                                *ngIf="pensionList.length > 0 && template.ins_comPension">
+                                                <span>{{ comer.COMISION_PENSION_AUT }}</span>
+                                            </td>
+                                            <td class="col-sm"
+                                                *ngIf="pensionList.length > 0 && !editFlag">
+                                                <input type="text"
+                                                       class="text-center"
+                                                       name="comisionProPension{{ i }}"
+                                                       maxlength="5"
+                                                       [ngClass]="{ 'error-validate': comer.valItemPen }"
+                                                       [disabled]="stateBrokerTasaPension"
+                                                       placeholder="0"
+                                                       [(ngModel)]="comer.COMISION_PENSION_PRO"
+                                                       (ngModelChange)="comisionPropuesta(comer.COMISION_PENSION_PRO,i,1)"
+                                                       (keypress)="onKey($event, 'decimal');"
+                                                       (keydown)="onKeydown($event);"
+                                                       (paste)="onPaste($event, 'porcentaje')" />
+                                            </td>
+                                            <td *ngIf="!editFlag">
+                                                <span style="padding: 0 12px"
+                                                      *ngIf="comer.eliminarBroker">
+                                                    <img src="assets/icons/anular.png"
+                                                         (click)="deleteBroker(i)"
+                                                         title="Eliminar"
+                                                         alt="Eliminar" />
+                                                </span>
+                                                <span style="padding: 0 12px"
+                                                      *ngIf="!comer.eliminarBroker">
+                                                    ------
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="collapse-list">
+            <div>
+                <input class="collapse-open"
+                       type="checkbox"
+                       id="poliza" />
+                <label class="collapse-btn title"
+                       for="poliza">Datos de la Póliza
+                    <i class="fa fa-angle-down pull-right"
+                       style="position: relative; top: 4px"></i>
+                </label>
+                <div class="collapse-panel">
+                    <div class="collapse-inner collapse-border">
+                        <!-- <ng-container> -->
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <span>TIPO RENOVACIÓN</span>
+                                <select [ngClass]="{ 'error-validate': flagTipoR }"
+                                        [(ngModel)]="polizaEmitCab.tipoRenovacion"
+                                        name="tipoRenovacion"
+                                        [disabled]="((editFlag && !this.enabledFrecPago) || template.ins_disabledTipRenovacion)"
+                                        (change)="habilitarFechas()"
+                                        class="minimal">
+                                    <ng-container *ngFor="let renovacion of tipoRenovacion">
+                                        <ng-container
+                                                      *ngIf="!(epsItem.NCODE === '3' && renovacion.COD_TIPO_RENOVACION === 7)">
+                                            <ng-container
+                                                          *ngIf="!(epsItem.NCODE === '3' && renovacion.COD_TIPO_RENOVACION === 6)">
+                                                <option [value]="renovacion.COD_TIPO_RENOVACION">
+                                                    {{renovacion.DES_TIPO_RENOVACION}}
+                                                </option>
+                                            </ng-container>
+                                        </ng-container>
+                                    </ng-container>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <span>DESDE</span>
+                                <input type="text"
+                                       [ngClass]="{ 'error-validate': !flagFechaMenorMayor }"
+                                       #dp="bsDatepicker"
+                                       (ngModelChange)="validarTipoRenovacion($event)"
+                                       [bsConfig]="bsConfig"
+                                       bsDatepicker
+                                       [(bsValue)]="polizaEmitCab.bsValueIni"
+                                       [(ngModel)]="polizaEmitCab.bsValueIni"
+                                       name="bsValueIni"
+                                       [(minDate)]="polizaEmitCab.bsValueIniMin"
+                                       [(maxDate)]="polizaEmitCab.bsValueFinMax"
+                                       value="{{ polizaEmitCab.bsValueIni | date: 'dd/MM/yyyy' }}"
+                                       [disabled]="disabledFecha"
+                                       readonly
+                                       #desde />
+                            </div>
+                            <div class="col-sm-3">
+                                <span>HASTA</span>
+                                <input type="text"
+                                       [ngClass]="{ 'error-validate': !flagFechaMenorMayorFin }"
+                                       [bsConfig]="bsConfig"
+                                       #dp="bsDatepicker"
+                                       bsDatepicker
+                                       (change)="validarTipoRenovacion($event)"
+                                       [(bsValue)]="polizaEmitCab.bsValueFin"
+                                       [(ngModel)]="polizaEmitCab.bsValueFin"
+                                       name="bsValueFin"
+                                       [(minDate)]="polizaEmitCab.bsValueFinMin"
+                                       value="{{ polizaEmitCab.bsValueFin | date: 'dd/MM/yyyy' }}"
+                                       #hasta
+                                       [disabled]="disabledFechaFin"
+                                       readonly />
+                            </div>
+                            <div class="col-sm-3">
+                                <span>FRECUENCIA PAGO</span>
+                                <select [ngClass]="{ 'error-validate': errorFrecPago }"
+                                        [disabled]="!this.enabledFrecPago"
+                                        [(ngModel)]="polizaEmitCab.frecuenciaPago"
+                                        name="frecuenciaPago"
+                                        (change)="cambioFecha()"
+                                        class="minimal">
+                                    <option value="0">SELECCIONE</option>
+                                    <option *ngFor="let frecuencia of frecuenciaPago"
+                                            [value]="frecuencia.COD_TIPO_FRECUENCIA">
+                                        {{ frecuencia.DES_TIPO_FRECUENCIA }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <span>MONEDA</span>
+                                <select disabled
+                                        [(ngModel)]="polizaEmitCab.COD_MONEDA"
+                                        name="COD_MONEDA"
+                                        class="minimal">
+                                    <option [value]="polizaEmitCab.COD_MONEDA"
+                                            disabled
+                                            selected>
+                                        {{ polizaEmitCab.DES_MONEDA }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div *ngIf="template.ins_regula_mes || template.ins_facturacion"
+                                 class="col-sm-3">
+                                <span style="margin: 0">&nbsp;</span>
+                                <!--AVS INTERCONEXION SABSA 31/08/2023-->
+                                <label *ngIf="canBillMonthly && template.ins_regula_mes && clienteValido"
+                                       style="width: 100%; margin-bottom: 0">
+                                    <input type="checkbox"
+                                           [disabled]="facVencido || editFlag"
+                                           [(ngModel)]="polizaEmit.facturacionVencido"
+                                           name="facturacionVencido"
+                                           (change)="onFacturacion($event, 'FAC_VENCIDO')"
+                                           class="checkbox" />
+                                    <span class="schk"
+                                          style="margin-top: 15px; font-size: 13px">REGULA A MES VENCIDO</span>
+                                </label>
+                                <label *ngIf="!canBillMonthly || !template.ins_regula_mes || !clienteValido"
+                                       style="width: 100%; margin-bottom: 0">&nbsp;</label>
+                                <label *ngIf="canBillInAdvance && template.ins_facturacion"
+                                       style="width: 100%; margin-bottom: 0">
+                                    <input type="checkbox"
+                                           [(ngModel)]="polizaEmit.facturacionAnticipada"
+                                           name="facturacionAnticipada || editFlag"
+                                           (change)="onFacturacion($event, 'FAC_ANTICIPADA')"
+                                           class="checkbox"
+                                           [disabled]="facAnticipada" />
+                                    <span class="schk"
+                                          style="margin-top: 5px; font-size: 13px">FACTURACIÓN ANTICIPADA</span>
+                                </label>
+                            </div>
+                            <div class="col-sm-3">
+                                <span>SEDE</span>
+                                <!--Ini RQ2024-243-->
+                                <ng-container *ngIf="this.mode == 'include' || this.mode =='renew' || 
+                                           this.mode =='exclude' || this.mode =='netear'">
+                                    <!--Ini RQ2025-4-->
+                                    <ng-select [(ngModel)]="inputsQuotation.P_NIDSEDE"
+                                               (ngModelChange)="onSelectSede()"
+                                               [clearable]="true"
+                                               (click)="clearValidate(2)"
+                                               [ngClass]="{ 'error-validate': inputsValidate[2] }"
+                                               name="COD_TIPO_SEDE"
+                                               class="minimal combo-sede"
+                                               [disabled]="stateQuotation"
+                                               placeholder="Seleccionar"
+                                               dropdownPosition="bottom"
+                                               notFoundText="No hay resultados"
+                                               style="margin-top: 0px !important">
+                                        <ng-option [value]="0">AGREGAR SEDE</ng-option>
+                                        <ng-option *ngFor="let sede of sedesList"
+                                                   [value]="sede.Id">{{ sede.Description }}
+                                        </ng-option>
+                                    </ng-select>
+                                    <!--Fin RQ2025-4-->
+                                </ng-container>
+                                <ng-container *ngIf="!(this.mode == 'include' || this.mode == 'renew' || 
+                                           this.mode == 'exclude' || this.mode == 'netear')">
+                                    <select disabled
+                                            [(ngModel)]="polizaEmitCab.COD_TIPO_SEDE"
+                                            name="COD_TIPO_SEDE"
+                                            class="minimal">
+                                        <option [value]="polizaEmitCab.COD_TIPO_SEDE">
+                                            {{ polizaEmitCab.DES_TIPO_SEDE }}
+                                        </option>
+                                    </select>
+                                </ng-container>
+                                <!--Fin RQ2024-243-->
+                            </div>
+                            <div class="col-sm-3"
+                                 *ngIf="template.ins_mina">
+                                <span>&nbsp;</span>
+                                <label style="width: 100%; margin-bottom: 0"><span class="spn-delimiter">{{
+                                        polizaEmitCab.DELIMITACION
+                                        }}</span></label>
+                                <label style="width: 100%; margin-bottom: 0"
+                                       *ngIf="epsItem.NCODE == 3">
+                                    <input type="checkbox"
+                                           [(ngModel)]="polizaEmitCab.MINA"
+                                           name="MINA"
+                                           [checked]="polizaEmitCab.MINA"
+                                           class="checkbox"
+                                           disabled /><span class="schk chk-mina">¿Trabajos en
+                                        mina?</span></label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6"
+                                 *ngIf="template.ins_actRealizar">
+                                <span>ACTIVIDAD A REALIZAR</span>
+                                <!--Ini RQ2024-243-->
+                                <ng-container *ngIf="this.mode == 'include' || this.mode =='renew' || 
+                                           this.mode =='exclude' || this.mode =='netear'">
+                                    <ng-select [disabled]="editFlag"
+                                               [(ngModel)]="polizaEmitCab.ACT_TECNICA"
+                                               [items]="technicalList"
+                                               (change)="onSelectTechnicalActivity($event)"
+                                               bindLabel="Name"
+                                               [ngClass]="{ 'error-validate': inputsValidate[12] }"
+                                               bindValue="Id"
+                                               (click)="clearValidate(12)"
+                                               placeholder="Seleccionar"
+                                               dropdownPosition="bottom"
+                                               notFoundText="No hay resultados"
+                                               title="{{ activityMain }}"
+                                               class="minimal">
+                                        <ng-option *ngFor="let technical of technicalList"
+                                                   [value]="technical.id">{{ technical.name }}
+                                        </ng-option>
+
+                                    </ng-select>
+                                </ng-container>
+                                <ng-container *ngIf="!(this.mode == 'include' || this.mode == 'renew' || 
+                                           this.mode == 'exclude' || this.mode == 'netear')">
+                                    <select disabled
+                                            [(ngModel)]="polizaEmitCab.ACT_TECNICA"
+                                            name="ACT_TECNICA"
+                                            title="{{ polizaEmitCab.DES_ACT_TECNICA }}"
+                                            class="minimal">
+                                        <option disabled
+                                                value=""
+                                                selected>Seleccionar</option>
+                                        <option [value]="polizaEmitCab.ACT_TECNICA">
+                                            {{ polizaEmitCab.DES_ACT_TECNICA }}
+                                        </option>
+                                    </select>
+                                </ng-container>
+                                <!--Fin RQ2024-243-->
+                            </div>
+                            <div class="col-sm-6"
+                                 *ngIf="template.ins_subActividad">
+                                <span>SUB-ACTIVIDADES</span>
+                                <!--Ini RQ2024-243-->
+                                <ng-container *ngIf="this.mode == 'include' || this.mode =='renew' || 
+                                           this.mode =='exclude' || this.mode =='netear'">
+                                    <ng-select [disabled]="editFlag"
+                                               [items]="economicActivityList"
+                                               (change)="onSelectEconomicActivity($event)"
+                                               bindLabel="Name"
+                                               [ngClass]="{ 'error-validate': inputsValidate[3] }"
+                                               bindValue="Id"
+                                               [(ngModel)]="activityEconomic"
+                                               class="border-ng"
+                                               (click)="clearValidate(3)"
+                                               [clearable]="true"
+                                               placeholder="Seleccionar"
+                                               dropdownPosition="bottom"
+                                               name="COD_ACT_ECONOMICA"
+                                               notFoundText="No hay resultados"
+                                               title="{{ subActivity }}"
+                                               class="minimal">
+                                        <ng-option *ngFor="let activity of economicActivityList"
+                                                   [value]="activity.id">{{ activity.name }}
+                                        </ng-option>
+                                    </ng-select>
+                                </ng-container>
+                                <ng-container *ngIf="!(this.mode == 'include' || this.mode == 'renew' || 
+                                           this.mode == 'exclude' || this.mode == 'netear')">
+                                    <select disabled
+                                            [(ngModel)]="polizaEmitCab.COD_ACT_ECONOMICA"
+                                            name="COD_ACT_ECONOMICA"
+                                            title="{{ polizaEmitCab.DES_ACT_ECONOMICA }}"
+                                            class="minimal">
+                                        <option [value]="polizaEmitCab.COD_ACT_ECONOMICA">
+                                            {{ polizaEmitCab.DES_ACT_ECONOMICA }}
+                                        </option>
+                                    </select>
+                                </ng-container>
+                                <!--Fin RQ2024-243-->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3"
+                                 *ngIf="template.ins_departamento">
+                                <span>DEPARTAMENTO (*)</span>
+                                <!--Ini RQ2024-243-->
+                                <ng-container *ngIf="this.mode == 'include' || this.mode =='renew' || 
+                                           this.mode =='exclude' || this.mode =='netear'">
+                                    <select disabled
+                                            [(ngModel)]="inputsQuotation.P_NPROVINCE"
+                                            name="COD_DEPARTAMENTO"
+                                            class="minimal">
+                                        <option [value]="inputsQuotation.P_NPROVINCE">
+                                            {{ inputsQuotation.DES_NPROVINCE }}
+                                        </option>
+                                    </select>
+                                </ng-container>
+                                <ng-container *ngIf="!(this.mode == 'include' || this.mode == 'renew' || 
+                                           this.mode == 'exclude' || this.mode == 'netear')">
+                                    <select disabled
+                                            [(ngModel)]="polizaEmitCab.COD_DEPARTAMENTO"
+                                            name="COD_DEPARTAMENTO"
+                                            class="minimal">
+                                        <option [value]="polizaEmitCab.COD_DEPARTAMENTO">
+                                            {{ polizaEmitCab.DES_DEPARTAMENTO }}
+                                        </option>
+                                    </select>
+                                </ng-container>
+                                <!--Fin RQ2024-243-->
+                            </div>
+                            <div class="col-sm-3"
+                                 *ngIf="template.ins_provincia">
+                                <span>PROVINCIA (*)</span>
+                                <!--Ini RQ2024-243-->
+                                <ng-container *ngIf="this.mode == 'include' || this.mode =='renew' || 
+                                           this.mode =='exclude' || this.mode =='netear'">
+                                    <select disabled
+                                            [(ngModel)]="inputsQuotation.P_NLOCAL"
+                                            name="COD_PROVINCIA"
+                                            class="minimal">
+                                        <option [value]="inputsQuotation.P_NLOCAL">
+                                            {{ inputsQuotation.DES_NLOCAL }}
+                                        </option>
+                                    </select>
+                                </ng-container>
+                                <ng-container *ngIf="!(this.mode == 'include' || this.mode == 'renew' || 
+                                           this.mode == 'exclude' || this.mode == 'netear')">
+                                    <select disabled
+                                            [(ngModel)]="polizaEmitCab.COD_PROVINCIA"
+                                            name="COD_PROVINCIA"
+                                            class="minimal">
+                                        <option [value]="polizaEmitCab.COD_PROVINCIA">
+                                            {{ polizaEmitCab.DES_PROVINCIA }}
+                                        </option>
+                                    </select>
+                                </ng-container>
+                                <!--Fin RQ2024-243-->
+                            </div>
+                            <div class="col-sm-3"
+                                 *ngIf="template.ins_distrito">
+                                <span>DISTRITO (*)</span>
+                                <!--Ini RQ2024-243-->
+                                <ng-container *ngIf="this.mode == 'include' || this.mode =='renew' || 
+                                           this.mode =='exclude' || this.mode =='netear'">
+                                    <select disabled
+                                            [(ngModel)]="inputsQuotation.P_NMUNICIPALITY"
+                                            name="COD_DISTRITO"
+                                            class="minimal">
+                                        <option [value]="inputsQuotation.P_NMUNICIPALITY">
+                                            {{ inputsQuotation.DES_DISTRICT }}
+                                        </option>
+                                    </select>
+                                </ng-container>
+                                <ng-container *ngIf="!(this.mode == 'include' || this.mode == 'renew' || 
+                                           this.mode == 'exclude' || this.mode == 'netear')">
+                                    <select disabled
+                                            [(ngModel)]="polizaEmitCab.COD_DISTRITO"
+                                            name="COD_DISTRITO"
+                                            class="minimal">
+                                        <option [value]="polizaEmitCab.COD_DISTRITO">
+                                            {{ polizaEmitCab.DES_DISTRITO }}
+                                        </option>
+                                    </select>
+                                </ng-container>
+                                <!--Fin RQ2024-243-->
+
+                            </div>
+                            <div class="col-sm-3">
+                                <span class="mb-1">TIPO DE TASA</span>
+                                <select [(ngModel)]="polizaEmitCab.NRATETYPE"
+                                        name="tipoTasa"
+                                        class="minimal"
+                                        (change)="validarTipoRenovacion($event)"
+                                        [disabled]="editFlag">
+                                    <option disabled
+                                            value="">Seleccione</option>
+                                    <ng-container *ngFor="let item of rateTypeList">
+                                        <option [value]="item.ncode_rate">
+                                            {{item.sdescription_rate}}
+                                        </option>
+                                    </ng-container>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="collapse-list"
+             *ngIf="
+          (codProducto != '3' && mode != 'cancel') ||
+          (codProducto == '3' && isUserOp && mode != 'broker') ||
+          isComerExclu == 1 ">
+            <!-- <div> -->
+            <div *ngIf="flagAprovateTecnica != 'renewAprove' && flagAprovateTecnica != 'includeAprove' && flagAprovateTecnica != 'excludeAprove' ">
+                <input class="collapse-open"
+                       type="checkbox"
+                       id="planilla" />
+                <label class="collapse-btn title"
+                       for="planilla">Carga de Planilla
+                    <i class="fa fa-angle-down pull-right"
+                       style="position: relative; top: 4px"></i></label>
+                <div class="collapse-panel">
+                    <div class="collapse-inner collapse-border">
+                        <div class="row">
+                            <div class="col-sm-9">
+                                <span>TRAMA (*)</span>
+                                <input [ngClass]="{ 'error-validate': errorExcel }"
+                                       type="file"
+                                       class="mt-10"
+                                       #fileInput
+                                       (change)="seleccionExcel($event.target.files[0])"
+                                       onclick="this.value=null;"
+                                       (click)="clickExcel()"
+                                       accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                                       style="
+                                                position: relative;
+                                                top: 8px;
+                                                margin: 5px 0px;
+                                                font-size: 16px !important;
+                                                width: 100%; " />
+                                <p *ngIf="alertGrati != ''"
+                                   class="mb-0 alert-gratificacion">
+                                    {{ alertGrati }}
+                                </p>
+                            </div>
+                            <div class="col-sm-3">
+                                <span>&nbsp;</span>
+                                <button type="button"
+                                        style="display: inline-block; position: relative; top: 5px"
+                                        (click)="validarExcel()">
+                                    <span>Validar</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+        <div class="collapse-list"
+             *ngIf="processID != ''">
+            <div>
+                <input class="collapse-open"
+                       type="checkbox"
+                       id="cotizador" />
+                <label class="collapse-btn title"
+                       for="cotizador">Cotizador
+                    <i class="fa fa-angle-down pull-right"
+                       style="position: relative; top: 4px">
+                    </i>
+                </label>
+                <div class="collapse-panel">
+                    <div class="collapse-inner collapse-border">
+                        <div *ngIf="mode != 'cancel' &&  mode != 'netear'" class="row justify-content-between">
+                            <div class="col-sm-7">
+                                <table class="table table-borderless riesgo"
+                                       style="margin: 15px 0">
+                                    <thead>
+                                        <tr class="d-flex"
+                                            style="border-bottom: 1px solid #ddd">
+                                            <th class="col-sm">
+                                                <label style="font-weight: 100">CATEGORÍA</label>
+                                            </th>
+                                            <th class="col-sm text-center">
+                                                <label style="font-weight: 100">TOTAL TRABAJADORES</label>
+                                            </th>
+                                            <th class="col-sm text-center">
+                                                <label style="font-weight: 100">MONTO PLANILLA SALUD</label>
+                                            </th>
+                                            <th class="col-sm text-center">
+                                                <label style="font-weight: 100">MONTO PLANILLA PENSIÓN</label>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="d-flex"
+                                            *ngIf="tasasList.length == 0">
+                                            <td class="col-sm text-center">No hay tasas</td>
+                                        </tr>
+                                        <tr class="d-flex"
+                                            *ngFor="let item of tasasList; let i = index">
+                                            <ng-container *ngIf="item.totalWorkes > 0">
+                                                <td class="col-sm">
+                                                    <span>{{ item.description }}</span>
+                                                </td>
+                                                <td class="col-sm text-center">
+                                                    <span>{{ item.totalWorkes }}</span>
+                                                </td>
+                                                <td class="col-sm text-center">
+                                                    <span>{{ item.planillaSal | prettyNumber: 2 }}</span>
+                                                </td>
+                                                <td class="col-sm text-center">
+                                                    <span>{{ item.planillaPen | prettyNumber: 2 }}</span>
+                                                </td>
+                                            </ng-container>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- Mejoras -->
+                            <div *ngIf="template.ins_rmaList && (pensionList.length > 0 || saludList.length > 0)"
+                                 class="col-sm-4">
+                                <table class="table table-borderless riesgo"
+                                       style="margin: 15px 0">
+                                    <thead>
+                                        <tr class="d-flex"
+                                            style="border-bottom: 1px solid #ddd">
+                                            <th class="col-sm">
+                                                <label style="font-weight: 100">RMA</label>
+                                            </th>
+                                            <th class="col-sm">
+                                                <label style="font-weight: 100">VIGENCIA</label>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="d-flex">
+                                            <td class="col-sm">
+                                                <span>{{ polizaEmitCab.rma | prettyNumber: 2 }}
+                                                </span>
+                                            </td>
+                                            <td class="col-sm">
+                                                <span>
+                                                    {{ polizaEmitCab.desdeRma }} - {{ polizaEmitCab.finRma }}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12"
+                                 *ngIf="stateWorker">
+                                <p class="msg-error">{{ messageWorker }}</p>
+                            </div>
+                        </div>
+                        <div class="row"
+                             *ngIf="mode != 'netear'">
+                            <div class="col-sm-6"
+                                 *ngIf="saludList.length > 0">
+                                <div class="row">
+                                    <div class="col-sm-6"
+                                         *ngIf="template.ins_primaSaludMin">
+                                        <span>PRIMA MÍNIMA SALUD</span>
+                                        <input type="text"
+                                               [(ngModel)]="polizaEmitCab.PRIMA_SALUD_END"
+                                               name="MIN_SALUD"
+                                               placeholder="0"
+                                               disabled />
+                                    </div>
+                                    <div class="col-sm-6"
+                                         *ngIf="mode == 'renew' && !editFlag">
+                                        <label style="margin: 0">
+                                            <span class="schk"><input type="checkbox"
+                                                       style="top: 3px"
+                                                       class="checkbox"
+                                                       (change)="resetearPropuesto(1)"
+                                                       [(ngModel)]="primMinimaSalud"
+                                                       [disabled]="editFlag || !canProposeComission"
+                                                       name="primMinimaSalud" />
+                                                PRIMA MÍNIMA PROPUESTA
+                                            </span>
+                                        </label>
+                                        <input type="text"
+                                               placeholder="0"
+                                               [disabled]="statePrimaSalud"
+                                               maxlength="12"
+                                               [(ngModel)]="polizaEmitCab.MIN_SALUD_PR"
+                                               (change)="resetearPrimas($event, infoSalud, 1, null)"
+                                               (keypress)="onKey($event, 'decimal');"
+                                               (keydown)="onKeydown($event);"
+                                               (paste)="onPaste($event, 'decimal')" />
+                                    </div>
+                                </div>
+                                <div class="card mt-3"
+                                     style="background-color: #EDF6FF;border-color: #5790D3 !important;">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <h5 style="color: #5790d3;">
+                                                    <img src="assets/images/SCTR_SALUD.png"
+                                                         alt="sctrSALUD"
+                                                         style="width: 36px;" />
+                                                    SCTR SALUD
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <table class="table table-borderless riesgo tblTasas"
+                                                   style="border-collapse: separate;">
+                                                <thead>
+                                                    <tr class="d-flex">
+                                                        <th class="col-sm text-center">
+                                                            <label>Categoría</label>
+                                                        </th>
+                                                        <th class="col-sm text-center">
+                                                            <label>Tasa Neta</label>
+                                                        </th>
+                                                        <th class="col-sm text-center"
+                                                            *ngIf="flagAprovateTecnica != 'renewAprove' && flagAprovateTecnica != 'includeAprove' && flagAprovateTecnica != 'excludeAprove' ">
+                                                            <label>Propuesta (%)</label>
+                                                        </th>
+                                                        <th class="col-sm text-center">
+                                                            <label
+                                                                   *ngIf="this.mode == 'exclude'; else elseTransactionSalud">
+                                                                Prima a devolver
+                                                            </label>
+                                                            <ng-template #elseTransactionSalud>
+                                                                <label>Prima Mensual</label>
+                                                            </ng-template>
+                                                        </th>
+                                                    </tr>
+                                                    <hr style="border-color: #cfe3fc !important;" />
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="d-flex"
+                                                        *ngIf="saludList.length == 0">
+                                                        <td class="col-sm text-center">
+                                                            No hay tasas asociadas
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="d-flex"
+                                                        *ngFor="let item of saludList; let i = index">
+                                                        <ng-container *ngIf="item.totalWorkes > 0">
+                                                            <td class="col-sm text-center">
+                                                                <span>{{ item.description }}</span>
+                                                            </td>
+                                                            <td class="col-sm text-center">
+                                                                <span>{{ item.rate | prettyNumber: 6 }} %</span>
+                                                            </td>
+                                                            <td class="col-sm"
+                                                                style="background-color: #EDF6FF;border-color: #cfe3fc !important;"
+                                                                *ngIf="flagAprovateTecnica != 'renewAprove' && flagAprovateTecnica != 'includeAprove' && flagAprovateTecnica != 'excludeAprove' ">
+                                                                <input type="text"
+                                                                       class="text-center"
+                                                                       placeholder="0"
+                                                                       maxlength="5"
+                                                                       name="tasaPropuestaSalud{{ i }}"
+                                                                       [(ngModel)]="item.planProp"
+                                                                       (change)="resetearPrimas($event, infoSalud, 1, null, item)"
+                                                                       [disabled]="item.disabled || editFlag"
+                                                                       (keypress)="onKey($event, 'rate');"
+                                                                       (keydown)="onKeydown($event);"
+                                                                       style="border-color: #cfe3fc !important;" />
+                                                                <span class="porcentaje">%</span>
+                                                            </td>
+                                                            <td class="col-sm text-center">
+                                                                <span>{{ item.premiumMonth | prettyNumber: 2 }}</span>
+                                                            </td>
+                                                        </ng-container>
+                                                    </tr>
+                                                    <hr style="margin-bottom: 0"
+                                                        *ngIf="saludList.length > 0"
+                                                        style="border-color: #cfe3fc !important;" />
+                                                    <tr class="d-flex"
+                                                        *ngIf="saludList.length > 0">
+                                                        <td class="col-sm text-right colspan3">
+                                                            <span>Prima Neta</span>
+                                                        </td>
+                                                        <td class="col-sm text-center">
+                                                            <span
+                                                                  *ngIf="this.mode == 'exclude'; else elseTransactionSalud">
+                                                                {{this.npremiumnExec_Salud | prettyNumber: 2}}
+                                                            </span>
+                                                            <ng-template #elseTransactionSalud>
+                                                                <span>{{totalNetoSaludSave | prettyNumber: 2}}</span>
+                                                            </ng-template>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="d-flex"
+                                                        *ngIf="saludList.length > 0">
+                                                        <td class="col-sm text-right colspan3">
+                                                            <span>Prima Comercial</span>
+                                                        </td>
+                                                        <td class="col-sm text-center">
+                                                            <span
+                                                                  *ngIf="this.mode == 'exclude'; else elseTransactionSalud">
+                                                                {{this.npremiumnExec_Salud | prettyNumber: 2}}
+                                                            </span>
+                                                            <ng-template #elseTransactionSalud>
+                                                                <span>{{polizaEmitCab.primaComSalud | prettyNumber:
+                                                                    2}}</span>
+                                                            </ng-template>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="d-flex"
+                                                        *ngIf="saludList.length > 0">
+                                                        <td class="col-sm text-right colspan3">
+                                                            <span>IGV</span>
+                                                        </td>
+                                                        <td class="col-sm text-center">
+                                                            <span
+                                                                  *ngIf="this.mode == 'exclude'; else elseTransactionSalud">
+                                                                {{this.nigvExec_Salud | prettyNumber: 2}}
+                                                            </span>
+                                                            <ng-template #elseTransactionSalud>
+                                                                <span>{{igvSaludSave | prettyNumber: 2}}</span>
+                                                            </ng-template>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="d-flex"
+                                                        *ngIf="saludList.length > 0">
+                                                        <td class="col-sm text-right colspan3">
+                                                            <span>Prima Comercial Total
+                                                            </span>
+                                                        </td>
+                                                        <td class="col-sm text-center">
+                                                            <span
+                                                                  *ngIf="this.mode == 'exclude'; else elseTransactionSalud">
+                                                                {{this.npremiumExec_Salud | prettyNumber: 2}}
+                                                            </span>
+                                                            <ng-template #elseTransactionSalud>
+                                                                <span>{{brutaTotalSaludSave | prettyNumber: 2}}</span>
+                                                            </ng-template>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="col-sm-12">
+                                                <p class="msg-error">{{ mensajePrimaSalud }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div [ngClass]="template.ins_pensionWith ? 'col-sm-12' : 'col-sm-6'"
+                                 *ngIf="pensionList.length > 0">
+                                <div class="row">
+                                    <div [ngClass]="template.ins_pensionWith ? 'col-sm-3' : 'col-sm-6'">
+                                        <span>PRIMA MÍNIMA PENSIÓN</span>
+                                        <input type="text"
+                                               [(ngModel)]="polizaEmitCab.PRIMA_PEN_END"
+                                               name="MIN_PENSION"
+                                               placeholder="Prima Mínima"
+                                               disabled />
+                                    </div>
+                                    <div [ngClass]="template.ins_pensionWith ? 'col-sm-3' : 'col-sm-6'"
+                                         *ngIf="mode == 'renew' && !editFlag">
+                                        <label style="margin: 0"><span class="schk"><input type="checkbox"
+                                                       style="top: 3px"
+                                                       class="checkbox"
+                                                       name="primMinimaPension"
+                                                       (change)="resetearPropuesto(2)"
+                                                       [(ngModel)]="primMinimaPension"
+                                                       [disabled]="editFlag || !canProposeComission" />
+                                                PRIMA MÍNIMA PROPUESTA</span></label>
+                                        <input type="text"
+                                               placeholder="0"
+                                               style="margin-top: 2px !important"
+                                               [disabled]="statePrimaPension"
+                                               maxlength="12"
+                                               (change)="resetearPrimas($event, infoPension, 1, null)"
+                                               [(ngModel)]="polizaEmitCab.MIN_PENSION_PR"
+                                               (keypress)="onKey($event, 'decimal');"
+                                               (keydown)="onKeydown($event);"
+                                               (paste)="onPaste($event, 'decimal')" />
+                                    </div>
+                                </div>
+                                <div class="card mt-3"
+                                     style="background-color: #fff6ed;border-color: #ff9a3b !important;">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <h5 style="color: #ff9a3b;">
+                                                    <img src="assets/images/SCTR_PENSION.png"
+                                                         alt="sctrPENSION"
+                                                         style="width: 34px;" />
+                                                    SCTR PENSIÓN
+                                                </h5>
+                                            </div>
+                                        </div>
+                                        <div class="row"
+                                             *ngIf="template.ins_pensionList">
+                                            <table class="table table-borderless riesgo tblTasas"
+                                                   style="border-collapse: separate;">
+                                                <thead>
+                                                    <tr class="d-flex">
+                                                        <th class="col-sm text-center">
+                                                            <label>Categoría</label>
+                                                        </th>
+                                                        <th class="col-sm text-center">
+                                                            <label>Tasa Neta</label>
+                                                        </th>
+                                                        <th class="col-sm text-center"
+                                                            *ngIf="flagAprovateTecnica != 'renewAprove' && flagAprovateTecnica != 'includeAprove' && flagAprovateTecnica != 'excludeAprove' ">
+                                                            <label>Propuesta (%)</label>
+                                                        </th>
+                                                        <th class="col-sm text-center">
+                                                            <label
+                                                                   *ngIf="mode == 'exclude'; else elseTransactionPension">
+                                                                Prima a devolver</label>
+                                                            <ng-template #elseTransactionPension>
+                                                                <label>Prima Mensual</label>
+                                                            </ng-template>
+                                                        </th>
+                                                    </tr>
+                                                    <hr style="border-color: #ffead7 !important;" />
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="d-flex"
+                                                        *ngIf="pensionList.length == 0">
+                                                        <td class="col-sm text-center">
+                                                            No hay tasas asociadas
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="d-flex"
+                                                        *ngFor="let item of pensionList; let i = index">
+                                                        <ng-container *ngIf="item.totalWorkes > 0">
+                                                            <td class="col-sm text-center">
+                                                                <span>{{ item.description }}</span>
+                                                            </td>
+                                                            <td class="col-sm text-center">
+                                                                <span>{{ item.rate | prettyNumber: 6 }} %</span>
+                                                            </td>
+                                                            <td class="col-sm"
+                                                                style="border-color: #ffdfc1 !important;"
+                                                                *ngIf="flagAprovateTecnica != 'renewAprove' && flagAprovateTecnica != 'includeAprove' && flagAprovateTecnica != 'excludeAprove' ">
+                                                                <input type="text"
+                                                                       class="text-center"
+                                                                       placeholder="0"
+                                                                       maxlength="5"
+                                                                       name="tasaPropuestaPension{{ i }}"
+                                                                       [(ngModel)]="item.planProp"
+                                                                       (change)="resetearPrimas($event, infoPension, 1, null, item)"
+                                                                       [disabled]="item.disabled || editFlag"
+                                                                       (keypress)="onKey($event, 'rate');"
+                                                                       (keydown)="onKeydown($event);"
+                                                                       style="border-color: #ffdfc1 !important;" />
+                                                                <span class="porcentaje">%</span>
+                                                            </td>
+                                                            <td class="col-sm text-center">
+                                                                <span>{{item.premiumMonth | prettyNumber: 2}}</span>
+                                                            </td>
+                                                        </ng-container>
+                                                    </tr>
+                                                    <hr style="margin-bottom: 0"
+                                                        *ngIf="pensionList.length > 0"
+                                                        style="border-color: #ffead7 !important;" />
+                                                    <tr class="d-flex"
+                                                        *ngIf="pensionList.length > 0">
+                                                        <td class="col-sm text-right colspan3">
+                                                            <span>Prima Neta</span>
+                                                        </td>
+                                                        <td class="col-sm text-center">
+                                                            <span
+                                                                  *ngIf="this.mode == 'exclude'; else elseTransactionPension">
+                                                                {{this.npremiumnExec_Pension | prettyNumber: 2}}</span>
+                                                            <ng-template #elseTransactionPension>
+                                                                <span>{{totalNetoPensionSave | prettyNumber: 2}}</span>
+                                                            </ng-template>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="d-flex"
+                                                        *ngIf="pensionList.length > 0">
+                                                        <td class="col-sm text-right colspan3">
+                                                            <span>Prima Comercial</span>
+                                                        </td>
+                                                        <td class="col-sm text-center">
+                                                            <span
+                                                                  *ngIf="this.mode == 'exclude'; else elseTransactionPension">
+                                                                {{this.npremiumnExec_Pension | prettyNumber: 2}}</span>
+                                                            <ng-template #elseTransactionPension>
+                                                                <span>{{polizaEmitCab.primaComPension | prettyNumber:
+                                                                    2}}</span>
+                                                            </ng-template>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="d-flex"
+                                                        *ngIf="pensionList.length > 0">
+                                                        <td class="col-sm text-right colspan3">
+                                                            <span>IGV</span>
+                                                        </td>
+                                                        <td class="col-sm text-center">
+                                                            <span
+                                                                  *ngIf="this.mode == 'exclude'; else elseTransactionPension">
+                                                                {{this.nigvExec_Pension | prettyNumber: 2}}</span>
+                                                            <ng-template #elseTransactionPension>
+                                                                <span>{{igvPensionSave | prettyNumber: 2}}</span>
+                                                            </ng-template>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="d-flex"
+                                                        *ngIf="pensionList.length > 0">
+                                                        <td class="col-sm text-right colspan3">
+                                                            <span>Prima Comercial Total</span>
+                                                        </td>
+                                                        <td class="col-sm text-center">
+                                                            <span
+                                                                  *ngIf="this.mode == 'exclude'; else elseTransactionPension">
+                                                                {{this.npremiumExec_Pension | prettyNumber: 2}}</span>
+                                                            <ng-template #elseTransactionPension>
+                                                                <span>{{brutaTotalPensionSave | prettyNumber: 2}}</span>
+                                                            </ng-template>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="col-sm-12"
+                                                 *ngIf="this.polizaEmit.facturacionVencido != true">
+                                                <p class="msg-error">{{ mensajePrimaPension }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row"
+                             *ngIf="mode == 'cancel'">
+                            <div class="col-sm-6">
+                                <span>MOTIVO DE ANULACIÓN</span>
+                                <ng-select [items]="annulmentList"
+                                           bindLabel="DES_ANULACION"
+                                           bindValue="COD_ANULACION"
+                                           [(ngModel)]="annulmentID"
+                                           class="border-ng"
+                                           [clearable]="true"
+                                           placeholder="Seleccionar"
+                                           dropdownPosition="bottom"
+                                           name="annulment"
+                                           [disabled]="flagAprovateTecnica == 'cancelAprove' ? true : false"
+                                           notFoundText="No hay resultados">
+                                </ng-select>
+                            </div>
+                            <div class="col-sm-3">
+                                <span>DESDE</span>
+                                <input
+                                type="text"
+                                [ngClass]="{ 'error-validate': !flagFechaMenorMayor }"
+                                #dp="bsDatepicker"
+                                [bsConfig]="bsConfig"
+                                bsDatepicker
+                                [(bsValue)]="polizaEmitCab.FechaAnulacion"
+                                [(ngModel)]="polizaEmitCab.FechaAnulacion"
+                                [(minDate)]="polizaEmitCab.bsValueIniMin"
+                                [(maxDate)]="polizaEmitCab.bsValueFinMax"
+                                value="{{
+                                    polizaEmitCab.FechaAnulacion | date: 'dd/MM/yyyy'
+                                }}"
+                                readonly
+                                [disabled]="(this.codProfile == 157 || this.codProfile == 166) && this.mode == 'cancel'"
+                                #anulacion
+                                />
+                            </div>
+                            <div class="col-sm-3">
+                                <span>HASTA</span>
+                                <input
+                                type="text"
+                                [ngClass]="{ 'error-validate': !flagFechaMenorMayorFin }"
+                                [bsConfig]="bsConfig"
+                                #dp="bsDatepicker"
+                                bsDatepicker
+                                (change)="validarTipoRenovacion($event)"
+                                [(bsValue)]="polizaEmitCab.bsValueFin"
+                                [(ngModel)]="polizaEmitCab.bsValueFin"
+                                name="bsValueFin"
+                                [(minDate)]="polizaEmitCab.bsValueFinMin"
+                                value="{{
+                                    polizaEmitCab.bsValueFin | date: 'dd/MM/yyyy'
+                                }}"
+                                #hasta
+                                [disabled]="disabledFechaFin"
+                                readonly
+                                />
+                            </div>
+                        </div>
+
+                        <div  class="row" *ngIf="['renewAprove', 'includeAprove', 'excludeAprove','cancelAprove'].includes(flagAprovateTecnica)">
+                            <div class="col-sm-6">
+                                <h5 style="font-size: 14px; margin-top: 10px;">ARCHIVO ADJUNTOS</h5>
+                                <table class="table table-borderless riesgo tblbroker">
+                                    <thead>
+                                        <tr class="d-flex">
+                                            <th class="col-sm text-center">
+                                                <label>Nombre del archivo</label>
+                                            </th>
+                                            <th class="col-sm text-center">
+                                                <label>Descargar</label>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="polizaEmitCab.FilePathList != null && polizaEmitCab.FilePathList.length > 0">
+                                        <tr *ngFor="let item of polizaEmitCab.FilePathList" class="d-flex">
+                                            <td class="col-sm text-center">
+                                                <span>{{ item | fileName }}</span>
+                                            </td>
+                                            <td class="col-sm text-center">
+                                                <a (click)="downloadFile(item)">
+                                                    <img
+                                                    src="assets/icons/imprimir.png"
+                                                    title="Descargar"
+                                                    style="cursor: pointer"
+                                                    alt="Descargar"/>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody *ngIf="polizaEmitCab.FilePathList == null || polizaEmitCab.FilePathList.length == 0">
+                                        <tr class="d-flex">
+                                            <td colspan="2" class="col-sm text-center">
+                                                <span>No se encontraron archivos</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="collapse-list">
+            <div>
+                <input class="collapse-open"
+                       type="checkbox"
+                       id="history" />
+                <label class="collapse-btn title"
+                       for="history">
+                    Evaluar
+                    <i class="fa fa-angle-down pull-right"
+                       style="position: relative; top: 4px"></i>
+                </label>
+                <div class="collapse-panel">
+                    <div class="collapse-inner collapse-border">
+                        <!--Gestión de trámite EHH-->
+                        <div *ngIf="transactNumber != 0"
+                             class="row">
+                            <div *ngIf=" modificarTransact == true || reingresarTransact == true;
+                                        then selectMod;
+                                        else selectPro
+                                        "></div>
+                            <ng-template #selectMod>
+                                <div class="col-sm-3">
+                                    <span>ESTADO (*)</span>
+                                    <select [(ngModel)]="statusTransact"
+                                            (change)="changeStatusTransactMod($event)"
+                                            class="minimal">
+                                        <option selected
+                                                value="">Seleccione</option>
+                                        <option value="2">Aprobado</option>
+                                        <option value="99">Anular</option>
+                                    </select>
+                                </div>
+                            </ng-template>
+                            <ng-template #selectPro>
+                                <div class="col-sm-3">
+                                    <span>ESTADO (*)</span>
+                                    <select [(ngModel)]="statusTransact"
+                                            (change)="changeStatusTransact($event)"
+                                            class="minimal">
+                                        <option selected
+                                                value="">Seleccione</option>
+                                        <option value="2">Aprobado</option>
+                                        <option value="6">Rechazar</option>
+                                        <!-- <option value="16">En Pausa</option> -->
+                                    </select>
+                                </div>
+                                <div *ngIf="statusTransact == 6"
+                                     class="col-sm-6">
+                                    <span>MOTIVO DE RECHAZO (*)</span>
+                                    <ng-select [items]="rechazoMotivoList"
+                                               bindLabel="DES_MOTIVO"
+                                               bindValue="COD_MOTIVO"
+                                               [(ngModel)]="rechazoMotivoID"
+                                               class="border-ng"
+                                               [clearable]="true"
+                                               placeholder="Seleccionar"
+                                               dropdownPosition="bottom"
+                                               name="motivorechazo"
+                                               notFoundText="No hay resultados">
+                                    </ng-select>
+                                </div>
+                            </ng-template>
+                        </div>
+                        <!--Gestión de trámite EHH-->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <span>COMENTARIO</span>
+                                <textarea cols="40"
+                                          rows="5"
+                                          style="width: 100%"
+                                          [(ngModel)]="polizaEmit.comentario"
+                                          name="comentario"
+                                          (keypress)="textValidate($event, 4)"
+                                          maxlength="4000"></textarea>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="inline-block">
+                                <div class="inline-block">
+                                    <button type="button"
+                                            (click)="fileInput.click()"
+                                            style="margin: 10px 0">
+                                        <span>Seleccionar Archivo</span>
+                                    </button>
+                                    <input hidden
+                                           #fileInput
+                                           ngfSelect
+                                           multiple
+                                           type="file"
+                                           [(files)]="files"
+                                           [accept]="accept"
+                                           [maxSize]="maxSize"
+                                           [(lastInvalids)]="lastInvalids"
+                                           (filesChange)="seleccionArchivos()" />
+                                </div>
+                            </div>
+                            <div></div>
+                            <div *ngIf="files.length > 0">
+                                <div style="margin-bottom: 0px">
+                                    <h6>Archivos Seleccionados ({{ files.length }})</h6>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th class="text-center">Tamaño</th>
+                                                <th class="text-center">Acción</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of files; let i = index">
+                                                <td>
+                                                    <strong>{{ item.name }}</strong>
+                                                </td>
+                                                <td class="text-center">
+                                                    {{ item.size / 1024 / 1024 | number: ".2" }} MB
+                                                </td>
+                                                <td class="text-center">
+                                                    <img src="assets/icons/anular.png"
+                                                         (click)="files.splice(i, 1)"
+                                                         title="Eliminar"
+                                                         alt="Eliminar" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-sm-12">
+                <div style="display: flex; float: right">
+                    <button *ngIf="codProducto == 2"
+                            type="button"
+                            routerLink="/extranet/sctr/consulta-polizas">
+                        <span>CANCELAR</span>
+                    </button>
+                    <button [hidden]="this.flagDisabledRestric"
+                            (click)="generarPoliza()"
+                            class="full-color">
+                        <span>PROCESAR</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #peModal>
+    <div class="modal-body">
+        <img src="./assets/soat/img/pago-efectivo-info.png"
+             height="250"
+             alt="PagoEfectivo" />
+    </div>
+    <div class="modal-footer footer-pe">
+        <div class="row align-self-center mx-auto">
+            <button class="soat-button ripple btn-pe"
+                    (click)="modalRef.hide()">
+                Cerrar
+            </button>
+        </div>
+    </div>
+</ng-template>
+
+<panel-info-pago [(abrir)]="modal.pagos"
+                 [cotizacion]="cotizacion"
+                 (confirmar)="formaPagoElegido()"
+                 [(isLoading)]="loading">
+</panel-info-pago>
+
+<!-- Pantalla de carga -->
+<div [hidden]="!loading"
+     class="loadingScreen">
+    <div style="display: flex; height: 100%; width: 100%">
+        <i style="margin: auto; font-size: 50px"
+           class="fa fa-spinner fa-spin"></i>
+    </div>
+</div>

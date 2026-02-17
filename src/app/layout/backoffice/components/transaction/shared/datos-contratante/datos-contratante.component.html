@@ -1,0 +1,90 @@
+<div class="container-fluid">
+  <div class="row head-row mb-1">
+    <div class="col-md-12">
+      <span>DATOS DEL CONTRATANTE</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="content-input">
+        <label for="state"
+               class="lbl-in filter-text">DOCUMENTO:</label>
+        <label class="lbl-in-action">{{ $DATA_CONTRATANTE.documentoConcat }}</label>
+      </div>
+    </div>
+    <div class="col-md-9  pr-0"
+         *ngIf="$IS_EMPRESA_OR_PERSONA == 'empresa'">
+      <div class="content-input">
+        <label class="lbl-in filter-text">RAZÓN SOCIAL:</label>
+        <label class="lbl-in-action">{{ $DATA_CONTRATANTE.razonSocial }}</label>
+      </div>
+    </div>
+    <div class="col-md-3"
+         *ngIf="$IS_EMPRESA_OR_PERSONA == 'persona'">
+      <div class="content-input">
+        <label for="state"
+               class="lbl-in filter-text">NOMBRES:</label>
+        <label class="lbl-in-action">{{ $DATA_CONTRATANTE.nombres }}</label>
+      </div>
+    </div>
+    <div class="col-md-3"
+         *ngIf="$IS_EMPRESA_OR_PERSONA == 'persona'">
+      <div class="content-input">
+        <label for="state"
+               class="lbl-in filter-text">APELLIDO PATERNO:</label>
+        <label class="lbl-in-action">{{ $DATA_CONTRATANTE.apePaterno }}</label>
+      </div>
+    </div>
+    <div class="col-md-3  pr-0"
+         *ngIf="$IS_EMPRESA_OR_PERSONA == 'persona'">
+      <div class="content-input">
+        <label for="state"
+               class="lbl-in filter-text">APELLIDO MATERNO:</label>
+        <label class="lbl-in-action">{{ $DATA_CONTRATANTE.apeMaterno }}</label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="content-input">
+        <label class="lbl-in filter-text">CORREO:</label>
+        <label class="lbl-in-action">{{ $DATA_CONTRATANTE.correo }}</label>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="content-input">
+        <label for="state"
+               class="lbl-in filter-text">DEPARTAMENTO:</label>
+        <label class="lbl-in-action">{{ $DATA_CONTRATANTE.departamento }}</label>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="content-input">
+        <label for="state"
+               class="lbl-in filter-text">PROVINCIA:</label>
+        <label class="lbl-in-action">{{ $DATA_CONTRATANTE.provincia }}</label>
+      </div>
+    </div>
+    <div class="col-md-3 pr-0">
+      <div class="content-input">
+        <label for="state"
+               class="lbl-in filter-text">DISTRITO:</label>
+        <label class="lbl-in-action">{{ $DATA_CONTRATANTE.distrito }}</label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-9">
+      <div class="content-input">
+        <label class="lbl-in filter-text">DIRECCIÓN:</label>
+        <label class="lbl-in-action">{{ $DATA_CONTRATANTE.direccion }}</label>
+      </div>
+    </div>
+    <div class="col-md-3 pr-0">
+      <div class="content-input">
+        <label class="lbl-in filter-text">TELÉFONO:</label>
+        <label class="lbl-in-action">{{ $DATA_CONTRATANTE.telefono }}</label>
+      </div>
+    </div>
+  </div>
+</div>

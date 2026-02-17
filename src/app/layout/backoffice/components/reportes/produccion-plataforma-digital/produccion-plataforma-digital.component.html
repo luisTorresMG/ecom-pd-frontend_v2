@@ -1,0 +1,299 @@
+<!-- <div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="container-fluid">
+        <div class="header-content">
+          <div class="containt-item">
+            <div class="header-item">
+              <span class="title">Reporte Producción Plataforma Digital</span>
+            </div>
+          </div>
+          <div class="containt-item">
+            <div class="header-item right-item">
+              <button
+                class="full-color btn-export-excel mx-0"
+                (click)="onEventDownload($event)"
+              >
+                <img alt="" src="assets/icons/download2.png" />
+                <span> Exportar Excel</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter">
+          <div class="form-group row filter-row">
+            <div class="col-lg-5">
+              <label for="" class="filter-text">FECHA DE CARGA:</label>
+              <div class="row">
+                <div class="col-6 padding-right-0">
+                  <input
+                    type="text"
+                    class="form-control date-search input-date"
+                    #dp="bsDatepicker"
+                    [bsConfig]="bsConfig"
+                    bsDatepicker
+                    [(bsValue)]="bsValueIni"
+                    value="{{ bsValueIni | date: 'dd/MM/yyyy' }}"
+                  />
+                </div>
+                <div class="col-6 padding-right-0">
+                  <input
+                    type="text"
+                    class="form-control date-search input-date"
+                    #dp="bsDatepicker"
+                    [bsConfig]="bsConfig"
+                    bsDatepicker
+                    [(bsValue)]="bsValueFin"
+                    value="{{ bsValueFin | date: 'dd/MM/yyyy' }}"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-7 margin-top-20">
+              <div class="row float-right mx-0">
+                <div class="lg-6">
+                  <button
+                    class="full-color btn-export-excel"
+                    (click)="onEventClear($event)"
+                  >
+                    <img alt="" src="assets/icons/delete.png" />
+                    <span> Limpiar</span>
+                  </button>
+                </div>
+                 <div class="lg-6">
+                        <button class="full-color margin-right-0"
+                        (click)="onEventSearch($event)">
+                            <span>Buscar</span>
+                        </button>
+                    </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid form-group row">
+          <div class="table-responsive" style="display: none">
+            <table class="table">
+              <thead>
+                <tr class="grid-title">
+                  <td class="grid-title-item">Canal</td>
+                  <td class="grid-title-item">Certificado</td>
+                  <td class="grid-title-item">Contratante</td>
+                  <td class="grid-title-item">ID contratante</td>
+                  <td class="grid-title-item">F.I. Vigencia</td>
+                  <td class="grid-title-item">Comprobante</td>
+                  <td class="grid-title-item">Estado</td>
+                  <td class="grid-title-item">
+                    N. contratante del comprobante
+                  </td>
+                  <td class="grid-title-item">
+                    ID N. contratante del comprobante
+                  </td>
+                  <td class="grid-title-item">Fecha comprobante</td>
+                  <td class="grid-title-item">Monto del comprobante</td>
+                  <td class="grid-title-item">N° de interfaz</td>
+                  <td class="grid-title-item">Fecha de interfaz</td>
+                  <td class="grid-title-item">Prima B. certificado</td>
+                  <td class="grid-title-item">Prima N. certificado</td>
+                  <td class="grid-title-item">DE</td>
+                  <td class="grid-title-item">IGV</td>
+                  <td class="grid-title-item">% Comisión</td>
+                  <td class="grid-title-item">Comisión</td>
+                  <td class="grid-title-item">Clase</td>
+                  <td class="grid-title-item">Placa</td>
+                  <td class="grid-title-item">Categoria</td>
+                  <td class="grid-title-item">Uso</td>
+                  <td class="grid-title-item">Carrocería</td>
+                  <td class="grid-title-item">Marca</td>
+                  <td class="grid-title-item">Departamento</td>
+                  <td class="grid-title-item">Provincia</td>
+                  <td class="grid-title-item">Distrito</td>
+                </tr>
+              </thead>
+              <div
+                *ngIf="fExistRegistro; then ocultarGrilla; else mostrarGrilla"
+              ></div>
+            </table>
+            <ng-template #mostrarGrilla>
+              <tbody>
+                <tr>
+                  <td colspan="28">{{ msgErrorLista }}</td>
+                </tr>
+              </tbody>
+            </ng-template>
+            <ng-template #ocultarGrilla>
+              <tbody *ngFor="let result of ListProductionReport">
+                <tr>
+                  <td class="data-table-tr-td">{{ result.spolicy }}</td>
+                  <td class="data-table-tr-td">{{ result.npolesP_COMP }}</td>
+                  <td class="data-table-tr-td">
+                    <div title="{{ result.s_CLIENTNAME }}">
+                      {{ result.s_CLIENTNAME }}
+                    </div>
+                  </td>
+                  <td class="data-table-tr-td">{{ result.s_CLIENT }}</td>
+                  <td class="data-table-tr-td">
+                    {{ result.dstartdate | date: "dd/MM/yyyy" }}
+                  </td>
+                  <td class="data-table-tr-td">{{ result.numdoc }}</td>
+                  <td class="data-table-tr-td">{{ result.sstatuspol }}</td>
+                  <td class="data-table-tr-td">{{ result.nomcontratante }}</td>
+                  <td>{{ result.idcontratante }}</td>
+                  <td>{{ result.dcompdate | date: "dd/MM/yyyy" }}</td>
+                  <td>{{ result.montocomprobante }}</td>
+                  <td>{{ result.numinterfaz }}</td>
+                  <td>{{ result.fecinterfaz }}</td>
+                  <td>{{ result.nmprima }}</td>
+                  <td>{{ result.nmonnet }}</td>
+                  <td>{{ result.nderemi }}</td>
+                  <td>{{ result.nmonigv }}</td>
+                  <td>{{ result.porcomision }}</td>
+                  <td>{{ result.comision }}</td>
+                  <td>{{ result.desnclass }}</td>
+                  <td>{{ result.splate }}</td>
+                  <td>{{ result.descategoria }}</td>
+                  <td>{{ result.desuso }}</td>
+                  <td>{{ result.descarroceria }}</td>
+                  <td>{{ result.marca }}</td>
+                  <td>{{ result.departamento }}</td>
+                  <td>{{ result.provincia }}</td>
+                  <td>{{ result.distrito }}</td>
+                </tr>
+              </tbody>
+            </ng-template>
+          </div>
+        </div>
+
+        <div
+          *ngIf="fExistRegistro; then ocultarPaginado; else mostrarPaginado"
+        ></div>
+        <ng-template #mostrarPaginado>
+          <div></div>
+        </ng-template>
+
+        <ng-template #ocultarPaginado>
+          <div class="row">
+            <div class="col-xs-12 col-12">
+              <pagination
+                [totalItems]="totalItems"
+                [itemsPerPage]="itemsPerPage"
+                [rotate]="rotate"
+                [maxSize]="maxSize"
+                [(ngModel)]="currentPage"
+                (pageChanged)="pageChanged($event)"
+              >
+              </pagination>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="container-fluid">
+  <div class="row content-all">
+    <div class="col-md-12 content">
+      <div class="container-fluid content-page">
+        <div class="row r1-head">
+          <div class="col-12 head-title">
+            <h1 class="title">Reporte Producción Plataforma Digital</h1>
+            <button type="submit"
+                    class="full-color btn-clear d-flex align-items-center justify-content-center"
+                    (click)="exportar()"
+                    [disabled]="form.invalid">
+              <i class="fa fa-download"
+                 aria-hidden="true"></i>
+              Exportar
+            </button>
+          </div>
+        </div>
+        <form class="row r2-head"
+              [formGroup]="form">
+          <div class="col-md-4 content-actions">
+            <div class="content-input">
+              <label for="state"
+                     class="lbl-in filter-text">FECHA INICIO:</label>
+              <input autocomplete="off"
+                     type="text"
+                     class="form-control date-search input-date in-action"
+                     id="fecha"
+                     #dp="bsDatepicker"
+                     [bsConfig]="bsConfig"
+                     bsDatepicker
+                     formControlName="fechaInicio"
+                     readonly
+                     style="background-color: white"
+                     [maxDate]="bsValueFin" />
+            </div>
+            <div class="content-input">
+              <label for="chanel"
+                     class="lbl-in filter-text">FECHA FIN:</label>
+              <input autocomplete="off"
+                     type="text"
+                     class="form-control date-search input-date in-action"
+                     id="fecha"
+                     #dp="bsDatepicker"
+                     [bsConfig]="bsConfig"
+                     bsDatepicker
+                     formControlName="fechaFin"
+                     readonly
+                     style="background-color: white"
+                     [maxDate]="bsValueFin" />
+            </div>
+          </div>
+          <div class="col-md-8 cont-btn-generar">
+            <button type="button"
+                    class="full-color d-flex align-items-center justify-content-center btn-clear"
+                    (click)="limpiar()">
+              <i class="fa fa-trash"
+                 aria-hidden="true"></i>
+              Limpiar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade"
+     bsModal
+     #modal="bs-modal"
+     [config]="{
+    backdrop: 'static'
+  }">
+  <div class="modal-dialog"
+       role="document">
+    <div class="modal-content anular">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                (click)="ocultarModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <h4 class="textanular"
+            style="font-size: 15px">
+          {{ MENSAJE }}
+        </h4>
+      </div>
+      <div class="
+          modal-footer modal-foot-confirm
+          d-flex
+          align-items-center
+          justify-content-center
+        ">
+        <button type="button"
+                class="btn full-color btn-aceptar-modal"
+                (click)="ocultarModal()">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

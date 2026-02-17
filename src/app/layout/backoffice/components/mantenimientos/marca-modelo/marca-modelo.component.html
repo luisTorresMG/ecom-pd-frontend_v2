@@ -1,0 +1,994 @@
+<div class="content">
+  <div class="content__item content__header">
+    <h1 class="content__header--title title-u">Mant. Marca / Modelo</h1>
+  </div>
+
+  <!-- FILTROS -->
+  <form class="form" [formGroup]="formFilters" (ngSubmit)="search()">
+    <div class="content__item content__filters">
+      <div class="formFilters__group ffg1">
+        <label for="in-marca" class="lbl-input-u" aria-label="Marca">
+          <select id="in-marca" class="input-u" formControlName="marca">
+            <option [value]="null" selected disabled hidden>SELECCIONE</option>
+            <option *ngFor="let data of marks$" [value]="data.idMarca">
+              {{ data.marca }}
+            </option>
+          </select>
+        </label>
+        <label for="in-modelo" class="lbl-input-u" aria-label="Modelo">
+          <select id="in-modelo" class="input-u" formControlName="modelo">
+            <option [value]="null" selected disabled hidden>SELECCIONE</option>
+            <option *ngFor="let data of models$" [value]="data.idModelo">
+              {{ data.modelo }}
+            </option>
+          </select>
+        </label>
+        <label for="in-version" class="lbl-input-u" aria-label="Versión">
+          <select id="in-version" class="input-u" formControlName="version">
+            <option [value]="null" selected disabled hidden>SELECCIONE</option>
+            <option *ngFor="let data of versions$" [value]="data.idVersion">
+              {{ data.version }}
+            </option>
+          </select>
+        </label>
+      </div>
+      <div class="formFilters__group ffg2">
+        <button class="btn-primary-u" type="submit" role="button">
+          Buscar
+        </button>
+        <button
+          class="btn-secondary-u"
+          type="button"
+          role="button"
+          (click)="resetFormFilters()"
+        >
+          Limpiar
+        </button>
+      </div>
+    </div>
+    <div class="content__item content__filters"></div>
+  </form>
+
+  <!-- MARCAS -->
+  <div class="content__item marcas">
+    <h2 class="subtitle-u">Listado de Marcas</h2>
+    <div class="marcas__actions">
+      <button
+        class="btn-primary-u"
+        type="button"
+        role="button"
+        (click)="openModalMarca()"
+      >
+        Nueva Marca
+      </button>
+      <div ngbDropdown>
+        <button
+          class="btn-primary-u"
+          type="button"
+          role="button"
+          ngbDropdownToggle>
+          Exportar Marcas
+        </button>
+        <ul
+          class="dropdown-u dropdown-mark"
+          display="dynamic"
+          ngbDropdownMenu>
+          <li class="dropdown-item-u">
+            <button
+              class="dropdown-item-btn-u"
+              (click)="downloadFilterMarks()">
+              SOLO ACTIVOS
+            </button>
+          </li>
+          <li class="dropdown-item-u">
+            <button
+              class="dropdown-item-btn-u"
+              (click)="downloadAllMarks()">
+              TODOS
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="content__table">
+      <table class="tbl tblMarca">
+        <thead class="tbl__head tblMarca__head">
+          <tr class="tbl__head--row tblMarca__head--row">
+            <th
+              class="tbl__head--row-col tblMarca__head--row-col tblMarca__head--row-code"
+            >
+              Código
+            </th>
+            <th
+              class="tbl__head--row-col tblMarca__head--row-col tblMarca__head--row-desc"
+            >
+              Descripción
+            </th>
+            <th
+              class="tbl__head--row-col tblMarca__head--row-col tblMarca__head--row-createdat"
+            >
+              Fecha Creación
+            </th>
+            <th
+              class="tbl__head--row-col tblMarca__head--row-col tblMarca__head--row-dateupdate"
+            >
+              Fecha Modificación
+            </th>
+            <th
+              class="tbl__head--row-col tblMarca__head--row-col tblMarca__head--row-state"
+            >
+              Estado
+            </th>
+            <th
+              class="tbl__head--row-col tblMarca__head--row-col tblMarca__head--row-actions"
+            >
+              Acciones
+            </th>
+          </tr>
+        </thead>
+        <tbody class="tbl__body tblMarca__body">
+          <ng-container *ngIf="!smarks$.length">
+            <tr class="tbl__body--row tblMarca__body--row">
+              <td class="tbl__body--row-col" colspan="6">
+                No hay resultados para mostrar
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="!!smarks$.length">
+            <tr
+              class="tbl__body--row tblMarca__body--row"
+              *ngFor="
+                let data of smarks$
+                  | paginate
+                    : { id: 'pmarks', itemsPerPage: 5, currentPage: pmark }
+              "
+              [class.row-selected]="markSelected?.id == data.idMarca"
+            >
+              <td
+                class="tbl__body--row-col tblMarca__body--row-col tblMarca__body--row-code"
+                (click)="searchModels(data)"
+                role="button"
+              >
+                {{ data.idMarca }}
+              </td>
+              <td
+                class="tbl__body--row-col tblMarca__body--row-col tblMarca__body--row-desc"
+                (click)="searchModels(data)"
+                role="button"
+              >
+                {{ data.marca }}
+              </td>
+              <td
+                class="tbl__body--row-col tblMarca__body--row-col tblMarca__body--row-createdat"
+                (click)="searchModels(data)"
+                role="button"
+              >
+                {{ data.fechaCreacion }}
+              </td>
+              <td
+                class="tbl__body--row-col tblMarca__body--row-col tblMarca__body--row-dateupdate"
+                (click)="searchModels(data)"
+                role="button"
+              >
+                {{ data.fechaModificacion }}
+              </td>
+              <td
+                class="tbl__body--row-col tblMarca__body--row-col tblMarca__body--row-state"
+                (click)="searchModels(data)"
+                role="button"
+              >
+                {{ data.estado }}
+              </td>
+              <td
+                class="tbl__body--row-col tblMarca__body--row-col tblMarca__body--row-actions"
+                ngbDropdown
+              >
+                <button
+                  class="btn-dropdown-u"
+                  tabindex="0"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  ngbDropdownToggle
+                >
+                  <i
+                    class="fa fa-ellipsis-v btn__actions--icon"
+                    aria-hidden="true"
+                  ></i>
+                </button>
+                <ul
+                  class="dropdown-u dropdown-marcas"
+                  display="dynamic"
+                  ngbDropdownMenu
+                >
+                  <!-- <li class="dropdown-item-u">
+                    <button class="dropdown-item-btn-u"
+                            (click)="searchModels(data)">
+                      <i class="fa fa-eye"
+                         aria-hidden="true"></i>
+                      Ver Modelos
+                    </button>
+                  </li> -->
+                  <ng-container *ngIf="data.estado == 'INACTIVO'">
+                    <li class="dropdown-item-u">
+                      <button class="dropdown-item-btn-u">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        Habilitar
+                      </button>
+                    </li>
+                  </ng-container>
+                  <ng-container *ngIf="data.estado == 'ACTIVO'">
+                    <li class="dropdown-item-u">
+                      <button
+                        class="dropdown-item-btn-u"
+                        (click)="showModalConfirmDisable(1, data)"
+                      >
+                        <i class="fa fa-ban" aria-hidden="true"></i>
+                        Deshabilitar
+                      </button>
+                    </li>
+                  </ng-container>
+                </ul>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      <ng-container *ngIf="smarks$.length > 5">
+        <div class="pagination mt-3">
+          <pagination-controls
+            class="my-pagination"
+            (pageChange)="pmark = $event"
+            id="pmarks"
+            autoHide="true"
+            responsive="true"
+            previousLabel="Anterior"
+            nextLabel="Siguiente"
+            screenReaderPaginationLabel="Paginación"
+            screenReaderPageLabel="pagina"
+            screenReaderCurrentLabel="Estás en la pagina"
+          >
+          </pagination-controls>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <!-- MODELOS -->
+  <div class="content__item modelos">
+    <h2 class="subtitle-u">
+      Listado de Modelos de: {{ markSelected?.description }}
+    </h2>
+    <div class="modelos__actions">
+      <button
+        class="btn-primary-u"
+        type="button"
+        role="button"
+        (click)="openModalModelo()"
+        [disabled]="!markSelected?.id"
+      >
+        Nuevo Modelo
+      </button>
+      <div ngbDropdown>
+        <button
+          class="btn-primary-u"
+          type="button"
+          role="button"
+          [disabled]="!markSelected?.id || !smodels$.length"
+          ngbDropdownToggle>
+        Exportar Modelos
+        </button>
+        <ul
+          class="dropdown-u dropdown-model"
+          display="dynamic"
+          ngbDropdownMenu>
+          <li class="dropdown-item-u">
+            <button
+              class="dropdown-item-btn-u"
+              (click)="downloadFilterModels()">
+              SOLO ACTIVOS
+            </button>
+          </li>
+          <li class="dropdown-item-u">
+            <button
+              class="dropdown-item-btn-u"
+              (click)="downloadAllModels()">
+              TODOS
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="content__table">
+      <table class="tbl tblModelo">
+        <thead class="tbl__head tblModelo__head">
+          <tr class="tbl__head--row tblModelo__head--row">
+            <th
+              class="tbl__head--row-col tblModelo__head--row-col tblModelo__head--row-code"
+            >
+              Código
+            </th>
+            <th
+              class="tbl__head--row-col tblModelo__head--row-col tblModelo__head--row-desc"
+            >
+              Descripción
+            </th>
+            <th
+              class="tbl__head--row-col tblModelo__head--row-col tblModelo__head--row-createdat"
+            >
+              Fecha Creación
+            </th>
+            <th
+              class="tbl__head--row-col tblModelo__head--row-col tblModelo__head--row-dateupdate"
+            >
+              Fecha Modificación
+            </th>
+            <th
+              class="tbl__head--row-col tblModelo__head--row-col tblModelo__head--row-state"
+            >
+              Estado
+            </th>
+            <th
+              class="tbl__head--row-col tblModelo__head--row-col tblModelo__head--row-actions"
+            >
+              Acciones
+            </th>
+          </tr>
+        </thead>
+        <tbody class="tbl__body tblModelo__body">
+          <ng-container *ngIf="!smodels$.length">
+            <tr class="tbl__body--row">
+              <td class="tbl__body--row-col" colspan="6">
+                No hay resultados para mostrar
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="!!smodels$.length">
+            <tr
+              class="tbl__body--row tblModelo__body--row"
+              *ngFor="
+                let data of smodels$
+                  | paginate
+                    : { id: 'pmodels', itemsPerPage: 5, currentPage: pmodel }
+              "
+              [class.row-selected]="modelSelected?.id == data.idModelo"
+            >
+              <td
+                class="tbl__body--row-col tblModelo__body--row-col tblModelo__body--row-code"
+                (click)="searchVersions(data)"
+                role="button"
+              >
+                {{ data.idModelo }}
+              </td>
+              <td
+                class="tbl__body--row-col tblModelo__body--row-col tblModelo__body--row-desc"
+                (click)="searchVersions(data)"
+                role="button"
+              >
+                {{ data.modelo }}
+              </td>
+              <td
+                class="tbl__body--row-col tblModelo__body--row-col tblModelo__body--row-createdat"
+                (click)="searchVersions(data)"
+                role="button"
+              >
+                {{ data.fechaCreacion }}
+              </td>
+              <td
+                class="tbl__body--row-col tblModelo__body--row-col tblModelo__body--row-dateupdate"
+                (click)="searchVersions(data)"
+                role="button"
+              >
+                {{ data.fechaModificacion }}
+              </td>
+              <td
+                class="tbl__body--row-col tblModelo__body--row-col tblModelo__body--row-state"
+                (click)="searchVersions(data)"
+                role="button"
+              >
+                {{ data.estado }}
+              </td>
+              <td
+                class="tbl__body--row-col tblModelo__body--row-col tblModelo__body--row-actions"
+                ngbDropdown
+              >
+                <button
+                  class="btn-dropdown-u"
+                  tabindex="0"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  ngbDropdownToggle
+                >
+                  <i
+                    class="fa fa-ellipsis-v btn__actions--icon"
+                    aria-hidden="true"
+                  ></i>
+                </button>
+                <ul
+                  class="dropdown-u dropdown-modelo"
+                  display="dynamic"
+                  ngbDropdownMenu
+                >
+                  <!-- <li class="dropdown-item-u">
+                    <button class="dropdown-item-btn-u"
+                            (click)="searchVersions(data)">
+                      <i class="fa fa-eye"
+                         aria-hidden="true"></i>
+                      Ver Versiones
+                    </button>
+                  </li> -->
+                  <ng-container *ngIf="data.estado == 'INACTIVO'">
+                    <li class="dropdown-item-u">
+                      <button class="dropdown-item-btn-u">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        Habilitar
+                      </button>
+                    </li>
+                  </ng-container>
+                  <ng-container *ngIf="data.estado == 'ACTIVO'">
+                    <li class="dropdown-item-u">
+                      <button
+                        class="dropdown-item-btn-u"
+                        (click)="showModalConfirmDisable(2, data)"
+                      >
+                        <i class="fa fa-ban" aria-hidden="true"></i>
+                        Deshabilitar
+                      </button>
+                    </li>
+                  </ng-container>
+                </ul>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      <ng-container *ngIf="smodels$.length > 5">
+        <div class="pagination mt-3">
+          <pagination-controls
+            class="my-pagination"
+            (pageChange)="pmodel = $event"
+            id="pmodels"
+            autoHide="true"
+            responsive="true"
+            previousLabel="Anterior"
+            nextLabel="Siguiente"
+            screenReaderPaginationLabel="Paginación"
+            screenReaderPageLabel="pagina"
+            screenReaderCurrentLabel="Estás en la pagina"
+          >
+          </pagination-controls>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <!-- VERSIONES -->
+  <div class="content__item versiones">
+    <h2 class="subtitle-u">
+      Listado de Versiones de: {{ modelSelected?.description }}
+    </h2>
+    <div class="versiones__actions">
+      <button
+        class="btn-primary-u"
+        type="button"
+        role="button"
+        (click)="openModalVersion()"
+        [disabled]="!modelSelected?.id"
+      >
+        Nueva Versión
+      </button>
+      <div ngbDropdown>
+        <button
+          class="btn-primary-u"
+          type="button"
+          role="button"
+          [disabled]="!modelSelected?.id || !sversions$.length"
+          ngbDropdownToggle>
+          Exportar Versiones
+        </button>
+        <ul
+          class="dropdown-u dropdown-version"
+          display="dynamic"
+          ngbDropdownMenu>
+          <li class="dropdown-item-u">
+            <button
+              class="dropdown-item-btn-u"
+              (click)="downloadFilterVersions()">
+              SOLO ACTIVOS
+            </button>
+          </li>
+          <li class="dropdown-item-u">
+            <button
+              class="dropdown-item-btn-u"
+              (click)="downloadAllVersions()">
+              TODOS
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="content__table">
+      <table class="tbl tblVersiones">
+        <thead class="tbl__head tblVersiones__head">
+          <tr class="tbl__head--row tblVersion__head--row">
+            <th
+              class="tbl__head--row-col tblVersiones__head--row-col tblVersiones__head--row-code"
+            >
+              Código
+            </th>
+            <th
+              class="tbl__head--row-col tblVersiones__head--row-col tblVersiones__head--row-desc"
+            >
+              Descripción
+            </th>
+            <th
+              class="tbl__head--row-col tblVersiones__head--row-col tblVersiones__head--row-desc"
+            >
+              Clase
+            </th>
+            <th
+              class="tbl__head--row-col tblVersiones__head--row-col tblVersiones__head--row-createdat"
+            >
+              Fecha Creación
+            </th>
+            <th
+              class="tbl__head--row-col tblVersiones__head--row-col tblVersiones__head--row-dateupdate"
+            >
+              Fecha Modificación
+            </th>
+            <th
+              class="tbl__head--row-col tblVersiones__head--row-col tblVersiones__head--row-state"
+            >
+              Estado
+            </th>
+            <th
+              class="tbl__head--row-col tblVersiones__head--row-col tblVersiones__head--row-actions"
+            >
+              Acciones
+            </th>
+          </tr>
+        </thead>
+        <tbody class="tbl__body tblVersiones__body">
+          <ng-container *ngIf="!sversions$.length">
+            <tr class="tbl__body--row">
+              <td class="tbl__body--row-col" colspan="7">
+                No hay resultados para mostrar
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="!!sversions$.length">
+            <tr
+              class="tbl__body--row tblVersiones__body--row"
+              *ngFor="
+                let data of sversions$
+                  | paginate
+                    : { id: 'pversion', itemsPerPage: 5, currentPage: pversion }
+              "
+            >
+              <td
+                class="tbl__body--row-col tblVersiones__body--row-col tblVersiones__body--row-code"
+              >
+                {{ data.idVersion }}
+              </td>
+              <td
+                class="tbl__body--row-col tblVersiones__body--row-col tblVersiones__body--row-desc"
+              >
+                {{ data.version }}
+              </td>
+              <td
+                class="tbl__body--row-col tblVersiones__body--row-col tblVersiones__body--row-desc"
+              >
+                {{ data.clase }}
+              </td>
+              <td
+                class="tbl__body--row-col tblVersiones__body--row-col tblVersiones__body--row-createdat"
+              >
+                {{ data.fechaCreacion }}
+              </td>
+              <td
+                class="tbl__body--row-col tblVersiones__body--row-col tblVersiones__body--row-dateupdate"
+              >
+                {{ data.fechaModificacion }}
+              </td>
+              <td
+                class="tbl__body--row-col tblVersiones__body--row-col tblVersiones__body--row-state"
+              >
+                {{ data.estado }}
+              </td>
+              <td
+                class="tbl__body--row-col tblVersiones__body--row-col tblVersiones__body--row-actions"
+                ngbDropdown
+              >
+                <button
+                  class="btn-dropdown-u"
+                  tabindex="0"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  ngbDropdownToggle
+                >
+                  <i
+                    class="fa fa-ellipsis-v btn__actions--icon"
+                    aria-hidden="true"
+                  ></i>
+                </button>
+                <ul
+                  class="dropdown-u dropdown-versiones"
+                  display="dynamic"
+                  ngbDropdownMenu
+                >
+                  <ng-container *ngIf="data.estado == 'INACTIVO'">
+                    <li class="dropdown-item-u">
+                      <button class="dropdown-item-btn-u">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        Habilitar
+                      </button>
+                    </li>
+                  </ng-container>
+                  <ng-container *ngIf="data.estado == 'ACTIVO'">
+                    <li class="dropdown-item-u">
+                      <button
+                        class="dropdown-item-btn-u"
+                        (click)="showModalConfirmDisable(3, data)"
+                      >
+                        <i class="fa fa-ban" aria-hidden="true"></i>
+                        Deshabilitar
+                      </button>
+                    </li>
+                  </ng-container>
+                </ul>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+      <ng-container *ngIf="sversions$.length > 5">
+        <div class="pagination mt-3">
+          <pagination-controls
+            class="my-pagination"
+            (pageChange)="pversion = $event"
+            id="pversion"
+            autoHide="true"
+            responsive="true"
+            previousLabel="Anterior"
+            nextLabel="Siguiente"
+            screenReaderPaginationLabel="Paginación"
+            screenReaderPageLabel="pagina"
+            screenReaderCurrentLabel="Estás en la pagina"
+          >
+          </pagination-controls>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalMarca>
+  <div class="content-modal-u">
+    <div class="modal-u modalCreateMark">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Crear Marca</h6>
+        <button class="modal__header--close" (click)="closeModal()">
+          &times;
+        </button>
+      </div>
+      <form class="modal__body" [formGroup]="formMark">
+        <label for="mark-desc" class="lbl-input-u" aria-label="Marca">
+          <input
+            type="text"
+            id="mark-desc"
+            class="input-u"
+            (input)="filterMark($event.target.value)"
+            [maxLength]="30"
+            formControlName="description"
+          />
+          <ul class="list-modal">
+            <ng-container
+              *ngIf="fma['description'].value?.length && !isSelectCreateMark"
+            >
+              <ng-container *ngIf="!this.existMark">
+                <li (click)="createdValue('marca')">
+                  <button class="btn-created">
+                    <i class="fa fa-plus-circle"></i>
+                    CREAR "{{ fma["description"].value.toUpperCase() }}"
+                  </button>
+                </li>
+              </ng-container>
+              <li *ngFor="let item of marksFiltered">
+                {{ item.marca }}
+              </li>
+            </ng-container>
+          </ul>
+        </label>
+      </form>
+      <div class="modal__footer">
+        <button class="btn-secondary-u mr-3" (click)="closeModal()">
+          Cancelar
+        </button>
+        <button
+          class="btn-primary-u"
+          (click)="modalConfirmCreateMark()"
+          [disabled]="!validateFormMark"
+        >
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #modalModelo>
+  <div class="content-modal-u">
+    <div class="modal-u modalCreateModel">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Crear Modelo</h6>
+        <button class="modal__header--close" (click)="closeModal()">
+          &times;
+        </button>
+      </div>
+      <form
+        class="modal__body frmCreateModel"
+        [formGroup]="formModel"
+        style="padding-top: 15px"
+      >
+        <div>
+          <label for="mark-model" class="lbl-input-u" aria-label="Marca">
+            <select id="mark-model" class="input-u" formControlName="mark">
+              <option [value]="null" selected disabled>SELECCIONE</option>
+              <option *ngFor="let data of marks$" [value]="data.idMarca">
+                {{ data.marca }}
+              </option>
+            </select>
+          </label>
+        </div>
+
+        <label for="model-auto" class="lbl-input-u" aria-label="Modelo">
+          <input
+            type="text"
+            id="model-auto"
+            class="input-u"
+            (input)="filterModel($event.target.value)"
+            [maxLength]="30"
+            formControlName="description"
+          />
+          <ul class="list-modal">
+            <ng-container
+              *ngIf="fmo['description'].value?.length && !isSelectCreateModel"
+            >
+              <ng-container *ngIf="!this.existModel">
+                <li (click)="createdValue('model')">
+                  <button class="btn-created">
+                    <i class="fa fa-plus-circle"></i>
+                    CREAR "{{ fmo["description"].value.toUpperCase() }}"
+                  </button>
+                </li>
+              </ng-container>
+
+              <li *ngFor="let item of smodelsFiltered">
+                {{ item.modelo }}
+              </li>
+            </ng-container>
+          </ul>
+        </label>
+      </form>
+      <div class="modal__footer" style="padding-top: 20px">
+        <button class="btn-secondary-u mr-3" (click)="closeModal()">
+          Cancelar
+        </button>
+        <button
+          class="btn-primary-u"
+          (click)="showModalConfirmCreateModel()"
+          [disabled]="!validateFormModel"
+        >
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #modalVersion>
+  <div class="content-modal-u">
+    <div class="modal-u modalCreateVersion">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Crear Versión</h6>
+        <button class="modal__header--close" (click)="closeModal()">
+          &times;
+        </button>
+      </div>
+      <form
+        class="modal__body frmCreateVersion"
+        [formGroup]="formVersion"
+        style="padding-top: 15px"
+      >
+        <label for="clase-version" class="lbl-input-u" aria-label="Clase">
+          <select id="clase-version" class="input-u" formControlName="clase">
+            <option [value]="null" selected disabled hidden>SELECCIONE</option>
+            <option *ngFor="let data of classes$" [value]="data.idClase">
+              {{ data.clase }}
+            </option>
+          </select>
+        </label>
+        <div>
+          <label for="mark-version" class="lbl-input-u" aria-label="Marca">
+            <select id="mark-version" class="input-u" formControlName="mark">
+              <option [value]="null" selected disabled>SELECCIONE</option>
+              <option *ngFor="let data of marks$" [value]="data.idMarca">
+                {{ data.marca }}
+              </option>
+            </select>
+          </label>
+        </div>
+        <div>
+          <label for="model-version" class="lbl-input-u" aria-label="Modelo">
+            <select id="model-version" class="input-u" formControlName="model">
+              <option [value]="null" selected disabled>SELECCIONE</option>
+              <option *ngFor="let data of smodels$" [value]="data.idModelo">
+                {{ data.modelo }}
+              </option>
+            </select>
+          </label>
+        </div>
+        <div>
+          <label for="version-auto" class="lbl-input-u" aria-label="Version">
+            <input
+              type="text"
+              id="version-auto"
+              class="input-u"
+              (input)="filterVersion($event.target.value)"
+              [maxLength]="30"
+              formControlName="description"
+            />
+            <ul class="list-modal">
+              <ng-container
+                *ngIf="
+                  fve['description'].value?.length && !isSelectCreateVersion
+                "
+              >
+                <ng-container *ngIf="!this.existVersion">
+                  <li (click)="createdValue('version')">
+                    <button class="btn-created">
+                      <i class="fa fa-plus-circle"></i>
+                      CREAR "{{ fve["description"].value.toUpperCase() }}"
+                    </button>
+                  </li>
+                </ng-container>
+
+                <li *ngFor="let item of sversionsFiltered">
+                  {{ item.version }}
+                </li>
+              </ng-container>
+            </ul>
+          </label>
+        </div>
+      </form>
+      <div class="modal__footer" style="padding-top: 20px">
+        <button class="btn-secondary-u mr-3" (click)="closeModal()">
+          Cancelar
+        </button>
+        <button
+          class="btn-primary-u"
+          (click)="showModalConfirmCreateVersion()"
+          [disabled]="!validateFormVersion"
+        >
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #modalMessage>
+  <div class="content-modal-u">
+    <div class="modal-u">
+      <div class="modal__header">
+        <div class="d-flex justify-content-center" *ngIf="!messageIsValid">
+          <h6 class="modal__header--title">Mensaje</h6>
+        </div>
+        <button class="modal__header--close" (click)="closeModal()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <ng-container *ngIf="messageIsValid">
+          <div class="d-flex justify-content-center mt-2 mb-4">
+            <img
+              src="assets/backoffice/check-success.png"
+              alt="image succes"
+              width="120px"
+              height="120px"
+            />
+          </div>
+        </ng-container>
+        <p class="modal__body--desc">{{ message$ }}</p>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-primary-u" (click)="closeModal()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalConfirmeCreateMark>
+  <div class="content-modal-u">
+    <div class="modal-u">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Mensaje de Confirmación</h6>
+        <button class="modal__header--close" (click)="removeLastModal()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <p class="modal__body--desc">¿Desea guardar los cambios?</p>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-secondary-u mr-3" (click)="removeLastModal()">
+          Cancelar
+        </button>
+        <button class="btn-primary-u" (click)="createMark()">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #modalConfirmCreateModel>
+  <div class="content-modal-u">
+    <div class="modal-u">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Mensaje de Confirmación</h6>
+        <button class="modal__header--close" (click)="removeLastModal()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <p class="modal__body--desc">¿Desea guardar los cambios?</p>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-secondary-u mr-3" (click)="removeLastModal()">
+          Cancelar
+        </button>
+        <button class="btn-primary-u" (click)="createModel()">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #modalConfirmCreateVersion>
+  <div class="content-modal-u">
+    <div class="modal-u">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Mensaje de Confirmación</h6>
+        <button class="modal__header--close" (click)="removeLastModal()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <p class="modal__body--desc">¿Desea guardar los cambios?</p>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-secondary-u mr-3" (click)="removeLastModal()">
+          Cancelar
+        </button>
+        <button class="btn-primary-u" (click)="createVersion()">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalConfirmDisable>
+  <div class="content-modal-u">
+    <div class="modal-u">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Mensaje de Confirmación</h6>
+        <button class="modal__header--close" (click)="closeModal()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <p class="modal__body--desc">{{ messageModalConfirmDisable }}</p>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-secondary-u mr-3" (click)="closeModal()">
+          Cancelar
+        </button>
+        <button class="btn-primary-u" (click)="disableAction()">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

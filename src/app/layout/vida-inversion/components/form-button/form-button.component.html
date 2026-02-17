@@ -1,0 +1,15 @@
+<div class="form-buttonVI" [class.form-buttonVI-slim]="slim">
+  <span *ngIf="inlineInput">&nbsp;</span>
+  <button (click)="onClick.emit()" class="{{btnClass}}" [disabled]="disabled">
+    <span>{{label}}</span>
+    
+    <span>&nbsp;</span>
+
+    <img *ngIf="icon == 'search'" src="assets/icons/buscar_certificado.png" />
+    <img *ngIf="icon == 'union'" src="assets/icons/Union.png" />
+    <img *ngIf="icon == 'check'" src="assets/icons/check.png"/>
+    <img *ngIf="icon == 'download'" src="assets/icons/des.png"/>
+    
+    <i *ngIf="(icon || '').includes('fa-')" class="fa {{icon}}"></i>
+  </button>
+</div>

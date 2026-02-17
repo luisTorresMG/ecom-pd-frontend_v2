@@ -1,0 +1,518 @@
+<form class="dps"
+      [formGroup]="form">
+  <ol class="list"
+      type="1">
+
+    <!-- *¿Cuál es su talla y peso? -->
+    <li class="list__item">
+      <div class="quest">
+        <p class="quest__text">
+          ¿Cuál es su talla y peso?
+        </p>
+      </div>
+
+      <div class="quest__answer content-size-weight">
+        <div class="input">
+          <label for="form-q1"
+                 class="placeholder"
+                 aria-placeholder="Talla (m)">
+            <input type="text"
+                   id="form-q1"
+                   placeholder="Ej: 1.6"
+                   formControlName="q1">
+          </label>
+          <ng-container *ngIf="formControl['q1'].errors && formControl['q1'].touched">
+            <small class="has-error"
+                   @fade
+                   *ngIf="formControl['q1'].hasError('required')">
+              Este campo es obligatorio
+            </small>
+          </ng-container>
+        </div>
+        <div class="input">
+          <label for="form-q2"
+                 class="placeholder"
+                 aria-placeholder="Peso (Kg)">
+            <input type="text"
+                   id="form-q2"
+                   placeholder="Kg"
+                   formControlName="q2">
+          </label>
+          <ng-container *ngIf="formControl['q2'].errors && formControl['q2'].touched">
+            <small class="has-error"
+                   @fade
+                   *ngIf="formControl['q2'].hasError('required')">
+              Este campo es obligatorio
+            </small>
+          </ng-container>
+        </div>
+      </div>
+    </li>
+
+    <!-- *¿Usted fuma? -->
+    <li class="list__item"
+        formGroupName="q3">
+      <div class="quest">
+        <p class="quest__text">
+          ¿Usted fuma?
+        </p>
+        <div class="quest__options">
+          <div class="answer__option pill">
+            <input type="radio"
+                   id="form-q3-yes"
+                   value="1"
+                   formControlName="answer">
+            <label for="form-q3-yes">
+              Sí
+            </label>
+          </div>
+          <div class="answer__option pill">
+            <input type="radio"
+                   id="form-q3-no"
+                   value="0"
+                   formControlName="answer">
+            <label for="form-q3-no">
+              No
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- *Detalle -->
+      <div class="quest__answer"
+           @fade
+           *ngIf="getFormControlOfFormGroup('q3')['answer'].value == 1">
+        <div class="input">
+          <label for="form-q3-detail"
+                 class="placeholder"
+                 aria-placeholder="Indicar el consumo diario">
+            <input type="text"
+                   id="form-q3-detail"
+                   formControlName="detail">
+          </label>
+        </div>
+      </div>
+    </li>
+
+    <!-- *¿Se ha medido la presión arterial en los últimos 2 años? -->
+    <li class="list__item"
+        formGroupName="q4">
+      <div class="quest">
+        <p class="quest__text">
+          ¿Se ha medido la presión arterial en los últimos 2 años?
+        </p>
+
+        <div class="quest__options">
+          <div class="answer__option pill">
+            <input type="radio"
+                   id="form-q4-yes"
+                   value="1"
+                   formControlName="answer">
+            <label for="form-q4-yes">
+              Sí
+            </label>
+          </div>
+          <div class="answer__option pill">
+            <input type="radio"
+                   id="form-q4-no"
+                   value="0"
+                   formControlName="answer">
+            <label for="form-q4-no">
+              No
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- *Detalle -->
+      <div class="quest__options"
+           @fade
+           *ngIf="getFormControlOfFormGroup('q4')['answer'].value == 1">
+        <div class="input">
+          <label for="form-q4-detail"
+                 class="placeholder select"
+                 aria-placeholder="¿Cuál fue el resultado?">
+            <select id="form-q4-detail"
+                    formControlName="detail">
+              <option value=""
+                      hidden
+                      disabled>
+                Seleccione
+              </option>
+              <option value="1">BAJO</option>
+              <option value="2">NORMAL</option>
+              <option value="3">ALTO</option>
+              <option value="4">IGNORO</option>
+            </select>
+          </label>
+        </div>
+      </div>
+    </li>
+
+    <!--
+      *¿Usted tiene, o ha tenido, o se encuentra en tratamiento, o en proceso de diagnóstico,
+      alguna de las siguientes enfermedades, dolencias o situaciones de salud?
+    -->
+    <li class="list__item"
+        formGroupName="q5">
+      <div class="quest">
+        <p class="quest__text">
+          ¿Usted tiene, o ha tenido, o se encuentra en tratamiento, o en proceso de diagnóstico, alguna de las
+          siguientes enfermedades, dolencias o situaciones de salud?
+        </p>
+
+      </div>
+
+      <ol class="list"
+          type="a">
+        <li class="list__item"
+            formGroupName="q51">
+          <div class="quest">
+            <p class="quest__text">
+              ¿Cáncer, Tumores, V.I.H positivo, SIDA, Linfomas, Leucemia, Enfermedades Hematológicas, Enfermedades de
+              Pulmón, Enfermedades al Riñon, Insuficiencia Renal Crónica? En caso afirmativo, favor detallar:
+            </p>
+            <div class="quest__options">
+              <div class="answer__option pill">
+                <input type="radio"
+                       id="form-q51-yes"
+                       value="1"
+                       formControlName="answer">
+                <label for="form-q51-yes">
+                  Sí
+                </label>
+              </div>
+              <div class="answer__option pill">
+                <input type="radio"
+                       id="form-q51-no"
+                       value="0"
+                       formControlName="answer">
+                <label for="form-q51-no">
+                  No
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="quest__answer"
+               @fade
+               *ngIf="getFormControlOfDoubleFormGrup('q5', 'q51')['answer'].value == 1">
+            <div class="input">
+              <label for="form-q51-detail"
+                     class="placeholder"
+                     aria-placeholder="Detallar situación">
+                <input type="text"
+                       id="form-q51-detail"
+                       placeholder="Detallar"
+                       formControlName="detail">
+              </label>
+            </div>
+          </div>
+        </li>
+
+        <li class="list__item"
+            formGroupName="q52">
+          <div class="quest">
+            <p class="quest__text">
+              ¿Infarto al Miocardio, Infarto Cerebral, Enfermedades Cardíacas, Hipertensión Arterial, Enfermedades
+              Coronarias, Soplos Cardíacos, Arritmias, Aneurismas, Accidentes Cerebrovasculares, Displidemia,
+              Hipercolesterolemia, Sobrepeso, Obesidad, Diabetes Mellitus? En caso afirmativo, favor detallar:
+            </p>
+            <div class="quest__options">
+              <div class="answer__option pill">
+                <input type="radio"
+                       id="form-q52-yes"
+                       value="1"
+                       formControlName="answer">
+                <label for="form-q52-yes">
+                  Sí
+                </label>
+              </div>
+              <div class="answer__option pill">
+                <input type="radio"
+                       id="form-q52-no"
+                       value="0"
+                       formControlName="answer">
+                <label for="form-q52-no">
+                  No
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="quest__answer"
+               @fade
+               *ngIf="getFormControlOfDoubleFormGrup('q5', 'q52')['answer'].value == 1">
+            <div class="input">
+              <label for="form-q52-detail"
+                     class="placeholder"
+                     aria-placeholder="Detallar situación">
+                <input type="text"
+                       id="form-q52-detail"
+                       placeholder="Detallar"
+                       formControlName="detail">
+              </label>
+            </div>
+          </div>
+        </li>
+
+        <li class="list__item"
+            formGroupName="q53">
+          <div class="quest">
+            <p class="quest__text">
+              ¿Enfermedades Gastrointestinales, Hepatitis (B o C), Cirrosis Hepática, Úlcera Gástrica, Colitis Ulcerosa,
+              Epilepsia, Enfermedad de Alzheimer, Depresión, Enfermedades Psiquiátricas? En caso afirmativo, favor
+              detallar:
+            </p>
+            <div class="quest__options">
+              <div class="answer__option pill">
+                <input type="radio"
+                       id="form-q53-yes"
+                       value="1"
+                       formControlName="answer">
+                <label for="form-q53-yes">
+                  Sí
+                </label>
+              </div>
+              <div class="answer__option pill">
+                <input type="radio"
+                       id="form-q53-no"
+                       value="0"
+                       formControlName="answer">
+                <label for="form-q53-no">
+                  No
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="quest__answer"
+               @fade
+               *ngIf="getFormControlOfDoubleFormGrup('q5', 'q53')['answer'].value == 1">
+            <div class="input">
+              <label for="form-q53-detail"
+                     class="placeholder"
+                     aria-placeholder="Detallar situación">
+                <input type="text"
+                       id="form-q53-detail"
+                       placeholder="Detallar"
+                       formControlName="detail">
+              </label>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </li>
+
+    <!-- *¿Tiene que ser hospitalizado o recibir tratamiento médico próximamente? -->
+    <li class="list__item"
+        formGroupName="q6">
+      <div class="quest">
+        <p class="quest__text">
+          ¿Tiene que ser hospitalizado o recibir tratamiento médico próximamente?
+        </p>
+
+        <div class="quest__options">
+          <div class="answer__option pill">
+            <input type="radio"
+                   id="form-q6-yes"
+                   value="1"
+                   formControlName="answer">
+            <label for="form-q6-yes">
+              Sí
+            </label>
+          </div>
+          <div class="answer__option pill">
+            <input type="radio"
+                   id="form-q6-no"
+                   value="0"
+                   formControlName="answer">
+            <label for="form-q6-no">
+              No
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="quest__answer"
+           @fade
+           *ngIf="getFormControlOfFormGroup('q6')['answer'].value == 1">
+        <div class="input">
+          <label for="form-q6-detail"
+                 class="placeholder"
+                 aria-placeholder="Detallar situación">
+            <input type="text"
+                   id="form-q6-detail"
+                   placeholder="Detallar"
+                   formControlName="detail">
+          </label>
+        </div>
+      </div>
+    </li>
+
+    <!--
+        *¿Realiza o participa en alguna de las siguientes actividades o deportes riesgosos? Se consideran como tales
+        actividades o deportes, aquellos que constituyan una clara agravación del riesgo o en el que se ponga en
+        peligro su vida.
+    -->
+    <li class="list__item"
+        formGroupName="q7">
+      <div class="quest">
+        <p class="quest__text">
+          ¿Realiza o participa en alguna de las siguientes actividades o deportes riesgosos? Se consideran como tales
+          actividades o deportes, aquellos que constituyan una clara agravación del riesgo o en el que se ponga en
+          peligro su vida.
+        </p>
+      </div>
+
+      <ol class="list"
+          type="a">
+        <li class="list__item"
+            formGroupName="q71">
+          <div class="quest">
+            <p class="quest__text">
+              ¿Viaja en helicópteros, aviones militares, de instrucción o avionetas particulares, vuelos como piloto o
+              estudiante? En caso afirmativo, favor detallar.
+            </p>
+            <div class="quest__options">
+              <div class="answer__option pill">
+                <input type="radio"
+                       id="form-q71-yes"
+                       value="1"
+                       formControlName="answer">
+                <label for="form-q71-yes">
+                  Sí
+                </label>
+              </div>
+              <div class="answer__option pill">
+                <input type="radio"
+                       id="form-q71-no"
+                       value="0"
+                       formControlName="answer">
+                <label for="form-q71-no">
+                  No
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="quest__answer"
+               @fade
+               *ngIf="getFormControlOfDoubleFormGrup('q7', 'q71')['answer'].value == 1">
+            <div class="input">
+              <label for="form-q71-detail"
+                     class="placeholder"
+                     aria-placeholder="Detallar situación">
+                <input type="text"
+                       id="form-q71-detail"
+                       placeholder="Detallar"
+                       formControlName="detail">
+              </label>
+            </div>
+          </div>
+        </li>
+
+        <li class="list__item"
+            formGroupName="q72">
+          <div class="quest">
+            <p class="quest__text">
+              ¿Practica paracaidismo, andinismo, automovilismo, buceo, motociclismo o afines, bungee jumping (caída
+              libre con cuerda), pesca submarina, ala delta, planeador, rodeo, surf o cualquier otro deporte o actividad
+              obviamente peligrosa? En caso afirmativo, favor detallar.
+            </p>
+            <div class="quest__options">
+              <div class="answer__option pill">
+                <input type="radio"
+                       id="form-q72-yes"
+                       value="1"
+                       formControlName="answer">
+                <label for="form-q72-yes">
+                  Sí
+                </label>
+              </div>
+              <div class="answer__option pill">
+                <input type="radio"
+                       id="form-q72-no"
+                       value="0"
+                       formControlName="answer">
+                <label for="form-q72-no">
+                  No
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="quest__answer"
+               @fade
+               *ngIf="getFormControlOfDoubleFormGrup('q7', 'q72')['answer'].value == 1">
+            <div class="input">
+              <label for="form-q72-detail"
+                     class="placeholder"
+                     aria-placeholder="Detallar situación">
+                <input type="text"
+                       id="form-q72-detail"
+                       placeholder="Detallar"
+                       formControlName="detail">
+              </label>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </li>
+
+    <!-- *¿Tiene que ser hospitalizado o recibir tratamiento médico próximamente? -->
+    <li class="list__item"
+        formGroupName="q8">
+      <div class="quest">
+        <p class="quest__text">
+          ¿Tiene alguna otra enfermedad o antecedente médico no considerados en la lista (si usted padece o ha padecido
+          de alguna enfermedad no mencionada líneas arriba, por favor detallar)
+        </p>
+
+        <div class="quest__options">
+          <div class="answer__option pill">
+            <input type="radio"
+                   id="form-q8-yes"
+                   value="1"
+                   formControlName="answer">
+            <label for="form-q8-yes">
+              Sí
+            </label>
+          </div>
+          <div class="answer__option pill">
+            <input type="radio"
+                   id="form-q8-no"
+                   value="0"
+                   formControlName="answer">
+            <label for="form-q8-no">
+              No
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="quest__answer"
+           @fade
+           *ngIf="getFormControlOfFormGroup('q8')['answer'].value == 1">
+        <div class="input">
+          <label for="form-q8-detail"
+                 class="placeholder"
+                 aria-placeholder="Detallar situación">
+            <input type="text"
+                   id="form-q8-detail"
+                   placeholder="Detallar"
+                   formControlName="detail">
+          </label>
+        </div>
+      </div>
+    </li>
+  </ol>
+  <div class="selection orange">
+    <input type="checkbox"
+           id="declare-valid-info"
+           formControlName="declareValidInfo">
+    <label for="declare-valid-info">
+      Declaro que toda la información es verdadera
+    </label>
+  </div>
+  <button class="button primary fit orange"
+          [disabled]="form.invalid"
+          (click)="onSubmit()">
+    Continuar
+  </button>
+</form>

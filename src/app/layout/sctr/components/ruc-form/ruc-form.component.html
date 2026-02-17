@@ -1,0 +1,96 @@
+<form action=""
+      [formGroup]="rucForm"
+      (ngSubmit)="onSubmit()"
+      (keydown.enter)="!loading && onSubmit()">
+  <div class="row">
+    <div class="col-12">
+      <div class="soat-input-container big">
+        <input type="text"
+               placeholder="RUC"
+               class="soat-input"
+               formControlName="ruc"
+               [ngClass]="{ error: showError('ruc') }"
+               maxlength="11"
+               minlength="11"
+               (keydown.space)="$event.preventDefault();"
+               appSpecialCharacters />
+      </div>
+      <div class="soat-error-message"
+           *ngIf="showError('ruc')">
+        <ng-container *ngIf="rForm['ruc'].errors.required">
+          <i></i><span>Necesitamos conocer tu RUC</span>
+        </ng-container>
+        <ng-container *ngIf="rForm['ruc'].errors.pattern">
+          <i></i><span>Formato de RUC inválido</span>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="soat-input-container icon big">
+        <input type="text"
+               placeholder="CORREO ELECTRÓNICO"
+               class="soat-input soat-input-mail"
+               formControlName="email"
+               maxlength="50"
+               autocomplete="nope"
+               (keydown.space)="$event.preventDefault();"
+               [ngClass]="{ error: showError('email') }" />
+        <app-email-suggestions [email]="rForm['email'].value"
+                               (suggestion)="emailSuggestion($event)"></app-email-suggestions>
+        <i class="fa fa-pencil"></i>
+      </div>
+      <div class="soat-error-message"
+           *ngIf="showError('email')">
+        <ng-container *ngIf="rForm['email'].errors.required">
+          <i></i><span>Necesitamos conocer tu correo</span>
+        </ng-container>
+        <ng-container *ngIf="rForm['email'].errors.email">
+          <i></i><span>Formato de correo inválido</span>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="legal">
+        <label class="soat-checkbox-container"
+               [ngClass]="{ error: showError('privacy') }">
+          <input type="checkbox"
+                 formControlName="privacy"
+                 name="privacy"
+                 class="soat-checkbox" />
+          <span class="soat-checkbox-target"
+                [ngClass]="{'checkbox-parpadeo': rucForm.get('privacy').value !== true}"></span>
+          <div class="soat-checkbox-text"
+               tooltip="Tenemos más promociones para ti. Acepta el envío de publicidad de acuerdo a lo señalado en la Política de Privacidad">
+            <span (click)="enablePrivacy()">
+              Acepto el envío de publicidad de acuerdo a lo señalado en la
+            </span>
+            <a class="soat-link"
+               href="https://protectasecurity.pe/politica-de-privacidad/"
+               target="_blank">
+              Política de Privacidad
+            </a>
+          </div>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="center">
+    <button class="soat-button ripple stretch big"
+            type="submit"
+            [disabled]="loading || !rucForm.valid"
+            [ngClass]="{ loading: loading }"
+            (click)="onSubmit">
+      <i class="fa fa-circle-o-notch fa-spin"
+         *ngIf="loading"></i>
+      Siguiente
+    </button>
+  </div>
+</form>
+<ng-template #privacyModal>
+  <app-privacyvidaley (closeaction)="closePrivacyModal()"></app-privacyvidaley>
+</ng-template>

@@ -1,0 +1,212 @@
+<div class="container-modal">
+
+    <div class="container-title-modal">
+        <h3>DATOS DE LOS ÚLTIMOS 3 TRABAJOS - CONTRATANTE</h3>
+    </div>
+
+    <div class="container-form d-flex flex-wrap">
+        <div class="d-flex align-items-center col-lg-6 mb-0  px-0">
+            <div class="col-lg-4 mb-0 px-0">
+                <div>Centro de trabajo</div>
+            </div>
+            <div class="col-lg-8 mb-0 px-0"
+                 style="margin-bottom: -8px !important;">
+                <form-input-text [(value)]="work.place_work"
+                    [patternPrevent]="CONSTANTS.REGEX.ALFANUMERICO"
+                    [disabled]="profile_id == 192"></form-input-text>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center col-lg-6 mb-0">
+            <div class="col-lg-4 mb-0 px-0">
+                <div>Cargo</div>
+            </div>
+            <div class="col-lg-8 mb-0 px-0"
+                 style="margin-bottom: -8px !important;">
+                <form-input-text [(value)]="work.position"
+                        [patternPrevent]="CONSTANTS.REGEX.ALFANUMERICO"
+                                 [disabled]="profile_id == 192"></form-input-text>
+            </div>
+        </div>
+
+      
+        <div class="d-flex align-items-center col-lg-6 mb-0  px-0">
+            <div class="col-lg-4 mb-0 px-0">
+                <div>Fecha de inicio</div>
+            </div>
+            <div class="col-lg-8 mb-0 px-0"
+                 style="margin-bottom: -8px !important;">
+                <form-input-date [(value)]="work.ini_date"
+                [disabled]="profile_id == 192"></form-input-date>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center col-lg-6 mb-0">
+            <div class="col-lg-4 mb-0 px-0">
+                <div>Fecha de cese</div>
+            </div>
+            <div class="col-lg-8 mb-0 px-0"
+                 style="margin-bottom: -8px !important;">
+                <form-input-date [(value)]="work.fin_date"
+                [disabled]="profile_id == 192 || fin_date_disabled"></form-input-date>
+            </div>
+        </div>
+
+
+        <div class="d-flex align-items-center col-lg-6 mb-0  px-0">
+            <div class="col-lg-4 mb-0 px-0">
+                <div>Sueldo (soles)</div>
+            </div>
+
+            <div class="col-lg-8 mb-0 px-0"
+                style="margin-bottom: -8px !important;">
+                <form-input-text [(value)]="work.salary"
+                
+                                 (valueChange)="changeStyleCredit2(work.salary)"
+                                 [patternPrevent]="CONSTANTS.REGEX.HUNDREDS_NUMBER"
+                                 [disabled]="profile_id == 192"></form-input-text>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center col-lg-6 mb-0">
+            <div class="col-lg-4 mb-0 px-0">
+                <div></div>
+            </div>
+            <div class="d-flex align-items-center col-lg-8 mb-0 px-0"
+                 style="margin-bottom: -8px !important;">
+                 <input
+                 type="checkbox"
+                 name="check_laboral"
+                 id="check_laboral"
+                 [(ngModel)]="work.check_laboral"
+                 (change)="changeCheckLab()"
+                 />
+                 <label for="check_laboral" class="ml-2 mt-2">Actualmente laborando</label>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center col-lg-6 mb-0  px-0">
+            <div class="col-lg-4 mb-0 px-0">
+                <div>Trabajos de</div>
+            </div>
+            <div class="col-lg-8 mb-0 px-0">
+                <form-input-select [extra_large]="true"
+                                   [items]="list_relations"
+                                   [firstSelect]="true"
+                                   [updateModelOnChange]="true"
+                                   fieldCodigo="Id"
+                                   fieldValor="Name"
+                                   [(value)]="work.type_client"
+                                   [disabled]="profile_id == 192"></form-input-select>
+            </div>
+        </div>
+
+
+        <div class="d-flex align-items-center col-lg-12 mb-0  px-0">
+            <div class="col-lg-4 px-0">
+                <div></div>
+            </div>
+            <div class="col-lg-8 px-0"
+                 style="display: flex; gap: 4px; justify-content: end;">
+                <form-button label="Grabar"
+                             btnClass="btn-primary-VI"
+                             *ngIf="toggle_edit_work && profile_id == 191"
+                             (click)="updateWork()"></form-button>
+                <form-button label="Cancelar"
+                             btnClass="btn-primary-VI"
+                             *ngIf="toggle_edit_work && profile_id == 191"
+                             (click)="cancelWork()"></form-button>
+            </div>
+
+        </div>
+
+
+        <div class="d-flex align-items-center col-lg-12 mb-1 px-0">
+            <form-button label="Agregar"
+                         btnClass="btn-primary-VI"
+                         *ngIf="toggle_add_work && profile_id == 191"
+                         (click)="addWork()"></form-button>
+
+
+        </div>
+
+
+
+        <div class="grid form-group col-lg-12 mb-3 px-0">
+            <div class="table-responsive "
+                 id="table-scroll"
+                 style="margin-top: 9px;">
+                <table class="table-u">
+                    <thead class="grid-title">
+                        <th class="grid-title-item">Id</th>
+                        <th class="grid-title-item">Relación del trabajo</th>
+                        <th class="grid-title-item">Centro de trabajo</th>
+                        <th class="grid-title-item">Cargo</th>
+                        <th class="grid-title-item">Fecha de inicio</th>
+                        <th class="grid-title-item">Fecha de cese</th>
+                        <th class="grid-title-item">Sueldo</th>
+                        <th class="grid-title-item">Acciones</th>
+                    </thead>
+                    <tbody style="text-transform: uppercase;">
+                        <ng-container *ngIf="!work_list?.length">
+                            <tr class="grid-body">
+                                <td class="grid-body-item"
+                                    colspan="12"
+                                    style="text-align: center">
+                                    No hay informacion para mostrar
+                                </td>
+                            </tr>
+                        </ng-container>
+                        <ng-container *ngIf="!!work_list?.length">
+                            <tr class="grid-body"
+                                *ngFor="let item of work_list">
+                                <td class="grid-title-item">{{ item.id }}</td>
+                                <td class="grid-title-item">{{ resolveTextTypeClient(item.type_client) }}</td>
+                                <td class="grid-title-item">{{ item.place_work }}</td>
+                                <td class="grid-title-item">{{ item.position }}</td>
+                                <td class="grid-title-item">
+                                    {{ item.ini_date}}
+                                </td>
+
+                                <td class="grid-title-item">{{ item.check_laboral == 1 ? 'Actualmente laborando' : item.fin_date }}</td>
+                                <td class="grid-title-item">{{ item.desc_currency }}{{ item.salary }}</td>
+                                <td>
+                                    <div style="display: flex; justify-content: center; text-transform: capitalize;" *ngIf="profile_id == 191">
+                                        <div class="p-2"
+                                             (click)="editWork(item)">
+                                            <i class="fa fa-edit"
+                                               style=" margin-right: 2px; color: #553d81;"></i>
+                                            <span>Editar</span>
+                                        </div>
+
+                                        <div class="p-2"
+                                             (click)="deleteWork(item.id)">
+                                            <i class="fa fa-trash"
+                                               style=" margin-right: 2px; color:red"></i>
+                                            <span>Eliminar</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center col-lg-12 mt-0 px-0">
+            <form-button label="Guardar"
+                        btnClass="btn-primary-VI"
+                        (click)="SaveWork()"
+                        *ngIf="profile_id == 191"></form-button>
+            <form-button label="Cerrar"
+                         btnClass="btn-primary-VI"
+                         (click)="reference.close()"></form-button>
+        </div>
+
+
+
+
+    </div>
+
+</div>

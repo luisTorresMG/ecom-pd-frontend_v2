@@ -1,0 +1,917 @@
+<div class="container-fluid">
+  <div class="row content-all">
+    <div class="col-md-12 content">
+      <div class="container-fluid content-page">
+        <div class="row r1-head">
+          <div class="col-12 head-title">
+            <h1 class="title">Endosos General</h1>
+          </div>
+        </div>
+        <form [formGroup]="formCertificadoSearch" class="form-filters">
+          <div class="group-inputs">
+            <label for="policy" class="lbl-input-u" aria-label="CERTIFICADO:">
+              <input
+                type="text"
+                formControlName="certificado"
+                id="policy"
+                class="input-u"
+                maxlength="10"
+              />
+            </label>
+            <label for="placa" class="lbl-input-u" aria-label="PLACA:">
+              <input
+                type="text"
+                formControlName="placa"
+                id="placa"
+                class="input-u"
+                minlength="6"
+                maxlength="6"
+              />
+            </label>
+            <label
+              for="documentType"
+              class="lbl-input-u"
+              aria-label="TIPO DOCUMENTO:"
+            >
+              <select
+                formControlName="tipoDoc"
+                id="documentType"
+                class="input-u"
+                (change)="changeValueTipoDocumento($event.target.value)"
+              >
+                <option value="0" disabled>SELECCIONE</option>
+                <option value="2">DNI</option>
+                <option value="4">C.E.</option>
+                <option value="1">RUC</option>
+              </select>
+            </label>
+          </div>
+          <div
+            class="group-inputs group-actions"
+            [class.group-row-3]="
+              tipoDocumento === 'DNI' ||
+              tipoDocumento === 'C.E.' ||
+              tipoDocumento === 'RUC'
+            "
+          >
+            <button
+              class="btn-primary-u"
+              role="button"
+              type="button"
+              [disabled]="
+                formCertificadoSearch.invalid ||
+                (!f['certificado'].value &&
+                  !f['placa'].value &&
+                  !f['numero'].value)
+              "
+              (click)="searchData()"
+            >
+              Buscar
+            </button>
+            <button
+              class="btn-primary-u"
+              role="button"
+              type="button"
+              (click)="setEnableForm()"
+              [disabled]="isSearchedData == false"
+            >
+              Modificar
+            </button>
+            <button
+              class="btn-primary-u"
+              role="button"
+              type="button"
+              (click)="clearDataSearch()"
+            >
+              Limpiar
+            </button>
+          </div>
+          <ng-container
+            *ngIf="tipoDocumento === 'DNI' || tipoDocumento === 'C.E.'"
+          >
+            <div class="group-inputs group-normal-person">
+              <label
+                for="documentNumber"
+                class="lbl-input-u"
+                [attr.aria-label]="tipoDocumento === 'DNI' ? 'N° DNI' : 'C.E.'"
+              >
+                <input
+                  type="text"
+                  formControlName="numero"
+                  id="documentNumber"
+                  class="input-u"
+                  [minlength]="limitDocumentNumber.min"
+                  [maxlength]="limitDocumentNumber.max"
+                />
+              </label>
+              <label for="names" class="lbl-input-u" aria-label="NOMBRE:">
+                <input
+                  type="text"
+                  formControlName="nombre"
+                  id="names"
+                  class="input-u"
+                />
+              </label>
+              <label
+                for="apePat"
+                class="lbl-input-u"
+                aria-label="APELLIDO PATERNO:"
+              >
+                <input
+                  type="text"
+                  formControlName="apellidop"
+                  id="apePat"
+                  class="input-u"
+                />
+              </label>
+              <label
+                for="apeMat"
+                class="lbl-input-u"
+                aria-label="APELLIDO MATERNO:"
+              >
+                <input
+                  type="text"
+                  formControlName="apellidom"
+                  id="apeMat"
+                  class="input-u"
+                />
+              </label>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="tipoDocumento === 'RUC'">
+            <div class="group-inputs">
+              <label
+                for="documentNumberRuc"
+                class="lbl-input-u"
+                aria-label="N° RUC"
+              >
+                <input
+                  type="text"
+                  formControlName="numero"
+                  id="documentNumberRuc"
+                  class="input-u"
+                  [minlength]="limitDocumentNumber.min"
+                  [maxlength]="limitDocumentNumber.max"
+                />
+              </label>
+              <label
+                for="razonSocial"
+                class="lbl-input-u"
+                aria-label="RAZÓN SOCIAL:"
+              >
+                <input
+                  type="text"
+                  formControlName="nombre"
+                  id="razonSocial"
+                  class="input-u"
+                />
+              </label>
+            </div>
+          </ng-container>
+        </form>
+        <div class="divider" [hidden]="isSearchedData == false"></div>
+        <form
+          [formGroup]="formDataCertificado"
+          [hidden]="isSearchedData == false"
+        >
+          <div class="dataEndosos py-0">
+            <div class="row head-row mb-2" style="margin-top: 20px">
+              <div class="col-md-12 px-1">
+                <span>Datos de Póliza</span>
+              </div>
+            </div>
+            <div class="row" style="margin-top: 20px">
+              <div class="col-md-2 pl-0 d-flex flex-column">
+                <label class="lbl-in">CERTIFICADO:</label>
+                <label class="in-action d-flex align-items-center">{{
+                  dataEndosos.poliza.nCertificado
+                }}</label>
+              </div>
+              <div class="col-md-2 pl-0 d-flex flex-column">
+                <label class="lbl-in">COMPROBANTE:</label>
+                <label class="in-action d-flex align-items-center">{{
+                  transformCertif(dataEndosos.poliza.comprobante)
+                }}</label>
+              </div>
+              <div class="col-md-2 pl-0 d-flex flex-column">
+                <label class="lbl-in">INICIO VIGENCIA:</label>
+                <input
+                  type="text"
+                  class="in-action"
+                  #dp="bsDatepicker"
+                  [bsConfig]="bsConfig"
+                  bsDatepicker
+                  readonly
+                  formControlName="iniVigencia"
+                  (change)="changeFechaInicio($event.target.value)"
+                />
+              </div>
+              <div class="col-md-2 pl-0 d-flex flex-column">
+                <label class="lbl-in">FIN VIGENCIA:</label>
+                <input
+                  type="text"
+                  class="in-action"
+                  #dp="bsDatepicker"
+                  [bsConfig]="bsConfig"
+                  bsDatepicker
+                  readonly
+                  formControlName="finVigencia"
+                />
+              </div>
+              <div class="col-md-2 pl-0 d-flex flex-column">
+                <label class="lbl-in">FECHA DE EMISIÓN:</label>
+                <input
+                  type="text"
+                  class="in-action"
+                  #dp="bsDatepicker"
+                  [bsConfig]="bsConfig"
+                  bsDatepicker
+                  readonly
+                  formControlName="fechaEmision"
+                />
+              </div>
+              <div class="col-md-2 pl-0 d-flex flex-column pr-0">
+                <label class="lbl-in">HORA DE EMISIÓN:</label>
+                <input
+                  type="time"
+                  class="in-action"
+                  formControlName="horaEmision"
+                />
+              </div>
+            </div>
+            <div class="row head-row mb-2" style="margin-top: 20px">
+              <div class="col-md-12 px-1">
+                <span>Datos de Vehículo</span>
+              </div>
+            </div>
+            <div class="row mb-2" style="margin-top: 20px">
+              <div class="col-md-3 pl-0 d-flex flex-column">
+                <label class="lbl-in">PLACA:</label>
+                <input
+                  type="text"
+                  class="in-action"
+                  formControlName="placaAuto"
+                  [maxlength]="6"
+                />
+              </div>
+              <div class="col-md-3 pl-0 d-flex flex-column">
+                <label class="lbl-in">MARCA:</label>
+                <select
+                  class="in-action"
+                  formControlName="marcaAuto"
+                  (change)="changeMarcaAuto($event.target.value)"
+                >
+                  <option [value]="0" disabled selected>SELECCIONE</option>
+                  <option
+                    *ngFor="let data of dataMarca?.PA_SEL_MARK"
+                    [value]="data?.NVEHBRAND"
+                  >
+                    {{ data?.SDESCRIPT }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-3 pl-0 d-flex flex-column">
+                <label class="lbl-in">VERSIÓN:</label>
+                <select
+                  class="in-action"
+                  formControlName="versionAuto"
+                  (change)="changeVersionAuto($event.target.value)"
+                >
+                  <option [value]="0" disabled selected>SELECCIONE</option>
+                  <option
+                    *ngFor="let data of dataVersion?.version"
+                    [value]="data?.SDESVEHMODEL"
+                  >
+                    {{ data?.SDESCRIPT }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-md-3 pl-0 d-flex flex-column pr-0">
+                <label class="lbl-in">CLASE:</label>
+                <select
+                  class="in-action"
+                  formControlName="claseAuto"
+                  (change)="changeClaseAuto($event.target.value)"
+                >
+                  <option [value]="0" disabled selected>SELECCIONE</option>
+                  <option
+                    *ngFor="let data of dataClase?.PRO_CLASS"
+                    [value]="data?.NIDCLASE"
+                  >
+                    {{ data?.SDESCRIPT }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="row" style="margin-top: 20px" style="margin-top: 20px">
+              <div class="col-md-3 pl-0 d-flex flex-column">
+                <label class="lbl-in">USO:</label>
+                <label class="in-action d-flex align-items-center">{{
+                  dataEndosos.vehiculo.uso
+                }}</label>
+              </div>
+              <div class="col-md-3 pl-0 d-flex flex-column">
+                <label class="lbl-in">N° ASIENTOS:</label>
+                <label class="in-action d-flex align-items-center">{{
+                  dataEndosos.vehiculo.nAsientos
+                }}</label>
+              </div>
+              <div class="col-md-3 pl-0 d-flex flex-column">
+                <label class="lbl-in">AÑO:</label>
+                <input
+                  type="text"
+                  class="in-action"
+                  formControlName="anio"
+                  [maxlength]="4"
+                />
+              </div>
+              <div class="col-md-3 pl-0 d-flex flex-column pr-0">
+                <label class="lbl-in">N° SERIE:</label>
+                <input type="text" class="in-action" formControlName="serie" />
+              </div>
+            </div>
+            <div class="row head-row mb-2" style="margin-top: 20px">
+              <div class="col-md-12 px-1">
+                <span>Datos del Contratante</span>
+              </div>
+            </div>
+            <div class="row mb-2" style="margin-top: 20px">
+              <div class="col-md-3 pl-0 d-flex flex-column">
+                <label class="lbl-in">TIPO DOCUMENTO:</label>
+                <label class="in-action d-flex align-items-center">{{
+                  dataEndosos.contratante.tipoDocumento
+                }}</label>
+              </div>
+              <div class="col-md-3 pl-0 d-flex flex-column">
+                <label class="lbl-in">DOCUMENTO:</label>
+                <label class="in-action d-flex align-items-center">{{
+                  dataEndosos.contratante.nDocumento
+                }}</label>
+              </div>
+            </div>
+            <div class="row mb-2" style="margin-top: 20px">
+              <div
+                class="col-md-9 pl-0 d-flex flex-column"
+                *ngIf="dataEndosos.contratante.tipoContratante === 'empresa'"
+              >
+                <label class="lbl-in">RAZÓN SOCIAL:</label>
+                <label class="in-action d-flex align-items-center">{{
+                  dataEndosos.contratante.razonSocial
+                }}</label>
+              </div>
+              <div class="col-md-3 pl-0 d-flex flex-column">
+                <label class="lbl-in">NOMBRES:</label>
+                <label class="in-action d-flex align-items-center">{{
+                  dataEndosos.contratante.nombres
+                }}</label>
+              </div>
+              <div class="col-md-3 pl-0 d-flex flex-column">
+                <label class="lbl-in">APELLIDO PATERNO:</label>
+                <label class="in-action d-flex align-items-center">{{
+                  dataEndosos.contratante.apePaterno
+                }}</label>
+              </div>
+              <div class="col-md-3 pl-0 d-flex flex-column pr-0">
+                <label class="lbl-in">APELLIDO MATERNO:</label>
+                <label class="in-action d-flex align-items-center">{{
+                  dataEndosos.contratante.apeMaterno
+                }}</label>
+              </div>
+            </div>
+            <div class="row head-row mb-2" style="margin-top: 20px">
+              <div class="col-md-12 px-1">
+                <span>Datos de Dirección de Contratante</span>
+              </div>
+            </div>
+            <div class="row mb-2" style="margin-top: 20px">
+              <div class="col-md-3 pl-0 d-flex flex-column">
+                <label class="lbl-in">EMAIL:</label>
+                <input
+                  type="text"
+                  formControlName="emailContratante"
+                  class="in-action d-flex align-items-center"
+                />
+              </div>
+              <div class="col-md-3 pl-0 d-flex flex-column">
+                <label class="lbl-in">DEPARTAMENTO:</label>
+                <label class="in-action d-flex align-items-center">{{
+                  dataEndosos.contratante.departamento
+                }}</label>
+              </div>
+              <div class="col-md-3 pl-0 d-flex flex-column">
+                <label class="lbl-in">PROVINCIA:</label>
+                <label class="in-action d-flex align-items-center">{{
+                  dataEndosos.contratante.provincia
+                }}</label>
+              </div>
+              <div class="col-md-3 pl-0 d-flex flex-column pr-0">
+                <label class="lbl-in">DISTRITO:</label>
+                <label class="in-action d-flex align-items-center">{{
+                  dataEndosos.contratante.distrito
+                }}</label>
+              </div>
+            </div>
+            <div class="row mb-2" style="margin-top: 20px">
+              <div class="col-md-6 pl-0 d-flex flex-column">
+                <label class="lbl-in">DIRECCIÓN:</label>
+                <label class="in-action d-flex align-items-center">{{
+                  dataEndosos.contratante.direccion
+                }}</label>
+              </div>
+            </div>
+            <div class="row" style="margin-top: 40px">
+              <div class="col-md-3 pl-0 d-flex flex-column">
+                <label class="lbl-in">MOTIVO ENDOSO:</label>
+                <select class="in-action" formControlName="motivoEndoso">
+                  <option [value]="null" disabled selected>SELECCIONE</option>
+                  <option value="1">ERROR DE DIGITACION</option>
+                  <option value="2">SOLICITUD COMERCIAL</option>
+                  <option value="3">SOLICITUD CLIENTE</option>
+                  <option value="4">OTROS</option>
+                </select>
+              </div>
+              <div class="col-md-6 pl-0 d-flex flex-column">
+                <label class="lbl-in">OBSERVACIÓN:</label>
+                <input
+                  type="text"
+                  class="in-action"
+                  formControlName="observacion"
+                />
+              </div>
+            </div>
+            <div class="row mt-3 content-actions-result">
+              <button
+                type="submit"
+                class="btn-primary-u mr-3"
+                [disabled]="!ff['motivoEndoso'].value"
+                (click)="comparacion()"
+              >
+                Guardar
+              </button>
+              <button
+                type="button"
+                class="btn-primary-u"
+                (click)="clearDataSearch()"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  bsModal
+  #modalGuardar="bs-modal"
+  [config]="{
+    backdrop: 'static'
+  }"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmación de Endoso</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="hideModalGuardarEndoso()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label style="margin-left: 3%; margin-top: 15px"
+          >¿Seguro que desea realizar los siguientes cambios?</label
+        >
+        <div class="content-data" style="width: 100%; margin-left: 3%">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="lbl-in font-weight-bold"
+                >Antes de la modificación</label
+              >
+            </div>
+            <div class="col-md-6">
+              <label class="lbl-in font-weight-bold"
+                >Después de la modificación</label
+              >
+            </div>
+          </div>
+          <div class="row mb-3" *ngIf="isChangeForm.iniVigencia">
+            <div class="col-md-6 d-flex flex-column">
+              <label class="lbl-in lbl-opaque">INICIO VIGENCIA:</label>
+              <label class="lbl-in">{{ dataEndosos.poliza.iniVigencia }}</label>
+            </div>
+            <div class="col-md-6 d-flex flex-column">
+              <label class="lbl-in lbl-opaque">INICIO VIGENCIA:</label>
+              <label class="lbl-in">{{
+                formDataCertificado.get("iniVigencia").value
+                  | date: "dd/MM/yyyy"
+              }}</label>
+            </div>
+          </div>
+          <div class="row mb-3" *ngIf="isChangeForm.finVigencia">
+            <div class="col-md-6 d-flex flex-column">
+              <label class="lbl-in lbl-opaque">FIN VIGENCIA:</label>
+              <label class="lbl-in">{{ dataEndosos.poliza.finVigencia }}</label>
+            </div>
+            <div class="col-md-6 d-flex flex-column">
+              <label class="lbl-in lbl-opaque">FIN VIGENCIA:</label>
+              <label class="lbl-in">{{
+                formDataCertificado.get("finVigencia").value
+                  | date: "dd/MM/yyyy"
+              }}</label>
+            </div>
+          </div>
+          <div class="row mb-3" *ngIf="isChangeForm.fechaEmision">
+            <div class="col-md-6 d-flex flex-column">
+              <label class="lbl-in lbl-opaque">FECHA EMISION:</label>
+              <label class="lbl-in">{{
+                dataEndosos.poliza.fechaEmision
+              }}</label>
+            </div>
+            <div class="col-md-6 d-flex flex-column">
+              <label class="lbl-in lbl-opaque">FECHA EMISION:</label>
+              <label class="lbl-in">{{
+                formDataCertificado.get("fechaEmision").value
+                  | date: "dd/MM/yyyy"
+              }}</label>
+            </div>
+          </div>
+          <div class="row mb-3" *ngIf="isChangeForm.horaEmision">
+            <div class="col-md-6 d-flex flex-column">
+              <label class="lbl-in lbl-opaque">HORA EMISION:</label>
+              <label class="lbl-in">{{ dataEndosos.poliza.horaEmision }}</label>
+            </div>
+            <div class="col-md-6 d-flex flex-column">
+              <label class="lbl-in lbl-opaque">HORA EMISION:</label>
+              <label class="lbl-in">{{
+                formDataCertificado.get("horaEmision").value
+              }}</label>
+            </div>
+          </div>
+          <div class="row mb-3" *ngIf="isChangeForm.placaAuto">
+            <div class="col-md-6 d-flex flex-column">
+              <label class="lbl-in lbl-opaque">PLACA VEHICULO:</label>
+              <label class="lbl-in">{{ dataEndosos.vehiculo.placa }}</label>
+            </div>
+            <div class="col-md-6 d-flex flex-column">
+              <label class="lbl-in lbl-opaque">PLACA VEHICULO:</label>
+              <label class="lbl-in">{{
+                formDataCertificado.get("placaAuto").value
+              }}</label>
+            </div>
+          </div>
+          <div class="row mb-3" *ngIf="isChangeForm.marcaAuto">
+            <div class="col-md-6 d-flex flex-column">
+              <label class="lbl-in lbl-opaque">MARCA VEHICULO:</label>
+              <label class="lbl-in">{{ dataEndosos.vehiculo.marca }}</label>
+            </div>
+            <div class="col-md-6 d-flex flex-column">
+              <label class="lbl-in lbl-opaque">MARCA VEHICULO:</label>
+              <label class="lbl-in">{{
+                formDataCertificado.get("marcaAuto").value
+              }}</label>
+            </div>
+          </div>
+          <div class="row mb-3" *ngIf="isChangeForm.versionAuto">
+            <div class="col-md-6 d-flex flex-column">
+              <label class="lbl-in lbl-opaque">MODELO VEHÍCULO:</label>
+              <label class="lbl-in">{{ dataEndosos.vehiculo.version }}</label>
+            </div>
+            <div class="col-md-6 d-flex flex-column">
+              <label class="lbl-in lbl-opaque">MODELO VEHÍCULO:</label>
+              <label class="lbl-in">{{
+                formDataCertificado.get("versionAuto").value
+              }}</label>
+            </div>
+          </div>
+          <div class="row mb-3" *ngIf="isChangeForm.claseAuto">
+            <div class="col-md-6 d-flex flex-column">
+              <label class="lbl-in lbl-opaque">CLASE VEHÍCULO:</label>
+              <label class="lbl-in">{{ dataEndosos.vehiculo.clase }}</label>
+            </div>
+            <div class="col-md-6 d-flex flex-column">
+              <label class="lbl-in lbl-opaque">CLASE VEHÍCULO:</label>
+              <label class="lbl-in">{{
+                formDataCertificado.get("claseAuto").value
+              }}</label>
+            </div>
+          </div>
+          <div class="row mb-3" *ngIf="isChangeForm.anio">
+            <div class="col-md-6 d-flex flex-column">
+              <label class="lbl-in lbl-opaque">AÑO VEHÍCULO:</label>
+              <label class="lbl-in">{{ dataEndosos.vehiculo.anio }}</label>
+            </div>
+            <div class="col-md-6 d-flex flex-column">
+              <label class="lbl-in lbl-opaque">AÑO VEHÍCULO:</label>
+              <label class="lbl-in">{{
+                formDataCertificado.get("anio").value
+              }}</label>
+            </div>
+          </div>
+          <div class="row mb-3" *ngIf="isChangeForm.serie">
+            <div class="col-md-6 d-flex flex-column">
+              <label class="lbl-in lbl-opaque">SERIE VEHÍCULO:</label>
+              <label class="lbl-in">{{ dataEndosos.vehiculo.serie }}</label>
+            </div>
+            <div class="col-md-6 d-flex flex-column">
+              <label class="lbl-in lbl-opaque">SERIE VEHÍCULO:</label>
+              <label class="lbl-in">{{
+                formDataCertificado.get("serie").value
+              }}</label>
+            </div>
+          </div>
+          <div class="row mb-3" *ngIf="isChangeForm.emailContratante">
+            <div class="col-md-6 d-flex flex-column">
+              <label class="lbl-in lbl-opaque">EMAIL CONTRATANTE:</label>
+              <label class="lbl-in">{{ dataEndosos.contratante.email }}</label>
+            </div>
+            <div class="col-md-6 d-flex flex-column">
+              <label class="lbl-in lbl-opaque">EMAIL CONTRATANTE:</label>
+              <label class="lbl-in">{{
+                formDataCertificado.get("emailContratante").value
+              }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn full-color btn-secondary btn-close-modal"
+          data-dismiss="modal"
+          (click)="hideModalGuardarEndoso()"
+        >
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn full-color btn-aceptar-modal"
+          (click)="aceptar()"
+        >
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-modal-message
+  [message]="mensajeModal"
+  [isShow]="isShowModal"
+></app-modal-message>
+
+<div
+  class="modal fade"
+  bsModal
+  #modalError="bs-modal"
+  [config]="{
+    backdrop: 'static'
+  }"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content anular">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="cerrarModal()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <h4 class="textanular" style="font-size: 15px">
+          {{ MENSAJE }}
+        </h4>
+      </div>
+      <div
+        class="modal-footer modal-foot-confirm d-flex align-items-center justify-content-center"
+      >
+        <button
+          type="button"
+          class="btn full-color btn-aceptar-modal"
+          (click)="cerrarModal()"
+        >
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #modalResultado="bs-modal"
+  [config]="{
+    backdrop: 'static'
+  }"
+>
+  <div class="modal-dialog modal-ver-detalle" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Resultado de Búsqueda
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="hideModalResultado()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3 px-0 mb-3 py-0">
+        <table
+          class="table table-info-soat table-group-soat mx-0 mt-3 table-history"
+        >
+          <thead class="thead">
+            <tr class="grid-title">
+              <td class="grid-title-item">Nombre</td>
+              <td class="grid-title-item">Número de Documento</td>
+              <td class="grid-title-item">Placa</td>
+              <td class="grid-title-item">Certificado</td>
+              <td class="grid-title-item">Origen</td>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="!dataBuscada?.PA_SEL_ENDOSO?.length">
+              <tr class="grid-body">
+                <td
+                  class="grid-body-item"
+                  colspan="5"
+                  style="text-align: center"
+                >
+                  No hay informacion para mostrar
+                </td>
+              </tr>
+            </ng-container>
+            <ng-container *ngIf="!!dataBuscada?.PA_SEL_ENDOSO?.length">
+              <tr
+                class="grid-body"
+                style="cursor: pointer"
+                *ngFor="let data of dataBuscada?.PA_SEL_ENDOSO"
+                (click)="guardarInfo(data)"
+                [class.filaSeleccionada]="data == info"
+                style="cursor: pointer"
+              >
+                <td class="grid-body-item">{{ data.SCLIENTNAME }}</td>
+                <td class="grid-body-item">{{ data.SNUMDOC }}</td>
+                <td class="grid-body-item">{{ data.SPLACA }}</td>
+                <td class="grid-body-item">{{ data.NPOLESP_COMP }}</td>
+                <td class="grid-body-item">{{ data.SORIGEN }}</td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+        <div class="modal-footer footer-envio d-flex justify-content-center">
+          <button
+            class="full-color btn-export-excel mx-0"
+            (click)="showInformacionCertificado()"
+            [disabled]="!info"
+          >
+            Visualizar Ficha
+          </button>
+          <button
+            class="full-color btn-export-excel mx-0"
+            (click)="hideModalResultado()"
+          >
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #modalValidar="bs-modal"
+  [config]="{
+    backdrop: 'static'
+  }"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content anular">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="ocultarModalValidar()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <h4 class="textanular" style="font-size: 15px">
+          {{ MENSAJE2 }}
+        </h4>
+      </div>
+      <div
+        class="modal-footer modal-foot-confirm d-flex align-items-center justify-content-center"
+      >
+        <button
+          type="button"
+          class="btn full-color btn-aceptar-modal"
+          (click)="ocultarModalValidar()"
+        >
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #modalModificar="bs-modal"
+  [config]="{
+    backdrop: 'static'
+  }"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content anular">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="ocultarModalValidar()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <h4 class="textanular" style="font-size: 15px">
+          {{ MENSAJEFINAL }}
+        </h4>
+      </div>
+      <div
+        class="modal-footer modal-foot-confirm d-flex align-items-center justify-content-center"
+      >
+        <button
+          type="button"
+          class="btn full-color btn-aceptar-modal"
+          (click)="ocultarModalValidar()"
+        >
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #modalModificarError="bs-modal"
+  [config]="{
+    backdrop: 'static'
+  }"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content anular">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="ocultarModalValidar()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <h4 class="textanular" style="font-size: 15px">
+          {{ MENSAJEFINALERROR }}
+        </h4>
+      </div>
+      <div
+        class="modal-footer modal-foot-confirm d-flex align-items-center justify-content-center"
+      >
+        <button
+          type="button"
+          class="btn full-color btn-aceptar-modal"
+          (click)="ocultarModalValidar()"
+        >
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

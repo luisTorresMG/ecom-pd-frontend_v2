@@ -1,0 +1,68 @@
+<ng-template #modalAuthMehod>
+  <div class="content-modal-u">
+    <div class="modal-u mam">
+      <div class="modal__header">
+        <button class="modal__header--close" (click)="closeModal()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <h6 class="mam__subtitle">Proceso de validación</h6>
+        <p class="mam__desc" *ngIf="!isAP">
+          ¿Qué tipo de autenticación deseas hacer?
+        </p>
+        <p class="mam__desc" *ngIf="isAP">
+          Para continuar con tu compra necesitamos validar tu identidad. ¿Qué
+          tipo de autenticación deseas hacer?
+        </p>
+        <div
+          class="mam__actions"
+          [class.is-vdp]="isVdp"
+          [class.is-soat]="isSOAT"
+          [class.is-vl]="isVL"
+          [class.is-ap]="isAP"
+          [class.is-full]="!isVdp && !isSOAT"
+        >
+          <button
+            class="btn-auth-method"
+            (click)="selectAuthMethod(1)"
+            *ngIf="!isSOAT && !isVL && !isAP"
+          >
+            <img
+              class="face-ia"
+              [src]="'assets/vidaindividual/biometric/face-ia.png'"
+            />
+            Biométrica
+          </button>
+          <button
+            class="btn-auth-method"
+            (click)="selectAuthMethod(2)"
+            *ngIf="!isVdp && !isSOAT && !isVL && !isAP"
+          >
+            <i class="fa fa-comment" aria-hidden="true"></i>
+            Mensaje de texto
+          </button>
+          <button class="btn-auth-method" (click)="selectAuthMethod(3)">
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+            Correo electrónico
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #modalBiometricAuth>
+  <app-step-biometric
+    [insurance]="biometricData"
+    (uploadFileBiometricResult)="uploadFileBiometric($event)"
+    (modalBiometric)="selectAuthMethod(0, false)"
+    (biometricResult)="biometricResponse($event)"
+  ></app-step-biometric>
+</ng-template>
+<ng-template #modalOtpAuth>
+  <app-otp-auth
+    [data]="data"
+    (showOtpAuth)="selectAuthMethod(0)"
+    (resultOtp)="otpResponse($event)"
+  ></app-otp-auth>
+</ng-template>

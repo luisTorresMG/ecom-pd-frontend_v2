@@ -1,0 +1,50 @@
+<div class="content">
+  <div class="content__item header">
+    <button class="content__item--close"
+            (click)="closePlanDetail()">&times;</button>
+    <div class="content_desc">
+      <h2 class="content__item--title">
+        Plan 1
+      </h2>
+      <p class="content__item--desc">
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae ipsum itaque, aspernatur fuga delectus dicta
+        numquam quam? Doloremque perspiciatis architecto corporis obcaecati iure dignissimos tempora odit, cum
+        repellendus
+        ipsum in?
+      </p>
+    </div>
+  </div>
+  <div class="content__item body background">
+    <div class="navigator">
+      <button class="btn-nav"
+              [class.active]="typeSelected === 1"
+              (click)="changeTypeSelected(1)">Coberturas</button>
+      <button class="btn-nav"
+              [class.active]="typeSelected === 2"
+              (click)="changeTypeSelected(2)">Asistencias</button>
+      <button class="btn-nav"
+              [class.active]="typeSelected === 3"
+              (click)="changeTypeSelected(3)">Beneficios</button>
+    </div>
+    <ul class="list">
+      <li class="list__item"
+          *ngFor="let data of coverages; let index = index">
+        <button class="list__item--content"
+                role="button"
+                type="button"
+                (click)="changeindexListSelected(index)">
+          <span class="list__item--content-desc">{{ data.title }}</span>
+          <div class="btn-right"
+               [class.selected]="indexListSelected === index">
+            <i class="fa fa-angle-down"
+               aria-hidden="true"></i>
+          </div>
+        </button>
+        <div class="list__item--desc"
+             [class.li-selected]="indexListSelected === index">
+          <p>{{ data.description }}}</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

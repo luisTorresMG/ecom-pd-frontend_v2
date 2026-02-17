@@ -1,0 +1,212 @@
+*:focus {
+  outline: none;
+}
+
+.form-group {
+  flex: 0 0 calc(20% - 10px);
+  /* 20% de ancho y margen de 5px */
+  margin: 0px 0px;
+  margin-bottom: 16px;
+  position: relative;
+  font-family: "Bliss Pro";
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  /* Espaciado de 5px en la parte inferior del label */
+  color: #553d81;
+  font-size: 1rem;
+}
+
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border: 1px solid #aa9ec0;
+  box-shadow: none;
+}
+
+
+.form-group-extra_large {
+  flex: 0 0 calc(20% - 10px);
+  /* 20% de ancho y margen de 5px */
+  margin: 0px 0px;
+  margin-bottom: 16px;
+  position: relative;
+  font-family: "Bliss Pro";
+}
+
+
+.form-group-extra_large label {
+  display: block;
+  margin-bottom: 5px;
+  /* Espaciado de 5px en la parte inferior del label */
+  color: #553d81;
+  font-size: 1rem;
+}
+
+
+.form-group-extra_large input:focus,
+.form-group-extra_large select:focus {
+  outline: none;
+  border: 1px solid #aa9ec0;
+  box-shadow: none;
+}
+
+input:disabled {
+  background-color: rgb(235, 235, 228);
+  color: #553d81;
+}
+
+
+.placeholder-u {
+  position: relative;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+
+  &::before {
+    position: relative;
+    top: 0;
+    left: 0;
+    margin-bottom: 5px;
+    width: 100%;
+    max-width: 100%;
+    content: attr(aria-placeholder);
+    display: block;
+    color: #2b0d61;
+    font-size: 1rem;
+    flex-wrap: nowrap;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  &.inside {
+    &::before {
+      position: absolute;
+      top: 12px;
+      left: 10px;
+      font-size: 1rem;
+      margin: 0;
+    }
+  }
+}
+
+::placeholder {
+  color: rgb(146, 138, 163);
+  /* text-align: center; */
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    }
+input[type=number] { -moz-appearance:textfield; }
+
+.placeholder-u::before {
+  font-size: 1rem;
+}
+
+.input-u {
+  font-weight: 500;
+  box-shadow: none;
+  background: none;
+  padding-left: 12px;
+  outline: none;
+  display: block;
+  border: 1px solid #aa9ec0;
+  background-color: #fff;
+  color: #553d81;
+  padding: 7px 10px 5px 10px;
+  width: 100%;
+  height: 34px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+}
+
+
+.input-u-small {
+  font-weight: 500;
+  box-shadow: none;
+  background: none;
+  padding-left: 8px;
+  outline: none;
+  display: block;
+  border: 1px solid #aa9ec0;
+  background-color: #fff;
+  color: #553d81;
+  padding: 7px 10px 5px 10px;
+  width: 100%;
+  height: 42px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+}
+
+.input-u-large {
+  font-weight: 500;
+  box-shadow: none;
+  background: none;
+  padding-left: 8px;
+  outline: none;
+  display: block;
+  border: 1px solid #aa9ec0;
+  background-color: #fff;
+  color: #553d81;
+  padding: 7px 10px 5px 10px;
+  width: 100%;
+  height: 41px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+}
+
+.input-u-extra-large {
+  font-weight: 500;
+  box-shadow: none;
+  background: none;
+  padding-left: 8px;
+  outline: none;
+  display: block;
+  border: 1px solid #aa9ec0;
+  background-color: #fff;
+  color: #553d81;
+  padding: 7px 10px 5px 10px;
+  width: 100%;
+  height: 42px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+}
+
+.text_center {
+  text-align: center;
+}
+.text_center::placeholder {
+  color: rgb(146, 138, 163);
+  text-align: center;
+}
+
+.error_label {
+    border: 1px solid red !important;
+}

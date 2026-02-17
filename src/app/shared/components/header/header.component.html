@@ -1,0 +1,75 @@
+<div class="main-container-header">
+  <div class="container-header">
+    <nav class="navbar navbar-toggleable-sm navbar-light bg-faded">
+      <div class="si-mobile"
+           *ngIf="showLeftButton">
+        <button class="btn-menu"
+                (click)="toggleSidebar()">
+          <i class="fa fa-bars"></i>
+        </button>
+      </div>
+      <div class="navbar-brand"
+           [ngClass]="{ 'navbar-brand-push': haveUser }">
+        <a aria-label="Protecta Security"
+           href="https://protectasecurity.pe/"
+           target="_self">
+          <img alt=""
+               src="assets/logos/logo_protecta_security.svg"
+               class="img-fluid img-logo" />
+        </a>
+      </div>
+      <div class="menu-top oculto">
+        <div class="collapse navbar-collapse my-collapse"
+             [class.show]="show"
+             id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-item nav-link"
+               href="https://protectasecurity.pe/quienes-somos-6/"
+               target="_new">
+              <span>¿Qui&eacute;nes somos?</span>
+            </a>
+            <a class="nav-item nav-link"
+               href="https://protectasecurity.pe/landing-productos-rentas/"
+               target="_new">
+              <span>Rentas</span>
+            </a>
+            <a class="nav-item nav-link"
+               href="https://protectasecurity.pe/landing-productos-seguro-empresas/"
+               target="_new">
+              <span>Seguro empresas</span>
+            </a>
+            <a class="nav-item nav-link"
+               href="https://protectasecurity.pe/landing-productos-microseguros/"
+               target="_new">
+              <span>Microseguros</span>
+            </a>
+            <a class="nav-item nav-link"
+               href="https://protectasecurity.pe/landing-productos-banca-seguros/"
+               target="_new">
+              <span>Banca seguros</span>
+            </a>
+            <a class="nav-item nav-link"
+               href="/ecommerce/soat/consulta"
+               target="_new">
+              <span>Consulta SOAT</span>
+            </a>
+            <a [routerLink]="['/shop/checkout']"
+               class="nav-item nav-link ecommerce"
+               *ngIf="ecommerce">
+              <i></i>
+              <span>{{ ecommerceTotal }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showLogo"
+           class="navbar-nav-Canal"
+           [ngClass]="{ 'navbar-brand-push': haveUser }">
+        <img alt=""
+             src="{{ imagePath }}"
+             class="img-fluid img-logo-canal"
+             onerror="this.src='assets/logos_Canal/color-blanco.png'" />
+      </div>
+    </nav>
+  </div>
+</div>

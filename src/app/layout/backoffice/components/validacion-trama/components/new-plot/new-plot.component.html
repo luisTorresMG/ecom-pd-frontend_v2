@@ -1,0 +1,295 @@
+<main class="content">
+  <section class="header-u">
+    <h1 class="title-u">Cargar trama</h1>
+    <button class="button primary fit" (click)="backPage()">
+      <i class="fa fa-angle-left" aria-hidden="true"></i>
+      Volver
+    </button>
+  </section>
+  <section class="section" *ngIf="!responsePlot$" @fade>
+    <form class="form" [formGroup]="form">
+      <div>
+        <div class="content-inputs">
+          <!-- *CANAL DE VENTA -->
+          <label class="placeholder-u" aria-placeholder="CANAL DE VENTA:">
+            <select class="input-u" formControlName="channelSale">
+              <ng-container *ngIf="!channelSales$.length">
+                <option value="" selected hidden>
+                  NO SE ENCONTRARON RESULTADOS
+                </option>
+              </ng-container>
+              <ng-container *ngIf="channelSales$.length">
+                <option value="" selected hidden *ngIf="channelSales$.length">
+                  SELECCIONE
+                </option>
+                <option *ngFor="let data of channelSales$" [value]="data.id">
+                  {{ data.description }}
+                </option>
+              </ng-container>
+            </select>
+          </label>
+
+          <!-- *RAMO -->
+          <label class="placeholder-u" aria-placeholder="RAMO:">
+            <select class="input-u" formControlName="branch">
+              <ng-container *ngIf="!branches$.length">
+                <option [value]="null" selected hidden>
+                  NO SE ENCONTRARON RESULTADOS
+                </option>
+              </ng-container>
+              <ng-container *ngIf="branches$.length">
+                <option [value]="null" selected hidden *ngIf="branches$.length">
+                  SELECCIONE
+                </option>
+                <option value="0">TODOS</option>
+                <option *ngFor="let data of branches$" [value]="data.id">
+                  {{ data.description }}
+                </option>
+              </ng-container>
+            </select>
+          </label>
+
+          <!-- *PRODUCTO -->
+          <label class="placeholder-u" aria-placeholder="PRODUCTO:">
+            <select class="input-u" formControlName="product">
+              <option [value]="null" selected hidden *ngIf="products$.length">
+                SELECCIONE
+              </option>
+              <option value="0">TODOS</option>
+              <ng-container *ngIf="products$.length">
+                <option *ngFor="let data of products$" [value]="data.id">
+                  {{ data.description }}
+                </option>
+              </ng-container>
+            </select>
+          </label>
+
+          <!-- *TIPO DE ESTRUCTURA -->
+          <label class="placeholder-u" aria-placeholder="TIPO DE ESTRUCTURA:">
+            <select class="input-u" formControlName="structureType">
+              <ng-container *ngIf="!structureTypes$.length">
+                <option [value]="null" selected hidden>SIN ESTRUCTURAS</option>
+              </ng-container>
+              <ng-container *ngIf="structureTypes$.length">
+                <option
+                  [value]="null"
+                  selected
+                  hidden
+                  *ngIf="structureTypes$.length"
+                >
+                  SELECCIONE
+                </option>
+                <option
+                  *ngFor="let data of structureTypes$"
+                  [value]="data.idEstructura"
+                >
+                  {{ data.estructura }}
+                </option>
+              </ng-container>
+            </select>
+          </label>
+        </div>
+        <!-- *UPLOAD FILE -->
+        <div class="content-upload-file">
+          <label
+            class="file-upload"
+            [class.has-uploaded]="attachedFile"
+            [attr.aria-label]="attachedFile?.name || 'Seleccione un archivo'"
+            for="in-upload-file"
+          >
+            <i class="fa fa-upload" aria-hidden="true"></i>
+            <input
+              type="file"
+              id="in-upload-file"
+              (change)="uploadFile($event)"
+            />
+          </label>
+        </div>
+      </div>
+
+      <div class="divider arguments-divider" *ngIf="argumentsList.length"></div>
+      <div class="content-args-file">
+        <!-- *ARGUMENTOS GENERALES -->
+        <div>
+          <ng-container *ngIf="argumentsList.length">
+            <h2 class="subtitle-u mb-3">Argumentos generales:</h2>
+            <table class="table-u table-arguments" formArrayName="arguments">
+              <thead>
+                <tr>
+                  <th>Campo</th>
+                  <th>Tipo de dato</th>
+                  <th>Valor por defecto</th>
+                </tr>
+              </thead>
+              <tbody class="no-hover">
+                <tr
+                  *ngFor="let form of argumentsList.controls; let index = index"
+                  [formGroup]="form"
+                >
+                  <td>{{ form.get("argumentName").value }}</td>
+                  <td>{{ form.get("dataType").value }}</td>
+                  <td>
+                    <div class="cell-actions">
+                      <ng-container [ngSwitch]="form.get('dataType').value">
+                        <ng-container *ngSwitchCase="'Fecha'">
+                          <input
+                            type="text"
+                            #dp="bsDatepicker"
+                            [bsConfig]="bsConfig"
+                            bsDatepicker
+                            readonly
+                            formControlName="defaultValue"
+                          />
+                        </ng-container>
+                        <ng-container *ngSwitchCase="'Numero'">
+                          <input type="text" formControlName="defaultValue" />
+                        </ng-container>
+                      </ng-container>
+                      <button
+                        class="button-cell-action"
+                        (click)="clearFormControl(form, 'defaultValue')"
+                      >
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </ng-container>
+        </div>
+      </div>
+      <div class="content-actions">
+        <!-- *ACTIONS -->
+        <div class="actions">
+          <button
+            class="button primary fit"
+            [disabled]="form.invalid || !attachedFile"
+            (click)="validateFile()"
+          >
+            Validar trama
+          </button>
+        </div>
+      </div>
+    </form>
+  </section>
+  <ng-container *ngIf="responsePlot$ && responsePlot$?.validaciones?.length">
+    <div @fade>
+      <div
+        class="table-actions"
+        [formGroup]="form"
+        *ngIf="!responsePlot$?.success"
+      >
+        <div class="table-actions-left">
+          <!-- <label
+            for="email-channel"
+            class="placeholder-u inside email-channel"
+            [class.placeholder-active-u]="formControl['emailChannel'].value"
+            aria-placeholder="Correo del canal de ventas"
+          >
+            <input
+              type="text"
+              class="text input-u"
+              id="email-channel"
+              formControlName="emailChannel"
+            />
+          </label>
+          <button
+            class="button primary fit"
+            [disabled]="!responsePlot$?.validaciones?.length"
+          >
+            <i class="fa fa-send" aria-hidden="true"></i>
+            Enviar trama
+          </button> -->
+        </div>
+        <div class="table-actions-right">
+          <button class="button primary fit" (click)="removeAllTables()">
+            Nueva carga
+          </button>
+          <button
+            class="button secondary fit"
+            [disabled]="!responsePlot$?.validaciones?.length"
+            (click)="exportLog()"
+          >
+            <i class="fa fa-download" aria-hidden="true"></i>
+            Descargar Log
+          </button>
+        </div>
+      </div>
+      <ng-container
+        *ngIf="!responsePlot$.success && responsePlot$?.validaciones?.length"
+      >
+        <section class="section">
+          <table class="table-u">
+            <thead>
+              <tr>
+                <th>Número de linea</th>
+                <th>Campo</th>
+                <th>Descripción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let data of responsePlot$?.validaciones
+                    | paginate
+                      : {
+                          id: 'pagination-errors',
+                          currentPage: currentPageError,
+                          totalItems: responsePlot$?.validaciones?.length,
+                          itemsPerPage: 10
+                        };
+                  let index = index
+                "
+              >
+                <td>{{ data.numeroLinea }}</td>
+                <td>{{ data.campo }}</td>
+                <td>{{ data.descripcion }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </ng-container>
+      <pagination-controls
+        id="pagination-errors"
+        [autoHide]="true"
+        previousLabel="Anterior"
+        nextLabel="Siguiente"
+        (pageChange)="changeCurrentPageError = $event"
+      ></pagination-controls>
+    </div>
+  </ng-container>
+</main>
+
+<ng-template #modalSubmit>
+  <div class="content-modal modal-submit">
+    <section>
+      <div class="modal-header">
+        <h6>Mensaje</h6>
+        <button (click)="closeModals()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <ng-container *ngIf="responsePlot$?.showSuccessImage">
+          <ng-container *ngIf="responsePlot$?.success">
+            <img src="assets/backoffice/check-success.png" alt="succes image" />
+          </ng-container>
+          <ng-container *ngIf="!responsePlot$?.success">
+            <img src="assets/backoffice/check-error.png" alt="error image" />
+          </ng-container>
+        </ng-container>
+
+        <p class="paragraph">{{ responsePlot$?.message }}</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          class="button-default primary"
+          type="button"
+          aria-label="cerrar modal"
+          (click)="closeModals()"
+        >
+          Aceptar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>

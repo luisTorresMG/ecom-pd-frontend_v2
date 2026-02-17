@@ -1,0 +1,71 @@
+<div class="container-miga">
+  <div class="steps">
+    <div class="step"
+         [ngClass]="{ 'step-done': currentPage > 1, step01: currentPage === 1 }">
+      <div [ngClass]="{
+          'title-done': currentPage > 1,
+          'title-pending': currentPage === 1
+        }"></div>
+    </div>
+
+    <div class="rule-wrapper">
+      <div [ngClass]="{
+          'separador-done': currentPage > 1,
+          separador: currentPage === 1
+        }"></div>
+    </div>
+
+    <div class="step"
+         [ngClass]="{ 'step-done': currentPage > 2, step02: currentPage <= 2 }">
+      <div [ngClass]="{
+          'title-done': currentPage > 2,
+          'title-pending': currentPage <= 2
+        }"></div>
+    </div>
+
+    <div class="rule-wrapper">
+      <div [ngClass]="{
+          'separador-done': currentPage > 2,
+          separador: currentPage <= 2
+        }"></div>
+    </div>
+
+    <div class="step"
+         [ngClass]="{ 'step-done': currentPage > 3, step03: currentPage <= 3 }">
+      <div [ngClass]="{
+          'title-done': currentPage > 3,
+          'title-pending': currentPage <= 3
+        }"></div>
+    </div>
+
+    <div class="rule-wrapper">
+      <div [ngClass]="{
+          'separador-done': currentPage > 3,
+          separador: currentPage <= 3
+        }"></div>
+    </div>
+
+    <div class="step"
+         [ngClass]="{ 'step-done': currentPage > 4, step04: currentPage <= 4 }">
+      <div [ngClass]="{
+          'title-done': currentPage > 4,
+          'title-pending': currentPage <= 4
+        }"></div>
+    </div>
+
+    <div class="rule-wrapper">
+      <div [ngClass]="{
+          'separador-done': currentPage > 4,
+          separador: currentPage <= 4
+        }"></div>
+    </div>
+
+    <div class="step"
+         [ngClass]="{ 'step-done': currentPage > 5, step05: currentPage <= 5 }">
+      <div [ngClass]="{
+          'title-done': currentPage > 5,
+          'title-pending': currentPage <= 5
+        }"></div>
+    </div>
+  </div>
+</div>

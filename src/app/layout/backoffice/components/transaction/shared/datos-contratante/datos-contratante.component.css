@@ -1,0 +1,53 @@
+.head-row{
+  background-color: #553d81;
+}
+.head-row .col-md-12 span{
+  color: #fff;
+  font-family: "Bliss Pro";
+  text-align: center;
+  font-size: 14px;
+  padding: 5px;
+}
+.lbl-in{
+  display: block;
+  width: 100%;
+  color: #2b0d61;
+  font-size: 14px;
+  font-family: 'Bliss Pro';
+  margin: 0 !important;
+}
+.row div{
+  padding-left: 0;
+}
+.full-color{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(129, 118, 157);
+  border-radius: 2px;
+  margin: 0 5px;
+  background: #553d81;
+  color: #fff;
+  padding: 8px 8px;
+  min-width: 177px;
+  height: 45px;
+  outline: none;
+}
+.content-input{
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-top: .5rem
+}
+.lbl-in-action{
+  font-size: 16px;
+  color: #9181af;
+  font-weight: 500;
+  padding: .5rem .5rem .5rem 0;
+  background-color: rgba(0,0,0,.025);
+  margin: 0;
+  height: auto;
+  min-height: 45px;
+  width: 100%;
+  min-width: 100%;
+}

@@ -1,0 +1,114 @@
+*:focus {
+  outline: none;
+  text-transform: uppercase;
+}
+
+.placeholder-u {
+  position: relative;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  text-transform: uppercase;
+  font-size: 1rem;
+
+  &::before {
+    position: relative;
+    top: 0;
+    left: 0;
+    margin-bottom: 4.6px;
+    width: 100%;
+    max-width: 100%;
+    content: attr(aria-placeholder);
+    display: block;
+    color: #2b0d61;
+    font-size: 1rem;
+    flex-wrap: nowrap;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: 0.2s;
+    -webkit-transition: 0.2s;
+    -moz-transition: 0.2s;
+    -ms-transition: 0.2s;
+    -o-transition: 0.2s;
+  }
+
+  &.inside {
+    &::before {
+      position: absolute;
+      top: 12px;
+      left: 10px;
+      font-size: 1rem;
+      margin: 0;
+    }
+  }
+}
+
+::placeholder {
+  color: rgb(146, 138, 163);
+}
+
+
+.placeholder-u::before {
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.input-u {
+  text-transform: uppercase;
+  width: 100%;
+  padding: 7px 5px;
+  font-weight: normal;
+  box-shadow: none;
+  background: none;
+  padding-left: 12px;
+  color: #553d81;
+  padding: 7px 10px 5px 10px;
+  border: 1px solid #aa9ec0;
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+}
+
+
+.input-u-large {
+  width: 100%;
+  padding: 10px 4px;
+  font-weight: normal;
+  box-shadow: none;
+  background: none;
+  padding-left: 10px;
+  /* outline: none; */
+  color: #553d81;
+  border: 1px solid #aa9ec0;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+}
+
+.input-u-extralarge {
+  width: 100%;
+  padding-top: 5px;
+  padding-bottom: 6.6px;
+  font-weight: normal;
+  box-shadow: none;
+  background: none;
+  padding-left: 5px;
+  padding-right: 4px;
+  color: #553d81;
+  border: 1px solid #aa9ec0;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+
+}
+
+select:disabled {
+  background-color: rgb(235, 235, 228);
+}

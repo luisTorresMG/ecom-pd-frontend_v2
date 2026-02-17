@@ -1,0 +1,30 @@
+<section class="asesor">
+  <div class="content-no-apto text-center mb-0">
+    <h2 class="title-no-apto text-center">
+      {{
+        message ||
+          "Hola! tu solicitud ha sido recepcionada por un asesor de Protecta Security, pronto nos estaremos comunicando contigo."
+      }}
+    </h2>
+    <p class="desc-no-apto text-center">
+      Contáctanos en:<br />
+      Correo Electrónico: <b>{{ email }}</b
+      ><br />
+      Línea telefónica directa: <b>(01) 391 3000</b><br />
+      Estamos a tu disposición de lunes a viernes de
+      <b>9:00 a.m. a 6:00 p.m.</b>
+    </p>
+  </div>
+  <div class="row mx-0 my-0 px-0 py-0">
+    <div class="col-lg-12 mx-0 my-0 px-0 py-0 content-buttons-actions">
+      <button
+        class="btn-back d-inline-flex align-items-center justify-content-center"
+        (click)="backtoInit()"
+      >
+        <i class="fa fa-chevron-left mr-2" aria-hidden="true"></i>Volver al
+        inicio
+      </button>
+      <button hidden disabled></button>
+    </div>
+  </div>
+</section>

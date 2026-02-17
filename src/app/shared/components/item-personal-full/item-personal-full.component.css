@@ -1,0 +1,60 @@
+.ip-item-personal-full {
+  width: 100%;
+  text-align: left;
+  margin-top: 15px;
+  margin-left: 25px;
+  color: #2b0d61;
+  font-family: "Bliss Pro";
+  font-size: 14px;
+  font-weight: 500;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.ip-item-personal-full .label {
+  display: inline-block;
+  width: 90%;
+  color: #2b0d61;
+  font-weight: bold;
+  text-transform: uppercase;
+  word-wrap: break-word;
+  text-align: justify;
+}
+
+.ip-item-personal-full .label2 {
+  display: inline-block;
+  width: 90%;
+  color: #2b0d61;
+  font-weight: bold;
+  text-transform: uppercase;
+  word-wrap: break-word;
+  text-align: justify;
+}
+
+.ip-item-personal-full .dots {
+  display: inline-block;
+  width: 1%;
+}
+
+.ip-item-personal-full .value {
+  display: inline-block;
+  width: 75%;
+  padding-left: 20px;
+  font-weight: bold;
+}
+
+/* @media (max-width: 690px) {
+  .ip-item-personal-full {
+    width: 90%;
+  }
+  .ip-item-personal-full .value {
+    text-align: right;
+    float: right;
+  }
+}
+
+@media (max-width: 768px) {
+  .ip-item-personal-full {
+    width: 85%;
+  }
+} */

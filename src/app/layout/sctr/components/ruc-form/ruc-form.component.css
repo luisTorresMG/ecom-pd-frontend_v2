@@ -1,0 +1,66 @@
+.big {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.big > input {
+  text-align: center;
+}
+
+.legal {
+  margin: 10px 0 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .legal {
+    margin: 10px 0 -7px;
+  }
+  .legal-policy {
+    margin-bottom: 25px;
+  }
+}
+
+.center {
+  text-align: center;
+}
+
+.soat-link {
+  text-decoration: underline !important;
+  cursor: pointer;
+}
+.soat-checkbox-target {
+  position: relative;
+}
+.checkbox-parpadeo::before {
+  width: 12px;
+  height: 12px;
+  content: "";
+  background: transparent;
+  position: absolute;
+  left: 0;
+  top: 5px;
+  box-shadow: 0 0 0 3px #ff6e00;
+  animation: parpadeo 0.65s infinite alternate-reverse;
+  -webkit-animation: parpadeo 0.65s infinite alternate-reverse;
+  z-index: -1;
+}
+@keyframes parpadeo {
+  from {
+    box-shadow: 0 0 0 3px #fff;
+  }
+  to {
+    box-shadow: 0 0 0 3px #ff6e00;
+  }
+}
+.content-no-apto {
+  padding: 4rem 2rem;
+  margin: auto;
+  max-width: 680px;
+}
+.title-no-apto,
+.desc-no-apto {
+  color: #2b0d61;
+}
+.desc-no-apto {
+  margin-top: 2rem;
+}

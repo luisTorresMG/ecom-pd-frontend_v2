@@ -1,0 +1,236 @@
+<div class="row">
+    <div class="col-md-3">
+        <app-nav-menuprod></app-nav-menuprod>
+    </div>
+    <div class="col-md-9">
+        <div class="container-fluid">
+            <div class="group1"
+                 style="border-bottom: 1px solid #553d81; padding-bottom: 8px;">
+                <h2 class="title">
+                    CONSULTA DE TRANSACCIONES DE PÓLIZAS
+                </h2>
+
+                <div class="d-flex flex-column align-items-end">
+                    <span>PRODUCTO: {{productTypes[0].valor}}</span>
+                    <span>{{lblFecha}}</span>
+                </div>
+
+            </div>
+            <div class="filter">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row"
+                             style="color: #553d81;">
+                            <div class="col-sm-3">
+                                <span>PRODUCTO:</span>
+                                <select [(ngModel)]="params.P_NPRODUCT"
+                                        class="minimal"
+                                        disabled>
+                                    <option *ngFor="let item of productTypes"
+                                            value="{{ item.codigo }}">
+                                        {{ item.valor }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <span>NRO. PÓLIZA:</span>
+                                <input type="text"
+                                       placeholder="NRO. PÓLIZA"
+                                       [(ngModel)]="params.P_NPOLICY"
+                                       maxlength="10">
+                            </div>
+                            <div class="col-sm-3">
+                                <span>FECHA DE EMISIÓN DESDE:</span>
+                                <input type="text"
+                                       [(ngModel)]="params.P_DFEC_INI"
+                                       #dp="bsDatepicker"
+                                       bsDatepicker
+                                       DateDirective
+                                       [bsConfig]="bsConfig"
+                                       readonly>
+                            </div>
+                            <div class="col-sm-3">
+                                <span>FECHA DE EMISIÓN HASTA:</span>
+                                <input type="text"
+                                       [(ngModel)]="params.P_DFEC_FIN"
+                                       #dp="bsDatepicker"
+                                       bsDatepicker
+                                       DateDirective
+                                       [bsConfig]="bsConfig"
+                                       readonly>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <span>TIPO DE CLIENTE:</span>
+                                <select [(ngModel)]="params.P_NTYPE_CLI"
+                                        class="minimal">
+                                    <option *ngFor="let item of clientTypes"
+                                            value="{{ item.codigo }}">
+                                        {{ item.valor }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <span>TIPO DE DOCUMENTO:</span>
+                                <select [(ngModel)]="params.P_NTYPE_DOC"
+                                        (ngModelChange)="onSelectTypeDocument()"
+                                        class="minimal">
+                                    <option value="0">Seleccionar</option>
+                                    <option *ngFor="let item of docTypes"
+                                            value="{{ item.Id }}">
+                                        {{ item.Name }}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <span>NÚMERO DE DOCUMENTO:</span>
+                                <input type="text"
+                                       placeholder="NÚMERO DE DOCUMENTO"
+                                       [(ngModel)]="params.P_SNUM_DOC"
+                                       (keypress)="documentNumberKeyPress($event)"
+                                       (keyup.enter)="search()"
+                                       maxlength="maxlength" />
+                            </div>
+                            <div class="col-sm-3">
+                            </div>
+
+                            <div class="col-sm-3">
+                                <span>NOMBRES:</span>
+                                <input type="text"
+                                       placeholder="NOMBRES"
+                                       [(ngModel)]="params.P_SNAMES"
+                                       (keyup.enter)="search()"
+                                       OnlyTextSpaceDirective
+                                       maxlength="19" />
+                            </div>
+                            <div class="col-sm-3">
+                                <span>APELLIDO 1:</span>
+                                <input type="text"
+                                       placeholder="APELLIDO 1"
+                                       [(ngModel)]="params.P_SAPE_PAT"
+                                       (keyup.enter)="search()"
+                                       OnlyTextSpaceDirective
+                                       maxlength="19" />
+                            </div>
+                            <div class="col-sm-3">
+                                <span>APELLIDO 2:</span>
+                                <input type="text"
+                                       placeholder="APELLIDO 2"
+                                       [(ngModel)]="params.P_SAPE_MAT"
+                                       (keyup.enter)="search()"
+                                       OnlyTextSpaceDirective
+                                       maxlength="19" />
+                            </div>
+                            <div class="col-sm-3">
+                                <span>&nbsp;</span>
+                                <button class="full-color pull-right"
+                                        (click)="search()">
+                                    <span>Buscar</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="col-sm-12"
+                 *ngIf="policyList.length > 0">
+                <div class="btn-group btn-group-toggle mb-3"
+                     style="float:right"
+                     data-toggle="buttons">
+                    <label class="btn btn-secondary">
+                        <input type="radio"
+                               (click)="choosePolicyClk(selectedPolicy)"
+                               name="options"> ENDOSO
+                    </label>
+                </div>
+            </div> -->
+
+            <div class="grid form-group">
+                <div class="grid form-group">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr class="grid-title">
+                                    <td class="grid-title-item text-center">Sel.</td>
+                                    <td class="grid-title-item text-center">Nro. Póliza</td>
+                                    <td class="grid-title-item text-center">Nro. Cotización</td>
+                                    <td class="grid-title-item text-center">Doc. Identidad Contratante</td>
+                                    <td class="grid-title-item text-center">Nombre del Contratante</td>
+                                    <td class="grid-title-item text-center">Doc. Identidad Asegurado</td>
+                                    <td class="grid-title-item text-center">Nombre del Asegurado</td>
+                                    <td class="grid-title-item text-center">Fecha Emisión</td>
+                                    <td class="grid-title-item text-center">Acciones</td>
+                                </tr>
+                            </thead>
+                            <ng-container *ngIf="policyList != null && policyList.length > 0; then showGrid else hideGrid">
+                            </ng-container>
+                            <ng-template #hideGrid>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="9"
+                                            class="text-center">
+                                            No se encontraron registros.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </ng-template>
+                            <ng-template #showGrid>
+                                <tbody>
+                                    <tr *ngFor="let item of listToShow; let row_no = index">
+                                        <td class="text-center">
+                                            <input type="radio"
+                                                   [value]="item"
+                                                   name="policy"
+                                                   [(ngModel)]="selectedPolicy">
+                                                   <!-- [value]="{ item,SDOC_CONT: item.SDOC_CONT, SDOC_ASEG: item.SDOC_ASEG,SCOTIZACION: item.SCOTIZACION,NID_PROC: item.NID_PROC }" -->
+                                        </td>
+                                        <td class="text-center">{{ item.NPOLIZA }}</td>
+                                        <td class="text-center">{{ item.SCOTIZACION }}</td>
+                                        <td class="text-center">{{ item.SDOC_CONT }}</td>
+                                        <td class="text-center">{{ item.SNAME_CONT }}</td>
+                                        <td class="text-center">{{ item.SDOC_ASEG }}</td>
+                                        <td class="text-center">{{ item.SNAME_ASEG }}</td>
+                                        <td class="text-center">{{ item.DFECHA_EMISION }}</td>
+                                        <td class="text-center">
+                                            <a (click)="openModal(item)">
+                                                <img alt="ver"
+                                                     src="assets/icons/preview_soat_box.png"
+                                                     title="Ver detalle"
+                                                     style="cursor: pointer;height: 24px;width: 24px">
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </ng-template>
+                        </table>
+                    </div>
+                    <ng-container *ngIf="policyList != null && policyList.length > 0; then showPagination">
+                    </ng-container>
+                    <ng-template #showPagination>
+                        <div class="row mt-4">
+                            <div class="col-sm-10">
+                                <ngb-pagination [(page)]="currentPage"
+                                                [pageSize]="itemsPerPage"
+                                                [collectionSize]="totalItems"
+                                                [maxSize]="maxSize"
+                                                (pageChange)="pageChanged(currentPage)">
+                                    <ng-template ngbPaginationPrevious>ANTERIOR</ng-template>
+                                    <ng-template ngbPaginationNext>SIGUIENTE</ng-template>
+                                </ngb-pagination>
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div [hidden]="!isLoading"
+     class="loadingScreen">
+    <div style="display: flex; height: 100%; width: 100%">
+        <i style="margin: auto; font-size: 50px"
+           class="fa fa-spinner fa-spin"></i>
+    </div>
+</div>

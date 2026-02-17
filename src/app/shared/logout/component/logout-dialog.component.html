@@ -1,0 +1,15 @@
+<div
+  class="modal"
+  tabindex="-1"
+  [ngClass]="{ in: true }"
+  [ngStyle]="{ display: 'block', opacity: 1 }"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body modal-body-font"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn-orange" (click)="cerrar()">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,114 @@
+.head-title,
+.content-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.content-page {
+  margin: 1rem 0;
+  padding: 0 1rem;
+}
+
+.r1-head {
+  border-bottom: 1px solid #2b0d61;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.r2-head {
+  border-bottom: 1px solid #2b0d61;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.head-title {
+  padding: 0;
+}
+.title {
+  color: #553d81;
+  font-size: 32px;
+  font-weight: bold;
+  line-height: 31px;
+  display: block;
+  margin-top: 8px;
+  margin-right: 18px;
+  font-family: "Bliss Pro";
+}
+
+.full-color {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(129, 118, 157);
+  border-radius: 2px;
+  margin: 0 5px;
+  background: #553d81;
+  color: #fff;
+  padding: 8px 8px;
+  min-width: 177px;
+  height: 45px;
+  outline: none;
+}
+
+.full-color img,
+.full-color i {
+  margin-right: 0.65rem;
+}
+.full-color:last-child {
+  margin-right: 0;
+}
+.full-color:first-child {
+  margin-left: 0;
+}
+
+.cont-btn-generar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+.content-actions,
+.cont-btn-generar {
+  padding: 0;
+}
+.content-input {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-right: 1rem;
+}
+.content-input:last-child {
+  margin: 0;
+}
+
+.lbl-in {
+  display: block;
+  width: 100%;
+  color: #2b0d61;
+  font-size: 14px;
+  font-family: "Bliss Pro";
+  margin: 0 !important;
+}
+.in-action {
+  border-radius: 2px;
+  padding: 7px 5px;
+  font-size: 14px;
+  width: 100%;
+  border: 1px solid #aa9ec0;
+  color: #aa9ec0;
+  height: 45px;
+  font-weight: 300;
+  padding-left: 12px;
+  outline: none;
+}
+.in-action[disabled] {
+  background-color: rgba(0, 0, 0, 0.025);
+  cursor: not-allowed;
+  border: 1px solid rgba(0, 0, 0, 0.035);
+}

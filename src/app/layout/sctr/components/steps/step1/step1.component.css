@@ -1,0 +1,45 @@
+.orange {
+  color: #ff6e00;
+}
+.soat-header-main > .title {
+  font-size: 25px;
+  text-align: center !important;
+  color: #2e0563;
+  font-weight: bold;
+  margin-bottom: -20px !important;
+  margin-top: 26px;
+}
+.content-no-apto {
+  padding: 4rem 2rem;
+  margin: auto;
+  max-width: 680px;
+}
+.title-no-apto,
+.desc-no-apto {
+  color: #2b0d61;
+}
+.desc-no-apto {
+  margin-top: 2rem;
+}
+.button-home-deuda {
+  background-color: #ff6e00;
+  color: #fff;
+  padding: 10px 15px;
+  border: 0;
+  margin-bottom: 10px;
+  outline: none;
+}
+
+.button-home-deuda:disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.button-home-deuda.stretch {
+  padding: 10px 35px;
+}
+
+.button-home-deuda.ripple {
+  background-position: center;
+  transition: background 0.8s;
+}

@@ -1,0 +1,110 @@
+<div class="container-fluid">
+  <div class="row content-all">
+    <div class="col-md-12 content">
+      <div class="container-fluid content-page">
+        <div class="row r1-head">
+          <div class="col-12 head-title">
+            <h1 class="title">Reporte Notas de Crédito</h1>
+          </div>
+        </div>
+        <form class="row r2-head" [formGroup]="form">
+          <div class="col-md-4 content-actions">
+            <div class="content-input">
+              <label for="state" class="lbl-in filter-text"
+                >FECHA INICIO:</label
+              >
+              <input
+                autocomplete="off"
+                type="text"
+                class="form-control date-search input-date in-action"
+                id="fecha"
+                #dp="bsDatepicker"
+                [bsConfig]="bsConfig"
+                bsDatepicker
+                formControlName="fechaInicio"
+                readonly
+                style="background-color: white"
+                [maxDate]="bsValueFin"
+              />
+            </div>
+            <div class="content-input">
+              <label for="chanel" class="lbl-in filter-text">FECHA FIN:</label>
+              <input
+                autocomplete="off"
+                type="text"
+                class="form-control date-search input-date in-action"
+                id="fecha"
+                #dp="bsDatepicker"
+                [bsConfig]="bsConfig"
+                bsDatepicker
+                formControlName="fechaFin"
+                readonly
+                style="background-color: white"
+                [maxDate]="bsValueFin"
+              />
+            </div>
+          </div>
+          <div class="col-md-8 cont-btn-generar">
+            <button
+              type="submit"
+              class="full-color"
+              (click)="exportar()"
+              [disabled]="form.invalid"
+            >
+              Exportar
+            </button>
+            <button type="button" class="full-color" (click)="limpiar()">
+              Limpiar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #modal="bs-modal"
+  [config]="{
+    backdrop: 'static'
+  }"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content anular">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="ocultarModal()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <h4 class="textanular" style="font-size: 15px">
+          {{ MENSAJE }}
+        </h4>
+      </div>
+      <div
+        class="
+          modal-footer modal-foot-confirm
+          d-flex
+          align-items-center
+          justify-content-center
+        "
+      >
+        <button
+          type="button"
+          class="btn full-color btn-aceptar-modal"
+          (click)="ocultarModal()"
+        >
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

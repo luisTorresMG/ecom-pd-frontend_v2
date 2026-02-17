@@ -1,0 +1,134 @@
+<div class="form-group row">
+  <div class="col-lg-3">
+    <app-nav-menuprod></app-nav-menuprod>
+  </div>
+  <div class="col-lg-9">
+    <div class="container-fluid p-0">
+      <div class="header-content">
+        <div class="containt-item">
+          <div class="header-item">
+            <span class="title">Generación de Reporte de Ingresos</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="alert alert-warning" *ngIf="!isUserAuthorized && !isCheckingAuthorization">
+        <i class="fa fa-exclamation-triangle"></i>
+        {{ authorizationMessage }}
+      </div>
+
+      <div class="alert alert-info" *ngIf="isCheckingAuthorization">
+        <i class="fa fa-spinner fa-spin"></i> Verificando permisos de acceso...
+      </div>
+      
+      <div [class.unauthorized-content]="!isUserAuthorized">
+        <div class="filter">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                
+                <div class="col-sm-4">
+                  <span>RAMO(*)</span>
+                  <span *ngIf="isLoadingRamos" class="loading-ramos">
+                    <i class="fa fa-spinner fa-spin"></i>
+                  </span>
+                  
+                  <select 
+                    [(ngModel)]="sRamo" 
+                    [disabled]="isLoadingRamos"
+                    [class]="formErrors.ramo ? 'error-border' : ''">
+                    <option value="0">
+                      {{ isLoadingRamos ? 'Cargando ramos...' : 'Seleccione' }}
+                    </option>
+                    <option *ngFor="let ramo of ListRamos" [value]="ramo.NBRANCH">
+                      {{ ramo.SDESCRIPT }}
+                    </option>
+                  </select>
+                </div>
+                
+                <div class="col-sm-4">
+                  <span>FECHA DE INICIO(*)</span>
+                  <input type="text" #dp="bsDatepicker" [bsConfig]="bsConfig" bsDatepicker
+                    [(bsValue)]="bsValueIni" value="{{ bsValueIni | date:'dd/MM/yyyy' }}" [(maxDate)]="bsValueFinMax"
+                    [class]="formErrors.fechaInicio ? 'error-border' : ''" readonly>
+                  
+                  <small *ngIf="formErrors.fechaInicio" class="error-message">
+                    <i class="fa fa-exclamation-triangle"></i> {{ formErrors.fechaInicio }}
+                  </small>
+                </div>
+                
+                <div class="col-sm-4">
+                  <span>FECHA DE FIN(*)</span>
+                  <input type="text" #dp="bsDatepicker" [bsConfig]="bsConfig" bsDatepicker
+                    [(bsValue)]="bsValueFin" value="{{ bsValueFin | date:'dd/MM/yyyy' }}" [(maxDate)]="bsValueFinMax"
+                    [class]="formErrors.fechaFin ? 'error-border' : ''" readonly>
+                  
+                  <small *ngIf="formErrors.fechaFin" class="error-message">
+                    <i class="fa fa-exclamation-triangle"></i> {{ formErrors.fechaFin }}
+                  </small>
+                </div>
+              </div>
+              
+              <div class="row" *ngIf="formErrors.periodo">
+                <div class="col-sm-12">
+                  <div class="period-warning">
+                    <small>
+                      <i class="fa fa-exclamation-triangle"></i> {{ formErrors.periodo }}
+                    </small>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col-sm-9">
+                  <span>&nbsp;</span>
+                  <button 
+                    type="button"
+                    class="full-color" 
+                    (click)="resetForm()"
+                    [disabled]="isGeneratingReport">
+                    <span>                                
+                        <i class="fa fa-undo"></i> LIMPIAR
+                    </span>
+                  </button>
+                </div>
+                <div class="col-sm-3">
+                  <span>&nbsp;</span>
+                  <button 
+                    class="full-color" 
+                    (click)="processReports()" 
+                    style="margin-top: 5px;"
+                    [disabled]="buttonDisabled"
+                    [title]="isUserAuthorized ? 'Procesar reporte de ingresos' : 'Acceso restringido - Contacte al administrador'">
+                    
+                    <span *ngIf="!isGeneratingReport && !isLoadingRamos && !isCheckingAuthorization">
+                      <i class="fa fa-cogs"></i> {{ buttonText }}
+                    </span>
+                    
+                    <span *ngIf="isGeneratingReport">
+                      <i class="fa fa-spinner fa-spin"></i> {{ buttonText }}
+                    </span>
+                    
+                    <span *ngIf="isLoadingRamos">
+                      <i class="fa fa-spinner fa-spin"></i> {{ buttonText }}
+                    </span>
+                    
+                    <span *ngIf="isCheckingAuthorization">
+                      <i class="fa fa-spinner fa-spin"></i> VERIFICANDO...
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div [hidden]="!isLoading" class="loadingScreen">
+          <div style="display:flex;height: 100%;width:100%">
+            <i style="margin:auto;font-size: 50px" class="fa fa-spinner fa-spin"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

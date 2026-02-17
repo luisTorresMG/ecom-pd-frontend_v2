@@ -1,0 +1,20 @@
+<div class="container-modal">
+  <div class="container-title-modal">
+    <h3>Endoso</h3>
+  </div>
+  <div class="container-form d-flex flex-wrap">
+    <p>Tipo de endoso</p>
+    <form-input-select text_label="Tipo de documento:"
+    method="getDocumentTypeList"
+    [updateModelOnChange]="true"
+    fieldCodigo="Id"
+    fieldValor="Name"
+    [firstSelect]="true"
+    [large]="true">
+    ></form-input-select>
+    <form-button class="button" label="Cerrar"
+                    btnClass="btn-primary-VI text-nowrap"
+                    [slim]="true"
+                    ></form-button> 
+  </div>
+</div>

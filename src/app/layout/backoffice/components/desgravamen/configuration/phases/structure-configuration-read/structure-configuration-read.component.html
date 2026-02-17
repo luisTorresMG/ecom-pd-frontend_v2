@@ -1,0 +1,380 @@
+<section class="section">
+  <div class="section__tabs">
+    <button
+      [class.active]="tabSelected == 'transaction'"
+      (click)="selectTab = 'transaction'"
+    >
+      Transacción
+    </button>
+    <button
+      [class.active]="tabSelected == 'notification'"
+      (click)="selectTab = 'notification'"
+    >
+      Notificaciones
+    </button>
+  </div>
+
+  <ng-container *ngIf="tabSelected == 'transaction'">
+    <button
+      class="button-dropdown"
+      [class.active]="dropdownSelected == 'transaction'"
+      (click)="selectDropdown = 'transaction'"
+    >
+      <i class="fa fa-angle-right"
+         aria-hidden="true"></i>
+      Transacciones
+    </button>
+    <ng-container *ngIf="dropdownSelected == 'transaction'">
+      <div class="content-table"
+           [formGroup]="form">
+        <table
+          class="table-u table-field-u table-read"
+          @fade
+          formArrayName="transactions"
+        >
+          <thead>
+          <tr>
+            <th class="table-head-field index">Índice</th>
+            <th class="table-head-field input-data">Atributo</th>
+            <th class="table-head-field data-type">Tipo de dato</th>
+            <th class="table-head-field required">Obligatorio</th>
+            <th class="table-head-field unique-value">Valor único</th>
+            <th class="col-mw function">Función adicional</th>
+            <th class="col-mw function-parameter">Argumento</th>
+            <th class="col-mw value-type">Origen</th>
+            <th class="col-mw value">Dominio de valores</th>
+              <th class="table-head-field remove"
+                  *ngIf="transactions.enabled">
+              Eliminar campo
+            </th>
+          </tr>
+          </thead>
+          <ng-container *ngIf="transactions.length">
+            <tbody class="no-hover"
+                   @fade>
+            <tr
+              *ngFor="let form of transactions.controls; let index = index"
+              [formGroup]="form"
+            >
+              <td class="table-body-field index">{{ index + 1 }}</td>
+              <td>
+                <input
+                  type="text"
+                  class="input-collapse"
+                  formControlName="inputData"
+                />
+              </td>
+              <td>
+                  <select class="input-collapse"
+                          formControlName="dataType">
+                    <option [value]="null"
+                            selected
+                            disabled
+                            hidden>
+                    Ninguno
+                  </option>
+                  <option
+                    [value]="item.idTipoDato"
+                    *ngFor="let item of parameters$?.tipoDato"
+                  >
+                    {{ item.tipoDato }}
+                  </option>
+                </select>
+              </td>
+              <td>
+                <input
+                  type="checkbox"
+                  class="mark-u center orange"
+                  [id]="'input-required' + index"
+                  formControlName="required"
+                />
+                <label
+                  [attr.for]="'input-required' + index"
+                  class="center"
+                ></label>
+              </td>
+              <td>
+                <input
+                  type="checkbox"
+                  class="mark-u center orange"
+                  [id]="'unique-value' + index"
+                  formControlName="uniqueValue"
+                />
+                <label
+                  [attr.for]="'unique-value' + index"
+                  class="center"
+                ></label>
+              </td>
+                <td colspan="4"
+                    class="field-function">
+                <ng-container
+                  *ngFor="
+                      let ff of form.get('functions').controls;
+                      let indexf = index
+                    "
+                >
+                  <tr>
+                    <td [formGroup]="ff">
+                  <tr>
+                    <td class="field-action col-mw function">
+                      <select
+                        class="input-collapse"
+                        formControlName="type"
+                      >
+                          <option [value]="null"
+                                  selected
+                                  disabled>
+                          Ninguno
+                        </option>
+                        <ng-container
+                          *ngFor="let item of parameters$?.funciones"
+                        >
+                          <ng-container
+                            *ngIf="
+                                    isFunctionType1AndMatchingDataType(
+                                      item,
+                                      form,
+                                      indexf
+                                    ) ||
+                                    isFunctionType26AndMatchingInputData(
+                                      item,
+                                      form,
+                                      indexf
+                                    )
+                                  "
+                          >
+                            <option [value]="item.idFuncion">
+                              {{ item.funcion }}
+                            </option>
+                          </ng-container>
+                        </ng-container>
+                      </select>
+                      <div
+                        class="field-actions-buttons"
+                        *ngIf="transactions.enabled"
+                      >
+                        <ng-container
+                          *ngIf="
+                                  showButtonAddFunction(
+                                    indexf + 1,
+                                    form.get('functions').controls.length
+                                  )
+                                "
+                        >
+                          <button
+                            (click)="addRowFunction(form)"
+                            [disabled]="
+                                    disableAddFunction(
+                                      form.get('dataType').value,
+                                      form.get('functions').controls
+                                    )
+                                  "
+                          >
+                              <i class="fa fa-plus"
+                                 aria-hidden="true"></i>
+                          </button>
+                        </ng-container>
+                        <ng-container
+                          *ngIf="!ff.get('isFunctionOfEntity').value"
+                        >
+                          <button
+                            (click)="removeRowFunction(form, indexf)"
+                          >
+                              <i class="fa fa-trash"
+                                 aria-hidden="true"></i>
+                          </button>
+                        </ng-container>
+                      </div>
+                    </td>
+                  </tr>
+                  <td class="content-parameters">
+                    <ng-container
+                      *ngFor="
+                                let fp of ff.get('parameters').controls;
+                                let indexp = index
+                              "
+                    >
+                        <tr [formGroup]="fp"
+                            class="row-parameters">
+                        <td class="field-action col-mw function-parameter">
+                          <select
+                            class="input-collapse"
+                            formControlName="parameter"
+                          >
+                              <option [value]="null"
+                                      selected
+                                      disabled>
+                              Ninguno
+                            </option>
+                            <ng-container
+                              *ngFor="let item of parameters$?.parametros"
+                            >
+                              <ng-container
+                                *ngIf="
+                                          ff.get('type').value == item.idFuncion &&
+                                          isVisibleOption(
+                                            ff,
+                                            'parameters',
+                                            indexp,
+                                            'parameter',
+                                            item.idParametro
+                                          )
+                                        "
+                              >
+                                <option [value]="item.idParametro">
+                                  {{ item.parametro }}
+                                </option>
+                              </ng-container>
+                            </ng-container>
+                          </select>
+                          <div
+                            class="field-actions-buttons"
+                            *ngIf="transactions.enabled"
+                          >
+                            <ng-container
+                              *ngIf="
+                                        showButtonAddRowFunctionParamter(
+                                          ff.controls,
+                                          indexp
+                                        )
+                                      "
+                            >
+                              <button
+                                (click)="addRowFunctionParameter(ff)"
+                                [disabled]="
+                                          !ff.get('type').value ||
+                                          disableAddFunctionParameter(
+                                            ff.get('type').value,
+                                            ff.get('parameters').controls
+                                          )
+                                        "
+                              >
+                                <i
+                                  class="fa fa-plus"
+                                  aria-hidden="true"
+                                ></i>
+                              </button>
+                            </ng-container>
+                            <ng-container
+                              *ngIf="
+                                        !fp.get('isParameterOfEntity').value &&
+                                        !ff.get('isFunctionOfEntity').value
+                                      "
+                            >
+                              <button
+                                (click)="
+                                          removeRowFunctionParameter(ff, indexp)
+                                        "
+                                [disabled]="!ff.get('type').value"
+                              >
+                                <i
+                                  class="fa fa-trash"
+                                  aria-hidden="true"
+                                ></i>
+                              </button>
+                            </ng-container>
+                          </div>
+                        </td>
+                        <td class="col-mw value-type">
+                          <select
+                            class="input-collapse"
+                            formControlName="parameterType"
+                          >
+                              <option [value]="null"
+                                      selected
+                                      disabled>
+                              Ninguno
+                            </option>
+                            <ng-container
+                              *ngFor="
+                                        let item of parameters$?.tipoValorParametro
+                                      "
+                            >
+                              <ng-container
+                                *ngIf="item.idTipoEstructura == 1"
+                              >
+                                <option [value]="item.idTipoValor">
+                                  {{ item.tipoValor }}
+                                </option>
+                              </ng-container>
+                            </ng-container>
+                          </select>
+                        </td>
+                        <td class="col-mw value">
+                          <ng-container
+                            [ngSwitch]="fp.get('parameterType').value"
+                          >
+                            <ng-container *ngSwitchCase="0">
+                              <select
+                                formControlName="detail"
+                                class="input-cp"
+                              >
+                                <option [value]="null">Ninguno</option>
+                                <option
+                                  *ngFor="
+                                            let item of readingFieldList(form)
+                                          "
+                                  [value]="item.inputData"
+                                >
+                                  {{ item.inputData }}
+                                </option>
+                              </select>
+                            </ng-container>
+                            <ng-container *ngSwitchDefault>
+                              <input
+                                type="text"
+                                class="input-cp"
+                                formControlName="detail"
+                                [title]="fp.get('detail').value"
+                              />
+                            </ng-container>
+                          </ng-container>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </td>
+                </ng-container>
+              </td>
+              <ng-container *ngIf="transactions.enabled">
+                <td class="field-action table-body-field remove">
+                  <div class="field-actions-buttons">
+                    <button (click)="removeRowField(index)">
+                        <i class="fa fa-trash"
+                           aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </td>
+              </ng-container>
+            </tr>
+          </tbody>
+    </ng-container>
+    </table>
+    </div>
+    <button
+      class="button-default secondary no-outline orange"
+      [disabled]="transactions.invalid"
+      (click)="addRowTransaction()"
+      *ngIf="storage?.params?.action != 'detalle'"
+    >
+        <i class="fa fa-plus"
+           aria-hidden="true"></i>
+      Agregar elemento
+    </button>
+  </ng-container>
+  </ng-container>
+  <div [hidden]="tabSelected !== 'notification'">
+    <button
+      class="button-dropdown"
+      [class.active]="dropdownSelected == 'notification'"
+      (click)="selectDropdown = 'notification'"
+    >
+      <i class="fa fa-angle-right"
+         aria-hidden="true"></i>
+      Notificaciones
+    </button>
+    <div [hidden]="dropdownSelected !== 'notification'">
+      <app-structure-configuration-notifications (values)="notificationValues($event)"
+                                                 phaseType="read"></app-structure-configuration-notifications>
+    </div>
+  </div>
+</section>

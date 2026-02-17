@@ -1,0 +1,190 @@
+<div class="form-group row">
+    <div class="col-lg-3">
+        <app-nav-menuprod></app-nav-menuprod>
+    </div>
+
+    <div class="col-lg-9 container">
+        <!-- TÍTULO -->
+        <div class="group1" style="border-bottom: 1.4px solid #553d81; padding-bottom: 8px;">
+            <div class="title-with-button">
+                <h2 class="title">REPORTE TÉCNICA</h2>
+                <form-button 
+                    label="Generar"
+                    (click)="generateReport()"
+                    btnClass="btn-primary-VI text-nowrap"
+                    [disabled]="!canGenerate">
+                </form-button>
+            </div>
+        </div>
+
+        <!-- RADIO BUTTONS PARA TIPO DE FECHA PRIMERO -->
+        <div class="row mt-3">
+            <div class="col-12">
+                <label class="form-label" style="color: #553d81; font-weight: 600; margin-bottom: 10px;">
+                    TIPO DE FECHA: <span style="color: red;">*</span>
+                </label>
+                <div class="d-flex align-items-center" style="gap: 30px;">
+                    <div class="form-check">
+                        <input 
+                            class="form-check-input" 
+                            type="radio" 
+                            name="dateType" 
+                            id="fechaEmision"
+                            value="EMISION" 
+                            [(ngModel)]="formData.dateType"
+                            (change)="onDateTypeChange()"
+                            [disabled]="!areDateTypeRadiosEnabled">
+                        <label class="form-check-label" for="fechaEmision" style="color: #553d81; font-weight: 500;">
+                            Fecha de Emisión
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input 
+                            class="form-check-input" 
+                            type="radio" 
+                            name="dateType" 
+                            id="fechaMovimiento"
+                            value="MOVIMIENTO" 
+                            [(ngModel)]="formData.dateType"
+                            (change)="onDateTypeChange()"
+                            [disabled]="!areDateTypeRadiosEnabled">
+                        <label class="form-check-label" for="fechaMovimiento" style="color: #553d81; font-weight: 500;">
+                            Fecha de Movimiento
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FILTROS EN DOS FILAS -->
+        <div class="row mt-3">
+            <!-- PÓLIZA -->
+            <div class="col-lg-3">
+                <form-input-text 
+                    text_label="PÓLIZA:"
+                    [onlyInput]="true"
+                    [(value)]="formData.policy"
+                    (keyup)="onPolicyChange()"
+                    (input)="onPolicyChange()"
+                    maxCaracter="10"
+                    [large]="true"
+                    [patternPrevent]="'[^0-9]'"
+                    [disabled]="!isPolicyFieldEnabled"
+                    placeholder="10 dígitos">
+                </form-input-text>
+                
+                <!-- Mensaje de validación de póliza -->
+                <small *ngIf="showPolicyValidation" [class]="policyValidationClass" class="form-text">
+                    <i *ngIf="isValidatingPolicy" class="fa fa-spinner fa-spin me-1"></i>
+                    <i *ngIf="!isValidatingPolicy && isPolicyValid" class="fa fa-check-circle me-1"></i>
+                    <i *ngIf="!isValidatingPolicy && !isPolicyValid && formData.policy" class="fa fa-exclamation-triangle me-1"></i>
+                    {{policyValidationMessage}}
+                </small>
+            </div>
+
+            <!-- ESTADO PÓLIZA -->
+            <div class="col-lg-3">
+                <form-input-select 
+                    text_label="ESTADO PÓLIZA:"
+                    [(value)]="formData.policyState"
+                    [items]="policyStates"
+                    fieldCodigo="value"
+                    fieldValor="label"
+                    [firstSelect]="false"
+                    [large]="true"
+                    [disabled]="!isPolicyStateEnabled">
+                </form-input-select>
+                
+                <!-- Información sobre dependencia -->
+                <small *ngIf="formData.policy && !isPolicyValid" class="form-text text-muted">
+                    <i class="fa fa-info-circle me-1"></i>
+                    Disponible cuando la póliza sea válida
+                </small>
+            </div>
+
+            <!-- FECHAS DE EMISIÓN -->
+            <div class="col-lg-3" *ngIf="formData.dateType === 'EMISION'">
+                <form-input-date 
+                    text_label="FECHA INICIO EMISIÓN:"
+                    [(value)]="formData.emissionStartDate"
+                    (ngModelChange)="updateDatesByType()"
+                    [large]="true"
+                    [disabled]="!areEmissionDatesEnabled">
+                </form-input-date>
+            </div>
+            <div class="col-lg-3" *ngIf="formData.dateType === 'EMISION'">
+                <form-input-date 
+                    text_label="FECHA FIN EMISIÓN:"
+                    [(value)]="formData.emissionEndDate"
+                    (ngModelChange)="updateDatesByType()"
+                    [large]="true"
+                    [disabled]="!areEmissionDatesEnabled">
+                </form-input-date>
+            </div>
+
+            <!-- FECHAS DE MOVIMIENTO -->
+            <div class="col-lg-3" *ngIf="formData.dateType === 'MOVIMIENTO'">
+                <form-input-date 
+                    text_label="FECHA INICIO MOVIMIENTO:"
+                    [(value)]="formData.movementStartDate"
+                    (ngModelChange)="updateDatesByType()"
+                    [large]="true"
+                    [disabled]="!areMovementDatesEnabled">
+                </form-input-date>
+            </div>
+            <div class="col-lg-3" *ngIf="formData.dateType === 'MOVIMIENTO'">
+                <form-input-date 
+                    text_label="FECHA FIN MOVIMIENTO:"
+                    [(value)]="formData.movementEndDate"
+                    (ngModelChange)="updateDatesByType()"
+                    [large]="true"
+                    [disabled]="!areMovementDatesEnabled">
+                </form-input-date>
+            </div>
+        </div>
+
+        <!-- INFORMACIÓN CONTEXTUAL -->
+        <div class="row mt-3" *ngIf="formData.dateType">
+            <div class="col-12">
+                <div class="alert alert-info" style="background-color: #e3f2fd; border: 1px solid #90caf9; color: #1976d2;">
+                    <small>
+                        <i class="fa fa-info-circle me-1" style="color: #1976d2;"></i>
+                        <span *ngIf="isEmissionDateSelected">
+                            <strong>Fecha de Emisión seleccionada:</strong> El reporte mostrará datos basados en la fecha de emisión de las pólizas. 
+                            <span style="color: #d32f2f;">Las fechas de movimiento están bloqueadas.</span>
+                        </span>
+                        <span *ngIf="isMovementDateSelected">
+                            <strong>Fecha de Movimiento seleccionada:</strong> El reporte mostrará datos basados en la fecha de último movimiento de las pólizas.
+                            <span style="color: #d32f2f;">Las fechas de emisión están bloqueadas.</span>
+                        </span>
+                    </small>
+                </div>
+            </div>
+        </div>
+
+        <!-- ALERTA SI NO HAY TIPO DE FECHA SELECCIONADO -->
+        <div class="row mt-3" *ngIf="!formData.dateType">
+            <div class="col-12">
+                <div class="alert alert-warning" style="background-color: #fff3cd; border: 1px solid #ffeaa7; color: #856404;">
+                    <small>
+                        <i class="fa fa-exclamation-triangle me-1" style="color: #856404;"></i>
+                        <strong>Debe seleccionar un tipo de fecha</strong> para habilitar los filtros de fecha correspondientes.
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOADING OVERLAY -->
+    <div [hidden]="!isLoading && !isGenerating" class="loadingScreen">
+        <div style="display:flex;height: 100%;width:100%">
+            <div style="margin:auto;text-align:center;color:#553d81;">
+                <i style="font-size: 50px" class="fa fa-spinner fa-spin"></i>
+                <div class="mt-2">
+                    <span *ngIf="isLoading">Cargando configuración...</span>
+                    <span *ngIf="isGenerating">Generando reporte técnico...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

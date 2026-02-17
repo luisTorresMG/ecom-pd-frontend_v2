@@ -1,0 +1,293 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="container-fluid">
+        <div class="header-content">
+          <div class="containt-item">
+            <div class="header-item">
+              <span class="title">Reporte Certificados asignados / reasignados</span>
+            </div>
+          </div>
+          <div class="containt-item">
+            <div class="header-item right-item">
+              <button class="full-color btn-export-excel mx-0"
+                      (click)="exportar()"
+                      [disabled]="!ListPayroll?.entities?.length">
+                <img alt=""
+                     src="assets/icons/download2.png" />
+                <span> Exportar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter">
+          <form [formGroup]="form">
+            <div class="form-group row filter-row d-flex align-items-end">
+              <!-- <div class="col-lg-9 filter-row-cell">
+                <app-channel-point
+                  (CANAL_VENTA_DATA_OUT)="CanalVentaData($event)"
+                  (PUNTO_VENTA_DATA_OUT)="PuntoVentaData($event)"
+                  [OPTIONS_CONF]="'TODOS'"
+                ></app-channel-point>
+              </div> -->
+              <div class="col-lg-5 filter-row-cell"
+                   style="padding-right: 0px">
+                <label for=""
+                       class="lbl-in filter-text">CANAL DE VENTA</label>
+                <select class="in-action"
+                        formControlName="canal">
+                  <option [value]="null"
+                          selected
+                          disabled>SELECCIONE</option>
+                  <option *ngFor="let canal of canales"
+                          [value]="canal.nchannel">
+                    {{ canal.sdescript }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-lg-5 filter-row-cell"
+                   style="padding-right: 0px">
+                <!-- <app-channel-point (CANAL_VENTA_DATA_OUT)="CanalVentaData($event)"
+                                 (PUNTO_VENTA_DATA_OUT)="PuntoVentaData($event)"
+                                 [OPTIONS_CONF]="'TODOS'"></app-channel-point> -->
+
+                <label for=""
+                       class="lbl-in filter-text">PUNTO DE VENTA</label>
+                <select id="ChannelSalesSelect"
+                        [disabled]="blockfilter"
+                        class="in-action"
+                        formControlName="puntov">
+                  <option [value]="null"
+                          selected
+                          disabled>SELECCIONE</option>
+                  <ng-container *ngIf="!!ListChannelPoint?.length">
+                    <option *ngFor="let channelpoint of ListChannelPoint"
+                            [value]="channelpoint.nnumpoint">
+                      {{ channelpoint.sdescript }}
+                    </option>
+                  </ng-container>
+                  <ng-container *ngIf="!ListChannelPoint?.length && !!f['canal'].value">
+                    <option disabled
+                            selected>NO HAY RESULTADOS</option>
+                  </ng-container>
+                </select>
+              </div>
+
+              <div class="col-lg-2 filter-row-cell">
+                <span class="filter-text">F. ASIG. / REASIG.:</span>
+                <input style="background-color: white"
+                       type="text"
+                       class="form-control date-search input-date"
+                       #dp="bsDatepicker"
+                       [bsConfig]="bsConfig"
+                       bsDatepicker
+                       [(bsValue)]="bsValueIni"
+                       value="{{ bsValueIni | date: 'dd/MM/yyyy' }}"
+                       formControlName="fecha"
+                       readonly />
+              </div>
+            </div>
+            <div class="
+                row
+                d-flex
+                align-items-end
+                justify-content-between
+                flex-row
+              ">
+              <div class="col-lg-3 filter-row-cell pt-0 padding-right-0">
+                <span class="filter-text">N° LOTE:</span>
+                <input type="number"
+                       class="form-control date-search input-date"
+                       formControlName="lote" />
+              </div>
+              <div class="col-lg-3 filter-row-cell pt-0 pb-0">
+                <span for=""
+                      class="filter-text">ESTADO:</span>
+                <select class="in-action"
+                        formControlName="estado">
+                  <option [value]="null"
+                          selected
+                          disabled>SELECCIONE</option>
+                  <option *ngFor="let data of dataEstado?.entities"
+                          [value]="data.NSTATUSPOL">
+                    {{ data.SDESCRIPT }}
+                  </option>
+                </select>
+              </div>
+              <div class="col-lg-6">
+                <div class="
+                    row
+                    float-right
+                    mx-0
+                    d-flex
+                    justify-content-between
+                    align-items-center
+                  ">
+                  <div class="lg-6">
+                    <button class="full-color margin-right-0"
+                            [disabled]="!f['canal'].value || !f['puntov'].value"
+                            (click)="onEventSearch()">
+                      <span>Buscar</span>
+                    </button>
+                  </div>
+                  <div class="lg-6">
+                    <button class="full-color btn-export-excel"
+                            (click)="onEventClear($event)">
+                      <img alt=""
+                           src="assets/icons/delete.png" />
+                      <span> Limpiar</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row fila-search"></div>
+          </form>
+        </div>
+
+        <div class="grid form-group row margin-right-0">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr class="grid-title">
+                  <td class="grid-title-item">Canal</td>
+                  <td class="grid-title-item">Punto de venta</td>
+                  <td class="grid-title-item">F. asignación / reasignación</td>
+                  <td class="grid-title-item">Tipo de certificado</td>
+                  <td class="grid-title-item">Certificado</td>
+                  <td class="grid-title-item">Estado</td>
+                  <td class="grid-title-item">N° lote asignación</td>
+                  <td class="grid-title-item">N° lote producción venta</td>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="!ListPayroll?.entities?.length">
+                  <tr class="grid-body">
+                    <td class="grid-body-item"
+                        colspan="8"
+                        style="text-align: center">
+                      No hay informacion para mostrar
+                    </td>
+                  </tr>
+                </ng-container>
+                <ng-container *ngIf="!!ListPayroll?.entities?.length">
+                  <tr class="table-body"
+                      *ngFor="
+                      let result of ListPayroll?.entities
+                        | paginate: { itemsPerPage: 10, currentPage: p }
+                    ">
+                    <td class="table-body-item">{{ result.SNAME_CHANNEL }}</td>
+                    <td class="table-body-item">
+                      {{ result.SNAME_SALEPOINT }}
+                    </td>
+                    <td class="table-body-item">
+                      {{ result.DASSIGN | date: "dd/MM/yyyy" }}
+                    </td>
+                    <td class="table-body-item">{{ result.SCERTIFICATE }}</td>
+                    <td class="table-body-item">
+                      {{ result.NPOLESP_COMP }}
+                    </td>
+                    <td class="table-body-item">{{ result.SSTATUS }}</td>
+                    <td class="table-body-item">{{ result.NNUMLOT }}</td>
+                    <td class="table-body-item">{{ result.NNUMLOTSALE }}</td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+          <pagination-controls *ngIf="!!ListPayroll?.entities?.length"
+                               class="my-pagination"
+                               (pageChange)="p = $event"
+                               autoHide="true"
+                               responsive="true"
+                               previousLabel="Anterior"
+                               nextLabel="Siguiente"
+                               screenReaderPaginationLabel="Paginación"
+                               screenReaderPageLabel="pagina"
+                               screenReaderCurrentLabel="Estás en la pagina">
+          </pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalExport>
+  <div class="content-modal-u">
+    <div class="modal-u modalCreateRequest">
+      <div class="modal__header">
+        <h6 class="modal__header--title"
+            style="margin-left: -20px">
+          Formato de exportación
+        </h6>
+        <button class="modal__header--close"
+                (click)="closeModalExport()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body mbcr">
+        <form [formGroup]="formRadio">
+          <div class="mbcr_radios">
+            <div class="mbcr_radios--item"
+                 style="margin-bottom: 10px">
+              <input type="radio"
+                     class="chk"
+                     id="mbcr_channel"
+                     value="EXCEL"
+                     formControlName="radio" />
+              <label class="lbl-chk"
+                     for="mbcr_channel">Excel</label>
+            </div>
+            <div class="mbcr_radios--item">
+              <input type="radio"
+                     class="chk"
+                     id="mbcr_pointSale"
+                     value="PDF"
+                     formControlName="radio" />
+              <label class="lbl-chk"
+                     for="mbcr_pointSale">PDF</label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-primary-u"
+                style="margin-right: 10px"
+                (click)="tipoExportar()">
+          Exportar
+        </button>
+        <button class="btn-secondary-u mr-3"
+                (click)="closeModalExport()">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #mensaje>
+  <div id="modal-u">
+    <div class="modal-u"
+         style="width: 400px; height: 250px">
+      <div class="modal__header">
+        <h6 class="modal__header--title"
+            style="text-align: left">Mensaje</h6>
+        <button class="modal__header--close"
+                (click)="closeModalExport()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body"
+           style="margin-left: 17px; margin-top: 1.5rem; margin-bottom: 1rem">
+        <p class="modal__body--desc">{{ MENSAJE }}</p>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-primary-u"
+                (click)="closeModalExport()">
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

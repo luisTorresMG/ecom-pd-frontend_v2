@@ -1,0 +1,54 @@
+<div class="home">
+  <h3 class="home__title">Proceso de diagnóstico de salud y actividades</h3>
+  <div class="home__image">
+    <img src="./assets/dps/home.png"
+         alt=""/>
+  </div>
+  <p class="home__info">
+    A continuación vamos a iniciar el proceso de validación, que consistirá en
+    la resolución de un cuestionario. Para comenzar a contestar las preguntas
+    del cuestionario, primero acepte nuestra Políticas de privacidad y nuestros
+    Términos y condiciones.
+  </p>
+  <form [formGroup]="form"
+        (ngSubmit)="onSubmit()">
+    <div class="home__agree-terms">
+      <div class="home__checkbox">
+        <input type="checkbox"
+               id="terms"
+               formControlName="terms"/>
+        <label for="terms">
+          Acepto los
+          <a role="button"
+             (click)="showModalTerms()">
+            Términos y condiciones
+          </a>
+        </label>
+      </div>
+      <div class="home__checkbox">
+        <input type="checkbox"
+               id="privacy"
+               formControlName="privacy"/>
+        <label for="privacy">
+          Acepto las
+          <a href="https://www.protectasecurity.pe/politica-de-privacidad/"
+             target="_blank">
+            Políticas de privacidad
+          </a>
+        </label>
+      </div>
+    </div>
+
+    <div class="home__buttons">
+      <button class="home__button"
+              type="submit"
+              [disabled]="form.invalid">
+        Empezar
+      </button>
+    </div>
+  </form>
+</div>
+
+<ng-template #modalTerms>
+  <app-terms (close)="closeModalTerms()"></app-terms>
+</ng-template>

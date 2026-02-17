@@ -1,0 +1,172 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="container-fluid">
+        <div class="header-content">
+          <div class="containt-item">
+            <div class="header-item">
+              <span class="title">Reporte de Tarifas</span>
+            </div>
+          </div>
+          <div class="containt-item">
+            <div class="header-item right-item">
+              <button class="full-color btn-export-excel mx-0" 
+                    (click)="onEventDownload($event)">
+                <img alt=""
+                     src="assets/icons/download2.png" />
+                <span> Exportar Excel</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter">
+          <div class="form-group row filter-row">
+
+            <div class=" col-lg-3">
+                <label for=""
+                    class="filter-text">FECHA DE CARGA:</label>
+                <div class="row">
+                    <div class="col-6 padding-right-0">
+                        <input type="text"
+                        class="form-control date-search input-date"
+                        #dp="bsDatepicker"
+                        [bsConfig]="bsConfig"
+                        bsDatepicker
+                        [(bsValue)]="bsValueIni"
+                        value="{{ bsValueIni | date: 'dd/MM/yyyy' }}" />
+                    </div>
+                    <div class="col-6 padding-right-0">
+                        <input type="text"
+                           class="form-control date-search input-date"
+                           #dp="bsDatepicker"
+                           [bsConfig]="bsConfig"
+                           bsDatepicker
+                           [(bsValue)]="bsValueFin"
+                           value="{{ bsValueFin | date: 'dd/MM/yyyy' }}" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 filter-row-cell">
+                <span class="filter-text">CANAL DE VENTA:</span>
+                  <select class="form-control date-search input-date"
+                    (change)="onChangeCanal($event.target.value)"
+                    [(ngModel)]="canalSelected"
+                  >
+                    <option value="0">--SELECCIONAR--</option>
+                    <option
+                      *ngFor="let canal of canales"
+                      value="{{ canal.nchannel }}"
+                      >{{ canal.sdescript }}</option
+                    >
+                  </select>
+              </div>
+              <div class="col-lg-3 filter-row-cell">
+                <span class="filter-text">NRO. DE LOTE</span>
+  
+                <input type="text"
+                       placeholder="Nro. de Lote"
+                       class="form-control date-search input-date"
+                       [(ngModel)]="this.lote" />
+              </div>
+          </div>
+
+          <div class="form-group row fila-search">
+
+
+            <div class="col-lg-12 ">
+                <div class="row float-right mx-0">
+                   
+                    <div class="lg-6">
+                        <button class="full-color btn-export-excel"
+                        (click)="onEventClear($event)">
+                            <img alt=""
+                                src="assets/icons/delete.png" />
+                            <span> Limpiar</span>
+                        </button>
+                    </div>
+                    <div class="lg-6">
+                        <button class="full-color margin-right-0"
+                        (click)="onEventSearch($event)">
+                            <span>Buscar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid form-group row ">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr class="grid-title">
+
+                  <td class="grid-title-item">Canal de venta</td>
+                  <td class="grid-title-item">Lote</td>
+                  <td class="grid-title-item">Póliza</td>
+                  <td class="grid-title-item">Fecha Emisión</td>
+                  <td class="grid-title-item">Inicio de Vigencia</td>
+                  <td class="grid-title-item">Fin de Vigencia</td>
+                  <td class="grid-title-item">Proforma</td>
+                  <td class="grid-title-item">Tarifa Protecta</td>
+                  <td class="grid-title-item">Tarifa Broker</td>
+                  <td class="grid-title-item">Diferencia</td>
+                  <td class="grid-title-item">Moneda</td>
+                  <td class="grid-title-item">Fecha de Distribución</td>
+                  <td class="grid-title-item">Fecha de Registro</td>
+
+                </tr>
+              </thead>
+              <div *ngIf="fExistRegistro; then ocultarGrilla; else mostrarGrilla"></div>
+            </table>
+            <ng-template #mostrarGrilla>
+              <tbody>
+                <tr>
+                  <td colspan="13">{{ msgErrorLista }}</td>
+                </tr>
+              </tbody>
+            </ng-template>
+            <ng-template #ocultarGrilla>
+              <tbody *ngFor="let result of ListRateReport">
+                <tr>
+                  <td class="data-table-tr-td">{{ result.sdeschannel }}</td>
+                  <td class="data-table-tr-td">{{ result.nnumlot }}</td>
+                  <td class="data-table-tr-td">{{ result.npolicy }}</td>
+                  <td class="data-table-tr-td">{{ result.dissuedat }}</td>
+                  <td class="data-table-tr-td">{{ result.dstartdate | date: 'dd/MM/yyyy'  }}</td>
+                  <td class="data-table-tr-td">{{ result.dexpirdat | date: 'dd/MM/yyyy'  }}</td>
+                  <td class="data-table-tr-td">{{ result.nreceipt }}</td>
+                  <td class="data-table-tr-td">{{ result.tarifA_PROTEC }}</td>
+                  <td class="data-table-tr-td">{{ result.tarifA_BROKER }}</td>
+                  <td class="data-table-tr-td">{{ result.diferencia }}</td>
+                  <td class="data-table-tr-td">{{ result.sdescript }}</td>
+                  <td class="data-table-tr-td">{{ result.dcompdate }}</td>
+                  <td class="data-table-tr-td">{{ result.feregistro }}</td>
+                </tr>
+              </tbody>
+            </ng-template>
+          </div>
+        </div>
+        <div *ngIf="fExistRegistro; then ocultarPaginado; else mostrarPaginado"></div>
+        <ng-template #mostrarPaginado>
+          <div></div>
+        </ng-template>
+
+        <ng-template #ocultarPaginado>
+          <div class="row">
+            <div class="col-xs-12 col-12">
+              <pagination [totalItems]="totalItems"
+                          [itemsPerPage]="itemsPerPage"
+                          [rotate]="rotate"
+                          [maxSize]="maxSize"
+                          [(ngModel)]="currentPage"
+                          (pageChanged)="pageChanged($event)">
+              </pagination>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

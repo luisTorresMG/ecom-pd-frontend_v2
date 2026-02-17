@@ -1,0 +1,288 @@
+<div class="container-fluid">
+  <div class="row content-all">
+    <div class="col-md-12 content">
+      <div class="container-fluid content-page">
+        <div class="row r1-head">
+          <div class="col-12 head-title">
+            <h1 class="title">Transferencia APESEG</h1>
+            <button class="full-color btn-with-icon btn-download"
+                    hidden>
+              <img class="icon-btn"
+                   src="assets/icons/download2.png" />
+              Exportar
+            </button>
+          </div>
+        </div>
+        <form class="row r2-head"
+              [formGroup]="formDataSearch">
+          <div class="col-md-12 content-actions">
+            <div class="content-input">
+              <label for="state"
+                     class="lbl-in filter-text">FECHA INICIO:</label>
+              <input type="text"
+                     class="form-control date-search input-date in-action"
+                     #dp="bsDatepicker"
+                     [bsConfig]="bsConfig"
+                     bsDatepicker
+                     formControlName="fechaInicio"
+                     [(bsValue)]="bsValueIni"
+                     value="{{ bsValueIni | date: 'dd/MM/yyyy' }}" />
+            </div>
+            <div class="content-input">
+              <label for="chanel"
+                     class="lbl-in filter-text">FECHA FIN:</label>
+              <input type="text"
+                     class="form-control date-search input-date in-action"
+                     formControlName="fechaFin"
+                     #dp="bsDatepicker"
+                     [bsConfig]="bsConfig"
+                     bsDatepicker
+                     formControlName="fechaFin"
+                     [(bsValue)]="bsValueFin"
+                     value="{{ bsValueFin | date: 'dd/MM/yyyy' }}" />
+            </div>
+            <div class="content-input">
+              <label for="state"
+                     class="lbl-in filter-text">ESTADO DE TRANSFERENCIA:</label>
+              <select class="in-action"
+                      formControlName="estadoTrans"
+                      (selectionChange)="onChange($event.value)">
+                <option [value]="0"
+                        disabled
+                        selected>SELECCIONE</option>
+                <option *ngFor="let data of dataEstado?.PRO_MASTER"
+                        [value]="data?.SITEM">
+                  {{ data?.SDECRIPTION }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-12 content-actions">
+            <div class="content-input">
+              <label for="state"
+                     class="lbl-in filter-text">CERTIFICADO:</label>
+              <input type="number"
+                     class="in-action"
+                     formControlName="nCertificado" />
+            </div>
+            <div class="content-input">
+              <label for="state"
+                     class="lbl-in filter-text">PLACA:</label>
+              <input type="text"
+                     class="in-action"
+                     formControlName="placa" />
+            </div>
+            <button type="submit"
+                    class="full-color"
+                    (click)="showbuscar()">
+              Buscar
+            </button>
+            <button type="button"
+                    (click)="clearDataFormSearch()"
+                    class="full-color">
+              Limpiar
+            </button>
+            <button type="button"
+                    class="full-color"
+                    (click)="showModalEnviarMasivo()"
+                    hidden>
+              Enviar Masivo
+            </button>
+          </div>
+        </form>
+        <div class="grid form-group row content-table">
+          <div class="table-responsive mo">
+            <table class="table tablem">
+              <thead>
+                <tr class="grid-title table-head">
+                  <td class="grid-title-item">Placa</td>
+                  <td class="grid-title-item">Canal</td>
+                  <td class="grid-title-item">Punto de Venta</td>
+                  <td class="grid-title-item">N° Certificado</td>
+                  <td class="grid-title-item">F. I. Vigencia</td>
+                  <td class="grid-title-item">F. F. Vigencia</td>
+                  <td class="grid-title-item">F. de Envio</td>
+                  <td class="grid-title-item">Contratante</td>
+                  <td class="grid-title-item">Desc. Error</td>
+                  <td class="grid-title-item">Estado</td>
+                  <td class="grid-title-item">Acciones</td>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="!dataTransferenciaApeseg?.entities?.length">
+                  <tr class="grid-body">
+                    <td class="grid-body-item"
+                        colspan="11"
+                        style="text-align: center">
+                      No hay informacion para mostrar
+                    </td>
+                  </tr>
+                </ng-container>
+                <ng-container *ngIf="!!dataTransferenciaApeseg?.entities?.length">
+                  <tr class="table-body"
+                      *ngFor="
+                      let data of dataTransferenciaApeseg?.entities
+                        | paginate: { itemsPerPage: 10, currentPage: p }
+                    ">
+                    <td class="table-body-item">{{ data?.NPLACA }}</td>
+                    <td class="table-body-item">{{ data?.SPOLICY }}</td>
+                    <td class="table-body-item">{{ data?.SSALEPOINT }}</td>
+                    <td class="table-body-item">{{ data?.N_POLESP_COMP }}</td>
+                    <td class="table-body-item">
+                      {{ data?.D_STARTDATE | date: "dd/MM/yyyy" }}
+                    </td>
+                    <td class="table-body-item">
+                      {{ data?.D_EXPIRDAT | date: "dd/MM/yyyy" }}
+                    </td>
+                    <td class="table-body-item">
+                      {{ data?.NFECHA_REGISTRO | date: "dd/MM/yyyy" }}
+                    </td>
+                    <td class="table-body-item">{{ data?.S_CLIENAME }}</td>
+                    <td class="table-body-item">{{ data?.DESERROR }}</td>
+                    <td class="table-body-item">{{ data?.STRANSFERSTATUS }}</td>
+                    <td class="table-body-item">
+                      <a (click)="modalConfirmacion(data)">
+                        <i title="Enviar"
+                           style="cursor: pointer"
+                           class="fa fa-send fa-lg"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+          <br />
+          <pagination-controls class="my-pagination"
+                               (pageChange)="p = $event"
+                               *ngIf="!!dataTransferenciaApeseg?.entities?.length"
+                               autoHide="true"
+                               responsive="true"
+                               previousLabel="Anterior"
+                               nextLabel="Siguiente"
+                               screenReaderPaginationLabel="Paginación"
+                               screenReaderPageLabel="pagina"
+                               screenReaderCurrentLabel="Estás en la pagina">
+          </pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade"
+     bsModal
+     #modal="bs-modal"
+     [config]="{
+    backdrop: 'static'
+  }">
+  <div class="modal-dialog"
+       role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"
+            id="exampleModalLabel">APESEG</h5>
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                (click)="cancelModalConfirmacion()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label>¿Seguro que desea enviar a APESEG el certificado
+          {{ info?.N_POLESP_COMP }}?
+        </label>
+      </div>
+      <div class="modal-footer"
+           style="justify-content: center">
+        <button type="button"
+                class="btn full-color btn-secondary btn-close-modal"
+                data-dismiss="modal"
+                (click)="cancelModalConfirmacion()">
+          Cancelar
+        </button>
+        <button type="button"
+                class="btn full-color btn-aceptar-modal"
+                (click)="enviarMasivo()">
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade"
+     bsModal
+     #modalEnviarMasivo="bs-modal"
+     [config]="{
+    backdrop: 'static'
+  }">
+  <div class="modal-dialog"
+       role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"
+            id="exampleModalLabel">APESEG</h5>
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                (click)="hideModalEnviarMasivo()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label>¿Seguro que desea enviar de forma Masiva los Certificados para
+          APESEG?</label>
+      </div>
+      <div class="modal-footer">
+        <button type="button"
+                class="btn full-color btn-secondary btn-close-modal"
+                data-dismiss="modal"
+                (click)="hideModalEnviarMasivo()">
+          Cancelar
+        </button>
+        <button type="button"
+                (click)="enviarMasivo()"
+                class="btn full-color btn-aceptar-modal">
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade"
+     bsModal
+     #modalResultado="bs-modal"
+     [config]="{
+    backdrop: 'static'
+  }">
+  <div class="modal-dialog"
+       role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"
+            id="exampleModalLabel">Mensaje</h5>
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                (click)="hideModalResultado()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">{{ MENSAJEFINAL }}</div>
+      <div class="modal-footer">
+        <button type="button"
+                class="btn full-color btn-secondary btn-close-modal"
+                data-dismiss="modal"
+                (click)="hideModalResultado()">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

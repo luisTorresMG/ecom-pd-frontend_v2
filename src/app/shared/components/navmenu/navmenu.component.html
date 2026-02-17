@@ -1,0 +1,120 @@
+<div class="main-nav collapse">
+  <div class="navbar navbar-inverse no-left"
+       id="sidebarContainer">
+    <div class="nav-user">
+      <div class="user-wrap">
+        <div class="user-log">
+          <span class="log-circle">{{ INICIAL_FNAME + INICIAL_FLNAME }}</span>
+        </div>
+        <div class="user-info">
+          <span>Bienvenido a</span>
+          <span>Protecta Security,</span>
+          <span class="user-name">{{ NAME_USER }}</span>
+        </div>
+      </div>
+    </div>
+    <div id="navbar"
+         class="navbar-collapse">
+      <ul class="nav navbar-nav menu-ul ">
+        <li class="nav_menu"
+            *ngFor="let data of DATA_MENU">
+          <a role="button"
+             [title]="data.sdescription"
+             class="menu-item menu-item-father"
+             (click)="showHideSubMenu(data.nidresource)"
+             [hidden]="data.children.length == 0">
+            <div class="li-img">
+              <i [class]="'fa ' + data.shtml"
+                 aria-hidden="true"></i>
+            </div>
+            <span class="li-span">
+              {{ data.sname }}
+            </span>
+            <div class="icon-right"
+                 [hidden]="data.children.length == 0">
+              <i class="fa fa-caret-right"
+                 aria-hidden="true"
+                 [id]="'iconmenu' + data.nidresource"></i>
+            </div>
+          </a>
+          <a role="button"
+             [title]="data.sdescription"
+             class="menu-item menu-item-father"
+             [routerLink]="['/'+data.stag]"
+             [hidden]="data.children.length >= 1">
+            <div class="li-img">
+              <i [class]="'fa ' + data.shtml"
+                 aria-hidden="true"></i>
+            </div>
+            <span class="li-span">
+              {{ data.sname }}
+            </span>
+          </a>
+          <ul class="nav navbar-nav menu-ul menu-child"
+              [id]="'menu'+data.nidresource"
+              hidden="true">
+            <li class="nav_menu"
+                *ngFor="let submenu of data.children">
+              <a role="button"
+                 class="menu-item menu-item-father"
+                 [title]="submenu.sdescription"
+                 (click)="showHideChildren(submenu.nidresource)"
+                 [hidden]="submenu.children.length == 0">
+                <div class="li-img">
+                  <i [class]="'fa ' + submenu.shtml"
+                     aria-hidden="true"></i>
+                </div>
+                <span class="li-span">
+                  {{ submenu.sname }}
+                </span>
+                <div class="icon-right"
+                     [hidden]="submenu.children.length == 0">
+                  <i class="fa fa-caret-right"
+                     aria-hidden="true"
+                     [id]="'iconsubmenu'+submenu.nidresource"></i>
+                </div>
+              </a>
+              <a role="button"
+                 class="menu-item menu-item-father"
+                 [title]="submenu.sdescription"
+                 [routerLink]="['/'+submenu.stag]"
+                 [hidden]="submenu.children.length >= 1">
+                <div class="li-img">
+                  <i [class]="'fa ' + submenu.shtml"
+                     aria-hidden="true"></i>
+                </div>
+                <span class="li-span">
+                  {{ submenu.sname }}
+                </span>
+              </a>
+              <ul class="nav navbar-nav menu-ul menu-child-child"
+                  [id]="'submenu'+submenu.nidresource"
+                  hidden="true">
+                <li class="nav_menu"
+                    *ngFor="let children of submenu.children">
+                  <a class="menu-item"
+                     [routerLink]="['/'+children.stag]"
+                     [title]="children.sdescription">
+                    <div class="icon-left">
+                      <i class="fa fa-caret-right"
+                         aria-hidden="true"></i>
+                    </div>
+                    <span class="li-span">
+                      {{ children.sname }}
+                    </span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <div class="close-window">
+        <a role="button"
+           (click)="doLogout()">
+          <span>Salir de Protecta Security</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,122 @@
+<div class="form-group row">
+  <div class="col-lg-3">
+    <app-nav-menuprod></app-nav-menuprod>
+  </div>
+  <div class="col-lg-9" *ngIf="!esEvaluacion || cotizacion.numeroCotizacion">
+    <div class="container-fluid p-0">
+      <panel-header-producto [title]="obtenerTitulo()"></panel-header-producto>
+
+      <panel-info-contratante
+        [(contratante)]="cotizacion.contratante"
+        [cotizacion]="cotizacion"
+        [(isLoading)]="isLoading"
+        [detail]="esEvaluacion"
+        (modifyDatos)="ModalModificarDatos($event)"
+      >
+      </panel-info-contratante>
+
+      <panel-info-contactos
+        [contactos]="cotizacion.contratante.EListContactClient"
+        [contratante]="cotizacion.contratante"
+        [detail]="esEvaluacion"
+      ></panel-info-contactos>
+
+      <panel-info-brokers
+        [(brokers)]="cotizacion.brokers"
+        [vista]="cotizacion"
+        [initialize]="!esEvaluacion"
+        [detail]="esEvaluacion"
+      ></panel-info-brokers>
+
+      <panel-info-endosatarios
+        [(endosers)]="cotizacion.endosatario"
+        [vista]="cotizacion"
+        [initialize]="!esEvaluacion"
+        [detail]="esEvaluacion"
+      ></panel-info-endosatarios>
+
+      <!-- Datos de la polizaaa-->
+      <panel-info-poliza
+        [(poliza)]="cotizacion.poliza"
+        (cambiaDatosPoliza)="recargar.trama = true"
+        [cotizacion]="cotizacion"
+        [detail]="esEvaluacion"
+      ></panel-info-poliza>
+
+      <!-- Panel trama o datos de beneficiarios-->
+      <panel-info-trama
+        [detail]="esEvaluacion"
+        [(trama)]="cotizacion.trama"
+        [(recargar)]="recargar.trama"
+        [poliza]="cotizacion.poliza"
+        [cotizacion]="cotizacion"
+        [(cotizador)]="cotizacion.cotizador"
+        [esEvaluacion]="esEvaluacion"
+        [(isLoading)]="isLoading"
+        *ngIf="trxPendiente != '' && modoVista != 'Visualizar'"
+      ></panel-info-trama>
+      <!-- Panel DPS Estado -->
+      <panel-dps-estado
+      *ngIf="esEvaluacion && cotizacion.modoTrama == false"
+      [cotizacion]="cotizacion"
+        [detail]="esEvaluacion"
+      ></panel-dps-estado>
+      <!-- Panel DPS 
+      <panel-dps
+        [cotizacion]="cotizacion"
+        (cambiaDatosPoliza)="recargar.trama = true"
+        [(isLoading)]="isLoading"
+        [detail]="esEvaluacion"
+      ></panel-dps>
+-->
+      <!-- Cotizador-->
+      <panel-info-cotizador
+      [hidden]="!esEvaluacion"
+        [(cotizador)]="cotizacion.cotizador"
+        [trama]="cotizacion.trama"
+        [cotizacion]="cotizacion"
+        (cambiaDatosPoliza)="recargar.trama = true"
+        [poliza]="cotizacion.poliza"
+        [contratante]="cotizacion.contratante"
+        [esPolizaMatriz]="cotizacion.poliza?.checkbox1?.POL_MAT"
+        [(recargar)]="cotizacion.cotizador.changeContratante"
+        [(isLoading)]="isLoading"
+        [detail]="esEvaluacion"
+        [cotizaDPS]="cotizaDPS"
+      ></panel-info-cotizador>
+
+      <panel-info-evaluacion
+        *ngIf="esEvaluacion && cotizacion.modoTrama == false"
+        [cotizacion]="cotizacion"
+        [(isLoading)]="isLoading"
+      ></panel-info-evaluacion>
+
+      <panel-info-pago
+        [(abrir)]="modal.pagos"
+        [cotizacion]="cotizacion"
+        (confirmar)="formaPagoElegido()"
+        [(isLoading)]="isLoading"
+      ></panel-info-pago>
+
+      <!-- botones-->
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="pull-right">
+            <form-button
+              label="Cancelar"
+              (click)="clickCancelar()"
+            ></form-button>
+
+            <form-button
+              *ngIf="trxPendiente != '' && modoVista != 'Visualizar' && modoVista != 'EmitirR'"
+              label="{{ labelBtn }}"
+              (click)="obtenerFuctionBtn()"
+              btnClass="btn-primary"
+            ></form-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <loading-screen [hidden]="!isLoading"></loading-screen>
+</div>

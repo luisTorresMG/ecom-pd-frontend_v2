@@ -1,0 +1,416 @@
+<main class="content">
+  <!-- *Navegación -->
+  <section class="content__breadcrumb">
+    <app-breadcrumb>
+      <a>
+        <i class="fa fa-home" aria-hidden="true"></i>
+        Desgravamen
+      </a>
+      <a routerLink="/backoffice/desgravamen/carga-masiva/bandeja">
+        Bandeja de carga masiva
+      </a>
+      <a> Nueva trama </a>
+    </app-breadcrumb>
+    <a
+      class="button-default secondary no-outline button-back"
+      routerLink="/backoffice/desgravamen/carga-masiva/bandeja"
+    >
+      <i class="fa fa-angle-left" aria-hidden="true"></i>
+      Regresar
+    </a>
+  </section>
+
+  <!-- *Cabecera -->
+  <section class="content__header">
+    <h1 class="title">Nueva trama</h1>
+  </section>
+
+  <!-- *Cuerpo -->
+  <form class="content__body" [formGroup]="form">
+    <div class="body__pills">
+      <div class="pill">
+        <input type="radio" id="radio-1" formControlName="type" [value]="1"/>
+        <label for="radio-1"> Por póliza </label>
+      </div>
+      <div class="pill">
+        <input type="radio" id="radio-2" formControlName="type" [value]="2"/>
+        <label for="radio-2"> Por ruc </label>
+      </div>
+      <div class="pill">
+        <input type="radio" id="radio-3" formControlName="type" [value]="3"/>
+        <label for="radio-3"> Por contratante </label>
+      </div>
+    </div>
+    <div class="form" [class.contractor]="formControl['type'].value == 3">
+      <!-- *POLICY CONTROL -->
+      <ng-container *ngIf="formControl['type'].value == 1">
+        <label for="form-policy" class="placeholder" aria-placeholder="Póliza">
+          <div class="content-input-policy">
+            <input
+              type="text"
+              id="form-policy"
+              formControlName="policy"
+              (blur)="getInformation('policy')"
+            />
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </div>
+          <ng-container *ngIf="structureInfo$">
+            <span>
+              Vigencia: {{ structureInfo$.fechaInicio }} -
+              {{ structureInfo$.fechaFin }}. Moneda:
+              {{ structureInfo$.moneda }}. Estado: {{ structureInfo$.estado }}
+            </span>
+          </ng-container>
+        </label>
+      </ng-container>
+
+      <!-- *RUC CONTROL -->
+      <ng-container *ngIf="formControl['type'].value != 1">
+        <label for="form-ruc" class="placeholder" aria-placeholder="RUC">
+          <input
+            type="text"
+            id="form-ruc"
+            formControlName="ruc"
+            (blur)="getInformation('ruc')"
+          />
+        </label>
+      </ng-container>
+
+      <!-- *CONTRACTOR CONTROL -->
+      <div class="form-contractor">
+        <pro-select
+          placeholder="Contratante"
+          [items]="contractors$"
+          [clearable]="true"
+          label="label"
+          value="id"
+          formControlName="contractor"
+        ></pro-select>
+      </div>
+
+      <!-- *PRODUCT CONTROL -->
+      <pro-select
+        placeholder="Producto"
+        formControlName="product"
+        [items]="products$"
+        value="id"
+        label="label"
+      ></pro-select>
+
+      <!-- *SALES CHANNEL CONTROL -->
+      <label
+        for="form-sales-channel"
+        class="placeholder"
+        aria-placeholder="Canal de venta"
+      >
+        <input
+          type="text"
+          id="form-sales-channel"
+          formControlName="salesChannel"
+        />
+      </label>
+
+      <!-- *POLICY CONTROL -->
+      <ng-container *ngIf="formControl['type'].value != 1">
+        <pro-select
+          placeholder="Póliza"
+          formControlName="policy"
+          [items]="policies$"
+          value="id"
+          label="label"
+        ></pro-select>
+      </ng-container>
+
+      <!-- *TRANSACTION CONTROL -->
+      <pro-select
+        placeholder="Transacción"
+        formControlName="transaction"
+        [items]="transactions$"
+        value="id"
+        label="label"
+      ></pro-select>
+
+      <!-- *PERIODO DE DECLARACION - CONTROL -->
+      <label
+        for="form-declaration-period"
+        class="placeholder"
+        aria-placeholder="Periodo de declaración"
+      >
+        <input
+          type="text"
+          id="form-declaration-period"
+          #dp="bsDatepicker"
+          bsDatepicker
+          [bsConfig]="datepickerConfig"
+          readonly
+          formControlName="declarationPeriod"
+        />
+        <i class="fa fa-calendar" aria-hidden="true"></i>
+      </label>
+    </div>
+    <div class="content-drop-file">
+      <div class="content-structure-info" *ngIf="structureInfo$?.nombreEstructura">
+        <div class="file__name">
+          <span>
+            <b>Nombre de estructura:</b>
+            <br>
+            {{ structureInfo$.nombreEstructura }}
+          </span>
+        </div>
+        <div class="content-input content-flow">
+          <span>Elegir flujo:</span>
+
+            <div class="content-checkbox">
+                <input type="checkbox"
+                    id="chk_read_validate"
+                    class="mark-u orange"
+                   formControlName="read"
+                   [(ngModel)]="chk_read">
+                <label for="chk_read_validate">Leer y validar</label>
+            </div>
+            <div class="content-checkbox">
+                <input type="checkbox"
+                    id="chk_emit_generate"
+                    class="mark-u orange"
+                    formControlName="migration"
+                    (change)="checkEmision()"
+                    [(ngModel)]="chk_emit_generatem">
+                <label for="chk_emit_generate">Emitir y generar recibos</label>
+            </div>
+            <div class="content-checkbox">
+                <input type="checkbox"
+                    id="chk_bill"
+                    class="mark-u orange"
+                    formControlName="billing"
+                    (change)="checkFactu()"
+                    [(ngModel)]="chk_billm">
+                <label for="chk_bill">Facturar</label>
+            </div>
+        </div>
+      </div>
+      <div *ngIf="btnAgrFact == 'opentype'">
+        <button
+          class="button-default secondary orange"
+          (click)="agruparFactura(content1,structureInfo$)">
+          <i class="fa fa-plus" aria-hidden="true"></i>
+          Agrupar facturación
+        </button>
+        <span>&nbsp;</span>
+      </div>
+        <div class="content-table" *ngIf="tblAgrFact == 'opentype'">
+            <table class="table-u">
+                <thead>
+                    <tr class="grid-title">
+                        <th class="grid-title-item">ID Processo</th>
+                        <th class="grid-title-item">Transacción</th>
+                        <th class="grid-title-item">Contratante</th>
+                        <th class="grid-title-item">Fecha y hora de carga</th>
+                        <th class="grid-title-item">Fecha de estado</th>
+                        <th class="grid-title-item">Accion</th>
+                    </tr>
+                </thead>
+                <ng-container *ngIf="listProcessFin.length ==0; then hideGrid else showGrid"></ng-container>
+                <ng-template #hideGrid>
+                    <tbody>
+                        <tr>
+                            <td class="text-center" colspan="7">No se encontraron registros.</td>
+                        </tr>
+                    </tbody>
+                </ng-template>
+                <ng-template #showGrid>
+                    <tbody *ngFor="let item0 of listProcessFin">
+                        <tr>
+                            <td class="data-table-tr-td">{{item0.numProceso}}</td>
+                            <td class="data-table-tr-td">{{item0.transaccion}}</td>
+                            <td class="data-table-tr-td">{{item0.contratante}}</td>
+                            <td class="data-table-tr-td">{{item0.fechaCarga | date : "dd/MM/yyyy hh:mm:ss a" }}</td>
+                            <td class="data-table-tr-td">{{item0.fechaEstado | date : "dd/MM/yyyy hh:mm:ss a" }}</td>
+                            <td class="data-table-tr-td"><img src="assets/icons/anular.png" (click)="Borrar(item0.numProceso)" title="Borrar" alt="Borrar" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </ng-template>
+            </table>
+        </div>
+      <span class="drop__file--accept">
+        Subir trama (Formato permitido: txt, csv y xlsx)
+      </span>
+
+      <div class="attach-file" *ngIf="!attachedFile">
+        <ngx-file-drop (onFileDrop)="dropped($event)">
+          <ng-template
+            ngx-file-drop-content-tmp
+            let-openFileSelector="openFileSelector"
+          >
+            <div class="file__drop">
+              <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+              <div class="file__drop--info">
+                <span>Arrastre y suelte su archivo aquí </span>
+                <small>Tamaño máximo: 80MB</small>
+              </div>
+              <button
+                class="button-default orange"
+                type="button"
+                (click)="openFileSelector()"
+              >
+                Seleccione archivo
+              </button>
+            </div>
+          </ng-template>
+        </ngx-file-drop>
+        <span class="has-error" *ngIf="messageInfo.message">
+          {{ messageInfo.message }}
+        </span>
+      </div>
+
+      <div class="uploaded-file" *ngIf="attachedFile">
+        <div>
+          <span>{{ attachedFile.name }}</span>
+          <small>{{ attachedFile.size / 1024 | number : "1.2-2" }}KB</small>
+        </div>
+        <div>
+          <button
+            class="button-delete"
+            aria-label="eliminar archivo"
+            title="Eliminar archivo"
+            (click)="deleteUploadedFile()"
+          >
+            <i class="fa fa-check" aria-hidden="true"></i>
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <button
+      class="button-default orange"
+      [disabled]="form.invalid || !attachedFile" 
+      (click)="onSubmit()">
+      <!-- [disabled]="form.invalid || !attachedFile" -->
+      Procesar trama
+    </button>
+  </form>
+</main>
+<ng-template #modalMessage>
+  <div class="content-modal modal-message">
+    <section>
+      <div class="modal-header">
+        <h6>Mensaje</h6>
+        <button
+          type="button"
+          role="button"
+          aria-label="cerrar modal"
+          (click)="closeModal()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <ng-container *ngIf="messageInfo.showImage">
+          <ng-container *ngIf="messageInfo.success">
+            <img src="../../../../../../../assets/backoffice/check-success.png" alt="succes image" />
+          </ng-container>
+          <ng-container *ngIf="!messageInfo.success">
+            <img src="../../../../../../../assets/backoffice/check-error.png" alt="error image" />
+          </ng-container>
+        </ng-container>
+
+        <p class="paragraph">
+          {{ messageInfo.message }}
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          role="button"
+          class="button-default orange"
+          (click)="closeModal()"
+        >
+          Aceptar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #content1
+    let-c="close"
+    let-d="dismiss">
+    <div class="row"><span>&nbsp;</span></div>
+    <div class="modal-header">
+        <h3 class="modal-title" id="modal-basic-title">Agregar a la facturación</h3>
+    </div>
+    <div class="row"><span>&nbsp;</span></div>
+    <div class="modal-body">
+        <div class="filter">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table class="table" id ="prbTabla">
+                                <thead>
+                                    <tr class="grid-title">
+                                        <th class="grid-title-item">ID Processo</th>
+                                        <th class="grid-title-item">Transacción</th>
+                                        <th class="grid-title-item">Contratante</th>
+                                        <th class="grid-title-item">Fecha y hora de carga</th>
+                                        <th class="grid-title-item">Fecha de estado</th>
+                                        <th class="grid-title-item">Agrupar</th>
+                                    </tr>
+                                </thead>
+                                <ng-container *ngIf="listProcess.length ==0; then hideGrid else showGrid">
+                                </ng-container>
+                                <ng-template #hideGrid>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center" colspan="7">No se encontraron registros.</td>
+                                        </tr>
+                                    </tbody>
+                                </ng-template>
+                                <ng-template #showGrid>
+                                    <tbody *ngFor="let item3 of listProcess">
+                                        <tr>
+                                            <td class="data-table-tr-td">{{item3.numProceso}}</td>
+                                            <td class="data-table-tr-td">{{item3.transaccion}}</td>
+                                            <td class="data-table-tr-td">{{item3.contratante}}</td>
+                                            <td class="data-table-tr-td">{{item3.fechaCarga | date : "dd/MM/yyyy hh:mm:ss a" }}</td>
+                                            <td class="data-table-tr-td">{{item3.fechaEstado | date : "dd/MM/yyyy hh:mm:ss a" }}</td>
+                                            <td class="data-table-tr-td"><div class="col-md-12">
+                                                <input
+                                                class="form-check-input"
+                                                    type="checkbox"
+                                                    [id]="'policy' + item3.numProceso + index"
+                                                    (change)="agregarProcUno($event.target.checked, item3)"
+                                                    [checked]="item3.checkedAgrupar"
+                                                />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </ng-template>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row"><span>&nbsp;</span></div>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-3">
+                    <button
+                    class="button-default secondary orange"
+                    (click)="agregarProcesos()">
+                    AGRUPAR
+                    </button>
+                </div>
+                <div class="col-md-3">
+                    <button
+                    class="button-default secondary orange"
+                    (click)="cerrar(content1)">
+                    CANCELAR
+                    </button>
+                </div>
+            </div>
+            <div class="row"><span>&nbsp;</span></div>
+        </div>
+    </div>
+</ng-template>

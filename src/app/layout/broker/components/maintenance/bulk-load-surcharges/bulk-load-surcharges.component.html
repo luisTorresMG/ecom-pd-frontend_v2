@@ -1,0 +1,77 @@
+<div class="row">
+    <div class="col-md-3">
+        <app-nav-menuprod></app-nav-menuprod>
+    </div>
+    <div class="col-md-9">
+        <div class="container-fluid">
+            <div class="containt-item">
+                <div class="header-content">
+                    <div class="header-item">
+                        <span class="title">CARGA MASIVA DE RECARGOS</span>
+                    </div>
+                </div>
+           </div>
+           <div class="filter">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <span>RAMO(*)</span>
+                                <select class="minimal" [(ngModel)]="filters.NBRANCH" (change)="getProductListByBranch()">
+                                    <option value="0">SELECCIONAR</option>
+                                    <option *ngFor="let branch of branchList" value="{{branch.NBRANCH}}">{{branch.SDESCRIPT}}</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <span>PRODUCTO (*)</span>
+                                <select class="minimal" [(ngModel)]="filters.NPRODUCT" >
+                                    <option value="0">SELECCIONAR</option>
+                                    <option *ngFor="let product of productList" value="{{product.COD_PRODUCT}}">{{product.DES_PRODUCT}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                            </div>
+                       </div>
+                        
+                    </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <span>TRAMA(*)</span>
+                                <input [ngClass]="{'error-validate': errorExcel}"
+                                       type="file"
+                                       class="mt-10"
+                                       (change)="seleccionExcel($event.target.files[0])"
+                                       accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                                       style="display: inline-block; position: relative; top: 8px; margin: 10px 0px; font-size: 16px !important; width: 100%;">
+                            </div>
+                            <div class="col-sm-3" >
+                                <br>
+                                <button type="button"
+                                    style="display: inline-block; position: relative; top: 8px; margin: 10px 0px; font-size: 16px; width: 100%;"class="full-color" 
+                                    (click)="validarExcel()"><span>PROCESAR</span>
+                                </button>
+                            </div>
+                            <div class="col-sm-3" >
+                                <span>PLANILLA(*)</span>
+                                <button class="formatoTrama"
+                                    style="display: inline-block; position: relative; top: 8px; margin: 10px 0px; font-size: 16px; width: 100%;"
+                                    (click)="downloadExcel()">
+                                    <i class="fa fa-download mr-2" aria-hidden="true"></i>
+                                    Descargar Formato
+                                </button>     
+                            </div>
+                        </div>                                                     
+                    </div>
+                </div>
+            </div>               
+        </div>      
+    </div>
+    <!-- Pantalla de carga -->
+  <div [hidden]="!isLoading" class="loadingScreen">
+    <div style="display: flex; height: 100%; width: 100%">
+      <i style="margin: auto; font-size: 50px" class="fa fa-spinner fa-spin"></i>
+    </div>
+  </div>
+</div>

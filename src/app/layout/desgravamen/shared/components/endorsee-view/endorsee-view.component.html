@@ -1,0 +1,99 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Detalle Endosatario - {{insUpd}}</h4>  
+  <button type="button" class="close" aria-label="Close" (click)="Volver()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="container-fluid">
+    <div class="filter">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-12">
+              <h5>Datos de Endosatario</h5>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-3">
+              <span>TIPO DOCUMENTO</span>
+              <input [(ngModel)]="DocumentType" type="text" placeholder="Tipo Documento" disabled>
+            </div>
+            <div class="col-sm-3">
+              <span>NÚMERO DOCUMENTO</span>
+              <input [(ngModel)]="DocumentNumber" type="text" placeholder="Número Documento" disabled>
+            </div>
+            <div class="col-sm-6">
+              <span>ENDOSATARIO</span>
+              <input [(ngModel)]="FullName" type="text" placeholder="Contratante" disabled>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <span>DIRECCIÓN </span>
+              <input [(ngModel)]="Address" type="text" placeholder="" disabled>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <span>CORREO ELECTRÓNICO</span>
+              <input [(ngModel)]="Email" type="text" placeholder="Correo Electrónico" disabled>
+            </div>
+            <div class="col-sm-4">
+              <span>TELÉFONO</span>
+              <input [(ngModel)]="Phone" type="text" placeholder="Teléfono" disabled>
+            </div>
+          </div>
+
+          <div class="row"> 
+            <div class="col-sm-6">
+              <span class="">TIPO PROVEEDOR (*)</span>
+              <select  [(ngModel)]="idGrupo" required>
+                  <option value="0" disabled>Seleccionar</option>
+                  <option *ngFor="let item of GrupoList" value="{{item.detalle}}" id="profileIdSelected">
+                      {{item.descripcion}} </option>
+                      
+              </select>
+              <!-- <label *ngIf="item.descripcion != '' && item.descripcion != null">/</label>
+                  {{telefono.P_NEXTENS1}}</td> -->
+            </div>
+         </div>
+        
+
+      <!-- <div class="row"> 
+        <div class="col-sm-6">
+          <label for="poveedor">TIPO PROVEEDOR (*)</label>
+          <select class="form-control" id="poveedor"
+                  required
+                  [(ngModel)]="idGrupo" name="poveedor"
+                  #poveedor="ngModel">
+            <option *ngFor="let item of GrupoList" value="{{item.detalle}}">{{item.descripcion}}</option>
+          </select>
+          <div [hidden]="poveedor.SDESCRIPT != '' && poveedor.SDESCRIPT != null" class="mensaje-error-control">
+           El tipo de Proveedor es requerido
+          </div>
+        </div>
+      </div> -->
+            <div class="row">
+               <div class="col-sm-6">
+                <span>ESTADO</span>
+                <select  class="minimal" disabled>
+                 <option value="1">ACTIVO</option>
+                </select>
+             </div>
+           </div> 
+
+        </div>
+      </div>
+    </div>
+    <br>
+
+  </div>
+
+</div>
+<div class="modal-footer">
+
+  <button (click)="Volver()"><span>VOLVER</span></button>
+  <button class="full-color" (click)="listUpInsdProvider()"><span>GUARDAR</span></button>
+</div>

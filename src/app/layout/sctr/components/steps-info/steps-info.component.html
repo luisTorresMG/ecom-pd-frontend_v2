@@ -1,0 +1,325 @@
+<div class="faq-container"
+     [ngClass]="{ right: hideRightComponent }">
+  <div class="container"
+       [ngStyle]="{ display: hideRightComponent ? 'none' : 'block' }">
+    <div class="title">
+      <h4>
+        <b>¿Tienes preguntas?</b>
+      </h4>
+    </div>
+
+    <ol class="questions">
+      <li *ngFor="let f of faqText; index as i"
+          (click)="openModal(i)">
+        {{ f }}
+      </li>
+    </ol>
+  </div>
+</div>
+
+<ng-template #faqModal>
+  <div class="modal-header faq-modal faq-modal-header">
+    <button type="button"
+            class="close-btn"
+            aria-label="Close"
+            (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body faq-modal">
+    <p class="modal-title faq-modal-title">
+      <span *ngIf="faq === 1">¿Qué es un Seguro de SCTR?</span>
+      <span *ngIf="faq === 2">
+        ¿Cuáles son las coberturas del Seguro de SCTR?
+      </span>
+      <span *ngIf="faq === 3">
+        ¿Este seguro tiene Exclusiones? ¿Cuáles son?F
+      </span>
+      <span *ngIf="faq === 4"> ¿Qué es un accidente laboral? </span>
+      <span *ngIf="faq === 5"> ¿Qué es una enfermedad ocupacional? </span>
+      <span *ngIf="faq === 6">
+        ¿El Coronavirus Covid-19 puede ser calificado como una enfermedad
+        ocupacional?
+      </span>
+      <span *ngIf="faq === 7">
+        ¿A quiénes se les considera como Asegurados Obligatorios?
+      </span>
+      <span *ngIf="faq === 8">
+        ¿Qué actividades económicas se contemplan como de Riesgo?
+      </span>
+      <span *ngIf="faq === 9">
+        ¿Qué necesito para adquirir un seguro SCTR?
+      </span>
+      <span *ngIf="faq === 10">
+        ¿Qué conceptos se deben considerar para la declaración de los sueldos de
+        la planilla de los trabajadores en el SCTR Pensión?
+      </span>
+      <span *ngIf="faq === 11"> ¿Cuánto cuesta mi seguro de SCTR? </span>
+      <span *ngIf="faq === 12">
+        ¿Es posible asegurar a empleados que no se encuentran en planilla de la
+        empresa y/o a consultores extranjeros en el caso que realicen trabajos
+        de riesgo o sean exigidos por entidades a las que se prestará servicios?
+      </span>
+      <span *ngIf="faq === 13"> Tengo RUC 10 ¿Puedo adquirir un SCTR? </span>
+      <span *ngIf="faq === 14">
+        Soy independiente, solo tengo DNI o Carnet de Extranjería ¿Puedo
+        contratar un SCTR?
+      </span>
+      <span *ngIf="faq === 15">
+        Ya tengo un SCTR pero quiero renovarlo ¿Qué necesito?
+      </span>
+      <span *ngIf="faq === 16">
+        ¿Puedo incluir trabajadores a una póliza ya emitida, tiene costo
+        adicional?
+      </span>
+      <span *ngIf="faq === 17">
+        Si cuento ya con un bróker o asesor de póliza ¿Puedo contratar un SCTR
+        directo con Protecta Security?
+      </span>
+      <span *ngIf="faq === 18">
+        ¿Cuánto tiempo tengo para reclamar los Beneficios?
+      </span>
+      <span *ngIf="faq === 19">
+        ¿Desde qué fecha inicia el pago de la pensión de Sobrevivencia?
+      </span>
+      <span *ngIf="faq === 20">
+        ¿Qué necesito si deseo solicitar la indemnización por invalidez total
+        permanente?
+      </span>
+      <span *ngIf="faq === 21">
+        ¿Cómo puedo descargar las facturas de mis clientes?
+      </span>
+      <span *ngIf="faq === 22">
+        ¿Cómo puedo emitir los Estados de Cuenta de mis clientes?
+      </span>
+      <span *ngIf="faq === 23">
+        ¿Cómo puedo cobrar mis comisiones por las pólizas SCTR?
+      </span>
+    </p>
+
+    <p *ngIf="faq === 1">
+      Seguro para empresas que protege al trabajador, de la empresa contratante,
+      frente a un siniestro derivado de un accidente laboral y/o enfermedades
+      profesionales no cubiertas por el régimen de pensiones a cargo de la ONP
+      y/o AFP y que estén contempladas en las condiciones de la póliza
+      contratada."
+    </p>
+    <ul *ngIf="faq === 2">
+      <li>
+        Pensión o indemnización de invalidez total o parcial y temporal o
+        permanente.
+      </li>
+      <li>Pensión de sobrevivencia.</li>
+      <li>Reembolso de gastos de sepelio.</li>
+    </ul>
+    <div *ngIf="faq === 3">
+      Si, el seguro tiene exclusiones. <br />
+
+      Protecta Security queda eximida de cualquier obligación con respecto a un
+      accidente de trabajo o a una enfermedad profesional en los siguientes
+      casos: <br />
+
+      <ul>
+        <li>
+          Invalidez configurada antes del inicio de vigencia de la póliza de
+          seguro, la misma que deberá ser amparada por la Aseguradora que otorgó
+          la cobertura al tiempo de la configuración de la invalidez o, por la
+          Oficina de Normalización Previsional (ONP), en el caso que el
+          Trabajador, con calidad de asegurado obligatorio no hubiera estado
+          asegurado.
+        </li>
+        <li>
+          Muerte o invalidez causada por lesiones voluntariamente auto
+          infligidas o auto eliminación o su tentativa.
+        </li>
+        <li>
+          La muerte o invalidez de los trabajadores asegurables que no hubieran
+          sido declarados por el Contratante, cuyas pensiones serán a cargo de
+          la Oficina de Normalización Previsional (ONP).
+        </li>
+        <li>
+          La muerte del Asegurado producida durante el periodo de subsidio por
+          incapacidad temporal a cargo del ESSALUD, por causas distintas a
+          accidente de trabajo o enfermedad profesional.
+        </li>
+      </ul>
+    </div>
+    <p *ngIf="faq === 4">
+      Se considera accidente laboral o de trabajo toda lesión orgánica o
+      perturbación funcional causada en el centro de trabajo o con ocasión del
+      trabajo, por acción imprevista, fortuita u ocasional de una fuerza
+      externa, repentina y violenta que obra súbitamente sobre la persona del
+      trabajador o debido al esfuerzo del mismo (de acuerdo con el Decreto
+      Supremo Nº 009 - 97 - SA, artículo 2, inciso K).
+    </p>
+    <div *ngIf="faq === 5">
+      Se entiende como enfermedad profesional, todo estado patológico permanente
+      o temporal que sobreviene al trabajador como consecuencia directa de la
+      clase de trabajo que desempeña o del medio en que se ha visto obligado a
+      trabajar (de acuerdo con el Decreto Supremo Nº 009- 97 - SA, artículo 2,
+      inciso N).
+    </div>
+    <p *ngIf="faq === 6">
+      De acuerdo a la Ley 31025, publicada el 18 de junio del 2020, se ha
+      incorporado en la Sexta Disposición Complementaria de la Ley 26790, el
+      reconocimiento de la enfermedad causada por el Coronavirus COVID-19 dentro
+      del listado de enfermedades profesionales de los servidores de salud.
+    </p>
+    <p *ngIf="faq === 7">
+      De acuerdo con lo establecido por el Art. 82° del Decreto Supremo
+      N°009-97-SA., son asegurados obligatorios del seguro complementario de
+      trabajo de riesgo, la totalidad de los trabajadores del centro de trabajo
+      en el cual se desarrollan las actividades de riesgo previstas en el Anexo
+      5 de dicho Decreto Supremo, sean empleados u obreros, sean eventuales,
+      temporales o permanentes.
+    </p>
+    <div *ngIf="faq === 8">
+      Con el fin de determinar la obligación de contratar el SCTR, es
+      fundamental identificar el tipo de actividad que realiza la empresa,
+      independientemente de que esta sea o no la actividad principal. <br />
+      Así, para establecer el tipo de actividad que debe estar cubierta por
+      SCTR, tenemos que remitirnos al Anexo Nº 5 del Reglamento de la Ley 26790,
+      aprobado mediante Decreto Supremo N.º 009-97-SA, donde se contempla un
+      listado de actividades calificadas como riesgosas, que a través de leyes
+      posteriores se han adicionado más actividades. Puedes descargar la lista
+      de actividades haciendo
+      <a href="https://n9.cl/sctr_protecta"
+         target="_blank">click aquí</a>
+    </div>
+    <div *ngIf="faq === 9">
+      Residir en el Perú <br />
+      Encontrarse en la planilla de una empresa que por su actividad este
+      obligada a contratar el SCTR o que por motivo de sus labores se
+      encontrarse destacado en una empresa con esta obligación. <br />
+      Asimismo, debes tener a la mano el formato (Excel) con los datos de tus
+      trabajadores para poder realizar la cotización y posterior contratación.
+      Para descargar el formato haz
+      <a href="https://n9.cl/sctr_protecta"
+         target="_blank">click aquí</a>
+    </div>
+    <p *ngIf="faq === 10">
+      El sueldo proveniente del trabajo personal percibido en dinero. Así como,
+      los subsidios, gratificaciones ordinarias y reintegros. En base a estas
+      declaraciones se realizara el cálculo de la prima y del pago del
+      siniestro. <br />
+      Mediante el Decreto Supremo 003-98SA se señala que las gratificaciones de
+      julio y diciembre deben ser incluidas al momento de efectuar el cálculo de
+      la correspondiente prima por el SCTR.
+    </p>
+    <p *ngIf="faq === 11">
+      Dependiendo de la actividad a realizar y según el nivel riesgo, la
+      aseguradora asigna una tasa que aplica al total de sueldos declarados de
+      los trabajadores asegurados y por ende el costo.
+    </p>
+    <p *ngIf="faq === 12">
+      Así es, si una persona va a ingresar a un lugar donde se realiza una
+      actividad de riesgo necesita obligatoriamente este seguro, que no se
+      encuentre en la planilla de la empresa no es un impedimento para que pueda
+      contratar el SCTR salud y Pensión, en este caso bastará con un recibo o
+      factura por sus honorarios. El precio del seguro depende de la actividad a
+      realizar e igual que los trabajadores regulares es necesario saber los
+      datos del trabajador, remuneración y documentos de identidad.
+    </p>
+    <p *ngIf="faq === 13">
+      Sí, puedes realizar igualmente la cotización y emisión. No olvides tener a
+      la mano el formato (Excel) con los datos de los trabajadores. Puedes
+      descargar dicho formato haciendo
+      <a href="https://n9.cl/sctr_protecta"
+         target="_blank">click aquí</a>
+    </p>
+    <p *ngIf="faq === 14">
+      No, solo podemos emitir las pólizas a personas jurídicas, ya sea que
+      cuenten con RUC 20 o RUC 10. En este caso, debes pertenecer a la planilla
+      de alguna de estas personas jurídicas para acceder a esta póliza.
+    </p>
+    <p *ngIf="faq === 15">
+      Las renovaciones las puedes pedir como máximo hasta 10 días posteriores al
+      fin de tu última vigencia, si excedes ese plazo ya no podremos realizar
+      una renovación, se considerará una venta nueva. <br />
+      Del mismo modo, necesitas tener a la mano el formato (Excel) con los datos
+      de los trabajadores. Puedes descargar dicho formato haciendo
+      <a href="https://n9.cl/sctr_protecta"
+         target="_blank">click aquí</a>
+    </p>
+    <p *ngIf="faq === 16">
+      Efectivamente, a través de un endoso se puede incluir trabajadores
+      adicionales, para ello se tendrá que cancelar una Prima adicional.
+    </p>
+    <p *ngIf="faq === 17">
+      Si, si deseas puedes realizar tu cotización con el intermediario que mejor
+      prefieras. De lo contrario, puedes usar esta herramienta de autoatención
+      para saber el precio de tu seguro de SCTR.
+    </p>
+    <p *ngIf="faq === 18">
+      La pensión de invalidez a favor del Asegurado se devengará desde el día
+      siguiente de finalizado el período de 11 meses y 10 días consecutivos,
+      correspondiente al subsidio por incapacidad temporal que otorga el Seguro
+      Social de Salud (ESSALUD), siempre y cuando persista la condición de
+      invalidez parcial o total, de naturaleza temporal o permanente. <br />
+      La pensión de Sobrevivencia, el plazo para la presentación de los
+      beneficiarios es de 120 días calendario contados a partir de la fecha de
+      fallecimiento o declaración judicial de muerte presunta del Asegurado.
+    </p>
+    <p *ngIf="faq === 19">
+      Las pensiones devengan desde la fecha del siniestro – fecha de
+      fallecimiento del Asegurado. <br />
+      Los beneficiarios que se presenten con posterioridad al plazo de los 120
+      días calendarios, no perderán su derecho a las pensiones de sobrevivencia,
+      pero éstas sólo se devengarán desde la fecha de presentación de su
+      solicitud de pensión. <br />
+      De haberse presentado otros beneficiarios con anterioridad, la
+      presentación de nuevos beneficiarios no generará aporte adicional a cargo
+      de Protecta Security, sino un recálculo del capital requerido ya
+      calculado.
+    </p>
+    <p *ngIf="faq === 20">
+      Un mes antes de concluir el período de subsidios por incapacidad temporal,
+      en caso que la incapacidad persista, debes iniciar el trámite de
+      Evaluación y Calificación de Invalidez ante ONP o COMAFP según
+      corresponda. <br />
+
+      Estas preguntas son si la PD SCTR estará direccionada solo para bróker y
+      si estarán habilitadas estas opciones dentro de la plataforma:
+    </p>
+    <div *ngIf="faq === 21">
+      Las facturas pueden ser descargadas desde 2 plataformas: <br />
+      Plataforma Digital - Protecta (validar si tendrán acceso a los EECC)
+      <br />
+      Plataforma Optimus – Sanitas: la plataforma de Optimus te permite buscar y
+      descargar las facturas SCTR de tus clientes en la pestaña de “Consulta
+      Comprobantes de Pago”, utilizando filtros como: <br />
+      <ul>
+        <li>fecha de emisión</li>
+        <li>número de contrato</li>
+        <li>número de documento de identidad</li>
+        <li>número de prefactura</li>
+        <li>número de comprobante</li>
+      </ul>
+    </div>
+    <div *ngIf="faq === 22">
+      Plataforma Digital - Protecta (validar si tendrán acceso a las facturas)
+      <br />
+      Plataforma Optimus: puedes hacer uso de la pestaña “Estado de cuenta
+      SCTR”, que te permite descargarlos en formato Excel. <br />
+      Para buscar el Estado de Cuenta de un cliente, debes ingresar el número de
+      documento del cliente, y puedes filtrar las facturas a mostrar bajo los
+      siguientes criterios: <br />
+      <ul>
+        <li>Emitida</li>
+        <li>Impresa</li>
+        <li>Abonada</li>
+        <li>Anulada</li>
+      </ul>
+    </div>
+    <p *ngIf="faq === 23">
+      Plataforma Digital - Protecta (validar si tendrán acceso a las
+      liquidaciones). <br />
+      Plataforma Optimus: puedes hacer uso de la pestaña “Liquidaciones”, del
+      menú de Bróker, que te permite generar la liquidación de todas las pólizas
+      SCTR pendientes de cobrar. <br />
+      Esta opción generará un documento en formato PDF con un código que debes
+      usar para la presentación de tu factura al buzón de Recepción Comprobantes
+      (recepcioncomprobantes@protectasecurity.pe).
+    </p>
+  </div>
+</ng-template>

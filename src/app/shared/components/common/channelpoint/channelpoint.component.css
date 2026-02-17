@@ -1,0 +1,50 @@
+.filter-puntoventa {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 0px;
+}
+
+.filter-row-cell {
+}
+
+.filter-row-cell span {
+  display: block;
+  width: 100%;
+  color: #2b0d61;
+  font-size: 14px;
+}
+.filter-row-cell select {
+  width: 100%;
+  border: none;
+  display: block;
+  padding: 8px 5px;
+  border: 1px solid rgb(146, 138, 163);
+  border-radius: 2px;
+  margin-top: 5px;
+  color: rgb(146, 138, 163);
+  font-family: "Bliss Pro";
+  font-size: 14px;
+  height: 45px;
+  padding-left: 12px;
+  font-weight: 300;
+  color: #aa9ec0;
+  border: 1px solid #aa9ec0;
+}
+
+select {
+  width: 100%;
+  border: none;
+  display: block;
+  padding: 8px 5px;
+  border: 1px solid rgb(146, 138, 163);
+  border-radius: 2px;
+  margin-top: 5px;
+  color: rgb(146, 138, 163);
+  font-family: "Bliss Pro";
+  font-size: 14px;
+  height: 45px;
+  padding-left: 12px;
+  font-weight: 300;
+  color: #aa9ec0;
+  border: 1px solid #aa9ec0;
+}

@@ -1,0 +1,26 @@
+@import "standard"
+
+.content
+  display: flex
+  flex-direction: column
+  gap: 1.5rem
+
+  &__tabs
+    display: grid
+    margin: 0
+
+    @media (min-width: 480px)
+      grid-template-columns: 1fr 1fr
+
+    &--button
+      text-decoration: none
+      color: #66656E
+      background-color: transparent
+      border-bottom: 3px solid #EDEDEF
+      border-radius: 0
+      transition: .2s
+
+      &.active,
+      &:hover
+        color: $orange
+        border-bottom: 3px solid $orange

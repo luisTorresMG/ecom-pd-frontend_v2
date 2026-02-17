@@ -1,0 +1,72 @@
+<div class="panel-info-trama">
+<panel-widget title="DATOS DE BENEFICIARIOS">
+    <div class="row d-flex align-items-end">
+        <div class="col-sm-6">
+            <form-input-checkbox [inlineInput]="true"
+                                 [items]="[{codigo: 'isAsegContra', valor: 'LOS BENEFICIARIOS SERÁN LOS HEREDEROS LEGALES', isSelected:showTrama, disabled:esEvaluacion}]"
+                                 (change)="getValueCheckbox($event)"></form-input-checkbox>
+        </div>
+
+        <div class="col-sm-6"
+             [hidden]="esEvaluacion">
+            <button type="button"
+                    class="btn full-color"
+                    (click)="formatoTrama()"><span>Descargar Modelo de Trama</span>
+                <img src="assets/icons/download2.png"
+                     alt="download" />
+            </button>
+        </div>
+    </div>
+
+    <div class="row"
+         [hidden]="showTrama || esEvaluacion">
+        <div class="col-sm-6">
+            <form-input-file label="Trama"
+                             [(value)]="trama.excelSubir"
+                             [required]="false"
+                             [multiple]="true"
+                             [disabled]="trama?.excelSubir?.length >= 1"></form-input-file>
+        </div>
+        <div class="col-sm-3 mt-2">
+            <form-button label="Validar"
+                         [inlineInput]="true"
+                         (click)="validarExcel(true)"></form-button>
+        </div>
+
+    </div>
+    <div class="row"
+         [hidden]="hiddeShowTrama">
+        <table class="table table-borderless riesgo tblbroker">
+            <thead>
+                <tr class="d-flex">
+                    <th class="col-sm text-center"><label>Nombre del archivo</label>
+                    </th>
+                    <th class="col-sm text-center"><label>Descargar</label></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let filePath of cotizador.files"
+                    class="d-flex">
+                    <td class="col-sm text-center">
+                        <!-- <span>{{ filePath | fileName }}</span> -->
+                        <span>01_TramaBeneficiarios_VCF</span>
+                    </td>
+
+                    <td class="col-sm text-center"><a (click)="downloadFile(filePath)"><img src="assets/icons/imprimir.png"
+                                 title="Descargar"
+                                 style="cursor:pointer;"
+                                 alt="Descargar" /></a>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody *ngIf="!cotizacion?.files?.length">
+                <tr class="d-flex">
+                    <td colspan="2"
+                        class="col-sm text-center"><span>No se encontraron archivos</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</panel-widget>
+</div>

@@ -1,0 +1,1949 @@
+<div class="form-group row">
+    <div class="col-lg-3">
+        <app-nav-menuprod></app-nav-menuprod>
+    </div>
+
+    <div class="col-lg-9">
+
+        <nav class="nav-menu-prospects">
+            <div class="navigation">
+
+                <div>
+                    <app-breadcrumb>
+                        <a routerLink="/extranet/vida-inversion/consulta-cotizacion">
+                            <i class="fa fa-home"
+                               aria-hidden="true"></i>
+                            VIDA INVERSIÓN GLOBAL PROTECTA
+                        </a>
+                        <a routerLink="/extranet/vida-inversion/consulta-cotizacion"> Mis cotizaciones</a>
+                        <app-breadcrumb>
+                            <a routerLink="/extranet/vida-inversion/consulta-cotizacion">
+                                Oficialización
+                            </a>
+                        </app-breadcrumb>
+                    </app-breadcrumb>
+                </div>
+
+
+                <div class="d-flex flex-row align-items-center g-3">
+                    <div>
+                        <a class="return-link"
+                           routerLink="/extranet/vida-inversion/consulta-cotizacion">
+                            <i class="fa fa-angle-left"
+                               aria-hidden="true"></i>
+                            Regresar
+                        </a>
+                    </div>
+
+                    <div class="bg-light p-2"
+                         style=" border-radius: 10px;">
+                        <i class="fa fa-circle"
+                           style="color: #ed6e00; margin-right: 6px;"></i>
+                        <span>Asignado</span>
+                    </div>
+
+                </div>
+
+            </div>
+        </nav>
+
+        <div class="d-flex justify-content-between flex-wrap mb-2">
+            <index-steps [NSTEP]="current_step"
+                         [DATA_STEPS_OBJECT]="step_list"></index-steps>
+            <P class="subtitle-perfil">Asignado: {{cur_usr.firstName ? cur_usr.firstName.trim():''}} {{cur_usr.lastName
+                ? cur_usr.lastName.trim():''}}</P>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="container-form-and-button"
+             *ngIf="current_step == 1">
+
+            <!-- Input Radio Seleccionar Contratante/Asegurado -->
+            <div class="tabs"
+                 style="margin-bottom: -8px; position: relative;">
+
+                <input type="radio"
+                       name="tabs"
+                       id="tabone"
+                       checked="checked"
+                       style="display: none"
+                       value="0"
+                       [(ngModel)]="type_rol" />
+                <label for="tabone"
+                       class="tab-label"
+                       style="border-top: 1px solid #553d81; border-top-right-radius: 20px; border-top-left-radius: 20px;">Contratante</label>
+
+                <ng-container *ngIf="check_input_value == 0">
+
+                    <input type="radio"
+                           name="tabs"
+                           id="tabtwo"
+                           style="display: none"
+                           [(ngModel)]="type_rol"
+                           [disabled]="check_input_value == 3 || check_input_value == 1"
+                           value="1" />
+
+                    <label for="tabtwo"
+                           class="tab-label"
+                           (click)="validateCheckInsured()"
+                           style="border-top: 1px solid #553d81; border-top-right-radius: 20px; border-top-left-radius: 20px;"
+                           [class.tab-disabled]="check_input_value == 3 || check_input_value == 1">Asegurado</label>
+
+                    <img *ngIf="show_guide"
+                         src="./assets/vida-inversion/guide.gif"
+                         alt="indicador Asegurado"
+                         width="23px"
+                         height="30px"
+                         style="position: absolute;transform: rotate(90deg);left: 29%;">
+                </ng-container>
+
+                <!-- <form-button label="Siguiente"
+                             btnClass="btn-orange text-nowrap orange"
+                             (click)="changeStep(2)"
+                             style="position: absolute; top: -15px; right: 0px;"></form-button> -->
+            </div>
+
+
+
+            <!-- Para Contratante -->
+            <div class="d-flex flex-row flex-wrap py-3 px-2"
+                 style="border: 1.5px solid #553d81"
+                 [class.visibility__hidden]="type_rol == 1">
+                <div class="row">
+                    <div class="col-lg-9 row">
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="TIPO DE DOCUMENTO(*)"
+                                               [(value)]="data_contractor.type_document"
+                                               [items]="list_document_type_contractor"
+                                               [updateModelOnChange]="true"
+                                               fieldCodigo="Id"
+                                               fieldValor="Name"
+                                               [disabled]="data_contractor.type_document_disabled"
+                                               [large]="false"></form-input-select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-text text_label="NRO. DOCUMENTO(*):"
+                                             [(value)]="data_contractor.document_number"
+                                             [onlyInput]="true"
+                                             [patternPrevent]="CONSTANTS.REGEX[data_contractor.type_document?.Id]"
+                                             [disabled]="data_contractor.document_number_disabled">
+                            </form-input-text>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-date text_label="FECHA NACIMIENTO(*):"
+                                             [(value)]="data_contractor.birthday_date"
+                                             [disabled]="data_contractor.birthday_date_disabled"></form-input-date>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-text text_label="NOMBRES(*):"
+                                             [onlyInput]="true"
+                                             [(value)]="data_contractor.names"
+                                             [disabled]="data_contractor.names_disabled"
+                                             maxCaracter="19">
+                            </form-input-text>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-text text_label="APELLIDO PATERNO(*):"
+                                             [onlyInput]="true"
+                                             [(value)]="data_contractor.last_name"
+                                             [disabled]="data_contractor.last_name_disabled"
+                                             maxCaracter="19"></form-input-text>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-text text_label="APELLIDO MATERNO(*):"
+                                             [onlyInput]="true"
+                                             [(value)]="data_contractor.last_name2"
+                                             [disabled]="data_contractor.last_name2_disabled"
+                                             maxCaracter="19"></form-input-text>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="SEXO(*):"
+                                               [(value)]="data_contractor.gender"
+                                               [items]="list_gender_contractor"
+                                               [updateModelOnChange]="true"
+                                               [firstSelect]="true"
+                                               fieldCodigo="SSEXCLIEN"
+                                               fieldValor="SDESCRIPT"
+                                               [disabled]="data_contractor.gender_disabled"
+                                               [large]="false"></form-input-select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="ESTADO CIVIL:"
+                                               [(value)]="data_contractor.civil_status"
+                                               [items]="list_civil_state_contractor"
+                                               [updateModelOnChange]="true"
+                                               [firstSelect]="true"
+                                               fieldCodigo="NCIVILSTA"
+                                               fieldValor="SDESCRIPT"
+                                               [disabled]="data_contractor.civil_status_disabled"
+                                               [large]="false"></form-input-select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="NACIONALIDAD:"
+                                               [(value)]="data_contractor.nationality"
+                                               [items]="list_nationalities_contractor"
+                                               [updateModelOnChange]="true"
+                                               fieldCodigo="NNATIONALITY"
+                                               fieldValor="SDESCRIPT"
+                                               [firstSelect]="true"
+                                               [disabled]="data_contractor.nationality_disabled"
+                                               [large]="false"></form-input-select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-text text_label="CELULAR:"
+                                             [(value)]="data_contractor.phone"
+                                             [onlyInput]="true"
+                                             [disabled]="data_contractor.phone_disabled"
+                                             [patternPrevent]="CONSTANTS.REGEX.NUMBER"
+                                             maxCaracter="9"
+                                             (focusout)="validNumber(1)"
+                                             classInput="{{ boolNumberCTR ? 'error_label' : 'null' }}"></form-input-text>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <form-input-text text_label="CORREO ELECTRÓNICO:"
+                                             [onlyInput]="true"
+                                             [(value)]="data_contractor.email"
+                                             [disabled]="data_contractor.email_disabled"
+                                             maxCaracter="60"
+                                             (focusout)="validEmail(1)"
+                                             classInput="{{ boolEmailCTR ? 'error_label' : 'null' }}"></form-input-text>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <form-input-text text_label="DIRECCIÓN:"
+                                             [(value)]="data_contractor.address"
+                                             [disabled]="data_contractor.address_disabled"
+                                             maxCaracter="80"
+                                             [onlyInput]="true"></form-input-text>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="DEPARTAMENTO:"
+                                               [(value)]="data_contractor.department"
+                                               fieldCodigo="Id"
+                                               fieldValor="Name"
+                                               [firstSelect]="true"
+                                               [large]="false"
+                                               [updateModelOnChange]="true"
+                                               (onSelect)="onSelectDepartament()"
+                                               [items]="list_data_contractor_department"
+                                               [disabled]="data_contractor.department_disabled"></form-input-select>
+                            <!-- [service]="addressService"
+                                 method="getDepartmentList" -->
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="PROVINCIA:"
+                                               [(value)]="data_contractor.province"
+                                               fieldCodigo="Id"
+                                               fieldValor="Name"
+                                               [firstSelect]="true"
+                                               [large]="false"
+                                               [items]="list_data_contractor_province"
+                                               [updateModelOnChange]="true"
+                                               (onSelect)="onSelectProvince()"
+                                               [disabled]="data_contractor.province_disabled"></form-input-select>
+                        </div>
+                        <!-- method="getProvinceList" -->
+                        <!-- [service]="addressService" -->
+                        <!-- [params]="data_contractor?.department?.Id" -->
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="DISTRITO:"
+                                               [(value)]="data_contractor.district"
+                                               fieldCodigo="Id"
+                                               fieldValor="Name"
+                                               [firstSelect]="true"
+                                               [large]="false"
+                                               [items]="list_data_contractor_district"
+                                               [updateModelOnChange]="true"
+                                               [disabled]="data_contractor.district_disabled"></form-input-select>
+                            <!-- [service]="addressService" -->
+                            <!-- method="getDistrictList" -->
+                            <!-- [params]="data_contractor?.province?.Id == 0 ? null:data_contractor?.province?.Id" -->
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-3 mx-0 py-0">
+                        <div class="sub-container1">
+                            <div>
+                                <h3 class="sub-title">Idecon</h3>
+
+                                <div class="label">
+                                    <span class="item">Otras listas</span>
+                                    <span class="item-response"> {{ origin_pep_contractor.id_1 }} </span>
+                                </div>
+
+                                <div class="label">
+                                    <span class="item">Es PEP</span>
+                                    <span class="item-response"> {{ origin_pep_contractor.id_2 }} </span>
+                                </div>
+
+                                <div class="label">
+                                    <span class="item">Tiene Familiar PEP</span>
+                                    <span class="item-response"> {{ origin_pep_contractor.id_3 }} </span>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="sub-title">WorldCheck</h3>
+
+                                <div class="label">
+                                    <span class="item">Otras listas</span>
+                                    <span class="item-response"> {{ origin_pep_contractor.wc_1 }} </span>
+                                </div>
+
+                                <div class="label">
+                                    <span class="item">Es PEP</span>
+                                    <span class="item-response"> {{ origin_pep_contractor.wc_2 }} </span>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="sub-title">Experian</h3>
+
+                                <div class="label">
+                                    <span class="item">Cliente Riesgoso</span>
+                                    <span class="item-response"> {{ origin_pep_contractor.ex_1 }} </span>
+                                </div>
+                            </div>
+
+                            <!-- INI VIGP 17112025 -->
+                            <div>
+                                <h3 class="sub-title">Registro Negativo</h3>
+
+                                <div class="label">
+                                    <span class="item">Registro Negativo</span>
+                                    <span class="item-response"> {{riesgo_negative_cont}} </span>
+                                </div>
+                            </div>
+                            <!-- FIN VIGP 17112025 -->
+
+                            <!-- INI VIGP-KAFG 16/04/2025 -->
+                            <div>
+                                <h3 class="sub-title">Homologación</h3>
+
+                                <div class="label">
+                                    <span class="item">Homologado</span>
+                                    <span class="item-response"> {{ homologacionCont }} </span>
+                                </div>
+                            </div>
+                            <!-- FIN VIGP-KAFG 16/04/2025 -->
+
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 5px; display: flex; align-items: center">
+                    <label class="subtitle">El asegurado es la misma persona que contrata el seguro</label>
+                    <div class="content-radio-u mr-3">
+                        <input type="radio"
+                               name="status_contractor"
+                               id="client_yes_contractor"
+                               class="mark-u orange"
+                               [value]="1"
+                               [checked]="check_input_value == 1"
+                               (click)="changeValue(1)"
+                               [disabled]="status_contractor_disabled" />
+                        <label for="client_yes_contractor"
+                               class="radio-label-u orange mark-u">
+                            Sí
+                        </label>
+                    </div>
+                    <div class="content-radio-u">
+                        <input type="radio"
+                               name="status_contractor"
+                               id="client_no_contractor"
+                               class="mark-u orange"
+                               [value]="0"
+                               [checked]="check_input_value == 0"
+                               (click)="changeValue(0)"
+                               [disabled]="status_contractor_disabled" />
+                        <label for="client_no_contractor"
+                               class="radio-label-u orange mark-u">
+                            No
+                        </label>
+                    </div>
+                </div>
+                <div class="container-form2">
+                    <div class="container-subtitle">
+                        <span>Datos Complementarios del Contratante</span>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div class="container-form2-container-select">
+                            <div style="width: 170px;">
+                                <span>OCUPACIÓN:</span>
+                            </div>
+                            <div style="min-width: 300px;">
+                                <form-input-select [(value)]="data_complementary.occupation_status"
+                                                   fieldCodigo="Id"
+                                                   fieldValor="Name"
+                                                   [firstSelect]="true"
+                                                   [large]="false"
+                                                   [updateModelOnChange]="true"
+                                                   [disabled]="data_complementary.occupation_status_disabled"
+                                                   [items]="list_occupation_contractor"></form-input-select>
+                            </div>
+                        </div>
+
+                        <form-button [label]="resolveLabelBtnSocietario(1)"
+                                     *ngIf="viewBtnAddSocietario(1)"
+                                     btnClass="btn-primary-VI text-nowrap"
+                                     (click)="openModalAddSocietario(1)"></form-button>
+                    </div>
+
+                    <div class="container-form2-container-select">
+                        <div style="width: 170px;">
+                            <span>CENTRO DE TRABAJO{{data_complementary.texto_obligated_subject}}:</span>
+                        </div>
+                        <div style="min-width: 300px;">
+                            <form-input-text [onlyInput]="true"
+                                             [(value)]="data_complementary.centro_trabajo"
+                                             [disabled]="data_complementary.centro_trabajo_disabled"
+                                             maxCaracter="250"></form-input-text>
+                        </div>
+                    </div>
+
+                    <div class="container-form2-container-select">
+                        <div style="width: 170px;">
+                            <span>CARGO{{data_complementary.texto_obligated_subject}}:</span>
+                        </div>
+                        <div style="min-width: 300px;">
+                            <form-input-text [onlyInput]="true"
+                                             [(value)]="data_complementary.cargo"
+                                             [disabled]="data_complementary.cargo_disabled"
+                                             maxCaracter="250"></form-input-text>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; align-items: center; color: #553d81;">
+
+
+                        <div class="content-radio-u">
+
+                            <input type="radio"
+                                   name="nationality_check"
+                                   id="nationality_check_yes"
+                                   class="mark-u orange"
+                                   value="0"
+                                   [value]="1"
+                                   [checked]="check_input_nationality == 1"
+                                   (click)="changeValueNationality(1)"
+                                   [disabled]="check_input_nationality_disabled" />
+                            <label for="nationality_check_yes"
+                                   class="radio-label-u orange mark-u">
+                                Sí
+                            </label>
+                        </div>
+                        <div class="content-radio-u-2">
+                            <input type="radio"
+                                   name="nationality_check"
+                                   id="nationality_check_no"
+                                   class="mark-u orange"
+                                   [value]="0"
+                                   [checked]="check_input_nationality == 0"
+                                   (click)="changeValueNationality(0)"
+                                   [disabled]="check_input_nationality_disabled" />
+                            <label for="nationality_check_no"
+                                   class="radio-label-u orange mark-u">
+                                No
+                            </label>
+                        </div>
+                        <label class="subtitle-checkbox"
+                               style="font-weight: bold;">¿Es de nacionalidad estadounidense?</label>
+                    </div>
+
+
+                    <div style="display: flex; align-items: center; color: #553d81;">
+                        <div class="content-radio-u">
+                            <input type="radio"
+                                   name="paret_check"
+                                   id="paret_check_yes"
+                                   class="mark-u orange"
+                                   [value]="1"
+                                   [disabled]="check_input_relationship_disabled"
+                                   [checked]="check_input_relationship == 1"
+                                   (click)="changeValueRelationship(1)" />
+                            <label for="paret_check_yes"
+                                   class="radio-label-u orange mark-u">
+                                Sí
+                            </label>
+                        </div>
+                        <div class="content-radio-u-2">
+                            <input type="radio"
+                                   name="paret_check"
+                                   id="paret_check_no"
+                                   class="mark-u orange"
+                                   [value]="0"
+                                   [disabled]="check_input_relationship_disabled"
+                                   [checked]="check_input_relationship == 0"
+                                   (click)="changeValueRelationship(0)" />
+                            <label for="paret_check_no"
+                                   class="radio-label-u orange mark-u">
+                                No
+                            </label>
+                        </div>
+                        <label class="subtitle-checkbox"
+                               style="font-weight: bold;">¿Es cónyuge o pariente hasta segundo grado de
+                            consanguinidad (abuelo(a), padre, madre, hijo(a), hermano(a), nieto(a)) de uno o más
+                            PEP?</label>
+                    </div>
+
+
+                    <div style="display: flex; align-items: center; color: #553d81;">
+                        <div class="content-radio-u">
+                            <input type="radio"
+                                   name="obligation_check"
+                                   id="obligation_check_yes"
+                                   class="mark-u orange"
+                                   [disabled]="check_input_fiscal_obligations_disabled"
+                                   [value]="1"
+                                   [checked]="check_input_fiscal_obligations == 1"
+                                   (click)="changeValueFiscal_obligations(1)" />
+                            <label for="obligation_check_yes"
+                                   class="radio-label-u orange mark-u">
+                                Sí
+                            </label>
+                        </div>
+                        <div class="content-radio-u-2">
+                            <input type="radio"
+                                   name="obligation_check"
+                                   id="obligation_check_no"
+                                   class="mark-u orange"
+                                   [disabled]="check_input_fiscal_obligations_disabled"
+                                   [value]="0"
+                                   [checked]="check_input_fiscal_obligations == 0"
+                                   (click)="changeValueFiscal_obligations(0)" />
+                            <label for="obligation_check_no"
+                                   class="radio-label-u orange mark-u">
+                                No
+                            </label>
+                        </div>
+                        <label class="subtitle-checkbox"
+                               style="font-weight: bold;">¿El asegurado tiene obligaciones
+                            fiscales/tributarias
+                            fuera del Perú?</label>
+                    </div>
+
+
+                    <!-- INI VIGP-KAFG 03/04/2025 -->
+                    <div style="display: flex; align-items: center; color: #553d81;">
+
+
+                        <div class="content-radio-u">
+
+                            <input type="radio"
+                                   name="obligated_subject_check"
+                                   id="obligated_subject_check_yes"
+                                   class="mark-u orange"
+                                   value="0"
+                                   [value]="1"
+                                   (click)="changeValueObligatedSubject(1)"
+                                   [checked]="check_input_obligated_subject == 1"
+                                   [disabled]="check_input_obligated_subject_disabled" />
+                            <label for="obligated_subject_check_yes"
+                                   class="radio-label-u orange mark-u">
+                                Sí
+                            </label>
+                        </div>
+                        <div class="content-radio-u-2">
+                            <input type="radio"
+                                   name="obligated_subject_check"
+                                   id="obligated_subject_check_no"
+                                   class="mark-u orange"
+                                   [value]="0"
+                                   (click)="changeValueObligatedSubject(0)"
+                                   [checked]="check_input_obligated_subject == 0"
+                                   [disabled]="check_input_obligated_subject_disabled" />
+                            <label for="obligated_subject_check_no"
+                                   class="radio-label-u orange mark-u">
+                                No
+                            </label>
+                        </div>
+                        <label class="subtitle-checkbox"
+                               style="font-weight: bold;">¿Sujeto Obligado?</label>
+                    </div>
+                    <!-- FIN VIGP-KAFG 03/04/2025 -->
+
+
+                    <!-- INI VIGP-KAFG 09/07/2025 -->
+                    <div style="display: flex; align-items: center; color: #553d81;">
+
+
+                        <div class="content-radio-u">
+
+                            <input type="radio"
+                                   name="calidad_de_socio_check"
+                                   id="calidad_de_socio_check_yes"
+                                   class="mark-u orange"
+                                   value="0"
+                                   [value]="1"
+                                   [checked]="check_input_calidad_socio == 1"
+                                   (click)="changeValueCalidadDeSocio(1)"
+                                   [disabled]="check_input_calidad_socio_disabled" />
+                            <label for="calidad_de_socio_check_yes"
+                                   class="radio-label-u orange mark-u">
+                                Sí
+                            </label>
+                        </div>
+                        <div class="content-radio-u-2">
+                            <input type="radio"
+                                   name="calidad_de_socio_check"
+                                   id="calidad_de_socio_check_no"
+                                   class="mark-u orange"
+                                   [value]="0"
+                                   [checked]="check_input_calidad_socio == 0"
+                                   (click)="changeValueCalidadDeSocio(0)"
+                                   [disabled]="check_input_calidad_socio_disabled" />
+                            <label for="calidad_de_socio_check_no"
+                                   class="radio-label-u orange mark-u">
+                                No
+                            </label>
+                        </div>
+                        <label class="subtitle-checkbox"
+                               style="font-weight: bold;">¿Cuenta con calidad de socio, accionista, asociado o título
+                            equivalente y/o administrador de personas jurídicas o entes jurídicos donde un PEP tenga el
+                            25 % o más del capital social, aporte o participación?</label>
+                    </div>
+                    <!-- FIN VIGP-KAFG 09/07/2025 -->
+
+
+                    <div>
+
+                        <span class="text-span"
+                              style="color:#ed6e00; font-weight: bold;">Se debe completar todos los datos para poder
+                            continuar con el proceso.</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Para Asegurado -->
+            <div class="d-flex flex-row flex-wrap py-3 px-2"
+                 style="border: 1.5px solid #553d81"
+                 [class.visibility__hidden]="type_rol == 0">
+                <div class="row">
+                    <div class="col-lg-9 row">
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="TIPO DE DOCUMENTO(*)"
+                                               [(value)]="data_insured.type_document"
+                                               [service]="clientInformationService"
+                                               method="getDocumentTypeList"
+                                               [params]="cod_prod_channel"
+                                               [updateModelOnChange]="true"
+                                               [firstSelect]="true"
+                                               fieldCodigo="Id"
+                                               fieldValor="Name"
+                                               [disabled]="data_insured.type_document_disabled"
+                                               (onSelect)="changeDocumentType(2)"
+                                               [large]="false"></form-input-select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-text text_label="NRO. DOCUMENTO(*):"
+                                             [(value)]="data_insured.document_number"
+                                             [onlyInput]="true"
+                                             [disabled]="data_insured.document_number_disabled"
+                                             (onKeyenter)="search(2)"
+                                             [patternPrevent]="CONSTANTS.REGEX[data_insured.type_document?.Id]"></form-input-text>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-date text_label="FECHA NACIMIENTO(*):"
+                                             [(value)]="data_insured.birthday_date"
+                                             [disabled]="data_insured.birthday_date_disabled"></form-input-date>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-text text_label="NOMBRES(*):"
+                                             [onlyInput]="true"
+                                             [(value)]="data_insured.names"
+                                             [patternPrevent]="CONSTANTS.REGEX.LETRAS"
+                                             [disabled]="data_insured.names_disabled"
+                                             maxCaracter="19"></form-input-text>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-text text_label="APELLIDO PATERNO(*):"
+                                             [onlyInput]="true"
+                                             [(value)]="data_insured.last_name"
+                                             [patternPrevent]="CONSTANTS.REGEX.LETRAS"
+                                             [disabled]="data_insured.last_name_disabled"
+                                             maxCaracter="19"></form-input-text>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-text text_label="APELLIDO MATERNO(*):"
+                                             [onlyInput]="true"
+                                             [(value)]="data_insured.last_name2"
+                                             [patternPrevent]="CONSTANTS.REGEX.LETRAS"
+                                             [disabled]="data_insured.last_name2_disabled"
+                                             maxCaracter="19"></form-input-text>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="SEXO(*):"
+                                               [(value)]="data_insured.gender"
+                                               [service]="clientInformationService"
+                                               method="getGenderList"
+                                               [params]="CONSTANTS.WITHOUT_PARAMS"
+                                               [updateModelOnChange]="true"
+                                               fieldCodigo="SSEXCLIEN"
+                                               fieldValor="SDESCRIPT"
+                                               [disabled]="data_insured.gender_disabled"
+                                               [firstSelect]="true"
+                                               [large]="false"></form-input-select>
+
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="ESTADO CIVIL:"
+                                               [(value)]="data_insured.civil_status"
+                                               [service]="clientInformationService"
+                                               method="getCivilStatusList"
+                                               [params]="CONSTANTS.WITHOUT_PARAMS"
+                                               [firstSelect]="true"
+                                               [updateModelOnChange]="true"
+                                               fieldCodigo="NCIVILSTA"
+                                               fieldValor="SDESCRIPT"
+                                               [disabled]="data_insured.civil_status_disabled"
+                                               [large]="false"></form-input-select>
+                        </div>
+                        <!-- [items]="list_civil_state_insured" -->
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="NACIONALIDAD:"
+                                               [(value)]="data_insured.nationality"
+                                               [service]="clientInformationService"
+                                               method="getNationalityList"
+                                               [params]="CONSTANTS.WITHOUT_PARAMS"
+                                               fieldCodigo="NNATIONALITY"
+                                               fieldValor="SDESCRIPT"
+                                               [firstSelect]="true"
+                                               [updateModelOnChange]="true"
+                                               [disabled]="data_insured.nationality_disabled"
+                                               [large]="false"></form-input-select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-text text_label="CELULAR:"
+                                             [(value)]="data_insured.phone"
+                                             [onlyInput]="true"
+                                             [disabled]="data_insured.phone_disabled"
+                                             [patternPrevent]="CONSTANTS.REGEX.NUMBER"
+                                             maxCaracter="9"
+                                             (focusout)="validNumber(2)"
+                                             classInput="{{ boolNumberASG ? 'error_label' : 'null' }}"></form-input-text>
+
+                        </div>
+
+                        <div class="col-lg-6">
+                            <form-input-text text_label="CORREO ELECTRÓNICO:"
+                                             [onlyInput]="true"
+                                             [(value)]="data_insured.email"
+                                             [disabled]="data_insured.email_disabled"
+                                             maxCaracter="60"
+                                             (focusout)="validEmail(2)"
+                                             classInput="{{ boolEmailASG ? 'error_label' : 'null' }}"></form-input-text>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <form-input-text text_label="DIRECCIÓN:"
+                                             [onlyInput]="true"
+                                             [(value)]="data_insured.address"
+                                             [disabled]="data_insured.address_disabled"
+                                             maxCaracter="80"></form-input-text>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="DEPARTAMENTO:"
+                                               [(value)]="data_insured.department"
+                                               fieldCodigo="Id"
+                                               fieldValor="Name"
+                                               [firstSelect]="true"
+                                               [large]="false"
+                                               [updateModelOnChange]="true"
+                                               (onSelect)="onSelectDepartamentInsured()"
+                                               [items]="list_data_insured_department"
+                                               [disabled]="data_insured.department_disabled"></form-input-select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="PROVINCIA:"
+                                               [(value)]="data_insured.province"
+                                               fieldCodigo="Id"
+                                               fieldValor="Name"
+                                               [firstSelect]="true"
+                                               [large]="false"
+                                               [items]="list_data_insured_province"
+                                               [updateModelOnChange]="true"
+                                               (onSelect)="onSelectProvinceInsured()"
+                                               [disabled]="data_insured.province_disabled"></form-input-select>
+                            <!-- [params]="data_insured.department.Id" -->
+                            <!-- [service]="addressService" -->
+                            <!-- method="getProvinceList" -->
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="DISTRITO:"
+                                               [(value)]="data_insured.district"
+                                               fieldCodigo="Id"
+                                               fieldValor="Name"
+                                               [firstSelect]="true"
+                                               [large]="false"
+                                               [items]="list_data_insured_district"
+                                               [updateModelOnChange]="true"
+                                               [disabled]="data_insured.district_disabled"></form-input-select>
+
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="PARENTESCO CON EL CONTRATANTE(*):"
+                                               [(value)]="data_insured.relation"
+                                               [large]="false"
+                                               [service]="quotationService"
+                                               method="getRelationBenefeciaries"
+                                               [params]="CONSTANTS.WITHOUT_PARAMS"
+                                               fieldCodigo="COD_ELEMENTO"
+                                               fieldValor="GLS_ELEMENTO"
+                                               [firstSelect]="true"
+                                               [updateModelOnChange]="true"
+                                               [disabled]="data_insured.relation_disabled">
+                            </form-input-select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 mx-0 py-0">
+                        <div class="sub-container1">
+                            <div>
+                                <h3 class="sub-title">Idecon</h3>
+
+                                <div class="label">
+                                    <span class="item">Otras listas</span>
+                                    <span class="item-response"> {{ origin_pep_insured.id_1 }} </span>
+                                </div>
+
+                                <div class="label">
+                                    <span class="item">Es PEP</span>
+                                    <span class="item-response"> {{ origin_pep_insured.id_2 }} </span>
+                                </div>
+
+                                <div class="label">
+                                    <span class="item">Tiene Familiar PEP</span>
+                                    <span class="item-response"> {{ origin_pep_insured.id_3 }} </span>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="sub-title">WorldCheck</h3>
+
+                                <div class="label">
+                                    <span class="item">Otras listas</span>
+                                    <span class="item-response"> {{ origin_pep_insured.wc_1 }} </span>
+                                </div>
+
+                                <div class="label">
+                                    <span class="item">Es PEP</span>
+                                    <span class="item-response"> {{ origin_pep_insured.wc_2 }} </span>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="sub-title">Experian</h3>
+
+                                <div class="label">
+                                    <span class="item">Cliente Riesgoso</span>
+                                    <span class="item-response"> {{ origin_pep_insured.ex_1 }} </span>
+                                </div>
+                            </div>
+
+                            <!-- INI VIGP 17112025 -->
+                            <div>
+                                <h3 class="sub-title">Registro Negativo</h3>
+
+                                <div class="label">
+                                    <span class="item">Registro Negativo</span>
+                                    <span class="item-response"> {{riesgo_negative_insu}} </span>
+                                </div>
+                            </div>
+                            <!-- FIN VIGP 17112025 -->
+
+                            <!-- INI VIGP-KAFG 16/04/2025 -->
+                            <div>
+                                <h3 class="sub-title">Homologación</h3>
+
+                                <div class="label">
+                                    <span class="item">Homologado</span>
+                                    <span class="item-response"> {{ homologacionInsu }} </span>
+                                </div>
+                            </div>
+                            <!-- FIN VIGP-KAFG 16/04/2025 -->
+
+                        </div>
+                    </div>
+
+                    <!-- INI VIGP-KAFG 07/04/2025 -->
+                    <!-- DATOS COMPLEMENTARIOS DEL ASEGURADO -->
+                    <div class="col-lg-12 mx-0 py-0">
+                        <div class="container-form2">
+                            <div class="container-subtitle">
+                                <span>Datos Complementarios del Asegurado</span>
+                            </div>
+
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div class="container-form2-container-select">
+                                    <div style="width: 170px;">
+                                        <span>OCUPACIÓN:</span>
+                                    </div>
+                                    <div style="min-width: 300px;">
+                                        <form-input-select [(value)]="data_occuptacion_insu.occupation_status"
+                                                           fieldCodigo="Id"
+                                                           fieldValor="Name"
+                                                           [firstSelect]="true"
+                                                           [large]="false"
+                                                           [updateModelOnChange]="true"
+                                                           [disabled]="data_occuptacion_insu.occupation_status_disabled"
+                                                           [items]="list_occupation_contractor"></form-input-select>
+                                    </div>
+                                </div>
+
+                                <form-button [label]="resolveLabelBtnSocietario(2)"
+                                             *ngIf="viewBtnAddSocietario(2)"
+                                             btnClass="btn-primary-VI text-nowrap"
+                                             (click)="openModalAddSocietario(2)"></form-button>
+                            </div>
+
+                            <div class="container-form2-container-select">
+                                <div style="width: 170px;">
+                                    <span>CENTRO DE TRABAJO{{data_occuptacion_insu.texto_obligated_subject}}:</span>
+                                </div>
+                                <div style="min-width: 300px;">
+                                    <form-input-text [onlyInput]="true"
+                                                     [large]="false"
+                                                     [disabled]="data_occuptacion_insu.centro_trabajo_disabled"
+                                                     [(value)]="data_occuptacion_insu.centro_trabajo"
+                                                     maxCaracter="250"></form-input-text>
+                                </div>
+                            </div>
+
+                            <div class="container-form2-container-select">
+                                <div style="width: 170px;">
+                                    <span>CARGO{{data_occuptacion_insu.texto_obligated_subject}}:</span>
+                                </div>
+                                <div style="min-width: 300px;">
+                                    <form-input-text [onlyInput]="true"
+                                                     [large]="false"
+                                                     [disabled]="data_occuptacion_insu.cargo_disabled"
+                                                     [(value)]="data_occuptacion_insu.cargo"
+                                                     maxCaracter="250"></form-input-text>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; align-items: center; color: #553d81;">
+
+
+                                <div class="content-radio-u">
+
+                                    <input type="radio"
+                                           name="nationality_check_insu"
+                                           id="nationality_check_insu_yes"
+                                           class="mark-u orange"
+                                           value="0"
+                                           [value]="1"
+                                           [checked]="check_input_insu_nationality == 1"
+                                           (click)="changeValueNationality(1,'INSU')"
+                                           [disabled]="check_input_insu_nationality_disabled" />
+                                    <label for="nationality_check_insu_yes"
+                                           class="radio-label-u orange mark-u">
+                                        Sí
+                                    </label>
+                                </div>
+                                <div class="content-radio-u-2">
+                                    <input type="radio"
+                                           name="nationality_check_insu"
+                                           id="nationality_check_insu_no"
+                                           class="mark-u orange"
+                                           [value]="0"
+                                           [checked]="check_input_insu_nationality == 0"
+                                           (click)="changeValueNationality(0,'INSU')"
+                                           [disabled]="check_input_insu_nationality_disabled" />
+                                    <label for="nationality_check_insu_no"
+                                           class="radio-label-u orange mark-u">
+                                        No
+                                    </label>
+                                </div>
+                                <label class="subtitle-checkbox"
+                                       style="font-weight: bold;">¿Es de nacionalidad estadounidense?</label>
+                            </div>
+
+
+                            <div style="display: flex; align-items: center; color: #553d81;">
+                                <div class="content-radio-u">
+                                    <input type="radio"
+                                           name="paret_check_insu"
+                                           id="paret_check_insu_yes"
+                                           class="mark-u orange"
+                                           [value]="1"
+                                           [disabled]="check_input_insu_relationship_disabled"
+                                           [checked]="check_input_insu_relationship == 1"
+                                           (click)="changeValueRelationship(1,'INSU')" />
+                                    <label for="paret_check_insu_yes"
+                                           class="radio-label-u orange mark-u">
+                                        Sí
+                                    </label>
+                                </div>
+                                <div class="content-radio-u-2">
+                                    <input type="radio"
+                                           name="paret_check_insu"
+                                           id="paret_check_insu_no"
+                                           class="mark-u orange"
+                                           [value]="0"
+                                           [disabled]="check_input_insu_relationship_disabled"
+                                           [checked]="check_input_insu_relationship == 0"
+                                           (click)="changeValueRelationship(0,'INSU')" />
+                                    <label for="paret_check_insu_no"
+                                           class="radio-label-u orange mark-u">
+                                        No
+                                    </label>
+                                </div>
+                                <label class="subtitle-checkbox"
+                                       style="font-weight: bold;">¿Es cónyuge o pariente hasta segundo grado de
+                                    consanguinidad (abuelo(a), padre, madre, hijo(a), hermano(a), nieto(a)) de uno o más
+                                    PEP?</label>
+                            </div>
+
+
+                            <div style="display: flex; align-items: center; color: #553d81;">
+                                <div class="content-radio-u">
+                                    <input type="radio"
+                                           name="obligation_check_insu"
+                                           id="obligation_check_insu_yes"
+                                           class="mark-u orange"
+                                           [disabled]="check_input_insu_fiscal_obligations_disabled"
+                                           [value]="1"
+                                           [checked]="check_input_insu_fiscal_obligations == 1"
+                                           (click)="changeValueFiscal_obligations(1,'INSU')" />
+                                    <label for="obligation_check_insu_yes"
+                                           class="radio-label-u orange mark-u">
+                                        Sí
+                                    </label>
+                                </div>
+                                <div class="content-radio-u-2">
+                                    <input type="radio"
+                                           name="obligation_check_insu"
+                                           id="obligation_check_insu_no"
+                                           class="mark-u orange"
+                                           [disabled]="check_input_insu_fiscal_obligations_disabled"
+                                           [value]="0"
+                                           [checked]="check_input_insu_fiscal_obligations == 0"
+                                           (click)="changeValueFiscal_obligations(0,'INSU')" />
+                                    <label for="obligation_check_insu_no"
+                                           class="radio-label-u orange mark-u">
+                                        No
+                                    </label>
+                                </div>
+                                <label class="subtitle-checkbox"
+                                       style="font-weight: bold;">¿El asegurado tiene obligaciones
+                                    fiscales/tributarias
+                                    fuera del Perú?</label>
+                            </div>
+
+
+                            <!-- INI VIGP-KAFG 03/04/2025 -->
+                            <div style="display: flex; align-items: center; color: #553d81;">
+
+
+                                <div class="content-radio-u">
+
+                                    <input type="radio"
+                                           name="obligated_subject_check_insu"
+                                           id="obligated_subject_check_insu_yes"
+                                           class="mark-u orange"
+                                           value="0"
+                                           [value]="1"
+                                           [checked]="check_input_insu_obligated_subject == 1"
+                                           (click)="changeValueObligatedSubject(1,'INSU')"
+                                           [disabled]="check_input_insu_obligated_subject_disabled" />
+                                    <label for="obligated_subject_check_insu_yes"
+                                           class="radio-label-u orange mark-u">
+                                        Sí
+                                    </label>
+                                </div>
+                                <div class="content-radio-u-2">
+                                    <input type="radio"
+                                           name="obligated_subject_check_insu"
+                                           id="obligated_subject_check_insu_no"
+                                           class="mark-u orange"
+                                           [value]="0"
+                                           [checked]="check_input_insu_obligated_subject == 0"
+                                           (click)="changeValueObligatedSubject(0,'INSU')"
+                                           [disabled]="check_input_insu_obligated_subject_disabled" />
+                                    <label for="obligated_subject_check_insu_no"
+                                           class="radio-label-u orange mark-u">
+                                        No
+                                    </label>
+                                </div>
+                                <label class="subtitle-checkbox"
+                                       style="font-weight: bold;">¿Sujeto Obligado?</label>
+                            </div>
+                            <!-- FIN VIGP-KAFG 03/04/2025 -->
+
+
+                            <!-- INI VIGP-KAFG 09/07/2025 -->
+                            <div style="display: flex; align-items: center; color: #553d81;">
+
+                                <div class="content-radio-u">
+
+                                    <input type="radio"
+                                           name="calidad_de_socio_check_insu"
+                                           id="calidad_de_socio_check_insu_yes"
+                                           class="mark-u orange"
+                                           value="0"
+                                           [value]="1"
+                                           [checked]="check_input_insu_calidad_socio == 1"
+                                           (click)="changeValueCalidadDeSocio(1,'ISNU')"
+                                           [disabled]="check_input_insu_calidad_socio_disabled" />
+                                    <label for="calidad_de_socio_check_insu_yes"
+                                           class="radio-label-u orange mark-u">
+                                        Sí
+                                    </label>
+                                </div>
+                                <div class="content-radio-u-2">
+                                    <input type="radio"
+                                           name="calidad_de_socio_check_insu"
+                                           id="calidad_de_socio_check_insu_no"
+                                           class="mark-u orange"
+                                           [value]="0"
+                                           [checked]="check_input_insu_calidad_socio == 0"
+                                           (click)="changeValueCalidadDeSocio(0,'ISNU')"
+                                           [disabled]="check_input_insu_calidad_socio_disabled" />
+                                    <label for="calidad_de_socio_check_insu_no"
+                                           class="radio-label-u orange mark-u">
+                                        No
+                                    </label>
+                                </div>
+                                <label class="subtitle-checkbox"
+                                       style="font-weight: bold;">¿Cuenta con calidad de socio, accionista, asociado o
+                                    título equivalente y/o administrador de personas jurídicas o entes jurídicos donde
+                                    un PEP tenga el 25 % o más del capital social, aporte o participación?</label>
+                            </div>
+                            <!-- FIN VIGP-KAFG 09/07/2025 -->
+
+
+                            <div>
+
+                                <span class="text-span"
+                                      style="color:#ed6e00; font-weight: bold;">Se debe completar todos los datos para
+                                    poder
+                                    continuar con el proceso.</span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- INI VIGP-KAFG 07/04/2025 -->
+                </div>
+            </div>
+
+            <div class="container_button_next mt-3">
+                <form-button label="Siguiente"
+                             btnClass="btn-orange text-nowrap orange"
+                             (click)="changeStep(2)"></form-button>
+            </div>
+        </div>
+
+        <!-- Step 2 / 3 -->
+        <div class="container-form-and-button"
+             *ngIf="current_step == 2">
+            <div class="tabs"
+                 style="margin-bottom: -8px;">
+                <input type="radio"
+                       name="data_quotation"
+                       id="data_quotation"
+                       checked="checked"
+                       style="display: none" />
+                <label for="data_quotation"
+                       class="tab-label-one">Cotización</label>
+            </div>
+
+            <div style="border: 1.5px solid #553d81">
+
+                <div class="p-3">
+                    <div class="row">
+
+                        <div class="col-lg-2">
+                            <form-input-select text_label="MONEDA:"
+                                               fieldCodigo="NCODIGINT"
+                                               fieldValor="SDESCRIPT"
+                                               [large]="true"
+                                               [items]="CURRENCY"
+                                               [disabled]="true"
+                                               [(value)]="quotation.moneda"></form-input-select>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <form-input-text text_label="MONTO DE INVERSIÓN:"
+                                             [large]="true"
+                                             [(value)]="quotation.contribution"
+                                             (valueChange)="changeStyleCredit()"
+                                             [patternPrevent]="CONSTANTS.REGEX.HUNDREDS_NUMBER"
+                                             [disabled]="true"></form-input-text>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <form-input-select text_label="TIPO DE FONDO:"
+                                               fieldCodigo="NFUNDS"
+                                               fieldValor="SDESCRIPT"
+                                               [items]="investment"
+                                               [large]="true"
+                                               [disabled]="true"
+                                               [(value)]="quotation.fondo"></form-input-select>
+                        </div>
+
+                        <div class="col-lg-2">
+                            <form-input-date text_label="FECHA ABONO:"
+                                             [large]="true"
+                                             [(value)]="quotation.date_fund"
+                                             [minDateSup]="min_date_fund"
+                                             [maxDate]="max_date_fund"
+                                             [disabled]="quotation.date_fund_disabled"></form-input-date>
+                        </div>
+
+                    </div>
+
+                    <div style="margin-top: 6px; margin-bottom: 11px; display: flex; align-items: center">
+                        <label class="subtitle">Mis beneficiarios serán mis herederos legales</label>
+                        <div class="content-radio-u mr-3">
+                            <input type="radio"
+                                   name="status_contractor2"
+                                   id="client_yes_contractor2"
+                                   class="mark-u orange"
+                                   [value]="1"
+                                   [checked]="check_input_value_beneficiary == 1"
+                                   disabled />
+                            <!-- [disabled]="check_input_value_beneficiary_disabled"
+                                    (click)="changeValueBenefeciary(1)" VIGP-187-->
+                            <label for="client_yes_contractor2"
+                                   class="radio-label-u orange mark-u">
+                                Sí
+                            </label>
+                        </div>
+                        <div class="content-radio-u">
+                            <input type="radio"
+                                   name="status_contractor"
+                                   id="client_no_contractor"
+                                   class="mark-u orange"
+                                   [value]="0"
+                                   [checked]="check_input_value_beneficiary == 0"
+                                   disabled />
+                            <!-- [disabled]="check_input_value_beneficiary_disabled"
+                                   (click)="changeValueBenefeciary(0)" VIGP-187-->
+                            <label for="client_no_contractor"
+                                   class="radio-label-u orange mark-u">
+                                No
+                            </label>
+                        </div>
+                    </div>
+
+
+                    <div *ngIf="check_input_value_beneficiary == 0">
+                        <div class="d-flex mb-3"
+                             style="margin-top: -2px;">
+                            <form-button label="Agregar beneficiarios"
+                                         btnClass="btn-primary-VI text-nowrap"
+                                         (click)="OpenModalBeneficiary('add', null)"
+                                         [disabled]="['196'].includes(profile_id)"></form-button>
+                            <!-- [disabled]="dissabled_btn_modal_add_benef || !(profile_id == '192' && NID_STATE == 10)" -->
+                        </div>
+                        <div class="table-responsive TableMargin_short div-tableban"
+                             id="table-scroll">
+                            <table class="table-u"
+                                   style="width: 82.5%; margin: 6px; margin-bottom: 6px;">
+                                <thead>
+                                    <tr>
+                                        <th>Doc. Identidad</th>
+                                        <th>Nombres</th>
+                                        <th>Parentesco</th>
+                                        <th>Asignación(%)</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="!list_benefeciarys?.length">
+                                        <tr class="grid-body">
+                                            <td class="grid-body-item"
+                                                colspan="12"
+                                                style="text-align: center">
+                                                No hay informacion para mostrar
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                    <ng-container *ngIf="!!list_benefeciarys?.length">
+                                        <tr class="grid-body"
+                                            *ngFor="let item of listToShow_benefeciarys let index = index
+                                            "
+                                            [id]="'row' + index">
+                                            <td class="hovert">{{item.desc_type_doc}}-{{ item.siddoc }}</td>
+                                            <td class="hovert">{{ item.sfirstname }} {{ item.slastname }} {{
+                                                item.slastname2 }}
+                                            </td>
+                                            <td class="hovert">{{ item.srelation_name }}</td>
+                                            <td class="hovert">{{ item.percentage_participation }}</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: center;">
+                                                    <div class="p-2"
+                                                         (click)="OpenModalBeneficiary('edit', item)"
+                                                         [ngStyle]="['196'].includes(profile_id) ? { 'opacity': '0.5','cursor': 'not-allowed' } : { 'cursor': 'pointer' }">
+                                                        <!-- [ngStyle]="dissabled_btn_modal_add_benef ? { 'opacity': '0.5','cursor': 'not-allowed' } : { 'cursor': 'pointer' }" -->
+                                                        <i class="fa fa-edit"
+                                                           style=" margin-right: 2px; color: #553d81;"></i>
+                                                        <span>Editar</span>
+                                                    </div>
+
+                                                    <div class="p-2"
+                                                         (click)="deleteBenefeciary(item)"
+                                                         [ngStyle]="['196'].includes(profile_id) ? { 'opacity': '0.5','cursor': 'not-allowed' } : { 'cursor': 'pointer' }">
+                                                        <!-- [ngStyle]="dissabled_btn_modal_add_benef ? { 'opacity': '0.5','cursor': 'not-allowed' } : { 'cursor': 'pointer' }" -->
+                                                        <i class="fa fa-trash"
+                                                           style=" margin-right: 2px; color:red"></i>
+                                                        <span>Eliminar</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+
+
+
+                                </tbody>
+                            </table>
+
+                            <div *ngIf="list_benefeciarys != null && list_benefeciarys.length > 0"
+                                 style="display: flex">
+                                <div class="col-sm-12">
+                                    <ngb-pagination [(page)]="currentPage"
+                                                    [pageSize]="itemsPerPage"
+                                                    [collectionSize]="totalItems"
+                                                    [maxSize]="maxSize"
+                                                    (pageChange)="pageChanged(currentPage)">
+                                        <ng-template ngbPaginationPrevious>ANTERIOR</ng-template>
+                                        <ng-template ngbPaginationNext>SIGUIENTE</ng-template>
+                                    </ngb-pagination>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container-origen-fondo">
+                        <div class="my-3"
+                             style="width: fit-content;">
+                            <form-button label="Detalle Origen de Fondo"
+                                         btnClass="btn-primary-VI"
+                                         [disabled]="dissabled_btn_modal_detail_origin"
+                                         (click)="OpenModalDetailOrigin('add')"></form-button>
+                        </div>
+                        <table class="table-u"
+                               style="width: 34%;">
+                            <thead style="color: #fff;">
+                                <tr>
+                                    <th>Origen de fondo</th>
+                                    <th>Asignación (%)</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="hovert">Ahorro</td>
+                                    <td class="hovert">{{origin_fund_saving_percent}}</td>
+
+                                    <td *ngIf="actions">
+                                        <div style="display: flex; justify-content: center;">
+                                            <div class="p-2"
+                                                 [ngStyle]="dissabled_btn_modal_add_benef ? { 'opacity': '0.5','cursor': 'not-allowed' } : { 'cursor': 'pointer' }"
+                                                 (click)="OpenModalDetailOrigin('edit')"
+                                                 style="cursor: pointer;">
+                                                <i class="fa fa-edit"
+                                                   style=" margin-right: 2px; color: #553d81;"></i>
+                                                <span>Editar</span>
+                                            </div>
+
+                                            <div class="p-2"
+                                                 [ngStyle]="dissabled_btn_modal_add_benef || !(profile_id == '192' && NID_STATE == 10) ? { 'opacity': '0.5','cursor': 'not-allowed' } : { 'cursor': 'pointer' }"
+                                                 (click)="deleteDetailOrigin()"
+                                                 style="cursor: pointer;">
+                                                <i class="fa fa-trash"
+                                                   style=" margin-right: 2px; color:red"></i>
+                                                <span>Eliminar</span>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td class="hovert">SPP</td>
+                                    <td class="hovert">{{origin_fund_spp_percent}}</td>
+                                </tr>
+
+
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="container_button_next mt-3">
+                <form-button label="Siguiente"
+                             btnClass="btn-orange text-nowrap orange"
+                             (click)="changeStep(3)"></form-button>
+                <form-button label="Regresar"
+                             btnClass="btn-orange text-nowrap orange"
+                             (click)="previusStep(1)"></form-button>
+            </div>
+
+        </div>
+
+        <!-- Step 3 / 5 -->
+        <div class="container-form-and-button"
+             *ngIf="current_step == 3">
+
+            <div class="container-form-and-button">
+                <div class="tabs"
+                     style="margin-bottom: -8px;">
+
+                    <input type="radio"
+                           name="tabs"
+                           id="tabone"
+                           checked="checked"
+                           #insuredRadioInput
+                           style="display: none" />
+                    <label for="tabone"
+                           class="tab-label">File del cliente</label>
+
+                </div>
+
+                <div class="p-3"
+                     style="border: 1.5px solid #553d81">
+                    <div class="row">
+                        <div class="col-lg-10">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr class="grid-title table-head">
+                                            <td class="grid-title-item text-center">Tipo</td>
+                                            <td class="grid-title-item text-center">Nombre del archivo</td>
+                                            <td class="grid-title-item text-center">Acciones</td>
+                                            <td class="grid-title-item text-center"></td>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <ng-container *ngIf="!!filesList?.length">
+                                            <ng-container *ngFor="let item of filesList; let i = index">
+
+                                                <tr class="table-body"
+                                                    *ngIf="item.P_FLAG != 6 || (item.P_FLAG == 6 && !isExistFileFlag(7))">
+                                                    <!-- TIPO -->
+                                                    <td class="table-body-item text-left">
+                                                        <span *ngIf="[1,2,4,6,7,8,9].includes(item.P_FLAG)">
+                                                            {{ item.P_NAME }}
+                                                        </span>
+                                                        <span *ngIf="item.P_FLAG == 3 || item.P_FLAG == 5">
+                                                            <input type="text"
+                                                                   class="form-control border-0"
+                                                                   placeholder="OTROS"
+                                                                   [(ngModel)]="item.P_NAME"
+                                                                   maxlength="50"
+                                                                   (input)="toUpper($event)"
+                                                                   (paste)="toUpper($event)" />
+                                                        </span>
+                                                    </td>
+                                                    <!-- NOMBRE -->
+                                                    <td class="table-body-item"
+                                                        [ngClass]="item.P_TYPE ? 'text-left' : 'text-center'">
+                                                        <span *ngIf="item.P_FLAG != 7">
+                                                            {{ item.P_TYPE ? (item.P_TYPE) : '—' }}
+                                                        </span>
+                                                        <span *ngIf="item.P_FLAG == 7">
+                                                            {{ item.P_TYPE ? resolveOldFileClient(item.P_TYPE) : '—' }}
+                                                        </span>
+
+                                                    </td>
+                                                    <!-- ACCIONES -->
+                                                    <td class="table-body-item text-center">
+                                                        <input #fileUpload
+                                                               type="file"
+                                                               style="display: none;"
+                                                               (click)="fileUpload.value = null"
+                                                               (change)="importFile($event, item)">
+                                                        <!-- *ngIf="item.P_STATUS == 0 && item.P_FLAG != 1 && item.P_FLAG != 6 && item.P_FLAG != 7 && item.P_FLAG != 8 && profile_id != 203 && profile_id != 196" -->
+                                                        <button class="dwn"
+                                                                *ngIf="item.P_STATUS == 0 && ![1,7,8,9].includes(item.P_FLAG) && ![203,196].includes(profile_id)"
+                                                                (click)="fileUpload.click()">Adjuntar archivo</button>
+                                                        <button class="dwn"
+                                                                *ngIf="item.P_STATUS == 1"
+                                                                (click)="exportFile(item)">Descargar archivo</button>
+                                                    </td>
+                                                    <!-- MÁS ACCIONES -->
+                                                    <td class="table-body-item text-left">
+                                                        <i title="Descargar"
+                                                           style="cursor: pointer;"
+                                                           class="fa fa-download fa-lg"
+                                                           *ngIf="item.P_STATUS == 1 &&  ![203, 196].includes(profile_id)"
+                                                           (click)="exportFile(item)"></i>
+                                                        <i title="Eliminar"
+                                                           style="cursor: pointer;"
+                                                           class="fa fa-trash fa-lg"
+                                                           *ngIf="validateDeleteFile(item)"
+                                                           (click)="deleteFile(item, i)"></i>
+                                                        <i title="Agregar"
+                                                           style="cursor: pointer;"
+                                                           class="fa fa-plus fa-lg"
+                                                           *ngIf="item.P_FLAG == 3 && profile_id != 203 && profile_id != 196"
+                                                           (click)="addFile()"></i>
+                                                        <i title="Adjuntar voucher"
+                                                           style="cursor: pointer;"
+                                                           class="fa fa-edit fa-lg"
+                                                           *ngIf="item.P_DESCRI == 'voucher_de_pago' && profile_id == 192 && item.P_STATUS == 1"
+                                                           (click)="openModalVoucher()"></i>
+                                                        <i title="Visualizar"
+                                                           style="cursor: pointer;"
+                                                           class="fa fa-search fa-lg"
+                                                           *ngIf="item.P_STATUS == 1 && item.P_TYPE.split('.').pop() == 'pdf'"
+                                                           (click)="visualizeFile(item, pdfviewer)"></i>
+                                                    </td>
+                                                </tr>
+                                            </ng-container>
+                                        </ng-container>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container_button_next mt-3">
+                <form-button label="Siguiente"
+                             btnClass="btn-orange text-nowrap orange"
+                             (click)="changeStep(4)"></form-button>
+                <form-button label="Regresar"
+                             btnClass="btn-orange text-nowrap orange"
+                             (click)="previusStep(2)"></form-button>
+            </div>
+        </div>
+
+        <!-- Step 4 / 6 -->
+        <div class="container-form-and-button"
+             *ngIf="current_step == 4">
+
+            <div class="tabs"
+                 style="margin-bottom: -8px;">
+
+                <input type="radio"
+                       name="tabs"
+                       id="tabone"
+                       checked="checked"
+                       #insuredRadioInput
+                       style="display: none" />
+                <label for="tabone"
+                       class="tab-label">Cotización Definitiva</label>
+
+            </div>
+
+            <div class="p-3"
+                 style="border: 1.5px solid #553d81">
+                <div class="row justify-content-md-center g-3">
+                    <div class="col col-lg-4 border rounded-5 pl-3 pr-3 pt-4 pb-3">
+                        <div>
+                            <h5 class="mb-3"
+                                style="color: #553d81; font-weight: bold;">Contratante</h5>
+                            <table class="table table-borderless"
+                                   style="color: gray;">
+                                <tr>
+                                    <td class="p-0">Nombres :</td>
+                                    <td class="p-0">{{ data_contractor.names }} {{data_contractor.last_name}}
+                                        {{data_contractor.last_name2}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-0">Documento :</td>
+                                    <td class="p-0"> {{data_contractor.type_document.Name}} - {{
+                                        data_contractor.document_number
+                                        }}
+                                    </td>
+                                </tr>
+                                <h5 class="mt-2 mb-1"
+                                    style="color: #553d81; font-weight: bold;">Asegurado</h5>
+                                <tr>
+                                    <td class="p-0">Nombres :</td>
+                                    <td class="p-0"
+                                        *ngIf="check_input_value == 1; else elseBlockName">{{ data_contractor.names }}
+                                        {{data_contractor.last_name}}
+                                        {{data_contractor.last_name2}}
+                                    </td>
+                                    <ng-template #elseBlockName>
+                                        <td class="p-0">{{ data_insured.names }}
+                                            {{data_insured.last_name}}
+                                            {{data_insured.last_name2}}
+                                        </td>
+                                    </ng-template>
+                                </tr>
+                                <tr>
+                                    <td class="p-0">Documento :</td>
+                                    <td class="p-0"
+                                        *ngIf="check_input_value == 1; else elseBlockDoc">
+                                        {{data_contractor.type_document.Name}} -
+                                        {{ data_contractor.document_number }}
+                                    </td>
+                                    <ng-template #elseBlockDoc>
+                                        <td class="p-0">{{data_insured.type_document.Name}} - {{
+                                            data_insured.document_number }}
+                                        </td>
+                                    </ng-template>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="col col-lg-4 border rounded-5 pl-3 pr-3 pt-4 pb-3">
+                        <h5 class="mb-3"
+                            style="color: #553d81; font-weight: bold;">Datos del producto</h5>
+                        <table class="table table-borderless"
+                               style="color: gray;">
+                            <tr>
+                                <td class="p-0">Prima Total :</td>
+                                <td class="p-0">{{ quotation.contribution }}</td>
+                            </tr>
+                            <tr>
+                                <td class="p-0">Moneda :</td>
+                                <td class="p-0">{{ quotation.monedaDesc }}</td>
+                            </tr>
+                            <tr>
+                                <td class="p-0">Fecha Abono :</td>
+                                <td class="p-0">{{ quotation.date_fundDescrip }}</td>
+                            </tr>
+
+                            <tr>
+                                <td class="p-0">Tipo de Fondo :</td>
+                                <td class="p-0"
+                                    style="text-transform: capitalize;">{{ investment[0].SDESCRIPT }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row justify-content-md-center g-3">
+                    <div class="col col-lg-4 pl-3 pr-3 pt-4 pb-3">
+                        <!-- Scoring Asegurado-->
+                        <app-scoring-calculation [typeClient]="1"
+                                                 [comments]="comentarios"
+                                                 [quoteId]="quotation_id"
+                                                 [profileId]="profile_id"
+                                                 [stateId]="NID_STATE"
+                                                 [nidAsCon]="check_input_value"
+                                                 [quoteStateId]="quotation.quoteState"
+                                                 [scoreValue]="quotation.score"
+                                                 (qualification)="OnQualification($event)"></app-scoring-calculation>
+                    </div>
+
+                    <div *ngIf="check_input_value==0"
+                         class="col col-lg-4 pl-3 pr-3 pt-4 pb-3">
+                        <!-- Scoring Asegurado-->
+                        <app-scoring-calculation [typeClient]="2"
+                                                 [comments]="comentarios"
+                                                 [quoteId]="quotation_id"
+                                                 [profileId]="profile_id"
+                                                 [stateId]="NID_STATE"
+                                                 [nidAsCon]="check_input_value"
+                                                 [quoteStateId]="quotation.quoteState"
+                                                 [scoreValue]="quotation.score_insu"
+                                                 (qualification)="OnQualification($event)"></app-scoring-calculation>
+                    </div>
+                </div>
+
+                <!-- <div class="row justify-content-md-center mt-3"
+                     *ngIf="profile_id == 192 || profile_id == 203 || profile_id == 196">
+                    <div class="col col-lg-3 border rounded-5 pl-5 pr-5 pt-4 pb-3">
+                        <div class="text-center">
+                            <h5 style="color: #553d81; font-weight: bold;">Scoring UY</h5>
+                        </div>
+                        <div class="text-center mt-2">
+                            <button class="btn btn-gray pt-2 pb-2 pl-4 pr-4 rounded-5"
+                                    type="button"
+                                    (click)="scoring()"
+                                    *ngIf="showScoreBtn">Calcular</button>
+                            <h4 class="mb-3"
+                                style="color: #ed6e00; font-weight: bold; text-align: center;"
+                                *ngIf="!showScoreBtn">{{ randomItem }}</h4>
+                        </div>
+                        <div class="text-center mt-2"
+                             *ngIf="comentarios?.length > 0">
+                            <small style="color: #553d81; font-weight: bold;">({{ comentarios[0].SDESCRIPTION }})</small>
+                        </div>
+                    </div>
+                </div> -->
+
+            </div>
+
+            <div class="tabs mt-3"
+                 style="margin-bottom: -8px;">
+                <input type="radio"
+                       name="tabs2"
+                       id="tabone2"
+                       checked="checked"
+                       #insuredRadioInput2
+                       style="display: none" />
+                <label for="tabone2"
+                       class="tab-label">Comentarios</label>
+            </div>
+
+            <div class="p-3"
+                 style="border: 1.5px solid #553d81">
+                <div class="row justify-content-md-center">
+                    <div class="col col-lg-8 px-5 pt-1">
+
+                        <div class="custom-input p-2"
+                             style="border: 1px solid #553d81; border-radius: 8px;">
+                            <div class="input-group">
+                                <input type="text"
+                                       class="form-control border-0"
+                                       placeholder="Comentario"
+                                       [(ngModel)]="comentario">
+                                <button class="btn-orange pt-1 pb-1 pl-3 pr-3"
+                                        type="button"
+                                        (click)="coment()">Comentar</button>
+                            </div>
+                        </div>
+
+                        <table class="table table-borderless">
+                            <tr class="border-bottom"
+                                style="color: #553d81;"
+                                [id]="'row' + index"
+                                *ngFor="let item of coments; let index = index">
+                                <td class="p-0 pt-2 pb-2"
+                                    style="width: 80px;">
+                                    <i class="fa fa-user welcome__icon"
+                                       aria-hidden="true"></i>
+                                </td>
+                                <td class="p-0 pt-2 pb-2"
+                                    style="width: 180px;">
+                                    <span style="font-weight: bolder"
+                                          class="welcome__info--item i1"
+                                          [innerHTML]="userComment"></span>
+                                    <br>
+                                    <span class="welcome__info--item i2"
+                                          [innerHTML]="dateComment"></span>
+                                </td>
+                                <td class="p-0 pt-2 pb-2 text-wrap comentario-texto"
+                                    style="width: 300px; color: gray">
+                                    {{ item.coment }}
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table class="table table-borderless">
+                            <tr class="border-bottom"
+                                style="color: #553d81;"
+                                [id]="'row' + index"
+                                *ngFor="let item of comentarios; let index = index">
+                                <td class="p-0 pt-2 pb-2"
+                                    style="width: 80px;">
+                                    <i class="fa fa-user welcome__icon"
+                                       aria-hidden="true"></i>
+                                </td>
+                                <td class="p-0 pt-2 pb-2"
+                                    style="width: 180px;">
+                                    <span style="font-weight: bolder"
+                                          class="welcome__info--item i1"
+                                          [innerHTML]="item.SNAME"></span>
+                                    <br>
+                                    <span class="welcome__info--item i2"
+                                          [innerHTML]="item.DEFFECDATE"></span>
+                                </td>
+                                <td class="p-0 pt-2 pb-2 text-wrap comentario-texto"
+                                    style="width: 300px; color: gray">
+                                    {{ item.SCOMMENT }}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3 d-grid gap-2 d-md-flex justify-content-md-end">
+                <!-- SUPERVISOR -->
+                <button class="btn btn-orange pt-2 pb-2 pl-4 pr-4 mr-3 rounded-5"
+                        type="button"
+                        *ngIf="profile_id == 194"
+                        (click)="derivadoAJefe()">Derivar Jefe</button>
+
+                <!-- JEFE -->
+                <button class="btn btn-gray pt-2 pb-2 pl-4 pr-4 mr-3 rounded-5"
+                        type="button"
+                        *ngIf="profile_id == 195"
+                        (click)="observadoPorJefe()">Observar</button>
+                <button class="btn btn-orange pt-2 pb-2 pl-4 pr-4 mr-3 rounded-5"
+                        type="button"
+                        *ngIf="profile_id == 195"
+                        (click)="derivadoASoporte()">Derivar Soporte</button>
+
+                <!-- SOPORTE -->
+                <button class="btn btn-gray pt-2 pb-2 pl-4 pr-4 mr-3 rounded-5"
+                        type="button"
+                        *ngIf="profile_id == 192"
+                        (click)="cancelar()">Cancelar</button>
+                <button class="btn btn-gray pt-2 pb-2 pl-4 pr-4 mr-3 rounded-5"
+                        type="button"
+                        *ngIf="profile_id == 192 && NID_STATE !== 7 && NID_STATE !== 10 && NID_STATE !== 12 && flag_file_cliente != '2' && !isChangeSignature()"
+                        (click)="observadoPorSoporteASupervisor()">Observar al
+                    Supervisor</button><!--!isChangeSignature()-->
+                <button class="btn btn-gray pt-2 pb-2 pl-4 pr-4 mr-3 rounded-5"
+                        type="button"
+                        *ngIf="profile_id == 192 && NID_STATE !== 7 && NID_STATE !== 10 && NID_STATE !== 12  && flag_file_cliente != '2' && !isChangeSignature()"
+                        (click)="observadoPorSoporteAJefe()">Observar al Jefe</button><!--!isChangeSignature()-->
+                <!-- <button class="btn btn-orange pt-2 pb-2 pl-4 pr-4 mr-3 rounded-5"
+                        type="button"
+                        *ngIf="profile_id == 192 && showCoordinadorBtn"
+                        (click)="derivadoACoordinador()">Derivar a Coordinador</button> -->
+                <button class="btn btn-orange pt-2 pb-2 pl-4 pr-4 mr-3 rounded-5"
+                        type="button"
+                        *ngIf="profile_id == 192 && showGerenteBtn"
+                        (click)="derivadoAGerente()">Derivar a Gerente</button>
+
+                <button class="btn btn-orange pt-2 pb-2 pl-4 pr-4 mr-3 rounded-5"
+                        type="button"
+                        *ngIf="profile_id == 192 
+                                && (    [10,7].includes(NID_STATE) 
+                                        || (isScoreLow && NID_STATE != 12)
+                                        || (NID_STATE == 14 && isChangeSignature() && quotation.nderivfirm_changsign == 0) 
+                                        || ([28,30].includes(quotation.quoteState) && quotation.nintentos_cambio_firma == 1 && quotation.ninsdoc_changsign == 1 && quotation.nderivfirm_changsign == 0)
+                                    )"
+                        (click)="derivadoAFirmas()">Derivar para Firmas</button>
+
+                <!-- SOPORTE (FIRMAS) -->
+                <span class="box mt-2 mr-3"
+                      *ngIf="(NID_STATE == 12 && !firmaManuscrita && quotation.ninsdoc_changsign == 0 && flag_file_cliente != '1') || (NID_STATE == 12 && isChangeSignature() && quotation.ninsdoc_changsign == 0 && flag_file_cliente != '1')">
+                    <input type="checkbox"
+                           (change)="derBoss($event.target.checked)" />
+                    <label class="ml-3"
+                           style="color: gray; font-weight: bold;">Derivar al Jefe</label>
+                </span>
+
+                <button class="btn btn-orange pt-2 pb-2 pl-4 pr-4 mr-3 rounded-5"
+                        type="button"
+                        *ngIf="(NID_STATE == 12 && !firmaManuscrita && flag_file_cliente != '1' && quotation.ninsdoc_changsign == 0) 
+                                || (NID_STATE == 14 && flag_file_cliente == '2' ) 
+                                || (NID_STATE == 12 && flag_file_cliente != '1' && (isChangeSignature() || ([28,30].includes(quotation.quoteState))) && quotation.ninsdoc_changsign == 0)"
+                        (click)="firmaElectronica()">Firma Electrónica</button>
+
+                <button class="btn btn-orange pt-2 pb-2 pl-4 pr-4 mr-3 rounded-5"
+                        type="button"
+                        *ngIf="(NID_STATE == 12 && !firmaManuscrita && quotation.ninsdoc_changsign == 0) 
+                                || (NID_STATE == 14 && flag_file_cliente == '2' ) 
+                                || (NID_STATE == 12 && isChangeSignature() && quotation.ninsdoc_changsign == 0)"
+                        (click)="openFileModal()">Firma Manuscrita</button>
+
+                <!-- COORDINADOR -->
+                <button class="btn btn-gray pt-2 pb-2 pl-4 pr-4 mr-3 rounded-5"
+                        type="button"
+                        *ngIf="profile_id == 203"
+                        (click)="rechazadoPorCoordinador()">Rechazar</button>
+                <button class="btn btn-orange pt-2 pb-2 pl-4 pr-4 mr-3 rounded-5"
+                        type="button"
+                        *ngIf="profile_id == 203"
+                        (click)="aprobadoPorCoordinador()">Aprobar</button>
+
+                <!-- GERENTE -->
+                <button class="btn btn-gray pt-2 pb-2 pl-4 pr-4 mr-3 rounded-5"
+                        type="button"
+                        *ngIf="profile_id == 196"
+                        (click)="rechazadoPorGerente()">Rechazar</button>
+                <button class="btn btn-orange pt-2 pb-2 pl-4 pr-4 mr-3 rounded-5"
+                        type="button"
+                        *ngIf="profile_id == 196"
+                        (click)="aprobadoPorGerente()">Aprobar</button>
+
+                <!-- OPERACIONES -->
+                <button class="btn btn-gray pt-2 pb-2 pl-4 pr-4 mr-3 rounded-5"
+                        type="button"
+                        *ngIf="profile_id == 192 
+                                && NID_STATE == 12 
+                                && ((firmaManuscrita && !isChangeSignature()) || (isChangeSignature() && quotation.ninsdoc_changsign == 1 && quotation.nderivfirm_changsign == 1)) && [1,2].includes(quotation.nsignature_type)"
+                        (click)="derivadoAOperaciones()">Enviar operaciones</button>
+                <button class="btn btn-gray pt-2 pb-2 pl-4 pr-4 mr-3 rounded-5"
+                        type="button"
+                        *ngIf="profile_id == 136 && NID_STATE == 14">Crear</button>
+
+            </div>
+
+            <!-- <pre>quotation.nsignature_type: {{quotation.nsignature_type}}</pre>
+                        <pre>flag_file_cliente: {{flag_file_cliente}}</pre>
+                        <pre>isScoreLow: {{ isScoreLow }}</pre>
+                        <pre>firmaManuscrita: {{ firmaManuscrita}}</pre>
+                        <pre>nid_state: {{NID_STATE}}</pre>
+                        <pre>isChangeSignature: {{isChangeSignature()}}</pre>
+                        <pre>ninsdoc_changsign: {{quotation.ninsdoc_changsign}}</pre>
+                        <pre>nderivfirm_changsign: {{quotation.nderivfirm_changsign}}</pre> -->
+
+            <div class="container_button_next mt-1">
+                <form-button btnClass="d-none"></form-button>
+                <form-button label="Regresar"
+                             btnClass="btn-orange text-nowrap orange"
+                             (click)="previusStep(3)"></form-button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div [hidden]="!isLoading"
+     class="loadingScreen">
+    <div style="display: flex; height: 100%; width: 100%">
+        <i style="margin: auto; font-size: 50px"
+           class="fa fa-spinner fa-spin"></i>
+    </div>
+</div>
+
+<!-- VISOR DE PDF-->
+<ng-template #pdfviewer
+             let-modal>
+    <div class="modal-header">
+        <p class="title"
+           id="modal-basic-title">
+            VISOR DE DOCUMENTO (.PDF)
+        </p>
+    </div>
+
+    <div class="modal-body">
+        <div id="outerContainer">
+            <div class="pdf-container">
+                <ngx-extended-pdf-viewer [src]="pdfFile"
+                                         height="70vh"
+                                         useBrowserLocale="true"
+                                         [filenameForDownload]="fileNameSelected"
+                                         [showUnverifiedSignatures]="true"></ngx-extended-pdf-viewer>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <div class="container_button_next mt-3">
+            <form-button label="Cerrar"
+                         btnClass="btn-orange text-nowrap orange"
+                         (click)="modal.dismiss('Cross click')"></form-button>
+        </div>
+    </div>
+</ng-template>

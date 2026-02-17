@@ -1,0 +1,111 @@
+<div
+  class="insurance-types"
+  [ngClass]="{
+    'justify-centered': user.totalWorkers === 1,
+    'insurance-types-center': user.healthAmount === 0
+  }"
+>
+  <!-- <div
+    class="insurance-card"
+    [ngClass]="{ active: insuranceType === 1 }"
+    *ngIf="user.totalWorkers > 1 && user.healthAmount > 0"
+  >
+    <label for="insurance-1">
+      <div class="insurance-form">
+        <input
+          type="radio"
+          id="insurance-1"
+          name="insurance"
+          value="1"
+          (change)="typeChange(1)"
+        />
+      </div>
+      <span class="insurance-name">SALUD</span>
+      <div class="insurance-icon">
+        <img src="./assets/soat/img/salud.png" alt="SCTR SALUD" />
+      </div>
+      <div class="insurance-amount">
+        S/ {{ user.healthAmount | number: "1.2-2" }}
+      </div>
+      <div class="insurance-info"> -->
+  <!-- <span>Tasa: {{ user.healthRate }}%</span> -->
+  <!-- <span>Incluído IGV.</span>
+        <span *ngIf="user.isHealthMinimumPremium" class="minimumPremium"
+          >* Aplica prima mínima</span
+        >
+        <span *ngIf="user.isHealthMinimumPremium" class="minimumPremium"
+          >S/ {{ user.healthMinimumPremium | number: "1.2-2" }}</span
+        >
+      </div>
+    </label>
+  </div> -->
+  <div class="insurance-card" [ngClass]="{ active: insuranceType === 2 }">
+    <label for="insurance-2">
+      <div class="insurance-form">
+        <input
+          type="radio"
+          id="insurance-2"
+          name="insurance"
+          value="2"
+          [checked]="user.totalWorkers === 1 || user.healthAmount === 0"
+          (change)="typeChange(2)"
+        />
+      </div>
+      <span class="insurance-name">PENSION</span>
+      <div class="insurance-icon">
+        <img src="./assets/soat/img/pension.png" alt="SCTR PENSION" />
+      </div>
+      <div class="insurance-amount">
+        S/ {{ user.allowanceAmount | number: "1.2-2" }}
+      </div>
+      <div class="insurance-info">
+        <!-- <span>Tasa: {{ user.allowanceRate  }}%</span> -->
+        <span>Incluído IGV.</span>
+        <span *ngIf="user.isRiskMinimumPremium" class="minimumPremium"
+          >* Aplica prima mínima</span
+        >
+        <span *ngIf="user.isRiskMinimumPremium" class="minimumPremium"
+          >S/ {{ user.riskMinimumPremium | number: "1.2-2" }}</span
+        >
+      </div>
+    </label>
+  </div>
+  <!-- <div
+    class="insurance-card"
+    [ngClass]="{ active: insuranceType === 0 }"
+    *ngIf="user.totalWorkers > 1 && user.healthAmount > 0"
+  >
+    <label for="insurance-3">
+      <div class="insurance-form">
+        <input
+          type="radio"
+          id="insurance-3"
+          name="insurance"
+          value="AMBOS"
+          checked
+          (change)="typeChange(0)"
+        />
+      </div>
+      <span class="insurance-name">SALUD + PENSION</span>
+      <div class="insurance-icon">
+        <img src="./assets/soat/img/ambos.png" alt="SCTR AMBOS" />
+      </div>
+      <div class="insurance-amount">
+        S/ {{ user.allowanceAmount + user.healthAmount | number: "1.2-2" }}
+      </div>
+      <div class="insurance-info">
+        <span
+          *ngIf="user.isRiskMinimumPremium || user.isHealthMinimumPremium"
+          class="minimumPremium"
+          >&nbsp;</span
+        >
+        <span
+          *ngIf="user.isRiskMinimumPremium || user.isHealthMinimumPremium"
+          class="minimumPremium"
+          >&nbsp;</span
+        >
+        <span>Incluído IGV.</span>
+      </div>
+    </label>
+  </div> -->
+</div>

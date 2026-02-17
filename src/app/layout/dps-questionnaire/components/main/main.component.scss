@@ -1,0 +1,13 @@
+@import "variables";
+.content-no-apto {
+  padding: 4rem 2rem;
+  margin: auto;
+  max-width: 680px;
+  .title-no-apto,
+  .desc-no-apto {
+    color: $purple;
+  }
+  .desc-no-apto {
+    margin-top: 2rem;
+  }
+}

@@ -1,0 +1,81 @@
+<div class="content-table">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Ramo</th>
+        <th>Producto</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let form of branchListForm.controls; let index = index">
+        <tr [formGroup]="form">
+          <td class="col-father">
+            <div class="content-row-with-actions">
+              <select formControlName="branch">
+                <option value=""
+                        disabled>Seleccione
+                </option>
+                <option *ngFor="let item of branches$"
+                        [value]="item.branchId">
+                  {{ item.name }}
+                </option>
+              </select>
+              <ng-container *ngIf="!isReadOnly">
+                <button class="button button-cell-icon"
+                        [disabled]="branchListForm.invalid"
+                        (click)="addRowBranch()"
+                        *ngIf="branchListForm.length == (index + 1)">
+                  <i class="fa fa-plus"
+                     aria-hidden="true"></i>
+                </button>
+                <button class="button button-cell-icon"
+                        (click)="removeOfFormArray(branchListForm, index)">
+                  <i class="fa fa-trash"
+                     aria-hidden="true"></i>
+                </button>
+              </ng-container>
+            </div>
+          </td>
+          <td class="col-father">
+            <ng-container>
+              <table>
+                <tbody>
+                  <tr class="row-child"
+                      *ngFor="let formp of form.get('products').controls; let indexp = index">
+                    <td [formGroup]="formp">
+                      <div class="content-row-with-actions">
+                        <select formControlName="product">
+                          <option value=""
+                                  disabled>Seleccione
+                          </option>
+                          <option *ngFor="let item of getProductsByBranch(form.get('branch').value)"
+                                  [value]="item.idProducto">
+                            {{ item.producto }}
+                          </option>
+                        </select>
+                        <ng-container *ngIf="!isReadOnly">
+                          <button class="button button-cell-icon"
+                                  [disabled]="form.get('products').invalid"
+                                  (click)="addRowProduct(form.get('products'))"
+                                  *ngIf="form.get('products').length == (indexp + 1)">
+                            <i class="fa fa-plus"
+                               aria-hidden="true"></i>
+                          </button>
+                          <button class="button button-cell-icon"
+                                  (click)="removeOfFormArray(form.get('products'), indexp)">
+                            <i class="fa fa-trash"
+                               aria-hidden="true"></i>
+                          </button>
+                        </ng-container>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </ng-container>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>

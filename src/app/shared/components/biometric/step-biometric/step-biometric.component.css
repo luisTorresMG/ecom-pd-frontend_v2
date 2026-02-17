@@ -1,0 +1,86 @@
+.steps-biometrico {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.content-form {
+  position: relative;
+  width: 100%;
+  max-width: 490px;
+  background: #fff;
+  height: 40vh;
+  min-height: 330px;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.close-modal-biom {
+  border: none;
+  background: none;
+  font-size: 28px;
+  position: absolute;
+  right: 0.5rem;
+  top: 0rem;
+  z-index: 999999;
+}
+.form-file-biom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 1rem;
+}
+.lbl-fileBio {
+  background-color: #ed6e00;
+  min-width: 110px;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  font-size: 14px;
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+}
+.description-biom {
+  text-align: center;
+  color: rgba(0, 0, 0, 0.7);
+  max-width: 370px;
+}
+.title-bio,
+.warning-biom {
+  color: #2b0d61;
+}
+.warning-biom {
+  max-width: 360px;
+  text-align: center;
+  margin-top: 5px;
+}
+.title-bio {
+  font-size: 22px;
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
+.title-finish {
+  max-width: 240px;
+  display: inline-block;
+}
+.finish-step {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.face-check {
+  margin-right: 1rem;
+  width: 40px;
+}

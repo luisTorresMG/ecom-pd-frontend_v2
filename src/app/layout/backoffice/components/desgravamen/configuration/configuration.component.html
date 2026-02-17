@@ -1,0 +1,755 @@
+<main class="content" @fade>
+    <nav class="content__navigation">
+        <app-breadcrumb>
+            <a role="button" (click)="backPage()">
+                <i class="fa fa-home" aria-hidden="true"></i>
+                Desgravamen
+            </a>
+            <a role="button" (click)="backPage()">
+                Configuración de estructuras y reglas
+            </a>
+            <a>
+                {{
+                structureSelected.action == "detalle"
+                    ? "Detalle de estructura"
+                    : structureSelected.action == "actualizar"
+                    ? "Actualizar estructura"
+                    : structureSelected.action == "clonar"
+                    ? "Clonar estructura"
+                    : "Nueva estructura"
+                }}
+            </a>
+        </app-breadcrumb>
+        <button
+            class="button-default secondary no-outline button-back"
+            type="button"
+            role="button"
+            aria-label="regresar página"
+            (click)="backPage()"
+            >
+            <i class="fa fa-angle-left" aria-hidden="true"></i>
+            Regresar
+        </button>
+    </nav>
+    <section class="content__header">
+        <h1 class="title">
+            {{
+                structureSelected.action == "detalle"
+                ? "Detalle de estructura"
+                : structureSelected.action == "actualizar"
+                ? "Actualizar estructura"
+                : structureSelected.action == "clonar"
+                ? "Clonar estructura"
+                : "Nueva estructura"
+            }}
+        </h1>
+    </section>
+    <section class="content__body">
+        <!-- *Datos generales para la creación de nueva estructura-->
+        <div class="content__generals body__section">
+            <div class="body__section--header">
+                <h2 class="subtitle">I. Datos generales</h2>
+            </div>
+            <ng-container *ngIf="structureSelected.action == 'detalle'">
+                <div class="content-detail">
+                    <div>
+                        <span>Nombre de estructura:</span>
+                        <span>{{ structureSelected.structure?.nombreEstructura }}</span>
+                        <span>Transacción:</span>
+                        <span>{{ formControl["transaction"].value }}</span>
+                        <span>Ramo:</span>
+                        <span>{{ formControl["branch"].value }}</span>
+                        <span>Datos de cabecera</span>
+                        <span>{{ formControl["headerData"].value }}</span>
+                    </div>
+                    <div>
+                        <span>¿Contiene certificado por rol?</span>
+                        <span>{{ formControl["containsCertificateByRol"].value }}</span>
+                        <span>¿Contiene filas ordenadas?</span>
+                        <span>{{ formControl["containsRowsSortedByRole"].value }}</span>
+                        <span>Formato de archivo:</span>
+                        <span>{{ formControl["fileFormat"].value }}</span>
+                        <span>Fecha de creación</span>
+                        <span>{{structureSelected.structure?.fechaCreacion | date : "dd/MM/yyyy"}}</span>
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="structureSelected.action != 'detalle'">
+                <form class="content__generals--form" [formGroup]="form">
+                    <!-- *Transacción -->
+                    <label for="form-generals-transaction" class="placeholder select"  aria-placeholder="Transacción" >
+                        <select formControlName="transaction">
+                        <option value="" disabled selected>Seleccione</option>
+                        <option value="VENTA">VENTA</option>
+                        </select>
+                    </label>
+
+                    <!-- *Ramo -->
+                    <label for="form-generals-branch" class="placeholder select" aria-placeholder="Ramo">
+                        <select formControlName="branch">
+                        <option value="" disabled selected>Seleccione</option>
+                        <option *ngFor="let obj of branches$" [value]="obj.description">
+                            {{ obj.description }}
+                        </option>
+                        </select>
+                    </label>
+
+                    <!-- *Datos de cabecera -->
+                    <label for="form-generals-headboard"  class="placeholder select" aria-placeholder="Datos de cabecera">
+                        <select formControlName="headerData">
+                        <option value="" disabled selected>Seleccione</option>
+                        <option value="Nombre del archivo">Nombre del archivo</option>
+                        </select>
+                    </label>
+
+                    <!-- *¿Contiene certificado por rol? -->
+                    <label for="form-generals-certificate" class="placeholder select" aria-placeholder="¿Contiene certificado por rol?">
+                        <select formControlName="containsCertificateByRol">
+                        <option value="" disabled selected>Seleccione</option>
+                        <option value="SÍ">SÍ</option>
+                        <option value="NO">NO</option>
+                        </select>
+                    </label>
+
+                    <!-- *¿Contiene filas ordenadas por rol? -->
+                    <label for="form-generals-rows" class="placeholder select" aria-placeholder="¿Contiene filas ordenadas por rol?">
+                        <select formControlName="containsRowsSortedByRole">
+                        <option value="" disabled selected>Seleccione</option>
+                        <option value="SÍ">SÍ</option>
+                        <option value="NO">NO</option>
+                        </select>
+                    </label>
+
+                    <!-- *Formato de archivo -->
+                    <label for="form-generals-file-type" class="placeholder select" aria-placeholder="Formato de archivo">
+                        <select formControlName="fileFormat">
+                        <option value="" disabled selected>Seleccione</option>
+                        <option value="xlsx">xlsx</option>
+                        </select>
+                    </label>
+
+                    <!-- *Formato de archivo -->
+                    <label for="form-generals-date-format" class="placeholder select" aria-placeholder="Formato de fecha">
+                        <select formControlName="dateFormat">
+                        <option value="" disabled selected>Seleccione</option>
+                        <option value="dd/mm/aaaa">dd/mm/aaaa</option>
+                        <option value="mm/dd/aaaa">mm/dd/aaaa</option>
+                        <option value="aaaa/mm/dd">aaaa/mm/dd</option>
+                        </select>
+                    </label>
+                </form>
+            </ng-container>
+        </div>
+        <div class="content__policies body__section">
+            <div class="body__section--header">
+                <h2 class="subtitle">II. Colección de pólizas</h2>
+                <button class="button-default secondary orange" (click)="showModalPolicies()" *ngIf="structureSelected.action != 'detalle'">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    Agregar póliza
+                </button>
+            </div>
+            <ng-container *ngIf="!policiesIncluded.length">
+                <div class="empty-rows" @fade>
+                    <img src="../../../../../../assets/icons/detailed-search.svg" alt="icono de búsqueda" />
+                    <span>No se encontraron resultados</span>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="policiesIncluded.length">
+                <div class="content-table table-policies" @fade>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                            <th style="display:none;"></th>
+                            <th style="display:none;"></th>
+                            <th style="display:none;"></th>
+                            <th style="display:none;"></th>
+                            <th style="display:none;"></th>
+                                <th>N° Póliza</th>
+                                <th>Producto</th>
+                                <th>Contratante</th>
+                                <th>Canal de venta</th>
+                                <th>Vigencia</th>
+                                <th>Moneda</th>
+                                <th>Fac. agrupada</th>
+                                <th>Fac. automática</th>
+                                <th *ngIf="structureSelected.action != 'detalle'">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let obj of policiesIncluded | paginate
+                                        : { id: 'table-policies-included',
+                                            currentPage: currentPagePoliciesIncluded,
+                                            totalItems: policiesIncluded.length,
+                                            itemsPerPage: 10
+                                    }; let index = index">
+                            <td style="display:none;">{{obj.NLEER}}</td>
+                            <td style="display:none;">{{obj.NVALIDAR}}</td>
+                            <td style="display:none;">{{obj.NEMITIR}}</td>
+                            <td style="display:none;">{{obj.NFACTURAR}}</td>
+                            <td style="display:none;">{{obj.NTOTAL}}</td>
+                                <td>{{ obj.numeroPoliza }}</td>
+                                <td>{{ obj.producto }}</td>
+                                <td>{{ obj.contratante }}</td>
+                                <td>{{ obj.canal || "-" }}</td>
+                                <td>{{ obj.fechaInicio }} - {{ obj.fechaFin }}</td>
+                                <td>{{ obj.moneda || "-" }}</td>
+                                <td>{{ obj.FacAgruText}}</td>
+                                <td>{{ obj.FacAutoText}}</td>
+                                <td class="actions" *ngIf="structureSelected.action != 'detalle'" >
+                                    <div class="row">
+                                        <div class="col-md-6"> 
+                                            <button class="button-icon" (click)="removePolicy(obj, index)" >
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button class="button-icon" (click)="editarPolicy(obj, index, content1)" >
+                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <pagination-controls
+                    id="table-policies-included"
+                    previousLabel="Anterior"
+                    nextLabel="Siguiente"
+                    [autoHide]="true"
+                    (pageChange)="currentPagePoliciesIncluded = $event"
+                    *ngIf="policiesIncluded.length">
+                </pagination-controls>
+            </ng-container>
+        </div>
+        <div class="content__phase body__section">
+            <div class="body__section--header">
+                <h2 class="subtitle">III. Fase</h2>
+            </div>
+
+            <!-- *Lista de fases -->
+            <div class="body__section--tabs">
+                <button [class.active]="phaseTypeSelected == 'read'" (click)="phaseTypeSelected = 'read'">
+                    Leer
+                </button>
+                <button [class.active]="phaseTypeSelected == 'register'" (click)="phaseTypeSelected = 'register'">
+                    Registrar
+                </button>
+                <button [class.active]="phaseTypeSelected == 'validate'" (click)="phaseTypeSelected = 'validate'">
+                    Validar
+                </button>
+                <button [class.active]="phaseTypeSelected == 'migrate'" (click)="phaseTypeSelected = 'migrate'">
+                    Emitir y generar recibos
+                </button>
+                <button [class.active]="phaseTypeSelected == 'billing'" (click)="phaseTypeSelected = 'billing'">
+                    Facturar
+                </button>
+            </div>
+
+            <!-- *Fase de lectura -->
+            <ng-container>
+                <div class="phase__read" [hidden]="phaseTypeSelected != 'read'">
+                    <app-structure-configuration-read (dataEmitter)="setPhaseValues($event, 'read')">
+                    </app-structure-configuration-read>
+                </div>
+            </ng-container>
+
+            <!-- *Fase de registro -->
+            <ng-container>
+                <div class="phase__register" [hidden]="phaseTypeSelected != 'register'">
+                    <app-structure-configuration-register (dataEmitter)="setPhaseValues($event, 'register')">
+                    </app-structure-configuration-register>
+                </div>
+            </ng-container>
+
+            <!-- *Fase de validación -->
+            <ng-container>
+                <div class="phase__validate" [hidden]="phaseTypeSelected != 'validate'">
+                    <app-structure-configuration-validate (dataEmitter)="setPhaseValues($event, 'validate')">
+                    </app-structure-configuration-validate>
+                </div>
+            </ng-container>
+
+            <!-- *Fase de migración -->
+            <ng-container>
+                <div class="phase__migrate" [hidden]="phaseTypeSelected != 'migrate'">
+                    <app-structure-configuration-migrate (dataEmitter)="setPhaseValues($event, 'migrate')">
+                    </app-structure-configuration-migrate>
+                </div>
+            </ng-container>
+
+            <!-- *Fase de facturación -->
+            <ng-container>
+                <div class="phase__billing" [hidden]="phaseTypeSelected != 'billing'">
+                    <app-structure-configuration-billing (dataEmitter)="setPhaseValues($event, 'billing')">
+                    </app-structure-configuration-billing>
+                </div>
+            </ng-container>
+        </div>
+        <div class="content__actions">
+            <button class="button-default orange" (click)="showConfirmSubmitModal()" *ngIf="structureSelected.action != 'detalle'">
+                <!-- [disabled]="!isValidForm" -->
+                {{
+                    structureSelected?.action == "actualizar"
+                    ? "Actualizar estructura"
+                    : structureSelected?.action == "clonar"
+                    ? "Clonar estructura"
+                    : "Crear estructura"
+                }}
+            </button>
+        </div>
+    </section>
+</main>
+
+<!-- Mensaje confirmación-->
+<ng-template #modalConfirmSave>
+    <div class="content-modal">
+        <section>
+            <div class="modal-header">
+                <h6>
+                    {{
+                        structureSelected.action == "actualizar"
+                        ? "Edición"
+                        : structureSelected.action == "clonar"
+                        ? "Clonación"
+                        : "Creación"
+                    }}
+                </h6>
+                <button type="burron" role="button" (click)="closeModal()"> &times; </button>
+            </div>
+            <div class="modal-body">
+                <p class="paragraph">
+                {{ messageInfo.message }}
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="button-default secondary orange" role="button" type="button" (click)="closeModal()">
+                    Cancelar
+                </button>
+                <button class="button-default orange" role="button" type="button" (click)="onSubmit()">
+                    Confirmar
+                </button>
+            </div>
+        </section>
+    </div>
+</ng-template>
+
+<!-- Agregar pólizas -->
+<ng-template #modalPolicies>
+    <div class="content-modal modal-policies">
+        <section>
+            <div class="modal-header">
+                <h6>Nueva colección de pólizas</h6>
+                <button type="button"  role="button" aria-label="cerrar modal" (click)="closeModalPoliciesAvailable()">
+                    &times;
+                </button>
+            </div>
+            <div class="modal-body">
+                <label class="placeholder filter-search">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                    <input type="text" placeholder="Buscar" [formControl]="controlFilterPolicies"/>
+                    <button (click)="showModalAdvancedFilters()">
+                        <i class="fa fa-sliders" aria-hidden="true"></i>
+                    </button>
+                </label>
+                <div class="content-table">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th style="display:none;"></th>
+                                <th>N° Póliza</th>
+                                <th>Producto</th>
+                                <th>Contratante</th>
+                                <th>Canal de venta</th>
+                                <th>Vigencia</th>
+                                <th>Moneda</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="!policiesFiltered.length">
+                                <tr>
+                                <td colspan="7">No se encontraron resultados</td>
+                                </tr>
+                            </ng-container>
+                            <ng-container *ngIf="policiesFiltered.length">
+                                <tr *ngFor="let obj of policiesFiltered | paginate
+                                                : {
+                                                    id: 'table-polcies-available',
+                                                    currentPage: currentPagePolicies,
+                                                    totalItems: policiesFiltered.length,
+                                                    itemsPerPage: 10
+                                                };
+                                                let index = index
+                                            ">
+                                    <td>
+                                        <div class="selection orange">
+                                            <input type="checkbox" 
+                                                    [id]="'policy' + obj.numeroPoliza + index" 
+                                                    (change)="checkPolicy($event.target.checked, obj)" 
+                                                    [checked]="obj.checked"/>
+                                            <label [for]="'policy' + obj.numeroPoliza + index"></label>
+                                        </div>
+                                    </td>
+                                    <td style="display:none;">{{ obj.ruc }}</td>
+                                    <td>{{ obj.numeroPoliza }}</td>
+                                    <td>{{ obj.producto }}</td>
+                                    <td>{{ obj.contratante }}</td>
+                                    <td>{{ obj.canal || "-" }}</td>
+                                    <td>{{ obj.fechaInicio }} - {{ obj.fechaFin }}</td>
+                                    <td>{{ obj.moneda || "-" }}</td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+                <pagination-controls
+                    id="table-polcies-available"
+                    previousLabel="Anterior"
+                    nextLabel="Siguiente"
+                    [autoHide]="true"
+                    (pageChange)="currentPagePolicies = $event"
+                    *ngIf="policiesFiltered.length">
+                </pagination-controls>
+            </div>
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr class="grid-title">
+                                <th style="display:none;"></th>
+                                <th style="display:none;"></th>
+                                <th style="display:none;"></th>
+                                <th style="display:none;"></th>
+                                <th style="display:none;"></th>
+                                <th style="display:none;"></th>
+                                <th style="display:none;"></th>
+                                <th style="display:none;"></th>
+                                <th class="grid-title-item">N° Póliza</th>
+                                <th class="grid-title-item">Producto</th>
+                                <th class="grid-title-item">Contratante</th>
+                                <th class="grid-title-item">Facturación agrupada</th>
+                                <th class="grid-title-item">Facturación automática</th>
+                            </tr>
+                        </thead>
+                        <ng-container *ngIf="listPoliza.length ==0; then hideGrid else showGrid">
+                        </ng-container>
+                        <ng-template #hideGrid>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center" colspan="7">No se encontraron registros.</td>
+                                </tr>
+                            </tbody>
+                        </ng-template>
+                        <ng-template #showGrid>
+                            <tbody *ngFor="let item0 of listPoliza">
+                                <tr>
+                                    <td style="display:none;">{{item0.canal}}</td>
+                                    <td style="display:none;">{{item0.fechaInicio}}</td>
+                                    <td style="display:none;">{{item0.fechaFin}}</td>
+                                    <td style="display:none;">{{item0.moneda}}</td>
+                                    <td style="display:none;">{{item0.facAgru}}</td>
+                                    <td style="display:none;">{{item0.facAuto}}</td>
+                                    <td style="display:none;">{{item0.idProducto}}</td>
+                                    <td style="display:none;">{{item0.ruc}}</td>
+                                    <td class="data-table-tr-td">{{item0.numeroPoliza}}</td>
+                                    <td class="data-table-tr-td">{{item0.producto}}</td>
+                                    <td class="data-table-tr-td">{{item0.contratante}}</td>
+                                    <td class="data-table-tr-td"><div class="col-md-12">&nbsp;&nbsp;
+                                        <input
+                                            class="form-check-input"
+                                            type="checkbox"
+                                            [id]="'policy' + item0.numeroPoliza + index"
+                                            [checked]="item0.checkedFacAgru"
+                                            (change)="check2Agru($event.target.checked, item0)"
+                                        />
+                                        </div>
+                                    </td>
+                                    <td class="data-table-tr-td"><div class="col-md-12">&nbsp;&nbsp;
+                                        <input
+                                        class="form-check-input"
+                                            type="checkbox"
+                                            [id]="'policy' + item0.numeroPoliza + index + 1"
+                                            [checked]="item0.checkedFacAuto"
+                                            (change)="check2Auto($event.target.checked, item0)"
+                                        />
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </ng-template>
+                    </table>
+                </div>
+            </div>
+            <div class="row" *ngIf="tiempoDuracion">
+                <h5>Tiempo de duración por fase (hh:mm:ss) </h5>
+                <p>&nbsp;</p>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr class="grid-title">
+                                <th class="grid-title-item">Duración total</th>
+                                <th class="grid-title-item">Duración leer</th>
+                                <th class="grid-title-item">Duración validar</th>
+                                <th class="grid-title-item">Duración emitir y Gen. recib.</th>
+                                <th class="grid-title-item">Duración facturación</th>
+                            </tr>
+                        </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="data-table-tr-td" style="border: 1px solid black;">
+                                        <div class="col-sm-3"><input type="text" class="input-collapse" maxlength="4" [disabled]="true"
+                                             value="0" [(ngModel)]="txtTotal" />
+                                        </div>
+                                    </td>
+                                    <td class="data-table-tr-td" style="border: 1px solid black;">
+                                        <div class="col-sm-3"><input type="text" class="input-collapse" maxlength="8" (blur)="validarHora(txtLeer, 'txtLeer')"
+                                             value="0" [(ngModel)]="txtLeer"/>
+                                        </div>
+                                    </td>
+                                    <td class="data-table-tr-td" style="border: 1px solid black;">
+                                        <div class="col-sm-3"><input type="text" class="input-collapse" maxlength="8" (blur)="validarHora(txtValida, 'txtValida')"
+                                             value="0" [(ngModel)]="txtValida" />
+                                        </div>
+                                    </td>
+                                    <td class="data-table-tr-td" style="border: 1px solid black;">
+                                        <div class="col-sm-3"><input type="text" class="input-collapse" maxlength="8" (blur)="validarHora(txtEmitir, 'txtEmitir')"
+                                            value="0" [(ngModel)]="txtEmitir" />
+                                        </div>
+                                    </td>
+                                    <td class="data-table-tr-td" style="border: 1px solid black;">
+                                        <div class="col-sm-3"><input type="text" class="input-collapse" maxlength="8" (blur)="validarHora(txtFact, 'txtFact')"
+                                             value="0" [(ngModel)]="txtFact" />
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="button-default secondary orange" type="button" role="button" (click)="closeModalPoliciesAvailable()">
+                    Eliminar selección
+                </button>
+                <button class="button-default orange" type="button" role="button" (click)="addPolicies()">
+                    Agregar
+                </button>
+            </div>
+        </section>
+    </div>
+</ng-template>
+
+<ng-template #modalAdvancedFilters>
+    <div class="content-modal modal-filters">
+        <section>
+            <div class="modal-body">
+                <form class="form-filter" [formGroup]="formFilters">
+                    <div class="form-product">
+                        <pro-select
+                        [clearable]="false"
+                        placeholder="Producto"
+                        value="id"
+                        label="label"
+                        [multi]="true"
+                        [items]="products$"
+                        [config]="proSelectComponentConfig"
+                        formControlName="product"
+                        ></pro-select>
+                    </div>
+                    <label for="form-policy" class="placeholder" aria-placeholder="N° póliza">
+                        <input type="text" id="form-policy" formControlName="policy" />
+                    </label>
+                    <div class="form-sales-channel">
+                        <pro-select
+                        placeholder="Canal de venta"
+                        [clearable]="false"
+                        [items]="salesChannel$"
+                        value="id"
+                        label="label"
+                        formControlName="salesChannel"
+                        ></pro-select>
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </div>
+                    <label for="form-currency" class="placeholder" aria-placeholder="Moneda">
+                        <select formControlName="currency">
+                            <option value="">Seleccione</option>
+                            <option value="Soles">Soles</option>
+                            <option value="Dolares Americanos">Dólares</option>
+                        </select>
+                    </label>
+                </form>
+            </div>
+            <div class="modal-footer jce">
+                <button class="button-default secondary orange" (click)="resetFormFilters()">
+                    Limpiar
+                </button>
+                <button class="button-default orange" (click)="submitFilters()">
+                    Filtrar
+                </button>
+            </div>
+        </section>
+    </div>
+</ng-template>
+
+<!-- Mensaje -->
+<ng-template #modalMessage>
+    <div class="content-modal modal-message">
+        <section>
+            <div class="modal-header">
+                <h6>Mensaje</h6>
+                <button type="button" role="button" aria-label="cerrar modal" (click)="closeModal2()">
+                    &times;
+                </button>
+            </div>
+            <div class="modal-body">
+                <ng-container *ngIf="messageInfo.showImage">
+                    <ng-container *ngIf="messageInfo.success">
+                        <img src="../../../../../../assets/backoffice/check-success.png" alt="succes image" />
+                    </ng-container>
+                    <ng-container *ngIf="!messageInfo.success">
+                        <img src="../../../../../../assets/backoffice/check-error.png" alt="error image" />
+                    </ng-container>
+                </ng-container>
+                <p class="paragraph">
+                    {{ messageInfo.message }}
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" role="button" class="button-default orange" (click)="closeModal2()">
+                    Aceptar
+                </button>
+            </div>
+        </section>
+    </div>
+</ng-template>
+
+<!-- Detalle de la póliza -->
+<ng-template #content1 let-c="close" let-d="dismiss">
+    <div class="content-modal modal-policies">
+        <section>
+            <div class="modal-header">
+                <div class="row"><span>&nbsp;</span></div>
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="modal-basic-title">Detalle de la póliza</h3>
+                    </div>
+                <div class="row"><span>&nbsp;</span></div>
+            </div>
+            <div class="modal-body">
+                <div class="filter">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="table-responsive">
+                                    <table class="table" id="table1">
+                                        <thead>
+                                            <tr class="grid-title">
+                                                <th class="grid-title-item">N° Póliza</th>
+                                                <th class="grid-title-item">Producto</th>
+                                                <th class="grid-title-item">Contratante</th>
+                                                <th class="grid-title-item">Facturación agrupada</th>
+                                                <th class="grid-title-item">Facturación automática</th>
+                                            </tr>
+                                        </thead>
+                                        <ng-container *ngIf="listPolizaEdit.length ==0; then hideGrid else showGrid">
+                                        </ng-container>
+                                        <ng-template #hideGrid>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-center" colspan="7">No se encontraron registros.</td>
+                                                </tr>
+                                            </tbody>
+                                        </ng-template>
+                                        <ng-template #showGrid>
+                                            <tbody>
+                                                <tr *ngFor="let item3 of listPolizaEdit">
+                                                    <td class="data-table-tr-td">{{item3.numeroPoliza}}</td>
+                                                    <td class="data-table-tr-td">{{item3.producto}}</td>
+                                                    <td class="data-table-tr-td">{{item3.contratante}}</td>
+                                                    <td class="data-table-tr-td"><div class="col-md-12">&nbsp;&nbsp;
+                                                        <input
+                                                            class="form-check-input"
+                                                            type="checkbox"
+                                                            [id]="chkAgru"
+                                                            [checked]="item3.checkedFacAgru"
+                                                            (change)="checkAgru($event.target.checked, item3)"
+                                                        />
+                                                        </div>
+                                                    </td>
+                                                    <td class="data-table-tr-td"><div class="col-md-12">&nbsp;&nbsp;
+                                                        <input
+                                                        class="form-check-input"
+                                                            type="checkbox"
+                                                            [id]="chkAuto"
+                                                            [checked]="item3.checkedFacAuto"
+                                                            (change)="checkAuto($event.target.checked, item3)"
+                                                        />
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </ng-template>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row"><span>&nbsp;</span></div>
+                            <div class="row">
+                                <div class="table-responsive">
+                                    <table class="table" id="table2">
+                                        <thead>
+                                            <tr class="grid-title">
+                                                <th class="grid-title-item">Duración total</th>
+                                                <th class="grid-title-item">Duración leer</th>
+                                                <th class="grid-title-item">Duración validar</th>
+                                                <th class="grid-title-item">Duración emitir y Gen. recib.</th>
+                                                <th class="grid-title-item">Duración facturación</th>
+                                            </tr>
+                                        </thead>
+                                        <ng-container *ngIf="listPolizaEdit2.length ==0; then hideGrid2 else showGrid2">
+                                        </ng-container>
+                                        <ng-template #hideGrid2>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-center" colspan="7">No se encontraron registros.</td>
+                                                </tr>
+                                            </tbody>
+                                        </ng-template>
+                                        <ng-template #showGrid2>
+                                            <tbody>
+                                                <tr *ngFor="let item4 of listPolizaEdit2">
+                                                    <td>{{item4.NTOTAL}}</td>
+                                                    <td>{{item4.NLEER}}</td>
+                                                    <td>{{item4.NVALIDAR}}</td>
+                                                    <td>{{item4.NEMITIR}}</td>
+                                                    <td>{{item4.NFACTURAR}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </ng-template>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row"><span>&nbsp;</span></div>
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-3">
+                                    <button
+                                        class="button-default secondary orange"
+                                        (click)="actualizarProcesos()">
+                                        GUARDAR
+                                    </button>
+                                </div>
+                                <div class="col-md-3">
+                                    <button
+                                        class="button-default secondary orange"
+                                        (click)="cerrar()">
+                                        CANCELAR
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</ng-template>

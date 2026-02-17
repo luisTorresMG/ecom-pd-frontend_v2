@@ -1,0 +1,100 @@
+<div class="form-body without-side">
+    <div class="iofrm-layout">
+        <div class="form-holder">
+            <div class="form-content">
+                <div class="form-items">
+                    <h3 class="font-md">Valida tu Constancia</h3>
+                    <p>SCTR Protecta Security</p>
+                    <form [formGroup]="mainFormGroup" (ngSubmit)="getProof()">
+                        <div class="form-group">
+                            <label>Número de Documento</label>
+                            <input formControlName="nrodocument"
+                                   maxlength={{nrodocumentoMaxLength}}
+                                   (keypress)="textValidate($event, 1)"
+                                   class="form-control" 
+                                   type="text"
+                                   inputmode="numeric" 
+                                   [(ngModel)]="nrodocumento"
+                                   (blur)="mainFormGroup.get('nrodocument')?.markAsTouched()"
+                                   name="nrodocumento" 
+                                   placeholder="Ingresa tu número de documento">
+                            <span *ngIf="mainFormGroup.get('nrodocument')?.touched && mainFormGroup.get('nrodocument')?.invalid"
+                                  class="mensaje-error-control">
+                                <ng-container
+                                    *ngIf="mainFormGroup.get('nrodocument').hasError('required'); then required_nrodocumento else invalid_nrodocumento">
+                                </ng-container>
+                                <ng-template #required_nrodocumento>
+                                    El Nro de Documento es requerido.
+                                </ng-template >
+                                <ng-template #invalid_nrodocumento>
+                                    El Nro de Documento no es válido.
+                                </ng-template>
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label>Número de Póliza</label>    
+                            <input formControlName="nropolicy" 
+                                   maxlength={{nropolizaMaxLength}}
+                                   (keypress)="textValidate($event, 1)"
+                                   class="form-control" 
+                                   type="text" 
+                                   inputmode="numeric" 
+                                   [(ngModel)]="nropoliza"
+                                   (blur)="mainFormGroup.get('nropolicy')?.markAsTouched()"
+                                   name="nropoliza" 
+                                   placeholder="Ingresa el número de póliza">
+                            <span *ngIf="mainFormGroup.get('nropolicy')?.touched && mainFormGroup.get('nropolicy')?.invalid"
+                                   class="mensaje-error-control">
+                                   <ng-container
+                                       *ngIf="mainFormGroup.get('nropolicy').hasError('required'); then required_nropoliza else invalid_nropoliza">
+                                   </ng-container>
+                                   <ng-template #required_nropoliza>
+                                    El Nro de Póliza es requerido.
+                                   </ng-template>
+                                   <ng-template #invalid_nropoliza>El Nro de Poliza no es válido.
+                                   </ng-template>
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label>Número de Constancia</label>
+                            <input formControlName="nroproof"
+                                   maxlength={{nroconstanciaMaxLength}} 
+                                   (keypress)="textValidate($event, 1)"
+                                   class="form-control" 
+                                   type="text"
+                                   inputmode="numeric"  
+                                   [(ngModel)]="nroconstancia"
+                                   (blur)="mainFormGroup.get('nroproof')?.markAsTouched()"  
+                                   name="nroconstancia" 
+                                   placeholder="Ingresa el número de constancia">
+                            <span *ngIf="mainFormGroup.get('nroproof')?.touched && mainFormGroup.get('nroproof')?.invalid"
+                                   class="mensaje-error-control">
+                                   <ng-container
+                                       *ngIf="mainFormGroup.get('nroproof').hasError('required'); then required_nroconstancia else invalid_nroconstancia">
+                                   </ng-container>
+                                   <ng-template #required_nroconstancia>
+                                    El Nro de Constancia es requerido.
+                                   </ng-template>
+                                   <ng-template #invalid_nroconstancia>El Nro de Constancia no es válido.
+                                   </ng-template>
+                            </span>
+                        </div>
+                        <div class="form-button d-flex align-items-center">
+                            <div class="submit-container mr-auto text-start">
+                                <button type="submit" 
+                                        class="ibtn ibtn-full"
+                                        [disabled]="mainFormGroup.invalid">Consultar aquí</button>
+                            </div> 
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Pantalla de carga -->
+<div [hidden]="isLoading==false" class="loadingScreen">
+    <div style="display:flex;height: 100%;width:100%">
+        <i style="margin:auto;font-size: 50px" class="fa fa-spinner fa-spin"></i>
+    </div>
+</div>

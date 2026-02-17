@@ -1,0 +1,125 @@
+@import "variables";
+
+@mixin btn-submit {
+  height: 42px;
+  max-height: 42px;
+  min-height: 42px;
+  background-color: $orange !important;
+  color: #fff !important;
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
+@mixin button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: fit-content;
+  min-width: 160px;
+  height: 45px;
+  padding: 7px 15px;
+  background-color: $purple;
+  border: 1px solid $purple;
+  border-radius: 3px;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+
+  i {
+    color: #fff;
+    font-size: 20px;
+  }
+
+  &[disabled] {
+    opacity: .6 !important;
+    cursor: not-allowed !important;
+  }
+
+  &.orange {
+    background-color: $orange;
+    border: 1px solid $orange;
+  }
+
+  &.secondary {
+    background-color: #fff;
+    color: $purple;
+
+    i {
+      color: $purple;
+    }
+
+    &.orange {
+      color: $orange;
+
+      i {
+        color: $orange;
+      }
+    }
+  }
+
+  &.tab {
+    border: none;
+    background-color: #fff;
+    color: $purple;
+    position: relative;
+
+    &:hover {
+      background-color: #f1f1f1;
+    }
+
+    .fa {
+      color: $purple;
+    }
+
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      left: 0;
+      bottom: 0px;
+      width: 100%;
+      height: 3px;
+      border-radius: 4px;
+      background-color: $purple;
+      opacity: 0;
+      transition: .2s;
+    }
+
+    &.orange {
+      background-color: $orange;
+      color: $orange;
+
+      .fa {
+        color: $orange;
+      }
+    }
+
+    &.active {
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+@mixin input {
+  display: block;
+  border: 1px solid $purple_low;
+  background-color: #fff;
+  color: $purple;
+  padding: 7px 10px 5px 10px;
+  width: 100%;
+  height: 48px;
+  border-radius: 3px;
+
+  &::placeholder {
+    color: $purple;
+  }
+}

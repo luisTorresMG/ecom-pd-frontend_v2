@@ -1,0 +1,132 @@
+.title {
+  color: #300764;
+  text-align: center;
+  margin: 20px 15px;
+  font-weight: bold;
+}
+
+.title > span {
+  color: #ff6e00;
+  font-size: 50px;
+}
+
+.code {
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 18px;
+  margin-bottom: -15px;
+}
+
+.code span {
+  font-size: 16px;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+.ref {
+  font-weight: bold;
+  color: #ff6e00;
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.soat-container-outline {
+  border: 1px solid #fff;
+  margin-bottom: 1px;
+}
+
+.soat-summary {
+  padding: 0px;
+  color: #999;
+  background-color: #f2f2f2;
+}
+
+.soat-summary .soat-header-icon {
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.planvidaley {
+  margin-bottom: -14px !important;
+  margin-top: -14px !important;
+}
+
+.soat-summary .soat-header-icon .icon-title {
+  margin-right: 15px;
+}
+
+.soat-summary .sub-title {
+  color: #2e0563;
+}
+
+.descarga {
+  color: #2e0563;
+  text-decoration: underline;
+}
+
+.descarga-text {
+  font-size: 17px !important;
+  cursor: pointer;
+  color: #2e0563 !important;
+}
+
+.big {
+  font-size: 30px;
+}
+
+.metodo-pago {
+  font-size: 24px;
+}
+
+.soat-header > .title {
+  color: #ff6e00;
+}
+
+.dmessage {
+  color: #ff6e00;
+}
+
+.footer-pe {
+  padding: 0px;
+}
+
+.btn-pe {
+  padding: 0px 5px !important;
+  margin-top: 5px;
+  font-size: 14px;
+}
+.info {
+  margin-left: 5px;
+}
+
+.legal-text {
+  font-size: 12px;
+  text-align: center;
+  margin: 20px 10px 10px;
+}
+
+.button-container {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .separador-pe {
+    height: 0px !important;
+  }
+
+  .separador-visa {
+    margin-top: 35px !important;
+  }
+
+  .font-pe {
+    font-size: 14px;
+  }
+}

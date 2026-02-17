@@ -1,0 +1,18 @@
+<div class="container soat-container">
+  <div class="soat-navigation">
+    <i class="fa fa-caret-left arrow"></i>
+    <a routerLink="/sctr/step-2" class="soat-link">Regresar al paso 2</a>
+  </div>
+
+  <div class="soat-header">
+    <h2 class="title">
+      3. Datos de la cotización
+    </h2>
+  </div>
+
+  <app-quote
+    [loading]="loading"
+    [user]="vidaleyUser"
+    (formSubmitted)="onSubmit($event)"
+  ></app-quote>
+</div>

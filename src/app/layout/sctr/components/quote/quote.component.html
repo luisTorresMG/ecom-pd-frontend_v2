@@ -1,0 +1,335 @@
+<form action=""
+      [formGroup]="quoteForm"
+      (ngSubmit)="onSubmit()"
+      autocomplete="off">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="soat-input-form-container">
+        <label for=""
+               class="soat-label orange">Tipo de periodo</label>
+        <div class="soat-input-container"
+             [ngClass]="{ loading: loaders.term }">
+          <ng-select [items]="termTypes"
+                     [selectOnTab]="true"
+                     bindValue="id"
+                     bindLabel="description"
+                     placeholder="Tipo Periodo"
+                     formControlName="term"
+                     (blur)="validateTotalWorkers()"
+                     [ngClass]="{
+              error: showError('term'),
+              loading: loaders.term
+            }"
+                     (change)="$event && onTermSelected($event)">
+          </ng-select>
+          <i class="fa fa-circle-o-notch fa-spin"
+             *ngIf="loaders.term"></i>
+        </div>
+        <div class="soat-error-message"
+             *ngIf="showError('term')">
+          <i></i><span>Necesitamos conocer tu tipo de periodo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="soat-input-form-container">
+        <label for=""
+               class="soat-label orange">Inicio de vigencia</label>
+        <div class="soat-input-container icon">
+          <input type="text"
+                 placeholder="DD/MM/YYYY"
+                 class="soat-input"
+                 formControlName="startValidity"
+                 [ngClass]="{ error: showError('startValidity') }"
+                 #dp="bsDatepicker"
+                 bsDatepicker
+                 readonly
+                 [bsConfig]="datePickerConfig" />
+          <i class="fa fa-calendar-o"></i>
+        </div>
+        <div class="soat-error-message"
+             *ngIf="showError('startValidity')">
+          <ng-container *ngIf="
+              qForm['startValidity'].errors.required ||
+              qForm['startValidity'].errors.date
+            ">
+            <i></i>
+            <span> Ingresa una fecha valida para el inicio de vigencia </span>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="soat-input-form-container">
+        <label for=""
+               class="soat-label orange">Fin de Vigencia</label>
+        <div class="soat-input-container icon">
+          <input type="text"
+                 placeholder="DD/MM/YYYY"
+                 class="soat-input"
+                 formControlName="endValidity"
+                 [ngClass]="{ error: showError('endValidity') }"
+                 readonly />
+          <i class="fa fa-calendar-o"></i>
+        </div>
+        <div class="soat-error-message"
+             *ngIf="showError('endValidity')">
+          <ng-container *ngIf="
+              qForm['endValidity'].errors.required ||
+              qForm['endValidity'].errors.date
+            ">
+            <i></i>
+            <span> Ingresa una fecha valida para el fin de vigencia </span>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="soat-input-form-container">
+    <label for=""
+           class="soat-label orange">Actividad a Realizar</label>
+    <div class="soat-input-container"
+         [ngClass]="{ loading: loaders.activity }">
+      <ng-select [items]="activities"
+                 [selectOnTab]="true"
+                 bindValue="id"
+                 bindLabel="description"
+                 placeholder="Actividad a Realizar"
+                 formControlName="activity"
+                 [ngClass]="{
+          error: showError('activity'),
+          loading: loaders.activity
+        }"
+                 (change)="$event && changeActivity($event)">
+      </ng-select>
+
+      <i class="fa fa-circle-o-notch fa-spin"
+         *ngIf="loaders.activity"></i>
+    </div>
+    <div class="soat-error-message"
+         *ngIf="showError('activity')">
+      <i></i><span>Necesitamos conocer tu Actividad</span>
+    </div>
+  </div>
+
+  <div class="soat-input-form-container">
+    <label for=""
+           class="soat-label orange">Sub-Actividades</label>
+    <div class="soat-input-container"
+         [ngClass]="{ loading: loaders.subactivity }">
+      <ng-select [items]="subActivities"
+                 [selectOnTab]="true"
+                 bindValue="id"
+                 bindLabel="description"
+                 placeholder="Sub-Actividades"
+                 formControlName="subactivity"
+                 [ngClass]="{
+          error: showError('subactivity'),
+          loading: loaders.subactivity
+        }"
+                 (change)="$event && changeSubActivity($event)">
+      </ng-select>
+
+      <i class="fa fa-circle-o-notch fa-spin"
+         *ngIf="loaders.subactivity"></i>
+    </div>
+    <div class="soat-error-message"
+         *ngIf="showError('subactivity')">
+      <i></i><span>Necesitamos conocer tu Subactividad</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="soat-input-form-container">
+        <label for=""
+               class="soat-label orange">Dirección de Sede</label>
+        <div class="soat-input-container icon">
+          <input type="text"
+                 placeholder="Dirección de Sede"
+                 class="soat-input"
+                 formControlName="riskAddress"
+                 minlength="10"
+                 maxlength="80"
+                 [ngClass]="{ error: showError('riskAddress') }" />
+          <i class="fa fa-pencil"></i>
+        </div>
+        <div class="soat-error-message"
+             *ngIf="showError('riskAddress')">
+          <ng-container *ngIf="qForm['riskAddress'].errors.required">
+            <i></i><span> Necesitamos conocer la dirección de Sede.</span>
+          </ng-container>
+          <ng-container *ngIf="
+              qForm['riskAddress'].errors.minlength ||
+              qForm['riskAddress'].errors.maxlength
+            ">
+            <i></i><span>El tamaño de la dirección no puede ser menor a 10 o mayor a
+              80</span>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="soat-input-form-container">
+        <label for=""
+               class="soat-label orange">Departamento - Sede</label>
+        <div class="soat-input-container"
+             [ngClass]="{ loading: locationLoaders.department }">
+          <ng-select [items]="departments"
+                     [selectOnTab]="true"
+                     bindValue="nprovince"
+                     bindLabel="sdescript"
+                     placeholder="Departamento"
+                     formControlName="riskDepartment"
+                     [ngClass]="{
+              error: showError('riskDepartment'),
+              loading: locationLoaders.department
+            }"
+                     (change)="$event && onDepartmentSelected($event['nprovince'])">
+          </ng-select>
+          <i class="fa fa-circle-o-notch fa-spin"
+             *ngIf="locationLoaders.department"></i>
+        </div>
+        <div class="soat-error-message"
+             *ngIf="showError('riskDepartment')">
+          <i></i><span>Necesitamos conocer tu departamento</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="soat-input-form-container">
+        <label for=""
+               class="soat-label orange">Provincia - Sede</label>
+        <div class="soat-input-container"
+             [ngClass]="{ loading: locationLoaders.province }">
+          <ng-select [items]="provinces"
+                     [selectOnTab]="true"
+                     bindValue="nlocal"
+                     bindLabel="sdescript"
+                     placeholder="Provincia"
+                     formControlName="riskProvince"
+                     [ngClass]="{
+              error: showError('riskProvince'),
+              loading: locationLoaders.province
+            }"
+                     (change)="$event && onProvinceSelected($event['nlocal'])">
+          </ng-select>
+          <i class="fa fa-circle-o-notch fa-spin"
+             *ngIf="locationLoaders.province"></i>
+        </div>
+        <div class="soat-error-message"
+             *ngIf="showError('riskProvince')">
+          <i></i><span>Necesitamos conocer tu provincia</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="soat-input-form-container">
+        <label for=""
+               class="soat-label orange">Distrito - Sede</label>
+        <div class="soat-input-container"
+             [ngClass]="{ loading: locationLoaders.district }">
+          <ng-select [items]="districts"
+                     [selectOnTab]="true"
+                     bindValue="nmunicipality"
+                     bindLabel="sdescript"
+                     placeholder="Distrito"
+                     formControlName="riskDistrict"
+                     [ngClass]="{
+              error: showError('riskDistrict'),
+              loading: locationLoaders.district
+            }">
+          </ng-select>
+          <i class="fa fa-circle-o-notch fa-spin"
+             *ngIf="locationLoaders.district"></i>
+        </div>
+        <div class="soat-error-message"
+             *ngIf="showError('riskDistrict')">
+          <i></i><span>Necesitamos conocer tu distrito</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="soat-input-form-container">
+        <label for=""
+               class="soat-label orange">Total de Trabajadores (*)</label>
+        <div class="soat-input-container icon">
+          <input type="text"
+                 placeholder="Total Trabajadores"
+                 class="soat-input"
+                 formControlName="totalWorkers"
+                 min="9"
+                 onkeypress="return !(event.charCode > 31 && (event.charCode < 48 || event.charCode > 57  ))"
+                 [ngClass]="{ error: showError('totalWorkers') }"
+                 (blur)="validateTotalWorkers()" />
+          <i class="fa fa-pencil"></i>
+        </div>
+        <div class="soat-error-message"
+             *ngIf="showError('totalWorkers')">
+          <ng-container *ngIf="qForm['totalWorkers'].errors.required">
+            <i></i><span> Necesitamos conocer el total de Trabajadores</span>
+          </ng-container>
+          <ng-container *ngIf="qForm['totalWorkers'].errors.min">
+            <i></i><span> Debe ser mayor o igual a 1</span>
+          </ng-container>
+          <ng-container *ngIf="qForm['totalWorkers'].errors.totalWorkers">
+            <i></i>
+            <span>
+              Cambia la vigencia de tu póliza a una periodicidad anual
+            </span>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="soat-input-form-container">
+        <label for=""
+               class="soat-label orange">
+          Monto de Planilla Promedio Mensual S/ (*)
+        </label>
+        <div class="soat-input-container icon">
+          <input type="text"
+                 placeholder="Monto Planilla Promedio"
+                 class="soat-input"
+                 formControlName="totalAmount"
+                 min="1"
+                 onkeypress="return !(event.charCode > 31 && (event.charCode < 46 || event.charCode > 57  ))"
+                 [ngClass]="{ error: showError('totalAmount') }" />
+          <i class="fa fa-pencil"></i>
+        </div>
+        <div class="soat-error-message"
+             *ngIf="showError('totalAmount')">
+          <ng-container *ngIf="qForm['totalAmount'].errors.required">
+            <i></i><span> Necesitamos conocer el monto planilla promedio</span>
+          </ng-container>
+          <ng-container *ngIf="qForm['totalAmount'].errors.min">
+            <i></i><span> Debe ser mayor o igual al sueldo mínimo vital</span>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col soat-text-align-center space">
+      <button class="soat-button ripple stretch"
+              [disabled]="loading || !quoteForm.valid"
+              [ngClass]="{ loading: loading }">
+        <i class="fa fa-circle-o-notch fa-spin"
+           *ngIf="loading"></i>
+        Siguiente
+      </button>
+    </div>
+  </div>
+</form>

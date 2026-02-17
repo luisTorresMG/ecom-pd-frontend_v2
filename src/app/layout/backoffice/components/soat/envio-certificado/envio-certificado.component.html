@@ -1,0 +1,533 @@
+<div class="container-fluid">
+  <div class="row content-all">
+    <div class="col-md-12 content">
+      <div class="container-fluid content-page">
+        <div class="row r1-head">
+          <div class="col-12 head-title">
+            <h1 class="title">Envío de Certificados Digitales</h1>
+          </div>
+        </div>
+        <form class="row r2-head"
+              [formGroup]="form">
+          <div class="col-md-4 content-actions">
+            <div class="content-input">
+              <label for="state"
+                     class="lbl-in filter-text">CERTIFICADO:</label>
+              <input type="text"
+                     class="form-control date-search input-date in-action"
+                     [maxlength]="10"
+                     formControlName="certificado" />
+            </div>
+            <div class="content-input">
+              <label for="chanel"
+                     class="lbl-in filter-text">PLACA:</label>
+              <input type="text"
+                     class="form-control date-search input-date in-action"
+                     [maxlength]="6"
+                     formControlName="placa" />
+            </div>
+          </div>
+          <div class="col-md-8 cont-btn-generar">
+            <button type="submit"
+                    class="full-color"
+                    (click)="showbuscar()"
+                    [disabled]="form.invalid">
+              Buscar
+            </button>
+            <button type="button"
+                    class="full-color"
+                    (click)="limpiar()">
+              Limpiar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-12 content"
+         style="padding-left: 0px; padding-right: 0px"
+         *ngIf="showSelected">
+      <div class="col-md-12 content">
+        <div class="container-fluid content-page">
+          <div class="row r3-head">
+            <div class="col-md-12 grid-title table-head">
+              <span class="grid-title-item">Envío Correo</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 content">
+        <div class="container-fluid content-page">
+          <form class="row r3-head"
+                [formGroup]="formEnviar">
+            <div class="col-md-4 px-0">
+              <div class="content-input">
+                <label class="lbl-in filter-text">CORREO:</label>
+                <input type="text"
+                       style="text-transform: uppercase"
+                       class="form-control date-search input-date in-action"
+                       formControlName="correo" />
+              </div>
+            </div>
+            <div class="col-md-2 px-0 d-flex align-items-center">
+              <div class="content-input">
+                <button type="submit"
+                        class="full-color"
+                        style="margin-top: 21px; margin-left: 10px"
+                        (click)="enviar()"
+                        [disabled]="formEnviar.invalid">
+                  Enviar
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-12 content my-3">
+        <h6 class="content__item--title">Datos Póliza</h6>
+        <div class="container-fluid content-page">
+          <div class="row r3-head">
+            <div class="col-md-2 px-0">
+              <div class="content-input">
+                <label class="lbl-in filter-text">CERTIFICADO:</label>
+                <label class="lbl-in-action"
+                       style="
+                    background-color: rgba(0, 0, 0, 0.025);
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    font-size: 14px;
+                    color: #aa9ec0;
+                    align-items: center;
+                  ">{{ info?.NPOLESP_COMP }}</label>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="content-input">
+                <label class="lbl-in filter-text">COMPROBANTE:</label>
+                <label class="lbl-in-action"
+                       style="
+                    background-color: rgba(0, 0, 0, 0.025);
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    font-size: 14px;
+                    color: #aa9ec0;
+                    align-items: center;
+                  ">
+                  {{ info?.SCOMPROBANTE }}
+                </label>
+              </div>
+            </div>
+            <div class="col-md-2 px-0">
+              <div class="content-input">
+                <label class="lbl-in filter-text">INICIO VIGENCIA (*):</label>
+                <label class="lbl-in-action"
+                       style="
+                    background-color: rgba(0, 0, 0, 0.025);
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    font-size: 14px;
+                    color: #aa9ec0;
+                    align-items: center;
+                  ">
+                  {{ info?.DVIGINI | date: "dd/MM/yyyy" }}
+                </label>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="content-input">
+                <label class="lbl-in filter-text">FIN VIGENCIA (*):</label>
+                <label class="lbl-in-action"
+                       style="
+                    background-color: rgba(0, 0, 0, 0.025);
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    font-size: 14px;
+                    color: #aa9ec0;
+                    align-items: center;
+                  ">
+                  {{ info?.DVIGFIN | date: "dd/MM/yyyy" }}
+                </label>
+              </div>
+            </div>
+            <div class="col-md-2 px-0">
+              <div class="content-input">
+                <label class="lbl-in filter-text">FECHA DE EMISIÓN:</label>
+                <label class="lbl-in-action"
+                       style="
+                    background-color: rgba(0, 0, 0, 0.025);
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    font-size: 14px;
+                    color: #aa9ec0;
+                    align-items: center;
+                  ">
+                  {{ info?.FECHA_EMISION | date: "dd/MM/yyyy" }}
+                </label>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="content-input">
+                <label class="lbl-in filter-text">HORA DE EMISIÓN:</label>
+                <label class="lbl-in-action"
+                       style="
+                    background-color: rgba(0, 0, 0, 0.025);
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    font-size: 14px;
+                    color: #aa9ec0;
+                    align-items: center;
+                  ">
+                  {{ info?.HORA_EMISION }}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content__item">
+        <h6 class="content__item--title">Datos de Vehículo</h6>
+        <div class="content__item--inputs ctn-auto">
+          <label class="lbl-input-u"
+                 aria-label="PLACA (*):">
+            <span class="input-u disabled">{{ info?.SPLACA }}</span>
+          </label>
+          <label class="lbl-input-u"
+                 aria-label="MARCA (*):">
+            <span class="input-u  disabled">{{ descripcionMarca(info?.NMARK) }}</span>
+          </label>
+          <label class="lbl-input-u"
+                 aria-label="MODELO (*):">
+            <span class="input-u  disabled">{{ descripcionModelo(info?.NMODEL) || 'SELECCIONE' }}</span>
+          </label>
+          <label class="lbl-input-u"
+                 aria-label="CLASE (*):">
+            <span class="input-u  disabled">{{ descripcionClase(info?.NIDCLASE) || 'SELECCIONE' }}</span>
+          </label>
+          <label class="lbl-input-u"
+                 aria-label="USO (*):">
+            <span class="input-u  disabled">{{ descripcionUso(info?.NIDUSO) }}</span>
+          </label>
+          <label class="lbl-input-u"
+                 aria-label="N° ASIENTOS (*):">
+            <span class="input-u  disabled">{{ info?.NSEATING }}</span>
+          </label>
+          <label class="lbl-input-u"
+                 aria-label="AÑO (*):">
+            <span class="input-u  disabled">{{ info?.NYEAR }}</span>
+          </label>
+          <label class="lbl-input-u"
+                 aria-label="SERIE (*):">
+            <span class="input-u  disabled">{{ info?.SSERIAL }}</span>
+          </label>
+          <label class="lbl-input-u"
+                 aria-label="Z. CIRCULACIÓN (*):">
+            <span class="input-u  disabled">{{ descripcionZona(info?.NAUTOZONE) || 'SELECCIONE' }}</span>
+          </label>
+        </div>
+      </div>
+      <div class="col-md-12 content">
+        <div class="container-fluid content-page">
+          <div class="row r3-head">
+            <div class="col-md-12 grid-title table-head">
+              <span class="grid-title-item">Datos del Contratante</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 content">
+        <div class="container-fluid content-page">
+          <div class="row r3-head">
+            <div class="col-md-3 px-0">
+              <div class="content-input">
+                <label class="lbl-in filter-text">TIPO DE DOCUMENTO:</label>
+                <!-- <select class="lbl-in-action"
+                        [disabled]="true">
+                  <option [selected]="true">
+                    {{ descripcionTipoDoc(info?.NIDDOC_TYPE) }}
+                  </option>
+                </select> -->
+                <ng-container [ngSwitch]="info?.NIDDOC_TYPE">
+                  <span class="lbl-in-action"
+                        *ngSwitchDefault>SELECCIONE</span>
+                  <span class="lbl-in-action"
+                        *ngSwitchCase="1">RUC</span>
+                  <span class="lbl-in-action"
+                        *ngSwitchCase="2">DNI</span>
+                  <span class="lbl-in-action"
+                        *ngSwitchCase="4">C.E.</span>
+                </ng-container>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="content-input">
+                <label class="lbl-in filter-text">N° DOCUMENTO (*):</label>
+                <label class="lbl-in-action"
+                       style="
+                    background-color: rgba(0, 0, 0, 0.025);
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    font-size: 14px;
+                    color: #aa9ec0;
+                    align-items: center;
+                  ">{{ info?.SNUMDOC }}
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row r3-head">
+            <div class="col-md-3 px-0">
+              <div class="content-input">
+                <label class="lbl-in filter-text">A. PATERNO (*):</label>
+                <label class="lbl-in-action"
+                       style="
+                    background-color: rgba(0, 0, 0, 0.025);
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    font-size: 14px;
+                    color: #aa9ec0;
+                    align-items: center;
+                  ">{{ info?.SLASTNAME }}</label>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="content-input">
+                <label class="lbl-in filter-text">A. MATERNO (*):</label>
+                <label class="lbl-in-action"
+                       style="
+                    background-color: rgba(0, 0, 0, 0.025);
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    font-size: 14px;
+                    color: #aa9ec0;
+                    align-items: center;
+                  ">{{ info?.SLASTNAME2 }}</label>
+              </div>
+            </div>
+            <div class="col-md-3 px-0">
+              <div class="content-input">
+                <label class="lbl-in filter-text">NOMBRES (*):</label>
+                <label class="lbl-in-action"
+                       style="
+                    background-color: rgba(0, 0, 0, 0.025);
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    font-size: 14px;
+                    color: #aa9ec0;
+                    align-items: center;
+                  ">{{ info?.SNAME }}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 content">
+        <div class="container-fluid content-page">
+          <div class="row r3-head">
+            <div class="col-md-12 grid-title table-head">
+              <span class="grid-title-item">Datos de Dirección de Contratante</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 content">
+        <div class="container-fluid content-page">
+          <div class="row r3-head">
+            <div class="col-md-3 pl-0">
+              <div class="content-input">
+                <label class="lbl-in filter-text">DEPARTAMENTO:</label>
+                <select class="lbl-in-action"
+                        [disabled]="true">
+                  <option [selected]="true">
+                    {{ descripcionDepartamento(info?.NPROVINCE) }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3 px-0">
+              <div class="content-input">
+                <label class="lbl-in filter-text">PROVINCIA:</label>
+                <select class="lbl-in-action"
+                        [disabled]="true">
+                  <option [selected]="true">
+                    {{ descripcionProvincia(info?.NLOCAL) }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="content-input">
+                <label class="lbl-in filter-text">DISTRITO:</label>
+                <select class="lbl-in-action"
+                        [disabled]="true">
+                  <option [selected]="true">
+                    {{ descripcionDistrito(info?.NMUNICIPALITY) }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3 px-0">
+              <div class="content-input">
+                <label class="lbl-in filter-text">EMAIL (*):</label>
+                <label class="lbl-in-action"
+                       style="
+                    background-color: rgba(0, 0, 0, 0.025);
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    font-size: 14px;
+                    color: #aa9ec0;
+                    align-items: center;
+                  ">{{ info?.SE_MAIL }}</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row r3-head">
+            <div class="col-md-6 px-0">
+              <div class="content-input">
+                <label class="lbl-in filter-text">DIRECCIÓN (*):</label>
+                <label class="lbl-in-action"
+                       style="
+                    background-color: rgba(0, 0, 0, 0.025);
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    font-size: 14px;
+                    color: #aa9ec0;
+                    align-items: center;
+                  ">{{ info?.SADDRESS }}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade"
+     bsModal
+     #modalResultado="bs-modal"
+     [config]="{
+    backdrop: 'static'
+  }">
+  <div class="modal-dialog modal-ver-detalle"
+       role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"
+            id="exampleModalLabel">
+          Resultado de Búsqueda
+        </h5>
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                (click)="hidebuscar()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3 px-0 mb-3 py-0">
+        <table class="table table-info-soat table-group-soat mx-0 mt-3 table-history">
+          <thead class="thead">
+            <tr class="grid-title">
+              <td class="grid-title-item">Nombre</td>
+              <td class="grid-title-item">Número de Documento</td>
+              <td class="grid-title-item">Placa</td>
+              <td class="grid-title-item">Certificado</td>
+              <td class="grid-title-item">Origen</td>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="!dataEnvioCotizacion?.entities?.length">
+              <tr class="grid-body">
+                <td class="grid-body-item"
+                    colspan="5"
+                    style="text-align: center">
+                  No hay informacion para mostrar
+                </td>
+              </tr>
+            </ng-container>
+            <ng-container *ngIf="!!dataEnvioCotizacion?.entities?.length">
+              <tr class="grid-body"
+                  *ngFor="let data of dataEnvioCotizacion.entities"
+                  [id]="data.NPOLESP_COMP"
+                  (click)="guardarInfo(data)"
+                  [class.filaSeleccionada]="data == info"
+                  style="cursor: pointer">
+                <td class="grid-body-item">{{ data.SCLIENTNAME }}</td>
+                <td class="grid-body-item">{{ data.SNUMDOC }}</td>
+                <td class="grid-body-item">{{ data.SPLACA }}</td>
+                <td class="grid-body-item">{{ data.NPOLESP_COMP }}</td>
+                <td class="grid-body-item">{{ data.SORIGEN }}</td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+        <div class="modal-footer footer-envio d-flex justify-content-center">
+          <button class="full-color btn-export-excel mx-0"
+                  (click)="showInformacionCertificado()"
+                  [disabled]="!info">
+            Visualizar Ficha
+          </button>
+          <button class="full-color btn-export-excel mx-0"
+                  (click)="hidebuscar()">
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade"
+     bsModal
+     #modalConfirmacion="bs-modal"
+     [config]="{
+    backdrop: 'static'
+  }">
+  <div class="modal-dialog"
+       role="document">
+    <div class="modal-content anular">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                (click)="ocultarConfirmacion()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <div class="check-emitido">
+          <img src="assets/backoffice/check-success.png"
+               class="icon-check" />
+        </div>
+        <h4 class="textanular">
+          El envío se realizará en 1 min. aproximadamente.
+        </h4>
+      </div>
+      <div class="
+          modal-footer modal-foot-confirm
+          d-flex
+          align-items-center
+          justify-content-center
+        ">
+        <button type="button"
+                class="btn full-color btn-aceptar-modal"
+                (click)="ocultarConfirmacion()">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

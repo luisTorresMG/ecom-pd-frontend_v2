@@ -1,0 +1,37 @@
+<div
+  class="form-group app-input-date"
+  [ngClass]="{ 'bottom-border': borderBottom, 'input-error': inputError }"
+>
+  <div class="input-group" (click)="toggleDatepicker()">
+    <input
+      type="text"
+      displayFormat="DD/MM/YYYY"
+      placeholder="{{ inputHolder }}"
+      [disabled]="true"
+      class="form-control force-color"
+      #dp="bsDatepicker"
+      bsDatepicker
+      [bsConfig]="bsConfig"
+      [(bsValue)]="inputValue"
+      value="{{ inputValue | date: 'dd/MM/yyyy' }}"
+      (bsValueChange)="onValueChange($event)"
+      [ngStyle]="inputStyle"
+      (close)="ventanaCerrada()"
+    />
+    <div class="input-group-addon" [ngStyle]="addOnStyle">
+      <img
+        alt=""
+        src="assets/icons/calendar_filter.png"
+        [hidden]="iconFilter"
+        [ngStyle]="inputStyle"
+      />
+      <img
+        alt=""
+        src="assets/icons/calendar.svg"
+        width="24px"
+        [hidden]="!iconFilter"
+        [ngStyle]="inputStyle"
+      />
+    </div>
+  </div>
+</div>

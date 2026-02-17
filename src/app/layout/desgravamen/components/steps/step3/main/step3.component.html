@@ -1,0 +1,295 @@
+<div class="content background">
+  <app-steps-generic [NSTEPS]="5"
+                     [NSTEP]="3"></app-steps-generic>
+  <h1 class="frm_title">Compara y elige un <b>plan</b></h1>
+  <div class="content__plan">
+    <div class="content__plan--detail">
+      <div>
+        <button class="input-u btn_default-u btn-refresh">
+          <i class="fa fa-share"
+             aria-hidden="true"></i>
+        </button>
+        <button class="input-u btn_default-u btn-show-details"
+                type="button"
+                (click)="showPlanDetail()">
+          Ver detalles de planes
+        </button>
+      </div>
+      <div class="content__plan--detail-item">
+        <div class="actions_plan">
+          <button class="btn-plan btn-plan-selected">Coberturas</button>
+          <button class="btn-plan">Asistencias</button>
+          <button class="btn-plan">Servicios</button>
+        </div>
+        <ul class="list_plan">
+          <li>Muerte natural</li>
+          <li>Muerte natural</li>
+          <li>Muerte natural</li>
+          <li>Muerte natural</li>
+          <li>Muerte natural</li>
+          <li>Muerte natural</li>
+          <li>Muerte natural</li>
+          <li>Muerte natural</li>
+          <li>Muerte natural</li>
+          <li>Muerte natural</li>
+          <li>Muerte natural</li>
+        </ul>
+      </div>
+    </div>
+    <div class="content__plan--types">
+      <div class="content__plan--types-item plan-selected">
+        <label class="type_plan--header"
+               for="plan_1">
+          <input type="checkbox"
+                 class="chk"
+                 id="plan_1">
+          <label class="lbl-chk lbl-typeplan"
+                 for="plan_1"></label>
+          <span class="type_plan--title">PLAN 1</span>
+          <div class="type_plan--price">
+            <sup>S/</sup>
+            <span>100</span>
+            <small>mensual</small>
+          </div>
+        </label>
+        <div class="type_plan--body">
+          <div class="type_plan--body-titles grid-type_plan">
+            <span>Aplica</span>
+            <span>Suma asegurada</span>
+          </div>
+          <div class="grid-type_plan type_plan--body-list">
+            <div>
+              <svg width="24"
+                   height="24"
+                   xmlns="http://www.w3.org/2000/svg"
+                   fill-rule="evenodd"
+                   clip-rule="evenodd">
+                <path d="M21 6.285l-11.16 12.733-6.84-6.018 1.319-1.49 5.341 4.686 9.865-11.196 1.475 1.285z" />
+              </svg>
+            </div>
+            <span>
+              S/1,000.00
+            </span>
+            <div>
+              <svg width="24"
+                   height="24"
+                   xmlns="http://www.w3.org/2000/svg"
+                   fill-rule="evenodd"
+                   clip-rule="evenodd">
+                <path d="M21 6.285l-11.16 12.733-6.84-6.018 1.319-1.49 5.341 4.686 9.865-11.196 1.475 1.285z" />
+              </svg>
+            </div>
+            <span>
+              S/1,000.00
+            </span>
+            <div>
+              <svg width="24"
+                   height="24"
+                   xmlns="http://www.w3.org/2000/svg"
+                   fill-rule="evenodd"
+                   clip-rule="evenodd">
+                <path d="M21 6.285l-11.16 12.733-6.84-6.018 1.319-1.49 5.341 4.686 9.865-11.196 1.475 1.285z" />
+              </svg>
+            </div>
+            <span>
+              S/1,000.00
+            </span>
+            <div>
+              <svg width="24"
+                   height="24"
+                   xmlns="http://www.w3.org/2000/svg"
+                   fill-rule="evenodd"
+                   clip-rule="evenodd">
+                <path d="M21 6.285l-11.16 12.733-6.84-6.018 1.319-1.49 5.341 4.686 9.865-11.196 1.475 1.285z" />
+              </svg>
+            </div>
+            <span>
+              S/1,000.00
+            </span>
+            <div>
+              <svg width="24"
+                   height="24"
+                   xmlns="http://www.w3.org/2000/svg"
+                   fill-rule="evenodd"
+                   clip-rule="evenodd">
+                <path d="M21 6.285l-11.16 12.733-6.84-6.018 1.319-1.49 5.341 4.686 9.865-11.196 1.475 1.285z" />
+              </svg>
+            </div>
+            <span>
+              S/1,000.00
+            </span>
+            <div>
+              <div class="content_chk-apply">
+                <input type="checkbox"
+                       id="chk-apply"
+                       class="chk">
+                <label for="chk-apply"
+                       class="lbl-chk lbl-chk-apply"></label>
+              </div>
+              <svg width="24"
+                   height="24"
+                   xmlns="http://www.w3.org/2000/svg"
+                   fill-rule="evenodd"
+                   clip-rule="evenodd"
+                   *ngIf="false">
+                <path d="M21 6.285l-11.16 12.733-6.84-6.018 1.319-1.49 5.341 4.686 9.865-11.196 1.475 1.285z" />
+              </svg>
+            </div>
+            <span>
+              S/1,000.00
+            </span>
+            <div>
+              <div class="content_chk-apply">
+                <input type="checkbox"
+                       id="chk-apply"
+                       class="chk">
+                <label for="chk-apply"
+                       class="lbl-chk lbl-chk-apply"></label>
+              </div>
+              <svg width="24"
+                   height="24"
+                   xmlns="http://www.w3.org/2000/svg"
+                   fill-rule="evenodd"
+                   clip-rule="evenodd"
+                   *ngIf="false">
+                <path d="M21 6.285l-11.16 12.733-6.84-6.018 1.319-1.49 5.341 4.686 9.865-11.196 1.475 1.285z" />
+              </svg>
+            </div>
+            <span>
+              S/1,000.00
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="content__plan--types-item">
+        <label class="type_plan--header"
+               for="plan_1">
+          <input type="checkbox"
+                 class="chk"
+                 id="plan_1">
+          <label class="lbl-chk lbl-typeplan"
+                 for="plan_1"></label>
+          <span class="type_plan--title">PLAN 1</span>
+          <div class="type_plan--price">
+            <sup>S/</sup>
+            <span>100</span>
+            <small>mensual</small>
+          </div>
+        </label>
+        <div class="type_plan--body">
+          <div class="type_plan--body-titles grid-type_plan">
+            <span>Aplica</span>
+            <span>Suma asegurada</span>
+          </div>
+          <div class="grid-type_plan type_plan--body-list">
+            <div>
+              <svg width="24"
+                   height="24"
+                   xmlns="http://www.w3.org/2000/svg"
+                   fill-rule="evenodd"
+                   clip-rule="evenodd">
+                <path d="M21 6.285l-11.16 12.733-6.84-6.018 1.319-1.49 5.341 4.686 9.865-11.196 1.475 1.285z" />
+              </svg>
+            </div>
+            <span>
+              S/1,000.00
+            </span>
+            <div>
+              <svg width="24"
+                   height="24"
+                   xmlns="http://www.w3.org/2000/svg"
+                   fill-rule="evenodd"
+                   clip-rule="evenodd">
+                <path d="M21 6.285l-11.16 12.733-6.84-6.018 1.319-1.49 5.341 4.686 9.865-11.196 1.475 1.285z" />
+              </svg>
+            </div>
+            <span>
+              S/1,000.00
+            </span>
+            <div>
+              <svg width="24"
+                   height="24"
+                   xmlns="http://www.w3.org/2000/svg"
+                   fill-rule="evenodd"
+                   clip-rule="evenodd">
+                <path d="M21 6.285l-11.16 12.733-6.84-6.018 1.319-1.49 5.341 4.686 9.865-11.196 1.475 1.285z" />
+              </svg>
+            </div>
+            <span>
+              S/1,000.00
+            </span>
+            <div>
+              <svg width="24"
+                   height="24"
+                   xmlns="http://www.w3.org/2000/svg"
+                   fill-rule="evenodd"
+                   clip-rule="evenodd">
+                <path d="M21 6.285l-11.16 12.733-6.84-6.018 1.319-1.49 5.341 4.686 9.865-11.196 1.475 1.285z" />
+              </svg>
+            </div>
+            <span>
+              S/1,000.00
+            </span>
+            <div>
+              <svg width="24"
+                   height="24"
+                   xmlns="http://www.w3.org/2000/svg"
+                   fill-rule="evenodd"
+                   clip-rule="evenodd">
+                <path d="M21 6.285l-11.16 12.733-6.84-6.018 1.319-1.49 5.341 4.686 9.865-11.196 1.475 1.285z" />
+              </svg>
+            </div>
+            <span>
+              S/1,000.00
+            </span>
+            <div>
+              <svg width="24"
+                   height="24"
+                   xmlns="http://www.w3.org/2000/svg"
+                   fill-rule="evenodd"
+                   clip-rule="evenodd">
+                <path d="M21 6.285l-11.16 12.733-6.84-6.018 1.319-1.49 5.341 4.686 9.865-11.196 1.475 1.285z" />
+              </svg>
+            </div>
+            <span>
+              S/1,000.00
+            </span>
+            <div>
+              <svg width="24"
+                   height="24"
+                   xmlns="http://www.w3.org/2000/svg"
+                   fill-rule="evenodd"
+                   clip-rule="evenodd">
+                <path d="M21 6.285l-11.16 12.733-6.84-6.018 1.319-1.49 5.341 4.686 9.865-11.196 1.475 1.285z" />
+              </svg>
+            </div>
+            <span>
+              S/1,000.00
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content_navigation">
+    <button class="input-u btn-back input_submit-u"
+            type="button"
+            (click)="backStep()">
+      <i class="fa fa-angle-left fa-left"
+         aria-hidden="true"></i>
+      <span>Anterior</span>
+    </button>
+    <button class="input-u input_submit-u"
+            type="button"
+            (click)="submit()">
+      <span>Siguiente</span>
+      <i class="fa fa-angle-right fa-right"
+         aria-hidden="true"></i>
+    </button>
+  </div>
+</div>
+<ng-template #details>
+  <div class="details-plan no-scroll-style">
+    <app-plan-detail (close)="hidePlan($event)"></app-plan-detail>
+  </div>
+</ng-template>

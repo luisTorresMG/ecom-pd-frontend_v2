@@ -1,0 +1,74 @@
+.form-buttonVI {
+    padding: 0;
+    margin: 0;
+    /* max-width: 170px !important; */
+    /* min-width: 170px !important; */
+}
+
+.form-buttonVI button {
+    display: flex;
+    -ms-flex-pack: center;
+    justify-content: center;
+    border: 1px solid #553d81;
+    /* max-width: 180px;
+  min-width: 180px; */
+    max-width: 170px;
+    min-width: 170px;
+    width: 100%;
+    height: 42px;
+    border-radius: 7px;
+    margin: 0px;
+    background: #fff;
+    padding: 8px 0px;
+    outline: none;
+    font-family: "Bliss Pro";
+    font-size: 1rem;
+}
+
+.form-buttonVI button span {
+    display: block;
+    margin: 0px 0px;
+    font-weight: normal;
+    font-size: 1rem;
+}
+
+.form-buttonVI button img {
+    display: table-cell;
+    margin-top: auto;
+    margin-bottom: auto;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.form-buttonVI button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.form-buttonVI-slim button {
+    max-width: 130px !important;
+    min-width: 130px !important;
+    height: 39px !important;
+    align-items: center !important;
+    ;
+
+}
+
+.btn-primary-VI {
+    color: #fff !important;
+    background-color: #553d81 !important;
+    border-color: #553d81 !important;
+}
+
+.btn-secondary-VI {
+    border: 1px solid rgb(83, 66, 121) !important;
+    color: rgb(83, 66, 121) !important;
+    background-color: #fff !important;
+}
+
+.btn-orange {
+    background-color: #ed6e00 !important;
+    border: 1px solid #ed6e00 !important;
+    color: #fff !important;
+}

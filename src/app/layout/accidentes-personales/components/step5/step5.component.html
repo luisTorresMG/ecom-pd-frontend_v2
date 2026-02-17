@@ -1,0 +1,143 @@
+<main class="container-fluid px-0 py-0 mx-0 my-0">
+  <div class="max-width-to-center">
+    <div class="bc-1"></div>
+    <div class="row px-0 py-0 mx-0 my-0">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+        <app-show-steps [NSTEP]="5"></app-show-steps>
+      </div>
+    </div>
+    <div class="row px-0 py-0 mx-0 my-0">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+        <a class="back-step"
+           [routerLink]="'../step4'">
+          <i class="fa fa-caret-left fa-lg mr-2"
+             aria-hidden="true"></i>
+          Regresar al paso 4</a>
+      </div>
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+        <h1 class="title-step">
+          5. Datos de la cotización y selección del <b>medio de pago</b>
+        </h1>
+      </div>
+    </div>
+    <div class="row mx-0 my-0 px-0 py-0">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0 text-center">
+        <p class="info-pago">
+          <b class="price">S/200.00</b><span>(incluye IGV)</span><br>
+          Costo de prima de tu seguro Familiar Accidentes Personales
+        </p>
+        <span class="cod-transac">
+          Cod. Transacción 12345678
+        </span>
+      </div>
+    </div>
+    <div class="row mx-0 my-0 px-0 py-0 content-info-gray">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+        <h2 class="title-info title-metodo-pago">Método de pago</h2>
+        <div class="content-metodo-pago">
+          <img [src]="'assets/accidentes-personales/pago-efectivo-gris.png'"
+               alt=""
+               class="pagoefectivo-img">
+          <span>o</span>
+          <img [src]="'assets/accidentes-personales/visa-gris.png'"
+               alt=""
+               class="visa-img">
+        </div>
+        <span class="select-metodo-pago">Para finalizar tu compra, escoge tu método de pago</span>
+      </div>
+    </div>
+    <div class="row mx-0 my-0 px-0 py-0">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+        <small class="small-promo">Mediante la elección de cualquiera de los métodos de pago que se muestran a
+          continuación el contratante
+          acepta la promoción del Seguro de Accidentes Personales brindada mediante cotización Nº 3833</small>
+      </div>
+    </div>
+    <div class="row mx-0 my-0 px-0 py-0 content-info-gray">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+        <h2 class="title-info title-datos">Datos de la cotización</h2>
+        <div class="content-datos-cotiz">
+          <div class="datos-cotiz-item">
+            Plan
+          </div>
+          <div class="datos-cotiz-item-desc">
+            Plan 1
+          </div>
+          <div class="datos-cotiz-item">
+            Nro de Asegurados
+          </div>
+          <div class="datos-cotiz-item-desc">
+            2
+          </div>
+          <div class="datos-cotiz-item">
+            Nro de Beneficiarios
+          </div>
+          <div class="datos-cotiz-item-desc">
+            3
+          </div>
+        </div>
+        <br>
+        <h2 class="title-info title-datos">Datos del contratante</h2>
+        <div class="content-datos-cotiz">
+          <div class="datos-cotiz-item">
+            Nombres y Apellidos
+          </div>
+          <div class="datos-cotiz-item-desc">
+            James Fox Cooper
+          </div>
+          <div class="datos-cotiz-item">
+            Correo
+          </div>
+          <div class="datos-cotiz-item-desc">
+            asdqwe@gewmlk.com
+          </div>
+          <div class="datos-cotiz-item">
+            Nro de Celular
+          </div>
+          <div class="datos-cotiz-item-desc">
+            967 131 271
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mx-0 my-0 px-0 py-0 mt-4 text-center">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+        <button type="button"
+                class="btn-submit"><i class="fa fa-download mr-2"
+             aria-hidden="true"></i>Descarga tu cotización</button>
+      </div>
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0 mt-4">
+        <button type="button"
+                [routerLink]="'/accidentes-personales/step4'"
+                class="btn-back"><i class="fa fa-angle-left mr-2"
+             aria-hidden="true"></i>Anterior</button>
+      </div>
+    </div>
+  </div>
+  <div class="success-pago max-width-to-center">
+    <div class="row px-0 py-0 mx-0 my-0">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+        <app-show-steps [NSTEP]="5"></app-show-steps>
+      </div>
+    </div>
+    <div class="row mx-0 my-0 px-0 py-0">
+      <div class="col-lg-12 row mx-0 my-0 px-0 py-0">
+        <h2 class="title-success">¡Estás a punto de culminar la compra de <b>Seguro Familiar Accidentes Personales!</b>
+        </h2>
+      </div>
+      <div class="col-lg-12 row mx-0 my-0 px-0 py-0">
+        <p class="desc-success">Acércate dentro de las próximas 24 horas con tu código de pago al establecimiento
+          elegido de tu
+          preferencia para pagar tu <b>Seguro Familiar Accidentes Personales Protecta Security</b></p>
+      </div>
+    </div>
+    <div class="row mx-0 my-0 px-0 py-0 mt-4 text-center">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+        <button type="button"
+                [routerLink]="'/accidentes-personales'"
+                class="btn-submit">Realizar otra compra</button>
+      </div>
+    </div>
+  </div>
+  <app-questions></app-questions>
+</main>

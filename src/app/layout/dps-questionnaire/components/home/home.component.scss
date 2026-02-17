@@ -1,0 +1,64 @@
+@import "variables";
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 600px;
+  padding: 20px;
+  margin: 60px auto;
+  color: #75688b;
+
+  &__title {
+    color: #2b0d61;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 30px;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  &__image {
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  &__info {
+    text-align: center;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  &__agree-terms {
+    margin-bottom: 40px;
+  }
+
+  &__checkbox {
+    margin-bottom: 4px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    label {
+      margin-bottom: 1px;
+      margin-left: 5px;
+    }
+  }
+
+  &__buttons {
+    text-align: center;
+  }
+
+  &__button {
+    padding: 7px 15px;
+    color: #fff;
+    background-color: #ed6e00;
+    border: 0;
+    width: 120px;
+    border-radius: 5px;
+
+    &[disabled] {
+      opacity: 0.5;
+    }
+  }
+}

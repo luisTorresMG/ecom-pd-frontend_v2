@@ -1,0 +1,520 @@
+<!-- CAPTCHA -->
+<div class="captcha">
+  <re-captcha #recaptchaRef="reCaptcha"
+              (resolved)="resolved($event)"
+              siteKey="{{ siteKey }}"
+              badge="bottomleft"
+              size="invisible">
+  </re-captcha>
+</div>
+
+<div class="container-fluid mx-0 my-0 px-0 py-0"
+     *ngIf="returnTarifario; else notContinue">
+  <div class="row mx-0 my-0 px-0 py-0 content_main">
+    <div class="col-lg-12 mx-0 my-0 px-0 py-0 steps">
+      <app-show-steps [NSTEP]="1"></app-show-steps>
+    </div>
+    <div class="col-lg-6 mx-0 my-0 px-0 py-0 content-form"
+         [@fade]="true">
+      <form class="form-cotizacion"
+            [formGroup]="FORM_COTIZAR"
+            (ngSubmit)="submitFormCotizar()">
+        <div class="title-form">
+          <span class="frm-title">Cotiza tu seguro </span>
+          <div class="inline">
+            <b>Vida Devolución Protecta<sup>+</sup></b>
+            <span> aquí</span>
+          </div>
+        </div>
+        <div *ngIf="!iscollapse"
+             style="margin-bottom: 20px;"
+             class="inline">
+          <span>Ingresa los datos del</span><b> asegurado</b>
+
+        </div>
+        <div *ngIf="iscollapse"
+             style="margin-bottom: 20px;"
+             class="inline">
+          <span>Ingresa los datos del</span><b> asegurado/contratante</b>
+        </div>
+
+        <div class="frm-inputs">
+          <div class="double-inputs">
+            <select class="input input-wp"
+                    formControlName="typeDoc"
+                    (change)="changeTypeDoc()">
+              <!-- <option value="4">CE</option> -->
+              <option value="2">DNI</option>
+            </select>
+            <div class="content-input">
+              <label class="mini-placeholder"
+                     for="ndoc"
+                     [class.placeholder-active]="fc.nDoc.value">Número de Documento</label>
+              <input type="text"
+                     id="ndoc"
+                     class="input input-wp"
+                     [class.input-placeholder-active]="fc.nDoc.value"
+                     formControlName="nDoc"
+                     [maxlength]="numberDocumentLimit.max"
+                     [minlength]="numberDocumentLimit.min"/>
+            </div>
+          </div>
+          <small class="error-in text-left"
+                 *ngIf="errorDocument !== ''">{{
+            errorDocument
+            }}</small>
+          <div class="content-input">
+            <label class="mini-placeholder"
+                   for="email"
+                   [class.placeholder-active]="fc.email.value">Correo Electrónico</label>
+            <input type="email"
+                   id="email"
+                   class="input input-wp"
+                   [class.input-placeholder-active]="fc.email.value"
+                   autocomplete="nope"
+                   formControlName="email"/>
+            <app-email-suggestions [email]="fc['email'].value"
+                                   (suggestion)="emailSuggestion($event)"></app-email-suggestions>
+          </div>
+          <ng-container *ngIf="fc['email'].errors && fc['email'].touched">
+            <ng-container *ngIf="fc['email'].hasError('pattern')">
+              <small class="error-in text-left">El correo electrónico no es válido</small>
+            </ng-container>
+            <ng-container *ngIf="fc['email'].hasError('required')">
+              <small class="error-in text-left">El correo electrónico es obligatorio</small>
+            </ng-container>
+          </ng-container>
+          <div class="content-input">
+            <label class="mini-placeholder"
+                   for="telefono"
+                   [class.placeholder-active]="fc.telefono.value">Celular</label>
+            <input type="text"
+                   id="telefono"
+                   class="input input-wp"
+                   [class.input-placeholder-active]="fc.telefono.value"
+                   formControlName="telefono"
+                   [maxlength]="9"/>
+          </div>
+          <small class="error-in text-left"
+                 *ngIf="errorEmail !== ''">{{
+            errorEmail
+            }}</small>
+          <!-- <div class="content-input"
+     *ngIf="
+    documentResponse.success && !documentResponse.returnBirthDate
+  ">
+  <label class="mini-placeholder"
+         for="fechanac"
+         [class.placeholder-active]="fc.fechaNac.value">Fecha de nacimiento</label>
+  <input type="text"
+         id="fechanac"
+         class="input input-wp"
+         [class.input-placeholder-active]="fc.fechaNac.value"
+         [maxlength]="10"
+         #dp="bsDatepicker"
+         [bsConfig]="bsConfig"
+         bsDatepicker
+         formControlName="fechaNac"
+         [readonly]="true"
+         [value]="FORM_COTIZAR.get('fechaNac').value | date: 'dd/MM/yyyy'"
+         (change)="formatDatePicker(FORM_COTIZAR.get('fechaNac').value)" />
+</div> -->
+          <small class="error-in text-left"
+                 *ngIf="!isValidFechaNacimiento">Debes ser mayor de 18 años</small>
+          <small class="error-in text-left"
+                 *ngIf="errorFechaNac !== '' && FECHA_NAC_IS_ERROR">{{ errorFechaNac }}</small>
+          <small class="error-in text-left"
+                 *ngIf="msgMissData2 != '' ">{{ this.msgMissData2 }}</small>
+        </div>
+        <div class="fecha-nac"
+             *ngIf="documentResponse.success && documentResponse.returnBirthDate">
+          <i class="fa fa-check-circle-o"
+             aria-hidden="true"></i>
+          <span class="fechaNacimiento">Tu fecha de nacimiento es:<b> {{ this.FECHA_NAC }}</b></span>
+        </div>
+
+        <div class="checkboxes mt-3">
+
+
+          <div class="frm-inputs"
+               style="margin-top: 20px;"
+               *ngIf="!iscollapse">
+            <div class="inline">
+              <span>Ingresa los datos del</span><b> contratante</b>
+
+            </div>
+            <!--  <ng-container>
+  <label for="cparentesco"
+         class="lbl-input-u"
+         aria-label="Parentesco:">
+    <select class="input input-wp"
+            formControlName="cparentesco"
+            id="cparentesco">
+      <option [value]="null"
+              selected
+              disabled
+              hidden>
+        Seleccion el parentesco con el asegurado
+      </option>
+      <option *ngFor="let item of relationshipContractor$"
+              [value]="item.id">
+        {{ item.descripcion }}
+      </option>
+    </select>
+  </label>
+</ng-container> -->
+            <div class="double-inputs">
+              <select class="input input-wp"
+                      formControlName="ctypeDoc"
+                      (change)="changeTypeDoc()">
+                <!-- <option value="4">CE</option> -->
+                <option [value]="null"
+                        disabled
+                        hidden
+                        selected>
+                  Relación con el contratante
+                </option>
+                <option value="2">DNI</option>
+              </select>
+              <div class="content-input">
+                <label class="mini-placeholder"
+                       for="cnDoc"
+                       [class.placeholder-active]="fc.cnDoc.value">Número de Documento</label>
+                <input type="text"
+                       id="cnDoc"
+                       class="input input-wp"
+                       [class.input-placeholder-active]="fc.cnDoc.value"
+                       formControlName="cnDoc"
+                       [maxlength]="numberDocumentLimit.max"
+                       [minlength]="numberDocumentLimit.min"/>
+              </div>
+            </div>
+            <small class="error-in text-left"
+                   *ngIf="contErrorDocument !== ''">{{
+              contErrorDocument
+              }}</small>
+            <div class="content-input">
+              <label class="mini-placeholder"
+                     for="cemail"
+                     [class.placeholder-active]="fc.cemail.value">Correo Electrónico</label>
+              <input type="cemail"
+                     id="cemail"
+                     class="input input-wp"
+                     [class.input-placeholder-active]="fc.email.value"
+                     autocomplete="nope"
+                     formControlName="cemail"/>
+              <app-email-suggestions [email]="fc['cemail'].value"
+                                     (suggestion)="DuemailSuggestion($event)"></app-email-suggestions>
+            </div>
+            <ng-container *ngIf="fc['cemail'].errors && fc['cemail'].touched">
+              <ng-container *ngIf="fc['cemail'].hasError('pattern')">
+                <small class="error-in text-left">El correo electrónico no es válido</small>
+              </ng-container>
+              <ng-container *ngIf="fc['cemail'].hasError('required')">
+                <small class="error-in text-left">El correo electrónico es obligatorio</small>
+              </ng-container>
+            </ng-container>
+            <div class="content-input">
+              <label class="mini-placeholder"
+                     for="ctelefono"
+                     [class.placeholder-active]="fc.ctelefono.value">Celular</label>
+              <input type="text"
+                     id="ctelefono"
+                     class="input input-wp"
+                     [class.input-placeholder-active]="fc.ctelefono.value"
+                     formControlName="ctelefono"
+                     [maxlength]="9"/>
+            </div>
+            <small class="error-in text-left"
+                   *ngIf="contErrorEmail !== ''">{{
+              contErrorEmail
+              }}</small>
+            <!-- <div class="content-input"
+     *ngIf="
+      !otherDocumentResponse.p_DBIRTHDAT">
+  <label class="mini-placeholder"
+         for="cfechaNac"
+         [class.placeholder-active]="fc.cfechaNac.value">Fecha de nacimiento</label>
+  <input type="text"
+         id="cfechaNac"
+         class="input input-wp"
+         [class.input-placeholder-active]="fc.cfechaNac.value"
+         [maxlength]="10"
+         #dp="bsDatepicker"
+         [bsConfig]="bsConfig"
+         bsDatepicker
+         formControlName="cfechaNac"
+         [readonly]="true"
+         [value]="FORM_COTIZAR.get('cfechaNac').value | date: 'dd/MM/yyyy'"
+         (change)="formatDatePicker(FORM_COTIZAR.get('cfechaNac').value)" />
+</div> -->
+            <small class="error-in text-left"
+                   *ngIf="!NSisValidFechaNacimiento">Debes ser mayor de 18 años</small>
+            <div class="fecha-nac"
+                 *ngIf="otherDocumentResponse.success && otherDocumentResponse.returnBirthDate">
+              <i class="fa fa-check-circle-o"
+                 aria-hidden="true"></i>
+              <span class="fechaNacimiento">Tu fecha de nacimiento es:<b> {{ this.NSFECHA_NAC
+                }}</b></span>
+            </div>
+
+            <small class="error-in text-left"
+                   *ngIf="NSerrorFechaNac !== '' && NSFECHA_NAC_IS_ERROR">{{ errorFechaNac }}</small>
+
+            <small class="error-in text-left"
+                   *ngIf="errorSamePerson !== '' ">{{ errorSamePerson }}</small>
+
+            <small class="error-in text-left"
+                   *ngIf="msgMissData !== '' ">{{ this.msgMissData }}</small>
+          </div>
+
+
+        </div>
+
+        <div class="checkbox-accept"
+             style="margin-top: 20px">
+          <input type="checkbox"
+                 id="same"
+                 formControlName="same"/>
+          <label for="same"
+                 class="checkbox-personalizado"
+                 [class.parpadeo]="!fc.same.value"
+                 style="margin-bottom: 15px;">
+                        <span style="font-weight: bold;
+            font-size: 15px;">
+                            El contratante y el asegurado son la misma persona.
+                        </span>
+
+          </label>
+          <!--  (click)="showmodalInfo()" -->
+          <button type="button"
+                  class="icon-info"
+                  (click)="showmodalInfo()">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="24"
+                 height="24"
+                 viewBox="0 0 24 24">
+              <path fill="#ed6e00"
+                    d="M13 16h-2v-6h2v6zm-1-10.25c.69 0 1.25.56 1.25 1.25s-.56 1.25-1.25 1.25-1.25-.56-1.25-1.25.56-1.25 1.25-1.25zm0-2.75c5.514 0 10 3.592 10 8.007 0 4.917-5.145 7.961-9.91 7.961-1.937 0-3.383-.397-4.394-.644-1 .613-1.595 1.037-4.272 1.82.535-1.373.723-2.748.602-4.265-.838-1-2.025-2.4-2.025-4.872-.001-4.415 4.485-8.007 9.999-8.007zm0-2c-6.338 0-12 4.226-12 10.007 0 2.05.738 4.063 2.047 5.625.055 1.83-1.023 4.456-1.993 6.368 2.602-.47 6.301-1.508 7.978-2.536 1.418.345 2.775.503 4.059.503 7.084 0 11.91-4.837 11.91-9.961-.001-5.811-5.702-10.006-12.001-10.006z"/>
+            </svg>
+          </button>
+
+        </div>
+
+        <div class="checkbox-accept">
+          <input type="checkbox"
+                 id="policy"
+                 formControlName="privacy"/>
+          <label for="policy"
+                 class="checkbox-personalizado"
+                 [class.parpadeo]="!fc.privacy.value">
+                        <span>
+                            Acepto el envío de comunicaciones comerciales, publicidad y
+                            encuestas de calidad de servicio y/o productos de acuerdo a lo
+                            señalado en las
+                            <a role="button"
+                               href="https://www.protectasecurity.pe/politica-de-privacidad/"
+                               target="_blank"
+                               type="button"
+                               class="policy">Políticas de privacidad</a>
+                        </span>
+          </label>
+        </div>
+        <div>
+          <input type="submit"
+                 class="submit-form"
+                 [disabled]="
+              FORM_COTIZAR.invalid ||
+              !fc['terms'].value ||
+              !isValidFechaNacimiento ||
+              !isValidInfoDocument ||
+              errorSamePerson !== '' && !iscollapse ||
+              !NSisValidFechaNacimiento || msgMissData != '' ||  msgMissData2 != ''
+            "
+                 value="Cotiza aquí"/>
+        </div>
+        <small class="extra_policy">Al presionar "cotiza aquí" declaro conocer las
+          <a href="https://www.protectasecurity.pe/politica-de-privacidad/"
+             target="_blank"
+             (click)="policyEvent()">Políticas de privacidad</a></small>
+      </form>
+    </div>
+  </div>
+  <div
+    class="row mx-0 my-0 px-0 py-0 row-services d-flex align-items-center justify-content-center info-2 content_benefits">
+    <div class="col-lg-6 mw-600">
+      <ul class="listaServices">
+        <li class="listaServices__item"
+            *ngFor="let data of DATA_SERVICES">
+          <i class="fa fa-check-circle-o"
+             aria-hidden="true"></i>
+          <span>
+                        {{ data }}
+                    </span>
+        </li>
+      </ul>
+    </div>
+    <img src="assets/vidaindividual/step1/arbol-money.png"
+         class="ml-5"
+         style="width: 400px !important"
+         alt=""/>
+  </div>
+  <div class="row mx-0 my-0 px-0 py-5 d-flex align-items-center justify-content-center content-salud info-1"
+       style="padding: 5rem 2rem !important">
+    <div class="info-salud">
+            <span>Desde S/ 80 al mes,
+                <h2>ahorras para lo que más quieres.</h2>
+            </span>
+    </div>
+    <img src="assets/vidaindividual/step1/family2.png"
+         class="salud"
+         style="width: 300px !important"
+         alt=""/>
+  </div>
+  <div class="row mx-0 my-0 px-0 py-0 d-flex align-items-center justify-content-center row-whof info-3"
+       style="padding: 5rem !important">
+    <img src="assets/vidaindividual/step1/person-money.png"
+         class="men-with-money mr-5"
+         alt=""/>
+    <div class="info-salud info-devolcion">
+            <span>Te devolvemos hasta el
+                <h2>150% de todo lo pagado</h2>
+            </span>
+    </div>
+  </div>
+  <div class="row mx-0 my-0 px-0 py-5 d-flex align-items-center justify-content-center content-salud info-4"
+       style="display: none !important">
+    <div class="info-salud">
+      <span>Protege a los que</span>
+      <h2>más valoras</h2>
+    </div>
+    <img src="assets/vidaindividual/step1/salud.png"
+         class="salud"
+         alt=""/>
+  </div>
+</div>
+<div class="modal fade"
+     bsModal
+     #modalBeneficios="bs-modal">
+  <div class="modal-dialog"
+       role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+                <span class="modal-title-benef">
+                    Hola<b>{{ nameUser }}</b>al adquirir nuestro seguro recibe los siguientes beneficios:
+                </span>
+        <div class="grilla">
+          <div class="grilla__item"
+               *ngFor="let data of itemsBeneficios">
+            <img [src]="data.img"
+                 class="grilla__item--img"
+                 alt=""/>
+            <span class="grilla__item--desc">
+                            {{ data.desc }}
+              <small class="grilla__item--small">
+                                {{ data.small }}
+                            </small>
+                        </span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button"
+                class="btn full-color btn-aceptar-modal"
+                (click)="nextStep()">
+          Siguiente
+        </button>
+      </div>
+      <small class="benf-ref px-2 py-2"> Beneficios referenciales* </small>
+    </div>
+  </div>
+</div>
+<ng-template #termsModal>
+  <app-terms (closeaction)="closePrivacyModal()"></app-terms>
+</ng-template>
+<ng-template #termsModalPolicy>
+  <app-policy (closeaction)="closePrivacyModaPolicy()"></app-policy>
+</ng-template>
+<ng-template #notContinue>
+  <div class="col-lg-12 mx-0 my-0 px-0 py-0 steps">
+    <app-show-steps [NSTEP]="1"></app-show-steps>
+  </div>
+  <div class="content-no-apto text-center"
+       [@fade]="!isValidPerson">
+    <ng-container *ngIf="!linkVencido">
+      <h2 class="title-no-apto text-center">
+        Hola. Tu solicitud ha sido recepcionada por un asesor de Protecta
+        Security, nos estaremos comunicando contigo en un máximo de 2 días
+        laborables.
+      </h2>
+    </ng-container>
+    <ng-container *ngIf="linkVencido">
+      <h2 class="title-no-apto text-center">
+        Hola. Tu cotización ya no se encuentra vigente. Por favor, solicita una
+        nueva cotización a tu asesor.
+      </h2>
+    </ng-container>
+    <p class="desc-no-apto text-center">
+      Contáctanos en:<br/>
+      Correo Electrónico: <b>vidadevolucion@protectasecurity.pe</b><br/>
+      Estamos a tu disposición de lunes a viernes de
+      <b>9:00 a.m. a 6:00 p.m.</b>, a excepción de feriados.
+    </p>
+  </div>
+  <ng-container *ngIf="!linkVencido">
+    <button class="btn-back d-flex align-items-center justify-content-center"
+            (click)="refreshPage()">
+      <i class="fa fa-chevron-left mr-2"
+         aria-hidden="true"></i>Volver al inicio
+    </button>
+  </ng-container>
+</ng-template>
+
+<!-- MODAL DE CONTRATANTE -->
+<div class="modal fade"
+     bsModal
+     #modalContratante="bs-modal">
+  <div class="modal-dialog"
+       role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+                <span class="modal-title-benef">
+                    Hola al adquirir nuestro seguro recibe los siguientes beneficios:
+                </span>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button"
+                class="btn full-color btn-aceptar-modal"
+                (click)="nextStep()">
+          Siguiente
+        </button>
+      </div>
+      <small class="benf-ref px-2 py-2"> Beneficios referenciales* </small>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalReactivarAlert>
+  <div class="content-modal-u">
+    <section class="modal-u">
+      <div class="">
+        <div class="modal__body"
+             style="height: fit-content; text-align: center">
+                    <span class="msg-alert">
+
+                        <b>Asegurado</b> es la persona que recibirá y se beneficiará
+                        de todas las coberturas de la póliza y el <b>Contratante</b> es el responsable
+                        de las obligaciones de pago de la póliza.
+                    </span>
+        </div>
+        <div class="modal__footer">
+          <button class="button primary fit orange"
+                  (click)="closeModal()">
+            De acuerdo
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+</ng-template>

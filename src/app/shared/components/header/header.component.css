@@ -1,0 +1,156 @@
+.si-mobile {
+  display: none !important;
+}
+
+a {
+  text-decoration: none;
+  color: #2b0d61 !important;
+  font-family: "Bliss Pro";
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: block;
+}
+
+.main-container-header {
+  border-bottom: 2px solid #2b0d61;
+  padding-left: 15px;
+  border-spacing: 30px 0;
+  height: 105px;
+  background-color: #fff;
+}
+
+.container-header {
+  min-height: 90px;
+  text-align: center;
+  display: table;
+  margin: auto;
+}
+
+.container-header .navbar {
+  display: table-row;
+}
+
+.container-header .navbar > * {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.menu-top {
+}
+
+.bg-faded {
+  background-color: #ffffff !important;
+}
+
+.navbar-nav {
+  flex-direction: row !important;
+}
+
+.navbar-nav .nav-link {
+  white-space: nowrap !important;
+  padding-left: 11px;
+}
+
+.btn-menu {
+  font-size: 24px;
+  background: white;
+  border: none;
+}
+
+.img-logo {
+  min-height: 54px !important;
+  min-width: 324px !important;
+}
+
+.img-logo-canal {
+  min-height: 54px !important;
+  min-width: 324px !important;
+  max-height: 70px !important;
+  max-width: 300px !important;
+}
+
+.left-button {
+  display: none;
+}
+
+.ecommerce i {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  background-image: url(assets/ecommerce/cart-icon.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.ecommerce {
+  position: relative;
+}
+
+.ecommerce span {
+  background-color: #ff6e00;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  text-align: center;
+  color: #ffffff;
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  top: -2px;
+  right: -8px;
+  line-height: 15px;
+}
+
+@media (max-width: 992px) {
+}
+
+@media (max-width: 768px) {
+  .si-mobile {
+    display: table-cell !important;
+  }
+  .oculto {
+    display: none !important;
+  }
+  .img-logo-canal {
+    display: none !important;
+  }
+  .left-button {
+    display: block;
+  }
+  .menu-top {
+    display: block;
+    clear: both;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    background: white;
+    top: 90px;
+    z-index: 100;
+    border-top: 2px solid #2b0d61;
+  }
+
+  .navbar-nav {
+    width: 100%;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .navbar-nav-Canal {
+    width: 8px;
+  }
+  .my-collapse {
+    display: none !important;
+  }
+  .show {
+    display: block !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .main-container-header {
+    border-spacing: 10px 0;
+  }
+}

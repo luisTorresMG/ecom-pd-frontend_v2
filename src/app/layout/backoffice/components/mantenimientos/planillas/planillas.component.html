@@ -1,0 +1,367 @@
+<div class="container-fluid">
+  <div class="row content-all" style="margin-left: -15 px !important">
+    <div class="col-md-12 content">
+      <div class="container-fluid content-page">
+        <div class="row r1-head">
+          <div class="col-12 head-title">
+            <h1 class="title">Planillas</h1>
+          </div>
+        </div>
+        <div class="row r2-head">
+          <form class="col-md-2 content-actions" [formGroup]="form">
+            <div class="content-input">
+              <label for="state" class="lbl-in filter-text"
+                >NRO. PLANILLA:</label
+              >
+              <input
+                type="text"
+                autocomplete="off"
+                class="form-control date-search input-date in-action"
+                id="número_planilla"
+                formControlName="planilla"
+              />
+            </div>
+          </form>
+          <div class="col-md-10 cont-btn-generar">
+            <button
+              type="submit"
+              class="full-color"
+              (click)="buscarg()"
+              [disabled]="form.invalid"
+            >
+              Buscar
+            </button>
+            <button type="button" class="full-color" (click)="limpiar()">
+              Limpiar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col-md-12 content"
+      style="padding-left: 0px; padding-right: 0px"
+      *ngIf="!showSelected"
+    >
+      <div class="col-md-12 content">
+        <div class="container-fluid content-page">
+          <div class="row r3-head">
+            <div class="col-md-12 grid-title table-head">
+              <span class="grid-title-item">Proceso de Facturación</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 content">
+        <div class="container-fluid content-page">
+          <div
+            class="row r2-head"
+            style="
+              border-bottom: 0px solid #2b0d61;
+              padding-bottom: 0rem;
+              margin-bottom: 0rem;
+            "
+          >
+            <div
+              class="col-md-8 content-actions"
+              style="justify-content: flex-start"
+            >
+              <button type="button" class="full-color" (click)="NivelI()">
+                Nivel I
+              </button>
+              <button type="button" class="full-color" (click)="GenerarF()">
+                Generar Factura
+              </button>
+              <button type="button" class="full-color" (click)="Anular()">
+                Anular
+              </button>
+            </div>
+            <div class="col-md-6 content-actions"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 content">
+        <div class="container-fluid content-page">
+          <div class="row r3-head">
+            <div class="col-md-2 px-0">
+              <div class="content-input">
+                <label class="lbl-in filter-text">ESTADO:</label>
+                <label class="lbl-in-action">{{ ESTADO }}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 content">
+        <div class="container-fluid content-page">
+          <div class="row r3-head">
+            <div class="col-md-2 px-0">
+              <div class="content-input">
+                <label class="lbl-in filter-text">TOTAL:</label>
+                <label class="lbl-in-action">{{ TOTAL }}</label>
+              </div>
+            </div>
+            <div class="col-md-2 px-0" *ngIf="!showSelected2">
+              <div class="content-input">
+                <label class="lbl-in filter-text">COMPROBANTE:</label>
+                <label class="lbl-in-action">{{ COMPROBANTE }}</label>
+              </div>
+            </div>
+            <div class="col-md-2 px-0" *ngIf="!showSelected2">
+              <div class="content-input">
+                <label class="lbl-in filter-text">IMPORTE:</label>
+                <label class="lbl-in-action">{{ IMPORTE }}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="col-md-12 content">
+        <div class="grid form-group row content-table">
+          <div class="table-responsive" style="padding-left: 30px">
+            <table class="table">
+              <thead>
+                <tr class="grid-title table-head">
+                  <td class="grid-title-item">Canal</td>
+                  <td class="grid-title-item" style="width: 50px">Planilla</td>
+                  <td class="grid-title-item" style="width: 50px">Operación</td>
+                  <td class="grid-title-item" style="width: 240px">
+                    F. Operación
+                  </td>
+                  <td class="grid-title-item" style="width: 240px">
+                    F. Reg Planilla
+                  </td>
+                  <td class="grid-title-item" style="width: 240px">
+                    F. Reg Pago
+                  </td>
+                  <td class="grid-title-item" style="width: 100px">Acciones</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="table-body"
+                  style="text-align: center"
+                  *ngFor="let data of dataPlanilla?.entities"
+                >
+                  <td class="table-body-item">{{ data?.NCANAL }}</td>
+                  <td class="table-body-item">{{ data?.NRO_PLANILLA }}</td>
+                  <td class="table-body-item">{{ data?.NNRO_OPERACION }}</td>
+                  <td class="table-body-item">
+                    {{
+                      data?.NFECHA_OPERACION?.substr(6, 13)
+                        | date: "dd/MM/yyyy h:mm:ss a"
+                    }}
+                  </td>
+                  <td class="table-body-item">
+                    {{
+                      data?.NFECHA_REGISTRO_PLANILLA?.substr(6, 13)
+                        | date: "dd/MM/yyyy h:mm:ss a"
+                    }}
+                  </td>
+                  <td class="table-body-item">
+                    {{
+                      data?.NFECHA_REGISTRO_PAGO?.substr(6, 13)
+                        | date: "dd/MM/yyyy h:mm:ss a"
+                    }}
+                  </td>
+                  <td class="table-body-item">
+                    <a> </a>
+                    <a style="cursor: pointer" (click)="actualizar(data)">
+                      <i
+                        title="Actualizar"
+                        style="cursor: pointer"
+                        class="fa fa-refresh"
+                        aria-hidden="true"
+                      ></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls
+              class="my-pagination"
+              autoHide="true"
+              responsive="true"
+              previousLabel="Anterior"
+              nextLabel="Siguiente"
+              screenReaderPaginationLabel="Paginación"
+              screenReaderPageLabel="pagina"
+              screenReaderCurrentLabel="Estás en la pagina"
+            >
+            </pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #modalActualizar="bs-modal"
+  [config]="{
+    backdrop: 'static'
+  }"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Alteración de Datos</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="hideModalActualizar()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <form [formGroup]="formActualizar">
+              <div class="content-input">
+                <label for="chanel-point-modal-form" class="lbl-in filter-text"
+                  >NRO. OPERACIÓN:</label
+                >
+                <input
+                  type="number"
+                  formControlName="numero_operacion"
+                  class="in-action"
+                />
+              </div>
+              <br />
+              <div class="content-input">
+                <label for="chanel-point-modal-form" class="lbl-in filter-text"
+                  >FECHA OPERACIÓN:</label
+                >
+                <input
+                  type="text"
+                  formControlName="fecha_operacion"
+                  class="in-action"
+                  id="fecha"
+                  [maxDate]="bsValueFin"
+                  #dp="bsDatepicker"
+                  [bsConfig]="bsConfig"
+                  bsDatepicker
+                />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="justify-content: center">
+        <button
+          type="submit"
+          class="btn full-color btn-aceptar-modal"
+          (click)="actualizarInfo()"
+        >
+          Actualizar
+        </button>
+        <button
+          type="button"
+          class="btn full-color btn-secondary btn-close-modal"
+          data-dismiss="modal"
+          (click)="hideModalActualizar()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #modalNivelI="bs-modal"
+  [config]="{
+    backdrop: 'static'
+  }"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="hideModalNivelI()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <h5>
+          {{ BODY_MODAL_SUCCESS }}
+        </h5>
+      </div>
+      <div
+        class="
+          modal-footer modal-foot-confirm
+          d-flex
+          align-items-center
+          justify-content-center
+        "
+      >
+        <button
+          type="button"
+          class="btn full-color btn-aceptar-modal"
+          (click)="hideModalNivelI()"
+        >
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #modalMensajeActualizar="bs-modal"
+  [config]="{
+    backdrop: 'static'
+  }"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="hideModalNivelI()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <h5>
+          {{ MENSAJE }}
+        </h5>
+      </div>
+      <div
+        class="
+          modal-footer modal-foot-confirm
+          d-flex
+          align-items-center
+          justify-content-center
+        "
+      >
+        <button
+          type="button"
+          class="btn full-color btn-aceptar-modal"
+          (click)="hideModalNivelI()"
+        >
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

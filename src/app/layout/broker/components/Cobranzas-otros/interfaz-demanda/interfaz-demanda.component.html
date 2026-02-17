@@ -1,0 +1,80 @@
+<div class="row">
+    <div class="col-lg-3">
+        <app-nav-menuprod></app-nav-menuprod>
+    </div>
+    <div class="col-lg-9">
+        <div class="header-content">
+            <div class="containt-item">
+                <div class="header-item">
+                            <span class="title">Interfaz a Demanda</span>
+                </div>
+            </div>
+        </div>
+<div [formGroup]="filterForm">
+        <div class="row" >
+
+            <div class="col-sm-3">
+                <span>ORIGEN</span>
+                <select class="form-control" disabled (change)="procesarInterfaz()" formControlName="NNUMORI">
+                    <option *ngFor="let x of origen" value="{{ x.mvt_nnumori }}">{{ x.mvt_cdescri }}</option>
+                </select>
+            </div>
+
+            <div class="col-sm-3">
+                <span>INTERFAZ</span>
+                <select class="form-control" (change)="procesarInterfaz()" formControlName="NCODGRU">
+                    <option value="0">SELECCIONE</option>
+                    <option *ngFor="let x of interfaces" value="{{ x.mvt_ncodgru }}">{{ x.mvt_cdescri }}</option>
+                </select>
+            </div>
+
+            <div class="col-sm-3">
+                <span>RAMO</span>
+                <select class="form-control" (change)="procesarInterfaz()" formControlName="NBRANCH">
+                    <option value="0">SELECCIONE</option>
+                    <option *ngFor="let x of ramos" value="{{ x.NBRANCH }}">{{ x.SBRANCH_DESC }}</option>
+                </select>
+            </div>
+
+
+            </div>
+
+                    <div class="row" >
+                 <div class="col-sm-3">
+                <span>FECHA INICIO:</span>
+                <input class="form-control" type="text" disabled    formControlName="DPROCESS_INI" />
+
+            </div>
+
+                        <div class="col-sm-3">
+                <span>FECHA FIN:</span>
+                <input class="form-control" type="text" disabled   formControlName="DPROCESS_FIN" />
+
+            </div>
+
+                        <div class="col-sm-3">
+                <span>&nbsp;</span>
+                <button class="full-color"
+                [disabled]="!HabilitarBotonProcesar"
+                (click)="enviarSolicitudInterfazDemanda()">
+                    <span>Procesar solicitud </span>
+                </button>
+            </div>
+
+            </div>
+</div>
+
+
+
+
+
+            </div>
+
+        </div>
+
+   <!-- Pantalla de carga -->
+    <div [hidden]="procesandoSolicitud==false" class="loadingScreen">
+      <div style="display:flex;height: 100%;width:100%">
+        <i style="margin:auto;font-size: 50px" class="fa fa-spinner fa-spin"></i>
+      </div>
+    </div>

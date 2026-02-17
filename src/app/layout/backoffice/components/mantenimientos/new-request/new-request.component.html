@@ -1,0 +1,1451 @@
+<main class="content">
+  <nav class="navigation">
+    <div class="navigation__breadcrumb">
+      <app-breadcrumb>
+        <a
+          class="navigation__breadcrumb--item"
+          routerLink="/backoffice/mantenimientos/gestion-registro"
+        >
+          <i class="fa fa-home" aria-hidden="true"></i>
+          Gestión de registros
+        </a>
+        <a class="navigation__breadcrumb--item"> Nueva solicitud </a>
+      </app-breadcrumb>
+    </div>
+    <a
+      class="button secondary orange no-border navigation__back"
+      routerLink="/backoffice/mantenimientos/gestion-registro"
+    >
+      <i class="fa fa-chevron-left" aria-hidden="true"></i>
+      Regresar
+    </a>
+  </nav>
+  <header class="header">
+    <h2 class="title">Nueva solicitud</h2>
+  </header>
+  <hr />
+  <section class="section request-data">
+    <header class="section__header">
+      <h4 class="title">Datos de solicitud</h4>
+    </header>
+    <div class="section__inputs request-type">
+      <label class="placeholder select" aria-placeholder="TIPO DE SOLICITUD:">
+        <select [formControl]="requestTypeControl">
+          <option value="" disabled hidden>Seleccione</option>
+          <option [value]="REQUEST_TYPE.REGISTER_CHANNEL">
+            REGISTRO DE CANAL DE VENTA
+          </option>
+          <option [value]="REQUEST_TYPE.EDIT_CHANNEL">
+            MODIFICACIÓN DE CANAL
+          </option>
+        </select>
+      </label>
+      <ng-container
+        *ngIf="requestTypeControl.value && requestTypeControl.value != '0'"
+      >
+        <button
+          class="button primary fit"
+          (click)="showModalSearchChannelOrPointSale()"
+        >
+          {{
+            requestTypeControl.value == "3"
+              ? "Buscar Punto de Venta"
+              : "Buscar Canal"
+          }}
+        </button>
+      </ng-container>
+    </div>
+  </section>
+  <hr />
+  <section class="section product-channel">
+    <header class="section__header">
+      <h4 class="title">Productos del canal</h4>
+    </header>
+    <div class="product">
+      <div class="content-table">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Ramo</th>
+              <th>Producto</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container
+              *ngFor="let form of branchListForm.controls; let index = index"
+            >
+              <tr [formGroup]="form">
+                <td class="col-father">
+                  <div class="content-row-with-actions">
+                    <select formControlName="branch">
+                      <option value="" disabled>Seleccione</option>
+                      <ng-container *ngFor="let item of branches$">
+                        <option
+                          [value]="item.branchId"
+                          *ngIf="
+                            isVisibleBranchListOption(
+                              branchListForm,
+                              'branch',
+                              item.branchId,
+                              index
+                            )
+                          "
+                        >
+                          {{ item.name }}
+                        </option>
+                      </ng-container>
+                    </select>
+                    <button
+                      class="button button-cell-icon"
+                      [disabled]="branchListForm.invalid"
+                      (click)="addRowBranch()"
+                      *ngIf="
+                        branchListForm.length == index + 1 &&
+                        branchListForm.length < branches$.length
+                      "
+                    >
+                      <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+                    <button
+                      class="button button-cell-icon"
+                      (click)="removeOfFormArray(branchListForm, index)"
+                    >
+                      <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </td>
+                <td class="col-father">
+                  <ng-container>
+                    <table>
+                      <tbody>
+                        <tr
+                          class="row-child"
+                          *ngFor="
+                            let formp of form.get('products').controls;
+                            let indexp = index
+                          "
+                        >
+                          <td [formGroup]="formp">
+                            <div class="content-row-with-actions">
+                              <select formControlName="product">
+                                <option value="" disabled>Seleccione</option>
+                                <ng-container
+                                  *ngFor="
+                                    let item of getProductsByBranch(
+                                      form.get('branch').value
+                                    )
+                                  "
+                                >
+                                  <option
+                                    [value]="item.idProducto"
+                                    *ngIf="
+                                      isVisibleBranchListOption(
+                                        form.get('products'),
+                                        'product',
+                                        item.idProducto,
+                                        indexp
+                                      )
+                                    "
+                                  >
+                                    {{ item.producto }}
+                                  </option>
+                                </ng-container>
+                              </select>
+                              <button
+                                class="button button-cell-icon"
+                                [disabled]="form.get('products').invalid"
+                                (click)="addRowProduct(form.get('products'))"
+                                *ngIf="
+                                  form.get('products').length == indexp + 1 &&
+                                  form.get('products').length <
+                                    getProductsByBranch(
+                                      form.get('branch').value
+                                    ).length
+                                "
+                              >
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                              </button>
+                              <button
+                                class="button button-cell-icon"
+                                (click)="
+                                  removeOfFormArray(
+                                    form.get('products'),
+                                    indexp
+                                  )
+                                "
+                              >
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </ng-container>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <hr />
+  <section class="section basic-data">
+    <header class="section__header">
+      <h4 class="title">Datos básicos</h4>
+    </header>
+    <form class="form" [formGroup]="basicDataForm">
+      <!-- Content Channel Type -->
+      <label class="placeholder" aria-placeholder="TIPO DE CANAL:">
+        <div class="content-input select">
+          <select
+            [class.has-error]="
+              basicDataFormControl['channelType'].errors &&
+              basicDataFormControl['channelType'].touched
+            "
+            formControlName="channelType"
+          >
+            <option value="" disabled hidden>Seleccione</option>
+            <option *ngFor="let item of channelTypeList$" [value]="item.id">
+              {{ item.name }}
+            </option>
+          </select>
+        </div>
+
+        <ng-container
+          *ngIf="
+            basicDataFormControl['channelType'].errors &&
+            basicDataFormControl['channelType'].touched
+          "
+        >
+          <small
+            class="has-error"
+            *ngIf="basicDataFormControl['channelType'].hasError('required')"
+          >
+            Este campo es obligatorio
+          </small>
+        </ng-container>
+      </label>
+
+      <div>
+        <!-- Content Associated Channel -->
+        <ng-container
+          *ngIf="applyAssociatedChannel"
+        >
+          <label class="placeholder select" aria-placeholder="CANAL ASOCIADO:">
+            <select
+              [class.has-error]="
+                basicDataFormControl['associatedChannel'].errors &&
+                basicDataFormControl['associatedChannel'].touched
+              "
+              formControlName="associatedChannel"
+            >
+              <option value="" disabled hidden>Seleccione</option>
+              <option *ngFor="let item of salesChannelList$" [value]="item.id">
+                {{ item.name }}
+              </option>
+            </select>
+
+            <ng-container
+              *ngIf="
+                basicDataFormControl['associatedChannel'].errors &&
+                basicDataFormControl['associatedChannel'].touched
+              "
+            >
+              <small
+                class="has-error"
+                *ngIf="
+                  basicDataFormControl['associatedChannel'].hasError('required')
+                "
+              >
+                Este campo es obligatorio
+              </small>
+            </ng-container>
+          </label>
+        </ng-container>
+      </div>
+      <ng-container *ngIf="isSubChannel && requestTypeControl.value === REQUEST_TYPE.REGISTER_CHANNEL">
+        <div class="button-search-channel">
+          <button class="button primary fit" (click)="showModalSubChannel()">
+            Buscar Cliente
+          </button>
+        </div>
+      </ng-container>
+
+      <div class="content-business-info">
+        <!-- Content Document type & Document number -->
+        <div class="group-2">
+          <label
+            class="placeholder select"
+            aria-placeholder="TIPO DE DOCUMENTO:"
+          >
+            <select formControlName="documentType">
+              <option [value]="DOCUMENT_TYPE.RUC">RUC</option>
+              <option [value]="DOCUMENT_TYPE.DNI">DNI</option>
+              <option [value]="DOCUMENT_TYPE.CE">C.E</option>
+            </select>
+          </label>
+          <label
+            class="placeholder"
+            aria-placeholder="N° DE DOCUMENTO:"
+            for="form-document-number"
+          >
+            <input
+              type="text"
+              [class.has-error]="
+                (!rucIsValid ||
+                  basicDataFormControl['documentNumber'].errors) &&
+                basicDataFormControl['documentNumber'].touched
+              "
+              id="form-document-number"
+              placeholder="N° de documento"
+              maxlength="11"
+              formControlName="documentNumber"
+            />
+
+            <ng-container
+              *ngIf="basicDataFormControl['documentNumber'].touched"
+            >
+              <small
+                class="has-error"
+                *ngIf="
+                  (!rucIsValid &&
+                    basicDataFormControl['documentNumber'].value) ||
+                  basicDataFormControl['documentNumber'].hasError('minlength')
+                "
+              >
+                El número de RUC no es válido
+              </small>
+              <small
+                class="has-error"
+                *ngIf="
+                  basicDataFormControl['documentNumber'].hasError('required')
+                "
+              >
+                Este campo es obligatorio
+              </small>
+            </ng-container>
+          </label>
+        </div>
+
+        <!-- Content Legal name -->
+        <ng-container *ngIf="!isRuc10 || isSubChannel">
+          <label
+            class="placeholder legal-name"
+            aria-placeholder="RAZÓN SOCIAL:"
+            for="form-legal-name"
+          >
+            <input
+              type="text"
+              [class.has-error]="
+                basicDataFormControl['legalName'].errors &&
+                basicDataFormControl['legalName'].touched
+              "
+              id="form-legal-name"
+              placeholder="Razón social"
+              [maxlength]="MAX_LENGTH_ALLOWED.LEGAL_NAME"
+              formControlName="legalName"
+            />
+
+            <ng-container
+              *ngIf="
+                basicDataFormControl['legalName'].errors &&
+                basicDataFormControl['legalName'].touched
+              "
+            >
+              <small
+                class="has-error"
+                *ngIf="basicDataFormControl['legalName'].hasError('required')"
+              >
+                Este campo es obligatorio
+              </small>
+            </ng-container>
+          </label>
+        </ng-container>
+
+        <ng-container *ngIf="isRuc10 && !isSubChannel">
+          <!-- Names control -->
+          <label
+            class="placeholder names"
+            aria-placeholder="NOMBRES:"
+            for="form-names"
+          >
+            <input
+              type="text"
+              [class.has-error]="
+                basicDataFormControl['names'].errors &&
+                basicDataFormControl['names'].touched
+              "
+              id="form-names"
+              placeholder="Nombres"
+              maxlength="60"
+              formControlName="names"
+            />
+
+            <ng-container
+              *ngIf="
+                basicDataFormControl['names'].errors &&
+                basicDataFormControl['names'].touched
+              "
+            >
+              <small
+                class="has-error"
+                *ngIf="basicDataFormControl['names'].hasError('required')"
+              >
+                Este campo es obligatorio
+              </small>
+            </ng-container>
+          </label>
+
+          <!-- Paternal surname control -->
+          <label
+            class="placeholder paternal-surname"
+            aria-placeholder="APELLIDO PATERNO:"
+            for="form-paternal-surname"
+          >
+            <input
+              type="text"
+              [class.has-error]="
+                basicDataFormControl['paternalSurname'].errors &&
+                basicDataFormControl['paternalSurname'].touched
+              "
+              id="form-paternal-surname"
+              placeholder="Apellido paterno"
+              maxlength="60"
+              formControlName="paternalSurname"
+            />
+
+            <ng-container
+              *ngIf="
+                basicDataFormControl['paternalSurname'].errors &&
+                basicDataFormControl['paternalSurname'].touched
+              "
+            >
+              <small
+                class="has-error"
+                *ngIf="
+                  basicDataFormControl['paternalSurname'].hasError('required')
+                "
+              >
+                Este campo es obligatorio
+              </small>
+            </ng-container>
+          </label>
+
+          <!-- Maternal surname control -->
+          <label
+            class="placeholder maternal-surname"
+            aria-placeholder="APELLIDO MATERNO:"
+            for="form-maternal-surname"
+          >
+            <input
+              type="text"
+              [class.has-error]="
+                basicDataFormControl['maternalSurname'].errors &&
+                basicDataFormControl['maternalSurname'].touched
+              "
+              id="form-maternal-surname"
+              placeholder="Apellido materno"
+              maxlength="60"
+              formControlName="maternalSurname"
+            />
+
+            <ng-container
+              *ngIf="
+                basicDataFormControl['maternalSurname'].errors &&
+                basicDataFormControl['maternalSurname'].touched
+              "
+            >
+              <small
+                class="has-error"
+                *ngIf="
+                  basicDataFormControl['maternalSurname'].hasError('required')
+                "
+              >
+                Este campo es obligatorio
+              </small>
+            </ng-container>
+          </label>
+        </ng-container>
+      </div>
+
+      <!-- Content Department -->
+      <ng-container *ngIf="!isSubChannel">
+        <div>
+          <pro-select
+            placeholder="DEPARTAMENTO:"
+            [class]="
+              basicDataFormControl['department'].errors &&
+              basicDataFormControl['department'].touched
+                ? 'has-error'
+                : ''
+            "
+            [items]="departmentList$"
+            value="id"
+            label="descripcion"
+            [clearable]="true"
+            formControlName="department"
+          ></pro-select>
+          <ng-container
+            *ngIf="
+              basicDataFormControl['department'].errors &&
+              basicDataFormControl['department'].touched
+            ">
+            <small
+              class="has-error"
+              *ngIf="basicDataFormControl['department'].hasError('required')"
+            >
+              Este campo es obligatorio
+            </small>
+          </ng-container>    
+        </div>
+      </ng-container>
+
+      <!-- Content Province -->
+      <ng-container *ngIf="!isSubChannel">
+        <div>
+          <pro-select
+            placeholder="PROVINCIA:"
+            [class]="
+              basicDataFormControl['province'].errors &&
+              basicDataFormControl['province'].touched
+                ? 'has-error'
+                : ''
+            "
+            [items]="provinceList$"
+            value="idProvincia"
+            label="provincia"
+            [clearable]="true"
+            formControlName="province"
+          ></pro-select>
+          <ng-container
+            *ngIf="
+              basicDataFormControl['province'].errors &&
+              basicDataFormControl['province'].touched
+            ">
+            <small
+              class="has-error"
+              *ngIf="basicDataFormControl['province'].hasError('required')"
+            >
+              Este campo es obligatorio
+            </small>
+          </ng-container>
+        </div>
+      </ng-container>
+
+      <!-- Content District -->
+      <ng-container *ngIf="!isSubChannel">
+        <div>
+          <pro-select
+          placeholder="DISTRITO:"
+          [class]="
+            basicDataFormControl['district'].errors &&
+            basicDataFormControl['district'].touched
+              ? 'has-error'
+              : ''
+          "
+          [items]="districtList$"
+          value="idDistrito"
+          label="distrito"
+          [clearable]="true"
+          formControlName="district"
+          ></pro-select>
+          <ng-container
+          *ngIf="
+            basicDataFormControl['district'].errors &&
+            basicDataFormControl['district'].touched
+          ">
+          <small
+            class="has-error"
+            *ngIf="basicDataFormControl['district'].hasError('required')"
+          >
+            Este campo es obligatorio
+          </small>
+          </ng-container>
+        </div>
+      </ng-container>
+
+      <!-- Content Address -->
+      <ng-container *ngIf="!isSubChannel">
+        <label
+          class="placeholder address"
+          aria-placeholder="DIRECCIÓN:"
+          for="form-address"
+        >
+          <input
+            type="text"
+            [class.has-error]="
+              basicDataFormControl['address'].errors &&
+              basicDataFormControl['address'].touched
+            "
+            id="form-address"
+            placeholder="Dirección"
+            maxlength="80"
+            formControlName="address"
+          />
+
+          <ng-container
+            *ngIf="
+              basicDataFormControl['address'].errors &&
+              basicDataFormControl['address'].touched
+            "
+          >
+            <small
+              class="has-error"
+              *ngIf="basicDataFormControl['address'].hasError('required')"
+            >
+              Este campo es obligatorio
+            </small>
+          </ng-container>
+        </label>
+      </ng-container>
+
+      <!-- Content Contact -->
+      <ng-container *ngIf="!isSubChannel">
+        <label
+          class="placeholder contact"
+          aria-placeholder="CONTACTO:"
+          for="form-contact"
+        >
+          <input
+            type="text"
+            [class.has-error]="
+              basicDataFormControl['contact'].errors &&
+              basicDataFormControl['contact'].touched
+            "
+            id="form-contact"
+            placeholder="Contacto"
+            maxlength="50"
+            formControlName="contact"
+          />
+
+          <ng-container
+            *ngIf="
+              basicDataFormControl['contact'].errors &&
+              basicDataFormControl['contact'].touched
+            "
+          >
+            <small
+              class="has-error"
+              *ngIf="basicDataFormControl['contact'].hasError('required')"
+            >
+              Este campo es obligatorio
+            </small>
+          </ng-container>
+        </label>
+      </ng-container>
+
+      <!-- Content Phone Number -->
+      <ng-container *ngIf="!isSubChannel">
+        <label
+          class="placeholder"
+          aria-placeholder="NÚMERO DE CELULAR:"
+          for="form-phone-number"
+        >
+          <input
+            type="text"
+            [class.has-error]="
+              basicDataFormControl['phoneNumber'].errors &&
+              basicDataFormControl['phoneNumber'].touched
+            "
+            id="form-phone-number"
+            placeholder="Número de celular"
+            maxlength="9"
+            formControlName="phoneNumber"
+          />
+
+          <ng-container
+            *ngIf="
+              basicDataFormControl['phoneNumber'].errors &&
+              basicDataFormControl['phoneNumber'].touched
+            "
+          >
+            <small
+              class="has-error"
+              *ngIf="basicDataFormControl['phoneNumber'].hasError('required')"
+            >
+              Este campo es obligatorio
+            </small>
+          </ng-container>
+        </label>
+      </ng-container>
+
+      <!-- Content Email -->
+      <ng-container *ngIf="!isSubChannel">
+        <label
+          class="placeholder email"
+          [class.has-error]="
+            basicDataFormControl['email'].errors &&
+            basicDataFormControl['email'].touched
+          "
+          for="form-email"
+          aria-placeholder="CORREO ELECTRÓNICO:"
+        >
+          <input
+            type="text"
+            [class.has-error]="
+              basicDataFormControl['email'].errors &&
+              basicDataFormControl['email'].touched
+            "
+            id="form-email"
+            placeholder="Correo electrónico"
+            [maxlength]="MAX_LENGTH_ALLOWED.EMAIL"
+            formControlName="email"
+          />
+
+          <ng-container
+            *ngIf="
+              basicDataFormControl['email'].errors &&
+              basicDataFormControl['email'].touched
+            "
+          >
+            <small
+              class="has-error"
+              *ngIf="basicDataFormControl['email'].hasError('required')"
+            >
+              Este campo es obligatorio
+            </small>
+          </ng-container>
+        </label>
+      </ng-container>
+
+      <!-- Content Detail -->
+      <ng-container *ngIf="isSubChannel">
+        <label
+          class="placeholder"
+          [class.has-error]="
+            basicDataFormControl['detail'].errors &&
+            basicDataFormControl['detail'].touched
+          "
+          for="form-detail"
+          aria-placeholder="DETALLE:"
+        >
+          <input
+            type="text"
+            [class.has-error]="
+              basicDataFormControl['detail'].errors &&
+              basicDataFormControl['detail'].touched"
+            id="form-detail"
+            placeholder="Detalle"
+            [maxlength]="MAX_LENGTH_ALLOWED.DETAIL"
+            formControlName="detail"
+          />
+
+          <ng-container
+            *ngIf="
+              basicDataFormControl['detail'].errors &&
+              basicDataFormControl['detail'].touched"
+          >
+            <small
+              class="has-error"
+              *ngIf="basicDataFormControl['detail'].hasError('required')"
+            >
+              Este campo es obligatorio
+            </small>
+          </ng-container>
+        </label>
+      </ng-container>
+    </form>
+  </section>
+  <hr />
+  <section class="section supplementary-data">
+    <header class="section__header">
+      <h4 class="title">Datos complementarios</h4>
+    </header>
+    <form class="form" [formGroup]="supplementaryDataForm">
+      <!-- Content Start Date -->
+      <label
+        for="form-start-date"
+        class="placeholder"
+        aria-placeholder="INICIO DE VIGENCIA:"
+      >
+        <input
+          type="text"
+          id="form-start-date"
+          placeholder="dd/mm/aaaa"
+          readonly
+          #dp="bsDatepicker"
+          [bsConfig]="startValidityConfig"
+          bsDatepicker
+          formControlName="startValidity"
+        />
+      </label>
+
+      <!-- Content End Date -->
+      <label
+        for="form-end-date"
+        class="placeholder"
+        aria-placeholder="FIN DE VIGENCIA:"
+      >
+        <input
+          type="text"
+          id="form-end-date"
+          placeholder="dd/mm/aaaa"
+          readonly
+          #dp="bsDatepicker"
+          [bsConfig]="endValidityConfig"
+          bsDatepicker
+          formControlName="endValidity"
+        />
+      </label>
+
+      <!-- Content Provider -->
+      <label
+        class="placeholder provider"
+        aria-placeholder="PROVEEDOR DE STOCK:"
+      >
+        <div class="content-input select">
+          <select
+            [class.has-error]="
+              supplementaryDataFormControl['stockProvider'].errors &&
+              supplementaryDataFormControl['stockProvider'].touched
+            "
+            formControlName="stockProvider"
+          >
+            <option value="">Seleccione</option>
+            <option *ngFor="let item of stockProviderList$" [value]="item.id">
+              {{ item.name }}
+            </option>
+          </select>
+        </div>
+
+        <ng-container
+          *ngIf="
+            supplementaryDataFormControl['stockProvider'].errors &&
+            supplementaryDataFormControl['stockProvider'].touched
+          "
+        >
+          <small
+            class="has-error"
+            *ngIf="
+              supplementaryDataFormControl['stockProvider'].hasError('required')
+            "
+          >
+            Este campo es obligatorio
+          </small>
+        </ng-container>
+      </label>
+
+      <label class="placeholder distribution" aria-placeholder="DISTRIBUCIÓN:">
+        <div class="content-radios">
+          <div class="selection radio orange">
+            <input
+              type="radio"
+              id="form-distribution-channel"
+              [value]="DISTRIBUTION_TYPE.CHANNEL"
+              formControlName="distributionType"
+            />
+            <label for="form-distribution-channel">Canal</label>
+          </div>
+          <div class="selection radio orange">
+            <input
+              type="radio"
+              id="form-distribution-sale-point"
+              [value]="DISTRIBUTION_TYPE.POINT_SALE"
+              formControlName="distributionType"
+            />
+            <label for="form-distribution-sale-point">Punto de venta</label>
+          </div>
+        </div>
+      </label>
+    </form>
+  </section>
+
+  <ng-container *ngIf="isSoatProductSelected">
+    <hr />
+    <section class="section attachments">
+      <header class="section__header">
+        <h3 class="title">Datos adjuntos</h3>
+        <div class="section__header--actions">
+          <button
+            class="button primary fit"
+            [disabled]="attachedDataListForm.invalid"
+            (click)="addRowAttachment()"
+          >
+            Agregar
+          </button>
+          <button
+            class="button secondary fit"
+            [disabled]="!attachedDataListForm.length"
+            (click)="removeAttachedFile()"
+          >
+            Eliminar
+          </button>
+        </div>
+      </header>
+      <ng-container *ngIf="attachedDataListForm.controls.length">
+        <div class="content-table">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Tipo de archivo</th>
+                <th>Nombre de archivo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container
+                *ngFor="
+                  let form of attachedDataListForm.controls;
+                  let index = index
+                "
+              >
+                <tr
+                  [formGroup]="form"
+                  [class.invalid]="form.invalid && form.touched"
+                >
+                  <td>{{ index + 1 }}</td>
+                  <td>
+                    <select
+                      formControlName="fileType"
+                      (change)="onChangeFileType(form, index)"
+                    >
+                      <option value="" disabled hidden>Seleccione</option>
+                      <ng-container *ngFor="let item of fileTypeList$">
+                        <option
+                          [value]="item.id"
+                          *ngIf="
+                            isVisibleFileTypeOptionAttachmentList(
+                              attachedDataListForm,
+                              item.id,
+                              index
+                            )
+                          "
+                        >
+                          {{ item.name }}
+                        </option>
+                      </ng-container>
+                    </select>
+                  </td>
+                  <td>
+                    <div class="content-file-upload">
+                      <ng-container *ngIf="!form.get('isReadOnly').value">
+                        <input
+                          type="file"
+                          [id]="'file-control-' + index"
+                          hidden
+                          formControlName="file"
+                          (change)="onAttachedFile($event, index)"
+                        />
+                        <label
+                          class="button primary fit button-small"
+                          [for]="'file-control-' + index"
+                          role="button"
+                        >
+                          Elegir archivo
+                        </label>
+                      </ng-container>
+                      <button
+                        class="button primary fit button-small button-download-file"
+                        *ngIf="form.get('isReadOnly').value"
+                        (click)="downloadUploadedFile(form, index)"
+                      >
+                        Descargar
+                      </button>
+                      <span
+                        class="file-name"
+                        *ngIf="form.get('fileName').value"
+                      >
+                        {{ form.get("fileName").value }}
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+    </section>
+    <hr />
+    <section class="section credit-line">
+      <header class="section__header">
+        <h3 class="title">Datos - Linea de crédito</h3>
+        <div class="section__header--actions">
+          <button
+            class="button primary fit"
+            [disabled]="creditLineDataListForm.invalid"
+            (click)="addRowCreditLine()"
+          >
+            Agregar
+          </button>
+          <button
+            class="button secondary fit"
+            [disabled]="!creditLineDataListForm.length"
+            (click)="removeCreditLine()"
+          >
+            Eliminar
+          </button>
+        </div>
+      </header>
+      <ng-container *ngIf="creditLineDataListForm.controls.length">
+        <div class="content-table">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Tipo de papel</th>
+                <th>Stock Máximo</th>
+                <th>Stock Mínimo</th>
+                <th>Stock Actual</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container
+                *ngFor="
+                  let form of creditLineDataListForm.controls;
+                  let index = index
+                "
+              >
+                <tr
+                  [formGroup]="form"
+                  [class.invalid]="form.invalid && form.touched"
+                >
+                  <td>{{ index + 1 }}</td>
+                  <td>
+                    <select formControlName="certificateType">
+                      <option value="" hidden disabled>Seleccione</option>
+                      <ng-container *ngFor="let item of certificateTypeList$">
+                        <option
+                          [value]="item.id"
+                          *ngIf="
+                            isVisibleCertificateTypeOptionCreditLineList(
+                              creditLineDataListForm,
+                              item.id,
+                              index
+                            )
+                          "
+                        >
+                          {{ item.name }}
+                        </option>
+                      </ng-container>
+                    </select>
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="Stock máximo"
+                      formControlName="maxStock"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="Stock mínimo"
+                      formControlName="minStock"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="Stock actual"
+                      formControlName="currentStock"
+                    />
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+    </section>
+  </ng-container>
+
+  <div class="content__actions">
+    <a
+      class="button secondary fit"
+      routerLink="/backoffice/mantenimientos/gestion-registro"
+    >
+      Cancelar
+    </a>
+    <button class="button primary fit" (click)="showModalConfirmSave()">
+      Aceptar
+    </button>
+  </div>
+</main>
+
+<ng-template #modalConfirmSave>
+  <div class="content-modal">
+    <section class="modal-confirm-save">
+      <div class="modal-header">
+        <h6>Confirmación de nueva solicitud</h6>
+        <button (click)="hideModals()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="text">
+          Por favor, revisa que los datos registrados sean los correctos antes
+          de continuar:
+        </p>
+        <div class="summary">
+          <div class="summary__item">
+            <span>Número de RUC:</span>
+            <span>{{ basicDataFormControl["documentNumber"].value }}</span>
+          </div>
+
+          <ng-container *ngIf="!isRuc10">
+            <div class="summary__item">
+              <span>Razón Social</span>
+              <span>{{ basicDataFormControl["legalName"].value }}</span>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="isRuc10">
+            <div class="summary__item">
+              <span>Nombres</span>
+              <span>{{ basicDataFormControl["names"].value }}</span>
+            </div>
+            <div class="summary__item">
+              <span>Apellido paterno</span>
+              <span>{{ basicDataFormControl["paternalSurname"].value }}</span>
+            </div>
+            <div class="summary__item">
+              <span>Apellido materno</span>
+              <span>{{ basicDataFormControl["maternalSurname"].value }}</span>
+            </div>
+          </ng-container>
+
+          <div class="summary__item">
+            <span>Productos Seleccionados:</span>
+            <span>{{ selectedProductDescription }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="button secondary fit" (click)="hideModals()">
+          Cancelar
+        </button>
+        <button class="button primary fit" (click)="onSubmit()">
+          Confirmar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalResponse>
+  <div class="content-modal">
+    <section>
+      <div class="modal-header">
+        <h6>Mensaje</h6>
+        <button (click)="hideModals()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="text">
+          {{ response.message }}
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="button primary fit" (click)="hideModals()">
+          Aceptar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalSearchChannel>
+  <div class="content-modal">
+    <section class="modal-search-channel">
+      <div class="modal-header">
+        <h6>Buscar canal</h6>
+        <button (click)="hideModalSearChannel()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="row-title-fill">Filtro de búsqueda</div>
+        <form class="form" [formGroup]="searchChannelForm">
+          <label
+            class="placeholder select"
+            aria-placeholder="TIPO DE DOCUMENTO:"
+          >
+            <select formControlName="documentType">
+              <option [value]="DOCUMENT_TYPE.RUC">RUC</option>
+            </select>
+          </label>
+          <label class="placeholder" aria-placeholder="NÚMERO DE DOCUMENTO:">
+            <div class="content-input">
+              <input
+                type="text"
+                maxlength="11"
+                formControlName="documentNumber"
+              />
+            </div>
+          </label>
+          <label class="placeholder legal-name" aria-placeholder="RAZÓN SOCIAL">
+            <div class="content-input">
+              <input type="text" maxlength="60" formControlName="legalName" />
+            </div>
+          </label>
+        </form>
+        <button
+          class="button primary fit"
+          [disabled]="
+            !searchChannelFormControl['documentNumber'].value &&
+            !searchChannelFormControl['legalName'].value
+          "
+          (click)="searchChannel()"
+        >
+          Buscar
+        </button>
+        <div class="content-table">
+          <table class="table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Código de Canal</th>
+                <th>Nombre de Canal</th>
+                <th>Tipo Documento</th>
+                <th>Número Documento</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngIf="!searchChannelList$.length">
+                <tr>
+                  <td colspan="5">No se encontraron resultados</td>
+                </tr>
+              </ng-container>
+              <ng-container *ngIf="searchChannelList$.length">
+                <tr
+                  *ngFor="
+                    let item of searchChannelList$
+                      | paginate
+                        : {
+                            currentPage: searchChannelCurrentPage,
+                            totalItems: searchChannelTotalItems,
+                            itemsPerPage: 5
+                          };
+                    let index = index
+                  "
+                >
+                  <td>
+                    <div class="selection radio orange">
+                      <input
+                        type="radio"
+                        [id]="'search-channel' + index"
+                        name="searchSelectChannel"
+                        (change)="selectChannel(item)"
+                      />
+                      <label [for]="'search-channel' + index"></label>
+                    </div>
+                  </td>
+                  <td>{{ item.request }}</td>
+                  <td>{{ item.legalName }}</td>
+                  <td>{{ item.documentTypeDescription }}</td>
+                  <td>{{ item.documentNumber }}</td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+
+        <ng-container *ngIf="searchChannelTotalItems > 5">
+          <pagination-controls
+            nextLabel="Siguiente"
+            previousLabel="Anterior"
+            [autoHide]="true"
+            (pageChange)="searchChannelPageChange($event)"
+          ></pagination-controls>
+        </ng-container>
+      </div>
+      <div class="modal-footer">
+        <button class="button primary fit" (click)="hideModalSearChannel()">
+          Cancelar
+        </button>
+        <button
+          class="button primary fit"
+          [disabled]="!channelInfo"
+          (click)="acceptSelectChannel()"
+        >
+          Aceptar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalSubChannel>
+    <div class="content-modal">
+      <section class="modal-subchannel">
+        <div class="modal-header">
+          <h6>Buscar Cliente</h6>
+        </div>
+        <div class="modal-body">
+          <form class="form-subchannel"
+                [formGroup]="formSubChannel">
+            <label class="placeholder"
+                   aria-label="Buscar por:">
+              <div class="content-search-type">
+                <div class="selection radio">
+                  <input
+                    type="radio"
+                    id="search-by-document"
+                    [value]="SEARCH_TYPES.DOCUMENT"
+                    formControlName="searchType"
+                  />
+                  <label for="search-by-document">Documento</label>
+                </div>
+                <div class="selection radio">
+                  <input
+                    type="radio"
+                    id="search-by-names"
+                    [value]="SEARCH_TYPES.LEGALNAME"
+                    formControlName="searchType"
+                  />
+                  <label for="search-by-names">Razón Social</label>
+                </div>
+              </div>
+            </label>
+  
+            <ng-container
+              *ngIf="
+                formSubChannelControl['searchType'].value == SEARCH_TYPES.DOCUMENT
+              "
+            >
+              <div class="content-document">
+                <label for=""
+                       class="placeholder select">
+                  <select
+                    type="text"
+                    class="field-container__input"
+                    formControlName="documentType"
+                  >
+                    <option [value]="1">RUC</option>
+                  </select>
+                </label>
+  
+                <label
+                  for="form-subchannel-document-number"
+                  class="placeholder inside"
+                >
+                  <input
+                    type="text"
+                    id="form-subchannel-document-number"
+                    class="field-container__input upper"
+                    maxlength="11"
+                    formControlName="documentNumber"
+                    (blur)="requestClientInfo()"
+                  />
+                </label>
+              </div>
+            </ng-container>
+  
+            <ng-container
+              *ngIf="
+                formSubChannelControl['searchType'].value == SEARCH_TYPES.LEGALNAME
+              "
+            >
+              <label class="placeholder"
+                       aria-label="Razón Social:">
+                  <input
+                    type="text"
+                    class="field-container__input upper"
+                    formControlName="legalName"
+                  />
+              </label>
+
+              <button
+                class="button primary fit"
+                [disabled]="formSubChannelControl['legalName'].value.length < 4"
+                (click)="searchDocumentByNames()"
+                *ngIf="
+                  formSubChannelControl['searchType'].value == SEARCH_TYPES.LEGALNAME
+                "
+              >
+                Buscar
+              </button>
+            </ng-container>
+          </form>
+  
+          <div class="content-table">
+            <table class="table-u">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Documento</th>
+                  <th>Cliente</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="!listDataSubChannel$.length">
+                  <tr>
+                    <td colspan="3">No se encontraron resultados</td>
+                  </tr>
+                </ng-container>
+                <ng-container *ngIf="listDataSubChannel$.length">
+                  <tr
+                    class="list-contractors-row"
+                    *ngFor="
+                      let item of listDataSubChannel$
+                        | paginate
+                          : {
+                              id: 'current-page-list-subchannel',
+                              itemsPerPage: 4,
+                              currentPage: currentPageListSubchannel,
+                              totalItems: listDataSubChannel$.length
+                            };
+                      let index = index
+                    "
+                  >
+                    <td>
+                      <div class="selection radio">
+                        <input
+                          type="radio"
+                          name="subchannel-radio"
+                          [attr.id]="'select-subchannel-' + index"
+                          [value]="item.clientCode"
+                          [formControl]="clientCodeSubChannelControl"
+                          (change)="onChangeSelectSubChannel(item)"
+                        />
+                        <label [attr.for]="'select-subchannel-' + index"></label>
+                      </div>
+                    </td>
+                    <td>
+                      {{'RUC'}} -
+                      {{ item.documentNumber }}
+                    </td>
+                    <td>{{ item.legalName }}</td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+          <ng-container *ngIf="listDataSubChannel$.length">
+            <pagination-controls
+              id="current-page-list-subchannel"
+              [autoHide]="true"
+              (pageChange)="currentPageListSubchannel = $event"
+              previousLabel="Anterior"
+              nextLabel="Siguiente"
+            ></pagination-controls>
+          </ng-container>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="button secondary fit"
+            (click)="hideModalSubChannel()"
+          >
+            Cancelar
+          </button>
+          <button
+            class="button primary fit"
+            [disabled]="!subChannelSelected.id"
+            (click)="selectSubChannel()"
+          >
+            Aceptar
+          </button>
+        </div>
+      </section>
+    </div>
+  </ng-template>
+
+<div class="captcha">
+  <re-captcha
+    #recaptchaRef="reCaptcha"
+    (resolved)="resolved($event)"
+    siteKey="{{ siteKey }}"
+    badge="bottomleft"
+    size="invisible"
+  >
+  </re-captcha>
+</div>

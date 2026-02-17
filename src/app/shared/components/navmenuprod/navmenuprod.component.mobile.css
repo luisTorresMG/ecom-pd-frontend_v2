@@ -1,0 +1,31 @@
+.toggle-bar {
+  position: absolute;
+  top: -4.5rem;
+  left: 2rem;
+  z-index: 9999;
+  border: none;
+  background: transparent;
+  display: none;
+}
+@media (max-width: 991px) {
+  .main-nav {
+    height: 100vh;
+    max-height: 100vh;
+    min-height: 100%;
+    position: fixed !important;
+    width: 100%;
+    left: 0 !important;
+    top: 95px !important;
+    display: none;
+    z-index: 9999 !important;
+    background: #fff;
+    margin: 0px;
+    border: 2px solid #c5bdd2;
+    border-top: 0px none;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+  .toggle-bar {
+    display: block;
+  }
+}

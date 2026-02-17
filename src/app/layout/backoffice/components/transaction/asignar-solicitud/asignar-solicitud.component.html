@@ -1,0 +1,484 @@
+<div class="container-fluid">
+  <div class="row content-all">
+    <div class="col-md-12 content">
+      <form [formGroup]="formSearchPoliza" class="container-fluid content-page">
+        <div class="row r1-head">
+          <div class="col-12 head-title">
+            <h1 class="title">Asignar Solicitud</h1>
+            <button
+              class="full-color btn-with-icon btn-download"
+              (click)="exportar(formSearchPoliza.value)"
+            >
+              <img class="icon-btn" src="assets/icons/download2.png" />
+              Exportar
+            </button>
+          </div>
+        </div>
+        <div class="row r2-head mb-2">
+          <div class="col-md-12 content-actions">
+            <div class="content-input">
+              <label for="state" class="lbl-in filter-text"
+                >FECHA INICIO:</label
+              >
+              <input
+                type="text"
+                class="form-control date-search input-date in-action"
+                formControlName="P_DFCREABEGIN"
+                #dp="bsDatepicker"
+                [bsConfig]="bsConfig"
+                bsDatepicker
+                [maxDate]="bsValueFin"
+              />
+            </div>
+            <div class="content-input">
+              <label for="chanel" class="lbl-in filter-text">FECHA FIN:</label>
+              <input
+                type="text"
+                class="form-control date-search input-date in-action"
+                formControlName="P_DFCREAEND"
+                [bsConfig]="bsConfig"
+                #dp="bsDatepicker"
+                bsDatepicker
+                [maxDate]="bsValueFin"
+              />
+            </div>
+            <div class="content-input">
+              <label class="lbl-in filter-text">N° SOLICITUD:</label>
+              <input
+                type="number"
+                class="in-action"
+                formControlName="P_NIDREQUEST"
+              />
+            </div>
+            <div class="content-input">
+              <label class="lbl-in filter-text">ESTADO:</label>
+              <select class="in-action" formControlName="P_NSTATUS">
+                <option [value]="0" disabled selected>SELECCIONE</option>
+                <option
+                  *ngFor="let data of STATUS_POLCICY.PRO_MASTER"
+                  [value]="data.SITEM"
+                >
+                  {{ data.SDECRIPTION }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-8 px-0 mt-3">
+            <app-channel-point
+              (CANAL_VENTA_DATA_OUT)="CanalVentaData($event)"
+              (PUNTO_VENTA_DATA_OUT)="PuntoVentaData($event)"
+            ></app-channel-point>
+          </div>
+          <div class="col-md-4 search-right">
+            <button class="full-color" (click)="polizasData()">Buscar</button>
+          </div>
+        </div>
+      </form>
+      <div class="grid form-group row content-table">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr class="grid-title table-head">
+                <td class="grid-title-item">N° Solicitud</td>
+                <td class="grid-title-item">Canal de Venta</td>
+                <td class="grid-title-item">Punto de Venta</td>
+                <td class="grid-title-item">Cant. Solicitada</td>
+                <td class="grid-title-item">Cant. Atendida</td>
+                <td class="grid-title-item">Cant. Acumulada</td>
+                <td class="grid-title-item">N° Lote</td>
+                <td class="grid-title-item">Estado</td>
+                <td class="grid-title-item">Fecha Registro</td>
+                <td class="grid-title-item">Acción</td>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngIf="!POLIZAS_DATA?.entities?.length">
+                <tr class="grid-body">
+                  <td
+                    class="grid-body-item"
+                    colspan="10"
+                    style="text-align: center"
+                  >
+                    No hay informacion para mostrar
+                  </td>
+                </tr>
+              </ng-container>
+              <ng-container *ngIf="!!POLIZAS_DATA?.entities?.length">
+                <tr
+                  class="table-body"
+                  *ngFor="
+                    let data of POLIZAS_DATA.entities
+                      | paginate: { itemsPerPage: 10, currentPage: p }
+                  "
+                >
+                  <td class="table-body-item">{{ data.NIDREQUEST }}</td>
+                  <td class="table-body-item">{{ data.SPOLICY }}</td>
+                  <td class="table-body-item">{{ data.SSALEPOINT }}</td>
+                  <td class="table-body-item">{{ data.NREQUESTEDAMOUNT }}</td>
+                  <td class="table-body-item">{{ data.NAMOUNTCOVERED }}</td>
+                  <td class="table-body-item">{{ data.NQUANTITYAMOUNT }}</td>
+                  <td class="table-body-item">{{ data.NNUMLOT }}</td>
+                  <td class="table-body-item">{{ data.SSTATUS }}</td>
+                  <td class="table-body-item">
+                    {{ data.DREGISTER | date: "dd/MM/yyy hh:mm:ss a" }}
+                  </td>
+                  <td class="table-body-item">
+                    <a role="button" (click)="verDataLote(data)">
+                      <i
+                        title="Ver"
+                        style="cursor: pointer; margin-left: 3px"
+                        class="fa fa-search fa-lg"
+                      ></i>
+                    </a>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="paginatio-tbl">
+        <pagination-controls
+          class="my-pagination"
+          (pageChange)="p = $event"
+          *ngIf="!!POLIZAS_DATA?.entities?.length"
+          autoHide="true"
+          responsive="true"
+          previousLabel="Anterior"
+          nextLabel="Siguiente"
+          screenReaderPaginationLabel="Paginación"
+          screenReaderPageLabel="pagina"
+          screenReaderCurrentLabel="Estás en la pagina"
+        >
+        </pagination-controls>
+      </div>
+      <div class="row container-inputs mx-0" style="margin-top: 3%">
+        <div class="col-md-2">
+          <div class="content-input">
+            <button
+              class="full-color"
+              (click)="cantidadAsignada()"
+              [disabled]="AMOUNTCOVERED == false"
+            >
+              Nuevo
+            </button>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="content-input">
+            <button class="full-color" (click)="nuevaSolicitud()">
+              Nueva solicitud
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid data-lote">
+        <div class="row">
+          <div class="col-md-12 grid-title table-head">
+            <span class="grid-title-item">Datos del Lote</span>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-md-3 px-0">
+            <div class="content-input">
+              <label class="lbl-in filter-text">CANAL DE VENTA:</label>
+              <label class="lbl-in-action">{{ LOTE_DATA.SPOLICY }}</label>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="content-input">
+              <label class="lbl-in filter-text">PUNTO DE VENTA:</label>
+              <label class="lbl-in-action">{{ LOTE_DATA.SSALEPOINT }}</label>
+            </div>
+          </div>
+          <div class="col-md-3 px-0">
+            <div class="content-input">
+              <label class="lbl-in filter-text">N° SOLICITUD:</label>
+              <label class="lbl-in-action">{{ LOTE_DATA.NIDREQUEST }}</label>
+            </div>
+          </div>
+          <div class="col-md-3 pr-0">
+            <div class="content-input">
+              <label class="lbl-in filter-text">N° DE LOTE:</label>
+              <label class="lbl-in-action">{{ LOTE_DATA.NNUMLOT }}</label>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row" style="display: flex; align-items: flex-end">
+          <div class="col-md-3 px-0">
+            <div class="content-input">
+              <label class="lbl-in filter-text">TIPO:</label>
+              <label class="lbl-in-action">{{ LOTE_DATA.SCERTIFICATE }}</label>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="content-input">
+              <label class="lbl-in filter-text">CANTIDAD:</label>
+              <label class="lbl-in-action">{{
+                LOTE_RANGO.PRO_SEL_RANGE.P_TOTAL
+              }}</label>
+            </div>
+          </div>
+          <div class="col-md-3 px-0">
+            <div class="content-input">
+              <button
+                class="full-color addRange"
+                (click)="generarRango()"
+                [disabled]="btnRango == false"
+              >
+                >>
+              </button>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row" [formGroup]="formRange">
+          <div class="col-md-3 px-0">
+            <div class="content-input">
+              <label class="lbl-in filter-text">DESDE:</label>
+              <input type="text" formControlName="ini" class="lbl-in-action" />
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="content-input">
+              <label class="lbl-in filter-text">HASTA:</label>
+              <input type="text" formControlName="fin" class="lbl-in-action" />
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-md-2 px-0">
+            <div class="content-input">
+              <button
+                class="full-color"
+                (click)="grabarLote()"
+                [disabled]="btnGrabar == false || formRange.invalid"
+              >
+                Grabar
+              </button>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="content-input">
+              <button class="full-color" (click)="clearDataLote()">
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  bsModal
+  #modal="bs-modal"
+  [config]="{
+    backdrop: 'static'
+  }"
+>
+  <div class="modal-dialog" role="document">
+    <form
+      class="modal-content"
+      [formGroup]="formAsignarSolicitud"
+      (ngSubmit)="generarNuevaSolicitud()"
+    >
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Generar Solicitud</h5>
+        <button
+          type="button"
+          (click)="cancelNuevaSolicitud()"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="content-input">
+              <label for="chanel-modal-form" class="lbl-in filter-text"
+                >CANAL DE VENTA:</label
+              >
+              <select
+                class="in-action"
+                id="chanel-modal-form"
+                formControlName="P_NIDPOLICY"
+                (change)="changeCanalVentaData($event.target.value)"
+              >
+                <option [value]="0" selected disabled>SELECCIONE</option>
+                <option
+                  *ngFor="let data of CANAL_VENTA_DATA_NEW_POLICY"
+                  [value]="data.nchannel"
+                >
+                  {{ data.sdescript }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="content-input">
+              <label for="chanel-point-modal-form" class="lbl-in filter-text"
+                >PUNTO DE VENTA:</label
+              >
+              <select
+                [disabled]="selec == false"
+                class="in-action"
+                id="chanel-point-modal-form"
+                formControlName="P_NNUMPOINT"
+              >
+                <option [value]="0" selected disabled>SELECCIONE</option>
+                <ng-container
+                  *ngIf="!!PUNTO_VENTA_NEW_POLICY_DATA?.PRO_SALE_POINT?.length"
+                >
+                  <option
+                    *ngFor="
+                      let data of PUNTO_VENTA_NEW_POLICY_DATA.PRO_SALE_POINT
+                    "
+                    [value]="data.NNUMPOINT"
+                  >
+                    {{ data.SDESCRIPT }}
+                  </option>
+                </ng-container>
+                <ng-container
+                  *ngIf="!PUNTO_VENTA_NEW_POLICY_DATA?.PRO_SALE_POINT?.length"
+                >
+                  <option disabled>NO HAY RESULTADOS</option>
+                </ng-container>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="content-input">
+              <label for="certified-type-modal-form" class="lbl-in filter-text"
+                >TIPO DE CERTIFICADO:</label
+              >
+              <select
+                class="in-action"
+                id="certified-type-modal-form"
+                formControlName="P_NPRODUCT"
+              >
+                <option [value]="0" selected disabled>SELECCIONE</option>
+                <option
+                  *ngFor="let data of TIPOS_CERTIFICADOS.PRO_MASTER"
+                  [value]="data.SITEM"
+                >
+                  {{ data.SDECRIPTION }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="content-input">
+              <label for="certified-type-modal-form" class="lbl-in filter-text"
+                >CANTIDAD:</label
+              >
+              <input
+                type="text"
+                class="in-action"
+                formControlName="P_NQUANTITY"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn full-color btn-secondary btn-close-modal"
+          data-dismiss="modal"
+          (click)="cancelNuevaSolicitud()"
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          class="btn full-color btn-aceptar-modal"
+          [disabled]="
+            formAsignarSolicitud.invalid ||
+            formAsignarSolicitud.get('P_NIDPOLICY').value == 0 ||
+            formAsignarSolicitud.get('P_NNUMPOINT').value == 0 ||
+            formAsignarSolicitud.get('P_NPRODUCT').value == 0
+          "
+        >
+          Aceptar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #modalMessage="bs-modal"
+  [config]="{
+    backdrop: 'static'
+  }"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Mensaje</h5>
+        <button
+          type="button"
+          (click)="hideModalMessage()"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label for="">
+          {{ messageModal }}
+        </label>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          (click)="hideModalMessage()"
+          class="btn full-color btn-aceptar-modal"
+        >
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #modalAlert>
+  <div class="content-modal-u">
+    <div class="modal-u modal-alert">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Mensaje</h6>
+        <button class="modal__header--close" (click)="closeModal()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <p class="modal__body--desc">{{ message }}</p>
+      </div>
+      <div class="modal__footer">
+        <button
+          class="btn-primary-u"
+          role="button"
+          type="button"
+          (click)="closeModal()"
+        >
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

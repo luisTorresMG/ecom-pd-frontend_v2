@@ -1,0 +1,371 @@
+@import "standard"
+@import "modal"
+@import "variables"
+
+::ng-deep bs-datepicker-container
+  top: -21rem !important
+
+::ng-deep
+  .pay-periods
+    .list
+      top: -14rem
+
+.placeholder
+  input,
+  select
+    border: 1px solid $purple
+
+.progress-bar
+  border-radius: 4px
+  min-width: 90px
+  width: 90px
+  height: 27px
+
+  &.orange
+    background-color: rgba(254, 205, 12, 0.2) !important
+
+  &.blue
+    background-color: rgba(43, 191, 254, 0.2) !important
+
+  &.green
+    background-color: rgba(0, 207, 62, 0.2) !important
+
+  &.billing
+    background-color: $orange !important
+    color: #fff
+
+.content
+  display: flex
+  flex-direction: column
+  gap: 1rem
+
+  &__filter
+    width: 100%
+    display: flex
+    gap: 1rem
+
+    .button-filter
+      height: 48px
+      min-width: fit-content
+
+  &__billing-filter
+    form
+      align-items: flex-end
+      display: flex
+      gap: 1rem
+      flex-wrap: wrap
+
+      .placeholder
+        max-width: 230px
+
+      .clear-filters
+        min-width: fit-content
+
+  &__list
+    &--biller
+      display: flex
+      align-items: center
+      justify-content: space-between
+      background-color: $purple
+      padding: .5rem
+      border-bottom: 1px solid #ccc
+      border-radius: 10px 10px 0 0
+
+      span
+        color: #fff
+
+      .button
+        min-width: 95px
+        height: 32px
+
+.filter-search
+  display: flex
+  align-items: center
+
+  input
+    padding-left: 45px
+    padding-right: 50px
+
+  button
+    position: absolute
+    right: 0
+    display: flex
+    align-items: center
+    justify-content: center
+    width: 50px
+    height: 100%
+    background: none
+    border: none
+
+    &:hover
+      background-color: rgba(0, 0, 0, 0.075)
+
+  .fa-search
+    left: 20px
+    position: absolute
+
+.content-table
+  min-height: 420px
+
+  .selection
+    input[type="checkbox"]:disabled
+      & + label::before
+        opacity: .5
+
+  .result
+    display: flex
+    gap: 1rem
+
+    &__success,
+    &__errors
+      display: flex
+      flex-direction: column
+      align-items: flex-start
+
+      .fa
+        font-size: 16px
+
+      span
+        display: flex
+        align-items: center
+        gap: .5rem
+        font-size: 16px
+
+      small
+        font-size: 14px
+
+  .dropdown
+    &__list
+      width: 260px !important
+
+.modal-filters
+  section
+    max-width: 540px !important
+
+  .form-filter
+    display: flex
+    flex-direction: column
+    gap: 1rem
+
+    .fa-search,
+    .fa-calendar
+      position: absolute
+      right: 1rem
+
+    .form-contractor,
+    .form-sales-channel
+      display: flex
+      align-items: center
+
+    ::ng-deep pro-select .placeholder,
+    .placeholder
+      display: flex
+      align-items: center
+      flex-direction: row
+      gap: 1rem
+
+      &::before
+        min-width: 140px
+
+      input
+        padding-right: 2.5rem
+
+    ::ng-deep pro-select
+      .content-input
+        width: 100%
+
+      .list
+        max-height: 185px
+
+    .period-payment-control
+      ::ng-deep pro-select
+        .list
+          top: -12rem
+
+    .placeholder.dbl-input
+      & > div
+        position: relative
+
+        .fa
+          position: absolute
+          right: 10px
+          top: 18px
+
+.modal-drop-file
+  section
+    max-width: 720px !important
+
+  ::ng-deep
+    .ngx-file-drop__drop-zone,
+    .ngx-file-drop__content
+      height: auto
+
+    .ngx-file-drop__drop-zone
+      padding: 1rem
+      border: 2px dotted $orange
+      border-radius: 15px
+
+  .file__drop
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-direction: column
+    gap: .5rem
+
+    .fa-cloud-upload
+      font-size: 40px
+      color: $orange
+
+    &--info
+      display: flex
+      gap: 5px
+
+      span[role="button"]
+        color: $orange
+
+  .progress
+    display: flex
+    align-items: center
+    justify-content: space-between
+    margin-top: 1rem
+    padding: 1rem
+    min-height: 60px
+    background-color: #F9F9F9
+    border-radius: 18px
+
+    &__info
+      display: flex
+      align-items: center
+      gap: 1rem
+
+      span
+        font-size: 16px
+
+      .fa-file-o
+        display: flex
+        align-items: center
+        justify-content: center
+        width: 40px
+        height: 40px
+        padding: 10px
+        background: #FFDED2
+        color: $orange
+        border-radius: 50%
+        font-size: 17px
+        text-align: center
+
+    .button-close
+      display: flex
+      align-items: center
+      justify-content: center
+      width: 25px
+      height: 25px
+      background: transparent
+      border-radius: 50%
+      border: 2px solid #403E49
+
+      .fa-times
+        font-size: 13px
+
+.modal-view-load
+  .load
+    display: flex
+    flex-direction: column
+    gap: 10px
+
+    &:not(:last-child)
+      margin-bottom: 1rem
+
+    &__title
+      display: flex
+      align-items: center
+      justify-content: space-between
+      flex-wrap: wrap
+
+      .fa
+        color: #8A888F
+
+      span:first-child
+        font-size: 18px
+        font-weight: bold
+
+      span:last-child
+        color: #8A888F
+
+        .fa-check-circle
+          color: #00CF3E
+
+    &__progress
+      display: grid
+      grid-gap: .5rem
+      grid-template-columns: repeat(6, 1fr)
+
+      div
+        height: 10px
+        background-color: #EDEDEF
+
+    &__result
+      display: flex
+      gap: 1rem
+
+      .result
+        &__success,
+        &__errors
+          *
+            color: #66656E
+
+    &.read
+      .load__progress .active
+        background-color: #FECD0C
+
+    &.validate
+      .load__progress .active
+        background-color: #2BBFFE
+
+    &.migrate
+      .load__progress .active
+        background-color: #00CF3E
+
+    &.migrate
+      .load__progress .active
+        background-color: $orange
+
+.modal-biller
+  section
+    max-width: 980px
+
+  .content-table
+    min-height: auto
+
+    .button-exclude
+      min-width: fit-content
+      height: 25px
+      background-color: transparent
+
+.modal-confirm-emit-process,
+.modal-response
+  max-width: 400px !important
+
+.modal-response
+  .modal
+    &-header h6,
+    &-body .paragraph
+      text-align: center !important
+
+    &-body .fa
+      display: flex
+      align-items: center
+      justify-content: center
+      width: 90px
+      height: 90px
+      margin: auto auto 1rem auto
+      font-size: 54px
+      border: 2px solid
+      border-radius: 50%
+
+      &-check
+        color: $success-color
+
+      &-times
+        color: $error-color
+

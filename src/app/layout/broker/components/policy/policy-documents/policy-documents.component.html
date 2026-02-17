@@ -1,0 +1,146 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{title}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="reference.dismiss()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <!-- Modal para Detalle de EPS -->
+    <div class="col-sm-12 mt-3" *ngIf="opcionVer == 1">
+        <div class="card">
+            <div class="col-sm-12 mt-3 mb-3">
+            <span class="d-block mb-2">
+                <strong>Código N° {{ nidheaderproc }}</strong>
+            </span>
+
+            <table class="table table-striped text-center">
+                <thead>
+                <tr>
+                    <th>Índice</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Mensaje</th>
+                    <th>Usuario</th>
+                </tr>
+                </thead>
+                <ng-container *ngIf="detalleEPSList == null || detalleEPSList.length == 0; then noData else showData">
+                </ng-container>
+            </table>
+
+            <ng-template #noData>
+                <tbody>
+                <tr>
+                    <td colspan="5" class="text-center">No se encontraron movimientos</td>
+                </tr>
+                </tbody>
+            </ng-template>
+
+            <ng-template #showData>
+                <tbody>
+                <tr *ngFor="let item of listToShow; let i = index">
+                    <td>{{ item.norder }}</td>
+                    <td>{{ item.dcompdate }}</td>
+                    <td>{{ item.sstate == 5 ? 'ERROR' : (item.sstate == 2 ? 'EXITOSO' : item.sstate) }}</td>
+                    <td>{{ item.message }}</td>
+                    <td>{{ item.suser | uppercase }}</td>
+                </tr>
+                </tbody>
+            </ng-template>
+
+            <!-- PAGINACIÓN -->
+            <ng-container *ngIf="detalleEPSList != null && detalleEPSList.length > 0">
+                <div class="row mt-2">
+                <div class="col-sm-12">
+                    <ngb-pagination [(page)]="currentPage" 
+                                    [pageSize]="itemsPerPage" 
+                                    [collectionSize]="totalItems"
+                                    [maxSize]="maxSize"
+                                    (pageChange)="pageChanged(currentPage)">
+                    <ng-template ngbPaginationPrevious>ANTERIOR</ng-template>
+                    <ng-template ngbPaginationNext>SIGUIENTE</ng-template>
+                    </ngb-pagination>
+                </div>
+                </div>
+            </ng-container>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12 mt-3" *ngIf="opcionVer != 1 && motAnulacion != ''">
+        <span>Motivo de Anulación</span>
+        <input type="text" [(ngModel)]="motAnulacion" disabled />
+    </div>
+    <div class="col-sm-12 mt-2 mb-3" *ngIf="opcionVer != 1 && codTransac == 6 || codTransac == 7">
+        <span>Comentarios</span>
+        <textarea cols="40" [(ngModel)]="comentario" placeholder="SIN COMENTARIOS" rows="5" style="width:100%" [disabled]="true"></textarea>
+    </div>
+    <div class="col-sm-12 mt-3" *ngIf="opcionVer != 1 && codTransac != 6 && (codTransac != 7 || nbranch == 77)">
+        <div class="card">
+            <div class="col-sm-12 mt-3">
+                <h5>Documentos de la póliza</h5>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td class="col">Documento</td>
+                            <td class="col">Descargar</td>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="generadosList!=null && generadosList.length>0">
+                        <tr *ngFor="let item of generadosList">
+                            <td><span>{{ item | fileName }}</span></td>
+                            <td><span class="text-center"><a (click)="downloadFile(item)"><img
+                                            src="assets/icons/download2.png" title="Descargar" style="cursor:pointer;"
+                                            alt="Descargar" /></a></span></td>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="generadosList==null || generadosList.length==0">
+                        <tr>
+                            <td colspan="2" class="col-sm text-center"><span>No se encontraron archivos</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 mt-2 mb-3" *ngIf="opcionVer != 1 && codTransac != 6">
+        <div class="card">
+            <div class="col-sm-12 mt-3">
+                <h5>Archivos adjuntos</h5>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td class="col">Documento</td>
+                            <td class="col">Descargar</td>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="adjuntosList!=null && adjuntosList.length>0">
+                        <tr *ngFor="let item of adjuntosList">
+                            <td><span>{{ item | fileName }}</span></td>
+                            <td><span class="text-center"><a (click)="downloadFile(item)"><img
+                                            src="assets/icons/download2.png" title="Descargar" style="cursor:pointer;"
+                                            alt="Descargar" /></a></span></td>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="adjuntosList==null || adjuntosList.length==0">
+                        <tr>
+                            <td colspan="2" class="col-sm text-center"><span>No se encontraron archivos</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="card" *ngIf="codTransac != 7">
+                    <div class="col-sm-12 mt-3 mb-3">
+                        <span>Comentarios</span>
+                        <textarea cols="40" [(ngModel)]="comentario" rows="5" style="width:100%" placeholder="SIN COMENTARIOS"
+                            [disabled]="true"></textarea>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button (click)="reference.close()">Regresar</button>
+</div>

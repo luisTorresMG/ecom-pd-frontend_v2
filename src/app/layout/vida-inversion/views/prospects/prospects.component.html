@@ -1,0 +1,290 @@
+<div class="form-group row">
+    <div class="col-lg-3">
+        <app-nav-menuprod></app-nav-menuprod>
+    </div>
+
+    <div class="col-lg-9">
+
+        <div class="group1">
+            <h2 class="title">
+                Bandeja de prospectos
+            </h2>
+            <div class="d-flex g-2">
+                <form-button label="Limpiar"
+                             btnClass="btn-secondary-VI text-nowrap"
+                             [slim]="true"
+                             (click)="clearParameters()"></form-button>
+                <form-button label="Buscar"
+                             btnClass="btn-primary-VI text-nowrap"
+                             [slim]="true"
+                             (click)="searchProspects()"></form-button>
+                <form-button label="Nuevo cliente"
+                             btnClass="btn-orange"
+                             [disabled]="profile_id === '192'"
+                             [slim]="true"
+                             (click)="GoToNewProspesct()"></form-button>
+            </div>
+        </div>
+
+        <div class="form-filters">
+
+            <form-input-select text_label="CANAL:"
+                               fieldCodigo="COD_PRODUCT"
+                               fieldValor="DES_PRODUCT"
+                               [large]="true"
+                               [disabled]="true"
+                               [items]="CHANNEL"></form-input-select>
+
+            <!-- <form-input-select text_label="RAMO:" fieldCodigo="COD_PRODUCT" fieldValor="DES_PRODUCT" [large]="true" [items]="RAMO"
+        [disabled]="true"></form-input-select> -->
+
+            <form-input-select text_label="PRODUCTO:"
+                               fieldCodigo="COD_PRODUCT"
+                               fieldValor="DES_PRODUCT"
+                               [items]="PRODUCT"
+                               [large]="true"
+                               [disabled]="true"></form-input-select>
+
+            <form-input-select text_label="TIPO DE CLIENTE:"
+                               [(value)]="search_params.client_type"
+                               [updateModelOnChange]="true"
+                               fieldCodigo="COD_PRODUCT"
+                               fieldValor="DES_PRODUCT"
+                               [items]="TYPE_CLIENT"
+                               [large]="true"></form-input-select>
+
+            <form-input-select text_label="TIPO DE DOCUMENTO:"
+                               [service]="clientInformationService"
+                               method="getDocumentTypeList"
+                               [updateModelOnChange]="true"
+                               (onSelect)="changeDocumentType()"
+                               [params]="cod_prod_channel"
+                               [(value)]="search_params.document_type"
+                               fieldCodigo="Id"
+                               fieldValor="Name"
+                               [firstSelect]="true"
+                               [large]="true"></form-input-select>
+
+            <form-input-text text_label="NÚMERO DE DOCUMENTO:"
+                             [onlyInput]="true"
+                             [(value)]="search_params.document_number"
+                             [large]="true"
+                             [patternPrevent]="CONSTANTS.REGEX[search_params.document_type?.Id]"></form-input-text>
+
+            <form-input-text text_label="NOMBRES:"
+                             [onlyInput]="true"
+                             [(value)]="search_params.names"
+                             style="margin-top: -12px;"
+                             maxCaracter="19"
+                             [large]="true"
+                             [patternPrevent]="CONSTANTS.REGEX.LETRAS"></form-input-text>
+
+            <form-input-text text_label="APELLIDO 1:"
+                             [onlyInput]="true"
+                             [large]="true"
+                             [(value)]="search_params.last_name"
+                             style="margin-top: -12px;"
+                             maxCaracter="19"
+                             [patternPrevent]="CONSTANTS.REGEX.LETRAS"></form-input-text>
+
+            <form-input-text text_label="APELLIDO 2:"
+                             [onlyInput]="true"
+                             [large]="true"
+                             [(value)]="search_params.last_name2"
+                             style="margin-top: -12px;"
+                             maxCaracter="19"
+                             [patternPrevent]="CONSTANTS.REGEX.LETRAS"></form-input-text>
+
+            <form-input-text text_label="BLOCK"
+                             [large]="true"
+                             style="opacity: 0; visibility: hidden;"></form-input-text>
+            <form-input-text text_label="BLOCK"
+                             [large]="true"
+                             style="opacity: 0; visibility: hidden;"></form-input-text>
+
+
+            <!-- <form-input-select text_label="JEFE COMERCIAL:"
+                               [large]="true"
+                               style="margin-top: -23px;"
+                               [disabled]="(profile_id == 191 || profile_id == 194 || profile_id == 195) ? true: false"
+                               [items]="BOSS"></form-input-select>
+
+            <form-input-select text_label="SUPERVISOR COMERCIAL:"
+                               [large]="true"
+                               style="margin-top: -23px;"
+                               [disabled]="(profile_id == 191 || profile_id == 194) ? true: false"
+                               [items]="SUPERVISOR"></form-input-select>
+
+            <form-input-select text_label="ASESOR COMERCIAL:"
+                               [large]="true"
+                               style="margin-top: -23px;"
+                               [disabled]="(profile_id == 191) ? true: false"
+                               [items]="ADVISER"></form-input-select> -->
+            <form-input-select text_label="JEFE COMERCIAL:"
+                               [(value)]="search_params.type_boss"
+                               [updateModelOnChange]="true"
+                               fieldCodigo="Id"
+                               fieldValor="Name"
+                               [items]="TYPE_BOSS"
+                               [large]="true"
+                               (onSelect)="onSelectBoss()"
+                               style="margin-top: -12px;"
+                               [disabled]="(profile_id == '191' || profile_id == '194' || profile_id == '195' ) ? true: false"></form-input-select>
+                               <!-- [firstAll]="profile_id === '192' ? true: false" -->
+
+
+            <form-input-select text_label="SUPERVISOR COMERCIAL:"
+                               [(value)]="search_params.type_supervision"
+                               [updateModelOnChange]="true"
+                               fieldCodigo="Id"
+                               fieldValor="Name"
+                               [items]="TYPE_SUPERVIS"
+                               [large]="true"
+                               style="margin-top: -12px;"
+                               (onSelect)="onSelectSupervision()"
+                               [disabled]="(profile_id == '191' || profile_id == '194' ) ? true: false"></form-input-select>
+                               <!-- [firstAll]="(profile_id == '195' || profile_id == '196' || profile_id == '192') ? true: false" -->
+
+
+
+            <form-input-select text_label="ASESOR COMERCIAL:"
+                               [(value)]="search_params.type_adviser"
+                               [updateModelOnChange]="true"
+                               fieldCodigo="Id"
+                               fieldValor="Name"
+                               [items]="TYPE_ADVISER"
+                               [large]="true"
+                               style="margin-top: -12px;"
+                               [firstAll]="[194,196,192].includes(profile_id)"
+                               [disabled]="(profile_id == '191') ? true: false"></form-input-select>
+                               <!-- [firstAll]="(profile_id == '194' || profile_id == '195' || profile_id == '196' || profile_id == '192') ? true: false" -->
+
+
+        </div>
+
+        <!--<div class="row group2"> -->
+
+        <!-- <div class="col-lg-5">
+        <form-input-select text_label="EJECUTIVO COMERCIAL:" fieldCodigo="COD_PRODUCT" fieldValor="DES_PRODUCT"
+          [items]="EJECUTIVO" [large]="true" [disabled]="true"></form-input-select>
+          </div> -->
+        <!--</div> -->
+
+        <!-- TABLAA -->
+        <div class="grid form-group"
+             style="margin-top: 3px;">
+            <div class="table-responsive div-tableban"
+                 id="table-scroll">
+                <table class="table-u">
+                    <thead class="grid-title">
+                        <th class="grid-title-item">Doc. Identidad Contratante</th>
+                        <th class="grid-title-item">Nombre del Contratante</th>
+                        <th class="grid-title-item">Doc. Identidad Asegurado</th>
+                        <th class="grid-title-item">Nombre del Asegurado</th>
+                        <th class="grid-title-item">Asesor Comercial</th>
+                        <th class="grid-title-item">Fecha de actualización</th>
+                        <th class="grid-title-item">Acciones</th>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf="!prospects_list?.length">
+                            <tr class="grid-body">
+                                <td class="grid-body-item"
+                                    colspan="10"
+                                    style="text-align: center">
+                                    No se encontraron registros.
+                                </td>
+                            </tr>
+                        </ng-container>
+                        <ng-container *ngIf="!!prospects_list?.length">
+                            <tr class="grid-body"
+                                *ngFor="
+                          let item of prospects_list
+                          let index = index
+                        "
+                                [id]="'row' + index">
+                                <td class="grid-title-item">{{ item.DOC_CONTRACTOR }}</td>
+
+                                <td class="grid-title-item">
+                                    {{item.NAME_CONTRACTOR }}
+                                </td>
+
+                                <td class="grid-title-item">{{ item.DOC_INSURED }}</td>
+                                <td class="grid-title-item">{{ item.NAME_INSURED }}</td>
+                                <!-- <td class="grid-title-item">{{ item.COMMERCIAL_ADVISOR }}</td> -->
+                                <td class="grid-title-item">{{item.ASESOR_COMERCIAL}}</td>
+                                <td class="grid-title-item">{{ item.UPDATE_DATE }}</td>
+
+                                <td class="tbl__body-row-item tbl-actions actions"
+                                    ngbDropdown>
+                                    <button class="btn-dropdown-u"
+                                            tabindex="0"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false"
+                                            ngbDropdownToggle>
+                                        <i class="fa fa-ellipsis-v"
+                                           aria-hidden="true"></i>
+                                    </button>
+                                    <ul class="dropdown-u"
+                                        display="dynamic"
+                                        ngbDropdownMenu>
+                                        <li class="dropdown-item-u"
+                                            *ngIf="profile_id != 192">
+                                            <button class="dropdown-item-btn-u"
+                                                    title="Cotizar"
+                                                    (click)="GoToNewQuotation(item)">
+                                                <i class="fa fa-eye fa-lg"></i>Cotizar
+                                            </button>
+                                        </li>
+                                        <li class="dropdown-item-u"
+                                            *ngIf="profile_id == 192">
+                                            <button class="dropdown-item-btn-u"
+                                                    title="Reasignar"
+                                                    (click)="GotoReassignment(item)">
+                                                <i class="fa fa-eye fa-lg"></i>Reasignar
+                                            </button>
+                                        </li>
+
+                                        <!-- INI VIGP 13112025 -->
+                                        <li class="dropdown-item-u"
+                                            *ngIf="handleViewApproveRN(item)">
+                                            <button class="dropdown-item-btn-u"
+                                                    title="Aprobar"
+                                                    (click)="GoToAprobar(item)">
+                                                <i class="fa fa-eye fa-lg"></i>Aprobar
+                                            </button>
+                                        </li>
+                                        <!-- FIN VIGP 13112025 -->
+
+                                    </ul>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+
+                <div *ngIf="prospects_list != null && prospects_list.length > 0"
+                     style="display: flex">
+                    <div class="col-sm-12">
+                        <ngb-pagination [(page)]="currentPage"
+                                        [pageSize]="itemsPerPage"
+                                        [collectionSize]="totalItems"
+                                        [maxSize]="maxSize"
+                                        (pageChange)="pageChanged(currentPage)">
+                            <ng-template ngbPaginationPrevious>ANTERIOR</ng-template>
+                            <ng-template ngbPaginationNext>SIGUIENTE</ng-template>
+                        </ngb-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div [hidden]="!isLoading"
+     class="loadingScreen">
+    <div style="display: flex; height: 100%; width: 100%">
+        <i style="margin: auto; font-size: 50px"
+           class="fa fa-spinner fa-spin"></i>
+    </div>
+</div>

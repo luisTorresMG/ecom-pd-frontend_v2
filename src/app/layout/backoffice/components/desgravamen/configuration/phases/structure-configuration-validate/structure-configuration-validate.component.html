@@ -1,0 +1,1044 @@
+<section class="section">
+  <div class="section__tabs">
+    <button
+      [class.active]="tabSelected == 'rules'"
+      (click)="selectTab = 'rules'"
+    >
+      Reglas
+    </button>
+    <button
+      [class.active]="tabSelected == 'notifications'"
+      (click)="selectTab = 'notifications'"
+    >
+      Notificaciones
+    </button>
+  </div>
+
+  <!-- *Reglas -->
+  <ng-container *ngIf="tabSelected == 'rules'">
+    <!-- *Reglas comunes -->
+    <button
+      class="button-dropdown"
+      [class.active]="dropdownList.rules.commons"
+      (click)="selectDropdown = 'rules:commons'"
+    >
+      <i class="fa fa-angle-right" aria-hidden="true"></i>
+      Reglas comunes
+    </button>
+    <ng-container *ngIf="dropdownList.rules.commons">
+      <div class="content-table" @fade>
+        <table class="table-u table-fields">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Regla</th>
+            <th>Resultado</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let obj of commonsRules$; let index = index">
+            <td>{{ index + 1 }}</td>
+            <td>{{ obj.nombreFuncion }}</td>
+            <td>{{ obj.descripcion }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+
+    <!-- *Reglas de solicitud de afilicación -->
+    <button
+      class="button-dropdown"
+      [class.active]="dropdownList.rules.membership"
+      (click)="selectDropdown = 'rules:membership'"
+    >
+      <i class="fa fa-angle-right" aria-hidden="true"></i>
+      Reglas de solicitud de afiliación
+    </button>
+
+    <ng-container *ngIf="dropdownList.rules.membership">
+      <div class="glued-tabs" @fade>
+        <button
+          [class.active]="rulesMembership == 'generals'"
+          (click)="rulesMembership = 'generals'"
+        >
+          Reglas generales
+        </button>
+        <button
+          [class.active]="rulesMembership == 'specials'"
+          (click)="rulesMembership = 'specials'"
+        >
+          Reglas especiales
+        </button>
+      </div>
+      <ng-container *ngIf="rulesMembership == 'generals'">
+        <div class="content-table" @fade>
+          <table class="table-u table-fields">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>Funciones</th>
+              <th>Descripción de la función</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr
+              *ngFor="
+                  let obj of generalMembershipApplicationRules$;
+                  let index = index
+                "
+            >
+              <td>{{ index + 1 }}</td>
+              <td>{{ obj.nombreFuncion }}</td>
+              <td>{{ obj.descripcion }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="rulesMembership == 'specials'">
+        <div class="content-table" @fade>
+          <table class="table-u table-fields">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>Regla</th>
+              <th>Resultado</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr
+              *ngFor="
+                  let obj of specialMembershipApplicationRules$;
+                  let index = index
+                "
+            >
+              <td>{{ index + 1 }}</td>
+              <td>{{ obj.nombreFuncion }}</td>
+              <td>{{ obj.descripcion }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <!-- *Reglas de declaración de pago -->
+    <button
+      class="button-dropdown"
+      [class.active]="dropdownList.rules.payment"
+      (click)="selectDropdown = 'rules:payment'"
+    >
+      <i class="fa fa-angle-right" aria-hidden="true"></i>
+      Reglas de declaración de pago
+    </button>
+
+    <ng-container *ngIf="dropdownList.rules.payment">
+      <div class="glued-tabs" @fade>
+        <button
+          [class.active]="rulesPayment == 'generals'"
+          (click)="rulesPayment = 'generals'"
+        >
+          Reglas generales
+        </button>
+        <button
+          [class.active]="rulesPayment == 'specials'"
+          (click)="rulesPayment = 'specials'"
+        >
+          Reglas especiales
+        </button>
+      </div>
+      <ng-container *ngIf="rulesPayment == 'generals'">
+        <div class="content-table" @fade>
+          <table class="table-u table-fields">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>Funciones</th>
+              <th>Descripción de la función</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr
+              *ngFor="
+                  let obj of generalPaymentStatementRules$;
+                  let index = index
+                "
+            >
+              <td>{{ index + 1 }}</td>
+              <td>{{ obj.nombreFuncion }}</td>
+              <td>{{ obj.descripcion }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="rulesPayment == 'specials'">
+        <div class="content-table" @fade>
+          <table class="table-u table-fields">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>Regla</th>
+              <th>Resultado</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr
+              *ngFor="
+                  let obj of specialPaymentStatementRules$;
+                  let index = index
+                "
+            >
+              <td>{{ index + 1 }}</td>
+              <td>{{ obj.nombreFuncion }}</td>
+              <td>{{ obj.descripcion }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <!-- *Reglas por póliza -->
+    <div class="content-dropdown-actions">
+      <button
+        class="button-dropdown"
+        [class.active]="dropdownList.rules.policy"
+        (click)="selectDropdown = 'rules:policy'"
+      >
+        <i class="fa fa-angle-right" aria-hidden="true"></i>
+        Reglas por póliza
+      </button>
+    </div>
+    <ng-container *ngIf="dropdownList.rules.policy">
+      <div class="content-table policies">
+        <table class="table-u table-fields">
+          <thead>
+          <tr>
+            <th>Producto</th>
+            <th>N° Póliza</th>
+            <th>Contratante</th>
+            <th>Canal de venta</th>
+            <th>Moneda</th>
+            <ng-container *ngIf="storage.params?.action != 'detalle'">
+              <th>Desasociar reglas generales</th>
+              <th>Asociar reglas especiales</th>
+            </ng-container>
+            <th>Acciones</th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container *ngIf="!policies.length">
+            <tr>
+              <td colspan="8">No hay pólizas incluidas</td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="policies.length">
+            <tr
+              *ngFor="
+                  let obj of policies
+                    | paginate
+                      : {
+                          id: 'rules-policies',
+                          currentPage: currentPagePolicies,
+                          totalItems: policies.length,
+                          itemsPerPage: 10
+                        };
+                  let index = index
+                "
+            >
+              <td>
+                <span>{{ obj.producto }}</span>
+              </td>
+              <td>
+                <span>{{ obj.numeroPoliza }}</span>
+              </td>
+              <td [attr.title]="obj.contratante">
+                <span>{{ obj.contratante || "-" }}</span>
+              </td>
+              <td [attr.title]="obj.canal">
+                <span>{{ obj.canal || "-" }}</span>
+              </td>
+              <td>
+                <span>{{ obj.moneda || "-" }}</span>
+              </td>
+              <ng-container *ngIf="storage.params?.action != 'detalle'">
+                <td>
+                  <button
+                    class="button-link"
+                    (click)="showPolicyRulesModal(obj, 'modalDisassociate')"
+                  >
+                    Desasociar
+                  </button>
+                </td>
+                <td>
+                  <button
+                    class="button-link"
+                    (click)="showPolicyRulesModal(obj, 'modalAssociate')"
+                  >
+                    Asociar
+                  </button>
+                </td>
+              </ng-container>
+              <td class="dropdown">
+                <div
+                  ngbDropdown
+                  [placement]="index >= 3 ? 'top-right' : 'bottom-right'"
+                >
+                  <button class="dropdown__button" ngbDropdownToggle>
+                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                  </button>
+                  <ul class="dropdown__list" ngbDropdownMenu>
+                    <li>
+                      <button (click)="showModalPolicySummary(obj)">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                        Ver detalle
+                      </button>
+                    </li>
+                    <li *ngIf="storage.params?.action != 'detalle'">
+                      <button (click)="showModalDeleteRulePolicy(obj)">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                        Eliminar
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+          </tbody>
+        </table>
+      </div>
+      <pagination-controls
+        id="rules-policies"
+        [autoHide]="true"
+        previousLabel="Anterior"
+        nextLabel="Siguiente"
+        (pageChange)="currentPagePolicies = $event"
+        *ngIf="policies.length"
+      ></pagination-controls>
+    </ng-container>
+  </ng-container>
+
+  <!-- *Notificaciones -->
+  <div [hidden]="tabSelected !== 'notifications'">
+    <button
+      class="button-dropdown"
+      [class.active]="dropdownList.notifications.notifications"
+      (click)="selectDropdown = 'notifications:notifications'"
+    >
+      <i class="fa fa-angle-right" aria-hidden="true"></i>
+      Notificaciones
+    </button>
+    <div class="content-notifications-table" [hidden]="!dropdownList?.notifications?.notifications">
+      <app-structure-configuration-notifications (values)="notificationValues($event)"
+                                                 phaseType="validate"></app-structure-configuration-notifications>
+    </div>
+  </div>
+</section>
+
+<ng-template #modalAssociate>
+  <div class="content-modal modal-associate">
+    <section>
+      <div class="modal-header">
+        <h6>Asociar reglas especiales</h6>
+        <button
+          type="button"
+          role="button"
+          aria-label="cerrar modal"
+          (click)="closeModal()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="section__tabs">
+          <button
+            [class.active]="modalTabSelected == 'membership-application'"
+            (click)="modalTabSelected = 'membership-application'"
+          >
+            Solicitud de afiliacion
+          </button>
+          <button
+            [class.active]="modalTabSelected == 'payment-state'"
+            (click)="modalTabSelected = 'payment-state'"
+          >
+            Declaración de pago
+          </button>
+        </div>
+        <div class="section__tables">
+          <div>
+            <h3 class="subtitle">Reglas especiales disponibles</h3>
+            <div class="content-table">
+              <table class="table-u table-fields">
+                <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Reglas</th>
+                  <th>Descripción</th>
+                  <th>Agregar</th>
+                </tr>
+                </thead>
+                <tbody>
+                <ng-container
+                  *ngIf="modalTabSelected == 'membership-application'"
+                  @fade
+                >
+                  <tr
+                    *ngFor="
+                        let obj of specialMembershipApplicationRules$;
+                        let index = index
+                      "
+                    [class.has-included]="
+                        rulePolicyHasIncluded(obj.id, 'specialPolicyRules')
+                      "
+                  >
+                    <td>
+                      <span>{{ index + 1 }}</span>
+                    </td>
+                    <td>
+                      <span>{{ obj.nombreFuncion }}</span>
+                    </td>
+                    <td>
+                      <span>{{ obj.descripcion }}</span>
+                    </td>
+                    <td>
+                      <button
+                        class="button-icon"
+                        (click)="addRulePolicy(obj, 'specialPolicyRules')"
+                        [disabled]="
+                            rulePolicyHasIncluded(obj.id, 'specialPolicyRules')
+                          "
+                      >
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </ng-container>
+                <ng-container
+                  *ngIf="modalTabSelected == 'payment-state'"
+                  @fade
+                >
+                  <tr
+                    *ngFor="
+                        let obj of specialPaymentStatementRules$;
+                        let index = index
+                      "
+                    [class.has-included]="
+                        rulePolicyHasIncluded(obj.id, 'specialPolicyRules')
+                      "
+                  >
+                    <td>
+                      <span>{{ index + 1 }}</span>
+                    </td>
+                    <td>
+                      <span>{{ obj.nombreFuncion }}</span>
+                    </td>
+                    <td>
+                      <span>{{ obj.descripcion }}</span>
+                    </td>
+                    <td>
+                      <button
+                        class="button-icon"
+                        (click)="addRulePolicy(obj, 'specialPolicyRules')"
+                        [disabled]="
+                            rulePolicyHasIncluded(obj.id, 'specialPolicyRules')
+                          "
+                      >
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="separate">
+            <div class="icons">
+              <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+              <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+            </div>
+          </div>
+          <div>
+            <h3 class="subtitle">Reglas seleccionadas</h3>
+            <div class="content-table">
+              <table class="table-u table-fields">
+                <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Reglas</th>
+                  <th>Descripción</th>
+                  <th>Eliminar</th>
+                </tr>
+                </thead>
+                <tbody>
+                <ng-container *ngIf="!specialPolicyRules.length">
+                  <tr>
+                    <td colspan="4">
+                      No hay reglas asociadas para esta póliza
+                    </td>
+                  </tr>
+                </ng-container>
+                <ng-container *ngIf="specialPolicyRules.length">
+                  <ng-container
+                    *ngFor="let obj of specialPolicyRules; let index = index"
+                  >
+                    <tr *ngIf="obj.tipoRegla == 'Especial'">
+                      <td>
+                        <span>{{ index + 1 }}</span>
+                      </td>
+                      <td>
+                        <span>{{ obj.nombreFuncion }}</span>
+                      </td>
+                      <td>
+                        <span>{{ obj.descripcion }}</span>
+                      </td>
+                      <td>
+                        <button
+                          class="button-icon"
+                          (click)="
+                              removeRulePolicy(obj.id, 'specialPolicyRules')
+                            "
+                        >
+                          <i
+                            class="fa fa-minus-square-o"
+                            aria-hidden="true"
+                          ></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="button-default secondary orange" (click)="closeModal()">
+          Cancelar
+        </button>
+        <button class="button-default orange" (click)="saveRulePolicy()">
+          Asociar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalDisassociate>
+  <div class="content-modal modal-disassociate">
+    <section>
+      <div class="modal-header">
+        <h6>Desasociar reglas generales</h6>
+        <button
+          type="button"
+          role="button"
+          aria-label="cerrar modal"
+          (click)="closeModal()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="section__tabs">
+          <button
+            [class.active]="modalTabSelected == 'membership-application'"
+            (click)="modalTabSelected = 'membership-application'"
+          >
+            Solicitud de afiliacion
+          </button>
+          <button
+            [class.active]="modalTabSelected == 'payment-state'"
+            (click)="modalTabSelected = 'payment-state'"
+          >
+            Declaración de pago
+          </button>
+        </div>
+        <div class="section__tables">
+          <div>
+            <h3 class="subtitle">Reglas generales disponibles</h3>
+            <div class="content-table">
+              <table class="table-u table-fields">
+                <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Reglas</th>
+                  <th>Descripción</th>
+                  <th>Agregar</th>
+                </tr>
+                </thead>
+                <tbody>
+                <ng-container
+                  *ngIf="modalTabSelected == 'membership-application'"
+                  @fade
+                >
+                  <tr
+                    *ngFor="
+                        let obj of generalMembershipApplicationRules$;
+                        let index = index
+                      "
+                    [class.has-included]="
+                        rulePolicyHasIncluded(obj.id, 'generalPolicyRules')
+                      "
+                  >
+                    <td>
+                      <span>{{ index + 1 }}</span>
+                    </td>
+                    <td>
+                      <span>{{ obj.nombreFuncion }}</span>
+                    </td>
+                    <td>
+                      <span>{{ obj.descripcion }}</span>
+                    </td>
+                    <td>
+                      <button
+                        class="button-icon"
+                        (click)="addRulePolicy(obj, 'generalPolicyRules')"
+                        [disabled]="
+                            rulePolicyHasIncluded(obj.id, 'generalPolicyRules')
+                          "
+                      >
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </ng-container>
+                <ng-container
+                  *ngIf="modalTabSelected == 'payment-state'"
+                  @fade
+                >
+                  <tr
+                    *ngFor="
+                        let obj of generalPaymentStatementRules$;
+                        let index = index
+                      "
+                    [class.has-included]="
+                        rulePolicyHasIncluded(obj.id, 'generalPolicyRules')
+                      "
+                  >
+                    <td>
+                      <span>{{ index + 1 }}</span>
+                    </td>
+                    <td>
+                      <span>{{ obj.nombreFuncion }}</span>
+                    </td>
+                    <td>
+                      <span>{{ obj.descripcion }}</span>
+                    </td>
+                    <td>
+                      <button
+                        class="button-icon"
+                        (click)="addRulePolicy(obj, 'generalPolicyRules')"
+                        [disabled]="
+                            rulePolicyHasIncluded(obj.id, 'generalPolicyRules')
+                          "
+                      >
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="separate">
+            <div class="icons">
+              <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+              <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+            </div>
+          </div>
+          <div>
+            <h3 class="subtitle">Desasociar reglas</h3>
+            <div class="content-table">
+              <table class="table-u table-fields">
+                <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Reglas</th>
+                  <th>Descripción</th>
+                  <th>Eliminar</th>
+                </tr>
+                </thead>
+                <tbody>
+                <ng-container *ngIf="!generalPolicyRules.length">
+                  <tr>
+                    <td colspan="4">
+                      No hay reglas asociadas para esta póliza
+                    </td>
+                  </tr>
+                </ng-container>
+                <ng-container *ngIf="generalPolicyRules.length">
+                  <ng-container
+                    *ngFor="let obj of generalPolicyRules; let index = index"
+                  >
+                    <tr *ngIf="obj.tipoRegla == 'General'">
+                      <td>
+                        <span>{{ index + 1 }}</span>
+                      </td>
+                      <td>
+                        <span>{{ obj.nombreFuncion }}</span>
+                      </td>
+                      <td>
+                        <span>{{ obj.descripcion }}</span>
+                      </td>
+                      <td>
+                        <button
+                          class="button-icon"
+                          (click)="
+                              removeRulePolicy(obj.id, 'generalPolicyRules')
+                            "
+                        >
+                          <i
+                            class="fa fa-minus-square-o"
+                            aria-hidden="true"
+                          ></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="button-default secondary orange" (click)="closeModal()">
+          Cancelar
+        </button>
+        <button class="button-default orange" (click)="saveRulePolicy()">
+          Desasociar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalPolicies>
+  <div class="content-modal modal-policies">
+    <section>
+      <div class="modal-header">
+        <h6>Nueva colección de pólizas</h6>
+        <button
+          type="button"
+          role="button"
+          aria-label="cerrar modal"
+          (click)="closeModalPolicies()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <label class="placeholder filter-search">
+          <i class="fa fa-search" aria-hidden="true"></i>
+          <input type="text" placeholder="Buscar"/>
+          <button (click)="showModalAdvancedFilters()">
+            <i class="fa fa-sliders" aria-hidden="true"></i>
+          </button>
+        </label>
+        <div class="content-table">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>
+                <div class="selection orange">
+                  <input type="checkbox" id="mark-all-policies"/>
+                  <label for="mark-all-policies"></label>
+                </div>
+              </th>
+              <th>N° Póliza</th>
+              <th>Producto</th>
+              <th>Contratante</th>
+              <th>Canal de venta</th>
+              <th>Vigencia</th>
+              <th>Moneda</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>
+                <div class="selection orange">
+                  <input type="checkbox" id="mark-policy-0"/>
+                  <label for="mark-policy-0"></label>
+                </div>
+              </td>
+              <td>1001</td>
+              <td>Prod Core V100</td>
+              <td>Caja Arequipa</td>
+              <td>Redes y Asociados</td>
+              <td>12/02/22 - 30/11/22</td>
+              <td>Soles</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          class="button-default secondary orange"
+          type="button"
+          role="button"
+          (click)="closeModalPolicies()"
+        >
+          Eliminar selección
+        </button>
+        <button class="button-default orange" type="button" role="button">
+          Agregar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalAdvancedFilters>
+  <div class="content-modal modal-filters">
+    <section>
+      <div class="modal-body">
+        <form class="form-filter" [formGroup]="formFilters">
+          <label
+            for="form-policy"
+            class="placeholder"
+            aria-placeholder="N° de póliza"
+          >
+            <input type="text" id="form-policy" formControlName="policy"/>
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </label>
+          <div class="form-contractor">
+            <pro-select
+              placeholder="Contratante"
+              [clearable]="false"
+              formControlName="contractor"
+            ></pro-select>
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </div>
+          <div class="form-sales-channel">
+            <pro-select
+              placeholder="Canal de venta"
+              [clearable]="false"
+              formControlName="salesChannel"
+            ></pro-select>
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </div>
+          <label
+            for="form-created-at"
+            class="placeholder"
+            aria-placeholder="Fecha de creación"
+          >
+            <input
+              type="text"
+              id="form-created-at"
+              placeholder="Ejm: 02/08/2022"
+              formControlName="createdAt"
+            />
+            <i class="fa fa-calendar" aria-hidden="true"></i>
+          </label>
+        </form>
+      </div>
+      <div class="modal-footer jce">
+        <button
+          class="button-default secondary orange"
+          (click)="resetFormFilters()"
+        >
+          Limpiar
+        </button>
+        <button class="button-default orange" (click)="submitFilters()">
+          Filtrar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalSummary>
+  <div class="content-modal modal-summary">
+    <section>
+      <div class="modal-header">
+        <h6>Resumen</h6>
+        <button
+          type="button"
+          role="button"
+          aria-label="cerrar modal"
+          (click)="closeModal()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="summary__info">
+          <span>Producto:</span>
+          <span>{{ policySelected.producto }}</span>
+
+          <span>N° Póliza:</span>
+          <span>{{ policySelected.numeroPoliza }}</span>
+
+          <span>Contratante:</span>
+          <span>{{ policySelected.contratante }}</span>
+
+          <span>Canal de venta:</span>
+          <span>{{ policySelected.canal }}</span>
+
+          <span>Moneda:</span>
+          <span>{{ policySelected.moneda }}</span>
+        </div>
+        <div class="summary__dropdowns">
+          <!-- *Solicitud de afiliaciones -->
+          <button
+            class="button-dropdown"
+            [class.active]="modalSummaryMembershipSectionIsSelected"
+            (click)="
+              modalSummaryMembershipSectionIsSelected =
+                !modalSummaryMembershipSectionIsSelected
+            "
+          >
+            <i class="fa fa-angle-right" aria-label="true"></i>
+            Solicitud de afiliaciones
+          </button>
+          <ng-container *ngIf="modalSummaryMembershipSectionIsSelected">
+            <div class="glued-tabs">
+              <button
+                [class.active]="modalSummaryMembershipTabSelected == 'general'"
+                (click)="modalSummaryMembershipTabSelected = 'general'"
+              >
+                Reglas generales
+              </button>
+              <button
+                [class.active]="modalSummaryMembershipTabSelected == 'special'"
+                (click)="modalSummaryMembershipTabSelected = 'special'"
+              >
+                Reglas especiales
+              </button>
+            </div>
+            <div class="content-table">
+              <table class="table-u table-fields">
+                <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Funciones</th>
+                  <th>Descripción</th>
+                </tr>
+                </thead>
+                <tbody>
+                <ng-container
+                  *ngFor="let obj of policySelected.rules; let index = index"
+                >
+                  <tr
+                    *ngIf="
+                        obj.tipoTransaccion == 'Afiliacion' &&
+                        obj.tipoRegla ==
+                          (modalSummaryMembershipTabSelected == 'general'
+                            ? 'General'
+                            : 'Especial')
+                      "
+                  >
+                    <td>{{ index + 1 }}</td>
+                    <td>{{ obj.nombreFuncion }}</td>
+                    <td>{{ obj.descripcion }}</td>
+                  </tr>
+                </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </ng-container>
+
+          <!-- *Declaración de pago -->
+          <button
+            class="button-dropdown"
+            [class.active]="modalSummaryPaymentStateSectionIsSelected"
+            (click)="
+              modalSummaryPaymentStateSectionIsSelected =
+                !modalSummaryPaymentStateSectionIsSelected
+            "
+          >
+            <i class="fa fa-angle-right" aria-label="true"></i>
+            Declaración de pago
+          </button>
+          <ng-container *ngIf="modalSummaryPaymentStateSectionIsSelected">
+            <div class="glued-tabs">
+              <button
+                [class.active]="
+                  modalSummaryPaymentStateTabSelected == 'general'
+                "
+                (click)="modalSummaryPaymentStateTabSelected = 'general'"
+              >
+                Reglas generales
+              </button>
+              <button
+                [class.active]="
+                  modalSummaryPaymentStateTabSelected == 'special'
+                "
+                (click)="modalSummaryPaymentStateTabSelected = 'special'"
+              >
+                Reglas especiales
+              </button>
+            </div>
+            <div class="content-table">
+              <table class="table-u table-fields">
+                <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Funciones</th>
+                  <th>Descripción</th>
+                </tr>
+                </thead>
+                <tbody>
+                <ng-container
+                  *ngFor="let obj of policySelected.rules; let index = index"
+                >
+                  <tr
+                    *ngIf="
+                        obj.tipoTransaccion == 'De pago' &&
+                        obj.tipoRegla ==
+                          (modalSummaryPaymentStateTabSelected == 'general'
+                            ? 'General'
+                            : 'Especial')
+                      "
+                  >
+                    <td>{{ index + 1 }}</td>
+                    <td>{{ obj.nombreFuncion }}</td>
+                    <td>{{ obj.descripcion }}</td>
+                  </tr>
+                </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalRemovePolicy>
+  <div class="content-modal modal-remove-policy">
+    <section>
+      <div class="modal-header">
+        <h6>Eliminar</h6>
+        <button
+          type="button"
+          role="button"
+          aria-label="cerrar modal"
+          (click)="closeModal()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="paragraph">¿Está seguro de eliminar la regla por póliza?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="button-default secondary orange" (click)="closeModal()">
+          Cancelar
+        </button>
+        <button class="button-default orange" (click)="removePolicy()">
+          Eliminar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>

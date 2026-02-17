@@ -1,0 +1,145 @@
+<main class="container-fluid px-0 py-0 mx-0 my-0">
+  <div class="max-width-to-center">
+    <div class="bc-1"></div>
+    <div class="row px-0 py-0 mx-0 my-0">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+        <app-show-steps [NSTEP]="3"></app-show-steps>
+      </div>
+    </div>
+    <!-- PASO 3 - 3 COMPARE LOS PLANES-->
+    <div class="paso-3B">
+      <div class="row px-0 py-0 mx-0 my-0">
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <a class="back-step"
+             [routerLink]="'../step2'">
+            <i class="fa fa-caret-left fa-lg mr-2"
+               aria-hidden="true"></i>
+            Regresar al paso 3</a>
+          <a class="back-step mx-2"
+             [routerLink]="'../step2'">
+            <i class="fa fa-caret-left fa-lg mr-2"
+               aria-hidden="true"></i>
+            Compare y elija un plan</a>
+          <button class="btn-backstep"><i class="fa fa-caret-left mr-2"
+               aria-hidden="true"></i>Detalles del plan</button>
+        </div>
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <h1 class="title-step">
+            Detalles del plan
+          </h1>
+        </div>
+      </div>
+      <div class="row mx-0 my-0 px-0 py-0 content-info-compare-plan">
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0 mb-4">
+          <div class="type-plan mx-auto d-flex flex-column align-items-center justify-content-center">
+            <span class="type-plan-desc">PLAN 1</span>
+            <small class="type-plan-price">S/<b>140</b>/mensual</small>
+          </div>
+        </div>
+        <div class="content-menu-plan col-lg-12 mx-0 my-0 px-0 py-0">
+          <!-- ngClass "menu_plan_selected" -->
+          <button class="menu_plan menu_plan_selected">
+            Coberturas
+          </button>
+          <button class="menu_plan">
+            Asistencias
+          </button>
+          <button class="menu_plan">
+            Beneficios
+          </button>
+        </div>
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <!-- INFO COBERTURA -->
+          <div class="content-info-cobertura scroll-style"
+               hidden>
+            <div class="content-title">
+              <h5 class="title-cobertura">Coberturas obligatorias</h5>
+              <h5 class="title-cobertura">Suma asegurada</h5>
+            </div>
+            <div class="content-detail-cobertura">
+              <p class="desc-coberturas">Gasto de curación por accidente</p>
+              <div class="ammount-coberturas">
+                <button class="btn-minus-cobertura btn-action-cobertura">
+                  <i class="fa fa-minus"
+                     aria-hidden="true"></i>
+                </button>
+                <span class="price-cobertura">
+                  S/1,000.00
+                </span>
+                <button class="btn-minus-cobertura btn-action-cobertura">
+                  <i class="fa fa-plus"
+                     aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+            <div class="content-title">
+              <h5 class="title-cobertura title-cobertura2">Coberturas obligatorias</h5>
+              <h5 class="title-cobertura">Suma asegurada</h5>
+            </div>
+            <div class="content-detail-cobertura-op">
+              <input type="checkbox"
+                     id="chk1"
+                     class="check-cobert"
+                     hidden>
+              <label for="chk1"
+                     class="lbl-chk-cobert"></label>
+              <p class="desc-coberturas">Gasto de curación por accidente</p>
+              <div class="ammount-coberturas">
+                <button class="btn-minus-cobertura btn-action-cobertura">
+                  <i class="fa fa-minus"
+                     aria-hidden="true"></i>
+                </button>
+                <span class="price-cobertura">
+                  S/1,000.00
+                </span>
+                <button class="btn-minus-cobertura btn-action-cobertura">
+                  <i class="fa fa-plus"
+                     aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- INFO ASISTENCIA -->
+          <div class="content-info-asistencia scroll-style"
+               hidden>
+            <div class="content-chk">
+              <input type="checkbox"
+                     id="chk-cobert1"
+                     class="check-asistencia"
+                     hidden>
+              <label for="chk-cobert1"
+                     class="lbl-chk-asistencia"></label>
+            </div>
+            <span class="desc-info-asistencia">
+              Asistencia 11
+            </span>
+          </div>
+          <!-- INFO BENEFICIOS -->
+          <div class="content-info-asistencia content-info-beneficios scroll-style">
+            <div class="content-chk">
+              <input type="checkbox"
+                     id="chk-benf1"
+                     class="check-asistencia"
+                     hidden>
+              <label for="chk-benf1"
+                     class="lbl-chk-asistencia"></label>
+            </div>
+            <span class="desc-info-asistencia">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur earum quas ratione voluptatibus
+              molestiae enim aliquid neque, omnis fugit, accusamus dignissimos quos id! Vel esse officiis asperiores,
+              doloremque fugit voluptatum.
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="row mx-0 my-0 px-0 py-0 mt-5 text-center">
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <input type="button"
+                 [routerLink]="'/accidentes-personales/step3'"
+                 value="Aplicar">
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-questions></app-questions>
+</main>

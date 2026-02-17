@@ -1,0 +1,310 @@
+.soat-input-container {
+  position: relative;
+}
+
+.soat-input-container.icon > .fa {
+  color: #999;
+  position: absolute;
+  right: 12px;
+  top: 15px;
+}
+
+.soat-input {
+  border: 1px solid #999;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+  color: #999;
+  text-transform: uppercase;
+}
+
+.soat-input-mail {
+  text-transform: none !important;
+}
+
+.soat-input::placeholder {
+  color: #999;
+}
+
+.soat-input.error {
+  border: 1px solid #e60d2e;
+  color: #e60d2e;
+  /*   font-weight: bold; */
+}
+
+.soat-input.error::placeholder {
+  color: #e60d2e;
+}
+
+/* .soat-input:focus {
+  outline: none !important;
+  border: 1px solid #ff6e00;
+  box-shadow: 0 0 3px #ff6e00;
+} */
+
+.soat-input-container.icon > .soat-input {
+  padding-right: 35px;
+}
+
+.soat-input-container.drop-down > select {
+  -webkit-appearance: none;
+  background: #fff;
+  border-radius: 0;
+}
+
+.soat-input-container.drop-down:after {
+  content: "";
+  position: absolute;
+  right: 12px;
+  top: 15px;
+  font-family: FontAwesome;
+  z-index: 1;
+  pointer-events: none;
+  color: #999;
+  background-size: 16px 16px;
+  background-image: url(assets/soat/img/caret-down.png);
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+
+.soat-input-container.loading:after {
+  content: none !important;
+}
+
+.soat-input-container.loading > .fa {
+  position: absolute;
+  right: 12px;
+  top: 15px;
+  z-index: 1;
+  color: #999;
+}
+
+.soat-button {
+  background-color: #ff6e00;
+  color: #fff;
+  padding: 10px 15px;
+  border: 0;
+  margin-bottom: 10px;
+  outline: none;
+}
+
+.soat-button:disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.soat-button.stretch {
+  padding: 10px 35px;
+}
+
+.soat-button.ripple {
+  background-position: center;
+  transition: background 0.8s;
+}
+
+.soat-button.ripple:hover {
+  background: #ff9f56 radial-gradient(circle, transparent 1%, #ff9f56 1%)
+    center/15000%;
+}
+
+.soat-button.ripple:active {
+  background-color: #fac196;
+  background-size: 100%;
+  transition: background 0s;
+}
+
+.soat-button.stretch.loading {
+  padding: 10px 25px;
+}
+
+.soat-button.outline {
+  border: 1px solid #999;
+  background-color: #fff;
+  color: #999;
+}
+
+.soat-button.outline > .fa {
+  margin-left: 10px;
+}
+
+.soat-button.outline:hover {
+  font-weight: bold;
+}
+
+.soat-button.mini {
+  padding: 6px 7px;
+}
+
+.soat-label {
+  color: #300764;
+  font-size: 14px;
+}
+
+.soat-link {
+  color: #300764 !important;
+  text-decoration: underline !important;
+  cursor: pointer;
+}
+
+.soat-link:hover {
+  color: #300764 !important;
+  text-decoration: underline !important;
+  font-weight: bold;
+}
+
+.soat-navigation {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.soat-navigation > .arrow {
+  margin-right: 10px;
+  color: #ff6e00;
+}
+
+.soat-header > .title {
+  font-size: 21px;
+  color: #ff6e00;
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+
+.soat-text-align-center {
+  text-align: center;
+}
+
+.soat-error-message {
+  font-size: 12px;
+  color: #e60d2e;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.soat-error-message > i {
+  background-image: url(assets/soat/img/error-ico.png);
+  background-size: 13px;
+  display: block;
+  width: 13px;
+  height: 13px;
+  margin-right: 5px;
+  flex: 0 0 13px;
+}
+
+.soat-card-view-container {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  margin: 20px auto 30px;
+  justify-content: center;
+}
+
+.soat-card-view-container > .image {
+  margin-right: 20px;
+  width: 80px;
+}
+
+.soat-card-view-container > .body {
+  font-size: 14px;
+}
+
+.soat-card-view-container > .body > .title {
+  font-weight: bold;
+  color: #2e0563;
+}
+
+.soat-card-view-container > .body > .description {
+  color: #ff6e00;
+  margin-bottom: 0;
+}
+
+.soat-checkbox-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.soat-checkbox-container > a {
+  margin-left: 5px;
+}
+
+.soat-checkbox-container .soat-checkbox-target {
+  font-family: FontAwesome;
+}
+
+.soat-checkbox-container .soat-checkbox {
+  position: relative;
+  left: -999em;
+}
+
+.soat-checkbox-container .soat-checkbox + span.soat-checkbox-target:after {
+  content: "\f096";
+}
+
+.soat-checkbox-container
+  .soat-checkbox:checked
+  + span.soat-checkbox-target:after {
+  content: "\f046";
+  color: #ff6e00;
+}
+
+.soat-checkbox-text > span {
+  margin-left: 5px;
+  margin-right: 3px;
+}
+
+.soat-checkbox-text > a {
+  font-weight: bold;
+}
+
+.soat-container {
+  max-width: 660px;
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+
+.ng-select {
+  border: 1px solid #999;
+  margin-bottom: 10px;
+  color: #999;
+  text-transform: uppercase;
+  padding: 4px;
+  width: 100%;
+}
+
+.ng-select.error {
+  border: 1px solid #e60d2e;
+}
+
+.ng-select.error,
+.ng-select.error .ng-placeholder {
+  color: #e60d2e !important;
+}
+
+.ng-select.loading .ng-arrow-wrapper,
+.ng-select.loading .ng-clear-wrapper {
+  display: none !important;
+}
+
+.ng-select .ng-select-container {
+  border-radius: 0;
+  border: 0;
+  color: #999 !important;
+}
+
+.ng-select .ng-select-container:hover {
+  box-shadow: none;
+}
+
+.ng-select .ng-select-container .ng-value-container .ng-input > input {
+  color: #999;
+}
+
+@media only screen and (max-width: 768px) {
+  .soat-button {
+    width: 100%;
+  }
+}

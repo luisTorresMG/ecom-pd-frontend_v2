@@ -1,0 +1,71 @@
+<div #biometric></div>
+<div class="biometric">
+  <div class="biometric__container"
+       [hidden]="bigPrime">
+    <h2 class="biometric__title">Validación biométrica</h2>
+    <p class="biometric__info text-center">
+      Estamos iniciando el proceso de validación biométrica, por favor adjunte
+      una imagen de su documento de identidad (.JPG o .PNG) en sentido
+      horizontal.
+    </p>
+
+    <form [formGroup]="form">
+      <div class="biometric__upload">
+        <input type="file"
+               formControlName="file"
+               id="file-bio"
+               hidden
+               (change)="saveFileBiometric($event.target.files)" />
+        <label for="file-bio"
+               role="button"
+               class="lbl-fileBio mt-2">
+          <i class="fa fa-upload mr-2"
+             aria-hidden="true"></i>
+          Adjuntar documento de identidad
+        </label>
+      </div>
+
+      <div *ngIf="error"
+           class="biometric__error">
+        {{ messageUpload }}
+      </div>
+    </form>
+
+    <small class="biometric__info text-center">
+      *Debe adjuntar la parte frontal de su documento
+    </small>
+    <small class="biometric__info text-center">
+      **Si tu DNI se encuentra caducado, igualmente podrás contratar este
+      producto pero sólo hasta el 31 de diciembre de 2021. A partir de dicha
+      fecha, para adquirir la póliza y/o hacer uso de los derechos establecidos
+      en ella, tu DNI deberá encontrarse vigente.
+    </small>
+  </div>
+
+  <app-biometric (estado)="changeStateBiometric($event)"
+                 [hidden]="!bigPrime || rs"></app-biometric>
+
+  <div class="biometric__success"
+       *ngIf="rs">
+    <h2 class="biometric__title">{{ rs.description }}</h2>
+    <div class="biometric__image">
+      <img src="./assets/dps/facial-recognition-verified.png"
+           alt="" />
+    </div>
+    <div class="biometric__text">
+      {{ rs.message }}
+    </div>
+  </div>
+  <div class="navigation d-flex flex-row">
+    <button class="biometric__button btn-back"
+            (click)="backStep()"
+            *ngIf="!rs?.success">
+      <i class="fa fa-chevron-left"
+         aria-hidden="true"></i>
+      Anterior</button>
+    <div [hidden]="!back">
+      <button class="biometric__button"
+              (click)="tryAgain()">Reintentar</button>
+    </div>
+  </div>
+</div>

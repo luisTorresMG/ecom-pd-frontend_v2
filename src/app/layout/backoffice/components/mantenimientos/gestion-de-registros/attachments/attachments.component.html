@@ -1,0 +1,78 @@
+<div class="content">
+  <div class="content__item">
+    <div class="content__item--inputs">
+      <div class="actions"
+           *ngIf="showAction">
+        <button class="btn-action"
+                [disabled]="files.invalid"
+                (click)="addRow()">
+          Agregar
+        </button>
+        <button class="btn-action"
+                [disabled]="files.length <= 0"
+                (click)="deleteRow()">
+          Eliminar
+        </button>
+      </div>
+      <table class="tbl">
+        <thead class="tbl__head">
+          <tr class="tbl__head--row">
+            <th class="tbl__head--row-col">Item</th>
+            <th class="tbl__head--row-col"
+                style="width: 40%">Tipo Archivo</th>
+            <th class="tbl__head--row-col"
+                colspan="2">Nombre de Archivo</th>
+          </tr>
+        </thead>
+        <tbody class="tbl__body">
+          <tr class="tbl__body--row"
+              [formGroup]="form"
+              *ngFor="let form of files.controls; let i = index">
+            <td class="tbl__body--row-col">{{ i + 1 }}</td>
+            <td class="tbl__body--row-col">
+              <select class="input-u"
+                      formControlName="fileType">
+                <option value="null"
+                        disabled
+                        selected>SELECCIONE</option>
+                <option *ngFor="let data of dataArchivo?.PRO_MASTER"
+                        [value]="data.SITEM">
+                  {{ data.SDECRIPTION }}
+                </option>
+              </select>
+            </td>
+            <ng-container *ngIf="!!form.get('disable').value">
+              <td class="tbl__body--row-col">
+                <input type="text"
+                       formControlName="nombre"
+                       class="input-u"
+                       style="width: 170px" />
+              </td>
+              <td class="tbl__body--row-col">
+                <button class="btn-action"
+                        (click)="descargarAdj(i)">
+                  Descargar
+                </button>
+              </td>
+            </ng-container>
+            <ng-container *ngIf="!form.get('disable').value">
+              <td class="tbl__body--row-col">
+                <input type="file"
+                       [id]="'fileArchivo' + i"
+                       formControlName="file"
+                       (change)="fileChange($event, i)"
+                       hidden />
+                <label [attr.for]="'fileArchivo' + i"
+                       class="lbl-file">Elegir Archivo</label>
+              </td>
+              <td class="tbl__body--row-col"
+                  *ngIf="form.get('nombre').value">
+                <label [attr.for]="'fileArchivo' + i">{{ form.get("nombre").value }}</label>
+              </td>
+            </ng-container>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

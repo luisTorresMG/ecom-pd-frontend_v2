@@ -1,0 +1,27 @@
+<div class="content">
+  <section class="content__section">
+    <table class="table-u">
+      <thead>
+        <tr>
+          <th scope="col">Completado</th>
+          <th scope="col">Proceso exitoso</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Monto autorizado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ paymentResponse?.complete || "false" }}</td>
+          <td>{{ paymentResponse?.success || "false" }}</td>
+          <td>{{ paymentResponse?.description || "-" }}</td>
+          <td>{{ paymentResponse?.ammount || "-" }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <pre>
+      <code>
+         {{ paymentResponse | json }}
+      </code>
+    </pre>
+  </section>
+</div>

@@ -1,0 +1,91 @@
+<main class="content">
+  <div class="mxwd">
+    <div class="content__header">
+      <img
+        src="assets/logos/logo-PS.svg"
+        class="logo-protecta"
+        alt="logo protecta"
+      />
+    </div>
+    <div class="content__summary">
+      <div class="summary__info">
+        <h2 class="subtitle">Resumen de compra</h2>
+        <div class="summary__info--product">
+          <img src="assets/logos/isologo_protecta.svg" alt="" />
+          <h3 class="product-name">
+            {{ payload.productName }}
+          </h3>
+        </div>
+        <div class="summary__types">
+          <div class="selection radio orange"
+               *ngIf="!payload.payment.isSubscription">
+            <input
+              type="radio"
+              id="unique-payment"
+              value="unique"
+              [formControl]="paymentTypeControl"
+            />
+            <label for="unique-payment">Pago único</label>
+          </div>
+          <div
+            class="selection radio orange"
+            *ngIf="payload.payment.isSubscription"
+          >
+            <input
+              type="radio"
+              id="subscription-payment"
+              value="subscription"
+              [formControl]="paymentTypeControl"
+            />
+            <label for="subscription-payment">Suscripción</label>
+          </div>
+        </div>
+        <div class="summary__amounts">
+          <hr class="divider" />
+          <div class="summary__amounts--item mb-2">
+            <span>Impuestos</span>
+            <span>
+              {{ currencies[payload.payment.currency].symbol }}
+              0
+              {{ currencies[payload.payment.currency].prefix }}
+            </span>
+          </div>
+          <div class="summary__amounts--item">
+            <span>Subtotal</span>
+            <span>
+              {{ currencies[payload.payment.currency].symbol }}
+              {{ payload.payment.amount | number : "1.2-2" }}
+              {{ currencies[payload.payment.currency].prefix }}
+            </span>
+          </div>
+          <hr class="divider" />
+          <div class="summary__amounts--item total-amount">
+            <span>Total a pagar</span>
+            <span>
+              {{ currencies[payload.payment.currency].symbol }}
+              {{ payload.payment.amount | number : "1.2-2" }}
+              {{ currencies[payload.payment.currency].prefix }}
+            </span>
+          </div>
+        </div>
+        <div class="powered-by">
+          <img
+            src="/assets/logos/powered_by_kushki.svg"
+            alt="powered by kushki"
+            width="130px"
+            height="auto"
+          />
+          <div class="vertical-divider"></div>
+          <a href="#" target="_blank"> Términos y privacidad </a>
+        </div>
+      </div>
+
+      <div class="summary__payment">
+        <h2 class="subtitle">Pagar</h2>
+        <div class="summary__payment--form">
+          <pro-kushki-form></pro-kushki-form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,114 @@
+<div class="form-body without-side">
+    <div class="iofrm-layout">
+        <div class="form-holder">
+            <div class="form-content">
+                <div class="form-items">
+                    <h3 class="font-md">Consulta tus asegurados vigentes de la constancia</h3>
+                    <p>{{nroconstancia}}</p>
+                    <form [formGroup]="mainFormGroup">
+                        <div class="row">
+                            <div class="col-12 col-sm-6">
+                                <label>Tipo Documento</label>
+                                <select formControlName="documentType" 
+                                        class="form-control"
+                                        (change)="documentTypeChanged()">
+                                    <option value="" disabled>Seleccionar</option>
+                                    <option *ngFor="let item of documentTypeList" value="{{item.Id}}">{{item.Name}}</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <label>Nro. Documento</label>    
+                                <input formControlName="documentNumber"
+                                       (keypress)="documentNumberKeyPress($event,mainFormGroup.controls.documentType.value)" 
+                                       maxlength={{documentMaxLength}}
+                                       minlength={{documentMinLength}}
+                                       class="form-control" 
+                                       type="text"
+                                       [attr.inputmode]=inputMode
+                                       [(ngModel)]="nrodocumento"
+                                       (ngModelChange)="documentNumberChange()" 
+                                       name="nrodocumento" 
+                                       [disabled]="validateButton">
+                                <span *ngIf="!mainFormGroup.controls.documentNumber.valid && !mainFormGroup.valid"
+                                       class="mensaje-error-control">
+                                       <ng-container
+                                           *ngIf="mainFormGroup.get('documentNumber').hasError('required'); then required_documentNumber else invalid_documentNumber">
+                                       </ng-container>
+                                       <ng-template #required_documentNumber>El Nro de Documento es requerido.
+                                       </ng-template>
+                                       <ng-template #invalid_documentNumber>El Nro de Documento no es válido.
+                                       </ng-template>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 col-sm-6">
+                                <div class="form-button text-right">
+                                    <button class="ibtn less-padding" 
+                                            (click)="consultar()" 
+                                            [disabled]="validateButton || !mainFormGroup.controls.documentNumber.valid && !mainFormGroup.valid">Consultar</button>
+                                </div>
+                            </div>
+                            <div class="col-6 col-sm-6">
+                                <div class="form-button text-left">
+                                    <button class="ibtn less-padding"
+                                            (click)="limpiar()"
+                                            [disabled]="validateButton || !mainFormGroup.controls.documentNumber.valid && !mainFormGroup.valid">Limpiar</button>
+                                </div>
+                            </div>    
+                        </div>
+                        <div class="grid form-group">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr class="grid-title">
+                                            <td class="grid-title-item">Nro</td>
+                                            <td class="grid-title-item">Producto</td>
+                                            <td class="grid-title-item">Nro. Póliza</td>
+                                            <td class="grid-title-item">Nro. Constancia</td>
+                                            <td class="grid-title-item">Documentos</td>
+                                            <td class="grid-title-item">Inicio Vigencia</td>
+                                            <td class="grid-title-item">Fin Vigencia</td>
+                                        </tr>   
+                                    </thead>
+                                    <tbody *ngFor="let item of listToShow; let i = index">
+                                        <tr>
+                                            <td>{{i + 1}}</td>
+                                            <td>{{item.Product}}</td>
+                                            <td>{{item.NroPolicy}}</td>
+                                            <td>{{item.NroProof}}</td>
+                                            <td>{{item.Documents}}</td>
+                                            <td>{{item.StartDate}}</td>
+                                            <td>{{item.EndDate}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-12 col-sm-6">
+                                <div class="form-button text-left text-center">
+                                    <button class="ibtn less-padding" (click)="back()">
+                                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                                        &nbsp;Volver
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-button text-left"> 
+                                </div>
+                            </div>    
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Pantalla de carga -->
+<div [hidden]="isLoading==false" class="loadingScreen">
+    <div style="display:flex;height: 100%;width:100%">
+        <i style="margin:auto;font-size: 50px" class="fa fa-spinner fa-spin"></i>
+    </div>
+</div>

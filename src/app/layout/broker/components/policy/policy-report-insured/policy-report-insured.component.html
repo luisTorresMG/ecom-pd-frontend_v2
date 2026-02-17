@@ -1,0 +1,118 @@
+<div class="modal-header">
+    <h4 class="modal-title"
+        id="modal-basic-title"
+        style="text-transform: uppercase">Reporte de asegurados</h4>
+    <button type="button"
+            class="close"
+            aria-label="Close"
+            (click)="cerrarModal()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="container-fluid"
+         style="margin-bottom: 10px;">
+        <div class="filter">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <span>Fecha Inicio (*) </span>
+                            <input type="text"
+                                   [(ngModel)]="dateIni"
+                                   [bsConfig]="dateConfig"
+                                   bsDatepicker
+                                   value="{{ dateIni | date:'dd/MM/yyyy' }}"
+                                   [(maxDate)]="dateFin"
+                                   readonly>
+                        </div>
+                        <div class="col-sm-3">
+                            <span>Fecha Fin (*)</span>
+                            <input type="text"
+                                   [(ngModel)]="dateFin"
+                                   [bsConfig]="dateConfig"
+                                   bsDatepicker
+                                   value="{{ dateFin | date:'dd/MM/yyyy' }}"
+                                   [(minDate)]="dateIni"
+                                   [(maxDate)]="dateFinMax"
+                                   readonly>
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn-process mt-35"
+                                    (click)="generateReportInsured()">Procesar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="card"> -->
+        <div class="grid form-group">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr class="grid-title">
+                            <td class="grid-title-item text-center">Item</td>
+                            <td class="grid-title-item text-center">Nro Recibo</td>
+                            <td class="grid-title-item text-center">Comprobante</td>
+                            <td class="grid-title-item text-center">F. Inicio</td>
+                            <td class="grid-title-item text-center">F. Fin</td>
+                            <td class="grid-title-item text-center">Descarga</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf="reportInsuredList.length > 0; then showGrid else hideGrid"></ng-container>
+                    </tbody>
+                </table>
+            </div>
+            <ng-template #hideGrid>
+                <tr>
+                    <td colspan="6"
+                        class="text-center">
+                        No se encontraron registros
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template #showGrid>
+                <tr *ngFor="let item of reportInsuredList; let index = index">
+                    <td class="text-center">{{ index + 1 }}</td>
+                    <td class="text-center">{{ item.P_NRECIBO }}</td>
+                    <td class="text-center">{{ item.P_NCOMPROBANTE }}</td>
+                    <td class="text-center">{{ item.P_DFINI }}</td>
+                    <td class="text-center">{{ item.P_DFFIN }}</td>
+                    <td class="text-center"><img alt="Descargar"
+                             src="assets/icons/download2.png"
+                             title="Descargar"
+                             (click)="generateReportExcel(item, 1)"
+                             style="cursor: pointer;height: 24px;width: 24px">
+                    </td>
+                </tr>
+            </ng-template>
+            <!-- <ng-container *ngIf="policyMovementList!=null && policyMovementList.length>0; then showPagination">
+        </ng-container> -->
+            <!-- <ng-template #showPagination>
+          <div class="row mt-4">
+            <div class="col-sm-12">
+              <ngb-pagination [(page)]="currentPage" [pageSize]="itemsPerPage" [collectionSize]="totalItems"
+                [maxSize]="maxSize" (pageChange)="pageChanged(currentPage)">
+                <ng-template ngbPaginationPrevious>ANTERIOR</ng-template>
+                <ng-template ngbPaginationNext>SIGUIENTE</ng-template>
+              </ngb-pagination>
+            </div>
+          </div>
+        </ng-template> -->
+        </div>
+        <!-- </div> -->
+    </div>
+</div>
+<div class="modal-footer">
+    <button (click)="cerrarModal()">Regresar</button>
+</div>
+
+<!-- Pantalla de carga -->
+<div *ngIf="flagLoading"
+     class="loadingScreen">
+    <div style="display:flex;height: 100%; width:100%">
+        <i style="margin:auto;font-size: 50px"
+           class="fa fa-spinner fa-spin"></i>
+    </div>
+</div>

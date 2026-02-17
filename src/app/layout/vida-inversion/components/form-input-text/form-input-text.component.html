@@ -1,0 +1,10 @@
+<div class="form-group">
+  <label class="placeholder-u" [attr.aria-placeholder]="text_label">
+    <input style="text-transform: uppercase;" *ngIf="span !== true" type="text" maxlength="{{maxCaracter || ''}}"
+      placeholder="{{placeholder || label}}" [ngClass]="classInput" [(ngModel)]="value" [class.input-u]="default" [class.input-u-small]="small"
+     [class.text_center]="text_center" [class.input-u-large]="large" [class.input-u-extra-large]="extra_large"
+      (ngModelChange)="valueChange.emit($event)" [class.only-input]="onlyInput" (keypress)="onKey($event);"
+      (keydown)="onKeydown($event);" (blur)="onBlur.emit()" (focus)="onFocus.emit()" (paste)="onPaste($event)"
+      (focusout)="onFocusOut.emit()" autocomplete=off [disabled]="disabled" />
+  </label>
+</div>

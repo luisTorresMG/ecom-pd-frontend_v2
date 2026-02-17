@@ -1,0 +1,26 @@
+.modal-title {
+  color: #ff6e00 !important;
+}
+
+.terminos-texto {
+  height: 650px !important;
+  overflow: auto;
+}
+
+.left-privacy,
+.right-privacy {
+  font-family: "Bliss Pro";
+  color: #2b0d61;
+  font-size: 14px;
+  padding: 6px;
+}
+
+.left-privacy {
+  background-color: #d3d3d3;
+  text-align: center;
+  width: 27%;
+}
+
+.right-privacy {
+  text-align: justify;
+}

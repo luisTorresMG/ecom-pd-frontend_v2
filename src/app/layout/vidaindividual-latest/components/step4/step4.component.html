@@ -1,0 +1,1663 @@
+<ng-container>
+  <div class="row mx-0 my-0 px-0 py-0">
+    <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+      <app-show-steps [NSTEP]="4"></app-show-steps>
+    </div>
+  </div>
+  <div class="container-fluid mx-0 my-0 px-0 py-0">
+    <div class="row mx-0 my-0 px-4 py-0">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0 text-center cont-detail-compra">
+        <img
+          src="assets/vidaindividual/resources/Elementos-03.png"
+          alt=""
+          class="detail-compra-img"
+        />
+      </div>
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0 my-5">
+        <h3 class="title-step text-center">Detalle de compra</h3>
+        <span class="sub-title"
+        >Cod. Proceso: <b class="orange">{{ idProcess }}</b></span
+        >
+      </div>
+    </div>
+    <div class="row mx-0 my-0 px-4 py-0"
+         [@fade]="true">
+      <div class="datos-product col-lg-9 mx-0 my-0 px-0 py-0 mx-auto">
+        <h5 class="datos-product__title my-0 mb-2">Datos del producto</h5>
+        <div class="detail-product mb-2">
+          <div class="fila">
+            <span>Cobertura de protección por fallecimiento</span>
+            <span>{{
+              getStringCurrency(
+                detalleCompra.moneda,
+                detalleCompra.capital | number : "1.0-0"
+              )
+              }}</span>
+          </div>
+          <div class="fila"
+               hidden>
+            <span>Monto</span>
+            <span>{{
+              getStringCurrency(
+                detalleCompra.moneda,
+                detalleCompra.primaMensual | number : "1.2-2"
+              )
+              }}</span>
+          </div>
+          <div class="fila">
+            <span>Frecuencia</span>
+            <span>{{ detalleCompra.frecuencia }}</span>
+          </div>
+          <div class="fila">
+            <span>Periodo</span>
+            <span>{{ detalleCompra.cantidadAnio }} años</span>
+          </div>
+          <div class="fila">
+            <span>Porcentaje de devolución</span>
+            <span>{{ detalleCompra.porcentajeRetorno }}%</span>
+          </div>
+          <div class="fila">
+            <span>Cobertura de devolución de primas</span>
+            <span>{{
+              getStringCurrency(
+                detalleCompra.moneda,
+                detalleCompra.primaRetorno | number : "1.2-2"
+              )
+              }}</span>
+          </div>
+        </div>
+        <div class="content-grid2">
+          <div>
+            <h5 class="datos-product__title my-0">Primer pago</h5>
+            <div class="data_cuota">
+              <span>
+                {{
+                getStringCurrency(
+                  detalleCompra.moneda,
+                  ammountPayment | number : "1.2-2"
+                )
+                }}
+              </span>
+              <span>
+                La cuota inicial se calcula desde la fecha de contratación hasta
+                el último día del mes.
+              </span>
+            </div>
+          </div>
+          <div>
+            <h5 class="datos-product__title my-0">
+              Pago {{ detalleCompra.frecuencia }}(*)
+            </h5>
+            <div class="data_cuota">
+              <span>
+                {{
+                getStringCurrency(
+                  detalleCompra.moneda,
+                  detalleCompra.primaMensual | number : "1.2-2"
+                )
+                }}
+              </span>
+              <span> (*)Pago a realizar desde el siguiente periodo. </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="content-buttons"
+      *ngIf="this.CONTRACTOR_INFO.p_SDOCUMENT != this.USER_INFO_API.p_SDOCUMENT"
+    >
+      <div
+        class="col-lg-12 mx-0 my-0 px-0 py-0 mt-3 mb-4 d-flex flex-row justify-content-center"
+      >
+        <div>
+          <button
+            #btnSubmit
+            class="submitbutton"
+            (click)="sendSlip()"
+            [disabled]="FORM_STEP4.invalid"
+          >
+            Enviar cotización por correo<img
+            alt=""
+            src="assets/icons/Union.png"
+            class="img-excel"
+            style="margin-right: 10px; margin-left: 10px"
+          />
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row mx-0 my-0 px-4 py-0 d-flex align-items-center justify-content-center flex-row"
+    >
+      <div class="col-lg-12 mt-5 text-center">
+        <h3 class="title-datos-contratante my-0">
+          Completa los datos del <b>asegurado</b>
+        </h3>
+      </div>
+    </div>
+    <form class="row mx-0 my-0 px-4 py-0"
+          [formGroup]="FORM_STEP4">
+      <div class="col-lg-6 mt-2">
+        <h5 class="title-of-datos my-0">Datos personales</h5>
+        <div class="inputs">
+          <div class="inputs-double">
+            <div class="content-input">
+              <select
+                class="input-data d-flex align-items-center justify-content-start"
+                [ngClass]="{
+                  'in-disabled': USER_INFO_API.p_NDOCUMENT_TYP !== null
+                }"
+                [disabled]="true"
+              >
+                <option
+                  value="2"
+                  [selected]="USER_INFO_API.p_NDOCUMENT_TYP == '2'"
+                >
+                  DNI
+                </option>
+                <option
+                  value="4"
+                  [selected]="USER_INFO_API.p_NDOCUMENT_TYP == '4'"
+                >
+                  CE
+                </option>
+              </select>
+            </div>
+            <div class="content-input">
+              <div class="input-w-lbl">
+                <label for=""
+                       class="lbl-title-small"
+                >Número de documento</label
+                >
+                <input
+                  type="text"
+                  [ngClass]="{ 'in-disabled': USER_INFO.nDoc !== null }"
+                  class="input-data input-data-wlbl"
+                  [disabled]="USER_INFO.nDoc !== null"
+                  [value]="USER_INFO.nDoc"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="content-input">
+            <div class="input-w-lbl">
+              <label for=""
+                     class="lbl-title-small">Nombres</label>
+              <input
+                type="text"
+                class="input-data input-data-wlbl"
+                formControlName="names"
+                [ngClass]="{
+                  'in-disabled': USER_INFO_API.p_SCLIENT_NAME !== null,
+                  'error-in': f['names'].invalid && f['names'].touched
+                }"
+                (keypress)="keyPress($event)"
+              />
+            </div>
+          </div>
+          <div class="content-input">
+            <div class="input-w-lbl">
+              <label for=""
+                     class="lbl-title-small">Apellido paterno</label>
+              <input
+                type="text"
+                class="input-data input-data-wlbl"
+                formControlName="apePat"
+                [ngClass]="{
+                  'in-disabled': USER_INFO_API.p_SCLIENT_APPPAT !== null,
+                  'error-in': f['apePat'].invalid && f['apePat'].touched
+                }"
+                (keypress)="keyPress($event)"
+              />
+            </div>
+          </div>
+          <div class="content-input">
+            <div class="input-w-lbl">
+              <label for=""
+                     class="lbl-title-small">Apellido materno</label>
+              <input
+                type="text"
+                class="input-data input-data-wlbl"
+                formControlName="apeMat"
+                [ngClass]="{
+                  'in-disabled': USER_INFO_API.p_SCLIENT_APPMAT !== null,
+                  'error-in': f['apeMat'].invalid && f['apeMat'].touched
+                }"
+                (keypress)="keyPress($event)"
+              />
+            </div>
+          </div>
+          <div class="content-input content-input-wlbl">
+            <label
+              class="lbl-title-small"
+              *ngIf="FORM_STEP4.get('ocupacion').value >= 1"
+            >Ocupación</label
+            >
+            <select
+              class="input-data"
+              [ngClass]="{
+                'in-disabled': flagDisable,
+                'input-data-wlbl': FORM_STEP4.get('ocupacion').value >= 1,
+                'error-in': f['ocupacion'].invalid && f['ocupacion'].touched
+              }"
+              formControlName="ocupacion"
+            >
+              <option value="null"
+                      disabled>Ocupación
+              </option>
+              <option
+                *ngFor="let data of parameters$?.ocupaciones"
+                [value]="data.id"
+              >
+                {{ data.descripcion }}
+              </option>
+            </select>
+          </div>
+          <div class="content-input content-input-wlbl">
+            <label
+              class="lbl-title-small"
+              *ngIf="FORM_STEP4.get('estadoCivil').value >= 1"
+            >Estado Civil</label
+            >
+            <select
+              class="input-data"
+              [ngClass]="{
+                'in-disabled': flagDisable,
+                'input-data-wlbl': FORM_STEP4.get('estadoCivil').value >= 1,
+                'error-in': f['estadoCivil'].invalid && f['estadoCivil'].touched
+              }"
+              formControlName="estadoCivil"
+            >
+              <option value="null"
+                      disabled>Estado Civil
+              </option>
+              <option
+                *ngFor="let data of parameters$?.estadoCivil"
+                [value]="data.id"
+              >
+                {{ data.descripcion }}
+              </option>
+            </select>
+          </div>
+          <div class="content-input">
+            <div class="input-w-lbl">
+              <label for=""
+                     class="lbl-title-small">Sexo</label>
+              <select
+                class="input-data input-data-wlbl"
+                formControlName="sex"
+                [ngClass]="{
+                  'in-disabled': USER_INFO_API.p_SSEXCLIEN !== null,
+                  'error-in': f['sex'].invalid && f['sex'].touched
+                }"
+                (change)="handleSelect($event)"
+              >
+                <option value="2"
+                        [selected]="USER_INFO_API.p_SSEXCLIEN == 2">
+                  Masculino
+                </option>
+                <option value="1"
+                        [selected]="USER_INFO_API.p_SSEXCLIEN == 1">
+                  Femenino
+                </option>
+                <option value="3"
+                        [selected]="USER_INFO_API.p_SSEXCLIEN == 3">
+                  No Informado
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="content-input">
+            <div class="input-w-lbl">
+              <label for=""
+                     class="lbl-title-small">Fecha de nacimiento</label>
+              <input
+                type="text"
+                class="input-data input-data-wlbl"
+                [ngClass]="{ 'in-disabled': USER_INFO.fechaNac !== null }"
+                [disabled]="true"
+                [value]="USER_INFO?.fechaNac"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 mt-2">
+        <h5 class="title-of-datos my-0">Lugar de residencia</h5>
+        <div class="inputs">
+          <div
+            class="content-input content-input-wlbl"
+            *ngIf="USER_INFO_API.p_NDOCUMENT_TYP == '4'"
+          >
+            <label
+              class="lbl-title-small"
+              *ngIf="FORM_STEP4.get('idNacionalidad').value >= 1"
+            >Nacionalidad</label
+            >
+            <select
+              class="input-data"
+              [ngClass]="{
+                'input-data-wlbl': FORM_STEP4.get('idNacionalidad').value >= 1,
+                'error-in':
+                  f['idNacionalidad'].invalid && f['idNacionalidad'].touched
+              }"
+              formControlName="idNacionalidad"
+            >
+              <option value="null"
+                      disabled>Nacionalidad
+              </option>
+              <option *ngFor="let data of countries"
+                      [value]="data.id">
+                {{ data.descripcion }}
+              </option>
+            </select>
+          </div>
+          <div
+            class="content-input content-input-wlbl"
+            *ngIf="USER_INFO_API.p_NDOCUMENT_TYP == '2'"
+          >
+            <label
+              class="lbl-title-small"
+              *ngIf="FORM_STEP4.get('department').value >= 1"
+            >Departamento</label
+            >
+            <select
+              class="input-data"
+              [ngClass]="{
+                'in-disabled': flagDisable,
+                'input-data-wlbl': FORM_STEP4.get('department').value >= 1,
+                'error-in': f['department'].invalid && f['department'].touched
+              }"
+              formControlName="department"
+            >
+              <option value="null"
+                      disabled>Departamento
+              </option>
+              <option *ngFor="let data of departments$"
+                      [value]="data.id">
+                {{ data.descripcion }}
+              </option>
+            </select>
+          </div>
+          <div
+            class="content-input content-input-wlbl"
+            *ngIf="USER_INFO_API.p_NDOCUMENT_TYP == '2'"
+          >
+            <label
+              class="lbl-title-small"
+              *ngIf="FORM_STEP4.get('province').value >= 1"
+            >Provincia</label
+            >
+            <select
+              class="input-data"
+              [ngClass]="{
+                'in-disabled': flagDisable,
+                'input-data-wlbl': FORM_STEP4.get('province').value >= 1,
+                'error-in': f['province'].invalid && f['province'].touched
+              }"
+              formControlName="province"
+            >
+              <option value="null"
+                      disabled>Provincia
+              </option>
+              <option
+                *ngFor="let data of provinces$"
+                [value]="data.idProvincia"
+              >
+                {{ data.provincia }}
+              </option>
+            </select>
+          </div>
+          <div
+            class="content-input content-input-wlbl"
+            *ngIf="USER_INFO_API.p_NDOCUMENT_TYP == '2'"
+          >
+            <label
+              class="lbl-title-small"
+              *ngIf="FORM_STEP4.get('district').value >= 1"
+            >Distrito</label
+            >
+            <select
+              class="input-data"
+              [ngClass]="{
+                'in-disabled': flagDisable,
+                'input-data-wlbl': FORM_STEP4.get('district').value >= 1,
+                'error-in': f['district'].invalid && f['district'].touched
+              }"
+              formControlName="district"
+            >
+              <option value="null"
+                      disabled>Distrito
+              </option>
+              <option *ngFor="let data of districts$"
+                      [value]="data.idDistrito">
+                {{ data.distrito }}
+              </option>
+            </select>
+          </div>
+          <div class="content-input content-input-wlbl">
+            <label class="lbl-title-small">Dirección</label>
+            <input
+              type="text"
+              class="input-data input-data-wlbl"
+              style="text-transform: uppercase"
+              formControlName="direccion"
+              [ngClass]="{
+                'error-in': f['direccion'].invalid && f['direccion'].touched
+              }"
+            />
+          </div>
+          <h5 class="title-of-datos my-0 title-of-datos-contact">
+            Datos de contacto
+          </h5>
+          <div class="content-input content-input-wlbl">
+            <label class="lbl-title-small">Número de celular</label>
+            <input
+              type="text"
+              class="input-data input-data-wlbl"
+              [class.error-in]="f['phone'].invalid && f['phone'].touched"
+              formControlName="phone"
+              [minlength]="9"
+              [maxlength]="9"
+            />
+          </div>
+          <h5
+            *ngIf="
+              this.CONTRACTOR_INFO.p_SDOCUMENT != this.USER_INFO_API.p_SDOCUMENT
+            "
+            class="title-of-datos my-0 title-of-datos-contact"
+          >
+            Parentesco
+          </h5>
+          <div
+            class="content-input content-input-wlbl"
+            *ngIf="
+              this.CONTRACTOR_INFO.p_SDOCUMENT != this.USER_INFO_API.p_SDOCUMENT
+            "
+          >
+            <label class="lbl-title-small">Parentesco</label>
+            <select
+              class="input-data"
+              [ngClass]="{
+                'in-disabled': flagDisable,
+                'input-data-wlbl': FORM_STEP4.get('parentesco').value >= 0,
+                'error-in': f['parentesco'].invalid && f['parentesco'].touched
+              }"
+              formControlName="parentesco"
+            >
+              <option value="null"
+                      disabled>
+                Parentesco con el contratante
+              </option>
+              <option
+                *ngFor="let data of relationshipContractor$"
+                [value]="data.id"
+              >
+                {{ data.descripcion }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="content-obligaciones">
+        <span class="quest-obligaciones">
+          <button class="icon-info"
+                  (click)="showHideModalObligaciones(true)">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M13 16h-2v-6h2v6zm-1-10.25c.69 0 1.25.56 1.25 1.25s-.56 1.25-1.25 1.25-1.25-.56-1.25-1.25.56-1.25 1.25-1.25zm0-2.75c5.514 0 10 3.592 10 8.007 0 4.917-5.145 7.961-9.91 7.961-1.937 0-3.383-.397-4.394-.644-1 .613-1.595 1.037-4.272 1.82.535-1.373.723-2.748.602-4.265-.838-1-2.025-2.4-2.025-4.872-.001-4.415 4.485-8.007 9.999-8.007zm0-2c-6.338 0-12 4.226-12 10.007 0 2.05.738 4.063 2.047 5.625.055 1.83-1.023 4.456-1.993 6.368 2.602-.47 6.301-1.508 7.978-2.536 1.418.345 2.775.503 4.059.503 7.084 0 11.91-4.837 11.91-9.961-.001-5.811-5.702-10.006-12.001-10.006z"
+              />
+            </svg>
+          </button>
+          ¿El asegurado tiene obligaciones fiscales/tributarias fuera del Perú?
+        </span>
+        <div
+          class="content-chk-obligaciones my-2 d-flex align-items-center justify-content-center"
+        >
+          <input
+            type="radio"
+            id="chk-ob-1"
+            formControlName="obligaciones"
+            [value]="1"
+            hidden
+          />
+          <label for="chk-ob-1"
+                 class="style-chk-ob"
+                 role="button">Si</label>
+          <input
+            type="radio"
+            id="chk-ob-0"
+            [value]="0"
+            formControlName="obligaciones"
+            hidden
+          />
+          <label for="chk-ob-0"
+                 class="style-chk-ob ml-5"
+                 role="button"
+          >No</label
+          >
+        </div>
+        <small
+          class="error-obligation"
+          *ngIf="f['obligaciones'].invalid && f['obligaciones'].touched"
+        >Este campo es obligatorio</small
+        >
+      </div>
+      <div
+        class="col-lg-12 mx-0 my-0 px-0 py-0 mt-3 mb-4 d-flex flex-row justify-content-center row"
+        *ngIf="!this.fromEcommerce"
+      >
+        <div *ngIf="!this.aseguradoValidate && this.currentUserState != 0">
+          <span class="quest-obligaciones">
+            <i
+              class="fa fa-exclamation-triangle"
+              aria-hidden="true"
+              style="color: red; font-size: 25px"
+            ></i>
+            Queda pendiente la validación del asegurado.
+          </span>
+        </div>
+        <div *ngIf="this.aseguradoValidate">
+          <span class="quest-obligaciones">
+            <img
+              [src]="'assets/insurance/check-circle-2.svg'"
+              class="face-check"
+              alt=""
+            />
+            ¡La validación se realizó con éxito!.
+          </span>
+        </div>
+      </div>
+      <div class="button-content"
+           *ngIf="this.CONTRACTOR_INFO != null">
+        <div
+          class="col-lg-12 mx-0 my-0 px-0 py-0 mt-3 mb-4 d-flex flex-row justify-content-center"
+          *ngIf="
+            !this.aseguradoValidate &&
+            this.CONTRACTOR_INFO.p_SDOCUMENT != this.USER_INFO_API.p_SDOCUMENT
+          "
+        >
+          <div *ngIf="!this.aseguradoValidate && this.currentUserState != 0">
+            <button
+              #btnSubmit
+              class="submitbutton"
+              (click)="sendValidationLinkAsegurado()"
+              [disabled]="FORM_STEP4.invalid || FORM_STEP4_CONTRACTOR.invalid"
+            >
+              Enviar link de validación al asegurado<img
+              alt=""
+              src="assets/icons/Union.png"
+              class="img-excel"
+              style="margin-right: 10px; margin-left: 10px"
+            />
+            </button>
+          </div>
+          <div>
+            <button
+              #btnSubmit
+              [disabled]="this.currentUserState != 0"
+              class="validatebutton"
+              (click)="showHideModalBiometricoAsegurado()"
+            >
+              Validar asegurado
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div
+      *ngIf="this.CONTRACTOR_INFO.p_SDOCUMENT != this.USER_INFO_API.p_SDOCUMENT"
+    >
+      <div
+        class="row mx-0 my-0 px-4 py-0 d-flex align-items-center justify-content-center flex-row"
+      >
+        <div class="col-lg-12 mt-5 text-center">
+          <h3 class="title-datos-contratante my-0">
+            Completa los datos del <b>contratante</b>
+          </h3>
+        </div>
+      </div>
+      <form class="row mx-0 my-0 px-4 py-0"
+            [formGroup]="FORM_STEP4_CONTRACTOR">
+        <div class="col-lg-6 mt-2">
+          <h5 class="title-of-datos my-0">Datos personales</h5>
+          <div class="inputs">
+            <div class="inputs-double">
+              <div class="content-input">
+                <select
+                  class="input-data d-flex align-items-center justify-content-start"
+                  [ngClass]="{
+                    'in-disabled': USER_INFO_API.p_NDOCUMENT_TYP !== null
+                  }"
+                  [disabled]="true"
+                >
+                  <option
+                    value="2"
+                    [selected]="USER_INFO_API.p_NDOCUMENT_TYP == '2'"
+                  >
+                    DNI
+                  </option>
+                  <option
+                    value="4"
+                    [selected]="USER_INFO_API.p_NDOCUMENT_TYP == '4'"
+                  >
+                    CE
+                  </option>
+                </select>
+              </div>
+              <div class="content-input">
+                <div class="input-w-lbl">
+                  <label for=""
+                         class="lbl-title-small"
+                  >Número de documento</label
+                  >
+                  <input
+                    type="text"
+                    [ngClass]="{
+                      'in-disabled': CONTRACTOR_INFO.p_SDOCUMENT !== null
+                    }"
+                    class="input-data input-data-wlbl"
+                    [disabled]="CONTRACTOR_INFO.p_SDOCUMENT !== null"
+                    [value]="CONTRACTOR_INFO.p_SDOCUMENT"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="content-input">
+              <div class="input-w-lbl">
+                <label for=""
+                       class="lbl-title-small">Nombres</label>
+                <input
+                  type="text"
+                  class="input-data input-data-wlbl"
+                  formControlName="names"
+                  [ngClass]="{
+                    'in-disabled': CONTRACTOR_INFO.p_SCLIENT_NAME !== null,
+                    'error-in': fc['names'].invalid && fc['names'].touched
+                  }"
+                  (keypress)="keyPress($event)"
+                />
+              </div>
+            </div>
+            <div class="content-input">
+              <div class="input-w-lbl">
+                <label for=""
+                       class="lbl-title-small">Apellido paterno</label>
+                <input
+                  type="text"
+                  class="input-data input-data-wlbl"
+                  formControlName="apePat"
+                  [ngClass]="{
+                    'in-disabled': CONTRACTOR_INFO.p_SCLIENT_APPPAT !== null,
+                    'error-in': fc['apePat'].invalid && fc['apePat'].touched
+                  }"
+                  (keypress)="keyPress($event)"
+                />
+              </div>
+            </div>
+            <div class="content-input">
+              <div class="input-w-lbl">
+                <label for=""
+                       class="lbl-title-small">Apellido materno</label>
+                <input
+                  type="text"
+                  class="input-data input-data-wlbl"
+                  formControlName="apeMat"
+                  [ngClass]="{
+                    'in-disabled': CONTRACTOR_INFO.p_SCLIENT_APPMAT !== null,
+                    'error-in': fc['apeMat'].invalid && fc['apeMat'].touched
+                  }"
+                  (keypress)="keyPress($event)"
+                />
+              </div>
+            </div>
+            <div class="content-input content-input-wlbl">
+              <label
+                class="lbl-title-small"
+                *ngIf="FORM_STEP4_CONTRACTOR.get('ocupacion').value >= 1"
+              >Ocupación</label
+              >
+              <select
+                class="input-data"
+                [ngClass]="{
+                  'in-disabled': flagDisable,
+                  'input-data-wlbl':
+                    FORM_STEP4_CONTRACTOR.get('ocupacion').value >= 1,
+                  'error-in': fc['ocupacion'].invalid && fc['ocupacion'].touched
+                }"
+                formControlName="ocupacion"
+              >
+                <option value="null"
+                        disabled>Ocupación
+                </option>
+                <option
+                  *ngFor="let data of parameters$?.ocupaciones"
+                  [value]="data.id"
+                >
+                  {{ data.descripcion }}
+                </option>
+              </select>
+            </div>
+            <div class="content-input content-input-wlbl">
+              <label
+                class="lbl-title-small"
+                *ngIf="FORM_STEP4_CONTRACTOR.get('estadoCivil').value >= 1"
+              >Estado Civil</label
+              >
+              <select
+                class="input-data"
+                [ngClass]="{
+                  'in-disabled': flagDisable,
+                  'input-data-wlbl':
+                    FORM_STEP4_CONTRACTOR.get('estadoCivil').value >= 1,
+                  'error-in':
+                    fc['estadoCivil'].invalid && fc['estadoCivil'].touched
+                }"
+                formControlName="estadoCivil"
+              >
+                <option value="null"
+                        disabled>Estado Civil
+                </option>
+                <option
+                  *ngFor="let data of parameters$?.estadoCivil"
+                  [value]="data.id"
+                >
+                  {{ data.descripcion }}
+                </option>
+              </select>
+            </div>
+            <div class="content-input">
+              <div class="input-w-lbl">
+                <label for=""
+                       class="lbl-title-small">Sexo</label>
+                <select
+                  class="input-data input-data-wlbl"
+                  formControlName="sex"
+                  [ngClass]="{
+                    'in-disabled': CONTRACTOR_INFO.p_SSEXCLIEN !== null,
+                    'error-in': fc['sex'].invalid && fc['sex'].touched
+                  }"
+                  (change)="handleSelect($event)"
+                >
+                  <option
+                    value="2"
+                    [selected]="CONTRACTOR_INFO.p_SSEXCLIEN == 2"
+                  >
+                    Masculino
+                  </option>
+                  <option
+                    value="1"
+                    [selected]="CONTRACTOR_INFO.p_SSEXCLIEN == 1"
+                  >
+                    Femenino
+                  </option>
+                  <option
+                    value="3"
+                    [selected]="CONTRACTOR_INFO.p_SSEXCLIEN == 3"
+                  >
+                    No Informado
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="content-input">
+              <div class="input-w-lbl">
+                <label for=""
+                       class="lbl-title-small"
+                >Fecha de nacimiento</label
+                >
+                <input
+                  type="text"
+                  class="input-data input-data-wlbl"
+                  [ngClass]="{
+                    'in-disabled': CONTRACTOR_INFO.p_DBIRTHDAT !== null
+                  }"
+                  [disabled]="true"
+                  [value]="CONTRACTOR_INFO?.p_DBIRTHDAT"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 mt-2">
+          <h5 class="title-of-datos my-0">Lugar de residencia</h5>
+          <div class="inputs">
+            <div
+              class="content-input content-input-wlbl"
+              *ngIf="CONTRACTOR_INFO.p_NDOCUMENT_TYP == '4'"
+            >
+              <label
+                class="lbl-title-small"
+                *ngIf="FORM_STEP4_CONTRACTOR.get('idNacionalidad').value >= 1"
+              >Nacionalidad</label
+              >
+              <select
+                class="input-data"
+                [ngClass]="{
+                  'input-data-wlbl':
+                    FORM_STEP4_CONTRACTOR.get('idNacionalidad').value >= 1,
+                  'error-in':
+                    fc['idNacionalidad'].invalid && fc['idNacionalidad'].touched
+                }"
+                formControlName="idNacionalidad"
+              >
+                <option value="null"
+                        disabled>Nacionalidad
+                </option>
+                <option *ngFor="let data of countries"
+                        [value]="data.id">
+                  {{ data.descripcion }}
+                </option>
+              </select>
+            </div>
+            <div
+              class="content-input content-input-wlbl"
+              *ngIf="CONTRACTOR_INFO.p_NDOCUMENT_TYP == '2'"
+            >
+              <label
+                class="lbl-title-small"
+                *ngIf="FORM_STEP4_CONTRACTOR.get('department').value >= 1"
+              >Departamento</label
+              >
+              <select
+                class="input-data"
+                [ngClass]="{
+                  'in-disabled': flagDisable,
+                  'input-data-wlbl':
+                    FORM_STEP4_CONTRACTOR.get('department').value >= 1,
+                  'error-in':
+                    fc['department'].invalid && fc['department'].touched
+                }"
+                formControlName="department"
+              >
+                <option value="null"
+                        disabled>Departamento
+                </option>
+                <option *ngFor="let data of departments$"
+                        [value]="data.id">
+                  {{ data.descripcion }}
+                </option>
+              </select>
+            </div>
+            <div
+              class="content-input content-input-wlbl"
+              *ngIf="CONTRACTOR_INFO.p_NDOCUMENT_TYP == '2'"
+            >
+              <label
+                class="lbl-title-small"
+                *ngIf="FORM_STEP4_CONTRACTOR.get('province').value >= 1"
+              >Provincia</label
+              >
+              <select
+                class="input-data"
+                [ngClass]="{
+                  'in-disabled': flagDisable,
+                  'input-data-wlbl':
+                    FORM_STEP4_CONTRACTOR.get('province').value >= 1,
+                  'error-in': fc['province'].invalid && fc['province'].touched
+                }"
+                formControlName="province"
+              >
+                <option value="null"
+                        disabled>Provincia
+                </option>
+                <option
+                  *ngFor="let data of provincesCon$"
+                  [value]="data.idProvincia"
+                >
+                  {{ data.provincia }}
+                </option>
+              </select>
+            </div>
+            <div
+              class="content-input content-input-wlbl"
+              *ngIf="CONTRACTOR_INFO.p_NDOCUMENT_TYP == '2'"
+            >
+              <label
+                class="lbl-title-small"
+                *ngIf="FORM_STEP4_CONTRACTOR.get('district').value >= 1"
+              >Distrito</label
+              >
+              <select
+                class="input-data"
+                [ngClass]="{
+                  'in-disabled': flagDisable,
+                  'input-data-wlbl':
+                    FORM_STEP4_CONTRACTOR.get('district').value >= 1,
+                  'error-in': fc['district'].invalid && fc['district'].touched
+                }"
+                formControlName="district"
+              >
+                <option value="null"
+                        disabled>Distrito
+                </option>
+                <option
+                  *ngFor="let data of districtsCon$"
+                  [value]="data.idDistrito"
+                >
+                  {{ data.distrito }}
+                </option>
+              </select>
+            </div>
+            <div class="content-input content-input-wlbl">
+              <label class="lbl-title-small">Dirección</label>
+              <input
+                type="text"
+                class="input-data input-data-wlbl"
+                style="text-transform: uppercase"
+                formControlName="direccion"
+                [ngClass]="{
+                  'error-in': fc['direccion'].invalid && fc['direccion'].touched
+                }"
+              />
+            </div>
+            <h5 class="title-of-datos my-0 title-of-datos-contact">
+              Datos de contacto
+            </h5>
+            <div class="content-input content-input-wlbl">
+              <label class="lbl-title-small">Número de celular</label>
+              <input
+                type="text"
+                class="input-data input-data-wlbl"
+                [class.error-in]="fc['phone'].invalid && fc['phone'].touched"
+                formControlName="phone"
+                [minlength]="9"
+                [maxlength]="9"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="content-obligaciones">
+          <span class="quest-obligaciones">
+            <button class="icon-info"
+                    (click)="showHideModalObligaciones(true)">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M13 16h-2v-6h2v6zm-1-10.25c.69 0 1.25.56 1.25 1.25s-.56 1.25-1.25 1.25-1.25-.56-1.25-1.25.56-1.25 1.25-1.25zm0-2.75c5.514 0 10 3.592 10 8.007 0 4.917-5.145 7.961-9.91 7.961-1.937 0-3.383-.397-4.394-.644-1 .613-1.595 1.037-4.272 1.82.535-1.373.723-2.748.602-4.265-.838-1-2.025-2.4-2.025-4.872-.001-4.415 4.485-8.007 9.999-8.007zm0-2c-6.338 0-12 4.226-12 10.007 0 2.05.738 4.063 2.047 5.625.055 1.83-1.023 4.456-1.993 6.368 2.602-.47 6.301-1.508 7.978-2.536 1.418.345 2.775.503 4.059.503 7.084 0 11.91-4.837 11.91-9.961-.001-5.811-5.702-10.006-12.001-10.006z"
+                />
+              </svg>
+            </button>
+            ¿El contratante tiene obligaciones fiscales/tributarias fuera del
+            Perú?
+          </span>
+          <div
+            class="content-chk-obligaciones my-2 d-flex align-items-center justify-content-center"
+          >
+            <input
+              type="radio"
+              id="chk-ob-3"
+              formControlName="obligacion"
+              [value]="1"
+              hidden
+            />
+            <label for="chk-ob-3"
+                   class="style-chk-ob"
+                   role="button">Si</label>
+            <input
+              type="radio"
+              id="chk-ob-4"
+              [value]="0"
+              formControlName="obligacion"
+              hidden
+            />
+            <label for="chk-ob-4"
+                   class="style-chk-ob ml-5"
+                   role="button"
+            >No</label
+            >
+          </div>
+          <small
+            class="error-obligation"
+            *ngIf="fc['obligacion'].invalid && fc['obligacion'].touched"
+          >Este campo es obligatorio</small
+          >
+        </div>
+        <div
+          class="col-lg-12 mx-0 my-0 px-0 py-0 mt-3 mb-4 d-flex flex-row justify-content-center row"
+        >
+          <div *ngIf="!this.contractorValidate && this.currentUserState == 0">
+            <span class="quest-obligaciones">
+              <i
+                class="fa fa-exclamation-triangle"
+                aria-hidden="true"
+                style="color: red; font-size: 25px"
+              ></i>
+              Queda pendiente la validación del contratante.
+            </span>
+          </div>
+          <div *ngIf="this.contractorValidate">
+            <span class="quest-obligaciones">
+              <img
+                [src]="'assets/insurance/check-circle-2.svg'"
+                class="face-check"
+                alt=""
+              />
+              ¡La validación se realizó con éxito!.
+            </span>
+          </div>
+        </div>
+        <div class="button-content">
+          <div
+            class="col-lg-12 mx-0 my-0 px-0 py-0 mt-3 mb-4 d-flex flex-row justify-content-center"
+            *ngIf="!this.contractorValidate"
+          >
+            <div
+              *ngIf="
+                (!this.contractorValidate && this.currentUserState != 1) ||
+                this.fromEcommerce
+              "
+            >
+              <button
+                #btnSubmit
+                class="submitbutton"
+                (click)="sendValidationLinkContratante()"
+                [disabled]="FORM_STEP4.invalid || FORM_STEP4_CONTRACTOR.invalid"
+              >
+                Enviar link de validación al contratante<img
+                alt=""
+                src="assets/icons/Union.png"
+                class="img-excel"
+                style="margin-right: 10px; margin-left: 10px"
+              />
+              </button>
+            </div>
+            <div
+              *ngIf="
+                (!this.contractorValidate && this.currentUserState == 1) ||
+                this.fromEcommerce
+              "
+            >
+              <button
+                #btnSubmit
+                class="validatebutton"
+                (click)="showHideModalBiometricoContratante()"
+                [disabled]="FORM_STEP4_CONTRACTOR.invalid || FORM_STEP4.invalid"
+              >
+                Validar contratante
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <ng-container *ngIf="biometricResult?.description">
+      <div class="finish-step mt-4"
+           [@fade]="fade">
+        <img
+          [src]="'assets/vidaindividual/biometric/face-check.png'"
+          class="face-check"
+          alt=""
+        />
+        <span
+          class="title-finish"
+          [class.error-biometric]="successBiometric && stepBiom === 1"
+        >
+          {{ biometricResult?.description }}
+        </span>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="otpResponse?.hasError">
+      <div class="finish-step mt-4"
+           [@fade]="fade">
+        <span class="title-finish error-biometric">
+          {{ otpResponse?.message }}
+        </span>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="otpResponse?.success && !otpResponse?.hasError">
+      <div class="finish-step mt-4"
+           [@fade]="fade">
+        <img
+          [src]="'assets/vidaindividual/biometric/face-check.png'"
+          class="face-check"
+          alt=""
+        />
+        <span class="title-finish"> ¡La validación se realizó con éxito! </span>
+      </div>
+    </ng-container>
+    <ng-container
+      *ngIf="
+        (biometricResult?.success &&
+          !biometricResult?.hasError &&
+          biometricResult?.description ==
+            '¡La validación de reconocimiento facial se realizó con éxito!') ||
+        (this.aseguradoValidate &&
+          this.contractorValidate &&
+          this.currentUserState === 1) ||
+        metododepagovalidation ||
+        (otpResponse?.success && !otpResponse?.hasError)
+      "
+    >
+      <div
+        class="row mx-0 my-0 px-0 py-0 d-flex flex-column text-center"
+        #methodPayment
+      >
+        <div class="content-data-product mx-auto">
+          <h5 class="datos-product__title my-0">Método de pago</h5>
+          <div class="metodos-pagos mt-4">
+            <!-- <button class="btn-pago"
+        role="button"
+        (click)="pagar(1)"
+        [disabled]="FORM_STEP4.invalid">
+  <img src="assets/soat/img/pagoefectivo.png"
+       alt="Pago Efectivo">
+</button> -->
+            <ng-container *ngIf="paymentType$.niubiz">
+              <button class="btn-pago button primary fit orange"
+                      role="button"
+                      [disabled]="FORM_STEP4.invalid"
+                      (click)="eventPay(2, 2)"
+                      #visaPay>
+                Pagar
+              </button>
+              <div class="card-logos">
+                <img
+                  src="./assets/logos/payments/diners.svg"
+                  class="diners logo"
+                  width="43"
+                />
+                <img
+                  src="./assets/logos/payments/amex.svg"
+                  class="amex logo"
+                  width="43"
+                />
+                <img
+                  src="./assets/logos/payments/visa-2.svg"
+                  alt="visa logo"
+                  width="43"
+                />
+                <img
+                  src="./assets/logos/payments/mastercard.svg"
+                  alt="mastercard logo"
+                  width="43"
+                />
+              </div>
+            </ng-container>
+            <ng-container *ngIf="paymentType$.kushki">
+              <button class="btn-pago button primary fit orange"
+                      role="button"
+                      [disabled]="FORM_STEP4.invalid"
+                      (click)="eventPay(6, 2)"
+                      #visaPay>
+                Pagar
+              </button>
+              <div class="card-logos">
+                <img
+                  src="./assets/logos/payments/diners.svg"
+                  class="diners logo"
+                  width="43"
+                />
+                <img
+                  src="./assets/logos/payments/amex.svg"
+                  class="amex logo"
+                  width="43"
+                />
+                <img
+                  src="./assets/logos/payments/visa-2.svg"
+                  alt="visa logo"
+                  width="43"
+                />
+                <img
+                  src="./assets/logos/payments/mastercard.svg"
+                  alt="mastercard logo"
+                  width="43"
+                />
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="content_disclaimer">
+        <button class="icon-info"
+                (click)="showModalDisclaimerPayment(true)">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M13 16h-2v-6h2v6zm-1-10.25c.69 0 1.25.56 1.25 1.25s-.56 1.25-1.25 1.25-1.25-.56-1.25-1.25.56-1.25 1.25-1.25zm0-2.75c5.514 0 10 3.592 10 8.007 0 4.917-5.145 7.961-9.91 7.961-1.937 0-3.383-.397-4.394-.644-1 .613-1.595 1.037-4.272 1.82.535-1.373.723-2.748.602-4.265-.838-1-2.025-2.4-2.025-4.872-.001-4.415 4.485-8.007 9.999-8.007zm0-2c-6.338 0-12 4.226-12 10.007 0 2.05.738 4.063 2.047 5.625.055 1.83-1.023 4.456-1.993 6.368 2.602-.47 6.301-1.508 7.978-2.536 1.418.345 2.775.503 4.059.503 7.084 0 11.91-4.837 11.91-9.961-.001-5.811-5.702-10.006-12.001-10.006z"
+            />
+          </svg>
+        </button>
+        <p class="content_disclaimer__desc">
+          Declaro ser el(la) titular de la tarjeta de crédito o débito de Visa o
+          Mastercard y autorizo a Protecta Security a realizar: el cobro de la
+          prima recurrente mediante débito automático y el envío de la póliza
+          electrónica.
+        </p>
+      </div>
+    </ng-container>
+    <div class="row mx-0 my-0 px-4 py-0 content-buttons-actions">
+      <div
+        class="col-lg-12 mx-0 my-0 px-0 py-0 mt-3 mb-4 d-flex flex-row justify-content-center"
+      >
+        <button
+          class="btn-back d-inline-flex align-items-center justify-content-center"
+          (click)="backStep()"
+        >
+          <i class="fa fa-chevron-left mr-2"
+             aria-hidden="true"></i>Anterior
+        </button>
+
+        <div
+          [hidden]="
+            stepBiom == 3 ||
+            otpResponse?.success ||
+            this.CONTRACTOR_INFO.p_SDOCUMENT !=
+              this.USER_INFO_API.p_SDOCUMENT ||
+            metododepagovalidation
+          "
+        >
+          <button
+            [disabled]="FORM_STEP4.invalid"
+            #btnSubmit
+            (click)="showHideModalBiometrico()"
+          >
+            Siguiente
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #modalObligaciones>
+  <div class="content-modal">
+    <section>
+      <div class="modal-header">
+        <button
+          type="button"
+          class="modal-header-close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="showHideModalObligaciones(false)"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <!-- <img [src]="'assets/vidaindividual/resources/money.png'"
+     alt=""> -->
+        <span class="modal-title-benef">
+          Obligaciones fiscales/tributarias
+        </span>
+        <p class="desc-modal-ob">
+          En referencia a casos en donde el contratante/asegurado/beneficiario
+          ha nacido, tiene la nacionalidad y permiso de residencia en EEUU y/o
+          tiene residencia fiscal en un país distinto al Perú.
+        </p>
+      </div>
+      <button
+        type="button"
+        class="btn full-color btn-next-modal"
+        (click)="showHideModalObligaciones(false)"
+      >
+        Cerrar
+      </button>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalDisclaimerPayment>
+  <div class="content-modal">
+    <section>
+      <div class="modal-header">
+        <button
+          type="button"
+          class="modal-header-close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="showModalDisclaimerPayment(false)"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <p class="desc-modal-ob">
+          En tanto que titular de la tarjeta de crédito o débito, autorizo a
+          Protecta Security a realizar los cobros automáticos a la tarjeta sin
+          necesidad de solicitar una confirmación posterior y extendiéndose a la
+          tarjeta de crédito o débito solicitada por el cliente por renovación,
+          pérdida o robo y si Niubiz así lo notifica a Protecta Security. De no
+          contar con esta notificación, Protecta Security no será responsable
+          por la falta de cargo automático de la prima, cuya cobertura podría
+          quedar suspendida o anulada, según se indica en los condicionados
+          generales de la póliza.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn full-color btn-next-modal"
+          (click)="showModalDisclaimerPayment(false)"
+        >
+          Cerrar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+<ng-container *ngIf="modalAdjuntarArchivo">
+  <!-- <app-step-biometric [insurance]="insurance"
+                    (uploadFileBiometricResult)="funcUploadFileBiometricResult($event)"
+                    (modalBiometric)="closeBiometric($event)"
+                    (biometricResult)="funcBiometricResult($event)"></app-step-biometric> -->
+  <app-auth-method
+    (showModalAuthMethod)="showModalAuthMethod($event)"
+    [biometricData]="insurance"
+    (uploadFileBiometricResult)="funcUploadFileBiometricResult($event)"
+    (biometricResult)="funcBiometricResult($event)"
+    [data]="authMethodData"
+    (otpResult)="otpResult($event)"
+    (selectedAuthMethod)="selectedAuthMethod($event)"
+  ></app-auth-method>
+</ng-container>
+<ng-template #modalSuccess>
+  <div class="content-modal">
+    <section>
+      <div class="modal-body modal-emitido my-3">
+        <div class="check-emitido">
+          <img src="assets/backoffice/check-success.png"
+               class="icon-check"/>
+        </div>
+        <div>
+          <h2>{{ titleModal }}</h2>
+          <span>
+            {{ descriptionModal }}
+          </span>
+        </div>
+      </div>
+      <div class="modal-footer modal-foot-confirm">
+        <button
+          type="button"
+          class="btn full-color btn-aceptar-modal"
+          (click)="closeModal()"
+        >
+          Cerrar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+<ng-template #modalMessage>
+  <div class="content-modal">
+    <section>
+      <div class="modal-header">
+        <button
+          type="button"
+          class="modal-header-close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="closeModal()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido my-3">
+        <div class="check-emitido"
+             style="padding-top: 10px">
+          <h2>{{ titleModal }}</h2>
+        </div>
+        <div class="descpMsg">
+          <span>
+            {{ descriptionModal }}
+          </span>
+        </div>
+      </div>
+      <div class="modal-footer modal-foot-confirm">
+        <button
+          type="button"
+          class="validatebutton"
+          (click)="closeModal()"
+          style="width: 171px"
+        >
+          Cerrar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+<ng-template #modalParent>
+  <div class="content-modal">
+    <section>
+      <div class="modal-header">
+        <button
+          type="button"
+          class="modal-header-close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="closeModal()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <h4 class="title-modal">Declaración Jurada de vinculación</h4>
+        <div class="sub-content-modal">
+          <div class="content-info-modal">
+            <p class="info-modal mb-3">
+              Fecha: {{ this.today | date : "dd-MM-yyyy" }}
+            </p>
+            <p class="info-modal">
+              Yo, {{ this.fullContracName | titlecase }} identificado (a) con
+              DNI Nº {{ this.CONTRACTOR_INFO.p_SDOCUMENT }}, domiciliado en
+              {{ this.CONTRACTOR_INFO.p_SADDRESS }}, y con Ocupación
+              {{ this.contractorOcupation }}, deseo asegurar a
+              {{ this.fullasecuName | titlecase }}, identificado (a) con DNI N°
+              {{ this.USER_INFO.nDoc }}, siendo mi
+              {{ this.stringparentesco }} por el producto Vida Devolución
+              Protecta<sup>+</sup>.
+            </p>
+          </div>
+
+          <div class="content-info-modal">
+            <p class="info-modal mb-0">
+              Asimismo, declaro bajo juramento que la información contenida en
+              el presente documento es veraz y autorizo la verificación de lo
+              declarado, en caso resulte necesario; asumiendo la responsabilidad
+              penal, administrativa y civil en caso se evidencie falsedad,
+              omisión, imprecisión, inexactitud y/o reticencia.
+            </p>
+          </div>
+          <div class="content-info-modal">
+            <p class="info-modal mb-0 mt-3">
+              <b>Información del contratante </b>
+            </p>
+          </div>
+          <div class="content-info-modal">
+            <p class="info-modal">
+              Nombres y Apellidos: {{ this.fullContracName | titlecase }} <br/>
+              D.N.I. N° {{ this.CONTRACTOR_INFO.p_SDOCUMENT }}
+            </p>
+            <p class="info-modal">
+              (*) Considerar que en caso de fallecimiento del contratante las
+              obligaciones y derechos del mismo serán adquiridos por el
+              asegurado de la póliza.
+            </p>
+          </div>
+        </div>
+        <button
+          type="button"
+          class="btn full-color btn-next-modal btn-next"
+          (click)="closeModal()"
+          style="margin-top: 20px"
+        >
+          Estoy de acuerdo
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalKushkiPayment>
+  <div class="content-modal modal-kushki">
+    <section>
+      <div class="modal-header">
+        <button
+          class="modal__header--close"
+          aria-label="close"
+          (click)="closeModal()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <img
+          src="./assets/logos/logo-PS.svg"
+          alt="logo protecta"
+          class="logo-protecta"
+        />
+        <form [formGroup]="kushkiForm">
+          <div class="content-input">
+            <label
+              class="placeholder inside"
+              [class.active]="kushkiFormControl['cardNumber'].value"
+              aria-placeholder="Número de tarjeta"
+            >
+              <input
+                type="text"
+                formControlName="cardNumber"
+                [class.has-error]="
+                  kushkiFormControl['cardNumber'].touched &&
+                  kushkiFormControl['cardNumber'].errors
+                "
+                maxlength="16"
+                autocomplete="nope"
+                (blur)="binInfo()"
+              />
+              <i class="fa fa-credit-card"
+                 aria-hidden="true"></i>
+              <ng-container *ngIf="cardType">
+                <img
+                  [src]="'./assets/logos/payments/visa.svg'"
+                  class="card-type-image"
+                  width="40"
+                  height="auto"
+                  *ngIf="cardType == 'visa'"
+                />
+                <img
+                  [src]="'./assets/logos/payments/mastercard.svg'"
+                  class="card-type-image"
+                  width="40"
+                  height="auto"
+                  *ngIf="cardType == 'mastercard'"
+                />
+                <img
+                  [src]="'./assets/logos/payments/diners.svg'"
+                  class="card-type-image"
+                  width="40"
+                  height="auto"
+                  *ngIf="cardType == 'diners'"
+                />
+                <img
+                  [src]="'./assets/logos/payments/amex.svg'"
+                  class="card-type-image"
+                  width="40"
+                  height="auto"
+                  *ngIf="cardType == 'amex'"
+                />
+              </ng-container>
+            </label>
+          </div>
+          <div class="content-expiredate-cvv">
+            <div class="content-input">
+              <label
+                class="placeholder inside"
+                [class.active]="kushkiFormControl['dueDate'].value"
+                aria-placeholder="MM/AA"
+              >
+                <input
+                  type="text"
+                  formControlName="dueDate"
+                  [class.has-error]="
+                    kushkiFormControl['dueDate'].touched &&
+                    kushkiFormControl['dueDate'].errors
+                  "
+                  autocomplete="nope"
+                />
+                <i class="fa fa-calendar-o"
+                   aria-hidden="true"></i>
+              </label>
+            </div>
+            <div class="content-input">
+              <label
+                class="placeholder inside"
+                [class.active]="kushkiFormControl['cvv'].value"
+                aria-placeholder="CVV"
+              >
+                <input
+                  type="password"
+                  formControlName="cvv"
+                  [class.has-error]="
+                    kushkiFormControl['cvv'].touched &&
+                    kushkiFormControl['cvv'].errors
+                  "
+                  autocomplete="nope"
+                  maxlength="4"
+                />
+                <i class="fa fa-lock"
+                   aria-hidden="true"></i>
+              </label>
+            </div>
+          </div>
+          <button
+            class="button primary orange"
+            [disabled]="kushkiForm.invalid"
+            (click)="kushkiSubmit()"
+          >
+            {{ detalleCompra.moneda == 1 ? "S/" : "US$" }}
+            {{ ammountPayment | number : "1.2-2" }}
+          </button>
+          <small class="has-error"
+                 *ngIf="messageInfoKushki">
+            {{ messageInfoKushki }}
+          </small>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="modal-footer__left">
+          <img
+            src="./assets/logos/pci_certificate.svg"
+            alt="pci certificate"
+            width="72"
+          />
+        </div>
+        <div class="modal-footer__right">
+          <img
+            src="./assets/logos/payments/diners.svg"
+            class="diners logo"
+            width="43"
+          />
+          <img
+            src="./assets/logos/payments/amex.svg"
+            class="amex logo"
+            width="43"
+          />
+          <img
+            src="./assets/logos/payments/visa-2.svg"
+            alt="visa logo"
+            width="43"
+          />
+          <img
+            src="./assets/logos/payments/mastercard.svg"
+            alt="mastercard logo"
+            width="43"
+          />
+        </div>
+      </div>
+    </section>
+  </div>
+</ng-template>

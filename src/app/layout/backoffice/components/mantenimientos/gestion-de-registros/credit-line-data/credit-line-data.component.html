@@ -1,0 +1,75 @@
+<div class="content">
+  <div class="content__item">
+    <div class="content__item--inputs">
+      <div class="actions"
+           *ngIf="!isReadOnly">
+        <button
+          class="btn-action"
+          [disabled]="files.invalid || showAction == false"
+          (click)="addRow()"
+        >
+          Agregar
+        </button>
+        <button
+          class="btn-action"
+          [disabled]="files.length <= 0 || showAction == false"
+          (click)="deleteRow()"
+        >
+          Eliminar
+        </button>
+      </div>
+      <table class="tbl">
+        <thead class="tbl__head">
+          <tr class="tbl__head--row">
+            <th class="tbl__head--row-col">Item</th>
+            <th class="tbl__head--row-col"
+                style="width: 40%">Tipo de Papel
+            </th>
+            <th class="tbl__head--row-col">Stock Máximo</th>
+            <th class="tbl__head--row-col">Stock Mínimo</th>
+            <th class="tbl__head--row-col">Stock Actual</th>
+          </tr>
+        </thead>
+        <tbody
+          class="tbl__body"
+          *ngFor="let form of files.controls; let i = index"
+        >
+          <tr class="tbl__body--row"
+              [formGroup]="form">
+            <td class="tbl__body--row-col">{{ i + 1 }}</td>
+            <td class="tbl__body--row-col">
+              <select class="input-u"
+                      formControlName="papelType">
+                <option value="null"
+                        disabled
+                        selected>SELECCIONE
+                </option>
+                <option
+                  *ngFor="let data of dataCertificado?.PRO_MASTER"
+                  [value]="data.SITEM"
+                >
+                  {{ data.SDECRIPTION }}
+                </option>
+              </select>
+            </td>
+            <td class="tbl__body--row-col">
+              <input type="text"
+                     class="input-u"
+                     formControlName="stockMax"/>
+            </td>
+            <td class="tbl__body--row-col">
+              <input type="text"
+                     class="input-u"
+                     formControlName="stockMin"/>
+            </td>
+            <td class="tbl__body--row-col">
+              <input type="text"
+                     class="input-u"
+                     formControlName="stockAct"/>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

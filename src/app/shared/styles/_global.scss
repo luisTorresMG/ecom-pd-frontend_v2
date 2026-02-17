@@ -1,0 +1,12 @@
+@import "variables";
+*::-webkit-scrollbar:not(.no-scroll-style) {
+  width: 7px;
+  height: 7px;
+  background-color: rgba(0, 0, 0, 0.005);
+}
+*::-webkit-scrollbar-thumb:not(.no-scroll-style) {
+  background-color: $orange;
+}
+.capitalize {
+  text-transform: capitalize;
+}

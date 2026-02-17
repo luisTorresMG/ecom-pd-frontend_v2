@@ -1,0 +1,30 @@
+<main class="content">
+  <app-breadcrumb>
+    <a class="disabled">
+      <i class="fa fa-home" aria-hidden="true"></i>
+      Desgravamen
+    </a>
+    <a routerLink="/backoffice/desgravamen/configuracion-correos/destinatarios-externos">
+      Configuración de correos
+    </a>
+  </app-breadcrumb>
+
+  <section class="content__header">
+    <h2 class="subtitle">Configuración de correos</h2>
+  </section>
+
+  <div class="content__tabs">
+    <a class="button content__tabs--button"
+       routerLink="/backoffice/desgravamen/configuracion-correos/destinatarios-externos" routerLinkActive="active">
+      Destinatarios externos
+    </a>
+    <a class="button content__tabs--button"
+       routerLink="/backoffice/desgravamen/configuracion-correos/destinatarios-internos" routerLinkActive="active">
+      Destinatarios internos
+    </a>
+  </div>
+
+  <section class="content__body">
+    <router-outlet></router-outlet>
+  </section>
+</main>

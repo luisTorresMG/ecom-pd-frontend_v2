@@ -1,0 +1,108 @@
+<section class="content-modal-u">
+  <div class="modal-u motp">
+    <div class="modal__header">
+      <button class="modal__header--close" (click)="closeModal()">
+        &times;
+      </button>
+    </div>
+    <div class="modal__body">
+      <h5 class="motp__title">Verificar token enviado</h5>
+      <p class="motp__desc">{{ otpDescription }}</p>
+      <span class="motp__desc">Ingresa el token</span>
+      <form class="motp__verification" [formGroup]="form">
+        <input
+          type="text"
+          tabindex="1"
+          class="motp__verification--input"
+          [maxLength]="1"
+          [minLength]="1"
+          formControlName="code1"
+          (focusin)="code1Focus()"
+          #c1
+        />
+        <input
+          type="text"
+          tabindex="2"
+          class="motp__verification--input"
+          [maxLength]="1"
+          formControlName="code2"
+          (focusin)="code2Focus()"
+          #c2
+        />
+        <input
+          type="text"
+          tabindex="3"
+          class="motp__verification--input"
+          [maxLength]="1"
+          [minLength]="1"
+          formControlName="code3"
+          (focusin)="code3Focus()"
+          #c3
+        />
+        <input
+          type="text"
+          tabindex="4"
+          class="motp__verification--input"
+          [maxLength]="1"
+          [minLength]="1"
+          formControlName="code4"
+          (focusin)="code4Focus()"
+          #c4
+        />
+        <input
+          type="text"
+          tabindex="5"
+          class="motp__verification--input"
+          [maxLength]="1"
+          [minLength]="1"
+          formControlName="code5"
+          (focusin)="code5Focus()"
+          #c5
+        />
+        <input
+          type="text"
+          tabindex="6"
+          class="motp__verification--input"
+          [maxLength]="1"
+          [minLength]="1"
+          formControlName="code6"
+          (focusin)="code6Focus()"
+          #c6
+        />
+      </form>
+      <span class="motp__desc"
+        >Su token vencerá en <b>{{ tokenTime }}</b></span
+      >
+      <span class="motp__desc">¿No recibiste el código?</span>
+      <div class="content__actions">
+        <button
+          class="content__actions--btn"
+          tabindex="-1"
+          [disabled]="tryAgainTime > 0"
+          (click)="emitEventOtpAuthMethod(2)"
+        >
+          Reenviar token
+        </button>
+        <button
+          class="content__actions--btn"
+          [disabled]="tryAgainTime > 0"
+          (click)="emitEventOtpAuthMethod(3)"
+          *ngIf="payloadOtp?.methods?.length > 1"
+        >
+          Elegir otro método
+        </button>
+      </div>
+      <span class="motp__desc"
+        >Podrás reenviar el token en <b>{{ tokenTryAgainTime }}</b></span
+      >
+      <button
+        class="btn-submit"
+        [disabled]="form.invalid"
+        (click)="emitEventOtpAuthMethod(1)"
+      >
+        Verificar
+      </button>
+      <small class="hasError" #messageInfo></small>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,610 @@
+<div class="questionnaire">
+  <div class="questionnaire__container">
+    <h2 class="questionnaire__title">
+      Proceso de diagnóstico de salud y actividades
+    </h2>
+    <small class="questionnaire__info">
+      Queremos conocerte mejor, responde las siguientes preguntas:
+    </small>
+
+    <form [formGroup]="form"
+          (ngSubmit)="onSubmit()">
+      <div
+        class="questionnaire__row"
+        *ngIf="!showCurrentRow(1)"
+        @fade
+        formGroupName="group1"
+      >
+        <div class="questionnaire__item">
+          <div class="questionnaire__item__title">
+            <span>1.</span>
+            <span>¿Cual es su talla y peso?</span>
+          </div>
+          <div class="questionnaire__item__content">
+            <div class="inputs in-w-title mr-3">
+              <label
+                for="talla"
+                class="lbl-titlet"
+                [class.lbl-title-active]="!!f.group1.get('talla').value"
+              >
+                Talla (mts)
+              </label>
+              <input
+                type="text"
+                id="talla"
+                formControlName="talla"
+                [class.in-active]="!!f.group1.get('talla').value"
+                [class.lbl-title]="f.group1.get('talla').value?.length > 0"
+                aria-label="Talla (m)"
+                [minlength]="3"
+                [maxlength]="4"
+              />
+            </div>
+            <div class="inputs in-w-title">
+              <label
+                for="peso"
+                class="lbl-titlet"
+                [class.lbl-title-active]="!!f.group1.get('peso').value"
+              >
+                Peso (kg)
+              </label>
+              <input
+                type="text"
+                id="peso"
+                formControlName="peso"
+                [class.in-active]="!!f.group1.get('peso').value"
+                [ngClass]="{
+                  'lbl-title': f.group1.get('peso').value?.length > 0
+                }"
+                aria-label="Peso (kg)"
+                [minlength]="2"
+                [maxlength]="3"
+              />
+            </div>
+          </div>
+          <div class="questionnaire__item__error">
+            <small
+              class="error-in error-max-w"
+              *ngIf="
+                f.group1.get('talla').invalid && f.group1.get('talla').touched
+              "
+            >
+              La talla no es válida. Ejemplo: 1.70
+            </small>
+            <small
+              class="error-in error-max-w"
+              *ngIf="
+                f.group1.get('peso').invalid && f.group1.get('peso').touched
+              "
+            >
+              El peso no es válido
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="questionnaire__row"
+        *ngIf="!showCurrentRow(2)"
+        @fade
+        formGroupName="group2"
+      >
+        <div class="questionnaire__item">
+          <div class="questionnaire__item__title">
+            <span>2.</span>
+            <span>¿Fuma?</span>
+          </div>
+          <div class="questionnaire__item__content flex-column">
+            <div class="questionnaire__radio">
+              <div class="radio">
+                <input
+                  type="radio"
+                  id="fuma1"
+                  value="1"
+                  hidden
+                  formControlName="fuma"
+                />
+                <label for="fuma1"
+                       class="radio-style">Si</label>
+              </div>
+              <div class="radio">
+                <input
+                  type="radio"
+                  id="fuma0"
+                  value="0"
+                  formControlName="fuma"
+                  hidden
+                />
+                <label for="fuma0"
+                       class="radio-style">No</label>
+              </div>
+            </div>
+
+            <div
+              class="inputs mt-4 mb-3 d-flex flex-column text-center"
+              *ngIf="f.group2.get('fuma').value == 1"
+            >
+              <label class="lbl-title-adicional">
+                Indicar consumo diario de cigarrillo(s):
+              </label>
+              <input
+                type="number"
+                formControlName="fuma_resp"
+                [required]="f.group2.get('fuma').value == 1"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="questionnaire__row"
+        *ngIf="!showCurrentRow(3)"
+        @fade
+        formGroupName="group3"
+      >
+        <div class="questionnaire__item">
+          <div class="questionnaire__item__title">
+            <span>3.</span>
+            <span>
+              ¿Se ha medido la presión arterial en los últimos 2 años?
+            </span>
+          </div>
+          <div class="questionnaire__item__content flex-column">
+            <div class="questionnaire__radio">
+              <div class="radio">
+                <input
+                  type="radio"
+                  id="presion1"
+                  value="1"
+                  hidden
+                  formControlName="presion"
+                />
+                <label for="presion1"
+                       class="radio-style">Si</label>
+              </div>
+              <div class="radio">
+                <input
+                  type="radio"
+                  id="presion0"
+                  value="0"
+                  hidden
+                  formControlName="presion"
+                />
+                <label for="presion0"
+                       class="radio-style">No</label>
+              </div>
+            </div>
+
+            <div class="inputs mt-4"
+                 *ngIf="f.group3.get('presion').value == 1">
+              <label class="lbl-title-adicional d-flex justify-content-center">
+                ¿Cual fue el resultado?
+              </label>
+              <div
+                class="inputs-radio mt-3 mb-3 d-flex text-center justify-content-center"
+              >
+                <div class="radio no-margin">
+                  <input
+                    type="radio"
+                    id="presion_resp1"
+                    value="1"
+                    hidden
+                    formControlName="presion_resp"
+                  />
+                  <label for="presion_resp1"
+                         class="radio-style">Bajo</label>
+                </div>
+                <div class="radio no-margin">
+                  <input
+                    type="radio"
+                    id="presion_resp2"
+                    value="2"
+                    hidden
+                    formControlName="presion_resp"
+                  />
+                  <label for="presion_resp2"
+                         class="radio-style">Normal</label>
+                </div>
+                <div class="radio no-margin">
+                  <input
+                    type="radio"
+                    id="presion_resp3"
+                    value="3"
+                    hidden
+                    formControlName="presion_resp"
+                  />
+                  <label for="presion_resp3"
+                         class="radio-style">Alto</label>
+                </div>
+                <div class="radio no-margin">
+                  <input
+                    type="radio"
+                    id="presion_resp4"
+                    value="4"
+                    hidden
+                    formControlName="presion_resp"
+                  />
+                  <label for="presion_resp4"
+                         class="radio-style">Ignoro</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="questionnaire__row"
+        *ngIf="!showCurrentRow(4)"
+        @fade
+        formGroupName="group4"
+      >
+        <div class="questionnaire__item">
+          <div class="questionnaire__item__title">
+            <span>4.</span>
+            <span>
+              ¿Usted tiene, o ha tenido, o se encuentra en tratamiento, o en
+              proceso de diagnóstico, alguna de las siguientes enfemedades,
+              dolencias o situaciones de salud?
+            </span>
+          </div>
+          <hr/>
+          <div class="questionnaire__item__content flex-column">
+            <div class="questionnaire__sub-question__container">
+              <div class="questionnaire__sub-question">
+                <span>4.1</span>
+                <span>
+                  ¿Cáncer, tumores, V.I.H., SIDA, Linfomas, Leucemia,
+                  Enfermedades Hematológicas, Enfermedades del Pulmón,
+                  Enfermedades al Riñón, Insuficiencia Renal Crónica?
+                </span>
+              </div>
+              <div
+                class="inputs-radio mt-3 mb-3 d-flex text-center justify-content-center"
+              >
+                <div class="radio">
+                  <input
+                    type="radio"
+                    id="cancer1"
+                    value="1"
+                    hidden
+                    formControlName="cancer"
+                  />
+                  <label for="cancer1"
+                         class="radio-style">Si</label>
+                </div>
+                <div class="radio">
+                  <input
+                    type="radio"
+                    id="cancer0"
+                    value="0"
+                    hidden
+                    formControlName="cancer"
+                  />
+                  <label for="cancer0"
+                         class="radio-style">No</label>
+                </div>
+              </div>
+              <div
+                class="inputs mt-2 mb-4 d-flex flex-column questionnaire__textarea"
+                *ngIf="f.group4.get('cancer').value == 1"
+              >
+                <label class="lbl-title-adicional">Detallar:</label>
+                <textarea
+                  name="cancer_rsp"
+                  formControlName="cancer_rsp"
+                  class="form-control"
+                  required
+                ></textarea>
+              </div>
+            </div>
+            <div class="questionnaire__sub-question__container">
+              <div class="questionnaire__sub-question">
+                <span>4.2</span>
+                <span>
+                  ¿Infarto al Miocardio, Infarto Cerebral, Enfermedades
+                  Cardiacas, Hipertensión Arterial, Enfermedades Coronarias,
+                  Soplos Cardiacos, Aneurismas, Accidentes Cerebrovasculares,
+                  Dislipidemia, Hipercolesterolemia, Sobrepreso, Obesidad,
+                  Diabetes Mellitus?
+                </span>
+              </div>
+              <div
+                class="inputs-radio mt-3 mb-3 d-flex text-center justify-content-center"
+              >
+                <div class="radio">
+                  <input
+                    type="radio"
+                    id="infarto1"
+                    value="1"
+                    hidden
+                    formControlName="infarto"
+                  />
+                  <label for="infarto1"
+                         class="radio-style">Si</label>
+                </div>
+                <div class="radio">
+                  <input
+                    type="radio"
+                    id="infarto0"
+                    value="0"
+                    hidden
+                    formControlName="infarto"
+                  />
+                  <label for="infarto0"
+                         class="radio-style">No</label>
+                </div>
+              </div>
+              <div
+                class="inputs mt-4 mb-4 d-flex flex-column questionnaire__textarea"
+                *ngIf="f.group4.get('infarto').value == 1"
+              >
+                <label class="lbl-title-adicional">Detallar:</label>
+                <textarea
+                  name="infarto_rsp"
+                  formControlName="infarto_rsp"
+                  class="form-control"
+                  required
+                ></textarea>
+              </div>
+            </div>
+            <div class="questionnaire__sub-question__container">
+              <div class="questionnaire__sub-question">
+                <span>4.3</span>
+                <span>
+                  ¿Enfermedades Gastrointestinales, Hepatitis (B o C), Cirrosis
+                  Hepática, Úlcera Gástrica, Colitis Ulcerosa, Epilepsia,
+                  Enfermedad de Alzheimer, Depresión, Enfermedades
+                  Psiquiatricas?
+                </span>
+              </div>
+              <div
+                class="inputs-radio mt-3 mb-3 d-flex text-center justify-content-center"
+              >
+                <div class="radio">
+                  <input
+                    type="radio"
+                    id="gastro1"
+                    value="1"
+                    hidden
+                    formControlName="gastro"
+                  />
+                  <label for="gastro1"
+                         class="radio-style">Si</label>
+                </div>
+                <div class="radio">
+                  <input
+                    type="radio"
+                    id="gastro0"
+                    value="0"
+                    hidden
+                    formControlName="gastro"
+                  />
+                  <label for="gastro0"
+                         class="radio-style">No</label>
+                </div>
+              </div>
+              <div
+                class="inputs mt-4 mb-4 d-flex flex-column questionnaire__textarea"
+                *ngIf="f.group4.get('gastro').value == 1"
+              >
+                <label class="lbl-title-adicional">Detallar:</label>
+                <textarea
+                  name="gastro_rsp"
+                  formControlName="gastro_rsp"
+                  class="form-control"
+                  required
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="questionnaire__row"
+        *ngIf="!showCurrentRow(5)"
+        @fade
+        formGroupName="group5"
+      >
+        <div class="questionnaire__item">
+          <div class="questionnaire__item__title">
+            <span>5.</span>
+            <span>
+              ¿Tiene que ser hospitalizado o recibir tratamiento médico
+              próximamente?
+            </span>
+          </div>
+          <div class="questionnaire__item__content flex-column">
+            <div
+              class="inputs-radio mt-3 mb-3 d-flex text-center justify-content-center"
+            >
+              <div class="radio">
+                <input
+                  type="radio"
+                  id="h1"
+                  value="1"
+                  hidden
+                  formControlName="hospitalizacion"
+                />
+                <label for="h1"
+                       class="radio-style">Si</label>
+              </div>
+              <div class="radio">
+                <input
+                  type="radio"
+                  id="h0"
+                  value="0"
+                  hidden
+                  formControlName="hospitalizacion"
+                />
+                <label for="h0"
+                       class="radio-style">No</label>
+              </div>
+            </div>
+            <div
+              class="inputs mt-4 mb-4 d-flex flex-column questionnaire__textarea"
+              *ngIf="f.group5.get('hospitalizacion').value == 1"
+            >
+              <label class="lbl-title-adicional">Detallar:</label>
+              <textarea
+                name="hospitalizacion_resp"
+                formControlName="hospitalizacion_resp"
+                class="form-control"
+                required
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="questionnaire__row"
+        *ngIf="!showCurrentRow(6)"
+        @fade
+        formGroupName="group6"
+      >
+        <div class="questionnaire__item">
+          <div class="questionnaire__item__title">
+            <span>6.</span>
+            <span>
+              ¿Viaja en helicópteros, aviones militares, de instrucción o
+              avionetas particulares, vuelos como piloto o estudiante? En caso
+              afirmativo, favor detallar.
+            </span>
+          </div>
+          <hr/>
+          <div class="questionnaire__item__content flex-column">
+            <div
+              class="inputs-radio mt-3 mb-3 d-flex text-center justify-content-center"
+            >
+              <div class="radio">
+                <input
+                  type="radio"
+                  id="viaja1"
+                  value="1"
+                  hidden
+                  formControlName="viaja"
+                />
+                <label for="viaja1"
+                       class="radio-style">Si</label>
+              </div>
+              <div class="radio">
+                <input
+                  type="radio"
+                  id="viaja0"
+                  value="0"
+                  hidden
+                  formControlName="viaja"
+                />
+                <label for="viaja0"
+                       class="radio-style">No</label>
+              </div>
+            </div>
+            <div
+              class="inputs mt-2 mb-4 d-flex flex-column questionnaire__textarea"
+              *ngIf="f.group6.get('viaja').value == 1"
+            >
+              <label class="lbl-title-adicional">Detallar:</label>
+              <textarea
+                name="viaja_resp"
+                formControlName="viaja_resp"
+                class="form-control"
+                required
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="questionnaire__row"
+        *ngIf="!showCurrentRow(7)"
+        @fade
+        formGroupName="group7"
+      >
+        <div class="questionnaire__item">
+          <div class="questionnaire__item__title">
+            <span>7</span>
+            <span>
+              ¿Realiza o participa en actividades o deportes de riesgo, como
+              paracaidismo, andinismo, automovilismo, motociclismo, buceo, pesca
+              submarina, paracaidismo, ala delta, planeador, rodeo, surf, bungee
+              jumping (caída libre con cuerda) o cualquier otra afín a estas? En
+              caso afirmativo, favor detallar.
+            </span>
+          </div>
+          <div class="questionnaire__item__content flex-column">
+            <div
+              class="inputs-radio mt-3 mb-3 d-flex text-center justify-content-center"
+            >
+              <div class="radio">
+                <input
+                  type="radio"
+                  id="deporte1"
+                  value="1"
+                  hidden
+                  formControlName="deporte"
+                />
+                <label for="deporte1"
+                       class="radio-style">Si</label>
+              </div>
+              <div class="radio">
+                <input
+                  type="radio"
+                  id="deporte0"
+                  value="0"
+                  hidden
+                  formControlName="deporte"
+                />
+                <label for="deporte0"
+                       class="radio-style">No</label>
+              </div>
+            </div>
+            <div
+              class="inputs mt-2 mb-4 d-flex flex-column questionnaire__textarea"
+              *ngIf="f.group7.get('deporte').value == 1"
+            >
+              <label class="lbl-title-adicional">Detallar:</label>
+              <textarea
+                name="deporte_resp"
+                formControlName="deporte_resp"
+                class="form-control"
+                required
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-declare-dps"
+           *ngIf="!showCurrentRow(7)">
+        <div class="selection">
+          <input type="checkbox"
+                 [formControl]="checkDeclareInfoDPSValidControl"
+                 id="check-declare-dps">
+          <label for="check-declare-dps">
+            Declaro que toda la información registrada en mi DPS es verdadera
+          </label>
+        </div>
+      </div>
+
+      <div class="questionnaire__cta">
+        <button class="btn-back d-inline-flex align-items-center justify-content-center"
+                type="button"
+                (click)="onBack()">
+          <i class="fa fa-chevron-left mr-2"
+             aria-hidden="true"></i>Anterior
+        </button>
+        <button class="btn-next d-inline-flex align-items-center justify-content-center"
+                type="submit"
+                [disabled]="validateForm() || (!showCurrentRow(7) && checkDeclareInfoDPSValidControl.invalid)">
+          Siguiente
+          <i class="fa fa-chevron-right ml-2"
+             aria-hidden="true"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

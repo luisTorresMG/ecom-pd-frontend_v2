@@ -1,0 +1,164 @@
+<header class="header">
+  <div class="mxwd">
+    <div class="header__left">
+      <img src="assets/logos/logo-latest.png"
+           width="240px">
+      <h1 class="title">Seguro de Vida Grupo</h1>
+    </div>
+  </div>
+</header>
+<div class="content">
+  <div class="mxwd">
+    <aside class="content__info">
+      <div class="content__info__background">
+        <svg viewBox="0 0 200 200"
+             xmlns="http://www.w3.org/2000/svg">
+          <path fill="#F7F6F8"
+                d="M44.4,-31.1C51.3,-13.6,46.5,5.3,37.2,20.6C27.8,36,13.9,47.9,2.2,46.6C-9.4,45.3,-18.8,30.8,-23.3,18.3C-27.7,5.8,-27,-4.7,-22.3,-21C-17.6,-37.3,-8.8,-59.3,5,-62.1C18.7,-65,37.4,-48.7,44.4,-31.1Z"
+                transform="translate(100 100)"/>
+        </svg>
+      </div>
+      <img class="content__info__image"
+           src="assets/dps/declaracion_salud_actividades.svg"
+           alt="dps logo"
+           width="180px">
+      <h2 class="content__info__subtitle subtitle">
+        Declaración de salud y actividades
+      </h2>
+      <p class="content__info__text paragraph">
+        Nos alegra que hayas llegado a esta etapa en tu viaje virtual hacia la compra del Seguro de
+        Vida Crédito Fácil de Protecta Security.
+      </p>
+      <p class="content__info__text paragraph">
+        Para contratar este seguro de vida, no necesitas pasar por pruebas
+        médicas para calificar como cliente, solo responder de manera honesta al siguiente cuestionario de declaración
+        jurada.
+      </p>
+    </aside>
+
+    <ng-container *ngIf="!insuranceInfo.id">
+      <div class="content__expired">
+        <div class="content__expired__info">
+          <i class="fa fa-times"
+             aria-hidden="true"></i>
+          <h2 class="subtitle">
+            Hola. Tu cotización ya no se encuentra vigente o completaste el proceso.
+          </h2>
+          <h2 class="subtitle">
+            Por favor, solicita una nueva cotización a tu asesor.
+          </h2>
+          <p class="paragraph">
+            Contáctanos en:<br>
+            Correo Electrónico: <b>vidadevolucion@protectasecurity.pe</b><br>
+            Estamos a tu disposición de lunes a viernes de <b>9:00 a.m. a 6:00 p.m.</b>, a excepción de feriados.
+          </p>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="insuranceInfo.id">
+      <ng-container *ngIf="currentStep == 'dps'">
+        <section class="content__dps">
+          <app-dps [dpsData]="dpsData"
+                   (dps)="dpsOnSubmit($event)"></app-dps>
+        </section>
+      </ng-container>
+      <ng-container *ngIf="currentStep == 'auth'">
+        <section class="content__auth">
+          <protecta-otp [data]="otpPayload"
+                        (close)="closeOtp($event)"
+                        (result)="resultOtp($event)"></protecta-otp>
+        </section>
+      </ng-container>
+      <ng-container *ngIf="currentStep == 'success'">
+        <section class="content__success">
+          <div class="content__success__info">
+            <i class="fa fa-check"
+               aria-hidden="true"></i>
+            <h2 class="subtitle">
+              El proceso fue completado correctamente
+            </h2>
+            <p class="paragraph">
+              Un asesor se comunicará en breve con usted.
+            </p>
+          </div>
+        </section>
+      </ng-container>
+      <ng-container *ngIf="currentStep == 'error'">
+        <section class="content__error">
+          <div class="content__error__info">
+            <i class="fa fa-times"
+               aria-hidden="true"></i>
+            <h2 class="subtitle">
+              Ocurrió un error al intentar validar el proceso
+            </h2>
+            <h2 class="subtitle">
+              Por favor, solicita una nueva cotización a tu asesor.
+            </h2>
+            <p class="paragraph">
+              Contáctanos en:<br>
+              Correo Electrónico: <b>vidadevolucion@protectasecurity.pe</b><br>
+              Estamos a tu disposición de lunes a viernes de <b>9:00 a.m. a 6:00 p.m.</b>, a excepción de feriados.
+            </p>
+          </div>
+        </section>
+      </ng-container>
+      <ng-container *ngIf="currentStep == 'expired'">
+        <div class="content__expired">
+          <div class="content__expired__info">
+            <i class="fa fa-times"
+               aria-hidden="true"></i>
+            <h2 class="subtitle">
+              Hola. Tu cotización ya no se encuentra vigente
+            </h2>
+            <h2 class="subtitle">
+              Por favor, solicita una nueva cotización a tu asesor.
+            </h2>
+            <p class="paragraph">
+              Contáctanos en:<br>
+              Correo Electrónico: <b>vidadevolucion@protectasecurity.pe</b><br>
+              Estamos a tu disposición de lunes a viernes de <b>9:00 a.m. a 6:00 p.m.</b>, a excepción de feriados.
+            </p>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="currentStep == 'declined'">
+        <div class="content__expired">
+          <div class="content__expired__info">
+            <i class="fa fa-times"
+               aria-hidden="true"></i>
+            <h2 class="subtitle">
+              Hola. Tu cotización fue rechazada debido a un problema de autenticación
+            </h2>
+            <h2 class="subtitle">
+              Por favor, solicita una nueva cotización a tu asesor.
+            </h2>
+            <p class="paragraph">
+              Contáctanos en:<br>
+              Correo Electrónico: <b>vidadevolucion@protectasecurity.pe</b><br>
+              Estamos a tu disposición de lunes a viernes de <b>9:00 a.m. a 6:00 p.m.</b>, a excepción de feriados.
+            </p>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="currentStep == 'canceled'">
+        <div class="content__expired">
+          <div class="content__expired__info">
+            <i class="fa fa-times"
+               aria-hidden="true"></i>
+            <h2 class="subtitle">
+              Hola. Tu cotización se encuentra anulada
+            </h2>
+            <h2 class="subtitle">
+              Por favor, solicita una nueva cotización a tu asesor.
+            </h2>
+            <p class="paragraph">
+              Contáctanos en:<br>
+              Correo Electrónico: <b>vidadevolucion@protectasecurity.pe</b><br>
+              Estamos a tu disposición de lunes a viernes de <b>9:00 a.m. a 6:00 p.m.</b>, a excepción de feriados.
+            </p>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>

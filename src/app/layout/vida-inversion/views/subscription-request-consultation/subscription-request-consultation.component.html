@@ -1,0 +1,169 @@
+<div class="form-group row ">
+    <div class="col-lg-3">
+        <app-nav-menuprod></app-nav-menuprod>
+    </div>
+
+    <div class="col-lg-9 container">
+        <div class="group1">
+            <h2 class="title">
+                Consulta de Solicitudes Suscripción
+            </h2>
+            <div class="d-flex flex-column align-items-end">
+                <span>PRODUCTO: VIDA INVERSIÓN GLOBAL PROTECTA</span>
+                <span>FECHA ACTUAL: {{current_day.toLocaleDateString('es-ES')}}</span>
+            </div>
+            </div>
+        <div class="form-filters">  
+           <div class="grid">
+            <form-input-text text_label="Producto:"
+                        class="grid-item-1"
+                        [onlyInput]="true"
+                        [(value)]="SEARCH_PARAMS.product"
+                        [large]="true"
+                        [disabled]="true"></form-input-text>
+            <form-input-text text_label="Póliza:"
+                        class="grid-item-2"
+                        [onlyInput]="true"
+                        [(value)]="SEARCH_PARAMS.poliza"
+                        [patternPrevent]="CONSTANTS.REGEX.NUMBER_"
+                        maxCaracter="10"
+                        [large]="true"></form-input-text>
+                        <form-input-select text_label="TIPO DE CLIENTE:"
+                        class="grid-item-3"
+                        [(value)]="SEARCH_PARAMS.client_type"
+                        [updateModelOnChange]="true"
+                        fieldCodigo="codigo"
+                        fieldValor="valor"
+                        [items]="TYPE_CLIENT"
+                        [large]="true"
+                        ></form-input-select>
+
+                        <form-input-select text_label="Tipo de documento:"
+                        class="grid-item-4"
+                        [service]="clientInformationService"
+                        method="getDocumentTypeList"
+                        [updateModelOnChange]="true"
+                        (onSelect)="changeDocumentType()"
+                        [(value)]="SEARCH_PARAMS.document_type"
+                        [params]="codProducto"
+                        fieldCodigo="Id"
+                        fieldValor="Name"
+                        [firstSelect]="true"
+                        [large]="true"
+                        [disabled]="SEARCH_PARAMS.document_type_disabled">
+            ></form-input-select>
+            <form-input-text text_label="Número de documento:"
+                    class="grid-item-5"
+                    [patternPrevent]="CONSTANTS.REGEX.NUMBER_"
+                    maxCaracter="{{SEARCH_PARAMS.number}}"
+                    [(value)]="SEARCH_PARAMS.document_number"
+                    [large]="true"
+                    [disabled]="SEARCH_PARAMS.document_number_disabled"></form-input-text>
+            <form-input-text text_label="Nombres:"
+                    class="grid-item-6"
+                    [(value)]="SEARCH_PARAMS.name"
+                    maxCaracter="19"
+                    [patternPrevent]="CONSTANTS.REGEX.LETRAS"
+                    [large]="true"></form-input-text>
+            <form-input-text text_label="Apellido 1:"
+                    class="grid-item-7"
+                    [(value)]="SEARCH_PARAMS.lastname1"
+                    maxCaracter="19"
+                    [patternPrevent]="CONSTANTS.REGEX.LETRAS"
+                    [large]="true"></form-input-text>
+            <form-input-text text_label="Apellido 2:"
+                    class="grid-item-8"
+                    [(value)]="SEARCH_PARAMS.lastname2"
+                    maxCaracter="19"
+                    [patternPrevent]="CONSTANTS.REGEX.LETRAS"
+                    [large]="true"></form-input-text>
+           </div>
+          <div>
+            <h3 class="sub-title">Fecha de Emision</h3>
+            <div class="container-date">
+                <form-input-date [(value)]="SEARCH_PARAMS.date_start"
+                           [(value)]="SEARCH_PARAMS.date_start"
+                           text_label="Desde"></form-input-date>
+                <form-input-date [(value)]="SEARCH_PARAMS.date_end"
+                           text_label="Hasta"></form-input-date>
+            </div>
+            <div class="content-btn">
+                <form-button class="button" label="Buscar"
+                btnClass="btn-primary-VI text-nowrap"
+                (click)="buscar()"
+                [slim]="true"
+                ></form-button> 
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table ">
+                <thead class="table-titles">
+                    <th class="table-title-item">Nro. Poliza</th>
+                    <th class="table-title-item">Nro. Cotizacion</th>
+                    <th class="table-title-item">Doc. Identidad Contratante</th>
+                    <th class="table-title-item">Nombre Contratante</th>
+                    <th class="table-title-item">Doc. Identidad Asegurado</th>
+                    <th class="table-title-item">Nombre Asegurado</th>
+                    <th class="table-title-item">Fecha Solicitud</th>
+                    <th class="table-title-item">Acciones</th>
+                </thead>
+                <tbody>
+                    <ng-container *ngIf="!requests_list?.length">
+                        <tr class="grid-body">
+                            <td class="grid-body-item"
+                                colspan="10"
+                                style="text-align: center">
+                                No se encontraron registros.
+                            </td>
+                        </tr>
+                    </ng-container>
+                    <ng-container *ngIf="!!requests_list?.length">
+                        <tr class="grid-body"
+                            *ngFor="let item of requests_list let index = index"
+                            [id]="'row' + index">
+
+                            <td class="text-center">{{ item.NPOLIZA }}</td>
+                            <td class="text-center">{{ item.SCOTIZACION }}</td>
+                            <td class="text-center">{{ item.SDOC_CONT }}</td>
+                            <td class="text-center">{{ item.SNAME_CONT }}</td>
+                            <td class="text-center">{{ item.SDOC_ASEG }}</td>
+                            <td class="text-center">{{ item.SNAME_ASEG }}</td>
+                            <td class="text-center">{{ item.DFECHA_EMISION }}</td>
+                            <td class="tbl__body-row-item tbl-actions actions"
+                                ngbDropdown>
+                                <button class="btn-dropdown-u"
+                                        tabindex="0"
+                                        data-toggle="dropdown"
+                                        aria-haspopup="true"
+                                        aria-expanded="false"
+                                        ngbDropdownToggle>
+                                    <i class="fa fa-ellipsis-v"
+                                    aria-hidden="true"></i>
+                                </button>
+                                <ul class="dropdown-u"
+                                    display="dynamic"
+                                    ngbDropdownMenu>
+                                    <li class="dropdown-item-u">
+                                        <button class="dropdown-item-btn-u"
+                                                title="Suscripción"
+                                                *ngIf="profile_id == 192"
+                                                (click)="suscripcion(item)">
+                                            <i class="fa fa-eye fa-lg"></i>Suscripción
+                                        </button>
+                                        <button class="dropdown-item-btn-u"
+                                        title="Suscripción"
+                                        *ngIf="profile_id == 194"
+                                        (click)="suscripcion(item)">
+                                    <i class="fa fa-eye fa-lg"></i>Aceder
+                                </button>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

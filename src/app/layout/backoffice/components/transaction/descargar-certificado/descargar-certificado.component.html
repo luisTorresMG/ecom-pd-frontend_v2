@@ -1,0 +1,380 @@
+<div class="container-fluid">
+  <div class="row content-all">
+    <div class="col-md-12 content">
+      <div class="container-fluid content-page">
+        <div class="row r1-head">
+          <div class="col-12 head-title">
+            <h1 class="title">Descargo de Certificados</h1>
+          </div>
+        </div>
+        <form class="row r2-head" [formGroup]="form">
+          <div class="col-md-8 content-actions">
+            <div class="content-input">
+              <label for="state" class="lbl-in filter-text">ESTADO:</label>
+              <select
+                class="in-action"
+                formControlName="estado"
+                (selectionChange)="onChange($event.value)"
+              >
+                <option [value]="0" disabled selected>SELECCIONE</option>
+                <option
+                  *ngFor="let data of dataEstado?.PRO_CURRENCY"
+                  [value]="data?.NSTATUSPOL"
+                >
+                  {{ data?.SDESCRIPT }}
+                </option>
+              </select>
+            </div>
+            <div class="content-input">
+              <label for="chanel" class="lbl-in filter-text"
+                >CANAL DE VENTA:</label
+              >
+              <select
+                class="in-action"
+                formControlName="canal"
+                (selectionChange)="onChange($event.value)"
+              >
+                <option [value]="0" disabled selected>SELECCIONE</option>
+                <option
+                  *ngFor="let data of dataCanal?.PRO_POLICY"
+                  [value]="data?.NIDPOLICY"
+                >
+                  {{ data?.SCLIENAME }}
+                </option>
+              </select>
+            </div>
+            <div class="content-input">
+              <label for="cert" class="lbl-in filter-text"
+                >INGRESAR CERTIFICADO:</label
+              >
+              <input
+                type="text"
+                class="in-action"
+                formControlName="certificado"
+                (keyup.enter)="busqueda()"
+              />
+            </div>
+          </div>
+          <div
+            class="col-md-4 cont-btn-generar"
+            *ngIf="dataInfo?.entities?.length > 0"
+          >
+            <button
+              role="button"
+              type="button"
+              class="full-color"
+              (click)="limpiar()"
+            >
+              Limpiar
+            </button>
+            <button
+              role="button"
+              type="button"
+              class="full-color"
+              (click)="showModalGenerarLote()"
+            >
+              Generar Lote de Descargo
+            </button>
+          </div>
+        </form>
+        <div
+          class="grid form-group row content-table"
+          *ngIf="dataInfo?.entities?.length > 0"
+        >
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr class="grid-title table-head">
+                  <td class="grid-title-item">N°</td>
+                  <td class="grid-title-item">N° Certificado</td>
+                  <td class="grid-title-item">Canal de Venta</td>
+                  <td class="grid-title-item">Punto de Venta</td>
+                  <td class="grid-title-item">Estado</td>
+                  <td class="grid-title-item">Origen</td>
+                  <td class="grid-title-item">Fecha de Distribución</td>
+                  <td class="grid-title-item">Acciones</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="table-body"
+                  *ngFor="
+                    let data of dataInfo?.entities
+                      | paginate: { itemsPerPage: 10, currentPage: p };
+                    let index = index
+                  "
+                >
+                  <td class="table-body-item">{{ index + 1 }}</td>
+                  <td class="table-body-item">{{ data.P_NPOLICY_OUT }}</td>
+                  <td class="table-body-item">{{ data.P_DESCANAL }}</td>
+                  <td class="table-body-item">{{ data.P_VENTA }}</td>
+                  <td class="table-body-item">{{ data.P_SDESCRIPT }}</td>
+                  <td class="table-body-item">{{ data.P_SORIGEN }}</td>
+                  <td class="table-body-item">{{ data.P_DCOMPDATE }}</td>
+                  <td class="table-body-item table-body-item-actions">
+                    <a (click)="showModalEliminar(data)">
+                      <i
+                        title="Quitar"
+                        style="cursor: pointer"
+                        class="fa fa-trash fa-lg"
+                      ></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls
+              class="my-pagination"
+              (pageChange)="p = $event"
+              autoHide="true"
+              responsive="true"
+              previousLabel="Anterior"
+              nextLabel="Siguiente"
+              screenReaderPaginationLabel="Paginación"
+              screenReaderPageLabel="pagina"
+              screenReaderCurrentLabel="Estás en la pagina"
+            >
+            </pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #modal="bs-modal"
+  [config]="{
+    backdrop: 'static'
+  }"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Mensaje de Confirmación</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="closeGenerarLoteModal()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label>¿Desea realizar el descargo de las pólizas?</label>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn full-color btn-secondary btn-close-modal"
+          data-dismiss="modal"
+          (click)="closeGenerarLoteModal()"
+        >
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn full-color btn-aceptar-modal"
+          (click)="descargoPolizas()"
+        >
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #modalEliminar="bs-modal"
+  [config]="{
+    backdrop: 'static'
+  }"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Mensaje de Confirmación</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="hideModalEliminar()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label>¿Desea quitar el registro de la grilla?</label>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn full-color btn-secondary btn-close-modal"
+          data-dismiss="modal"
+          (click)="hideModalEliminar()"
+        >
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn full-color btn-aceptar-modal"
+          (click)="eliminarPoliza()"
+        >
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<app-modal-message
+  [isShow]="isShowModal"
+  [message]="mensajeModal"
+></app-modal-message>
+
+<div
+  class="modal fade"
+  bsModal
+  #modalAviso="bs-modal"
+  [config]="{
+    backdrop: 'static'
+  }"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content anular">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="ocultarModalAviso()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <h4 class="textanular" style="font-size: 15px">
+          {{ MENSAJE }}
+        </h4>
+      </div>
+      <div
+        class="
+          modal-footer modal-foot-confirm
+          d-flex
+          align-items-center
+          justify-content-center
+        "
+      >
+        <button
+          type="button"
+          class="btn full-color btn-aceptar-modal"
+          (click)="ocultarModalAviso()"
+          style="margin-right: 10px"
+        >
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #modalConfirmacion="bs-modal"
+  [config]="{
+    backdrop: 'static'
+  }"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content anular">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="ocultarModalAviso()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <h4 class="textanular success-text" style="font-size: 15px">
+          {{ MENSAJECONFIRMACION }}
+        </h4>
+      </div>
+      <div
+        class="
+          modal-footer modal-foot-confirm
+          d-flex
+          align-items-center
+          justify-content-center
+        "
+      >
+        <button
+          type="button"
+          class="btn full-color btn-aceptar-modal"
+          (click)="ocultarModalAviso()"
+          style="margin-right: 10px"
+        >
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #modalError="bs-modal"
+  [config]="{
+    backdrop: 'static'
+  }"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content anular">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="ocultarModalAviso()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <h4 class="textanular" style="font-size: 15px">
+          {{ MENSAJEERROR }}
+        </h4>
+      </div>
+      <div
+        class="
+          modal-footer modal-foot-confirm
+          d-flex
+          align-items-center
+          justify-content-center
+        "
+      >
+        <button
+          type="button"
+          class="btn full-color btn-aceptar-modal"
+          (click)="ocultarModalAviso()"
+          style="margin-right: 10px"
+        >
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

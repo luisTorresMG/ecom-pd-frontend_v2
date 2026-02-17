@@ -1,0 +1,360 @@
+<div class="content">
+  <!-- <h2 class="content__title">Declaración de salud y actividades</h2>
+  <small class="content__extra">Queremos conocerte mejor, responde las siguientes preguntas:</small> -->
+  <form class="content__dps"
+        [formGroup]="form"
+        #formDps>
+    <ol class="dps__item"
+        type="1">
+      <!-- TODO: PREGUNTA 1 -->
+      <li>
+        <span class="dps__item--quest">¿Cual es su talla y peso?</span>
+        <div class="dps__item--inputs"
+             [class.dps-error]="(f['talla'].hasError('required') && f['talla'].touched)||
+             (f['peso'].hasError('required') && f['peso'].touched)">
+          <label for="talla"
+                 class="content_input-u placeholder"
+                 [class.placeholder-active]="f['talla'].value"
+                 aria-placeholder="Talla(m)">
+            <input type="text"
+                   id="talla"
+                   class="input-u"
+                   [class.placeholder-active]="f['talla'].value"
+                   autocomplete="nope"
+                   formControlName="talla">
+          </label>
+          <label for="peso"
+                 class="content_input-u placeholder"
+                 [class.placeholder-active]="f['peso'].value"
+                 aria-placeholder="Peso(kg)">
+            <input type="text"
+                   id="peso"
+                   class="input-u"
+                   [class.placeholder-active]="f['peso'].value"
+                   autocomplete="nope"
+                   formControlName="peso">
+          </label>
+        </div>
+        <ng-container *ngIf="f['talla'].hasError('required') && f['talla'].touched">
+          <small class="error">
+            La talla es obligatoria: ejm: 1.80
+          </small>
+        </ng-container>
+        <ng-container *ngIf="f['peso'].hasError('required') && f['peso'].touched">
+          <small class="error">
+            El peso es obligatorio: ejm: 80
+          </small>
+        </ng-container>
+      </li>
+      <!-- TODO: PREGUNTA 2 -->
+      <li>
+        <span class="dps__item--quest">¿Fuma?</span>
+        <div class="dps__item--inputs"
+             [class.dps-error]="f['fuma'].hasError('required') && f['fuma'].touched">
+          <div class="content_check">
+            <input type="radio"
+                   id="fuma1"
+                   class="chk"
+                   value="Si"
+                   formControlName="fuma">
+            <label for="fuma1"
+                   class="lbl-chk">Si</label>
+          </div>
+          <div class="content_check">
+            <input type="radio"
+                   id="fuma0"
+                   class="chk"
+                   value="No"
+                   formControlName="fuma">
+            <label for="fuma0"
+                   class="lbl-chk">No</label>
+          </div>
+        </div>
+        <ng-container *ngIf="f['fuma'].hasError('required') && f['fuma'].touched">
+          <small class="error">
+            Este campo es obligatorio
+          </small>
+        </ng-container>
+        <ng-container *ngIf="showResFuma">
+          <div class="dbps__item--res">
+            <span class="dps__item--quest">Indicar consumo diario de cigarrillo(s):</span>
+            <div class="dps__item--inputs"
+                 [class.dps-error]="f['cantidadCigarros'].hasError('required') && f['cantidadCigarros'].touched">
+              <select type="text"
+                      class="input-u"
+                      id="cantidadCigarros"
+                      formControlName="cantidadCigarros">
+                <option *ngFor="let cantidad of cantidadConsumoCigarrillos"
+                        [value]="cantidad">{{ cantidad }}</option>
+              </select>
+            </div>
+          </div>
+          <ng-container *ngIf="f['cantidadCigarros'].hasError('required') && f['cantidadCigarros'].touched">
+            <small class="error">
+              Este campo es obligatorio
+            </small>
+          </ng-container>
+        </ng-container>
+      </li>
+      <!-- TODO: PREGUNTA 3 -->
+      <li>
+        <span class="dps__item--quest">¿Se ha medido la presión arterial en los últimos 2 años?</span>
+        <div class="dps__item--inputs"
+             [class.dps-error]="f['presionArterial'].hasError('required') && f['presionArterial'].touched">
+          <div class="content_check">
+            <input type="radio"
+                   id="presionArterial1"
+                   class="chk"
+                   value="Si"
+                   formControlName="presionArterial">
+            <label for="presionArterial1"
+                   class="lbl-chk">Si</label>
+          </div>
+          <div class="content_check">
+            <input type="radio"
+                   id="presionArterial0"
+                   class="chk"
+                   value="No"
+                   formControlName="presionArterial">
+            <label for="presionArterial0"
+                   class="lbl-chk">No</label>
+          </div>
+        </div>
+        <ng-container *ngIf="f['presionArterial'].hasError('required') && f['presionArterial'].touched">
+          <small class="error">
+            Este campo es obligatorio
+          </small>
+        </ng-container>
+        <ng-container *ngIf="showPresionArterialResult">
+          <div class="dbps__item--res">
+            <span class="dps__item--quest">¿Cual fue el resultado?</span>
+            <div class="dps__item--inputs"
+                 [class.dps-error]="f['presionArterialResult'].hasError('required') && f['presionArterialResult'].touched">
+              <div class="content_check">
+                <input type="radio"
+                       id="presionArterialResult1"
+                       class="chk"
+                       value="Bajo"
+                       formControlName="presionArterialResult">
+                <label for="presionArterialResult1"
+                       class="lbl-chk">Bajo</label>
+              </div>
+              <div class="content_check">
+                <input type="radio"
+                       id="presionArterialResult2"
+                       class="chk"
+                       value="Normal"
+                       formControlName="presionArterialResult">
+                <label for="presionArterialResult2"
+                       class="lbl-chk">Normal</label>
+              </div>
+              <div class="content_check">
+                <input type="radio"
+                       id="presionArterialResult3"
+                       class="chk"
+                       value="Alto"
+                       formControlName="presionArterialResult">
+                <label for="presionArterialResult3"
+                       class="lbl-chk">Alto</label>
+              </div>
+              <div class="content_check">
+                <input type="radio"
+                       id="presionArterialResult0"
+                       class="chk"
+                       value="Ignoro"
+                       formControlName="presionArterialResult">
+                <label for="presionArterialResult0"
+                       class="lbl-chk">Ignoro</label>
+              </div>
+            </div>
+            <ng-container *ngIf="f['presionArterialResult'].hasError('required') && f['presionArterialResult'].touched">
+              <small class="error">
+                Este campo es obligatorio
+              </small>
+            </ng-container>
+          </div>
+        </ng-container>
+      </li>
+      <!-- TODO: PREGUNTA 4 -->
+      <li>
+        <span class="dps__item--quest">¿Usted tiene, o ha tenido, o se encuentra en tratamiento, o en proceso de
+          diagnóstico, alguna de las siguientes enfemedades, dolencias o situaciones de salud?</span>
+        <ol type="a">
+          <!-- TODO: PREGUNTA 4.1 -->
+          <li>
+            <span class="dps__item--quest">¿Cáncer, tumores, V.I.H., SIDA, Linfomas, Leucemia, Enfermedades
+              Hematológicas, Enfermedades del Pulmón, Enfermedades al Riñón, Insuficiencia Renal Crónica?</span>
+            <div class="dps__item--inputs"
+                 [class.dps-error]="f['cancer'].hasError('required') && f['cancer'].touched">
+              <div class="content_check">
+                <input type="radio"
+                       id="cancer1"
+                       class="chk"
+                       value="Si"
+                       formControlName="cancer">
+                <label for="cancer1"
+                       class="lbl-chk">Si</label>
+              </div>
+              <div class="content_check">
+                <input type="radio"
+                       id="cancer0"
+                       class="chk"
+                       value="No"
+                       formControlName="cancer">
+                <label for="cancer0"
+                       class="lbl-chk">No</label>
+              </div>
+            </div>
+            <ng-container *ngIf="f['cancer'].hasError('required') && f['cancer'].touched">
+              <small class="error">
+                Este campo es obligatorio
+              </small>
+            </ng-container>
+          </li>
+          <!-- TODO: PREGUNTA 4.2 -->
+          <li>
+            <span class="dps__item--quest">¿Infarto al Miocardio, Infarto Cerebral, Enfermedades Cardiacas, Hipertensión
+              Arterial, Enfermedades Coronarias, Soplos Cardiacos, Aneurismas, Accidentes Cerebrovasculares,
+              Dislipidemia, Hipercolesterolemia, Sobrepreso, Obesidad, Diabetes Mellitus?</span>
+            <div class="dps__item--inputs"
+                 [class.dps-error]="f['infarto'].hasError('required') && f['infarto'].touched">
+              <div class="content_check">
+                <input type="radio"
+                       id="infarto1"
+                       class="chk"
+                       value="Si"
+                       formControlName="infarto">
+                <label for="infarto1"
+                       class="lbl-chk">Si</label>
+              </div>
+              <div class="content_check">
+                <input type="radio"
+                       id="infarto0"
+                       class="chk"
+                       value="No"
+                       formControlName="infarto">
+                <label for="infarto0"
+                       class="lbl-chk">No</label>
+              </div>
+            </div>
+            <ng-container *ngIf="f['infarto'].hasError('required') && f['infarto'].touched">
+              <small class="error">
+                Este campo es obligatorio
+              </small>
+            </ng-container>
+          </li>
+          <!-- TODO: PREGUNTA 4.3 -->
+          <li>
+            <span class="dps__item--quest">¿Enfermedades Gastrointestinales, Hepatitis (B o C), Cirrosis Hepática,
+              Úlcera Gástrica, Colitis Ulcerosa, Epilepsia, Enfermedad de Alzheimer, Depresión, Enfermedades
+              Psiquiatricas?</span>
+            <div class="dps__item--inputs"
+                 [class.dps-error]="f['gastro'].hasError('required') && f['gastro'].touched">
+              <div class="content_check">
+                <input type="radio"
+                       id="gastro1"
+                       class="chk"
+                       value="Si"
+                       formControlName="gastro">
+                <label for="gastro1"
+                       class="lbl-chk">Si</label>
+              </div>
+              <div class="content_check">
+                <input type="radio"
+                       id="gastro0"
+                       class="chk"
+                       value="No"
+                       formControlName="gastro">
+                <label for="gastro0"
+                       class="lbl-chk">No</label>
+              </div>
+            </div>
+            <ng-container *ngIf="f['gastro'].hasError('required') && f['gastro'].touched">
+              <small class="error">
+                Este campo es obligatorio
+              </small>
+            </ng-container>
+          </li>
+        </ol>
+      </li>
+      <!-- TODO: PREGUNTA 5 -->
+      <li>
+        <span class="dps__item--quest">¿Realiza o participa en actividades o deportes riesgosos? se considera como tales
+          actividades o deportes, aquellos que constituyan una clara agravación del riesgo o en el que se ponga en
+          peligro su vida.</span>
+        <ol type="a">
+          <!-- TODO: PREGUNTA 5.1 -->
+          <li>
+            <span class="dps__item--quest">¿Viaja en helicópteros, aviones militares, de instrucción o aviones
+              particulares, vuelos como piloto o estudiante?</span>
+            <div class="dps__item--inputs"
+                 [class.dps-error]="f['viaja'].hasError('required') && f['viaja'].touched">
+              <div class="content_check">
+                <input type="radio"
+                       id="viaja1"
+                       class="chk"
+                       value="Si"
+                       formControlName="viaja">
+                <label for="viaja1"
+                       class="lbl-chk">Si</label>
+              </div>
+              <div class="content_check">
+                <input type="radio"
+                       id="viaja0"
+                       class="chk"
+                       value="No"
+                       formControlName="viaja">
+                <label for="viaja0"
+                       class="lbl-chk">No</label>
+              </div>
+            </div>
+            <ng-container *ngIf="f['viaja'].hasError('required') && f['viaja'].touched">
+              <small class="error">
+                Este campo es obligatorio
+              </small>
+            </ng-container>
+          </li>
+          <!-- TODO: PREGUNTA 5.2 -->
+          <li>
+            <span class="dps__item--quest">¿Practica paracaidismo, andinismo, automovilismo, buceo, motociclismo o
+              afines, bungee jumping (caída libre con cuerda), pesca submarina, ala delta, planeador, rodeo, surf o
+              cualquier otro deporte o actividad obviamente peligrosa?</span>
+            <div class="dps__item--inputs"
+                 [class.dps-error]="f['deporte'].hasError('required') && f['deporte'].touched">
+              <div class="content_check">
+                <input type="radio"
+                       id="deporte1"
+                       class="chk"
+                       value="Si"
+                       formControlName="deporte">
+                <label for="deporte1"
+                       class="lbl-chk">Si</label>
+              </div>
+              <div class="content_check">
+                <input type="radio"
+                       id="deporte0"
+                       class="chk"
+                       value="No"
+                       formControlName="deporte">
+                <label for="deporte0"
+                       class="lbl-chk">No</label>
+              </div>
+            </div>
+            <ng-container *ngIf="f['deporte'].hasError('required') && f['deporte'].touched">
+              <small class="error">
+                Este campo es obligatorio
+              </small>
+            </ng-container>
+          </li>
+        </ol>
+      </li>
+    </ol>
+  </form>
+  <!--  <small class="acept_terms">Al hacer clic en el botón “Aceptar”, confirmo que estoy de acuerdo con la información
+    declarada
+    en esta DPS</small>
+  <button class="input-u input_submit-u"
+          type="button"
+          role="button"
+          (click)="submit()">Aceptar</button> -->
+</div>

@@ -1,0 +1,14 @@
+<ng-container *ngIf="!!emailsCopy?.length && !!f['email'].value && findEmail !== -1">
+  <ul class="suggestions"
+      [@entrada]="true">
+    <li class="suggestions__item">
+      <small class="suggestions__item--desc">Autocompletar</small>
+    </li>
+    <li class="suggestions__item"
+        *ngFor="let data of emailsCopy">
+      <button (click)="selectSuggestion(data)"
+              type="button"
+              role="button">{{ data }}</button>
+    </li>
+  </ul>
+</ng-container>

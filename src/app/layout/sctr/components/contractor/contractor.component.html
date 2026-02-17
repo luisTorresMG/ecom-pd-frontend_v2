@@ -1,0 +1,333 @@
+<form action=""
+      [formGroup]="userForm"
+      (ngSubmit)="onSubmit()"
+      autocomplete="off">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="soat-input-form-container">
+        <div class="soat-input-container icon">
+          <input type="text"
+                 placeholder="Tipo de Documento"
+                 value="RUC"
+                 class="soat-input"
+                 disabled />
+        </div>
+      </div>
+      <div class="soat-input-form-container">
+        <div class="soat-input-container icon">
+          <input type="text"
+                 placeholder="RUC"
+                 value="{{ user.ruc }}"
+                 class="soat-input"
+                 disabled />
+        </div>
+        <div class="soat-error-message"
+             *ngIf="documentNoExists()">
+          <ng-container *ngIf="documentNoExists()">
+            <i></i><span style="color: #2b0d61;">*Por favor revisar si el número de documento es válido.</span>
+          </ng-container>
+        </div>
+      </div>
+      <div class="soat-input-form-container"
+           *ngIf="legalUser">
+        <div class="soat-input-container icon">
+          <input type="text"
+                 placeholder="Razón Social"
+                 class="soat-input"
+                 formControlName="businessName"
+                 minlength="2"
+                 maxlength="180"
+                 [readonly]="setLegalName"
+                 [ngClass]="{ error: showError('businessName') }" />
+          <i *ngIf="showlockPencil"
+             class="fa fa-pencil"></i>
+        </div>
+        <div class="soat-error-message"
+             *ngIf="showError('businessName')">
+          <ng-container *ngIf="uForm['businessName'].errors.required">
+            <i></i><span> Necesitamos conocer tus razón social</span>
+          </ng-container>
+          <ng-container *ngIf="
+              uForm['businessName'].errors.minlength ||
+              uForm['businessName'].errors.maxlength
+            ">
+            <i></i><span>El tamaño de la dirección no puede ser menor a 2 o mayor a
+              180</span>
+          </ng-container>
+        </div>
+      </div>
+
+      <div *ngIf="!legalUser">
+        <div class="soat-input-form-container">
+          <div class="soat-input-container icon">
+            <input type="text"
+                   placeholder="Apellido Paterno"
+                   class="soat-input"
+                   formControlName="lastName"
+                   minlength="1"
+                   maxlength="80"
+                   [ngClass]="{ error: showError('lastName') }" />
+            <i class="fa fa-pencil"></i>
+          </div>
+          <div class="soat-error-message"
+               *ngIf="showError('lastName')">
+            <ng-container *ngIf="uForm['lastName'].errors.required">
+              <i></i><span> Necesitamos conocer tu apellido paterno</span>
+            </ng-container>
+            <ng-container *ngIf="
+                uForm['lastName'].errors.minlength ||
+                uForm['lastName'].errors.maxlength
+              ">
+              <i></i>
+              <span>
+                El tamaño de tu apellido paterno no puede ser menor a 1 o mayor
+                a 80
+              </span>
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="soat-input-form-container">
+          <div class="soat-input-container icon">
+            <input type="text"
+                   placeholder="Apellido Materno"
+                   class="soat-input"
+                   formControlName="surname"
+                   minlength="1"
+                   maxlength="80"
+                   [ngClass]="{ error: showError('surname') }" />
+            <i class="fa fa-pencil"></i>
+          </div>
+          <div class="soat-error-message"
+               *ngIf="showError('surname')">
+            <ng-container *ngIf="uForm['surname'].errors.required">
+              <i></i><span> Necesitamos conocer tu apellido materno</span>
+            </ng-container>
+            <ng-container *ngIf="
+                uForm['surname'].errors.minlength ||
+                uForm['surname'].errors.maxlength
+              ">
+              <i></i>
+              <span>
+                El tamaño de tu apellido materno no puede ser menor a 1 o mayor
+                a 80
+              </span>
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="soat-input-form-container">
+          <div class="soat-input-container icon">
+            <input type="text"
+                   placeholder="Nombre"
+                   class="soat-input"
+                   formControlName="name"
+                   minlength="1"
+                   maxlength="80"
+                   [ngClass]="{ error: showError('name') }" />
+            <i class="fa fa-pencil"></i>
+          </div>
+          <div class="soat-error-message"
+               *ngIf="showError('name')">
+            <ng-container *ngIf="uForm['name'].errors.required">
+              <i></i><span> Necesitamos conocer tu nombre</span>
+            </ng-container>
+            <ng-container *ngIf="
+                uForm['name'].errors.minlength || uForm['name'].errors.maxlength
+              ">
+              <i></i>
+              <span>
+                El tamaño de tu nombre no puede ser menor a 1 o mayor a 80
+              </span>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="soat-input-form-container"
+           *ngIf="legalUser">
+        <div class="soat-input-container icon">
+          <input type="text"
+                 placeholder="Dirección"
+                 class="soat-input"
+                 formControlName="address"
+                 minlength="10"
+                 maxlength="80"
+                 [ngClass]="{ error: showError('address') }" />
+          <i class="fa fa-pencil"></i>
+        </div>
+        <div class="soat-error-message"
+             *ngIf="showError('address')">
+          <ng-container *ngIf="uForm['address'].errors.required">
+            <i></i><span> Necesitamos conocer tu dirección</span>
+          </ng-container>
+          <ng-container *ngIf="
+              uForm['address'].errors.minlength ||
+              uForm['address'].errors.maxlength
+            ">
+            <i></i><span>El tamaño de la dirección no puede ser menor a 10 o mayor a
+              80</span>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="soat-input-form-container"
+           *ngIf="!legalUser">
+        <div class="soat-input-container icon">
+          <input type="text"
+                 placeholder="Dirección"
+                 class="soat-input"
+                 formControlName="address"
+                 minlength="10"
+                 maxlength="80"
+                 [ngClass]="{ error: showError('address') }" />
+          <i class="fa fa-pencil"></i>
+        </div>
+        <div class="soat-error-message"
+             *ngIf="showError('address')">
+          <ng-container *ngIf="uForm['address'].errors.required">
+            <i></i><span> Necesitamos conocer tu dirección</span>
+          </ng-container>
+          <ng-container *ngIf="
+              uForm['address'].errors.minlength ||
+              uForm['address'].errors.maxlength
+            ">
+            <i></i><span>El tamaño de la dirección no puede ser menor a 10 o mayor a
+              80</span>
+          </ng-container>
+        </div>
+      </div>
+      <div class="soat-input-form-container">
+        <div class="soat-input-container"
+             [ngClass]="{ loading: loaders.department }">
+          <ng-select [items]="departments"
+                     [selectOnTab]="true"
+                     bindValue="nprovince"
+                     bindLabel="sdescript"
+                     placeholder="Departamento"
+                     formControlName="department"
+                     [ngClass]="{
+              error: showError('department'),
+              loading: loaders.department
+            }"
+                     (change)="$event && onDepartmentSelected($event['nprovince'])">
+          </ng-select>
+          <i class="fa fa-circle-o-notch fa-spin"
+             *ngIf="loaders.department"></i>
+        </div>
+        <div class="soat-error-message"
+             *ngIf="showError('department')">
+          <i></i><span>Necesitamos conocer tu departamento</span>
+        </div>
+      </div>
+      <div class="soat-input-form-container">
+        <div class="soat-input-container"
+             [ngClass]="{ loading: loaders.province }">
+          <ng-select [items]="provinces"
+                     [selectOnTab]="true"
+                     bindValue="nlocal"
+                     bindLabel="sdescript"
+                     placeholder="Provincia"
+                     formControlName="province"
+                     [ngClass]="{
+              error: showError('province'),
+              loading: loaders.province
+            }"
+                     (change)="$event && onProvinceSelected($event['nlocal'])">
+          </ng-select>
+          <i class="fa fa-circle-o-notch fa-spin"
+             *ngIf="loaders.province"></i>
+        </div>
+        <div class="soat-error-message"
+             *ngIf="showError('province')">
+          <i></i><span>Necesitamos conocer tu provincia</span>
+        </div>
+      </div>
+      <div class="soat-input-form-container">
+        <div class="soat-input-container"
+             [ngClass]="{ loading: loaders.district }">
+          <ng-select [items]="districts"
+                     [selectOnTab]="true"
+                     bindValue="nmunicipality"
+                     bindLabel="sdescript"
+                     placeholder="Distrito"
+                     formControlName="district"
+                     [ngClass]="{
+              error: showError('district'),
+              loading: loaders.district
+            }"
+                     (change)="$event && onDistrictSelected($event['nmunicipality'])">
+          </ng-select>
+          <i class="fa fa-circle-o-notch fa-spin"
+             *ngIf="loaders.district"></i>
+        </div>
+        <div class="soat-error-message"
+             *ngIf="showError('district')">
+          <i></i><span>Necesitamos conocer tu distrito</span>
+        </div>
+      </div>
+      <div class="soat-input-form-container">
+        <div class="soat-input-container icon">
+          <input type="text"
+                 placeholder="Número de Celular"
+                 class="soat-input"
+                 formControlName="phoneNumber"
+                 min="9"
+                 onkeypress="return !(event.charCode > 31 && (event.charCode < 48 || event.charCode > 57  ))"
+                 [ngClass]="{ error: showError('phoneNumber') }"
+                 minlength="9"
+                 maxlength="9" />
+          <i class="fa fa-pencil"></i>
+        </div>
+        <div class="soat-error-message"
+             *ngIf="showError('phoneNumber')">
+          <ng-container *ngIf="uForm['phoneNumber'].errors.required">
+            <i></i><span>Necesitamos conocer tu celular</span>
+          </ng-container>
+          <ng-container *ngIf="uForm['phoneNumber'].errors.pattern">
+            <i></i><span>Formato de celular inválido</span>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-sm-6">
+      <div class="legal">
+        <label class="soat-checkbox-container"
+               [ngClass]="{ error: showError('terms') }">
+          <input type="checkbox"
+                 formControlName="terms"
+                 name="terms"
+                 class="soat-checkbox" />
+          <span class="soat-checkbox-target"
+                [ngClass]="{'checkbox-parpadeo': userForm.get('terms').value !== true}"></span>
+          <div class="soat-checkbox-text">
+            <span>Acepto los</span>
+            <a class="soat-link"
+               (click)="showModal()">
+              términos y condiciones
+            </a>
+          </div>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col soat-text-align-center space">
+      <button class="soat-button ripple stretch"
+              [disabled]="loading || !userForm.valid"
+              [ngClass]="{ loading: loading }">
+        <i class="fa fa-circle-o-notch fa-spin"
+           *ngIf="loading"></i>
+        Siguiente
+      </button>
+    </div>
+  </div>
+</form>
+
+<ng-template #termsModal>
+  <app-termsvidaley (closeaction)="closeTermsModal()"></app-termsvidaley>
+</ng-template>

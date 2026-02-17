@@ -1,0 +1,31 @@
+<div class="overlay"
+     [ngClass]="{ in: bVisibleAnimate, 'white-overlay': whiteOverlay }"
+     [ngStyle]="{
+    display: bVisible ? 'block' : 'none',
+    opacity: bVisibleAnimate ? 0.4 : 0
+  }"></div>
+<div class="modal"
+     [ngClass]="{
+    in: bVisibleAnimate,
+    'extra-modal': extraCss,
+    'mobile-display': mobileDisplay
+  }"
+     [ngStyle]="{
+    display: bVisible ? 'block' : 'none',
+    opacity: bVisibleAnimate ? 1 : 0
+  }">
+  <div class="modal-dialog"
+       [ngClass]="{ 'mobile-Vehiculo': mobileVehiculo }">
+    <div class="modal-content">
+      <div *ngIf="close"
+           class="modal-cerrar">
+        <a (click)="hide()"><img alt=""
+               src="assets/icons/close_modal.png" /></a>
+      </div>
+      <div class="modal-body modal-body-font px-0 py-0"
+           [ngClass]="{ efectivoCsss: efectivoCss }">
+        <ng-content select=".m-body"></ng-content>
+      </div>
+    </div>
+  </div>
+</div>

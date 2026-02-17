@@ -1,0 +1,171 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 no-left">
+            <app-nav-menuprod></app-nav-menuprod>
+        </div>
+        <div class="col-md-9">
+            <div class="container-fluid">
+                <div class="header-content pb-2">
+                    <div class="containt-item">
+                        <div class="header-item">
+                            <span class="title">Información de Planilla</span>
+                        </div>
+                    </div>
+                    <div class="containt-item">
+                        <div class="header-item rigth-item">
+                            <button [disabled]="!mostrarData"
+                                    (click)="descargarExcel()"
+                                    class="m-0">
+                                <img alt=""
+                                     src="assets/icons/descargar.png" />
+                                <span>Exportar</span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="filter mt-3">
+                    <div class="form-group row filter-row d-flex flex-column">
+                        <div class="d-flex flex-row">
+                            <div class="col-sm-12 col-lg-2 filter-row-cell">
+                                <span>Número de Planilla:</span>
+                                <input class="form-input-text"
+                                       *ngIf="alwaystrue"
+                                       placeholder="Número de Planilla"
+                                       [class.only-input]="onlyInput"
+                                       id="1"
+                                       matInput
+                                       type="text"
+                                       inputmode="numeric"
+                                       pattern="\d+"
+                                       maxlength="13"
+                                       oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9]/g, '');"
+                                       [(ngModel)]="nroPlanilla" />
+                            </div>
+                            <div class="col-sm-12 col-lg-2 filter-row-cell">
+                                <span>Número de Recibo:</span>
+                                <input class="form-input-text"
+                                       *ngIf="alwaystrue"
+                                       placeholder="Número de Recibo"
+                                       [class.only-input]="onlyInput"
+                                       id="2"
+                                       matInput
+                                       type="text"
+                                       inputmode="numeric"
+                                       pattern="\d+"
+                                       maxlength="10"
+                                       oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9]/g, '');"
+                                       [(ngModel)]="nroRecibo" />
+                            </div>
+                            <div class="col-sm-12 col-lg-2 filter-row-cell">
+                                <span>Número de Comprobante:</span>
+                                <input class="form-input-text"
+                                       *ngIf="alwaystrue"
+                                       placeholder="Número de Comprobante"
+                                       [class.only-input]="onlyInput"
+                                       id="3"
+                                       matInput
+                                       maxlength="12"
+                                       oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" 
+                                       type="text"
+                                       [(ngModel)]="nroComprobante" />
+                            </div>
+                            <div class="col-sm-12 col-lg-2 filter-row-cell">
+                                <span>Número de Operación:</span>
+                                <input class="form-input-text"
+                                       *ngIf="alwaystrue"
+                                       placeholder="Número de Operación"
+                                       [class.only-input]="onlyInput"
+                                       id="4"
+                                       matInput
+                                       type="text"
+                                       inputmode="numeric"
+                                       pattern="\d+"
+                                       maxlength="19"
+                                       oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9]/g, '');"
+                                       [(ngModel)]="nroOperacion" />
+                            </div>
+                            <div class="filter-row-cell w-ft pr-0">
+                                <span style="color: rgba(0,0,0,0);padding: 2px;"></span>
+                                <button type="button"
+                                        [disabled]="!validarData()"
+                                        class="searchForAdmin"
+                                        (click)="PrepararData()">Buscar</button>
+                            </div>
+                            <div class="filter-row-cell w-ft pl-0">
+                                <span style="color: rgba(0,0,0,0); padding: 2px;"></span>
+                                <button type="button"
+                                        class="searchForAdmin mr-0"
+                                        (click)="limpiarCampos()">Nuevo</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="grid form-group">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr class="grid-title">
+                                <td class="grid-title-item">Nro. Planilla</td>
+                                <td class="grid-title-item">Estado Planilla</td>
+                                <td class="grid-title-item">Ramo</td>
+                                <td class="grid-title-item">Póliza</td>
+                                <td class="grid-title-item">Recibo</td>
+                                <td class="grid-title-item">Comprobante</td>
+                                <td class="grid-title-item">Monto Comprobante</td>
+                                <td class="grid-title-item">Estado Comprobante</td>
+                                <td class="grid-title-item">Nro. Operación</td>
+                                <td class="grid-title-item">Recibo NC</td>
+                                <td class="grid-title-item">Comprobante NC</td>
+                                <td class="grid-title-item">Monto Comprobante NC</td>
+                                <td class="grid-title-item">Estado NC</td>
+
+                            </tr>
+                        </thead>
+                        <div *ngIf="mostrarData; then Conregistro; else Sinregistro"></div>
+                    </table>
+                    <ng-template #Sinregistro>
+                        <tbody>
+                            <tr>
+                                <td colspan="13">No se encontró información.</td>
+                            </tr>
+                        </tbody>
+                    </ng-template>
+                    <ng-template #Conregistro>
+                        <tbody *ngFor="let row of dataRecuperada  | paginate: { itemsPerPage: 20, currentPage: p }">
+                            <tr>
+                                <td>{{ row.NumeroPlanilla }}</td>
+                                <td>{{ row.StatusPlanilla }}</td>
+                                <td>{{ row.Ramo }}</td>
+                                <td>{{ row.Poliza }}</td>
+                                <td>{{ row.Recibo}} </td>
+                                <td>{{ row.Comprobante }} </td>
+                                <td>{{ row.MontoComprobante }}</td>
+                                <td>{{ row.EstadoComprobante }}</td>
+                                <td>{{ row.NumeroOperacion}}</td>
+                                <td>{{ row.ReciboNc }}</td>
+                                <td>{{ row.ComprobanteNc }}</td>
+                                <td>{{ row.MontoComprobanteNc }}</td>
+                                <td>{{ row.EstadoNc }}</td>
+
+                            </tr>
+                        </tbody>
+                    </ng-template>
+                    <pagination-controls *ngIf="mostrarData"
+                                         class="my-pagination"
+                                         (pageChange)="p = $event"
+                                         autoHide="true"
+                                         responsive="true"
+                                         previousLabel="Anterior"
+                                         nextLabel="Siguiente"
+                                         screenReaderPaginationLabel="Paginación"
+                                         screenReaderPageLabel="pagina"
+                                         screenReaderCurrentLabel="Estás en la pagina"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

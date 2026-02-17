@@ -1,0 +1,82 @@
+.space {
+  margin: 30px 0;
+}
+
+.legal {
+  margin: 10px 0 20px;
+}
+
+.modal-title {
+  color: #ff6e00 !important;
+}
+
+.terminos-titulo h1 {
+  color: #2b0d61;
+  font-family: "Bliss Pro";
+  font-size: 36px;
+  font-weight: 900;
+  text-align: center;
+  padding-top: 10px;
+}
+
+.terminos-titulo .close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  color: #ffffff;
+  background-color: #d5cede;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+}
+
+.terminos-titulo .close span {
+  position: absolute;
+  top: -2px;
+  left: 6px;
+}
+
+.terminos-texto {
+  width: 100%;
+  height: 600px;
+  overflow: auto;
+  padding: 0px;
+  font-family: "Bliss Pro";
+  color: #2b0d61;
+  font-size: 14px;
+}
+
+.terminos-texto h5,
+.terminos-texto h3 {
+  font-weight: bold;
+}
+
+.terminos-texto p {
+  font-weight: 500;
+  line-height: 24px;
+  text-align: justify;
+}
+.soat-checkbox-target {
+  position: relative;
+}
+.checkbox-parpadeo::before {
+  width: 12px;
+  height: 12px;
+  content: "";
+  background: transparent;
+  position: absolute;
+  left: 0;
+  top: 5px;
+  box-shadow: 0 0 0 3px #ff6e00;
+  animation: parpadeo 0.65s infinite alternate-reverse;
+  -webkit-animation: parpadeo 0.65s infinite alternate-reverse;
+  z-index: -1;
+}
+@keyframes parpadeo {
+  from {
+    box-shadow: 0 0 0 3px #fff;
+  }
+  to {
+    box-shadow: 0 0 0 3px #ff6e00;
+  }
+}

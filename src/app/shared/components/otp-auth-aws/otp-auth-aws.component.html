@@ -1,0 +1,79 @@
+<ng-container>
+  <section class="content-modal-u">
+    <div class="modal-u motp">
+      <div class="modal__header">
+        <button class="modal__header--close" (click)="closeModal()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <h5 class="motp__title">Verificar token enviado</h5>
+        <span class="motp__desc">Para acceder es necesario ingresar el token que se ha enviado a su correo electrónico.</span>
+        <form class="motp__verification" [formGroup]="form">
+          <input
+            type="text"
+            tabindex="1"
+            class="motp__verification--input"
+            [minLength]="1"
+            formControlName="code1"
+            (focusin)="focusCode('code1')"
+            #c1
+          />
+          <input
+            type="text"
+            tabindex="2"
+            class="motp__verification--input"
+            [minLength]="1"
+            formControlName="code2"
+            (focusin)="focusCode('code2')"
+            #c2
+          />
+          <input
+            type="text"
+            tabindex="3"
+            class="motp__verification--input"
+            [minLength]="1"
+            formControlName="code3"
+            (focusin)="focusCode('code3')"
+            #c3
+          />
+          <input
+            type="text"
+            tabindex="4"
+            class="motp__verification--input"
+            [minLength]="1"
+            formControlName="code4"
+            (focusin)="focusCode('code4')"
+            #c4
+          />
+        </form>
+        <span class="motp__desc"
+          >Su token vencerá en <b>{{ formatTime(tokenTimer) }}</b></span
+        >
+        <br>
+        <span class="motp__desc">¿No recibiste el código?</span>
+        <div class="content__actions">
+          <button
+            class="content__actions--btn"
+            tabindex="-1"
+            [disabled]="!canResend"
+            (click)="resendToken()">
+            Reenviar token
+          </button>
+        </div>
+        <span class="motp__desc"
+          >Podrás reenviar el token en <b>{{ formatTime(resendTimer) }}</b></span
+        >
+        <button
+          class="btn-submit"
+          (click)="validateCode()"
+          [disabled]="form.invalid"
+          tabindex="-1"
+        >
+          Verificar
+        </button>
+        <small class="hasError" *ngIf="message">{{ message }}</small>
+      </div>
+    </div>
+  </section>
+</ng-container>

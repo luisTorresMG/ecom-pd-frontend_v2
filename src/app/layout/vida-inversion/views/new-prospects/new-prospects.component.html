@@ -1,0 +1,659 @@
+<div class="form-group row">
+
+    <div class="col-lg-3">
+        <app-nav-menuprod></app-nav-menuprod>
+    </div>
+
+    <div class="col-lg-9">
+        <nav class="nav-menu-prospects">
+            <div class="navigation">
+
+                <div>
+                    <app-breadcrumb>
+                        <a routerLink="/extranet/vida-inversion/prospectos">
+                            <i class="fa fa-home"
+                               aria-hidden="true"></i>
+                            {{CONSTANTS.DESC_PRODUCTO}}
+                        </a>
+                        <a routerLink="/extranet/vida-inversion/prospectos">Mis prospectos</a>
+                        <app-breadcrumb>
+                            <a routerLink="/extranet/vida-inversion/prospectos">
+                                Nuevo prospecto
+                            </a>
+                        </app-breadcrumb>
+                    </app-breadcrumb>
+                </div>
+
+
+                <div class="d-flex flex-row align-items-center g-3">
+                    <div>
+                        <a class="return-link"
+                           routerLink="/extranet/vida-inversion/prospectos">
+                            <i class="fa fa-angle-left"
+                               aria-hidden="true"></i>
+                            Regresar
+                        </a>
+                    </div>
+
+                    <div class="bg-light p-2"
+                         style=" border-radius: 10px;">
+                        <i class="fa fa-circle"
+                           style="color: #ed6e00; margin-right: 6px;"></i>
+                        <span>Asignado</span>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </nav>
+        <div class="d-flex flex-row-reverse justify-content-between flex-wrap mb-2">
+            <P class="subtitle-perfil">Asignado: {{cur_usr?.firstName.trim()}} {{cur_usr?.lastName.trim()}}</P>
+        </div>
+
+
+        <div class="container-form-and-button">
+
+            <!-- Input Radio Seleccionar Contratante/Asegurado -->
+            <div class="tabs"
+                 style="margin-bottom: -8px; position: relative;">
+
+                <input type="radio"
+                       name="tabs"
+                       id="tabone"
+                       checked="checked"
+                       style="display: none"
+                       value="0"
+                       [(ngModel)]="type_rol" />
+                <label for="tabone"
+                       class="tab-label"
+                       style="border-top: 1px solid #553d81; border-top-right-radius: 20px; border-top-left-radius: 20px;">Contratante</label>
+
+                <input type="radio"
+                       name="tabs"
+                       id="tabtwo"
+                       style="display: none"
+                       [(ngModel)]="type_rol"
+                       [disabled]="check_input_value == 3 || check_input_value == 1"
+                       value="1" />
+
+                <label for="tabtwo"
+                       class="tab-label"
+                       (click)="validateCheckInsured()"
+                       *ngIf="check_input_value == 0"
+                       style="border-top: 1px solid #553d81; border-top-right-radius: 20px; border-top-left-radius: 20px;"
+                       [class.tab-disabled]="check_input_value == 3 || check_input_value == 1">Asegurado</label>
+
+                <img *ngIf="show_guide"
+                     src="./assets/vida-inversion/guide.gif"
+                     alt="indicador Asegurado"
+                     width="23px"
+                     height="30px"
+                     style="position: absolute;transform: rotate(90deg);left: 29%;">
+
+                <form-button label="Crear"
+                             btnClass="btn-orange text-nowrap orange"
+                             (click)="createProspect()"
+                             style="position: absolute; top: -15px; right: 0px;"></form-button>
+
+
+            </div>
+
+            <!-- Para Contratante -->
+            <div class="d-flex flex-row flex-wrap py-3 px-2"
+                 style="border: 1.5px solid #553d81"
+                 [class.visibility__hidden]="type_rol == 1">
+                <div class="row">
+                    <div class="col-lg-9 row">
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="TIPO DE DOCUMENTO(*)"
+                                               [(value)]="data_contractor.type_document"
+                                               [service]="clientInformationService"
+                                               [firstSelect]="true"
+                                               [updateModelOnChange]="true"
+                                               method="getDocumentTypeList"
+                                               [params]="cod_prod_channel"
+                                               fieldCodigo="Id"
+                                               fieldValor="Name"
+                                               [disabled]="data_contractor.type_document_disabled"
+                                               (onSelect)="changeDocumentType(1)"
+                                               [large]="false"></form-input-select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-text text_label="NRO. DOCUMENTO(*):"
+                                             [onlyInput]="true"
+                                             [(value)]="data_contractor.document_number"
+                                             (onKeyenter)="search(1)"
+                                             [patternPrevent]="CONSTANTS.REGEX[data_contractor.type_document?.Id]"
+                                             (valueChange)="changeDocumentNumber($event,1)"
+                                             [disabled]="data_contractor.document_number_disabled">
+                            </form-input-text>
+                            <!-- (keypress)="search(1)" -->
+                            <!-- (paste)="search(1)" -->
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-date text_label="FECHA NACIMIENTO(*):"
+                                             [(value)]="data_contractor.birthday_date"
+                                             [disabled]="data_contractor.birthday_date_disabled"></form-input-date>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-text text_label="NOMBRES(*):"
+                                             [onlyInput]="true"
+                                             [(value)]="data_contractor.names"
+                                             [disabled]="data_contractor.names_disabled"
+                                             maxCaracter="19"
+                                             [patternPrevent]="CONSTANTS.REGEX.LETRAS"></form-input-text>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-text text_label="APELLIDO PATERNO(*):"
+                                             [onlyInput]="true"
+                                             [(value)]="data_contractor.last_name"
+                                             [disabled]="data_contractor.last_name_disabled"
+                                             maxCaracter="19"
+                                             [patternPrevent]="CONSTANTS.REGEX.LETRAS"></form-input-text>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-text text_label="APELLIDO MATERNO(*):"
+                                             [onlyInput]="true"
+                                             [(value)]="data_contractor.last_name2"
+                                             [disabled]="data_contractor.last_name2_disabled"
+                                             maxCaracter="19"
+                                             [patternPrevent]="CONSTANTS.REGEX.LETRAS"></form-input-text>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select 
+                                            text_label="SEXO(*):"
+                                            [(value)]="data_contractor.gender"
+                                            [items]="GENDER_LIST"
+                                            [updateModelOnChange]="true"
+                                            [firstSelect]="true"
+                                            fieldCodigo="SSEXCLIEN"
+                                            fieldValor="SDESCRIPT"
+                                            [disabled]="data_contractor.gender_disabled"
+                                            [large]="false">
+                            </form-input-select>
+                        </div>
+                        <div class="col-lg-3">
+                            <form-input-select text_label="ESTADO CIVIL:"
+                                               [(value)]="data_contractor.civil_status"
+                                               [service]="clientInformationService"
+                                               method="getCivilStatusList"
+                                               [params]="CONSTANTS.WITHOUT_PARAMS"
+                                               [firstSelect]="true"
+                                               [updateModelOnChange]="true"
+                                               fieldCodigo="NCIVILSTA"
+                                               fieldValor="SDESCRIPT"
+                                               [disabled]="data_contractor.civil_status_disabled"
+                                               [large]="false"></form-input-select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="NACIONALIDAD:"
+                                               [service]="clientInformationService"
+                                               method="getNationalityList"
+                                               [params]="CONSTANTS.WITHOUT_PARAMS"
+                                               fieldCodigo="NNATIONALITY"
+                                               fieldValor="SDESCRIPT"
+                                               [firstSelect]="true"
+                                               [(value)]="data_contractor.nationality"
+                                               [updateModelOnChange]="true"
+                                               [disabled]="data_contractor.nationality_disabled"
+                                               [large]="false"></form-input-select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-text text_label="CELULAR:"
+                                             [(value)]="data_contractor.phone"
+                                             [onlyInput]="true"
+                                             [disabled]="data_contractor.phone_disabled"
+                                             [patternPrevent]="CONSTANTS.REGEX.NUMBER"
+                                             maxCaracter="9"
+                                             (focusout)="validNumber(1)"
+                                             classInput="{{ boolNumberCTR ? 'error_label' : 'null' }}"></form-input-text>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <form-input-text text_label="CORREO ELECTRÓNICO:"
+                                             [onlyInput]="true"
+                                             [(value)]="data_contractor.email"
+                                             [disabled]="data_contractor.email_disabled"
+                                             maxCaracter="60"
+                                             (focusout)="validEmail(1)"
+                                             classInput="{{ boolEmailCTR ? 'error_label' : 'null' }}"
+                                             ></form-input-text>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <form-input-text text_label="DIRECCIÓN:"
+                                             [(value)]="data_contractor.address"
+                                             [disabled]="data_contractor.address_disabled"
+                                             [onlyInput]="true"
+                                             maxCaracter="80"></form-input-text>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="DEPARTAMENTO:"
+                                               [(value)]="data_contractor.department"
+                                               fieldCodigo="Id"
+                                               fieldValor="Name"
+                                               [firstSelect]="true"
+                                               [large]="false"
+                                               [updateModelOnChange]="true"
+                                               (onSelect)="onSelectDepartament()"
+                                               [items]="list_data_contractor_department"
+                                               [disabled]="data_contractor.department_disabled"></form-input-select>
+                            <!-- [service]="addressService"
+                                 method="getDepartmentList" -->
+                        </div>
+
+                        <div class="col-lg-3">
+                            <!-- [params]="CONSTANTS.WITHOUT_PARAMS" -->
+                            <form-input-select text_label="PROVINCIA:"
+                                               [(value)]="data_contractor.province"
+                                               fieldCodigo="Id"
+                                               fieldValor="Name"
+                                               [firstSelect]="true"
+                                               [large]="false"
+                                               [items]="list_data_contractor_province"
+                                               [updateModelOnChange]="true"
+                                               (onSelect)="onSelectProvince()"
+                                               [disabled]="data_contractor.province_disabled"></form-input-select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="DISTRITO:"
+                                               [(value)]="data_contractor.district"
+                                               fieldCodigo="Id"
+                                               fieldValor="Name"
+                                               [firstSelect]="true"
+                                               [large]="false"
+                                               [items]="list_data_contractor_district"
+                                               [updateModelOnChange]="true"
+                                               [disabled]="data_contractor.district_disabled"></form-input-select>
+                            <!-- [params]="contractor_province_selected ? data_contractor.province.Id:0" -->
+                        </div>
+
+
+                    </div>
+
+                    <div class="col-lg-3 mx-0 py-0">
+                        <div class="sub-container1">
+                            <div>
+                                <h3 class="sub-title">Idecon</h3>
+
+                                <div class="label">
+                                    <span class="item">Otras listas</span>
+                                    <span class="item-response"> {{ idecon_contractor.otherList }} </span>
+                                </div>
+
+                                <div class="label">
+                                    <span class="item">Es PEP</span>
+                                    <span class="item-response"> {{ idecon_contractor.pep }} </span>
+                                </div>
+
+                                <div class="label">
+                                    <span class="item">Tiene Familiar PEP</span>
+                                    <span class="item-response"> {{ idecon_contractor.famPep }} </span>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="sub-title">WorldCheck</h3>
+
+                                <div class="label">
+                                    <span class="item">Otras listas</span>
+                                    <span class="item-response"> —— </span>
+                                </div>
+
+                                <div class="label">
+                                    <span class="item">Es PEP</span>
+                                    <span class="item-response"> —— </span>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="sub-title">Experian</h3>
+
+                                <div class="label">
+                                    <span class="item">Cliente Riesgoso</span>
+                                    <span class="item-response"> —— </span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 class="sub-title">Registro Negativo</h3>
+
+                                <div class="label">
+                                    <span class="item">Registro Negativo</span>
+                                    <span class="item-response"> {{riesgo_negativo_cont == '' ? '——' : riesgo_negativo_cont}} </span>
+                                </div>
+                            </div>
+
+                            <!-- INI VIGP-KAFG 16/04/2025 -->
+                            <div>
+                                <h3 class="sub-title">Homologación</h3>
+
+                                <div class="label">
+                                    <span class="item">Homologado</span>
+                                    <span class="item-response"> {{ homologacionCont }} </span>
+                                </div>
+                            </div>
+                            <!-- FIN VIGP-KAFG 16/04/2025 -->
+                        </div>
+                    </div>
+
+                </div>
+
+                <div style="margin-top: 5px; display: flex; align-items: center">
+                    <label class="subtitle">El asegurado es la misma persona que contrata el seguro</label>
+                    <div class="content-radio-u mr-3">
+                        <input type="radio"
+                               name="status_contractor"
+                               id="client_yes_contractor"
+                               class="mark-u orange"
+                               [value]="1"
+                               [checked]="check_input_value == 1"
+                               (click)="changeValue(1)" />
+                        <label for="client_yes_contractor"
+                               class="radio-label-u orange mark-u">
+                            Sí
+                        </label>
+                    </div>
+                    <div class="content-radio-u">
+                        <input type="radio"
+                               name="status_contractor"
+                               id="client_no_contractor"
+                               class="mark-u orange"
+                               [value]="0"
+                               [checked]="check_input_value == 0"
+                               (click)="changeValue(0)" />
+                        <label for="client_no_contractor"
+                               class="radio-label-u orange mark-u">
+                            No
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Para Asegurado -->
+            <div class="d-flex flex-row flex-wrap py-3 px-2"
+                 style="border: 1.5px solid #553d81"
+                 [class.visibility__hidden]="type_rol == 0">
+                <div class="row">
+                    <div class="col-lg-9 row">
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="TIPO DE DOCUMENTO(*)"
+                                               [(value)]="data_insured.type_document"
+                                               [service]="clientInformationService"
+                                               method="getDocumentTypeList"
+                                               [params]="cod_prod_channel"
+                                               [updateModelOnChange]="true"
+                                               [firstSelect]="true"
+                                               fieldCodigo="Id"
+                                               fieldValor="Name"
+                                               [disabled]="data_insured.type_document_disabled"
+                                               (onSelect)="changeDocumentType(2)"
+                                               [large]="false"></form-input-select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-text text_label="NRO. DOCUMENTO(*):"
+                                             [onlyInput]="true"
+                                             [(value)]="data_insured.document_number"
+                                             (onKeyenter)="search(2)"
+                                             (valueChange)="changeDocumentNumber($event,2)"
+                                             [patternPrevent]="CONSTANTS.REGEX[data_insured.type_document?.Id]"
+                                             [disabled]="data_insured.document_number_disabled"></form-input-text>
+                            <!-- (paste)="search(2)" -->
+                            <!-- (keypress)="search(2)" -->
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-date text_label="FECHA NACIMIENTO(*):"
+                                             [(value)]="data_insured.birthday_date"
+                                             [disabled]="data_insured.birthday_date_disabled"></form-input-date>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-text text_label="NOMBRES(*):"
+                                             [onlyInput]="true"
+                                             [(value)]="data_insured.names"
+                                             [disabled]="data_insured.names_disabled"
+                                             maxCaracter="19"
+                                             [patternPrevent]="CONSTANTS.REGEX.LETRAS"
+                            ></form-input-text>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-text text_label="APELLIDO PATERNO(*):"
+                                             [onlyInput]="true"
+                                             [(value)]="data_insured.last_name"
+                                             [disabled]="data_insured.last_name_disabled"
+                                             maxCaracter="19"
+                                             [patternPrevent]="CONSTANTS.REGEX.LETRAS"
+                            >
+                            </form-input-text>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-text text_label="APELLIDO MATERNO(*):"
+                                             [onlyInput]="true"
+                                             [(value)]="data_insured.last_name2"
+                                             [disabled]="data_insured.last_name2_disabled"
+                                             maxCaracter="19"
+                                             [patternPrevent]="CONSTANTS.REGEX.LETRAS"
+                            ></form-input-text>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select 
+                                            text_label="SEXO(*):"
+                                            [(value)]="data_insured.gender"
+                                            [items]="GENDER_LIST"
+                                            [updateModelOnChange]="true"
+                                            fieldCodigo="SSEXCLIEN"
+                                            fieldValor="SDESCRIPT"
+                                            [disabled]="data_insured.gender_disabled"
+                                            [firstSelect]="true"
+                                            [large]="false">
+                            </form-input-select>
+
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="ESTADO CIVIL:"
+                                               [(value)]="data_insured.civil_status"
+                                               [service]="clientInformationService"
+                                               method="getCivilStatusList"
+                                               [params]="CONSTANTS.WITHOUT_PARAMS"
+                                               [firstSelect]="true"
+                                               [updateModelOnChange]="true"
+                                               fieldCodigo="NCIVILSTA"
+                                               fieldValor="SDESCRIPT"
+                                               [disabled]="data_insured.civil_status_disabled"
+                                               [large]="false"></form-input-select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="NACIONALIDAD:"
+                                               [service]="clientInformationService"
+                                               method="getNationalityList"
+                                               [params]="CONSTANTS.WITHOUT_PARAMS"
+                                               fieldCodigo="NNATIONALITY"
+                                               fieldValor="SDESCRIPT"
+                                               [firstSelect]="true"
+                                               [(value)]="data_insured.nationality"
+                                               [updateModelOnChange]="true"
+                                               [disabled]="data_insured.nationality_disabled"
+                                               [large]="false"></form-input-select>
+
+
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-text text_label="CELULAR:"
+                                             [(value)]="data_insured.phone"
+                                             [onlyInput]="true"
+                                             [disabled]="data_insured.phone_disabled"
+                                             [patternPrevent]="CONSTANTS.REGEX.NUMBER"
+                                             maxCaracter="9"
+                                             (focusout)="validNumber(2)"
+                                             classInput="{{ boolNumberASG ? 'error_label' : 'null' }}"></form-input-text>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <form-input-text text_label="CORREO ELECTRÓNICO:"
+                                             [onlyInput]="true"
+                                             [(value)]="data_insured.email"
+                                             [disabled]="data_insured.email_disabled"
+                                             maxCaracter="60"
+                                             (focusout)="validEmail(2)"
+                                             classInput="{{ boolEmailASG ? 'error_label' : 'null' }}"
+                                             ></form-input-text>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <form-input-text text_label="DIRECCIÓN:"
+                                             [onlyInput]="true"
+                                             [(value)]="data_insured.address"
+                                             [disabled]="data_insured.address_disabled"
+                                             maxCaracter="80"
+                            ></form-input-text>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="DEPARTAMENTO:"
+                                               [(value)]="data_insured.department"
+                                               fieldCodigo="Id"
+                                               fieldValor="Name"
+                                               [firstSelect]="true"
+                                               [large]="false"
+                                               [updateModelOnChange]="true"
+                                               (onSelect)="onSelectDepartamentInsured()"
+                                               [items]="list_data_insured_department"
+                                               [disabled]="data_insured.department_disabled"></form-input-select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="PROVINCIA:"
+                                               [(value)]="data_insured.province"
+                                               fieldCodigo="Id"
+                                               fieldValor="Name"
+                                               [firstSelect]="true"
+                                               [large]="false"
+                                               [items]="list_data_insured_province"
+                                               [updateModelOnChange]="true"
+                                               (onSelect)="onSelectProvinceInsured()"
+                                               [disabled]="data_insured.province_disabled"></form-input-select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="DISTRITO:"
+                                               [(value)]="data_insured.district"
+                                               fieldCodigo="Id"
+                                               fieldValor="Name"
+                                               [firstSelect]="true"
+                                               [large]="false"
+                                               [items]="list_data_insured_district"
+                                               [updateModelOnChange]="true"
+                                               [disabled]="data_insured.district_disabled"></form-input-select>
+
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="PARENTESCO CON EL CONTRATANTE(*):"
+                                               [(value)]="data_insured.relation"
+                                               [large]="false"
+                                               [service]="quotationService"
+                                               method="getRelationBenefeciaries"
+                                               [params]="CONSTANTS.WITHOUT_PARAMS"
+                                               fieldCodigo="COD_ELEMENTO"
+                                               fieldValor="GLS_ELEMENTO"
+                                               [firstSelect]="true"
+                                               [updateModelOnChange]="true"></form-input-select>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-3 mx-0 py-0">
+                        <div class="sub-container1">
+                            <div>
+                                <h3 class="sub-title">Idecon</h3>
+
+                                <div class="label">
+                                    <span class="item">Otras listas</span>
+                                    <span class="item-response"> {{ idecon_insured.otherList }} </span>
+                                </div>
+
+                                <div class="label">
+                                    <span class="item">Es PEP</span>
+                                    <span class="item-response"> {{ idecon_insured.pep }} </span>
+                                </div>
+
+                                <div class="label">
+                                    <span class="item">Tiene Familiar PEP</span>
+                                    <span class="item-response"> {{ idecon_insured.famPep }} </span>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="sub-title">WorldCheck</h3>
+
+                                <div class="label">
+                                    <span class="item">Otras listas</span>
+                                    <span class="item-response"> —— </span>
+                                </div>
+
+                                <div class="label">
+                                    <span class="item">Es PEP</span>
+                                    <span class="item-response"> —— </span>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="sub-title">Experian</h3>
+
+                                <div class="label">
+                                    <span class="item">Cliente Riesgoso</span>
+                                    <span class="item-response"> —— </span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 class="sub-title">Registro Negativo</h3>
+
+                                <div class="label">
+                                    <span class="item">Registro Negativo</span>
+                                    <span class="item-response"> {{riesgo_negativo_insu == '' ? '——' : riesgo_negativo_insu}} </span>
+                                </div>
+                            </div>
+
+                            <!-- INI VIGP-KAFG 16/04/2025 -->
+                            <div>
+                                <h3 class="sub-title">Homologación</h3>
+
+                                <div class="label">
+                                    <span class="item">Homologado</span>
+                                    <span class="item-response"> {{ homologacionInsu }} </span>
+                                </div>
+                            </div>
+                            <!-- FIN VIGP-KAFG 16/04/2025 -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div [hidden]="!isLoading"
+     class="loadingScreen">
+    <div style="display: flex; height: 100%; width: 100%">
+        <i style="margin: auto; font-size: 50px"
+           class="fa fa-spinner fa-spin"></i>
+    </div>
+</div>

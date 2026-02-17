@@ -1,0 +1,225 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 no-left">
+            <app-nav-menuprod></app-nav-menuprod>
+        </div>
+        <div class="col-md-9">
+            <div class="container-fluid">
+                <div class="header-content pb-2">
+                    <div class="containt-item">
+                        <div class="header-item">
+                            <span class="title">Correción Suma Asegurada</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="filter mt-3">
+                    <div class="form-group row filter-row d-flex flex-column">
+                        <div class="d-flex w-100 h-100 align-items-center">
+                            <div class="d-flex flex-row w-50 align-items-center">
+                                <span style="font-size:medium; width: 25%;">RAMO:</span>
+                                <select [(ngModel)]="ramaElegida"
+                                        required
+                                        name="profile"
+                                        (change)="PrepararData()"
+                                        [disabled]="ValidarModal()"
+                                        style="display: flex;justify-content: center;align-items: center;"
+                                        class="form-input-text w-50">
+                                    <option selected
+                                            value="0"
+                                            disabled>--Elegir Ramo--</option>
+                                    <option *ngFor="
+                                            let
+                                            item
+                                            of
+                                            this.RamasDisponibles"
+                                            value="{{item.nbranch}}">
+                                        {{item.snombre}}</option>
+                                </select>
+                            </div>
+                            <div class="d-flex flex-row justify-content-end w-50 align-items-center">
+                                <button type="button"
+                                        class="searchForAdmin h-75"
+                                        (click)="ValidarData()">Buscar</button>
+                                <button type="button"
+                                        class="searchForAdmin h-75"
+                                        (click)="limpiarCampos()">Limpiar</button>
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-row w-50 align-items-center">
+                            <span style="font-size:medium; width: 25%;">PÓLIZA:</span>
+                            <input *ngIf="alwaystrue"
+                                   class="form-input-text  w-50"
+                                   placeholder="Número de Póliza"
+                                   [class.only-input]="onlyInput"
+                                   id="2"
+                                   matInput
+                                   type="text"
+                                   inputmode="numeric"
+                                   pattern="\d+"
+                                   (keyup)="ValidarPolizaColectiva()"
+                                   oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9]/g, '');"
+                                   maxlength="10"
+                                   [(ngModel)]="nroPoliza" />
+                        </div>
+
+                        <div class="d-flex w-100 h-100 align-items-center">
+                            <div class="d-flex flex-row w-50 align-items-center">
+                                <span style="font-size:medium; width: 25%;">CERTIFICADO:</span>
+                                <input class="form-input-text w-50"
+                                       *ngIf="alwaystrue"
+                                       placeholder="Número de Certificado"
+                                       [class.only-input]="onlyInput"
+                                       id="1"
+                                       matInput
+                                       type="text"
+                                       inputmode="numeric"
+                                       pattern="\d+"
+                                       [disabled]="polizaIndividual"
+                                       oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9]/g, '');"
+                                       maxlength="19"
+                                       [(ngModel)]="nroCertificado" />
+                            </div>
+
+                            <div class="d-flex flex-row justify-content-center w-50 align-items-center">
+                                <span style="font-size:medium; width: 25%;">ASEGURADO:</span>
+                                <input class="form-input-text w-50 ASEGURADO"
+                                       *ngIf="alwaystrue"
+                                       placeholder="Nombre del Asegurado"
+                                       [class.only-input]="onlyInput"
+                                       id="1"
+                                       disabled
+                                       [(ngModel)]="nombreAsegurado" />
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row w-50 align-items-center">
+                            <span style="font-size:medium; width: 25%;">FECHA OCURRENCIA:</span>
+                            <input type="text"
+                                   class="form-input-text  w-50"
+                                   #dp="bsDatepicker"
+                                   [bsConfig]="bsConfig"
+                                   bsDatepicker
+                                   [formControl]="FechaOcurrencia"
+                                   readonly
+                                   style="background-color: white" />
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="grid form-group">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr class="grid-title">
+                                <td class="grid-title-item">NRO. COB</td>
+                                <td class="grid-title-item col-sm-5">COBERTURA</td>
+                                <td class="grid-title-item">FECHA INICIO</td>
+                                <td class="grid-title-item">FECHA FIN</td>
+                                <td class="grid-title-item">SUMA ASEGURADA</td>
+                                <td class="grid-title-item">MONEDA</td>
+                                <td class="grid-title-item">ACCIÓN</td>
+                            </tr>
+                        </thead>
+                        <div *ngIf="mostrarData; then Conregistro; else Sinregistro"></div>
+                    </table>
+                    <ng-template #Sinregistro>
+                        <tbody>
+                            <tr>
+                                <td colspan="13">No se encontraron Registros..</td>
+                            </tr>
+                        </tbody>
+                    </ng-template>
+                    <ng-template #Conregistro>
+                        <tbody *ngFor="let row of dataRecuperada  | paginate: { itemsPerPage: 20, currentPage: p }">
+                            <tr>
+                                <td>{{ row.COD_COBERTURA }}</td>
+                                <td>{{ row.COBERTURA }}</td>
+                                <td>{{ row.FECHA_INICIO }}</td>
+                                <td>{{ row.FECHA_FIN }}</td>
+                                <td>{{ row.SUMA_ASEGURADA}} </td>
+                                <td>{{ row.MONEDA }} </td>
+                                <td class="justify-content-center">
+                                    <button [disabled]="false"
+                                            style="background-color:   rgb(85, 61, 129);"
+                                            type="button"
+                                            class="button_update w-100"
+                                            (click)="AbrirModal(row.COD_COBERTURA)">Modificar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </ng-template>
+                    <pagination-controls *ngIf="mostrarData"
+                                         class="my-pagination"
+                                         (pageChange)="p = $event"
+                                         autoHide="true"
+                                         responsive="true"
+                                         previousLabel="Anterior"
+                                         nextLabel="Siguiente"
+                                         screenReaderPaginationLabel="Paginación"
+                                         screenReaderPageLabel="pagina"
+                                         screenReaderCurrentLabel="Estás en la pagina"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div bsModal
+         #childModalMensaje="bs-modal"
+         class="modal fade w-100 p-3 align-items-center justify-content-center"
+         style="margin-left: 25%;">
+        <div class=" w-75 p-3">
+            <div class="modal-content d-flex align-items-center justify-content-center w-75 p-3">
+                <div class="w-75 d-flex align-items-center justify-content-between pl-4">
+                    <h4 id="
+           dialog-child-name"
+                        class="modal-title pull-left titlemensajeinfo">
+                        Corregir suma asegurada
+                    </h4>
+                    <button type="button"
+                            class="close close-button"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                            (click)="closeModalMensaje()">
+                        <span aria-hidden="true">
+                            <img alt=""
+                                 src="assets/icons/close_modal.png" />
+                        </span>
+                    </button>
+                </div>
+                <div class="w-75 d-flex flex-row align-item-center justify-content-center">
+                    <div class="px-5 w-100 d-flex flex-row">
+                        <span style="font-size:medium; width: 50%;">{{coberturaElegida}}</span>
+                        <input class="form-input-text w-50"
+                               *ngIf="alwaystrue"
+                               placeholder="Nuevo Monto..."
+                               [class.only-input]="onlyInput"
+                               matInput
+                               type="text"
+                               inputmode="numeric"
+                               oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                               maxlength="25"
+                               [(ngModel)]="montoTotal" />
+                    </div>
+                </div>
+                <div class="mt-4 d-flex flex-row justify-content-center gap-4 w-100">
+                    <div class="d-flex flex-row  align-items-center px-5 w-100">
+                        <button type="button"
+                                class="button-close button-center"
+                                (click)="closeModalMensaje()">
+                            <span>Salir</span>
+                        </button>
+                        <button type="button"
+                                class="button-close button-center"
+                                (click)="grabarNuevaSuma()">
+                            <span>Grabar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

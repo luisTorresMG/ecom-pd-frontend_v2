@@ -1,0 +1,204 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="container-fluid">
+        <div class="header-content">
+          <div class="containt-item">
+            <div class="header-item">
+              <span class="title">Reporte de Descargos</span>
+            </div>
+          </div>
+          <div class="containt-item">
+            <div class="header-item right-item">
+              <button
+                class="btn-export-excel mx-0"
+                (click)="exportar()"
+                [disabled]="!dataBusqueda?.entities?.length"
+                style="height: 45px"
+              >
+                <img alt="" src="assets/icons/download2.png" />
+                <span> Exportar Excel</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter">
+          <div
+            class="
+              form-group
+              row
+              filter-row
+              d-flex
+              align-items-end
+              justify-content-between
+              flex-row
+            "
+          >
+            <div class="col-lg-3 filter-row-cell">
+              <form [formGroup]="form">
+                <span class="filter-text">N° LOTE DE DESCARGO:</span>
+
+                <input
+                  type="text"
+                  class="form-control date-search input-date"
+                  formControlName="lote"
+                  [(ngModel)]="this.lote"
+                />
+              </form>
+            </div>
+            <div class="col-lg-9 margin-top-20">
+              <div
+                class="
+                  row
+                  float-right
+                  mx-0
+                  d-flex
+                  justify-content-between
+                  align-items-center
+                "
+              >
+                <div class="lg-6">
+                  <button
+                    class="full-color margin-right-0"
+                    (click)="busqueda()"
+                    [disabled]="form.invalid"
+                  >
+                    <span>Buscar</span>
+                  </button>
+                </div>
+                <div class="lg-6">
+                  <button
+                    class="full-color btn-export-excel"
+                    (click)="onEventClear($event)"
+                    style="margin-right: 0px"
+                  >
+                    <img alt="" src="assets/icons/delete.png" />
+                    <span> Limpiar</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid form-group row margin-right-0">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr class="grid-title">
+                  <td class="grid-title-item">Canal de venta</td>
+                  <td class="grid-title-item">Lote</td>
+                  <td class="grid-title-item">Póliza</td>
+                  <td class="grid-title-item">Estado</td>
+                  <td class="grid-title-item">Origen</td>
+                  <td class="grid-title-item">Usuario</td>
+                  <td class="grid-title-item">Fecha de creación</td>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="!dataBusqueda?.entities?.length">
+                  <tr class="grid-body">
+                    <td
+                      class="grid-body-item"
+                      colspan="7"
+                      style="text-align: center"
+                    >
+                      No hay informacion para mostrar
+                    </td>
+                  </tr>
+                </ng-container>
+                <ng-container *ngIf="!!dataBusqueda?.entities?.length">
+                  <tr
+                    class="table-body"
+                    *ngFor="
+                      let data of dataBusqueda.entities
+                        | paginate: { itemsPerPage: 10, currentPage: p }
+                    "
+                  >
+                    <td class="table-body-item">{{ data.SDESCHANNEL }}</td>
+                    <td class="table-body-item">{{ data.NNUMLOT }}</td>
+                    <td class="table-body-item">
+                      {{ data.NPOLICY }}
+                    </td>
+                    <td class="table-body-item">{{ data.SDESCRIPT }}</td>
+                    <td class="table-body-item">
+                      {{ data.SORIGEN }}
+                    </td>
+                    <td class="table-body-item">
+                      {{ data.SUSER }}
+                    </td>
+                    <td class="table-body-item">{{ data.DCOMPDATE }}</td>
+                  </tr>
+                </ng-container>
+              </tbody>
+              <!-- <div
+                *ngIf="fExistRegistro; then ocultarGrilla; else mostrarGrilla"
+              ></div> -->
+            </table>
+
+            <!-- <ng-template #mostrarGrilla>
+              <tbody>
+                <tr>
+                  <td colspan="7" style="text-align: center">
+                    {{ msgErrorLista }}
+                  </td>
+                </tr>
+              </tbody>
+            </ng-template> -->
+            <!-- <ng-template #ocultarGrilla>
+              <tbody *ngFor="let result of ListDischargeReport">
+                <tr>
+                  <td class="data-table-tr-td">{{ result.sdeschannel }}</td>
+                  <td class="data-table-tr-td">{{ result.nnumlot }}</td>
+                  <td class="data-table-tr-td">{{ result.npolicy }}</td>
+                  <td class="data-table-tr-td">{{ result.sdescript }}</td>
+                  <td class="data-table-tr-td">{{ result.sorigen }}</td>
+                  <td class="data-table-tr-td">{{ result.suser }}</td>
+                  <td class="data-table-tr-td">{{ result.dcompdate }}</td>
+                </tr>
+              </tbody>
+            </ng-template> -->
+          </div>
+          <pagination-controls
+            style="margin-top: 20px"
+            *ngIf="!!dataBusqueda?.entities?.length"
+            class="my-pagination"
+            (pageChange)="p = $event"
+            autoHide="true"
+            responsive="true"
+            previousLabel="Anterior"
+            nextLabel="Siguiente"
+            screenReaderPaginationLabel="Paginación"
+            screenReaderPageLabel="pagina"
+            screenReaderCurrentLabel="Estás en la pagina"
+          >
+          </pagination-controls>
+        </div>
+
+        <!-- <div
+          *ngIf="fExistRegistro; then ocultarPaginado; else mostrarPaginado"
+        ></div>
+        <ng-template #mostrarPaginado>
+          <div></div>
+        </ng-template> -->
+
+        <!-- <ng-template #ocultarPaginado>
+          <div class="row">
+            <div class="col-xs-12 col-12">
+              <pagination
+                [totalItems]="totalItems"
+                [itemsPerPage]="itemsPerPage"
+                [rotate]="rotate"
+                [maxSize]="maxSize"
+                [(ngModel)]="currentPage"
+                (pageChanged)="pageChanged($event)"
+              >
+              </pagination>
+            </div>
+          </div>
+        </ng-template> -->
+      </div>
+    </div>
+  </div>
+</div>

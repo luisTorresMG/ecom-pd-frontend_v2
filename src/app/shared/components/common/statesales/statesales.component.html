@@ -1,0 +1,11 @@
+<select
+  id="StateSalesSelect"
+  (change)="onSelectStateSales($event.target.value)"
+>
+  <option value="0" selected>Seleccionar</option>
+  <option
+    *ngFor="let statesale of ListStateSales"
+    value="{{ statesale.nidstatesales }}"
+    >{{ statesale.sdescript }}</option
+  >
+</select>

@@ -1,0 +1,169 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title" style="text-transform: uppercase">Movimientos de Póliza</h4>
+    <button type="button" class="close" aria-label="Close" (click)="reference.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="container-fluid" style="margin-bottom: 10px;">
+        <div class="filter">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h5>Detalle Contratante</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <span>PRODUCTO</span>
+                            <input type="text" placeholder="Producto" [(ngModel)]="inputsPolicy.P_PRODUCTO" disabled>
+                        </div>
+                        <div class="col-sm-6">
+                            <span>NRO. PÓLIZA</span>
+                            <input type="text" placeholder="Nro. Póliza" [(ngModel)]="inputsPolicy.P_POLIZA" disabled>
+                        </div>
+                        <div class="col-sm-6">
+                            <span>CONTRATANTE</span>
+                            <input type="text" placeholder="Contratante" [(ngModel)]="inputsPolicy.P_CONTRATANTE" disabled>
+                        </div>
+                        <div class="col-sm-6">
+                            <span>SEDE</span>
+                            <!--Ini RQ2025-4-->
+                            <input type="text" class="render-sede" placeholder="Sede" [(ngModel)]="inputsPolicy.P_SEDE" disabled>
+                            <!--Fin RQ2025-4-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="grid form-group">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h5>Detalle Movimiento</h5>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr class="grid-title">
+                                <td class="grid-title-item text-center">Nro.</td>
+                                <td class="grid-title-item">Movimiento</td>
+                                <td class="grid-title-item">Constancia</td>
+                                <td class="grid-title-item text-center">Ini. Cobertura</td>
+                                <td class="grid-title-item text-center">Fin Cobertura</td>
+                                <td class="grid-title-item text-center">Fecha Mov.</td>
+                                <td class="grid-title-item">Observaciones</td>
+                                <td class="grid-title-item text-center">Usuario</td>
+                                <td class="grid-title-item text-center">Documentos</td>
+                                <ng-container *ngIf="canCancelMovements">
+                                    <td class="grid-title-item" *ngIf="!flagAnular && template.ins_anularMovimiento">Anular</td>
+                                </ng-container>
+                                <td class="grid-title-item text-center">Facturar</td>
+                                <td class="grid-title-item" *ngIf="this.nbranch == 77">Relanzar</td>
+                                <td class="grid-title-item text-center" *ngIf="this.opcionVer == 1 && this.nbranch == 77">Ver Estado EPS</td>
+                                <td class="grid-title-item text-center" *ngIf="this.opcionVer == 1 && this.nbranch == 77 && validateButtonTrx(0)">Relanzamiento Data EPS</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container
+                                *ngIf="policyMovementList!=null && policyMovementList.length>0; then showGrid else hideGrid">
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+                <ng-template #hideGrid>
+                    <tr>
+                        <td colspan="9" class="text-center">
+                            No se encontraron registros
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template #showGrid>
+                    <tr *ngFor="let item of listToShow; let row_no = index">
+                        <td class="text-center">{{ item.NRO }}</td>
+                        <td>{{ item.TIPO_TRANSACCION }}</td>
+                        <td class="text-center">{{ item.CONSTANCIA }}</td>
+                        <td class="text-center">{{ item.INICIO_COBERTURA }}</td>
+                        <td class="text-center">{{ item.FIN_COBERTURA }}</td>
+                        <td class="text-center">{{ item.FECHA_TRANSACCION }}</td>
+                        <td class="text-center" *ngIf="item.FLAG_OBSERVACIONES == 0  && item.COD_TRANSAC == 7"> {{ item.SOBSERVACIONES || '--' }}</td>
+                        <td class="text-center" *ngIf="item.FLAG_OBSERVACIONES == 1 && item.COD_TRANSAC == 7">
+                            <label>
+                                <img src="assets/icons/download2.png" (click)="descargaRecibos(item.SOBSERVACIONES, 'OBSERVACIONES', 'OBSERVACIONES')"
+                                title="Recibos" alt="Recibos" style="cursor: pointer;" />
+                            </label>
+                        </td>
+                        <td class="text-center" *ngIf="item.COD_TRANSAC != 7">{{ item.RECIBO }}</td>
+                        <td>{{ item.USUARIO }}</td>
+                        <td class="text-center"><img alt="Ver Documentos" src="assets/icons/preview_soat_box.png"
+                            title="Ver Documentos" (click)="verDocumentos(item)" style="cursor: pointer;height: 24px;width: 24px">
+                        </td>
+                        <ng-container *ngIf="canCancelMovements && item.NBRANCH == 77">
+                            <td *ngIf="!flagAnular && template.ins_anularMovimiento" class="text-center">
+                                <img *ngIf="item.MOV_ANULADO == 0 && item.COD_TRANSAC != 9 && item.COD_TRANSAC != 5 && codProfileID != 134" src="assets/icons/anular.png"
+                                (click)="anularMov(item, 6)" title="Anular" alt="Anular" style="cursor: pointer;" />
+                                <!-- <label *ngIf="item.MOV_ANULADO != 0 || item.COD_TRANSAC == 9 || item.FACTURAR != 1 || item.COD_TRANSAC == 3"><b>--</b></label> -->
+                                <label *ngIf="item.MOV_ANULADO != 0 || item.COD_TRANSAC == 9 || codProfileID == 134"><b>--</b></label>
+                            </td>
+                        </ng-container>
+                        <ng-container *ngIf="canCancelMovements && item.NBRANCH != 77">
+                            <td *ngIf="!flagAnular && template.ins_anularMovimiento" class="text-center">
+                                <img *ngIf="item.MOV_ANULADO == 0 && item.COD_TRANSAC != 9" src="assets/icons/anular.png"
+                                (click)="anularMov(item, 6)" title="Anular" alt="Anular" style="cursor: pointer;" />
+                                <label *ngIf="item.MOV_ANULADO != 0 || item.COD_TRANSAC == 9"><b>--</b></label>
+                            </td>
+                        </ng-container>
+                        <td class="text-center">
+                            <img *ngIf="item.FACTURAR == 1" src="assets/icons/facturar.png" (click)="facturarMov(item, 10)"
+                                title="Facturar" alt="Facturar" style="cursor: pointer;" />
+                            <label *ngIf="item.FACTURAR == 0 || item.RECIBO == ''"><b>--</b></label>
+                        </td>
+                        <td class="text-center" *ngIf="item.NBRANCH == 77">
+                            <label *ngIf="![3, 0].includes(item.NENV_PRINT) && item.NIDHEADERPROC_SCTR > 0 && ![6, 9, 10].includes(+item.COD_TRANSAC)">
+                                <img src="assets/icons/ICONO-148.svg" (click)="relanzarDocumento(item)"
+                                title="Relanzar documentos" alt="Relanzar documentos" style="cursor: pointer; margin: -3px auto 0; text-align: center; width: 32px;" /> 
+                            </label>
+                            <label *ngIf="[3, 0].includes(item.NENV_PRINT) || item.NIDHEADERPROC_SCTR == 0 || [6, 9, 10].includes(+item.COD_TRANSAC)"><b>--</b></label>              
+                        </td>
+                        <td class="text-center" *ngIf="this.nbranch == 77 && this.opcionVer == 1">
+                            <label *ngIf="item.NIDHEADERPROC_SCTR > 0 && ![6, 7, 9, 10].includes(+item.COD_TRANSAC)">
+                                <img alt="Ver estados EPS" src="assets/icons/preview_soat_box.png" title="Ver estados EPS" (click)="verEstadosEPS(item)" style="cursor: pointer;height: 24px;width: 24px">
+                            </label>
+                            <label *ngIf="item.NIDHEADERPROC_SCTR == 0 || [6, 7, 9, 10].includes(+item.COD_TRANSAC)"><b>--</b></label>  
+                        </td>
+                        <td class="text-center" *ngIf="this.nbranch == 77 && this.opcionVer == 1 && validateButtonTrx(0)">
+                            <label *ngIf="item.flagVista != 3 && item.NIDHEADERPROC_SCTR > 0 && ![6, 7, 9, 10].includes(+item.COD_TRANSAC)">
+                                <img alt="Relanzamiento de Data EPS" src="assets/icons/reenvioEPS.png" title="Relanzamiento de Data EPS" (click)="relanzarDataEPS(item)" style="cursor: pointer;height: 30px;width: 28px">
+                            </label>
+                            <label *ngIf="item.flagVista == 3 || [6, 7, 9, 10].includes(+item.COD_TRANSAC)"><b>--</b></label>  
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-container *ngIf="policyMovementList!=null && policyMovementList.length>0; then showPagination">
+                </ng-container>
+                <ng-template #showPagination>
+                    <div class="row mt-4">
+                        <div class="col-sm-12">
+                            <ngb-pagination [(page)]="currentPage" [pageSize]="itemsPerPage" [collectionSize]="totalItems"
+                                [maxSize]="maxSize" (pageChange)="pageChanged(currentPage)">
+                                <ng-template ngbPaginationPrevious>ANTERIOR</ng-template>
+                                <ng-template ngbPaginationNext>SIGUIENTE</ng-template>
+                            </ngb-pagination>
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+    <!-- Pantalla de carga -->
+    <div [hidden]="!isLoading" class="loadingScreen">
+        <div style="display: flex; height: 100%; width: 100%">
+            <i style="margin: auto; font-size: 50px" class="fa fa-spinner fa-spin"></i>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button (click)="reference.close()">Regresar</button>
+</div>

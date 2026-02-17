@@ -1,0 +1,176 @@
+<div class="padding-modal">
+  <div class="modal-header border-none">
+    <h4 class="modal-title title-re" id="modal-basic-title">
+      Envío de Comentario
+    </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="formModalReference.dismiss()"
+      value="&times;"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="table-responsive">
+        <table class="table mb-none">
+          <thead class="t-head">
+            <tr class="grid-title">
+              <th class="grid-title-item">Documento</th>
+              <th class="grid-title-item">Fecha de carga</th>
+              <th class="grid-title-item">Usuario</th>
+              <th class="grid-title-item">Adjunto en Proceso de Pago</th>
+              <th class="grid-title-item">Tamaño</th>
+              <th class="grid-title-item">Acciones</th>
+              <th class="grid-title-item">Edición</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+          <tbody>
+            <ng-container *ngFor="let doc of doc_registrados">
+              <tr class="grid-title row-item">
+                <td class="grid-item">{{ doc.SNAME }}</td>
+                <td class="grid-item">{{ doc.DUPLOAD }}</td>
+                <td class="grid-item">{{ doc.SUSER }}</td>
+                <td class="grid-item">
+                    <ng-container *ngIf="doc.isEditing == true; else showValue">
+                        <form-input-select-re
+                          [items]="opcionesTipoDocumento"
+                          [itemsArray]="true"
+                          fieldCodigo="codigo"
+                          fieldValor="valor"
+                          [defaultValue]="{ codigo: doc.NTYPEATTACHMENT }"
+                          [firstSelect]="true"
+                          [(value)]="inputs.NTYPEATTACHMENT"
+                        ></form-input-select-re>
+                      </ng-container>
+                      <ng-template #showValue>{{ doc.NTYPEATTACHMENT?.valor || doc.STYPEATTACHMENT }}</ng-template>
+                    </td>
+                <td class="grid-item">{{ doc.SSIZE }}</td>
+                
+                <td class="grid-item">
+                  <a
+                    [ngClass]="{
+                      disabled: listActions?.SUBIR_ADJ !== 'TRUE'
+                    }"
+                    class="clickable"
+                    (click)="uploadFile2(doc.file, doc.NTYPEATTACHMENT); uploadFile(doc)"
+                  >
+                    <img
+                      *ngIf="doc.isNew"
+                      title="Cargar"
+                      src="assets/rentas/cloud_upload.svg"
+                      alt="autorenew"
+                    />
+                  </a>
+
+                  <a
+                    [ngClass]="{
+                      disabled: listActions?.DESCARJAR_ADJ !== 'TRUE'
+                    }"
+                    *ngIf="!doc.isNew"
+                    class="clickable"
+                    (click)="downloadFile(doc.SPATH)"
+                  >
+                    <img
+                      title="Descargar"
+                      src="assets/rentas/cloud_download_20dp_FILL1_wght400_GRAD0_opsz20.svg"
+                      alt="autorenew"
+                    />
+                  </a>
+                  <a
+                    [ngClass]="{
+                      disabled: listActions?.ELIMINAR_ADJ !== 'TRUE'
+                    }"
+                    class="clickable"
+                    (click)="
+                      !doc.isNew
+                        ? valTblAttachedfile(doc)
+                        : deleteFile(doc)
+                    "
+                  >
+                    <img
+                      title="Eliminar"
+                      src="assets/rentas/delete.svg"
+                      alt="autorenew"
+                    />
+                  </a>
+                </td>
+                <td class="grid-item">
+                    <ng-container *ngIf="doc.isEditing; else editIcons">
+                      <img
+                        (click)="saveChanges(doc)"
+                        class="clickable"
+                        title="Confirmar"
+                        src="assets/rentas/check_circle.svg"
+                        alt="Confirmar"
+                        [ngClass]="{
+                            disabled: listActions?.EDITAR_TIPO_ADJ_OK !== 'TRUE'
+                          }"
+                      />
+                      <img
+                        (click)="cancelEdit(doc)"
+                        class="clickable"
+                        title="Cancelar"
+                        src="assets/rentas/cancel.svg"
+                        alt="Cancelar"
+                        [ngClass]="{
+                            disabled: listActions?.EDITAR_TIPO_ADJ_X !== 'TRUE'
+                          }"
+                      />
+                    </ng-container>
+                    <ng-template #editIcons>
+                      <img
+                        (click)="setEditMode(doc)"
+                        class="clickable"
+                        title="Editar"
+                        [src]="listActions?.EDITAR_TIPO_ADJ=='TRUE'?'assets/rentas/edit.svg':'assets/rentas/edit_disabled.svg'"
+                        alt="Editar"
+                        [ngClass]="{
+                            disabled: listActions?.EDITAR_TIPO_ADJ !== 'TRUE'
+                          }"
+                      />
+                    </ng-template>
+                  </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+        <div
+  
+          [style.background]="
+            listActions?.ADJUNTAR_ARCHIVO == 'TRUE'
+              ? '#79cb33'
+              : '#8385B4'
+          "
+          class="new-document clickable"
+          (click)="fileInput.click()"
+        >
+          Añadir documento
+        </div>
+        <p>Formatos permitidos: {{ getDisplayFileFormats() }}</p>
+        <input
+          type="file"
+          #fileInput
+          (change)="onFileSelected($event, SCODE)"
+          style="display: none"
+          [accept]="getAcceptedFileFormats()"
+        />
+      </div>
+  </div>
+
+  <div class="modal-footer border-none">
+    <button
+      [style.background]="
+        listActions?.CANCELAR_M == 'TRUE' ? '#fff' : '#8385B4'
+      "
+      [disabled]="listActions.CANCELAR_M == 'TRUE' ? false : true"
+      class="button-cancelar"
+      (click)="formModalReference.dismiss()"
+    >
+      <span>Cerrar</span>
+    </button>
+  </div>
+</div>

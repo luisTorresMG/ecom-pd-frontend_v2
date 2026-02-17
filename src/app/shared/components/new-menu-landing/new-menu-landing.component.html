@@ -1,0 +1,110 @@
+<header class="content">
+  <div class="content__block content__top">
+    <div class="cont-left">
+      <a aria-label="Protecta Security"
+         href="https://protectasecurity.pe/"
+         target="_self"
+         class="block__item">
+        <img alt="Protecta Security"
+             src="assets/logos/logo-PS.svg"
+             class="block__item--img block__item--imgLogo" />
+      </a>
+      <a aria-label="Protecta Security"
+         href="https://protectasecurity.pe/empresas-grupo-security/"
+         target="_self"
+         class="block__item ml-4">
+        <img alt="Flag"
+             src="assets/menu/flag-group.png"
+             class="block__item--img" />
+        <span class="label-link">Empresas del grupo
+          <i class="fa fa-angle-down ml-2"
+             aria-hidden="true"></i>
+        </span>
+      </a>
+    </div>
+    <a [routerLink]="['/shop/checkout']"
+       *ngIf="ecommerceTotal > 0"
+       class="shop-cart">
+      <i class="fa fa-shopping-cart"
+         aria-hidden="true"></i>
+      <span class="count-cart">{{ ecommerceTotal }}</span>
+    </a>
+    <button class="btn-menu d-flex align-items-center justify-content-center"
+            (click)="showHideMenuList()">
+      <i class="fa fa-bars"
+         aria-hidden="true"
+         *ngIf="!IS_SHOW_LIST_MENU"></i>
+      <span class="icon-times"
+            *ngIf="IS_SHOW_LIST_MENU">&times;</span>
+    </button>
+    <div *ngIf="showLogo"
+         class="navbar-nav-Canal"
+         [ngClass]="{ 'navbar-brand-push': haveUser }">
+      <img alt=""
+           src="{{ imagePath }}"
+           class="img-fluid img-logo-canal"
+           onerror="this.style='display: none !important'" />
+    </div>
+  </div>
+  <div *ngIf="show==true" class="content__block content-menu-desktop">
+    <ul class="list-action-desktop d-flex flex-row align-item-center justify-content-between">
+      <div class="cont-list d-flex flex-row">
+        <li *ngFor="let data of list_link_desktop">
+          <a [href]="data.link"
+             target="_blank"
+             role="button"
+             class="item-link-menu-desk"
+             *ngIf="data.link">
+            {{ data.desc }}
+            <i class="fa fa-chevron-down ml-1"
+               aria-hidden="true"
+               *ngIf="data.child1"></i>
+          </a>
+          <a role="button"
+             class="item-link-menu-desk item-link-before"
+             *ngIf="!data.link">
+            {{ data.desc }}
+            <i class="fa fa-chevron-down ml-1"
+               aria-hidden="true"
+               *ngIf="data.child1"></i>
+          </a>
+          <div class="container-options-link"
+               *ngIf="data.child1">
+            <div class="content-sub-links">
+              <ul class="content-options"
+                  *ngFor="let item of data.child1">
+                <li *ngFor="let item2 of item.child2">
+                  <a *ngIf="!item2.link"
+                     [class]="item2.style">
+                    {{item2.desc}}
+                  </a>
+                  <a [href]="item2.link"
+                     target="_blank"
+                     [class]="item2.style"
+                     *ngIf="item2.link">
+                    {{item2.desc}}
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </li>
+      </div>
+    </ul>
+  </div>
+  <div class="content__block listMenuMobile"
+       #listMenuMobile
+       hidden>
+    <ul class="list-action-mobile">
+      <li *ngFor="let data of list_link_mobile">
+        <a [href]="data.link"
+           target="_blank"
+           class="d-flex align-items-center justify-content-between">
+          {{ data.desc }}
+          <i class="fa fa-chevron-down ml-1"
+             aria-hidden="true"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+</header>

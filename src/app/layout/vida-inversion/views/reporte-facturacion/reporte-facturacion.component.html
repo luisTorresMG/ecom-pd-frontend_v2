@@ -1,0 +1,101 @@
+<div class="form-group row">
+    <div class="col-lg-3">
+        <app-nav-menuprod></app-nav-menuprod>
+    </div>
+    <div class="col-lg-9">
+        <div class="container-fluid p-0">
+            <div class="header-content">
+                <div class="containt-item">
+                    <div class="header-item">
+                        <span class="title">Reporte Facturación</span>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="filter">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <form-input-date text_label="FECHA INICIO:"
+                                     [large]="true"
+                                     [(value)]="search_params.start_date_options.start_date"
+                                     [customClasses]="search_params.start_date_options.customClass"
+                                     (valueChange)="changeStartDate($event)"
+                                     [show_message]="search_params.start_date_options.validate_start_date"
+                                     [message]="'FECHA INICIO ES MAYOR A FECHA FIN'"></form-input-date>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <form-input-date text_label="FECHA FIN:"
+                                     [large]="true"
+                                     (valueChange)="changeEndDate($event)"
+                                     [(value)]="search_params.end_date_options.end_date"
+                                     [customClasses]="search_params.end_date_options.customClass"
+                                     [show_message]="search_params.end_date_options.validate_end_date"
+                                     [message]="'FECHA FIN ES MENOR A FECHA INICIO'"></form-input-date>
+
+                                </div>
+
+                                <div class="col-sm-8" style="display: flex; justify-content: end;">
+                                    <form-button label="Generar" style="margin-top: 29px;"
+                                 (click)="createReportCab()"
+                                 btnClass="btn-primary-VI text-nowrap"></form-button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid form-group">
+            <div class="table-responsive">
+                <table class="table text-center">
+                    <thead>
+                        <tr class="grid-title">
+                            <td class="grid-title-item">ESTADO</td>
+                            <td class="grid-title-item">PRODUCTO</td>
+                            <td class="grid-title-item">FECHA PROCESO</td>
+                            <td class="grid-title-item">USUARIO</td>
+                            <td class="grid-title-item">DESCARGA</td>
+                        </tr>
+                    </thead>
+                    <ng-container *ngIf="foundResults && foundResults.length > 0; else noRecords">
+                        <tbody class="text-center">
+                            <tr *ngFor="let result of foundResults">
+                                <td>
+                                    <img [src]="getStatusIcon(result.NSTATUS)" 
+                                        [title]="getStatusTitle(result.NSTATUS)" 
+                                        [alt]="getStatusTitle(result.NSTATUS)" />
+                                </td>
+                                <td>{{ result.PRODUCTO }}</td>
+                                <td>{{ result.DCOMPDATE }}</td>
+                                <td>{{ result.DESCRIPT_USU }}</td>
+                                <td class="text-center">
+                                    <img *ngIf="result.NSTATUS == 2" src="assets/icons/download2.png" title="Descargar" alt="Descargar"
+                                    style="cursor: pointer;" (click)="downloadFileReport(result)"
+                                    style="padding: 0px 18px 0px 18x;" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </ng-container>
+                </table>
+                <ng-template #noRecords>
+                    <tbody class="text-center">
+                        <tr class="no-hover">
+                            <td colspan="5">No ha genereado ningún reporte.</td>
+                        </tr>
+                    </tbody>
+                </ng-template>
+            </div>
+        </div>
+
+    </div>
+        <div [hidden]="!isLoading" class="loadingScreen">
+            <div style="display:flex;height: 100%;width:100%">
+                <i style="margin:auto;font-size: 50px" class="fa fa-spinner fa-spin"></i>
+            </div>
+        </div>
+</div>

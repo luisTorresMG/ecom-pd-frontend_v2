@@ -1,0 +1,44 @@
+.number-input-container {
+  width: 100%;
+}
+
+.number-input-label {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.number-input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #aa9ec0;
+  border-radius: 4px;
+  padding: 4px 8px;
+  position: relative;
+}
+
+.number-input-field {
+  color: #553d81;
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+.number-input-decorator {
+  font-size: 16px;
+  color: #553d81;
+  position: absolute;
+  right: 10px;
+  padding: 0 5px;
+}
+
+/* Disabled State */
+.number-input-wrapper.disabled {
+  background-color: #f3f3f3;
+  border-color: #ccc;
+}
+
+.number-input-field:disabled {
+  background-color: #f3f3f3;
+  cursor: not-allowed;
+}

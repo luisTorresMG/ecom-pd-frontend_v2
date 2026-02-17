@@ -1,0 +1,1302 @@
+<div class="content">
+  <!-- TODO: CABECERA -->
+  <section class="content__header content__item">
+    <h1 class="content__header__title title-u">Mant. Canal / Punto de Venta</h1>
+  </section>
+
+  <form [formGroup]="form">
+    <!-- TODO: FILTROS -->
+    <section class="content__item content__filters">
+      <!-- *FILTRO TIPO DE CANAL -->
+      <label for="channelType"
+             class="lbl-input-u"
+             aria-label="Tipo de Canal">
+        <select formControlName="tipoCanal"
+                id="channelType"
+                class="input-u"
+                (change)="channels()">
+          <option [value]="null"
+                  selected
+                  disabled>SELECCIONE</option>
+          <option *ngFor="let data of channelTypes$?.items"
+                  [value]="data.canal.id">
+            {{ data.canal.descripcion }}
+          </option>
+        </select>
+      </label>
+
+      <!-- *FILTRO CANAL DE VENTA -->
+      <label for="channelSale"
+             class="lbl-input-u"
+             aria-label="Canal de Venta">
+        <select formControlName="canalVenta"
+                id="channelSale"
+                class="input-u">
+          <option [value]="null"
+                  selected
+                  disabled>SELECCIONE</option>
+          <ng-container *ngIf="!channels$?.items?.length">
+            <option disabled>No hay información para mostrar</option>
+          </ng-container>
+          <ng-container *ngIf="!!channels$?.items?.length">
+            <option *ngFor="let data of channels$?.items"
+                    [value]="data.poliza">
+              {{ data.nombreCanal }}
+            </option>
+          </ng-container>
+        </select>
+      </label>
+
+      <!-- *FILTRO ESTADO DE CANAL -->
+      <label for="channelState"
+             class="lbl-input-u"
+             aria-label="Estado de Canal">
+        <select formControlName="estadoCanal"
+                id="channelState"
+                class="input-u">
+          <option [value]="null"
+                  selected
+                  disabled>SELECCIONE</option>
+          <option value="0">INACTIVO</option>
+          <option value="1">VIGENTE</option>
+        </select>
+      </label>
+
+      <!-- *FILTRO TIPO DE DOCUMENTO -->
+      <label for="documentType"
+             class="lbl-input-u"
+             aria-label="Tipo de Documento">
+        <select formControlName="tipoDocumento"
+                id="documentType"
+                class="input-u">
+          <option [value]="null"
+                  selected
+                  disabled>SELECCIONE</option>
+          <option value="1">RUC</option>
+        </select>
+      </label>
+    </section>
+    <ng-container *ngIf="!!f['tipoDocumento'].value">
+      <section class="content__item content__filterDocuments">
+        <!-- *FILTRO NÚMERO DE DOCUMENTO -->
+        <label for="documentNumber"
+               class="lbl-input-u"
+               aria-label="N° RUC">
+          <input type="text"
+                 formControlName="numeroDocumento"
+                 id="documentNumber"
+                 class="input-u"
+                 [maxlength]="12" />
+        </label>
+
+        <ng-container *ngIf="f['tipoDocumento'].value == '1'">
+          <!-- *FILTRO RAZÓN SOCIAL -->
+          <label for="razonSocial"
+                 class="lbl-input-u"
+                 aria-label="Razon Social">
+            <input type="text"
+                   formControlName="razonSocial"
+                   id="razonSocial"
+                   class="input-u" />
+          </label>
+        </ng-container>
+
+        <ng-container *ngIf="
+            f['tipoDocumento'].value == '2' || f['tipoDocumento'].value == '4'
+          ">
+          <!-- *FILTRO NOMBRES -->
+          <label for="names"
+                 class="lbl-input-u"
+                 aria-label="Nombres">
+            <input type="text"
+                   formControlName="nombres"
+                   id="names"
+                   class="input-u" />
+          </label>
+
+          <!-- *FILTRO APELLIDO PATERNO -->
+          <label for="apellidoPaterno"
+                 class="lbl-input-u"
+                 aria-label="Apellido Paterno">
+            <input type="text"
+                   formControlName="apellidoPaterno"
+                   id="apellidoPaterno"
+                   class="input-u" />
+          </label>
+
+          <!-- *FILTRO APELLIDO MATERNO -->
+          <label for="apellidoMaterno"
+                 class="lbl-input-u"
+                 aria-label="Apellido Materno">
+            <input type="text"
+                   formControlName="apellidoMaterno"
+                   id="apellidoMaterno"
+                   class="input-u" />
+          </label>
+        </ng-container>
+      </section>
+    </ng-container>
+  </form>
+
+  <!-- TODO: ACTIONS -->
+  <section class="content__item content__filterActions">
+    <button class="content__filterActions--search button-action-u btn-primary-u"
+            type="button"
+            (click)="buscar(true)">
+      Buscar
+    </button>
+    <button class="content__filterActions--export button-action-u btn-primary-u"
+            type="button"
+            (click)="export()">
+      Exportar
+    </button>
+    <button class="content__filterActions--create button-action-u btn-primary-u"
+            type="button"
+            (click)="nuevoCanal()">
+      Nuevo
+    </button>
+    <button class="content__filterActions--clear button-action-u btn-primary-u"
+            type="button"
+            (click)="clearForm()">
+      Limpiar
+    </button>
+  </section>
+
+  <!-- TODO: RESULTADOS DE BUSQUEDA -->
+  <section class="content__item content__table">
+    <table class="tbl">
+      <thead class="tbl__head">
+        <tr class="tbl__head--row">
+          <td class="tbl__head--row-col tbl__col--code">Código</td>
+          <td class="tbl__head--row-col tbl__col--channel">Canal</td>
+          <td class="tbl__head--row-col tbl__col--channelType">Tipo Canal</td>
+          <td class="tbl__head--row-col tbl__col--documentType">Tipo Doc.</td>
+          <td class="tbl__head--row-col tbl__col--documentNumber">
+            Nro. Documento
+          </td>
+          <td class="tbl__head--row-col tbl__col--distribution">
+            Distribución
+          </td>
+          <td class="tbl__head--row-col tbl__col--state">Estado</td>
+          <td class="tbl__head--row-col tbl__col--actions">Acciones</td>
+        </tr>
+      </thead>
+      <tbody class="tbl__body">
+        <ng-container *ngIf="!resultChannels$?.items.length">
+          <tr class="tbl__body--row">
+            <td class="tbl__body--row-col"
+                colspan="8">
+              No hay resultados para mostrar
+            </td>
+          </tr>
+        </ng-container>
+        <ng-container *ngIf="!!resultChannels$?.items.length">
+          <tr class="tbl__body--row"
+              *ngFor="let data of resultChannels$?.items | paginate : {
+                itemsPerPage: itemsPerPage,
+                currentPage: currentPage,
+                totalItems: resultChannels$?.totalItems
+              }">
+            <td class="tbl__body--row-col tbl__col--code">
+              {{ data.canal.codigoCanal }}
+            </td>
+            <td class="tbl__body--row-col tbl__col--channel">
+              {{ data.canal.nombreCanal }}
+            </td>
+            <td class="tbl__body--row-col tbl__col--channelType">
+              {{ data.canal.descripcionTipoCanal }}
+            </td>
+            <td class="tbl__body--row-col tbl__col--documentType">
+              {{ data.canal.tipoDocumentoDescripcion }}
+            </td>
+            <td class="tbl__body--row-col tbl__col--documentNumber">
+              {{ data.canal.numeroDocumento }}
+            </td>
+            <td class="tbl__body--row-col tbl__col--distribution">
+              {{ data.tipoDistribucion }}
+            </td>
+            <td class="tbl__body--row-col tbl__col--state">
+              {{ data.canal.estado }}
+            </td>
+            <td class="tbl__body--row-col tbl__col--actions"
+                ngbDropdown>
+              <button class="tbl__col--actions-btn"
+                      tabindex="0"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                      ngbDropdownToggle>
+                <i class="fa fa-ellipsis-v btn__actions--icon"
+                   aria-hidden="true"></i>
+              </button>
+              <ul class="dropdown-menu content__actions"
+                  display="dynamic"
+                  ngbDropdownMenu>
+                <li class="content__actions--item">
+                  <button class="content__actions--item-btn"
+                          (click)="showModalChannelForEdit(data)">
+                    <i class="fa fa-pencil edit-icon"
+                       aria-hidden="true"></i>Editar
+                  </button>
+                </li>
+                <li class="content__actions--item">
+                  <button class="content__actions--item-btn"
+                          (click)="showModalSemaforo(data)">
+                    <i class="fa fa-circle semaforo-icon"
+                       aria-hidden="true"></i>Semáforo
+                  </button>
+                </li>
+                <li class="content__actions--item">
+                  <button class="content__actions--item-btn"
+                          type="button"
+                          role="button"
+                          (click)="changeState(data)">
+                    <i class="fa fa-refresh change-state-icon"
+                       aria-hidden="true"></i>Cambiar Estado
+                  </button>
+                </li>
+              </ul>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+    <div class="pagination mt-3">
+      <pagination-controls class="my-pagination"
+                           (pageChange)="pageChanged($event)"
+                           autoHide="true"
+                           responsive="true"
+                           previousLabel="Anterior"
+                           nextLabel="Siguiente"
+                           screenReaderPaginationLabel="Paginación"
+                           screenReaderPageLabel="pagina"
+                           screenReaderCurrentLabel="Estás en la pagina">
+      </pagination-controls>
+    </div>
+  </section>
+</div>
+<!-- *MODAL NUEVO CANAL -->
+<ng-template #channel>
+  <section id="modal-u">
+    <div class="modal-u modalNewChannel">
+      <div class="modal__header">
+        <h6 class="modal__header--title modalNewChannel__title">
+          Creación de Canales
+        </h6>
+        <button class="modal__header--close"
+                (click)="closeModalChannel()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body contentFormChannel">
+        <form class="newChannel"
+              [formGroup]="formChannel">
+          <h6 class="newChannel__subtitle">Datos del Canal</h6>
+          <div class="newChannel__item">
+            <label for="newChannel_code"
+                   class="lbl-input-u"
+                   aria-label="Código Canal">
+              <input type="text"
+                     id="newChannel_code"
+                     class="input-u"
+                     formControlName="codigoCanal" />
+            </label>
+            <div class="
+                newChannel__item--agrupador
+                grid_content_client_documentType
+              ">
+              <label for="newChannel_client"
+                     class="lbl-input-u"
+                     aria-label="Código de Cliente">
+                <input type="text"
+                       id="newChannel_client"
+                       class="input-u"
+                       formControlName="codigoCliente" />
+              </label>
+              <label for="newChannel_document"
+                     class="lbl-input-u"
+                     aria-label="Tipo de Documento (*)">
+                <select name=""
+                        id="newChannel_client"
+                        class="input-u"
+                        formControlName="tipoDocumento">
+                  <option value="2">DNI</option>
+                  <option value="4">C.E.</option>
+                  <option value="1">RUC</option>
+                </select>
+              </label>
+            </div>
+          </div>
+          <div class="newChannel__item">
+            <ng-container *ngIf="!!fc['tipoDocumento'].value">
+              <div class="newChannel__item--agrupador grid_content_infoDocument"
+                   [class.grid100]="
+                  fc['tipoDocumento'].value == 1 ||
+                  fc['tipoDocumento'].value == 2 ||
+                  fc['tipoDocumento'].value == 4
+                ">
+                <label for="newChannel_documentNumber"
+                       class="lbl-input-u"
+                       [attr.aria-label]="
+                    documentTypeToText(fc['tipoDocumento'].value)
+                  ">
+                  <input type="text"
+                         id="newChannel_documentNumber"
+                         class="input-u"
+                         [minlength]="limitDocumentNumber.min"
+                         [maxlength]="limitDocumentNumber.max"
+                         (blur)="getDataOfDocument()"
+                         formControlName="numeroDocumento" />
+                </label>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!!fc['tipoDocumento'].value">
+              <div class="newChannel__item--agrupador grid_content_infoDocument"
+                   [class.grid100]="fc['tipoDocumento'].value == 1">
+                <ng-container *ngIf="fc['tipoDocumento'].value == 1">
+                  <label for="newChannel_razonSocial"
+                         class="lbl-input-u"
+                         aria-label="Razón Social">
+                    <input type="text"
+                           id="newChannel_razonSocial"
+                           class="input-u"
+                           formControlName="razonSocial" />
+                  </label>
+                </ng-container>
+                <ng-container *ngIf="fc['tipoDocumento'].value == 2">
+                  <label for="newChannel_names"
+                         class="lbl-input-u"
+                         aria-label="Nombres (*)">
+                    <input type="text"
+                           id="newChannel_names"
+                           class="input-u"
+                           formControlName="nombres" />
+                  </label>
+                  <label for="newChannel_apellidoPaterno"
+                         class="lbl-input-u"
+                         aria-label="Apellido Paterno (*)">
+                    <input type="text"
+                           id="newChannel_apellidoPaterno"
+                           class="input-u"
+                           formControlName="apellidoPaterno" />
+                  </label>
+                  <label for="newChannel_apellidoMaterno"
+                         class="lbl-input-u"
+                         aria-label="Apellido Materno (*)">
+                    <input type="text"
+                           id="newChannel_apellidoMaterno"
+                           class="input-u"
+                           formControlName="apellidoMaterno" />
+                  </label>
+                </ng-container>
+                <ng-container *ngIf="fc['tipoDocumento'].value == 4">
+                  <label for="newChannel_names"
+                         class="lbl-input-u"
+                         aria-label="Nombres (*)">
+                    <input type="text"
+                           id="newChannel_names"
+                           class="input-u"
+                           formControlName="nombres" />
+                  </label>
+                  <label for="newChannel_apellidoPaterno"
+                         class="lbl-input-u"
+                         aria-label="Apellido Paterno (*)">
+                    <input type="text"
+                           id="newChannel_apellidoPaterno"
+                           class="input-u"
+                           formControlName="apellidoPaterno" />
+                  </label>
+                  <label for="newChannel_apellidoMaterno"
+                         class="lbl-input-u"
+                         aria-label="Apellido Materno (*)">
+                    <input type="text"
+                           id="newChannel_apellidoMaterno"
+                           class="input-u"
+                           formControlName="apellidoMaterno" />
+                  </label>
+                </ng-container>
+              </div>
+            </ng-container>
+          </div>
+          <div class="newChannel__item">
+            <label for="newChannel_phone"
+                   class="lbl-input-u"
+                   aria-label="Teléfono">
+              <input type="text"
+                     id="newChannel_phone"
+                     class="input-u"
+                     formControlName="telefono" />
+            </label>
+            <label for="newChannel_adress"
+                   class="lbl-input-u"
+                   aria-label="Domicilio (*)">
+              <input type="text"
+                     id="newChannel_adress"
+                     class="input-u"
+                     formControlName="direccion"
+                     [maxlength]="40" />
+            </label>
+          </div>
+          <div class="newChannel__item">
+            <label for="newChannel_department"
+                   class="lbl-input-u"
+                   aria-label="Departamento (*)">
+              <select id="newChannel_department"
+                      class="input-u"
+                      formControlName="departamento"
+                      (click)="enableChangeUbigeo()">
+                <option [value]=null
+                        disabled
+                        selected>SELECCIONE</option>
+                <option *ngFor="let data of departments$"
+                        [value]="data.id">
+                  {{ data.descripcion }}
+                </option>
+              </select>
+            </label>
+            <div class="newChannel__item--agrupador grid_content_locations">
+              <label for="newChannel_province"
+                     class="lbl-input-u"
+                     aria-label="Provincia (*)">
+                <select id="newChannel_province"
+                        class="input-u"
+                        formControlName="provincia"
+                        (click)="enableChangeUbigeo()">
+                  <option [value]=null
+                          disabled
+                          selected>SELECCIONE</option>
+                  <option *ngFor="let data of provinces$"
+                          [value]="data.idProvincia">
+                    {{ data.provincia }}
+                  </option>
+                </select>
+              </label>
+              <label for="newChannel_district"
+                     class="lbl-input-u"
+                     aria-label="Distrito (*)">
+                <select id="newChannel_district"
+                        class="input-u"
+                        formControlName="distrito"
+                        (click)="enableChangeUbigeo()">
+                  <option [value]=null
+                          disabled
+                          selected>SELECCIONE</option>
+                  <option *ngFor="let data of districts$"
+                          [value]="data.idDistrito">
+                    {{ data.distrito }}
+                  </option>
+                </select>
+              </label>
+            </div>
+          </div>
+          <div class="newChannel__item">
+            <label for="newChannel_contact"
+                   class="lbl-input-u"
+                   aria-label="Contacto (*)">
+              <input type="text"
+                     id="newChannel_contact"
+                     class="input-u"
+                     formControlName="contacto" />
+            </label>
+            <label for="newChannel_email"
+                   class="lbl-input-u"
+                   aria-label="Correo Electrónico">
+              <input type="text"
+                     id="newChannel_email"
+                     class="input-u"
+                     formControlName="email" />
+            </label>
+          </div>
+          <div class="newChannel__item">
+            <label for="newChannel_channelType"
+                   class="lbl-input-u"
+                   aria-label="Tipo de Canal (*)">
+              <select id="newChannel_channelType"
+                      class="input-u"
+                      formControlName="tipoCanal"
+                      (change)="changeChannel($event.target.value)">
+
+                <ng-container *ngIf="!channelTypes$?.items?.length">
+                  <option [value]="null"
+                          disabled
+                          selected>
+                    No hay resultados para mostrar
+                  </option>
+                </ng-container>
+                <ng-container *ngIf="!!channelTypes$?.items?.length">
+                  <option [value]=null
+                          disabled
+                          selected>SELECCIONE</option>
+                  <option *ngFor="let data of channelTypes$?.items"
+                          [value]="data.canal.id">
+                    {{ data.canal.descripcion }}
+                  </option>
+                </ng-container>
+              </select>
+            </label>
+            <label for="newChannel_channelManagment"
+                   class="lbl-input-u"
+                   aria-label="Gestor Padre (*)">
+              <select name=""
+                      id="newChannel_channelManagment"
+                      class="input-u"
+                      formControlName="gestorPadre">
+                <option [value]=null
+                        selected
+                        disabled>SELECCIONE</option>
+                <ng-container *ngIf="!!channels$?.items?.length">
+                  <option *ngFor="let data of channels$?.items"
+                          [value]="data.poliza">
+                    {{ data.nombreCanal }}
+                  </option>
+                </ng-container>
+                <ng-container *ngIf="!channels$?.items?.length">
+                  <option [value]="null"
+                          selected
+                          disabled>
+                    No hay resultados para mostrar
+                  </option>
+                </ng-container>
+              </select>
+            </label>
+          </div>
+          <div class="newChannel__item">
+            <label for="newChannel_iniVigencia"
+                   class="lbl-input-u"
+                   aria-label="Inicio de Vigencia (*)">
+              <input type="text"
+                     id="newChannel_iniVigencia"
+                     class="input-u"
+                     #dp="bsDatepicker"
+                     [bsConfig]="bsConfig"
+                     bsDatepicker
+                     readonly
+                     formControlName="inicioVigencia" />
+            </label>
+            <div class="newChannel__item--agrupador grid_content_vigencia_dist">
+              <label for="newChannel_finVigencia"
+                     class="lbl-input-u"
+                     aria-label="Fin de Vigencia (*)">
+                <input type="text"
+                       id="newChannel_finVigencia"
+                       class="input-u"
+                       #dp="bsDatepicker"
+                       [bsConfig]="bsConfig"
+                       bsDatepicker
+                       readonly
+                       formControlName="finVigencia" />
+              </label>
+              <div class="distribucion">
+                <label for="newChannel_distribucion"
+                       class="lbl-input-u"
+                       aria-label="Distribución (*)">
+                  <div class="content_radios">
+                    <label class="lbl-radio mr-3"
+                           for="radio_channel"
+                           type="button">
+                      <input type="radio"
+                             id="radio_channel"
+                             value="CANAL DE VENTA"
+                             formControlName="distribucion"
+                             (click)="openModalDistributionConfirm('CANAL DE VENTA')" />
+                      Canal
+                    </label>
+                    <label class="lbl-radio"
+                           for="radio_pointSale"
+                           type="button">
+                      <input type="radio"
+                             id="radio_pointSale"
+                             value="PUNTO DE VENTA"
+                             formControlName="distribucion"
+                             (click)="openModalDistributionConfirm('PUNTO DE VENTA')" />
+                      Punto de Venta
+                    </label>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="newChannel__item">
+            <label for="newChannel_minStock"
+                   class="lbl-input-u"
+                   aria-label="Stock Mínimo (*)">
+              <input type="text"
+                     id="newChannel_minStock"
+                     class="input-u"
+                     formControlName="minimoStock" />
+            </label>
+            <div class="newChannel__item--agrupador grid_content_stock_percent">
+              <label for="newChannel_maxStock"
+                     class="lbl-input-u"
+                     aria-label="Stock Máximo (*)">
+                <input type="text"
+                       id="newChannel_maxStock"
+                       class="input-u"
+                       formControlName="maximoStock" />
+              </label>
+              <label for="newChannel_reject"
+                     class="lbl-input-u"
+                     aria-label="Porcentaje Máximo de Rechazo (*)">
+                <input type="text"
+                       id="newChannel_reject"
+                       class="input-u"
+                       formControlName="porcentajeRechazo" />
+              </label>
+            </div>
+          </div>
+        </form>
+        <div class="newChannel mb-3 content_tblChannel">
+          <h6 class="newChannel__subtitle">Puntos de Venta</h6>
+          <table class="tbl tblChannel">
+            <thead class="tbl__head tblChannel__head">
+              <tr class="tbl__head--row tblChannel__head--row">
+                <th class="
+                    tbl__head--row-col
+                    tblChannel__head--row-col tblChannel__col-nro
+                  ">
+                  Nro.
+                </th>
+                <th class="
+                    tbl__head--row-col
+                    tblChannel__head--row-col tblChannel__col-nombre
+                  ">
+                  Nombre
+                </th>
+                <th class="
+                    tbl__head--row-col
+                    tblChannel__head--row-col tblChannel__col-direccion
+                  ">
+                  Dirección
+                </th>
+                <th class="
+                    tbl__head--row-col
+                    tblChannel__head--row-col tblChannel__col-departamento
+                  ">
+                  Departamento
+                </th>
+                <th class="
+                    tbl__head--row-col
+                    tblChannel__head--row-col tblChannel__col-provincia
+                  ">
+                  Provincia
+                </th>
+                <th class="
+                    tbl__head--row-col
+                    tblChannel__head--row-col tblChannel__col-distrito
+                  ">
+                  Distrito
+                </th>
+                <th class="
+                    tbl__head--row-col
+                    tblChannel__head--row-col tblChannel__col-acciones
+                  ">
+                  Acciones
+                </th>
+              </tr>
+            </thead>
+            <tbody class="tbl__body tblChannel__body">
+              <ng-container *ngIf="!pointSalesOfChannel$?.items.length">
+                <tr class="tbl__body--row tblChannel__body--row">
+                  <td class="tbl__body--row-col tblChannel__body--row-col"
+                      colspan="7">
+                    No hay resultados para mostrar
+                  </td>
+                </tr>
+              </ng-container>
+              <ng-container *ngIf="!!pointSalesOfChannel$?.items.length">
+                <tr class="tbl__body--row tblChannel__body--row"
+                    *ngFor="let data of pointSalesOfChannel$?.items">
+                  <td class="
+                      tbl__body--row-col
+                      tblChannel__body--row-col tblChannel__col-nro
+                    ">
+                    {{ data.numeroPuntoVenta }}
+                  </td>
+                  <td class="
+                      tbl__body--row-col
+                      tblChannel__body--row-col tblChannel__col-nombre
+                    ">
+                    {{ data.descripcion }}
+                  </td>
+                  <td class="
+                      tbl__body--row-col
+                      tblChannel__body--row-col tblChannel__col-direccion
+                    ">
+                    {{ data.direccion }}
+                  </td>
+                  <td class="
+                      tbl__body--row-col
+                      tblChannel__body--row-col tblChannel__col-departamento
+                    ">
+                    {{ data.departamento.descripcion }}
+                  </td>
+                  <td class="
+                      tbl__body--row-col
+                      tblChannel__body--row-col tblChannel__col-provincia
+                    ">
+                    {{ data.provincia.descripcion }}
+                  </td>
+                  <td class="
+                      tbl__body--row-col
+                      tblChannel__body--row-col tblChannel__col-distrito
+                    ">
+                    {{ data.distrito.descripcion }}
+                  </td>
+                  <td class="
+                      tbl__body--row-col
+                      tblChannel__body--row-col tblChannel__col-acciones
+                    "
+                      ngbDropdown>
+                    <button class="tbl__col--actions-btn"
+                            tabindex="0"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            ngbDropdownToggle>
+                      <i class="fa fa-ellipsis-v btn__actions--icon"
+                         aria-hidden="true"></i>
+                    </button>
+                    <ul class="dropdown-menu content__actions dropdownChannel"
+                        display="dynamic"
+                        ngbDropdownMenu>
+                      <li class="content__actions--item">
+                        <button class="content__actions--item-btn"
+                                (click)="editPointSale(data)">
+                          <i class="fa fa-pencil edit-icon"
+                             aria-hidden="true"></i>Editar
+                        </button>
+                      </li>
+                      <li class="content__actions--item">
+                        <button class="content__actions--item-btn">
+                          <i class="fa fa-trash trash-icon"
+                             aria-hidden="true"></i>Eliminar
+                        </button>
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+          <ng-container *ngIf="!showFormPointSales">
+            <button class="button-action-u btn_agregar_puntoVenta"
+                    type="button"
+                    role="button"
+                    (click)="openPointSalesOfChannel()">
+              Agregar
+            </button>
+          </ng-container>
+        </div>
+        <ng-container *ngIf="showFormPointSales || (fc['distribucion'].value == 'PUNTO DE VENTA' && isNewChannel)">
+          <form class="newChannel formulario"
+                [formGroup]="formPointSale">
+            <h6 class="newChannel__subtitle">Punto de Venta</h6>
+            <div class="newChannel__item">
+              <label for="newChannel_point_code"
+                     class="lbl-input-u"
+                     aria-label="Código de Punto de Venta">
+                <input type="text"
+                       id="newChannel_point_code"
+                       class="input-u"
+                       formControlName="codigoPuntoVenta" />
+              </label>
+              <div class="newChannel__item--agrupador">
+                <label for="newChannel_point_desc"
+                       class="lbl-input-u"
+                       aria-label="Descripción (*)">
+                  <input type="text"
+                         id="newChannel_point_desc"
+                         class="input-u"
+                         formControlName="descripcion" />
+                </label>
+              </div>
+            </div>
+            <div class="newChannel__item">
+              <label for="newChannel_point_phone"
+                     class="lbl-input-u"
+                     aria-label="Teléfono">
+                <input type="text"
+                       id="newChannel_point_phone"
+                       class="input-u"
+                       formControlName="telefono" />
+              </label>
+              <div class="newChannel__item--agrupador">
+                <label for="newChannel_point_address"
+                       class="lbl-input-u"
+                       aria-label="Dirección (*)">
+                  <input type="text"
+                         id="newChannel_point_address"
+                         class="input-u"
+                         formControlName="direccion"
+                         [maxlength]="60" />
+                </label>
+              </div>
+            </div>
+            <div class="newChannel__item">
+              <label for="newChannel_point_department"
+                     class="lbl-input-u"
+                     aria-label="Departamento (*)">
+                <select id="newChannel_department"
+                        class="input-u"
+                        formControlName="departamento"
+                        (click)="enableChangeUbigeo()">
+                  <option [value]="null"
+                          selected
+                          disabled>SELECCIONE</option>
+                  <option *ngFor="let data of departmentsPointSales$"
+                          [value]="data.id">
+                    {{ data.descripcion }}
+                  </option>
+                </select>
+              </label>
+              <div class="newChannel__item--agrupador grid_content_locations">
+                <label for="newChannel_point_province"
+                       class="lbl-input-u"
+                       aria-label="Provincia (*)">
+                  <select id="newChannel_province"
+                          class="input-u"
+                          formControlName="provincia"
+                          (click)="enableChangeUbigeo()">
+                    <option [value]="null"
+                            selected
+                            disabled>SELECCIONE</option>
+                    <option *ngFor="let data of provincesPointSales$"
+                            [value]="data.idProvincia">
+                      {{ data.provincia }}
+                    </option>
+                  </select>
+                </label>
+                <label for="newChannel_point_district"
+                       class="lbl-input-u"
+                       aria-label="Distrito (*)">
+                  <select id="newChannel_district"
+                          class="input-u"
+                          formControlName="distrito"
+                          (click)="enableChangeUbigeo()">
+                    <option [value]="null"
+                            selected
+                            disabled>SELECCIONE</option>
+                    <option *ngFor="let data of districtsPointSales$"
+                            [value]="data.idDistrito">
+                      {{ data.distrito }}
+                    </option>
+                  </select>
+                </label>
+              </div>
+            </div>
+            <div class="newChannel__item">
+              <label for="newChannel_point_contact"
+                     class="lbl-input-u"
+                     aria-label="Contacto (*)">
+                <input type="text"
+                       id="newChannel_point_contact"
+                       class="input-u"
+                       formControlName="contacto" />
+              </label>
+              <label for="newChannel_point_email"
+                     class="lbl-input-u"
+                     aria-label="Correo Electrónico">
+                <input type="text"
+                       id="newChannel_point_email"
+                       class="input-u"
+                       formControlName="email" />
+              </label>
+            </div>
+            <div class="newChannel__item">
+              <label for="newChannel_point_minStock"
+                     class="lbl-input-u"
+                     aria-label="Stock Mínimo (*)">
+                <input type="text"
+                       id="newChannel_point_minStock"
+                       class="input-u"
+                       formControlName="minStock" />
+              </label>
+              <div class="newChannel__item--agrupador grid_content_stock_percent">
+                <label for="newChannel_point_maxStock"
+                       class="lbl-input-u"
+                       aria-label="Stock Máximo (*)">
+                  <input type="text"
+                         id="newChannel_point_maxStock"
+                         class="input-u"
+                         formControlName="maxStock" />
+                </label>
+                <label for="newChannel_point_reject"
+                       class="lbl-input-u"
+                       aria-label="Porcentaje Máximo de Rechazo (*)">
+                  <input type="text"
+                         id="newChannel_point_reject"
+                         class="input-u"
+                         formControlName="porcentajeRechazo" />
+                </label>
+              </div>
+            </div>
+          </form>
+        </ng-container>
+      </div>
+      <ng-container *ngIf="showFormPointSales">
+        <div class="modal__footer newChannel__actions">
+          <button class="btn-primary-u"
+                  (click)="savePointSale()">
+            Aceptar
+          </button>
+          <button class="btn-primary-u"
+                  (click)="noEditChannel()">
+            Cancelar
+          </button>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!showFormPointSales">
+        <div class="modal__footer newChannel__actions">
+          <button class="btn-primary-u"
+                  type="button"
+                  [disabled]="formChannel.invalid"
+                  (click)="submitChannel()">
+            Guardar
+          </button>
+          <button class="btn-primary-u"
+                  type="button"
+                  [disabled]="isNewChannel || editFormMode || !channelActive"
+                  (click)="editChannel()">
+            Editar
+          </button>
+          <button class="btn-primary-u"
+                  type="button"
+                  [disabled]="isNewChannel || !editFormMode"
+                  (click)="noEditChannel()">
+            Cancelar
+          </button>
+          <button class="btn-primary-u"
+                  type="button"
+                  (click)="closeModalChannel()">
+            Salir
+          </button>
+        </div>
+      </ng-container>
+    </div>
+  </section>
+</ng-template>
+
+<ng-template #distributionConfirm>
+  <section id="modal-u">
+    <div class="modal-u modalDistributionConfirm">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Distribución</h6>
+        <button class="modal__header--close"
+                role="button"
+                aria-label="cerrar"
+                (click)="closeModalDistributionConfirm()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <p class="modal__boy--desc">
+          El Canal de Venta cuenta con puntos de venta activos, se
+          deshabilitarán todos los puntos de venta. ¿Desea continuar?
+        </p>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-primary-u mr-3"
+                (click)="salePointBaja()">
+          Aceptar
+        </button>
+        <button class="btn-secondary-u"
+                (click)="closeModalDistributionConfirm()">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </section>
+</ng-template>
+
+<ng-template #succesChangeDistribution>
+  <div id="modal-u">
+    <div class="modal-u">
+      <div class="modal__header">
+        <h6 class="modal__header--title mx-0 my-0 text-left">
+          Creación de Canales
+        </h6>
+        <button class="modal__header--close"
+                (click)="removeLastTemplate()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <p class="modal__body--desc">Se eliminaron los Puntos de Venta</p>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-primary-u"
+                type="button"
+                role="button"
+                (click)="removeLastTemplate()">
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #semaforoPointSale>
+  <div id="modal-u">
+    <div class="modal-u modalSemaforo">
+      <div class="modal__header">
+        <h6 class="modal__header--title mx-0 my-0 text-left">
+          Semáforo de Puntos de Venta
+        </h6>
+        <button class="modal__header--close"
+                type="button"
+                role="button"
+                (click)="closeModal()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <div class="content__tblSemaforo">
+          <table class="tblSemaforo">
+            <thead class="tblSemaforo__head">
+              <tr class="tblSemaforo__head--row">
+                <th class="tblSemaforo__head--row-col tblSemaforo__head--row-id">
+                  Id
+                </th>
+                <th class="
+                    tblSemaforo__head--row-col tblSemaforo__head--row-puntoVenta
+                  ">
+                  Punto de Venta
+                </th>
+                <th class="
+                    tblSemaforo__head--row-col
+                    tblSemaforo__head--row-currentStock
+                  ">
+                  Stock Actual
+                </th>
+                <th class="
+                    tblSemaforo__head--row-col tblSemaforo__head--row-minStock
+                  ">
+                  Stock Mínimo
+                </th>
+                <th class="
+                    tblSemaforo__head--row-col tblSemaforo__head--row-maxStock
+                  ">
+                  Stock Máximo
+                </th>
+                <th class="
+                    tblSemaforo__head--row-col tblSemaforo__head--row-indicator
+                  ">
+                  Indicador
+                </th>
+              </tr>
+            </thead>
+            <tbody class="tblSemaforo__body">
+              <ng-container *ngIf="!dataSemaforo$?.items.length">
+                <tr class="tblSemaforo__body--row">
+                  <td class="tblSemaforo__body--row-col"
+                      colspan="6">
+                    No hay resultados para mostrar
+                  </td>
+                </tr>
+              </ng-container>
+              <ng-container *ngIf="!!dataSemaforo$?.items.length">
+                <tr class="tblSemaforo__body--row"
+                    *ngFor="let data of dataSemaforo$?.items">
+                  <td class="tblSemaforo__body--row-col">
+                    {{ data.puntoVenta.id }}
+                  </td>
+                  <td class="tblSemaforo__body--row-col">
+                    {{ data.puntoVenta.description }}
+                  </td>
+                  <td class="tblSemaforo__body--row-col">
+                    {{ data.stock.current }}
+                  </td>
+                  <td class="tblSemaforo__body--row-col">
+                    {{ data.stock.min }}
+                  </td>
+                  <td class="tblSemaforo__body--row-col">
+                    {{ data.stock.max }}
+                  </td>
+                  <td class="tblSemaforo__body--row-col">
+                    <i class="fa fa-circle"
+                       aria-hidden="true"
+                       [class.semaforo3]="data.semaforo.color == 3"
+                       [class.semaforo2]="data.semaforo.color == 2"
+                       [class.semaforo1]="data.semaforo.color == 1"></i>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-primary-u"
+                type="button"
+                role="button"
+                (click)="closeModal()">
+          Salir
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #stateChannel>
+  <div id="modal-u">
+    <form class="modal-u"
+          [formGroup]="formState"
+          (ngSubmit)="openSureChangeState()">
+      <div class="modal__header">
+        <h6 class="modal__header--title mx-0 my-0 text-left">
+          Cambiar Estado de Canal
+        </h6>
+        <button class="modal__header--close"
+                (click)="closeModal()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <label class="lbl-input-u"
+               aria-label="Canal:">
+          <span>{{ fullNameChannelSale }}</span>
+        </label>
+        <label for="stateChannel"
+               class="lbl-input-u mt-3"
+               aria-label="Estado:">
+          <select id="stateChannel"
+                  class="input-u"
+                  formControlName="state">
+            <option *ngFor="let data of estadoCanal"
+                    [value]="data.id">
+              {{ data.description }}
+            </option>
+          </select>
+        </label>
+        <ng-container *ngIf="dataChannel.canal.estado === 'INACTIVO'">
+          <label for="expireDateChannel"
+                 class="lbl-input-u mt-3"
+                 aria-label="Fecha de Expiración">
+            <input type="text"
+                   id="expireDateChannel"
+                   class="input-u"
+                   #dp="bsDatepicker"
+                   [bsConfig]="bsConfig"
+                   bsDatepicker
+                   readonly
+                   formControlName="expireDate" />
+          </label>
+        </ng-container>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-secondary-u mr-3"
+                type="button"
+                role="button"
+                (click)="closeModal()">
+          Cancelar
+        </button>
+        <button class="btn-primary-u"
+                type="submit"
+                role="button">
+          Aceptar
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #sureChangeState>
+  <div id="modal-u">
+    <div class="modal-u">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Mensaje de Confirmación</h6>
+        <button class="modal__header--close"
+                (click)="removeLastTemplate()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <p class="modal__body--desc">
+          Seguro que desea cambiar el estado del canal Nro:
+          {{ dataChannel.canal.codigoCanal }}
+        </p>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-secondary-u mr-3"
+                (click)="removeLastTemplate()">
+          Cancelar
+        </button>
+        <button class="btn-primary-u"
+                (click)="submitState()">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #successChangeState>
+  <div id="modal-u">
+    <div class="modal-u">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Cambiar Estado de Canal</h6>
+        <button class="modal__header--close"
+                (click)="closeModalSuccessState()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <p class="modal__body--desc">El estado del canal se cambió con éxito</p>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-primary-u"
+                (click)="closeModalSuccessState()">
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #sureChannel>
+  <div id="modal-u">
+    <div class="modal-u">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Mensaje de Confirmación</h6>
+        <button class="modal__header--close"
+                (click)="removeLastTemplate()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <p class="modal__body--desc">
+          ¿Estás seguro que desea guardar la información del registro?
+        </p>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-secondary-u mr-3"
+                type="button"
+                role="button"
+                (click)="removeLastTemplate()">
+          Cancelar
+        </button>
+        <button class="btn-primary-u"
+                type="button"
+                role="button"
+                (click)="saveChannel()">
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #successChannel>
+  <div id="modal-u">
+    <div class="modal-u">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Creación de Canales</h6>
+        <button class="modal__header--close">&times;</button>
+      </div>
+      <div class="modal__body">
+        <p class="modal__body--desc">El registro se guardó correctamente</p>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-primary-u">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

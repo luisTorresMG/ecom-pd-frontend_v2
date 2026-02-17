@@ -1,0 +1,47 @@
+@import "global";
+@import "ecommerce";
+@import "variables";
+.content__title {
+  text-align: center;
+  color: $purple;
+  font-size: 24px;
+}
+.form {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-column-gap: 1rem;
+  grid-row-gap: 1.5rem;
+  align-items: flex-start;
+  margin-top: 1.5rem;
+  .form__item {
+    display: grid;
+    grid-gap: 0.75rem;
+    .form__item--dbl {
+      display: grid;
+      grid-template-columns: 0.5fr 1fr;
+      grid-gap: 0.75rem;
+    }
+    .form__item--title {
+      font-size: 18px;
+      margin: 0;
+      color: $purple;
+    }
+    .content__input-u {
+      position: relative;
+      .fa-calendar {
+        position: absolute;
+        right: 0.75rem;
+        top: 35%;
+        color: rgba(0, 0, 0, 0.7);
+      }
+    }
+  }
+}
+@media (min-width: 710px) {
+  .form {
+    grid-template-columns: 1fr 1fr;
+    .form__item:last-child {
+      margin-top: -60px;
+    }
+  }
+}

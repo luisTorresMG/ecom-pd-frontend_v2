@@ -1,0 +1,74 @@
+.container-modal{
+    padding: 4px;
+    margin: 0 auto;
+    padding: 40px 0 40px 0;
+
+}
+
+
+.container-title-modal{
+    padding: 2px 0px;
+    margin: auto;
+  }
+
+  .title{
+    color: #553d81;
+    font-size: 26px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.content {
+    /* display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px; */
+
+display: grid;
+grid-auto-flow: row; /* Similar a flex-direction: column */
+justify-items: center; /* Equivalente a align-items: center en flex */
+row-gap: 21px; /* Equivalente a gap entre filas */
+}
+
+  .close{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.content-buttons {
+    display: flex;
+    gap: 40px;
+}
+
+
+
+.fileInput {
+    display: none;
+}
+
+
+.fileInputLabel {
+    cursor: pointer;
+}
+
+.button {
+    color: #ffffff;
+    font-family: "Bliss Pro";
+    background-color: #ed6e00;
+    border-radius: 6px;
+    text-align: center;
+    padding: 10px;
+    border: none;
+    width:100px;
+}
+
+#button {
+    height: fit-content;
+}
+
+.nameFile {
+    width: 80%;
+}

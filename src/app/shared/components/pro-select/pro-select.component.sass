@@ -1,0 +1,128 @@
+@import "variables"
+@import "standard"
+
+.placeholder
+  overflow: visible
+
+  &-empty
+    &::before
+      margin: 0
+
+  .content-input
+    position: relative
+
+  input
+    overflow: hidden
+    text-overflow: ellipsis
+    padding-right: 30px
+    border: 1px solid $purple // FIXME: MIXIN INPUT BORDE STANDARD
+
+    &.clearable
+      padding-right: 48px
+
+    &::placeholder
+      color: $purple
+
+  &.disabled
+    cursor: not-allowed
+
+  .arrow-times
+    display: flex
+    align-items: center
+    justify-content: center
+    background-color: transparent
+    width: 20px
+    height: 20px
+    right: 26px
+
+    span
+      color: $purple !important
+
+  .arrow-times,
+  .fa
+    position: absolute
+    top: 35%
+
+  .arrow-times span,
+  .fa
+    font-weight: bold
+    transition: .2s
+    font-size: 18px
+    color: $purple
+    transform: translateY(-2px)translateY(-2px)
+    transition: .2s
+
+  .fa
+    right: 12px
+    transform: rotate(90deg)
+
+    &.active
+      transform: rotate(90deg)rotateY(180deg)
+
+    &.disabled
+      cursor: not-allowed !important
+      opacity: .5 !important
+
+  .list
+    width: 100%
+    height: auto
+    max-height: 220px
+    padding: 7px 0
+    position: absolute
+    top: 100%
+    left: 0
+    background-color: #fff
+    box-shadow: 0 0 15px rgba(0,0,0,.15)
+    border-radius: 3px
+    transition: .2s
+    overflow: auto
+    z-index: 99
+
+    &::-webkit-scrollbar
+      width: 6px
+      height: 6px
+
+      &-thumb
+        background-color: $purple
+        border-radius: 3px
+
+    li
+      list-style: none
+
+      &.is-multi
+        display: flex
+        align-items: center
+
+      &.selected
+        .button-option
+          background-color: $purple_70 !important
+
+      .selection
+        width: 100%
+
+      &.empty,
+      .button-option,
+      .selection label
+        display: flex
+        align-items: center
+        justify-content: flex-start
+        width: 100%
+        color: $purple
+        overflow: hidden
+        text-overflow: ellipsis
+        white-space: nowrap
+        padding: 5px 12px
+        background-color: #fff
+        text-align: left
+        transition: .2s
+
+      .button-option,
+      .selection label
+        &:hover
+          background-color: rgba(0,0,0,.05)
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration
+  display: none

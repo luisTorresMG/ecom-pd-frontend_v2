@@ -1,0 +1,968 @@
+<div class="form-group row">
+    <div class="col-lg-3">
+        <app-nav-menuprod></app-nav-menuprod>
+    </div>
+
+    <div class="col-lg-9">
+
+        <div class="container-info-poliza">
+            <h2 class="title">
+                EVALUAR COTIZACION N° {{quotation_id}} | EMISIÓN
+            </h2>
+
+            <div class="d-flex flex-column align-items-end">
+                <span>PRODUCTO: {{CONSTANTS.DESC_PRODUCTO}}</span>
+                <span>FECHA ACTUAL: {{current_day}}</span>
+            </div>
+
+        </div>
+
+        <panel-widget text_title="DATOS BÁSICOS"
+                      style="background-origin: #553d81">
+
+            <div class="container-subtitle"
+                 style="margin-top: 10px;">
+                <span class="ml-2">Contratatante</span>
+            </div>
+
+            <!-- Para Contratante -->
+            <div class="d-flex flex-row flex-wrap pt-3 px-2">
+                <div class="row">
+                    <div class="col-lg-9 row">
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="TIPO DE DOCUMENTO"
+                                               [(value)]="data_contractor.type_document"
+                                               [items]="list_document_type_contractor"
+                                               [updateModelOnChange]="true"
+                                               fieldCodigo="Id"
+                                               fieldValor="Name"
+                                               [disabled]="data_contractor.type_document_disabled"
+                                               [large]="false"></form-input-select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-text text_label="NRO. DOCUMENTO"
+                                             [(value)]="data_contractor.document_number"
+                                             [onlyInput]="true"
+                                             [patternPrevent]="CONSTANTS.REGEX[data_contractor.type_document?.Id]"
+                                             [disabled]="data_contractor.document_number_disabled">
+                            </form-input-text>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-date text_label="FECHA NACIMIENTO"
+                                             [(value)]="data_contractor.birthday_date"
+                                             [disabled]="data_contractor.birthday_date_disabled"></form-input-date>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-text text_label="NOMBRES"
+                                             [onlyInput]="true"
+                                             [(value)]="data_contractor.names"
+                                             [disabled]="data_contractor.names_disabled"
+                                             maxCaracter="19">
+                            </form-input-text>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-text text_label="APELLIDO PATERNO"
+                                             [onlyInput]="true"
+                                             [(value)]="data_contractor.last_name"
+                                             [disabled]="data_contractor.last_name_disabled"
+                                             maxCaracter="19"></form-input-text>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-text text_label="APELLIDO MATERNO"
+                                             [onlyInput]="true"
+                                             [(value)]="data_contractor.last_name2"
+                                             [disabled]="data_contractor.last_name2_disabled"
+                                             maxCaracter="19"></form-input-text>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="SEXO"
+                                               [(value)]="data_contractor.gender"
+                                               [items]="list_gender_contractor"
+                                               [updateModelOnChange]="true"
+                                               [firstSelect]="true"
+                                               fieldCodigo="SSEXCLIEN"
+                                               fieldValor="SDESCRIPT"
+                                               [disabled]="data_contractor.gender_disabled"
+                                               [large]="false"></form-input-select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="ESTADO CIVIL:"
+                                               [(value)]="data_contractor.civil_status"
+                                               [items]="list_civil_state_contractor"
+                                               [updateModelOnChange]="true"
+                                               [firstSelect]="true"
+                                               fieldCodigo="NCIVILSTA"
+                                               fieldValor="SDESCRIPT"
+                                               [disabled]="data_contractor.civil_status_disabled"
+                                               [large]="false"></form-input-select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="NACIONALIDAD:"
+                                               [(value)]="data_contractor.nationality"
+                                               [items]="list_nationalities_contractor"
+                                               [updateModelOnChange]="true"
+                                               fieldCodigo="NNATIONALITY"
+                                               fieldValor="SDESCRIPT"
+                                               [firstSelect]="true"
+                                               [disabled]="data_contractor.nationality_disabled"
+                                               [large]="false"></form-input-select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-text text_label="CELULAR:"
+                                             [(value)]="data_contractor.phone"
+                                             [onlyInput]="true"
+                                             [disabled]="data_contractor.phone_disabled"
+                                             [patternPrevent]="CONSTANTS.REGEX.NUMBER"
+                                             maxCaracter="9"></form-input-text>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <form-input-text text_label="CORREO ELECTRÓNICO:"
+                                             [onlyInput]="true"
+                                             [(value)]="data_contractor.email"
+                                             [disabled]="data_contractor.email_disabled"
+                                             maxCaracter="60"></form-input-text>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <form-input-text text_label="DIRECCIÓN:"
+                                             [(value)]="data_contractor.address"
+                                             [disabled]="data_contractor.address_disabled"
+                                             maxCaracter="80"
+                                             [onlyInput]="true"></form-input-text>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="DEPARTAMENTO:"
+                                               [(value)]="data_contractor.department"
+                                               fieldCodigo="Id"
+                                               fieldValor="Name"
+                                               [firstSelect]="true"
+                                               [large]="false"
+                                               [updateModelOnChange]="true"
+                                               [items]="list_data_contractor_department"
+                                               [disabled]="data_contractor.department_disabled"></form-input-select>
+                            <!-- [service]="addressService"
+                                 method="getDepartmentList" -->
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="PROVINCIA:"
+                                               [(value)]="data_contractor.province"
+                                               fieldCodigo="Id"
+                                               fieldValor="Name"
+                                               [firstSelect]="true"
+                                               [large]="false"
+                                               [items]="list_data_contractor_province"
+                                               [updateModelOnChange]="true"
+                                               [disabled]="data_contractor.province_disabled"></form-input-select>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <form-input-select text_label="DISTRITO:"
+                                               [(value)]="data_contractor.district"
+                                               fieldCodigo="Id"
+                                               fieldValor="Name"
+                                               [firstSelect]="true"
+                                               [large]="false"
+                                               [items]="list_data_contractor_district"
+                                               [updateModelOnChange]="true"
+                                               [disabled]="data_contractor.district_disabled"></form-input-select>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-3 mx-0 py-0">
+                        <div class="sub-container1">
+                            <div>
+                                <h3 class="sub-title">Idecon</h3>
+
+                                <div class="label">
+                                    <span class="item">Otras listas</span>
+                                    <span class="item-response"> {{ idecon_contractor.otherList }} </span>
+                                </div>
+
+                                <div class="label">
+                                    <span class="item">Es PEP</span>
+                                    <span class="item-response"> {{ idecon_contractor.pep }} </span>
+                                </div>
+
+                                <div class="label">
+                                    <span class="item">Tiene Familiar PEP</span>
+                                    <span class="item-response"> {{ idecon_contractor.famPep }} </span>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="sub-title">WorldCheck</h3>
+
+                                <div class="label">
+                                    <span class="item">Otras listas</span>
+                                    <span class="item-response"> {{ world_check_contractor.otherList }} </span>
+                                </div>
+
+                                <div class="label">
+                                    <span class="item">Es PEP</span>
+                                    <span class="item-response"> {{ world_check_contractor.pep }} </span>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="sub-title">Experian</h3>
+
+                                <div class="label">
+                                    <span class="item">Cliente Riesgoso</span>
+                                    <span class="item-response"> {{ experian_contractor.riskClient }} </span>
+                                </div>
+                            </div>
+                            <!-- INI VIGP 17112025 -->
+                            <div>
+                                <h3 class="sub-title">Registro Negativo</h3>
+
+                                <div class="label">
+                                    <span class="item">Registro Negativo</span>
+                                    <span class="item-response"> {{riesgo_negativo_cont}} </span>
+                                </div>
+                            </div>
+                            <!-- FIN VIGP 17112025 -->
+
+                            <!-- INI VIGP-KAFG 25/04/2025 -->
+                            <div>
+                                <h3 class="sub-title">Homologación</h3>
+
+                                <div class="label">
+                                    <span class="item">Homologado</span>
+                                    <span class="item-response"> {{ homologacionCont }} </span>
+                                </div>
+                            </div>
+                            <!-- FIN VIGP-KAFG 25/04/2025 -->
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 5px; display: flex; align-items: center">
+                    <label class="subtitle">El asegurado es la misma persona que contrata el seguro</label>
+                    <div class="content-radio-u mr-3">
+                        <input type="radio"
+                               class="mark-u orange"
+                               [value]="1"
+                               [checked]="check_input_value == 1" />
+                        <label class="radio-label-u orange mark-u">
+                            Sí
+                        </label>
+                    </div>
+                    <div class="content-radio-u">
+                        <input type="radio"
+                               class="mark-u orange"
+                               [value]="0"
+                               [checked]="check_input_value == 0" />
+                        <label class="radio-label-u orange mark-u">
+                            No
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- *ngIf="check_input_value == 0" -->
+            <div [hidden]="check_input_value != 0">
+                <!-- Para Asegurado -->
+                <div class="container-subtitle">
+                    <span class="ml-2">Asegurado</span>
+                </div>
+                <div class="d-flex flex-row flex-wrap py-3 px-2">
+                    <div class="row">
+                        <div class="col-lg-9 row">
+
+                            <div class="col-lg-3">
+                                <form-input-select text_label="TIPO DE DOCUMENTO"
+                                                   [(value)]="data_insured.type_document"
+                                                   [service]="clientInformationService"
+                                                   method="getDocumentTypeList"
+                                                   [params]="CODPRODUCTO_PROFILE"
+                                                   [updateModelOnChange]="true"
+                                                   [firstSelect]="true"
+                                                   fieldCodigo="Id"
+                                                   fieldValor="Name"
+                                                   [disabled]="data_insured.type_document_disabled"
+                                                   [large]="false"></form-input-select>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <form-input-text text_label="NRO. DOCUMENTO"
+                                                 [(value)]="data_insured.document_number"
+                                                 [onlyInput]="true"
+                                                 [disabled]="data_insured.document_number_disabled"
+                                                 [patternPrevent]="CONSTANTS.REGEX[data_insured.type_document?.Id]"></form-input-text>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <form-input-date text_label="FECHA NACIMIENTO"
+                                                 [(value)]="data_insured.birthday_date"
+                                                 [disabled]="data_insured.birthday_date_disabled"></form-input-date>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <form-input-text text_label="NOMBRES"
+                                                 [onlyInput]="true"
+                                                 [(value)]="data_insured.names"
+                                                 [patternPrevent]="CONSTANTS.REGEX.LETRAS"
+                                                 [disabled]="data_insured.names_disabled"
+                                                 maxCaracter="19"></form-input-text>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <form-input-text text_label="APELLIDO PATERNO"
+                                                 [onlyInput]="true"
+                                                 [(value)]="data_insured.last_name"
+                                                 [patternPrevent]="CONSTANTS.REGEX.LETRAS"
+                                                 [disabled]="data_insured.last_name_disabled"
+                                                 maxCaracter="19"></form-input-text>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <form-input-text text_label="APELLIDO MATERNO"
+                                                 [onlyInput]="true"
+                                                 [(value)]="data_insured.last_name2"
+                                                 [patternPrevent]="CONSTANTS.REGEX.LETRAS"
+                                                 [disabled]="data_insured.last_name2_disabled"
+                                                 maxCaracter="19"></form-input-text>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <form-input-select text_label="SEXO"
+                                                   [(value)]="data_insured.gender"
+                                                   [items]="list_gender_contractor"
+                                                   [updateModelOnChange]="true"
+                                                   fieldCodigo="SSEXCLIEN"
+                                                   fieldValor="SDESCRIPT"
+                                                   [disabled]="data_insured.gender_disabled"
+                                                   [firstSelect]="true"
+                                                   [large]="false"></form-input-select>
+
+                            </div>
+
+                            <div class="col-lg-3">
+                                <!-- [service]="clientInformationService"
+                                method="getCivilStatusList" -->
+                                <!-- [params]="CONSTANTS.WITHOUT_PARAMS" -->
+                                <form-input-select text_label="ESTADO CIVIL:"
+                                                   [(value)]="data_insured.civil_status"
+                                                   [items]="list_civil_state_contractor"
+                                                   [updateModelOnChange]="true"
+                                                   [firstSelect]="true"
+                                                   fieldCodigo="NCIVILSTA"
+                                                   fieldValor="SDESCRIPT"
+                                                   [disabled]="data_insured.civil_status_disabled"
+                                                   [large]="false"></form-input-select>
+                            </div>
+
+
+                            <div class="col-lg-3">
+                                <form-input-select text_label="NACIONALIDAD:"
+                                                   [(value)]="data_insured.nationality"
+                                                   [items]="list_nationalities_insured"
+                                                   [updateModelOnChange]="true"
+                                                   fieldCodigo="NNATIONALITY"
+                                                   fieldValor="SDESCRIPT"
+                                                   [firstSelect]="true"
+                                                   [disabled]="data_insured.nationality_disabled"
+                                                   [large]="false"></form-input-select>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <form-input-text text_label="CELULAR:"
+                                                 [(value)]="data_insured.phone"
+                                                 [onlyInput]="true"
+                                                 [disabled]="data_insured.phone_disabled"
+                                                 [patternPrevent]="CONSTANTS.REGEX.NUMBER"
+                                                 maxCaracter="9"></form-input-text>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <form-input-text text_label="CORREO ELECTRÓNICO:"
+                                                 [onlyInput]="true"
+                                                 [(value)]="data_insured.email"
+                                                 [disabled]="data_insured.email_disabled"
+                                                 maxCaracter="60"></form-input-text>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <form-input-text text_label="DIRECCIÓN:"
+                                                 [onlyInput]="true"
+                                                 [(value)]="data_insured.address"
+                                                 [disabled]="data_insured.address_disabled"
+                                                 maxCaracter="80"></form-input-text>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <form-input-select text_label="DEPARTAMENTO:"
+                                                   [(value)]="data_insured.department"
+                                                   fieldCodigo="Id"
+                                                   fieldValor="Name"
+                                                   [firstSelect]="true"
+                                                   [large]="false"
+                                                   [updateModelOnChange]="true"
+                                                   [items]="list_data_insured_department"
+                                                   [disabled]="data_insured.department_disabled"></form-input-select>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <form-input-select text_label="PROVINCIA:"
+                                                   [(value)]="data_insured.province"
+                                                   fieldCodigo="Id"
+                                                   fieldValor="Name"
+                                                   [firstSelect]="true"
+                                                   [large]="false"
+                                                   [items]="list_data_insured_province"
+                                                   [updateModelOnChange]="true"
+                                                   [disabled]="data_insured.province_disabled"></form-input-select>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <form-input-select text_label="DISTRITO:"
+                                                   [(value)]="data_insured.district"
+                                                   fieldCodigo="Id"
+                                                   fieldValor="Name"
+                                                   [firstSelect]="true"
+                                                   [large]="false"
+                                                   [items]="list_data_insured_district"
+                                                   [updateModelOnChange]="true"
+                                                   [disabled]="data_insured.district_disabled"></form-input-select>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <form-input-select text_label="PARENTESCO CON EL CONTRATANTE(*):"
+                                                   [(value)]="data_insured.relation"
+                                                   [large]="false"
+                                                   [service]="quotationService"
+                                                   method="getRelationBenefeciaries"
+                                                   [params]="CONSTANTS.WITHOUT_PARAMS"
+                                                   fieldCodigo="COD_ELEMENTO"
+                                                   fieldValor="GLS_ELEMENTO"
+                                                   [firstSelect]="true"
+                                                   [disabled]="data_insured.relation_disabled"
+                                                   [updateModelOnChange]="true"></form-input-select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 mx-0 py-0">
+                            <div class="sub-container1">
+                                <div>
+                                    <h3 class="sub-title">Idecon</h3>
+
+                                    <div class="label">
+                                        <span class="item">Otras listas</span>
+                                        <span class="item-response"> {{ idecon_insured.otherList }} </span>
+                                    </div>
+
+                                    <div class="label">
+                                        <span class="item">Es PEP</span>
+                                        <span class="item-response"> {{ idecon_insured.pep }} </span>
+                                    </div>
+
+                                    <div class="label">
+                                        <span class="item">Tiene Familiar PEP</span>
+                                        <span class="item-response"> {{ idecon_insured.famPep }} </span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="sub-title">WorldCheck</h3>
+
+                                    <div class="label">
+                                        <span class="item">Otras listas</span>
+                                        <span class="item-response"> {{ world_check_insured.otherList }} </span>
+                                    </div>
+
+                                    <div class="label">
+                                        <span class="item">Es PEP</span>
+                                        <span class="item-response"> {{ world_check_insured.pep }} </span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h3 class="sub-title">Experian</h3>
+
+                                    <div class="label">
+                                        <span class="item">Cliente Riesgoso</span>
+                                        <span class="item-response"> {{ experian_insured.riskClient }} </span>
+                                    </div>
+                                </div>
+                                <!-- INI VIGP 17112025 -->
+                                <div>
+                                    <h3 class="sub-title">Registro Negativo</h3>
+
+                                    <div class="label">
+                                        <span class="item">Registro Negativo</span>
+                                        <span class="item-response"> {{riesgo_negativo_insu}} </span>
+                                    </div>
+                                </div>
+                                <!-- FIN VIGP 17112025 -->
+                                <!-- INI VIGP-KAFG 25/04/2025 -->
+                                <div>
+                                    <h3 class="sub-title">Homologación</h3>
+
+                                    <div class="label">
+                                        <span class="item">Homologado</span>
+                                        <span class="item-response"> {{ homologacionInsu }} </span>
+                                    </div>
+                                </div>
+                                <!-- FIN VIGP-KAFG 25/04/2025 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </panel-widget>
+
+        <panel-widget text_title="COTIZACIÓN"
+                      style="background-origin: #553d81">
+            <div class="p-3">
+                <div class="row">
+
+                    <div class="col-lg-2">
+                        <form-input-select text_label="MONEDA:"
+                                           [(value)]="quotation.moneda"
+                                           [updateModelOnChange]="true"
+                                           fieldCodigo="NCODIGINT"
+                                           fieldValor="SDESCRIPT"
+                                           [items]="CURRENCY"
+                                           [large]="true"
+                                           [disabled]="true"></form-input-select>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <form-input-text text_label="Aporte:"
+                                         [large]="true"
+                                         [(value)]="quotation.contribution"
+                                         [patternPrevent]="CONSTANTS.REGEX.HUNDREDS_NUMBER"
+                                         [disabled]="true"></form-input-text>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <form-input-select text_label="FONDO:"
+                                           [(value)]="quotation.fondo"
+                                           [updateModelOnChange]="true"
+                                           fieldCodigo="NFUNDS"
+                                           fieldValor="SDESCRIPT"
+                                           [items]="investment"
+                                           [large]="true"
+                                           [disabled]="true"></form-input-select>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <form-input-date text_label="FECHA ABONO:"
+                                         [large]="true"
+                                         [(value)]="quotation.date_fund"
+                                         [disabled]="true"></form-input-date>
+                    </div>
+
+                </div>
+
+                <div style="margin-top: 6px; margin-bottom: 11px; display: flex; align-items: center">
+                    <label class="subtitle">Mis beneficiarios serán mis herederos legales</label>
+                    <div class="content-radio-u mr-3">
+                        <input type="radio"
+                               class="mark-u orange"
+                               [value]="1"
+                               [checked]="check_input_value_beneficiary == 1"
+                               disabled />
+                        <label class="radio-label-u orange mark-u">
+                            Sí
+                        </label>
+                    </div>
+                    <div class="content-radio-u">
+                        <input type="radio"
+                               class="mark-u orange"
+                               [value]="0"
+                               [checked]="check_input_value_beneficiary == 0"
+                               disabled
+                               />
+                        <label class="radio-label-u orange mark-u">
+                            No
+                        </label>
+                    </div>
+                </div>
+
+
+                <div *ngIf="check_input_value_beneficiary == 0">
+
+                    <div style="width: 55%">
+                        <div class="container-subtitle">
+                            <span class="ml-2">Beneficiarios</span>
+                        </div>
+                        <div class="table-responsive TableMargin_short div-tableban"
+                             id="table-scroll">
+                            <table class="table-u"
+                                   style="margin-bottom: 4px;">
+                                <thead>
+                                    <tr>
+                                        <th>Nro Documento</th>
+                                        <th>Nombres</th>
+                                        <th>Parentesco</th>
+                                        <th>Asignación(%)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="!list_benefeciarys?.length">
+                                        <tr class="grid-body">
+                                            <td class="grid-body-item"
+                                                colspan="12"
+                                                style="text-align: center">
+                                                No hay informacion para mostrar
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                    <ng-container *ngIf="!!list_benefeciarys?.length">
+                                        <tr class="grid-body"
+                                            *ngFor="
+                                              let item of listToShow_benefeciarys
+                                              let index = index
+                                            "
+                                            [id]="'row' + index">
+                                            <td class="hovert">{{item.desc_type_doc}}-{{ item.siddoc }}</td>
+                                            <td class="hovert">{{ item.sfirstname }} {{ item.slastname }} {{ item.slastname2 }}
+                                            </td>
+                                            <td class="hovert">{{ item.srelation_name }}</td>
+                                            <td class="hovert">{{ item.percentage_participation }}</td>
+                                        </tr>
+                                    </ng-container>
+
+
+                                </tbody>
+                            </table>
+
+                            <div *ngIf="list_benefeciarys != null && list_benefeciarys.length > 0"
+                                 style="display: flex">
+                                <div class="col-sm-12">
+                                    <ngb-pagination [(page)]="currentPage"
+                                                    [pageSize]="itemsPerPage"
+                                                    [collectionSize]="totalItems"
+                                                    [maxSize]="maxSize"
+                                                    (pageChange)="pageChanged(currentPage)">
+                                        <ng-template ngbPaginationPrevious>ANTERIOR</ng-template>
+                                        <ng-template ngbPaginationNext>SIGUIENTE</ng-template>
+                                    </ngb-pagination>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="width: 32%;">
+                    <div class="container-subtitle">
+                        <span class="ml-2">ORÍGENES DE FONDO</span>
+                    </div>
+                    <table class="table-u">
+                        <thead style="color: #fff;">
+                            <tr>
+                                <th>Origen de fondo</th>
+                                <th>Asignación (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="hovert">Ahorro</td>
+                                <td class="hovert">{{origin_fund_saving_percent}}</td>
+
+                            </tr>
+                            <tr>
+                                <td class="hovert">SPP</td>
+                                <td class="hovert">{{origin_fund_spp_percent}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </panel-widget>
+
+
+
+        <panel-widget text_title="INFORMACIÓN ADICIONAL"
+                      style="background-origin: #553d81">
+            <div class="p-3">
+
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="container-informacion-adicional">
+                            <div class="container-informacion-adicional-item-1">
+                                <p class="informacion-adicional-sub-item-1-1">Inicio de vigencia(*):</p>
+                                <p class="informacion-adicional-sub-item-1-2">{{dstartdate}}</p>
+                                <p class="informacion-adicional-sub-item-1-3">Fin de vigencia:</p>
+                                <p class="informacion-adicional-sub-item-1-4">{{dexpirdat}}</p>
+                                <p class="informacion-adicional-sub-item-1-5">Devengue de póliza:</p>
+                                <p class="informacion-adicional-sub-item-1-6">{{dstartdate}}</p>
+                                <p class="informacion-adicional-sub-item-1-7">Periodicidad de pago de la prima:</p>
+                                <p class="informacion-adicional-sub-item-1-8">{{pay_freq_des}}</p>
+                            </div>
+
+                            <div class="container-informacion-adicional-item-2">
+                                <p class="informacion-adicional-sub-item-2-1">Derecho a rescate:</p>
+                                <p class="informacion-adicional-sub-item-2-2">{{rescue}}</p>
+                                <p class="informacion-adicional-sub-item-2-3">Derecho a rescates parciales:</p>
+                                <p class="informacion-adicional-sub-item-2-4">{{partial_rescue}}</p>
+                                <p class="informacion-adicional-sub-item-2-5">DPS (recargos):</p>
+                                <p class="informacion-adicional-sub-item-2-6">{{dps}}</p>
+
+                            </div>
+                        </div>
+
+                        <p style="color:#ed6e00">*La fecha de inicio de vigencia se calcula en base a que se envie a emitir el día hoy.</p>
+                    </div>
+                </div>
+
+                <div>
+                    <!-- <table class="table-u"> -->
+                    <table class="table-informacion-adicional">
+                        <thead>
+                            <tr>
+                                <th>Cobertura</th>
+                                <th>Suma Asegurada</th>
+                                <th>Edad mínima de ingreso (Años)</th>
+                                <th>Edad máxima de ingreso (Años)</th>
+                                <th>Límite de permanencia (Años)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            <ng-container *ngIf="!cover_list?.length">
+                                <tr class="grid-body">
+                                    <td class=""
+                                        colspan="5"
+                                        style="text-align: center">
+                                        No hay informacion para mostrar
+                                    </td>
+                                </tr>
+                            </ng-container>
+
+                            <ng-container *ngIf="!!cover_list?.length">
+                                <tr class="grid-body"
+                                    *ngFor="let item of cover_list let index = index"
+                                    [id]="'row' + index">
+                                    <td class="hovert">{{item.Sdescript}}</td>
+                                    <td class="hovert">{{item.Ncapital}}</td>
+                                    <td class="hovert">{{item.Nagemining}}</td>
+                                    <td class="hovert">{{item.Nagemaxing}}</td>
+                                    <td class="hovert">{{item.Nageper}}</td>
+                                </tr>
+
+                            </ng-container>
+
+
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+
+            </div>
+        </panel-widget>
+
+        <panel-widget text_title="FILE DEL CLIENTE"
+                      style="background-origin: #553d81">
+            <div class="container-form-and-button"
+                 style="border:1px solid #553d81">
+                <div class="p-3">
+                    <div class="row">
+                        <div class="col-lg-10 mx-auto">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr class="grid-title table-head">
+                                            <td class="grid-title-item text-center">Tipo</td>
+                                            <td class="grid-title-item text-center">Nombre del archivo</td>
+                                            <td class="grid-title-item text-center">Acciones</td>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <ng-container *ngIf="!!filesList?.length">
+                                            <tr class="table-body"
+                                                *ngFor="let item of filesList;">
+                                                <!-- TIPO -->
+                                                <td class="table-body-item text-left">
+                                                    <span>
+                                                        {{ item.P_NAME }}
+                                                    </span>
+                                                </td>
+                                                <!-- NOMBRE -->
+                                                <td class="table-body-item"
+                                                    [ngClass]="item.P_TYPE ? 'text-left' : 'text-center'">
+                                                    <span>
+                                                        {{ item.P_TYPE ? item.P_TYPE : '—' }}
+                                                    </span>
+                                                </td>
+                                                <!-- ACCIONES -->
+                                                <td class="table-body-item text-center">
+                                                    <input #fileUpload
+                                                           type="file"
+                                                           style="display: none;"
+                                                           (click)="fileUpload.value = null"
+                                                           (change)="importFile($event, item)">
+                                                    <button class="dwn"
+                                                            *ngIf="item.P_STATUS == 1"
+                                                            (click)="exportFile(item)">Descargar archivo</button>
+                                                </td>
+                                            </tr>
+                                        </ng-container>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- INI VIGP-KAFG 13/03/2025 -->
+                        <!-- <div class="mx-auto col-lg-11 mt-4"
+                             style="color: #553d81;">
+                            <label for="comment">COMENTARIO</label>
+                            <div class="p-2 custom-input">
+                                <div class="input-group">
+                                    <input type="text"
+                                           name="comment"
+                                           id="comment"
+                                           maxlength="200"
+                                           [(ngModel)]="comment"
+                                           class="form-control border-0">
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- FIN VIGP-KAFG 13/03/2025 -->
+                    </div>
+                </div>
+            </div>
+        </panel-widget>
+
+        <!-- Sección HISTORIAL DE EVALUACIONES -->
+         <!-- INI DVP VIGP 14-03-2025 -->
+        <panel-widget text_title="HISTORIAL DE EVALUACIONES"
+              style="background-origin: #553d81">
+    <div class="container-form-and-button"
+         style="border:1px solid #553d81">
+        <div class="p-3">
+            <div class="row">
+                <div class="col-lg-12 mx-auto">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr class="grid-title table-head">
+                                    <td class="grid-title-item text-center">Nro</td>
+                                    <td class="grid-title-item text-center">Descripción</td>
+                                    <td class="grid-title-item text-center">Fecha</td>
+                                    <td class="grid-title-item text-center">Comentario</td>
+                                    <td class="grid-title-item text-center">Usuario</td>
+                                    <td class="grid-title-item text-center">Perfil</td>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <ng-container *ngIf="!historialEvaluaciones?.length">
+                                    <tr class="table-body">
+                                        <td class="table-body-item text-center" colspan="6">
+                                            No hay información para mostrar
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                                <ng-container *ngIf="!!historialEvaluaciones?.length">
+                                    <tr class="table-body"
+                                        *ngFor="let item of historialEvaluaciones; let i = index">
+                                        <td class="table-body-item text-center">
+                                            <span>
+                                                {{ historialEvaluaciones.length - i }}
+                                            </span>
+                                        </td>
+                                        <td class="table-body-item text-center">
+                                            <span>
+                                                {{ item.Descripcion }}
+                                            </span>
+                                        </td>
+                                        <td class="table-body-item text-center">
+                                            <span>
+                                                {{ item.Fecha | date: 'dd/MM/yyyy HH:mm:ss' }}
+                                            </span>
+                                        </td>
+                                        <td class="table-body-item text-center">
+                                            <span>
+                                                {{ item.Comentario || '-' }}
+                                            </span>
+                                        </td>
+                                        <td class="table-body-item text-center">
+                                            <span>
+                                                {{ item.NombreUsuario }}
+                                            </span>
+                                        </td>
+                                        <td class="table-body-item text-center">
+                                            <span>
+                                                {{ item.Perfil }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</panel-widget>
+<!-- FIN DVP VIGP 14-03-2025 -->
+
+        <!-- INI VIGP-KAFG 13/03/2025 -->
+        <div class="d-flex flex-row px-2 pt-2 pb-4">
+            <div class="mx-auto col-lg-12"
+                    style="color: #553d81;">
+                <label for="comment">COMENTARIO</label>
+                <div class="p-2 custom-input">
+                    <div class="input-group">
+                        <input type="text"
+                                name="comment"
+                                id="comment"
+                                maxlength="200"
+                                [(ngModel)]="comment"
+                                class="form-control border-0">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- FIN VIGP-KAFG 13/03/2025 -->
+
+        <div class="d-flex flex-row-reverse g-3 mr-2">
+            <form-button label="ENVIAR A EMITIR"
+                         [slim]="true"
+                         (click)="validateEmitTransaction()"
+                         btnClass="btn-primary-VI text-nowrap"></form-button>
+            <!-- btnClass="btn-secondary-VI text-nowrap"></form-button> -->
+            <form-button label="OBSERVAR"
+                         [slim]="true"
+                         (click)="ReturnQuotation()"
+                         btnClass="btn-secondary-VI text-nowrap"></form-button>
+            <!-- <form-button label="RECHAZAR"
+                         [slim]="true"
+                         btnClass="btn-secondary-VI text-nowrap"></form-button> -->
+            <form-button label="CANCELAR"
+                         [slim]="true"
+                         (click)="GoToQuotationDefinitiveList()"
+                         btnClass="btn-secondary-VI text-nowrap"></form-button>
+        </div>
+
+
+    </div>
+
+</div>
+
+<div [hidden]="!isLoading"
+     class="loadingScreen">
+    <div style="display: flex; height: 100%; width: 100%">
+        <i style="margin: auto; font-size: 50px"
+           class="fa fa-spinner fa-spin"></i>
+    </div>
+</div>

@@ -1,0 +1,94 @@
+@import "standard"
+@import "modal"
+
+.modal-emails
+  section
+    max-width: 410px !important
+
+  .modal
+    &-body
+      gap: 1rem
+      overflow: visible !important
+
+      .content-input-search-email
+        padding: 1rem
+        border: 1px solid #ccc
+        border-radius: 2px
+
+        .placeholder
+          display: flex
+          align-items: center
+
+          input
+            padding: 5px 35px
+
+          .fa-search
+            position: absolute
+            left: 10px
+            font-size: 18px
+
+          .fa-angle-down
+            position: absolute
+            right: 10px
+            font-size: 18px
+
+      .content-radios
+        display: flex
+        align-items: center
+        justify-content: center
+        gap: 1rem
+
+      .content-list-emails
+        margin-top: 1rem
+        max-height: 240px
+        overflow: auto
+
+        .button
+          background-color: #fff
+
+          &:hover,
+          &.active
+            background-color: $purplebc
+
+      .selected-items
+        display: flex
+        align-items: center
+        justify-content: flex-start
+        flex-wrap: wrap
+        gap: 7px
+
+        &-email
+          background-color: #EEEDF1
+          border-radius: 20px
+          width: 100%
+          max-width: 110px
+          display: flex
+          align-items: center
+          justify-content: space-between
+          gap: 5px
+          padding: 4px 10px
+
+          span
+            white-space: nowrap
+            overflow: hidden
+            text-overflow: ellipsis
+            max-width: 75px
+            display: block
+
+          .button
+            padding: 2px
+            background-color: $purple
+            color: #fff
+            border-radius: 50%
+            min-width: 20px
+            width: 20px
+            height: 20px
+
+        &.is-detail
+          .selected-items-email
+            width: fit-content
+            max-width: none
+
+            span
+              max-width: fit-content
+

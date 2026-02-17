@@ -1,0 +1,31 @@
+<div class="form-group">
+    <label class="placeholder-u"
+           [attr.aria-placeholder]="text_label">
+        <!-- <span *ngIf="!!label">{{label}} <ng-template [ngIf]="required === true">(*)</ng-template></span> -->
+        <input type="text"
+               class="input-u"
+               [ngClass]="customClasses"
+               #dp="bsDatepicker"
+               [(ngModel)]="value"
+               (ngModelChange)="valueChange.emit($event); varifyConditions()"
+               bsDatepicker
+               [bsConfig]="bsConfig"
+               [(bsValue)]="value"
+               (bsValueChange)="onSelectItem()"
+               [class.input-u-large]="large"
+               value="{{ value | date:'dd/MM/yyyy' }}"
+               [(maxDate)]="maxDate"
+               #desde
+               readonly
+               [(minDate)]="minDate"
+               [disabled]="disabled">
+
+        <!-- TEST PARA MENSAJE DE ERROR -->
+    </label>
+    <div>
+        <!-- <span *ngIf="show_message" -->
+        <span class="message_class_hidden"
+              [class.activate_message_class]="show_message">{{message}}
+        </span>
+    </div>
+</div>

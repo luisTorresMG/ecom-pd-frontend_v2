@@ -1,0 +1,16 @@
+<div class="filter-canalventa">
+  <div class="filter-row-cell">
+    <span>POR CANAL DE VENTA:</span>
+    <select
+      id="ChannelSalesSelect"
+      (change)="onSelectChannelSales($event.target.value)"
+    >
+      <option value="0" selected>--SELECCIONAR--</option>
+      <option
+        *ngFor="let channelsales of ListChannelSaless"
+        value="{{ channelsales.nchannel }}"
+        >{{ channelsales.sdescript }}</option
+      >
+    </select>
+  </div>
+</div>

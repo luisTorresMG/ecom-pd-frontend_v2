@@ -1,0 +1,16 @@
+<div class="row container-steps mx-0 my-0 px-0 py-0">
+    <div class="contain-steps col-lg-12 mx-0 mx-0 px-0 py-0">
+        <div class="contain-step"
+             *ngFor="let step of DATA_STEPS_OBJECT; let index = index">
+            <span class="nStep"
+                  [ngClass]="{'step-active': NSTEP == index + 1 }"
+                  [class.disable-step]="disableNStep == step.step_index"
+                  [title]="step.tittle">
+                {{ step.step_index }}
+            </span>
+            <!-- (click)="ChangeSelected(index + 1)" -->
+            <div class="divider-steps"
+                 *ngIf="index + 1 < DATA_STEPS_OBJECT.length"></div>
+        </div>
+    </div>
+</div>

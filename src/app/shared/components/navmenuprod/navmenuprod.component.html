@@ -1,0 +1,245 @@
+<div class="main-nav collapse" id="main-nav-menu">
+  <div class="navbar navbar-inverse no-left" id="sidebarContainer">
+    <!-- <div class="nav-user" *ngIf="false">
+      <div class="welcome">
+        <i class="fa fa-user welcome__icon" aria-hidden="true"></i>
+        <div class="welcome__info">
+          <span class="welcome__info--item">Bienvenido(a)</span>
+          <span style="font-weight: bolder" class="welcome__info--item">{{
+            NAME_USER
+          }}</span>
+          <span class="welcome__info--item">{{ channelDescription }}</span>
+        </div>
+      </div>
+    </div> -->
+    <div id="navbar" class="navbar-collapse pt-0">
+      <ul class="nav navbar-nav menu-ul">
+        <li *ngIf="isSimulador" class="nav_menu">
+          <a class="menu-item menu-item-father" (click)="gotoProfile()">
+            <div class="li-img">
+              <i class="fa fa-users" aria-hidden="true"></i>
+            </div>
+            <span class="li-span"> Ir a Menú de Perfiles </span>
+          </a>
+        </li>
+
+        <ng-container *ngFor="let data of DATA_MENU; let index = index">
+          <li *ngIf="showPhotocheckOption && index == 1" class="nav_menu">
+            <a
+              class="menu-item menu-item-father"
+              routerLink="/extranet/photocheck"
+            >
+              <div class="li-img">
+                <i class="fa fa-user" aria-hidden="true"></i>
+              </div>
+              <span class="li-span"> Fotocheck </span>
+            </a>
+          </li>
+          <li class="nav_menu">
+            <a
+              role="button"
+              [title]="data.children.length == 0 ? data.sdescription : ''"
+              [ngClass]="
+                data.nidproduct != 0
+                  ? 'menu-item menu-item-father'
+                  : 'menu-cabecera'
+              "
+              (click)="showHideSubMenu(data.nidresource)"
+              [hidden]="data.children.length == 0 && data.nidproduct != 0"
+            >
+              <div *ngIf="data.nidproduct != 0" class="li-img">
+                <i [class]="'fa ' + data.shtml" aria-hidden="true"></i>
+              </div>
+              <span class="li-span" [innerHTML]="data.sname"></span>
+              <div class="icon-right" [hidden]="data.children.length == 0">
+                <i
+                  class="fa fa-angle-right"
+                  aria-hidden="true"
+                  [id]="'iconmenu' + data.nidresource"
+                ></i>
+              </div>
+            </a>
+            <a
+              *ngIf="data.nidproduct != 0"
+              role="button"
+              [title]="data.children.length == 0 ? data.sdescription : ''"
+              class="menu-item menu-item-father"
+              (click)="routerMenuGeneral(data)"
+              [hidden]="data.children.length >= 1"
+            >
+              <div class="li-img">
+                <i [class]="'fa ' + data.shtml" aria-hidden="true"></i>
+              </div>
+              <span class="li-span">
+                {{ data.sname }}
+              </span>
+            </a>
+            <ul
+              class="nav navbar-nav menu-ul menu-child"
+              [id]="'menu' + data.nidresource"
+              hidden="true"
+            >
+              <li class="nav_menu" *ngFor="let submenu of data.children">
+                <a
+                  role="button"
+                  class="menu-item menu-item-father"
+                  [title]="submenu.sdescription"
+                  (click)="showHideChildren(submenu.nidresource)"
+                  [hidden]="submenu.children.length == 0"
+                >
+                  <div class="li-img">
+                    <i [class]="'fa ' + submenu.shtml" aria-hidden="true"></i>
+                  </div>
+                  <span class="li-span">
+                    {{ submenu.sname }}
+                  </span>
+                  <div
+                    class="icon-right"
+                    [hidden]="submenu.children.length == 0"
+                  >
+                    <i
+                      class="fa fa-angle-right"
+                      aria-hidden="true"
+                      [id]="'iconsubmenu' + submenu.nidresource"
+                    ></i>
+                  </div>
+                </a>
+                <a
+                  role="button"
+                  class="menu-item menu-item-father"
+                  [title]="submenu.sdescription"
+                  [routerLink]="['/' + submenu.stag]"
+                  [hidden]="submenu.children.length >= 1"
+                >
+                  <div class="li-img">
+                    <i [class]="'fa ' + submenu.shtml" aria-hidden="true"></i>
+                  </div>
+                  <span class="li-span">
+                    {{ submenu.sname }}
+                  </span>
+                </a>
+                <!-- <ul class="nav navbar-nav menu-ul menu-child-child"
+                    [id]="'submenu'+submenu.nidresource"
+                    hidden="true">
+                  <li class="nav_menu"
+                      *ngFor="let children of submenu.children">
+                    <a class="menu-item"
+                       [routerLink]="['/'+children.stag]"
+                       [title]="children.sdescription">
+                      <div class="icon-left">
+                        <i class="fa fa-caret-right"
+                           aria-hidden="true"></i>
+                      </div>
+                      <span class="li-span">
+                        {{ children.sname }}
+                      </span>
+                    </a>
+                  </li>
+                </ul> -->
+                <ul
+                  class="nav navbar-nav menu-ul menu-child-child"
+                  [id]="'submenu' + submenu.nidresource"
+                  hidden="true"
+                >
+                  <li
+                    class="nav_menu"
+                    *ngFor="let children of submenu.children"
+                  >
+                    <a
+                      role="button"
+                      class="menu-item menu-item-father"
+                      [title]="children.sdescription"
+                      (click)="showHideGrandChildren(children.nidresource)"
+                      [hidden]="children.children.length == 0"
+                    >
+                      <div class="li-img">
+                        <i
+                          [class]="'fa ' + children.shtml"
+                          aria-hidden="true"
+                        ></i>
+                      </div>
+                      <span class="li-span">
+                        {{ children.sname }}
+                      </span>
+                      <div
+                        class="icon-right"
+                        [hidden]="children.children.length == 0"
+                      >
+                        <i
+                          class="fa fa-angle-right"
+                          aria-hidden="true"
+                          [id]="'iconchildren' + children.nidresource"
+                        ></i>
+                      </div>
+                    </a>
+                    <a
+                      role="button"
+                      class="menu-item menu-item-father"
+                      [title]="children.sdescription"
+                      [routerLink]="['/' + children.stag]"
+                      [hidden]="children.children.length >= 1"
+                    >
+                      <div class="li-img">
+                        <i
+                          [class]="'fa ' + children.shtml"
+                          aria-hidden="true"
+                        ></i>
+                      </div>
+                      <span class="li-span">
+                        {{ children.sname }}
+                      </span>
+                    </a>
+                    <ul
+                      class="nav navbar-nav menu-ul menu-child-child"
+                      [id]="'children' + children.nidresource"
+                      hidden="true"
+                    >
+                      <li
+                        class="nav_menu"
+                        *ngFor="let grandchildren of children.children"
+                      >
+                        <a
+                          class="menu-item"
+                          [routerLink]="['/' + grandchildren.stag]"
+                          [title]="grandchildren.sdescription"
+                        >
+                          <div class="icon-left">
+                            <i
+                              [class]="'fa ' + grandchildren.shtml"
+                              aria-hidden="true"
+                            ></i>
+                          </div>
+                          <span class="li-span">
+                            {{ grandchildren.sname }}
+                          </span>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+    <div class="nav_menu logout">
+      <a role="button" class="menu-item" (click)="doLogout()">
+        <div class="li-img">
+          <i class="fa fa-sign-out" aria-hidden="true"></i>
+        </div>
+        <span class="li-span"> Cerrar sesión </span>
+      </a>
+    </div>
+    <!--
+    <div class="footer-menu close-window">
+      <a role="button"
+         (click)="doLogout()">
+        <span>Cerrar sesión</span>
+      </a>
+    </div> -->
+  </div>
+</div>
+<button class="toggle-bar" (click)="openAndCloseNavMenu()">
+  <i class="fa fa-bars" aria-hidden="true"></i>
+</button>

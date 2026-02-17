@@ -1,0 +1,68 @@
+<form class="content"
+      [formGroup]="form">
+  <!-- *COUNTRIES -->
+  <ng-container *ngIf="showCountries">
+    <label for="frm-country"
+           class="lbl-input-u"
+           aria-label="Nacionalidad:">
+      <select id="frm-country"
+              class="input-u"
+              formControlName="country">
+        <option [value]="null"
+                selected
+                disabled
+                hidden>Seleccione</option>
+        <option *ngFor="let data of countries$"
+                [value]="data.id">{{ data.descripcion }}</option>
+      </select>
+    </label>
+  </ng-container>
+
+  <!-- *DEPARTMENTS -->
+  <label for="frm-department"
+         class="lbl-input-u"
+         aria-label="Departamento:">
+    <select id="frm-department"
+            class="input-u"
+            formControlName="department">
+      <option [value]="null"
+              selected
+              disabled
+              hidden>Seleccione</option>
+      <option *ngFor="let data of departments$"
+              [value]="data.id">{{ data.descripcion }}</option>
+    </select>
+  </label>
+
+  <!-- *PROVINCES -->
+  <label for="frm-province"
+         class="lbl-input-u"
+         aria-label="Provincia:">
+    <select id="frm-province"
+            class="input-u"
+            formControlName="province">
+      <option [value]="null"
+              selected
+              disabled
+              hidden>Seleccione</option>
+      <option *ngFor="let data of provinces$"
+              [value]="data.idProvincia">{{ data.provincia }}</option>
+    </select>
+  </label>
+
+  <!-- *DISTRICTS -->
+  <label for="frm-district"
+         class="lbl-input-u"
+         aria-label="Distrito:">
+    <select id="frm-district"
+            class="input-u"
+            formControlName="district">
+      <option [value]="null"
+              selected
+              disabled
+              hidden>Seleccione</option>
+      <option *ngFor="let data of districts$"
+              [value]="data.idDistrito">{{ data.distrito }}</option>
+    </select>
+  </label>
+</form>

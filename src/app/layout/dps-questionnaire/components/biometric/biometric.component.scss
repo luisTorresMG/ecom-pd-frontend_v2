@@ -1,0 +1,103 @@
+@import "variables";
+.biometric {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  &__container {
+    background: #f3f1f6;
+    padding: 2rem !important;
+    margin: 2rem auto;
+    border-radius: 30px;
+    max-width: 600px;
+  }
+
+  &__title {
+    font-size: 22px;
+    margin-bottom: 1.5rem;
+    color: #2b0d61;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  &__info {
+    color: $purple;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  &__upload {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  &__error {
+    display: flex;
+    justify-content: center;
+    color: red;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .lbl-fileBio {
+    background-color: #ed6e00;
+    min-width: 110px;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    font-size: 14px;
+    border-radius: 8px;
+  }
+
+  &__success {
+    text-align: center;
+    margin: 60px auto;
+  }
+
+  &__image {
+    margin: 40px auto;
+  }
+
+  &__text {
+    font-weight: 300;
+    font-size: 18px;
+    color: #75688b;
+  }
+
+  &__button {
+    padding: 7px 15px;
+    color: #fff;
+    background-color: #ed6e00;
+    border: 0;
+    width: 120px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+
+    &[disabled] {
+      opacity: 0.5;
+    }
+  }
+}
+.navigation {
+  z-index: 99999;
+}
+.btn-back {
+  color: $orange;
+  background-color: #fff;
+  border: none;
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  i {
+    font-size: 16px;
+    color: $orange;
+    margin-right: 0.5rem;
+    transform: translateY(1px);
+    -webkit-transform: translateY(1px);
+    -moz-transform: translateY(1px);
+    -ms-transform: translateY(1px);
+    -o-transform: translateY(1px);
+  }
+}

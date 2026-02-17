@@ -1,0 +1,127 @@
+@import "standard"
+@import "variables"
+
+.selection.radio
+  width: fit-content
+
+  label
+    &::before
+      content: ""
+      color: #fff
+      width: 20px
+      height: 20px
+
+  input:checked
+    & + label::before
+      box-shadow: 0 0 0 1px orange
+      border: 3px solid #fff
+
+.mxwd
+  max-width: 1240px
+  margin: auto
+
+.divider
+  background-color: rgba(0, 0, 0, 0.1)
+
+.content
+  width: 100%
+  min-height: 100%
+  height: auto
+  background-color: #F7FAFC
+
+  &__header
+    display: flex
+    align-items: center
+    justify-content: space-between
+    gap: 1rem
+    flex-wrap: wrap
+    margin-bottom: 3rem
+
+    .logo-protecta
+      width: 250px
+
+    .logo-kushki
+      width: 160px
+
+  &__summary
+    display: grid
+    justify-content: center
+    gap: 15vw
+
+    @media (min-width: 1024px)
+      grid-template-columns: 1fr 1fr
+
+.subtitle
+  font-size: 20px
+
+  &::after
+    content: ""
+    display: block
+    height: 3px
+    width: 32px
+    background-color: $orange
+    margin-top: 2px
+
+.summary
+  &__info
+    display: flex
+    flex-direction: column
+    gap: 2rem
+
+    &--product
+      display: flex
+      gap: 2rem
+      align-items: center
+
+      img
+        width: 66px
+
+      .product-name
+        font-size: 16px
+
+  &__amounts
+    &--item
+      display: flex
+      gap: 1rem
+      justify-content: space-between
+      flex-wrap: wrap
+
+      span
+        font-size: 14px
+
+      &.total-amount
+        span
+          font-size: 16px
+          font-weight: 700
+
+  &__types
+    display: flex
+    gap: 2rem
+
+  &__payment
+    display: flex
+    flex-direction: column
+    gap: 2rem
+
+    &--form
+      width: fit-content
+      padding: 2rem
+      background-color: #fff
+      border: 1px solid #CBD5E0
+      border-radius: 10px
+      overflow: hidden
+
+.powered-by
+  display: flex
+  justify-content: center
+  align-items: center
+  margin: auto auto 0 auto
+
+  .vertical-divider
+    height: 100%
+    width: 1px
+    background-color: #8792A2
+    margin: 0 1rem
+
+  a
+    font-size: 12px

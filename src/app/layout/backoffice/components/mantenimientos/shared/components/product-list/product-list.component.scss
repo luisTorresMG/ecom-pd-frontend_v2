@@ -1,0 +1,57 @@
+@import "standard";
+
+.content-table {
+  min-height: auto;
+}
+
+.table {
+  width: fit-content !important;
+
+  tr:hover {
+    background-color: transparent !important;
+  }
+
+  td {
+    padding: 0 !important;
+    height: 30px !important;
+  }
+
+  input,
+  select {
+    width: 100% !important;
+    border: none !important;
+  }
+
+  tr .col-father {
+    border: 1px solid $purple;
+
+    table {
+      width: 100%;
+    }
+  }
+
+  .row-child:not(:first-child) {
+    border-top: 1px solid $purple;
+
+    td {
+      border: transparent;
+    }
+  }
+
+  .content-row-with-actions {
+    display: flex;
+
+    .button {
+      min-width: 30px;
+      width: 30px;
+      max-width: 30px;
+      height: auto;
+      background-color: transparent;
+
+      .fa {
+        margin: 0;
+        font-size: 16px;
+      }
+    }
+  }
+}

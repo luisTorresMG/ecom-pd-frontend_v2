@@ -1,0 +1,2914 @@
+<div class="container-fluid">
+  <div class="row content-all">
+    <div class="col-md-12 content">
+      <div class="container-fluid content-page">
+        <div class="row r1-head">
+          <div class="col-12 head-title">
+            <h1 class="title">Gestión de Registros</h1>
+            <button class="full-color btn-with-icon btn-download"
+                    (click)="exportar()">
+              <img class="icon-btn"
+                   src="assets/icons/download2.png"/>
+              Exportar
+            </button>
+          </div>
+        </div>
+        <form class="row r2-head"
+              [formGroup]="form">
+          <div class="content-actions content-filters">
+            <div class="content-input">
+              <label for="state"
+                     class="lbl-in filter-text">FECHA INICIO:</label>
+              <input style="background-color: white"
+                     type="text"
+                     class="form-control date-search input-date in-action"
+                     id="fecha"
+                     #dp="bsDatepicker"
+                     [bsConfig]="bsConfig"
+                     bsDatepicker
+                     readonly
+                     formControlName="fechaInicio"
+                     [maxDate]="bsValueFin"/>
+            </div>
+            <div class="content-input">
+              <label for="chanel"
+                     class="lbl-in filter-text">FECHA FIN:</label>
+              <input style="background-color: white"
+                     type="text"
+                     class="form-control date-search input-date in-action"
+                     id="fecha"
+                     #dp="bsDatepicker"
+                     [bsConfig]="bsConfig"
+                     bsDatepicker
+                     readonly
+                     formControlName="fechaFin"
+                     [maxDate]="bsValueFin"/>
+            </div>
+            <div class="content-input">
+              <label for="chanel"
+                     class="lbl-in filter-text">NRO. SOLICITUD:</label>
+              <input type="text"
+                     class="form-control date-search input-date in-action"
+                     formControlName="numero_solicitud"/>
+            </div>
+            <div class="content-input">
+              <label for="state"
+                     class="lbl-in filter-text">ESTADO:</label>
+              <select class="in-action"
+                      formControlName="estado">
+                <option value="99"
+                        disabled
+                        selected>SELECCIONE
+                </option>
+                <option *ngFor="let data of dataEstado?.PA_SEL_STATE"
+                        [value]="data.SITEM">
+                  {{ data.SDECRIPTION }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="content-btns-actions">
+            <button type="submit"
+                    class="btn-action-filter"
+                    (click)="buscar()">
+              Buscar
+            </button>
+            <div class="dropdown button-new"
+                 ngbDropdown>
+              <button class="btn-action-filter dropdown__button"
+                      ngbDropdownToggle>
+                Nuevo
+              </button>
+              <ul class="dropdown__list"
+                  ngbDropdownMenu>
+                <li>
+                  <a routerLink="/backoffice/mantenimientos/gestion-registro/nueva-solicitud"
+                     class="button">
+                    Registro/Modificación Canal de Venta
+                  </a>
+                </li>
+                <li>
+                  <button class="button"
+                          (click)="openModalNewRequest()">
+                    Registro/Modificación Punto de Venta
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <button type="button"
+                    class="btn-action-filter"
+                    (click)="limpiar()">
+              Limpiar
+            </button>
+          </div>
+        </form>
+        <div class="grid form-group row content-table">
+          <div class="table-responsive">
+            <table class="table"
+                   style="margin-bottom: 0rem">
+              <thead>
+                <tr class="grid-title table-head">
+                  <td class="grid-title-item">N° Solicitud</td>
+                  <td class="grid-title-item">Tipo de Solicitud</td>
+                  <td class="grid-title-item">Código de Canal</td>
+                  <td class="grid-title-item">Nombre de Canal</td>
+                  <td class="grid-title-item">Estado</td>
+                  <td class="grid-title-item">Usuario de Registro</td>
+                  <td class="grid-title-item">Fecha de Registro</td>
+                  <td class="grid-title-item">Acciones</td>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="!dataBuscar?.entities?.length">
+                  <tr class="grid-body">
+                    <td class="grid-body-item"
+                        colspan="8"
+                        style="text-align: center">
+                      No hay informacion para mostrar
+                    </td>
+                  </tr>
+                </ng-container>
+                <ng-container *ngIf="!!dataBuscar?.entities?.length">
+                  <tr class="table-body"
+                      *ngFor="
+                      let data of dataBuscar?.entities
+                        | paginate
+                          : {
+                              itemsPerPage: 10,
+                              currentPage: p,
+                              id: 'dataBuscar'
+                            }
+                    ">
+                    <td class="table-body-item">{{ data.NREQUEST }}</td>
+                    <td class="table-body-item">{{ data.STYPE }}</td>
+                    <td class="table-body-item">{{ data.NIDREQUEST }}</td>
+                    <td class="table-body-item">{{ data.SCLIENTNAME }}</td>
+                    <td class="table-body-item">{{ data.SSTATUS }}</td>
+                    <td class="table-body-item">{{ data.SUSER }}</td>
+                    <td class="table-body-item">{{ data.DATEREGISTER }}</td>
+                    <td class="table-body-item">
+                      <a>
+                        <i title="Evaluar"
+                           class="fa fa-star"
+                           aria-hidden="true"
+                           style="cursor: pointer"
+                           (click)="openModalEvaluar(data)"></i>
+                      </a>
+                      <a>
+                        <i title="Ver historial"
+                           style="cursor: pointer"
+                           class="fa fa-search fa-lg ml-1"
+                           (click)="historial(data.NREQUEST)"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+          <pagination-controls *ngIf="!!dataBuscar?.entities?.length"
+                               class="my-pagination"
+                               id="dataBuscar"
+                               (pageChange)="p = $event"
+                               autoHide="true"
+                               responsive="true"
+                               previousLabel="Anterior"
+                               nextLabel="Siguiente"
+                               screenReaderPaginationLabel="Paginación"
+                               screenReaderPageLabel="pagina"
+                               screenReaderCurrentLabel="Estás en la pagina">
+          </pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #modalCreateRequest>
+  <div class="content-modal-u">
+    <div class="modal-u modalCreateRequest">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Nueva Solicitud</h6>
+        <button class="modal__header--close"
+                (click)="resetAll()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body mbcr">
+        <form [formGroup]="formCreateRequest"
+              style="margin-right: 10px">
+          <!-- *DATOS DE SOLICITUD -->
+          <div class="mbcr__item"
+               *ngIf="showRequestType">
+            <h6 class="mbcr__item--title">Datos Solicitud</h6>
+            <div class="mbcr__item--inputs"
+                 style="display: flex">
+              <label for="mbcr_requestType"
+                     class="lbl-input-u"
+                     aria-label="Tipo de Solicitud">
+                <select id="mbcr_requestType"
+                        class="input-u"
+                        formControlName="requestType">
+                  <option [value]="null"
+                          disabled
+                          selected
+                          hidden>
+                    SELECCIONE
+                  </option>
+                  <option value="2">REGISTRO DE PUNTO DE VENTA</option>
+                  <option value="3">MODIFICACIÓN DE PUNTO</option>
+                </select>
+              </label>
+              <button class="btn-primary-u"
+                      [hidden]="isSearchedData2 == false"
+                      style="margin-top: 28px; margin-left: 15px"
+                      (click)="searched()">
+                Buscar Canal
+              </button>
+              <button class="btn-primary-u"
+                      [hidden]="isSearchedData5 == false"
+                      (click)="showModalFcrSearchSalePoint()"
+                      style="margin-top: 28px; margin-left: 15px; width: 32%">
+                Buscar Punto de Venta
+              </button>
+            </div>
+          </div>
+
+          <!-- *DATOS BÁSICOS -->
+          <ng-container *ngIf="
+              ff['requestType'].value == 0 ||
+              ff['requestType'].value == 1 ||
+              !ff['requestType'].value
+            ">
+            <div class="divider"
+                 *ngIf="showRequestType"></div>
+            <div class="mbcr__item">
+              <h6 class="mbcr__item--title">Datos Básicos</h6>
+              <div class="mbcr__item--inputs grd1">
+                <div class="grd2">
+                  <label for="mbcr_documentType"
+                         class="lbl-input-u"
+                         aria-label="Tipo de Documento (*)">
+                    <select id="mbcr_documentType"
+                            class="input-u"
+                            formControlName="documentType"
+                            disabled>
+                      <option [value]="null"
+                              disabled
+                              selected
+                              hidden>
+                        SELECCIONE
+                      </option>
+                      <option [value]="1">DNI</option>
+                      <option [value]="2">RUC</option>
+                      <option [value]="3">C.E.</option>
+                    </select>
+                  </label>
+                  <label for="mbcr_documentNumber"
+                         class="lbl-input-u"
+                         aria-label="Número de Documento (*)">
+                    <input type="text"
+                           id="mbcr_documentNumber"
+                           class="input-u"
+                           formControlName="documentNumber"
+                           [maxlength]="limitDocumentNumber.max"/>
+                  </label>
+                </div>
+                <!-- -->
+                <div *ngIf="!flagDatosBasicos">
+                  <label for="mbcr_businessName"
+                         class="lbl-input-u"
+                         aria-label="Razón Social (*)">
+                    <input type="text"
+                           id="mbcr_businessName"
+                           class="input-u"
+                           [minlength]="3"
+                           [maxlength]="60"
+                           formControlName="businessName"/>
+                  </label>
+                </div>
+
+                <div class="grd2">
+                  <label for="mbcr_name"
+                         class="lbl-input-u"
+                         aria-label="Nombres (*)"
+                         *ngIf="flagDatosBasicos">
+                    <input type="text"
+                           id="mbcr_name"
+                           class="input-u"
+                           [minlength]="3"
+                           [maxlength]="19"
+                           formControlName="name"/>
+                  </label>
+
+
+                  <label for="mbcr_lastname"
+                         class="lbl-input-u"
+                         aria-label="Apellido Parterno (*)"
+                         *ngIf="flagDatosBasicos">
+                    <input type="text"
+                           id="mbcr_lastname"
+                           class="input-u"
+                           [minlength]="3"
+                           [maxlength]="19"
+                           formControlName="lastname"/>
+                  </label>
+
+                  <label for="mbcr_lastname2"
+                         class="lbl-input-u"
+                         aria-label="Apellido Marterno (*)"
+                         *ngIf="flagDatosBasicos">
+                    <input type="text"
+                           id="mbcr_lastname2"
+                           class="input-u"
+                           [minlength]="3"
+                           [maxlength]="19"
+                           formControlName="lastname2"/>
+                  </label>
+
+                  <label for="fcr-department"
+                         class="lbl-input-u"
+                         aria-label="Departamento (*)">
+                    <select formControlName="department"
+                            id="fcr-department"
+                            class="input-u">
+                      <ng-container *ngIf="!departments$?.length">
+                        <option value="null">NO HAY RESULTADOS</option>
+                      </ng-container>
+                      <ng-container *ngIf="!!departments$?.length">
+                        <option value="null"
+                                selected
+                                hidden>SELECCIONE
+                        </option>
+                        <option *ngFor="let data of departments$"
+                                [value]="data.id">
+                          {{ data.descripcion }}
+                        </option>
+                      </ng-container>
+                    </select>
+                  </label>
+                  <label for="fcr-province"
+                         class="lbl-input-u"
+                         aria-label="Provincia (*)">
+                    <select formControlName="province"
+                            id="fcr-province"
+                            class="input-u">
+                      <ng-container *ngIf="!provinces$?.length">
+                        <option value="null">NO HAY RESULTADOS</option>
+                      </ng-container>
+                      <ng-container *ngIf="!!provinces$?.length">
+                        <option value="null"
+                                selected
+                                hidden>SELECCIONE
+                        </option>
+                        <option *ngFor="let data of provinces$"
+                                [value]="data.idProvincia">
+                          {{ data.provincia }}
+                        </option>
+                      </ng-container>
+                    </select>
+                  </label>
+                  <label for="fcr-district"
+                         class="lbl-input-u"
+                         aria-label="Distrito (*)">
+                    <select formControlName="district"
+                            id="fcr-district"
+                            class="input-u">
+                      <ng-container *ngIf="!districts$?.length">
+                        <option value="null">NO HAY RESULTADOS</option>
+                      </ng-container>
+                      <ng-container *ngIf="!!districts$?.length">
+                        <option value="null"
+                                selected
+                                hidden>SELECCIONE
+                        </option>
+                        <option *ngFor="let data of districts$"
+                                [value]="data.idDistrito">
+                          {{ data.distrito }}
+                        </option>
+                      </ng-container>
+                    </select>
+                  </label>
+                  <label for="mbcr_cellphone"
+                         class="lbl-input-u"
+                         aria-label="Número de Celular (*)">
+                    <input type="text"
+                           id="mbcr_cellphone"
+                           class="input-u"
+                           formControlName="cellphone"
+                           [maxlength]="9"/>
+                  </label>
+                  <label for="mbcr_address"
+                         class="lbl-input-u"
+                         aria-label="Dirección (*)"
+                         *ngIf="flagDatosBasicos">
+                    <input type="text"
+                           id="mbcr_address"
+                           class="input-u"
+                           [maxlength]="40"
+                           formControlName="address"/>
+                  </label>
+                </div>
+                <label for="mbcr_address"
+                       class="lbl-input-u"
+                       aria-label="Dirección (*)"
+                       *ngIf="!flagDatosBasicos">
+                  <input type="text"
+                         id="mbcr_address"
+                         class="input-u"
+                         [maxlength]="40"
+                         formControlName="address"/>
+                </label>
+                <div class="grd2">
+                  <label for="mbcr_contact"
+                         class="lbl-input-u"
+                         aria-label="Contacto (*)">
+                    <input type="text"
+                           id="mbcr_contact"
+                           class="input-u"
+                           [maxlength]="50"
+                           formControlName="contact"/>
+                  </label>
+                  <label for="mbcr_email"
+                         class="lbl-input-u"
+                         aria-label="Correo Electrónico (*)">
+                    <input type="text"
+                           id="mbcr_email"
+                           class="input-u"
+                           [maxlength]="50"
+                           formControlName="email"/>
+                  </label>
+                </div>
+                <div class="grd2">
+                  <label for="mbcr_channelType"
+                         class="lbl-input-u"
+                         aria-label="Tipo de Canal (*)">
+                    <select id="mbcr_channelType"
+                            class="input-u"
+                            formControlName="channelType">
+                      <option value="null"
+                              disabled
+                              selected>SELECCIONE
+                      </option>
+                      <ng-container *ngIf="!!dataCanal?.PA_SEL_CHANNEL_TYPE?.length">
+                        <option *ngFor="let data of dataCanal.PA_SEL_CHANNEL_TYPE"
+                                [value]="data.NIDTYPECHANNEL">
+                          {{ data.SDESCRIPTIONTYPECHANNEL }}
+                        </option>
+                      </ng-container>
+                      <ng-container *ngIf="!dataCanal?.PA_SEL_CHANNEL_TYPE?.length">
+                        <option disabled>NO HAY RESULTADOS</option>
+                      </ng-container>
+                    </select>
+                  </label>
+                  <!-- CANAL ASOCIADO -->
+                  <label for="mbcr_mainChannel"
+                         class="lbl-input-u"
+                         aria-label="Canal asociado (*)"
+                         *ngIf="flagTipoCanal">
+                    <select id="mbcr_mainChannel"
+                            class="input-u"
+                            formControlName="mainChannel">
+                      <ng-container *ngIf="listMainChannel.length > 0">
+                        <option *ngFor="let data of listMainChannel"
+                                [value]="data.codigoCanal">
+                          {{ data.canal }}
+                        </option>
+                      </ng-container>
+                      <ng-container *ngIf="listMainChannel.length == 0">
+                        <option disabled>NO HAY RESULTADOS</option>
+                      </ng-container>
+                    </select>
+                  </label>
+                  <!--  -->
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <!-- *DATOS COMPLEMENTARIOS -->
+          <ng-container *ngIf="
+              ff['requestType'].value == 0 ||
+              ff['requestType'].value == 1 ||
+              !ff['requestType'].value
+            ">
+            <div class="divider"></div>
+            <div class="mbcr__item">
+              <h6 class="mbcr__item--title">Datos Complementarios</h6>
+              <div class="mbcr__item--inputs grd1">
+                <div class="grd2">
+                  <label for="mbcr_startValidity"
+                         class="lbl-input-u"
+                         aria-label="Inicio de Vigencia">
+                    <input style="background-color: white"
+                           type="text"
+                           class="input-u"
+                           id="fecha"
+                           #dp="bsDatepicker"
+                           [bsConfig]="bsConfig"
+                           bsDatepicker
+                           readonly
+                           formControlName="startValidity"
+                           [maxDate]="bsValueFin"/>
+                  </label>
+                  <label for="mbcr_endValidity"
+                         class="lbl-input-u"
+                         aria-label="Fin de Vigencia">
+                    <input style="background-color: white"
+                           type="text"
+                           class="input-u"
+                           id="fecha"
+                           #dp="bsDatepicker"
+                           [bsConfig]="bsConfig"
+                           bsDatepicker
+                           readonly
+                           formControlName="endValidity"/>
+                  </label>
+                </div>
+                <label for="mbcr_stockProvider"
+                       class="lbl-input-u"
+                       aria-label="Proveedor de Stock">
+                  <select name="stockProvider"
+                          class="input-u"
+                          formControlName="stockProvider">
+                    <option [value]="null"
+                            disabled
+                            selected
+                            hidden>
+                      SELECCIONE
+                    </option>
+                    <option *ngFor="let data of stockProvider$.items"
+                            [value]="data.id">
+                      {{ data.description }}
+                    </option>
+                  </select>
+                </label>
+                <div class="grd2">
+                  <label class="lbl-input-u"
+                         aria-label="Distribución">
+                    <div class="mbcr_radios">
+                      <div class="mbcr_radios--item">
+                        <input type="radio"
+                               class="chk"
+                               id="mbcr_channel"
+                               value="1"
+                               formControlName="distribution"/>
+                        <label class="lbl-chk"
+                               for="mbcr_channel">Canal</label>
+                      </div>
+                      <div class="mbcr_radios--item">
+                        <input type="radio"
+                               class="chk"
+                               id="mbcr_pointSale"
+                               value="0"
+                               formControlName="distribution"/>
+                        <label class="lbl-chk"
+                               for="mbcr_pointSale">Punto de Venta</label>
+                      </div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <!-- *DATOS ADJUNTOS -->
+          <ng-container *ngIf="
+              ff['requestType'].value == 0 ||
+              ff['requestType'].value == 1 ||
+              !ff['requestType'].value
+            ">
+            <div class="divider"></div>
+            <div class="mbcr__item">
+              <h6 class="mbcr__item--title">Datos Adjuntos</h6>
+              <app-attachments (efiles)="setFcrFiles($event)"
+                               [initWithRow]="enableAttachments"
+                               [showAction]="enableAttachments"
+                               [data]="attachmentsData"></app-attachments>
+            </div>
+          </ng-container>
+
+          <!-- *DATOS CANAL DE VENTA -->
+          <ng-container *ngIf="ff['requestType'].value == 2 || ff['requestType'].value == 3"
+                        formGroupName="channelSale">
+            <div class="mbcr__item">
+              <h6 class="mbcr__item--title">Datos - Canal de Venta</h6>
+              <div class="mbcr__item--inputs grd1">
+                <div class="grd2">
+                  <label for="mbcr_channelCode"
+                         class="lbl-input-u"
+                         aria-label="Código de Canal (*)">
+                    <input type="text"
+                           id="mbcr_channelCode"
+                           class="input-u"
+                           formControlName="channelCode"
+                           readonly/>
+                  </label>
+                  <label for="mbcr-distributionType"
+                         class="lbl-input-u"
+                         aria-label="Tipo Distribución (*)">
+                    <input type="text"
+                           id="mbcr-distributionType"
+                           class="input-u"
+                           formControlName="distributionType"
+                           readonly/>
+                  </label>
+                </div>
+                <div class="grd2">
+                  <label for="mbcr-channelState"
+                         class="lbl-input-u"
+                         aria-label="Estado de Canal (*)">
+                    <input type="text"
+                           id="mbcr-channelState"
+                           class="input-u"
+                           formControlName="channelState"
+                           readonly/>
+                  </label>
+                  <label for="mbcr-stateDate"
+                         class="lbl-input-u"
+                         aria-label="Fecha de Estado (*)">
+                    <input type="text"
+                           id="mbcr-stateDate"
+                           class="input-u"
+                           formControlName="stateDate"
+                           readonly/>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <!-- *POINT SALE -->
+          <ng-container *ngIf="fcr['requestType'].value == 3"
+                        formGroupName="pointSale">
+            <div class="divider"></div>
+            <h6 class="mbcr__item--title">Datos - Punto de Venta</h6>
+            <div class="mbcr__group">
+              <label for="ffPointSale-description"
+                     class="lbl-input-u"
+                     aria-label="Descripción (*)">
+                <input type="text"
+                       class="input-u"
+                       id="ffPointSale-description"
+                       formControlName="description"/>
+              </label>
+            </div>
+            <div class="mbcr__group grd3">
+              <label for="fcr-department"
+                     class="lbl-input-u"
+                     aria-label="Departamento (*)">
+                <select formControlName="department"
+                        id="fcr-department"
+                        class="input-u">
+                  <ng-container *ngIf="!departments$?.length">
+                    <option value="null">NO HAY RESULTADOS</option>
+                  </ng-container>
+                  <ng-container *ngIf="!!departments$?.length">
+                    <option value="null"
+                            selected
+                            hidden>SELECCIONE
+                    </option>
+                    <option *ngFor="let data of departments$"
+                            [value]="data.id">
+                      {{ data.descripcion }}
+                    </option>
+                  </ng-container>
+                </select>
+              </label>
+              <label for="fcr-province"
+                     class="lbl-input-u"
+                     aria-label="Provincia (*)">
+                <select formControlName="province"
+                        id="fcr-province"
+                        class="input-u">
+                  <ng-container *ngIf="!provinces$?.length">
+                    <option value="null">NO HAY RESULTADOS</option>
+                  </ng-container>
+                  <ng-container *ngIf="!!provinces$?.length">
+                    <option value="null"
+                            selected
+                            hidden>SELECCIONE
+                    </option>
+                    <option *ngFor="let data of provinces$"
+                            [value]="data.idProvincia">
+                      {{ data.provincia }}
+                    </option>
+                  </ng-container>
+                </select>
+              </label>
+              <label for="fcr-district"
+                     class="lbl-input-u"
+                     aria-label="Distrito (*)">
+                <select formControlName="district"
+                        id="fcr-district"
+                        class="input-u">
+                  <ng-container *ngIf="!districts$?.length">
+                    <option value="null">NO HAY RESULTADOS</option>
+                  </ng-container>
+                  <ng-container *ngIf="!!districts$?.length">
+                    <option value="null"
+                            selected
+                            hidden>SELECCIONE
+                    </option>
+                    <option *ngFor="let data of districts$"
+                            [value]="data.idDistrito">
+                      {{ data.distrito }}
+                    </option>
+                  </ng-container>
+                </select>
+              </label>
+            </div>
+            <div class="mbcr__group mbcr__grd2">
+              <label for="ffPointSale-phone"
+                     class="lbl-input-u"
+                     aria-label="Número de Celular (*)">
+                <input type="text"
+                       id="ffPointSale-phone"
+                       class="input-u"
+                       formControlName="phone"
+                       maxlength="9"/>
+              </label>
+              <label for="ffPointSale-address"
+                     class="lbl-input-u"
+                     aria-label="Dirección (*)">
+                <input type="text"
+                       id="ffPointSale-address"
+                       class="input-u"
+                       formControlName="address"/>
+              </label>
+            </div>
+            <div class="mbcr__group mbcr__grd2">
+              <label for="ffPointSale-contact"
+                     class="lbl-input-u"
+                     aria-label="Contacto (*)">
+                <input type="text"
+                       id="ffPointSale-contact"
+                       class="input-u"
+                       formControlName="contact"/>
+              </label>
+              <label for="ffPointSale-email"
+                     class="lbl-input-u"
+                     aria-label="Email (*)">
+                <input type="text"
+                       id="ffPointSale-email"
+                       class="input-u"
+                       formControlName="email"/>
+              </label>
+            </div>
+            <div class="mbcr__group mbcr__grd2">
+              <label for=""
+                     class="lbl-input-u"
+                     aria-label="Frecuencia (*)"
+                     formGroupName="frecuency">
+                <div class="content-frecuency">
+                  <input type="text"
+                         class="input-u"
+                         formControlName="quantity"
+                         maxlength="3"/>
+                  <select class="input-u"
+                          formControlName="type">
+                    <option [value]="null"
+                            selected
+                            disabled
+                            hidden>
+                      SELECCIONE
+                    </option>
+                    <option value="1">Semanalmente</option>
+                    <option value="2">Mensualmente</option>
+                  </select>
+                </div>
+              </label>
+              <label for="ffPointSale-state"
+                     class="lbl-input-u"
+                     aria-label="Estado">
+                <select class="input-u"
+                        id="ffPointSale-state"
+                        formControlName="state">
+                  <option value="0">Inactivo</option>
+                  <option value="1">Activo</option>
+                </select>
+              </label>
+            </div>
+          </ng-container>
+
+          <!-- *POINT SALES -->
+          <ng-container *ngIf="fcr['requestType'].value == 2"
+                        formArrayName="pointSales">
+            <div class="divider"></div>
+            <div class="mbcr__item">
+              <h6 class="mbcr__item--title">Datos - Punto de Venta</h6>
+              <div class="content">
+                <div class="content__item">
+                  <div class="content__item--inputs">
+                    <div class="actions">
+                      <button class="btn-action fcr-btn-action"
+                              role="button"
+                              type="button"
+                              (click)="fcrModalSalePoint(1)"
+                              [disabled]="!channelSelected">
+                        Agregar Punto de Venta
+                      </button>
+                      <!-- <button class="btn-action fcr-btn-action">
+  Carga Masiva
+</button> -->
+                    </div>
+                    <div class="content-tbl tbl-new-request">
+                      <table class="tbl"
+                             style="margin-top: 15px">
+                        <thead class="tbl__head">
+                          <tr class="tbl__head--row">
+                            <th class="tbl__head--row-col">Código</th>
+                            <th class="tbl__head--row-col">Descripción</th>
+                            <th class="tbl__head--row-col">Teléfono</th>
+                            <th class="tbl__head--row-col">E-mail</th>
+                            <th class="tbl__head--row-col">Stock</th>
+                            <th class="tbl__head--row-col">Acción</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <ng-container *ngIf="!selectedPointSaleDetail?.items.length">
+                            <tr class="tbl__body--row">
+                              <td class="tbl__body--row-col"
+                                  colspan="6">
+                                NO HAY RESULTADOS
+                              </td>
+                            </tr>
+                          </ng-container>
+                          <ng-container *ngIf="!!selectedPointSaleDetail?.items.length">
+                            <tr class="tbl__body--row"
+                                *ngFor="
+                                let data of selectedPointSaleDetail?.items;
+                                let index = index
+                              ">
+                              <td class="tbl__body--row-col fcrsp-index">
+                                {{ index + 1 }}
+                              </td>
+                              <td class="tbl__body--row-col fcrsp-desc">
+                                {{ data.description }}
+                              </td>
+                              <td class="tbl__body--row-col fcrsp-phone">
+                                {{ data.phone }}
+                              </td>
+                              <td class="tbl__body--row-col fcrsp-email">
+                                {{ data.email }}
+                              </td>
+                              <td class="tbl__body--row-col fcrsp-stock">
+                                {{
+                                stockOfSalePoint(index + 1).length
+                                  ? "Sí"
+                                  : "No"
+                                }}
+                              </td>
+                              <td class="tbl__body--row-col fcrsp-action"
+                                  ngbDropdown
+                                  placement="bottom-right">
+                                <button class="btn-dropdown-u"
+                                        tabindex="0"
+                                        data-toggle="dropdown"
+                                        aria-haspopup="true"
+                                        aria-expanded="false"
+                                        ngbDropdownToggle>
+                                  <i class="fa fa-ellipsis-v"
+                                     aria-hidden="true"></i>
+                                </button>
+                                <ul class="dropdown-u"
+                                    display="dynamic"
+                                    ngbDropdownMenu>
+                                  <li class="dropdown-item-u">
+                                    <button class="dropdown-item-btn-u"
+                                            (click)="
+                                        showModalFcrStock(data, index + 1)
+                                      ">
+                                      <i class="fa fa-archive"
+                                         aria-hidden="true"></i>
+                                      Stock
+                                    </button>
+                                  </li>
+                                  <li class="dropdown-item-u">
+                                    <button class="dropdown-item-btn-u"
+                                            (click)="
+                                        fcrModalSalePoint(2, data, index)
+                                      ">
+                                      <i class="fa fa-pencil"
+                                         aria-hidden="true"></i>
+                                      Editar
+                                    </button>
+                                  </li>
+                                  <li class="dropdown-item-u">
+                                    <button class="dropdown-item-btn-u"
+                                            (click)="dropSalePoint(index)">
+                                      <i class="fa fa-trash"
+                                         aria-hidden="true"></i>
+                                      Eliminar
+                                    </button>
+                                  </li>
+                                </ul>
+                              </td>
+                            </tr>
+                          </ng-container>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <!-- *DATOS DE LINEA DE CRÉDITO -->
+          <ng-container *ngIf="
+              ff['requestType'].value == 0 ||
+              ff['requestType'].value == 1 ||
+              ff['requestType'].value == 3 ||
+              !ff['requestType'].value
+            ">
+            <div class="divider"></div>
+            <div class="mbcr__item">
+              <h6 class="mbcr__item--title">Datos - Línea de crédito</h6>
+              <app-credit-line-data (efiles)="setFcrCreditLines($event)"
+                                    [showAction]="enableCreditLines"
+                                    [showInput]="!enableInputsCreditLines"
+                                    [data]="creditLinesData"></app-credit-line-data>
+            </div>
+          </ng-container>
+        </form>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-primary-u mr-3"
+                *ngIf="showButtonEdit && (!!channelSelected || !!salePointSelected)"
+                (click)="fcrEdit()">
+          Editar
+        </button>
+        <button class="btn-primary-u mr-3"
+                *ngIf="!showButtonEdit"
+                [disabled]="formCreateRequest.invalid"
+                (click)="nuevaSolicitud()">
+          Aceptar
+        </button>
+        <button class="btn-primary-u"
+                (click)="resetAll()">Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalHistory>
+  <div class="content-modal-u">
+    <div class="modal-u modalCreateRequest"
+         style="max-width: 1035px">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Historial Solicitud</h6>
+        <button class="modal__header--close"
+                (click)="resetAll()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body mbcr">
+        <div class="grid form-group row content-table">
+          <div class="table-responsive">
+            <table class="table"
+                   style="min-width: 950px; margin-top: 15px">
+              <thead>
+                <tr class="grid-title table-head">
+                  <td class="grid-title-item">Item</td>
+                  <td class="grid-title-item">N° Solicitud</td>
+                  <td class="grid-title-item">Tipo de Solicitud</td>
+                  <td class="grid-title-item">Solicitante</td>
+                  <td class="grid-title-item">Estado</td>
+                  <td class="grid-title-item">Registrador Estado</td>
+                  <td class="grid-title-item">Fecha Estado</td>
+                  <td class="grid-title-item">Observación</td>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="!dataHistorial?.PA_SEL_HISTORY?.length">
+                  <tr class="grid-body">
+                    <td class="grid-body-item"
+                        colspan="8"
+                        style="text-align: center">
+                      No hay informacion para mostrar
+                    </td>
+                  </tr>
+                </ng-container>
+                <ng-container *ngIf="!!dataHistorial?.PA_SEL_HISTORY?.length">
+                  <tr class="table-body"
+                      *ngFor="let data of dataHistorial?.PA_SEL_HISTORY">
+                    <td class="table-body-item">{{ data.NITEM }}</td>
+                    <td class="table-body-item">{{ data.NIDREQUEST }}</td>
+                    <td class="table-body-item">{{ data.STYPEREQUEST }}</td>
+                    <td class="table-body-item">{{ data.SNAMEREGISTER }}</td>
+                    <td class="table-body-item">{{ data.SSTATE }}</td>
+                    <td class="table-body-item">{{ data.SNAMEREQUEST }}</td>
+                    <td class="table-body-item">{{ data.SREGISTER }}</td>
+                    <td class="table-body-item">{{ data.SOBSERVATION }}</td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-secondary-u mr-3"
+                (click)="resetAll()">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalSearch>
+  <div class="content-modal-u">
+    <div class="modal-u modalCreateRequest">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Buscar Canal</h6>
+        <button class="modal__header--close"
+                (click)="closeModalSearch()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body mbcr">
+        <form [formGroup]="formSearch"
+              style="margin-right: 10px">
+          <div class="mbcr__item">
+            <h6 class="mbcr__item--title">Filtro de búsqueda</h6>
+            <div class="mbcr__item--inputs grd1">
+              <div class="grd2">
+                <label for="mbcr_documentType"
+                       class="lbl-input-u"
+                       aria-label="Tipo de Documento">
+                  <select id="mbcr_documentType"
+                          class="input-u"
+                          formControlName="documentType">
+                    <option value="null"
+                            disabled
+                            selected
+                            hidden>
+                      SELECCIONE
+                    </option>
+                    <option [value]="1">DNI</option>
+                    <option [value]="2">RUC</option>
+                    <option [value]="3">C.E.</option>
+                  </select>
+                </label>
+                <label for="mbcr_documentNumber"
+                       class="lbl-input-u"
+                       aria-label="Número de Documento">
+                  <input type="text"
+                         id="mbcr_documentNumber"
+                         class="input-u"
+                         formControlName="documentNumber"/>
+                </label>
+                <label for="mbcr_businessName"
+                       class="lbl-input-u"
+                       aria-label="Razón Social"
+                       style="width: 205%">
+                  <input type="text"
+                         id="mbcr_businessName"
+                         class="input-u"
+                         formControlName="businessName"/>
+                </label>
+              </div>
+              <div class="grd2">
+                <button class="btn-primary-u"
+                        style="width: 10px; margin-top: 5px"
+                        [disabled]="
+                    !fs['documentNumber'].value && !fs['businessName'].value
+                  "
+                        (click)="buscarCanal()">
+                  Buscar
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="grid form-group row content-table"
+             [hidden]="isSearchedData3 == false">
+          <div class="table-responsive"
+               style="margin-right: 10px">
+            <table class="table"
+                   style="min-width: 686px; margin-top: 15px">
+              <thead>
+                <tr class="grid-title table-head">
+                  <td class="grid-title-item">Código de Canal</td>
+                  <td class="grid-title-item">Nombre de Canal</td>
+                  <td class="grid-title-item">Tipo Documento</td>
+                  <td class="grid-title-item">Número Documento</td>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="!channels$.items.length">
+                  <tr class="grid-body">
+                    <td class="grid-body-item"
+                        colspan="8"
+                        style="text-align: center">
+                      No hay informacion para mostrar
+                    </td>
+                  </tr>
+                </ng-container>
+                <ng-container *ngIf="!!channels$.items.length">
+                  <tr class="table-body fs-row"
+                      [class.fs-row-selected]="selectedChannel(data)"
+                      role="button"
+                      *ngFor="let data of channels$.items"
+                      (click)="selectChannel(data)">
+                    <td class="table-body-item">{{ data.request.id }}</td>
+                    <td class="table-body-item">{{ data.clientName }}</td>
+                    <td class="table-body-item">{{ data.document.type }}</td>
+                    <td class="table-body-item">{{ data.document.number }}</td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="modal__footer"
+           [hidden]="isSearchedData3 == false">
+        <button class="btn-secondary-u mr-3"
+                (click)="closeModalSearch()">
+          Cancelar
+        </button>
+        <button class="btn-primary-u"
+                [disabled]="!channelSelected"
+                (click)="aceptSelectChannel()">
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalEvaluarA>
+  <div class="content-modal-u">
+    <div class="modal-u modalCreateRequest">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Evaluar Solicitud</h6>
+        <button class="modal__header--close"
+                (click)="resetAll()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body mbcr"
+           style="overflow-x: hidden">
+        <ng-container *ngIf="infoRegistro.NTYPEREQUEST == 0 || infoRegistro.NTYPEREQUEST == 1">
+          <div class="mbcr__item">
+            <h6 class="mbcr__item--title">Productos del canal</h6>
+            <app-product-list [data]="branchByChannelList"
+                              [readonly]="btnEditar"
+                              (changes)="onChangeBhanchFormList($event)"
+                              (isSOATSelected)="onChangeIsSoatSelected($event)"></app-product-list>
+          </div>
+        </ng-container>
+        <form [formGroup]="formEvaluarA"
+              style="margin-right: 10px">
+          <!-- DATOS - CANAL VENTA -->
+          <ng-container *ngIf="
+              infoRegistro.NTYPEREQUEST == 2 || infoRegistro.NTYPEREQUEST == 3
+            ">
+            <div class="mbcr__item">
+              <h6 class="mbcr__item--title">Datos - Canal de Venta</h6>
+              <div class="mbcr__item--inputs grd1">
+                <div class="grd2">
+                  <label for="mbcr_contact"
+                         class="lbl-input-u"
+                         aria-label="Código de Canal (*)">
+                    <input type="text"
+                           id="mbcr_contact"
+                           class="input-u"
+                           formControlName="codigo"
+                           disabled/>
+                  </label>
+                  <label for="mbcr_email"
+                         class="lbl-input-u"
+                         aria-label="Tipo Distribución (*)">
+                    <input type="text"
+                           id="mbcr_email"
+                           class="input-u"
+                           formControlName="type_d"
+                           disabled/>
+                  </label>
+                </div>
+                <div class="grd2">
+                  <label for="mbcr_contact"
+                         class="lbl-input-u"
+                         aria-label="Estado de Canal (*)">
+                    <input type="text"
+                           id="mbcr_contact"
+                           class="input-u"
+                           formControlName="estado"
+                           disabled/>
+                  </label>
+                  <label for="mbcr_email"
+                         class="lbl-input-u"
+                         aria-label="Fecha de Estado (*)">
+                    <input type="text"
+                           id="mbcr_email"
+                           class="input-u"
+                           formControlName="date"
+                           disabled/>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <!-- DATOS BASICOS -->
+          <ng-container *ngIf="
+              infoRegistro.NTYPEREQUEST == 0 || infoRegistro.NTYPEREQUEST == 1
+            ">
+            <div class="divider"></div>
+            <div class="mbcr__item">
+              <h6 class="mbcr__item--title">Datos Básicos</h6>
+              <div class="mbcr__item--inputs grd1">
+                <div class="grd2">
+                  <label for="mbcr_documentType"
+                         class="lbl-input-u"
+                         aria-label="Tipo de Documento (*)">
+                    <select id="mbcr_documentType"
+                            class="input-u"
+                            formControlName="documentType"
+                            disabled>
+                      <option [value]="null"
+                              disabled
+                              selected
+                              hidden>
+                        SELECCIONE
+                      </option>
+                      <option [value]="1">DNI</option>
+                      <option [value]="2">RUC</option>
+                      <option [value]="3">C.E.</option>
+                    </select>
+                  </label>
+                  <label for="mbcr_documentNumber"
+                         class="lbl-input-u"
+                         aria-label="Número de Documento (*)">
+                    <input type="text"
+                           id="mbcr_documentNumber"
+                           class="input-u"
+                           formControlName="documentNumber"
+                           autocomplete="off"
+                           [minlength]="limitDocumentNumber.min"
+                           [maxlength]="limitDocumentNumber.max"/>
+                  </label>
+                </div>
+                <div *ngIf="!flagDatosBasicos">
+                  <ng-container *ngIf="e['documentType'].value == 2">
+                    <label for="mbcr_businessName"
+                           class="lbl-input-u"
+                           aria-label="Razón Social (*)">
+                      <input type="text"
+                             id="mbcr_businessName"
+                             class="input-u"
+                             formControlName="businessName"
+                             autocomplete="off"/>
+                    </label>
+                  </ng-container>
+                </div>
+
+                <ng-container *ngIf="e['documentType'].value == 1">
+                  <label for="mbcr_businessName"
+                         class="lbl-input-u"
+                         aria-label="Nombres (*)">
+                    <input type="text"
+                           id="mbcr_businessName"
+                           class="input-u"
+                           formControlName="name"
+                           autocomplete="off"/>
+                  </label>
+                  <div class="grd2">
+                    <label for="mbcr_contact"
+                           class="lbl-input-u"
+                           aria-label="Apellido Paterno (*)">
+                      <input type="text"
+                             id="mbcr_contact"
+                             class="input-u"
+                             formControlName="lastname1"
+                             autocomplete="off"/>
+                    </label>
+                    <label for="mbcr_email"
+                           class="lbl-input-u"
+                           aria-label="Apellido Materno (*)">
+                      <input type="text"
+                             id="mbcr_email"
+                             class="input-u"
+                             formControlName="lastname2"
+                             autocomplete="off"/>
+                    </label>
+                  </div>
+                </ng-container>
+                <div class="grd2">
+                  <!--  -->
+                  <label for="mbcr_name"
+                         class="lbl-input-u"
+                         aria-label="Nombres (*)"
+                         *ngIf="flagDatosBasicos">
+                    <input type="text"
+                           id="mbcr_name"
+                           class="input-u"
+                           formControlName="name"
+                           autocomplete="off"/>
+                  </label>
+                  <label for="mbcr_lastName"
+                         class="lbl-input-u"
+                         aria-label="Apellido Paterno (*)"
+                         *ngIf="flagDatosBasicos">
+                    <input type="text"
+                           id="mbcr_lastName"
+                           class="input-u"
+                           formControlName="lastname1"
+                           autocomplete="off"/>
+                  </label>
+                  <label for="mbcr_lastName2"
+                         class="lbl-input-u"
+                         aria-label="Apellido Materno (*)"
+                         *ngIf="flagDatosBasicos">
+                    <input type="text"
+                           id="mbcr_lastName2"
+                           class="input-u"
+                           formControlName="lastname2"
+                           autocomplete="off"/>
+                  </label>
+                  <!--  -->
+                  <ng-container *ngIf="!isSubChannel">
+                    <label for="mbcr_department"
+                         class="lbl-input-u"
+                         aria-label="Departamento (*)">
+                    <select id="mbcr_department"
+                            class="input-u"
+                            (change)="changeValueDepartamento($event.target.value)"
+                            formControlName="department">
+                      <option value="null"
+                              disabled
+                              selected>SELECCIONE
+                      </option>
+                      <ng-container *ngIf="!!dataDepartamento?.PA_SEL_PROVINCE?.length">
+                        <option *ngFor="let data of dataDepartamento.PA_SEL_PROVINCE"
+                                [value]="data.NPROVINCE">
+                          {{ data.SDESCRIPT }}
+                        </option>
+                      </ng-container>
+                      <ng-container *ngIf="!dataDepartamento?.PA_SEL_PROVINCE?.length">
+                        <option disabled>NO HAY RESULTADOS</option>
+                      </ng-container>
+                    </select>
+                  </label>
+                  </ng-container>
+                  <ng-container *ngIf="!isSubChannel">
+                    <label for="mbcr_province"
+                         class="lbl-input-u"
+                         aria-label="Provincia (*)">
+                    <select id="mbcr_province"
+                            class="input-u"
+                            (change)="changeValueProvincia($event.target.value)"
+                            formControlName="province">
+                      <option value="null"
+                              disabled
+                              selected>SELECCIONE
+                      </option>
+                      <ng-container *ngIf="!!dataProvincia?.PA_SEL_LOCAL?.length">
+                        <option *ngFor="let data of dataProvincia?.PA_SEL_LOCAL"
+                                [value]="data.NLOCAL">
+                          {{ data.SDESCRIPT }}
+                        </option>
+                      </ng-container>
+                      <ng-container *ngIf="!dataProvincia?.PA_SEL_LOCAL?.length">
+                        <option disabled>NO HAY RESULTADOS</option>
+                      </ng-container>
+                    </select>
+                  </label>
+                  </ng-container>
+                  <ng-container *ngIf="!isSubChannel">
+                    <label for="mbcr_district"
+                         class="lbl-input-u"
+                         aria-label="Distrito (*)">
+                    <select id="mbcr_district"
+                            class="input-u"
+                            formControlName="district">
+                      <option value="null"
+                              disabled
+                              selected>SELECCIONE
+                      </option>
+                      <ng-container *ngIf="!!dataDistrito?.PA_SEL_MUNICIPALITY?.length">
+                        <option *ngFor="let data of dataDistrito?.PA_SEL_MUNICIPALITY"
+                                [value]="data.NMUNICIPALITY">
+                          {{ data.SDESCRIPT }}
+                        </option>
+                      </ng-container>
+                      <ng-container *ngIf="!dataDistrito?.PA_SEL_MUNICIPALITY?.length">
+                        <option disabled>NO HAY RESULTADOS</option>
+                      </ng-container>
+                    </select>
+                  </label>
+                  </ng-container>
+                  <ng-container *ngIf="!isSubChannel">
+                    <label for="mbcr_cellphone"
+                         class="lbl-input-u"
+                         aria-label="Número de Celular (*)">
+                    <input type="text"
+                           id="mbcr_cellphone"
+                           class="input-u"
+                           formControlName="cellphone"
+                           [maxlength]="9"
+                           [minlength]="9"
+                           autocomplete="off"/>
+                    </label>
+                  </ng-container>
+                  <ng-container *ngIf="!isSubChannel">
+                    <label for="mbcr_address"
+                         class="lbl-input-u"
+                         aria-label="Dirección (*)"
+                         *ngIf="flagDatosBasicos">
+                    <input type="text"
+                           id="mbcr_address"
+                           class="input-u"
+                           formControlName="address"
+                           autocomplete="off"/>
+                  </label>
+                  </ng-container>
+                </div>
+                <ng-container *ngIf="!isSubChannel">
+                  <label for="mbcr_address"
+                       class="lbl-input-u"
+                       aria-label="Dirección (*)"
+                       *ngIf="!flagDatosBasicos">
+                  <input type="text"
+                         id="mbcr_address"
+                         class="input-u"
+                         formControlName="address"
+                         autocomplete="off"/>
+                  </label>
+                </ng-container>
+                <div class="grd2">
+                  <ng-container *ngIf="!isSubChannel">
+                    <label for="mbcr_contact"
+                         class="lbl-input-u"
+                         aria-label="Contacto (*)">
+                    <input type="text"
+                           id="mbcr_contact"
+                           class="input-u"
+                           formControlName="contact"
+                           autocomplete="off"/>
+                    </label>
+                  </ng-container>
+                  <ng-container *ngIf="!isSubChannel">
+                    <label for="mbcr_email"
+                         class="lbl-input-u"
+                         aria-label="E-mail (*)">
+                    <input type="text"
+                           id="mbcr_email"
+                           class="input-u"
+                           formControlName="email"
+                           autocomplete="off"/>
+                  </label>
+                 </ng-container>
+                </div>
+                <div class="grd2">
+                  <label for="mbcr_channelType"
+                         class="lbl-input-u"
+                         aria-label="Tipo de Canal (*)">
+                    <select id="mbcr_channelType"
+                            class="input-u"
+                            formControlName="channelType">
+                      <option value="null"
+                              disabled
+                              selected>SELECCIONE
+                      </option>
+                      <ng-container *ngIf="!!dataCanal?.PA_SEL_CHANNEL_TYPE?.length">
+                        <option *ngFor="let data of dataCanal.PA_SEL_CHANNEL_TYPE"
+                                [value]="data.NIDTYPECHANNEL">
+                          {{ data.SDESCRIPTIONTYPECHANNEL }}
+                        </option>
+                      </ng-container>
+                      <ng-container *ngIf="!dataCanal?.PA_SEL_CHANNEL_TYPE?.length">
+                        <option disabled>NO HAY RESULTADOS</option>
+                      </ng-container>
+                    </select>
+                  </label>
+                  <!-- CANAL ASOCIADO -->
+                  <label for="mbcr_mainChannel"
+                         class="lbl-input-u"
+                         aria-label="Canal asociado (*)"
+                         *ngIf="flagTipoCanal">
+                    <select id="mbcr_mainChannel"
+                            class="input-u"
+                            formControlName="mainChannel">
+                      <ng-container *ngIf="listMainChannel.length > 0">
+                        <option *ngFor="let data of listMainChannel"
+                                [value]="data.codigoCanal">
+                          {{ data.canal }}
+                        </option>
+                      </ng-container>
+                      <ng-container *ngIf="listMainChannel.length == 0">
+                        <option disabled>NO HAY RESULTADOS</option>
+                      </ng-container>
+                    </select>
+                  </label>
+                  <!--  -->
+                </div>
+                <div class="grd2">
+                  <ng-container *ngIf="isSubChannel">
+                    <label for="mbcr_detail"
+                         class="lbl-input-u"
+                         aria-label="Detalle (*)">
+                    <input type="text"
+                           id="mbcr_detail"
+                           class="input-u"
+                           [maxlength]="60"
+                           formControlName="detail"/>
+                    </label>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <!-- DATOS COMPLEMENTARIOS -->
+          <ng-container *ngIf="
+              infoRegistro.NTYPEREQUEST == 0 || infoRegistro.NTYPEREQUEST == 1
+            ">
+            <div class="divider"></div>
+            <div class="mbcr__item">
+              <h6 class="mbcr__item--title">Datos Complementarios</h6>
+              <div class="mbcr__item--inputs grd1">
+                <div class="grd2">
+                  <label for="mbcr_startValidity"
+                         class="lbl-input-u"
+                         aria-label="Inicio de Vigencia">
+                    <input style="background-color: white"
+                           type="text"
+                           class="input-u"
+                           id="fecha"
+                           #dp="bsDatepicker"
+                           [bsConfig]="bsConfig"
+                           bsDatepicker
+                           readonly
+                           formControlName="startValidity"
+                           [maxDate]="bsValueFin"/>
+                  </label>
+                  <label for="mbcr_endValidity"
+                         class="lbl-input-u"
+                         aria-label="Fin de Vigencia">
+                    <input style="background-color: white"
+                           type="text"
+                           class="input-u"
+                           id="fecha"
+                           #dp="bsDatepicker"
+                           [bsConfig]="bsConfig"
+                           bsDatepicker
+                           readonly
+                           formControlName="endValidity"
+                           [maxDate]="bsValueFin"/>
+                  </label>
+                </div>
+                <label for="mbcr_stockProvider"
+                       class="lbl-input-u"
+                       aria-label="Proveedor de Stock">
+                  <select name="stockProvider"
+                          class="input-u"
+                          formControlName="stockProvider">
+                    <option [value]="null"
+                            disabled
+                            selected>SELECCIONE
+                    </option>
+                    <ng-container *ngIf="!!stockProvider$.items.length">
+                      <option *ngFor="let data of stockProvider$.items"
+                              [value]="data.id">
+                        {{ data.description }}
+                      </option>
+                    </ng-container>
+                    <ng-container *ngIf="!stockProvider$.items.length">
+                      <option disabled>NO HAY RESULTADOS</option>
+                    </ng-container>
+                  </select>
+                </label>
+                <div class="grd2">
+                  <label class="lbl-input-u"
+                         aria-label="Distribución">
+                    <div class="mbcr_radios">
+                      <div class="mbcr_radios--item">
+                        <input type="radio"
+                               class="chk"
+                               id="mbcr_channel"
+                               value="1"
+                               formControlName="distribution"/>
+                        <label class="lbl-chk"
+                               for="mbcr_channel">Canal</label>
+                      </div>
+                      <div class="mbcr_radios--item">
+                        <input type="radio"
+                               class="chk"
+                               s
+                               id="mbcr_pointSale"
+                               value="0"
+                               formControlName="distribution"/>
+                        <label class="lbl-chk"
+                               for="mbcr_pointSale">Punto de Venta</label>
+                      </div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <!-- DATOS ADJUNTOS -->
+          <ng-container *ngIf="isSOATSelected">
+            <ng-container *ngIf="
+              infoRegistro.NTYPEREQUEST == 0 || infoRegistro.NTYPEREQUEST == 1
+            ">
+              <div class="divider"></div>
+              <div class="mbcr__item">
+                <h6 class="mbcr__item--title">Datos Adjuntos</h6>
+                <app-attachments (efiles)="archivos($event)"
+                                 [data]="dataAdjunto"
+                                 [showAction]="showButton"></app-attachments>
+              </div>
+            </ng-container>
+          </ng-container>
+
+          <!-- DATOS - PUNTOS DE VENTA -->
+          <ng-container *ngIf="infoRegistro.NTYPEREQUEST == 3">
+            <div class="divider"></div>
+            <div class="mbcr__item">
+              <h6 class="mbcr__item--title">Datos - Punto de Venta</h6>
+              <div class="mbcr__item--inputs grd1">
+                <label for="mbcr_businessName"
+                       class="lbl-input-u"
+                       aria-label="Descripción">
+                  <input type="text"
+                         id="mbcr_businessName"
+                         class="input-u"
+                         formControlName="descripcion"
+                         autocomplete="off"/>
+                </label>
+                <div class="grd2">
+                  <label for="mbcr_department"
+                         class="lbl-input-u"
+                         aria-label="Departamento">
+                    <select id="mbcr_department"
+                            class="input-u"
+                            (change)="changeValueDepartamentoPV($event.target.value)"
+                            formControlName="departmentPV">
+                      <option value="null"
+                              disabled
+                              selected>SELECCIONE
+                      </option>
+                      <ng-container *ngIf="!!dataDepartamento?.PA_SEL_PROVINCE?.length">
+                        <option *ngFor="let data of dataDepartamento.PA_SEL_PROVINCE"
+                                [value]="data.NPROVINCE">
+                          {{ data.SDESCRIPT }}
+                        </option>
+                      </ng-container>
+                      <ng-container *ngIf="!dataDepartamento?.PA_SEL_PROVINCE?.length">
+                        <option disabled>NO HAY RESULTADOS</option>
+                      </ng-container>
+                    </select>
+                  </label>
+                  <label for="mbcr_province"
+                         class="lbl-input-u"
+                         aria-label="Provincia">
+                    <select id="mbcr_province"
+                            class="input-u"
+                            (change)="changeValueProvinciaPV($event.target.value)"
+                            formControlName="provincePV">
+                      <option value="null"
+                              disabled
+                              selected>SELECCIONE
+                      </option>
+                      <ng-container *ngIf="!!dataProvincia?.PA_SEL_LOCAL?.length">
+                        <option *ngFor="let data of dataProvincia?.PA_SEL_LOCAL"
+                                [value]="data.NLOCAL">
+                          {{ data.SDESCRIPT }}
+                        </option>
+                      </ng-container>
+                      <ng-container *ngIf="!dataProvincia?.PA_SEL_LOCAL?.length">
+                        <option disabled>NO HAY RESULTADOS</option>
+                      </ng-container>
+                    </select>
+                  </label>
+                </div>
+                <div class="grd2">
+                  <label for="mbcr_district"
+                         class="lbl-input-u"
+                         aria-label="Distrito">
+                    <select id="mbcr_district"
+                            class="input-u"
+                            formControlName="districtPV">
+                      <option value="null"
+                              disabled
+                              selected>SELECCIONE
+                      </option>
+                      <ng-container *ngIf="!!dataDistrito?.PA_SEL_MUNICIPALITY?.length">
+                        <option *ngFor="let data of dataDistrito?.PA_SEL_MUNICIPALITY"
+                                [value]="data.NMUNICIPALITY">
+                          {{ data.SDESCRIPT }}
+                        </option>
+                      </ng-container>
+                      <ng-container *ngIf="!dataDistrito?.PA_SEL_MUNICIPALITY?.length">
+                        <option disabled>NO HAY RESULTADOS</option>
+                      </ng-container>
+                    </select>
+                  </label>
+                  <label for="mbcr_cellphone"
+                         class="lbl-input-u"
+                         aria-label="Teléfono">
+                    <input type="text"
+                           id="mbcr_cellphone"
+                           class="input-u"
+                           formControlName="celular"
+                           [maxlength]="9"
+                           [minlength]="9"
+                           autocomplete="off"/>
+                  </label>
+                </div>
+                <label for="mbcr_address"
+                       class="lbl-input-u"
+                       aria-label="Dirección (*)">
+                  <input type="text"
+                         id="mbcr_address"
+                         class="input-u"
+                         formControlName="direccion"
+                         autocomplete="off"/>
+                </label>
+                <div class="grd2">
+                  <label for="mbcr_contact"
+                         class="lbl-input-u"
+                         aria-label="Contacto">
+                    <input type="text"
+                           id="mbcr_contact"
+                           class="input-u"
+                           formControlName="contacto"
+                           autocomplete="off"/>
+                  </label>
+                  <label for="mbcr_email"
+                         class="lbl-input-u"
+                         aria-label="Email">
+                    <input type="text"
+                           id="mbcr_email"
+                           class="input-u"
+                           formControlName="correo"
+                           autocomplete="off"/>
+                  </label>
+                </div>
+                <div class="grd2">
+                  <label for="mbcr_channelType"
+                         class="lbl-input-u"
+                         aria-label="Frecuencia">
+                    <input type="text"
+                           id="mbcr_email"
+                           class="input-u2"
+                           formControlName="numeroF"
+                           style="width: 25%"
+                           autocomplete="off"/>
+                    <select id="mbcr_channelType"
+                            class="input-u2"
+                            formControlName="frecuencia"
+                            style="width: 72%; margin-left: 10px">
+                      <option value="null"
+                              disabled
+                              selected>SELECCIONE
+                      </option>
+                      <option *ngFor="let data of dataFrecuencia?.PRO_MASTER"
+                              [value]="data.SITEM">
+                        {{ data.SDECRIPTION }}
+                      </option>
+                    </select>
+                  </label>
+                  <label for="mbcr_channelType"
+                         class="lbl-input-u"
+                         aria-label="Estado">
+                    <select id="mbcr_channelType"
+                            class="input-u"
+                            formControlName="estadoPV">
+                      <option value="null"
+                              disabled
+                              selected>SELECCIONE
+                      </option>
+                      <option *ngFor="let data of dataStatus?.PRO_MASTER"
+                              [value]="data.SITEM">
+                        {{ data.SDECRIPTION }}
+                      </option>
+                    </select>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <!-- DATOS - LINEA DE CREDITO -->
+          <ng-container *ngIf="isSOATSelected">
+            <ng-container *ngIf="
+              infoRegistro.NTYPEREQUEST == 0 ||
+              infoRegistro.NTYPEREQUEST == 3 ||
+              infoRegistro.NTYPEREQUEST == 1
+            ">
+              <div class="divider"></div>
+              <div class="mbcr__item">
+                <h6 class="mbcr__item--title">Datos - Línea de crédito</h6>
+                <app-credit-line-data (efiles)="listaCreditLine($event)"
+                                      [data]="listaPapeles"
+                                      [showAction]="showButton"
+                                      [showInput]="show"
+                                      [readOnly]="btnEditar"></app-credit-line-data>
+              </div>
+            </ng-container>
+          </ng-container>
+
+          <!-- DATOS - PUNTO DE VENTA 2 -->
+          <ng-container *ngIf="infoRegistro.NTYPEREQUEST == 2">
+            <div class="divider"></div>
+            <div class="mbcr__item">
+              <h6 class="mbcr__item--title">Datos - Punto de Venta</h6>
+              <div class="content">
+                <div class="content__item">
+                  <div class="content__item--inputs"
+                       style="overflow-x: auto">
+                    <div class="actions">
+                      <button class="btn-action"
+                              (click)="agregarPV()"
+                              *ngIf="!btnEditar">
+                        Agregar Punto de Venta
+                      </button>
+                      <button class="btn-action"
+                              (click)="fileChange()"
+                              hidden>
+                        Carga Masiva
+                      </button>
+                    </div>
+                    <table class="tbl"
+                           style="margin-top: 15px">
+                      <thead class="tbl__head">
+                        <tr class="tbl__head--row">
+                          <th class="tbl__head--row-col">Código</th>
+                          <th class="tbl__head--row-col">Descripción</th>
+                          <th class="tbl__head--row-col">Teléfono</th>
+                          <th class="tbl__head--row-col">E-mail</th>
+                          <th class="tbl__head--row-col">Stock</th>
+                          <th class="tbl__head--row-col"
+                              *ngIf="!btnEditar">Acción
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngIf="!dataPV?.PA_READ_DET_REQ_SALEPOINT.length">
+                          <tr class="tbl__body--row">
+                            <td class="tbl__body--row-col"
+                                colspan="6">
+                              NO HAY RESULTADOS
+                            </td>
+                          </tr>
+                        </ng-container>
+                        <ng-container *ngIf="!!dataPV?.PA_READ_DET_REQ_SALEPOINT.length">
+                          <tr class="tbl__body--row"
+                              style="text-align: center"
+                              *ngFor="
+                              let data of dataPV?.PA_READ_DET_REQ_SALEPOINT;
+                              let index = index
+                            ">
+                            <td class="tbl__body--row-col">
+                              {{ index + 1 }}
+                            </td>
+                            <td class="tbl__body--row-col">
+                              {{ data.SDESCRIPTION }}
+                            </td>
+                            <td class="tbl__body--row-col">
+                              {{ data.SPHONE }}
+                            </td>
+                            <td class="tbl__body--row-col">{{ data.SMAIL }}</td>
+                            <td class="tbl__body--row-col">
+                              <!-- {{
+  stockOfSalePoint(index + 1).length ? "Sí" : "No"
+}} -->
+                              {{ haveLineCredits(data.NIDSALEPOINT, index) ? 'Si' : 'No' }}
+                            </td>
+                            <td class="tbl__body--row-col"
+                                ngbDropdown
+                                placement="bottom-right"
+                                *ngIf="!btnEditar">
+                              <button class="btn-dropdown-u"
+                                      tabindex="0"
+                                      data-toggle="dropdown"
+                                      aria-haspopup="true"
+                                      aria-expanded="false"
+                                      ngbDropdownToggle>
+                                <i class="fa fa-ellipsis-v"
+                                   aria-hidden="true"></i>
+                              </button>
+                              <ul class="dropdown-u"
+                                  display="dynamic"
+                                  ngbDropdownMenu>
+                                <li class="dropdown-item-u">
+                                  <button class="dropdown-item-btn-u"
+                                          [disabled]="btnEditar == true"
+                                          (click)="agregarStock(data, index + 1)">
+                                    <i class="fa fa-archive"
+                                       aria-hidden="true"></i>
+                                    Stock
+                                  </button>
+                                </li>
+                                <li class="dropdown-item-u">
+                                  <button class="dropdown-item-btn-u"
+                                          [disabled]="btnEditar == true"
+                                          (click)="editarPV(data, index)">
+                                    <i class="fa fa-pencil"
+                                       aria-hidden="true"></i>
+                                    Editar
+                                  </button>
+                                </li>
+                                <li class="dropdown-item-u">
+                                  <button class="dropdown-item-btn-u"
+                                          [disabled]="btnEditar == true"
+                                          (click)="eliminar(index)">
+                                    <i class="fa fa-trash"
+                                       aria-hidden="true"></i>
+                                    Eliminar
+                                  </button>
+                                </li>
+                              </ul>
+                            </td>
+                          </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <!-- EVALUAR SOLICITUD -->
+          <ng-container *ngIf="
+              (infoRegistro.NSTATE == 1 ||
+              infoRegistro.NSTATE == 6 ||
+              infoRegistro.NSTATE == 3 ||
+              infoRegistro.NSTATE == 0) && btnEditar
+            ">
+            <div class="divider"></div>
+            <div class="mbcr__item"
+                 style="margin-bottom: 10px !important">
+              <h6 class="mbcr__item--title">Evaluar Solicitud</h6>
+              <div class="mbcr__item--inputs grd1">
+                <div class="grd2">
+                  <label for="mbcr_documentType"
+                         class="lbl-input-u"
+                         aria-label="Estado">
+                    <select id="mbcr_documentType"
+                            class="input-u"
+                            formControlName="estadoE">
+                      <option value="null"
+                              disabled
+                              selected>SELECCIONE
+                      </option>
+                      <option *ngFor="let data of dataEstadoEV?.PA_SEL_STATE"
+                              [value]="data.SITEM">
+                        {{ data.SDECRIPTION }}
+                      </option>
+                    </select>
+                  </label>
+                  <label for="mbcr_documentNumber"
+                         class="lbl-input-u"
+                         aria-label="Observación">
+                    <input type="text"
+                           id="mbcr_documentNumber"
+                           class="input-u"
+                           formControlName="observacion"
+                           autocomplete="off"/>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </form>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-secondary-u mr-3"
+                [hidden]="btnEditar == true"
+                (click)="guardar()">
+          Guardar
+        </button>
+        <button (click)="evaluar()"
+                class="btn-secondary-u mr-3"
+                *ngIf="
+            infoRegistro.NSTATE == 1 ||
+            infoRegistro.NSTATE == 6 ||
+            infoRegistro.NSTATE == 3 ||
+            infoRegistro.NSTATE == 0
+          "
+                [hidden]="btnEditar == false">
+          Evaluar
+        </button>
+       <!-- <button class="btn-secondary-u mr-3"
+                *ngIf="
+            infoRegistro.NSTATE == 1 ||
+            infoRegistro.NSTATE == 6 ||
+            infoRegistro.NSTATE == 3 ||
+            infoRegistro.NSTATE == 0
+          "
+                (click)="editar()"
+                [hidden]="btnEditar == false">
+          Editar
+        </button>-->
+        <button class="btn-secondary-u"
+                (click)="resetAll()"
+                *ngIf="
+            infoRegistro.NSTATE == 1 ||
+            infoRegistro.NSTATE == 6 ||
+            infoRegistro.NSTATE == 3 ||
+            infoRegistro.NSTATE == 0 ||
+            infoRegistro.NSTATE == 5 ||
+            infoRegistro.NSTATE == 4
+          ">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalMessage>
+  <div class="content-modal-u">
+    <div class="modal-u">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Mensaje</h6>
+        <button class="modal__header--close"
+                (click)="closeLastModal()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <p class="modal__body--desc">{{ message }}</p>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-primary-u"
+                role="button"
+                type="button"
+                (click)="closeLastModal()">
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalCreatePV>
+  <div class="content-modal-u">
+    <div class="modal-u"
+         style="max-width: 750px">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Crear Punto de Venta</h6>
+        <button class="modal__header--close"
+                (click)="closeLastModal()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <form [formGroup]="formCreatePV"
+              style="margin-right: 10px">
+          <div class="mbcr__item">
+            <h6 class="mbcr__item--title">Datos - Punto de Venta</h6>
+            <div class="mbcr__item--inputs grd1">
+              <label for="mbcr_businessName"
+                     class="lbl-input-u"
+                     aria-label="Descripción">
+                <input type="text"
+                       id="mbcr_businessName"
+                       class="input-u"
+                       formControlName="descripcion"
+                       [maxlength]="60"
+                       autocomplete="off"/>
+              </label>
+              <div class="grd2">
+                <label for="mbcr_department"
+                       class="lbl-input-u"
+                       aria-label="Departamento">
+                  <select id="mbcr_department"
+                          class="input-u"
+                          (change)="changeValueDepartamentoPV($event.target.value)"
+                          formControlName="departmentPV">
+                    <option value="null"
+                            disabled
+                            selected>SELECCIONE
+                    </option>
+                    <ng-container *ngIf="!!dataDepartamento?.PA_SEL_PROVINCE?.length">
+                      <option *ngFor="let data of dataDepartamento.PA_SEL_PROVINCE"
+                              [value]="data.NPROVINCE">
+                        {{ data.SDESCRIPT }}
+                      </option>
+                    </ng-container>
+                    <ng-container *ngIf="!dataDepartamento?.PA_SEL_PROVINCE?.length">
+                      <option disabled>NO HAY RESULTADOS</option>
+                    </ng-container>
+                  </select>
+                </label>
+                <label for="mbcr_province"
+                       class="lbl-input-u"
+                       aria-label="Provincia">
+                  <select id="mbcr_province"
+                          class="input-u"
+                          (change)="changeValueProvinciaPV($event.target.value)"
+                          formControlName="provincePV">
+                    <option value="null"
+                            disabled
+                            selected>SELECCIONE
+                    </option>
+                    <ng-container *ngIf="!!dataProvincia?.PA_SEL_LOCAL?.length">
+                      <option *ngFor="let data of dataProvincia?.PA_SEL_LOCAL"
+                              [value]="data.NLOCAL">
+                        {{ data.SDESCRIPT }}
+                      </option>
+                    </ng-container>
+                    <ng-container *ngIf="!dataProvincia?.PA_SEL_LOCAL?.length">
+                      <option disabled>NO HAY RESULTADOS</option>
+                    </ng-container>
+                  </select>
+                </label>
+              </div>
+              <div class="grd2">
+                <label for="mbcr_district"
+                       class="lbl-input-u"
+                       aria-label="Distrito">
+                  <select id="mbcr_district"
+                          class="input-u"
+                          formControlName="districtPV">
+                    <option value="null"
+                            disabled
+                            selected>SELECCIONE
+                    </option>
+                    <ng-container *ngIf="!!dataDistrito?.PA_SEL_MUNICIPALITY?.length">
+                      <option *ngFor="let data of dataDistrito?.PA_SEL_MUNICIPALITY"
+                              [value]="data.NMUNICIPALITY">
+                        {{ data.SDESCRIPT }}
+                      </option>
+                    </ng-container>
+                    <ng-container *ngIf="!dataDistrito?.PA_SEL_MUNICIPALITY?.length">
+                      <option disabled>NO HAY RESULTADOS</option>
+                    </ng-container>
+                  </select>
+                </label>
+                <label for="mbcr_cellphone"
+                       class="lbl-input-u"
+                       aria-label="Teléfono">
+                  <input type="text"
+                         id="mbcr_cellphone"
+                         class="input-u"
+                         formControlName="celularPV"
+                         [maxlength]="9"
+                         [minlength]="9"
+                         autocomplete="off"/>
+                </label>
+              </div>
+              <label for="mbcr_address"
+                     class="lbl-input-u"
+                     aria-label="Dirección (*)">
+                <input type="text"
+                       id="mbcr_address"
+                       class="input-u"
+                       [maxlength]="60"
+                       formControlName="direccion"
+                       autocomplete="off"/>
+              </label>
+              <div class="grd2">
+                <label for="mbcr_contact"
+                       class="lbl-input-u"
+                       aria-label="Contacto">
+                  <input type="text"
+                         id="mbcr_contact"
+                         class="input-u"
+                         [maxlength]="50"
+                         formControlName="contacto"
+                         autocomplete="off"/>
+                </label>
+                <label for="mbcr_email"
+                       class="lbl-input-u"
+                       aria-label="Email">
+                  <input type="text"
+                         id="mbcr_email"
+                         class="input-u"
+                         [maxlength]="60"
+                         formControlName="correo"
+                         autocomplete="off"/>
+                </label>
+              </div>
+              <div class="grd2">
+                <label for="mbcr_channelType"
+                       class="lbl-input-u"
+                       aria-label="Frecuencia">
+                  <input type="text"
+                         id="mbcr_email"
+                         class="input-u2"
+                         formControlName="numeroF"
+                         style="width: 25%"
+                         autocomplete="off"/>
+                  <select id="mbcr_channelType"
+                          class="input-u2"
+                          formControlName="frecuencia"
+                          style="width: 72%; margin-left: 9px">
+                    <option value="null"
+                            disabled
+                            selected>SELECCIONE
+                    </option>
+                    <option *ngFor="let data of dataFrecuencia?.PRO_MASTER"
+                            [value]="data.SITEM">
+                      {{ data.SDECRIPTION }}
+                    </option>
+                  </select>
+                </label>
+                <label for="mbcr_channelType"
+                       class="lbl-input-u"
+                       aria-label="Estado">
+                  <select id="mbcr_channelType"
+                          class="input-u"
+                          formControlName="estadoPV">
+                    <option value="null"
+                            disabled
+                            selected>SELECCIONE
+                    </option>
+                    <option *ngFor="let data of dataStatus?.PRO_MASTER"
+                            [value]="data.SITEM">
+                      {{ data.SDECRIPTION }}
+                    </option>
+                  </select>
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-primary-u"
+                role="button"
+                type="button"
+                style="margin-right: 5px"
+                [disabled]="formCreatePV.invalid"
+                (click)="aceptarPV()">
+          Aceptar
+        </button>
+        <button class="btn-primary-u"
+                role="button"
+                type="button"
+                (click)="closeLastModal()"
+                style="margin-left: 5px">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalFcrSalePoint>
+  <div class="content-modal-u">
+    <section class="modal-u fcr_sp-modal">
+      <div class="modal__header">
+        <h6 class="modal__header--title">
+          {{
+          typeModalSalePoint == 1
+            ? "Crear Punto de Venta"
+            : "Editar Punto de Venta"
+          }}
+        </h6>
+        <button class="modal__header--close"
+                (click)="closeLastModal()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <form class="fcr_sp"
+              [formGroup]="fcrSalePoint">
+          <h6 class="fcr_sp-title">Datos - Punto de Venta</h6>
+          <div class="fcr_sp-group grd1">
+            <label for="fcr_sp-description"
+                   class="lbl-input-u"
+                   aria-label="Descripción (*)">
+              <input type="text"
+                     id="fcr_sp-description"
+                     class="input-u"
+                     [maxlength]="60"
+                     formControlName="description"/>
+            </label>
+          </div>
+          <div class="fcr_sp-group grd2">
+            <label for="fcr_sp-department"
+                   class="lbl-input-u"
+                   aria-label="Departamento (*)">
+              <select formControlName="department"
+                      id="fcr_sp-department"
+                      class="input-u">
+                <ng-container *ngIf="!departments$?.length">
+                  <option value="null">NO HAY RESULTADOS</option>
+                </ng-container>
+                <ng-container *ngIf="!!departments$?.length">
+                  <option value="null"
+                          selected
+                          hidden>SELECCIONE
+                  </option>
+                  <option *ngFor="let data of departments$"
+                          [value]="data.id">
+                    {{ data.descripcion }}
+                  </option>
+                </ng-container>
+              </select>
+            </label>
+            <label for="fcr_sp-province"
+                   class="lbl-input-u"
+                   aria-label="Provincia (*)">
+              <select formControlName="province"
+                      id="fcr_sp-province"
+                      class="input-u">
+                <ng-container *ngIf="!provinces$?.length">
+                  <option value="null">NO HAY RESULTADOS</option>
+                </ng-container>
+                <ng-container *ngIf="!!provinces$?.length">
+                  <option value="null"
+                          selected
+                          hidden>SELECCIONE
+                  </option>
+                  <option *ngFor="let data of provinces$"
+                          [value]="data.idProvincia">
+                    {{ data.provincia }}
+                  </option>
+                </ng-container>
+              </select>
+            </label>
+            <label for="fcr_sp-district"
+                   class="lbl-input-u"
+                   aria-label="Distrito (*)">
+              <select formControlName="district"
+                      id="fcr_sp-district"
+                      class="input-u">
+                <ng-container *ngIf="!districts$?.length">
+                  <option value="null">NO HAY RESULTADOS</option>
+                </ng-container>
+                <ng-container *ngIf="!!districts$?.length">
+                  <option value="null"
+                          selected
+                          hidden>SELECCIONE
+                  </option>
+                  <option *ngFor="let data of districts$"
+                          [value]="data.idDistrito">
+                    {{ data.distrito }}
+                  </option>
+                </ng-container>
+              </select>
+            </label>
+            <label for="fcr_sp-phone"
+                   class="lbl-input-u"
+                   aria-label="Número de Celular (*)">
+              <input type="text"
+                     id="fcr_sp-phone"
+                     class="input-u"
+                     formControlName="phone"
+                     maxlength="9"/>
+            </label>
+          </div>
+          <div class="fcr_sp-group grd1">
+            <label for="fcr_sp-address"
+                   class="lbl-input-u"
+                   aria-label="Dirección (*)">
+              <input type="text"
+                     id="fcr_sp-address"
+                     class="input-u"
+                     [maxlength]="60"
+                     formControlName="address"/>
+            </label>
+          </div>
+          <div class="fcr_sp-group grd2">
+            <label for="fcr_sp-contact"
+                   class="lbl-input-u"
+                   aria-label="Contacto (*)">
+              <input type="text"
+                     id="fcr_sp-contact"
+                     class="input-u"
+                     [maxlength]="50"
+                     formControlName="contact"/>
+            </label>
+            <label for="fcr_sp-email"
+                   class="lbl-input-u"
+                   aria-label="Correo Electrónico (*)">
+              <input type="text"
+                     id="fcr_sp-email"
+                     class="input-u"
+                     [maxlength]="60"
+                     formControlName="email"/>
+            </label>
+          </div>
+          <div class="fcr_sp-group grd2">
+            <label for=""
+                   class="lbl-input-u"
+                   aria-label="Frecuencia (*)"
+                   formGroupName="frecuency">
+              <div class="content-frecuency">
+                <input type="text"
+                       class="input-u"
+                       formControlName="quantity"/>
+                <select class="input-u"
+                        formControlName="type">
+                  <option [value]="null"
+                          selected
+                          disabled
+                          hidden>
+                    SELECCIONE
+                  </option>
+                  <option value="1">Semanalmente</option>
+                  <option value="2">Mensualmente</option>
+                </select>
+              </div>
+            </label>
+            <label for="fcr_sp-state"
+                   class="lbl-input-u"
+                   aria-label="Estado">
+              <select class="input-u"
+                      id="fcr_sp-state"
+                      formControlName="state">
+                <option value="0">Inactivo</option>
+                <option value="1">Activo</option>
+              </select>
+            </label>
+          </div>
+        </form>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-primary-u mr-3"
+                role="button"
+                type="button"
+                [disabled]="fcrSalePoint.invalid"
+                (click)="fcrAddSalePoint()">
+          Aceptar
+        </button>
+        <button class="btn-primary-u mr-3"
+                role="button"
+                type="button"
+                (click)="closeLastModal()">
+          Cancelar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalEditPV>
+  <div class="content-modal-u">
+    <div class="modal-u"
+         style="max-width: 750px">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Editar Punto de Venta</h6>
+        <button class="modal__header--close"
+                (click)="closeLastModal()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <form [formGroup]="formEditPV"
+              style="margin-right: 10px">
+          <div class="mbcr__item">
+            <h6 class="mbcr__item--title">Datos - Punto de Venta</h6>
+            <div class="mbcr__item--inputs grd1">
+              <label for="mbcr_businessName"
+                     class="lbl-input-u"
+                     aria-label="Descripción">
+                <input type="text"
+                       id="mbcr_businessName"
+                       class="input-u"
+                       formControlName="descripcion"
+                       autocomplete="off"/>
+              </label>
+              <div class="grd2">
+                <label for="mbcr_department"
+                       class="lbl-input-u"
+                       aria-label="Departamento">
+                  <select id="mbcr_department"
+                          class="input-u"
+                          (change)="changeValueDepartamentoEPV($event.target.value)"
+                          formControlName="departmentPV">
+                    <option value="null"
+                            disabled
+                            selected>SELECCIONE
+                    </option>
+                    <ng-container *ngIf="!!dataDepartamento?.PA_SEL_PROVINCE?.length">
+                      <option *ngFor="let data of dataDepartamento.PA_SEL_PROVINCE"
+                              [value]="data.NPROVINCE">
+                        {{ data.SDESCRIPT }}
+                      </option>
+                    </ng-container>
+                    <ng-container *ngIf="!dataDepartamento?.PA_SEL_PROVINCE?.length">
+                      <option disabled>NO HAY RESULTADOS</option>
+                    </ng-container>
+                  </select>
+                </label>
+                <label for="mbcr_province"
+                       class="lbl-input-u"
+                       aria-label="Provincia">
+                  <select id="mbcr_province"
+                          class="input-u"
+                          (change)="changeValueProvinciaEPV($event.target.value)"
+                          formControlName="provincePV">
+                    <option value="null"
+                            disabled
+                            selected>SELECCIONE
+                    </option>
+                    <ng-container *ngIf="!!dataProvincia?.PA_SEL_LOCAL?.length">
+                      <option *ngFor="let data of dataProvincia?.PA_SEL_LOCAL"
+                              [value]="data.NLOCAL">
+                        {{ data.SDESCRIPT }}
+                      </option>
+                    </ng-container>
+                    <ng-container *ngIf="!dataProvincia?.PA_SEL_LOCAL?.length">
+                      <option disabled>NO HAY RESULTADOS</option>
+                    </ng-container>
+                  </select>
+                </label>
+              </div>
+              <div class="grd2">
+                <label for="mbcr_district"
+                       class="lbl-input-u"
+                       aria-label="Distrito">
+                  <select id="mbcr_district"
+                          class="input-u"
+                          formControlName="districtPV">
+                    <option value="null"
+                            disabled
+                            selected>SELECCIONE
+                    </option>
+                    <ng-container *ngIf="!!dataDistrito?.PA_SEL_MUNICIPALITY?.length">
+                      <option *ngFor="let data of dataDistrito?.PA_SEL_MUNICIPALITY"
+                              [value]="data.NMUNICIPALITY">
+                        {{ data.SDESCRIPT }}
+                      </option>
+                    </ng-container>
+                    <ng-container *ngIf="!dataDistrito?.PA_SEL_MUNICIPALITY?.length">
+                      <option disabled>NO HAY RESULTADOS</option>
+                    </ng-container>
+                  </select>
+                </label>
+                <label for="mbcr_cellphone"
+                       class="lbl-input-u"
+                       aria-label="Teléfono">
+                  <input type="text"
+                         id="mbcr_cellphone"
+                         class="input-u"
+                         formControlName="celularPV"
+                         [maxlength]="9"
+                         [minlength]="9"
+                         autocomplete="off"/>
+                </label>
+              </div>
+              <label for="mbcr_address"
+                     class="lbl-input-u"
+                     aria-label="Dirección (*)">
+                <input type="text"
+                       id="mbcr_address"
+                       class="input-u"
+                       formControlName="direccion"
+                       autocomplete="off"/>
+              </label>
+              <div class="grd2">
+                <label for="mbcr_contact"
+                       class="lbl-input-u"
+                       aria-label="Contacto">
+                  <input type="text"
+                         id="mbcr_contact"
+                         class="input-u"
+                         formControlName="contacto"
+                         autocomplete="off"/>
+                </label>
+                <label for="mbcr_email"
+                       class="lbl-input-u"
+                       aria-label="Email">
+                  <input type="text"
+                         id="mbcr_email"
+                         class="input-u"
+                         formControlName="correo"
+                         autocomplete="off"/>
+                </label>
+              </div>
+              <div class="grd2">
+                <label for="mbcr_channelType"
+                       class="lbl-input-u"
+                       aria-label="Frecuencia">
+                  <input type="text"
+                         id="mbcr_email"
+                         class="input-u2"
+                         formControlName="numeroF"
+                         style="width: 25%"
+                         autocomplete="off"/>
+                  <select id="mbcr_channelType"
+                          class="input-u2"
+                          formControlName="frecuencia"
+                          style="width: 72%; margin-left: 9px">
+                    <option value="null"
+                            disabled
+                            selected>SELECCIONE
+                    </option>
+                    <option *ngFor="let data of dataFrecuencia?.PRO_MASTER"
+                            [value]="data.SITEM">
+                      {{ data.SDECRIPTION }}
+                    </option>
+                  </select>
+                </label>
+                <label for="mbcr_channelType"
+                       class="lbl-input-u"
+                       aria-label="Estado">
+                  <select id="mbcr_channelType"
+                          class="input-u"
+                          formControlName="estadoPV">
+                    <option value="null"
+                            disabled
+                            selected>SELECCIONE
+                    </option>
+                    <option *ngFor="let data of dataStatus?.PRO_MASTER"
+                            [value]="data.SITEM">
+                      {{ data.SDECRIPTION }}
+                    </option>
+                  </select>
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-primary-u"
+                role="button"
+                type="button"
+                style="margin-right: 5px"
+                [disabled]="formEditPV.invalid"
+                (click)="aceptarEditPV()">
+          Aceptar
+        </button>
+        <button class="btn-primary-u"
+                role="button"
+                type="button"
+                (click)="closeLastModal()"
+                style="margin-left: 5px">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalAgregarStock>
+  <div class="content-modal-u">
+    <div class="modal-u"
+         style="max-width: 750px; min-width: 750px">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Línea de Crédito</h6>
+        <button class="modal__header--close"
+                (click)="closeLastModal()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <div class="mbcr__item">
+          <app-credit-line-data (efiles)="listaCreditLine3($event)"
+                                [showAction]="showButton"
+                                [showInput]="show"
+                                [data]="creditLinesData"></app-credit-line-data>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-primary-u"
+                role="button"
+                type="button"
+                style="margin-right: 5px"
+                (click)="aceptarStock()">
+          Aceptar
+        </button>
+        <button class="btn-primary-u"
+                role="button"
+                type="button"
+                style="margin-left: 5px"
+                (click)="closeLastModal()">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalFcrStock>
+  <div class="content-modal-u">
+    <section class="modal-u modal-fcr-stock">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Línea de Crédito</h6>
+        <button class="modal__header--close"
+                (click)="cancelModalStock()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <app-credit-line-data [showAction]="true"
+                              [showInput]="true"
+                              [data]="creditLinesData"
+                              (efiles)="dataFcrCreditLine($event)"></app-credit-line-data>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-primary-u mr-3"
+                role="button"
+                type="button"
+                (click)="aceptStockSalePoint()">
+          Aceptar
+        </button>
+        <button class="btn-primary-u"
+                role="button"
+                type="button"
+                (click)="cancelModalStock()">
+          Cancelar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalSearchSalePoint>
+  <div class="content-modal-u">
+    <div class="modal-u modal-fssp">
+      <div class="modal__heade">
+        <h6 class="modal__header--title">Buscar Punto de Venta</h6>
+        <button class="modal__header--close"
+                (click)="closeLastModal()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body mt-3">
+        <form class="fssp"
+              [formGroup]="formSearchSalePoint"
+              (ngSubmit)="searchSalePoint(true)">
+          <div class="fcrssp__group grd2">
+            <label for="fssp-documentType"
+                   class="lbl-input-u"
+                   aria-label="Tipo de Documento:">
+              <select formControlName="documentType"
+                      id="fssp-documentType"
+                      class="input-u">
+                <option value="1">DNI</option>
+                <option value="2">RUC</option>
+                <option value="3">C.E.</option>
+              </select>
+            </label>
+            <label for="fssp-documentNumber"
+                   class="lbl-input-u"
+                   aria-label="Número de Documento:">
+              <input type="text"
+                     id="fssp-documentNumber"
+                     class="input-u"
+                     formControlName="documentNumber"/>
+            </label>
+          </div>
+          <div class="fssp-group grd1">
+            <label for="fssp-clientName"
+                   class="lbl-input-u"
+                   aria-label="Razón Social:">
+              <input type="text"
+                     id="fssp-clientName"
+                     class="input-u"
+                     formControlName="clientName"/>
+            </label>
+          </div>
+          <div class="fcrssp__group grd2">
+            <label for="fssp-pdvCode"
+                   class="lbl-input-u"
+                   aria-label="Código de PDV:">
+              <input type="text"
+                     id="fssp-pdvCode"
+                     class="input-u"
+                     formControlName="code"/>
+            </label>
+            <label for="fssp-pdvDescription"
+                   class="lbl-input-u"
+                   aria-label="Descrición de PDV">
+              <input type="text"
+                     id="fssp-pdvDescription"
+                     class="input-u"
+                     formControlName="description"/>
+            </label>
+          </div>
+          <button class="btn-primary-u btn-submit-fssp"
+                  type="submit"
+                  role="button">
+            Buscar
+          </button>
+        </form>
+        <div class="content-table content-table-sp">
+          <table class="tbl">
+            <thead class="tbl__head">
+              <tr class="tbl__head--row">
+                <td class="tbl__head--row-col">Código de Canal</td>
+                <td class="tbl__head--row-col">Nombre de Canal</td>
+                <td class="tbl__head--row-col">Tipo de Documento</td>
+                <td class="tbl__head--row-col">Número de Documento</td>
+                <td class="tbl__head--row-col">Código de PDV</td>
+                <td class="tbl__head--row-col">Nombre de PDV</td>
+              </tr>
+            </thead>
+            <tbody class="tbl__body">
+              <ng-container *ngIf="!salePoints$?.items?.length">
+                <tr class="tbl__body--row">
+                  <td class="tbl__body--row-col"
+                      colspan="6">
+                    NO HAY RESULTADOS
+                  </td>
+                </tr>
+              </ng-container>
+              <ng-container *ngIf="!!salePoints$?.items?.length">
+                <tr class="tbl__body--row tbl-sp-row"
+                    *ngFor="
+                    let data of salePoints$?.items
+                      | paginate
+                        : {
+                            itemsPerPage: 5,
+                            currentPage: salePointPage,
+                            id: 'salePoints',
+                            totalItems: salePoints$.totalItems
+                          };
+                    let index = index
+                  "
+                    role="button"
+                    (click)="selectSalePoint(data)"
+                    [class.tbl-sp-row-selected]="salePointSelected == data">
+                  <td class="tbl__body--row-col">
+                    {{ data.channelId }}
+                  </td>
+                  <td class="tbl__body--row-col">
+                    {{ data.clientName }}
+                  </td>
+                  <td class="tbl__body--row-col">
+                    {{ data.descriptionDocumentType }}
+                  </td>
+                  <td class="tbl__body--row-col">
+                    {{ data.documentNumber }}
+                  </td>
+                  <td class="tbl__body--row-col">
+                    {{ data.salePointId }}
+                  </td>
+                  <td class="tbl__body--row-col">
+                    {{ data.description }}
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination-sp">
+          <pagination-controls *ngIf="!!salePoints$?.items?.length"
+                               class="my-pagination"
+                               id="salePoints"
+                               (pageChange)="currentPageSP = $event"
+                               autoHide="true"
+                               responsive="true"
+                               previousLabel="Anterior"
+                               nextLabel="Siguiente"
+                               screenReaderPaginationLabel="Paginación"
+                               screenReaderPageLabel="pagina"
+                               screenReaderCurrentLabel="Estás en la pagina">
+          </pagination-controls>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-primary-u mr-3"
+                [disabled]="!salePointSelected"
+                (click)="acepSalePoint()">
+          Aceptar
+        </button>
+        <button class="btn-primary-u"
+                (click)="closeLastModal()">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalBulkLoad>
+  <div class="content-modal-u">
+    <div class="modal-u">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Errores de Carga Masiva</h6>
+        <button class="modal__header--close">&times;</button>
+      </div>
+      <div class="modal__body">
+        <div class="content-tbl">
+          <table class="tbl">
+            <thead class="tbl__head">
+              <tr class="tbl__head--row">
+                <th class="tbl__head--row-col">Fila</th>
+                <th class="tbl__head--row-col">Descriptión de Error</th>
+              </tr>
+            </thead>
+            <tbody class="tbl__body">
+              <tr class="tbl__body--row"
+                  *ngFor="
+                  let data of bulkLoadData$?.DataLoadMasive?.ListSalePoints
+                ">
+                <td class="tbl__body--row-col"></td>
+                <td class="tbl__body--row-col"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-primary-u">Atrás</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

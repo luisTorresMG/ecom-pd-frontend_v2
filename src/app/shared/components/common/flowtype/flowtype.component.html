@@ -1,0 +1,8 @@
+<select id="FlowTypeSelect" (change)="onSelectFlowType($event.target.value)">
+  <option value="0" selected>Seleccionar</option>
+  <option
+    *ngFor="let flowtype of ListFlowType"
+    value="{{ flowtype.nidflow }}"
+    >{{ flowtype.sdescript }}</option
+  >
+</select>

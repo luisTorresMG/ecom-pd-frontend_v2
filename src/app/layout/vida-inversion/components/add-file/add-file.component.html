@@ -1,0 +1,52 @@
+<div class="container-modal">
+    <button class="close"
+            (click)="reference.close()">x</button>
+    <div class="content">
+        <div class="container-title-modal">
+            <h3 class="title">Cargar File firmado</h3>
+        </div>
+        <input class="nameFile"
+               type="text"
+               [value]="pdfFile ? pdfFile.name : ''"
+               readonly
+               placeholder="Nombre del archivo">
+        <input type="file"
+               (change)="onFileChange($event)"
+               accept=".pdf"
+               id="fileInput"
+               style="display: none;">
+
+
+        <p style="color: #553d81;font-weight: bold;padding: 0px; margin: 0px;">Contratante acepta promociones:</p>
+
+        <div style="display: flex; gap:15px; color: #553d81;">
+            <label>
+                <input type="radio"
+                       name="accpet_promotions"
+                       [(ngModel)]="accpet_promotions"
+                       value="SI"> SÍ
+            </label>
+            <label>
+                <input type="radio"
+                       name="accpet_promotions"
+                       [(ngModel)]="accpet_promotions"
+                       value="NO"> No
+            </label>
+        </div>
+
+        <div style="color: red;"
+             *ngIf="show_validate_message">
+            <p>*Se debe seleccionar una de las opciones para continuar.</p>
+        </div>
+        <div class="content-buttons">
+            <label class="button"
+                   for="fileInput"
+                   id="fileInputLabel">Seleccionar</label>
+            <div *ngIf="errorMessage">{{ errorMessage }}</div>
+            <button class="button"
+                    id="button"
+                    (click)="onSubmit()">Cargar</button>
+            <!-- [disabled]="!pdfFile">Cargar</button> -->
+        </div>
+    </div>
+</div>

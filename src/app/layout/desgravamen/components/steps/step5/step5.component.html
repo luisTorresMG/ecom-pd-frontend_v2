@@ -1,0 +1,297 @@
+<div class="content background">
+  <app-steps-generic [NSTEP]="5"
+                     [NSTEPS]="5"></app-steps-generic>
+  <div class="content__item">
+    <h1 class="title">Costo de la prima de tu <b>Seguro Desgravamen</b></h1>
+    <div class="plan_selected">
+      <h3 class="plan_selected--price">S/180</h3>
+      <div class="plan_selected--frecuency">
+        <span>Plan 1</span>
+        <span>mensual</span>
+      </div>
+    </div>
+    <span class="idProcess">Cód. Transacción 123456</span>
+    <button class="button-default btn-download-quotation">
+      <i class="fa fa-download"
+         aria-hidden="true"></i>
+      <span>Descarga tu cotización</span>
+    </button>
+    <span class="extra">Ingrese a sus beneficiarios, datos de contacto y proceda a pagar</span>
+    <div class="content_type_benef">
+      <h5 class="insurance_name">
+        James Cooper Fox
+      </h5>
+      <div class="content_chk">
+        <input type="radio"
+               class="chk"
+               id="herederos-legales-chk"
+               value="1"
+               [checked]="tipoCotizacion == 1"
+               (change)="changeTypeCotizacion($event.target.value)">
+        <label for="herederos-legales-chk"
+               class="lbl-chk">
+          <span>Mis beneficiarios serán mis herederos legales</span>
+        </label>
+      </div>
+      <div class="content_chk">
+        <input type="radio"
+               class="chk"
+               id="select-benef-chk"
+               value="2"
+               [checked]="tipoCotizacion == 2"
+               (change)="changeTypeCotizacion($event.target.value)">
+        <label for="select-benef-chk"
+               class="lbl-chk">
+          <span>Deseo elegir a mis beneficiarios</span>
+        </label>
+      </div>
+      <ng-container *ngIf="tipoCotizacion == 2">
+        <div class="content_beneficiarios"
+             [@fade]="true">
+          <div class="count_benef">
+            <span>Tienes (2) beneficiarios legales</span>
+            <button class="button-default btn-add-benef"
+                    (click)="showModalBeneficiario()">
+              <svg width="24"
+                   height="24"
+                   xmlns="http://www.w3.org/2000/svg"
+                   fill-rule="evenodd"
+                   clip-rule="evenodd">
+                <path d="M11 11v-11h1v11h11v1h-11v11h-1v-11h-11v-1h11z" />
+              </svg>
+              <span>Agregar</span>
+            </button>
+          </div>
+          <div class="content_benef_list">
+            <div class="list_benf">
+              <span>DNI</span>
+              <span>Nombres y Apellidos</span>
+              <span>Porcentaje de Participación (%)</span>
+            </div>
+            <div class="list_benf">
+              <span>75197879</span>
+              <span>Kevin Harrinson Lugo Díaz</span>
+              <span>50</span>
+              <div class="list_benf--actions">
+                <button class="button-default">
+                  <svg width="24"
+                       height="24"
+                       xmlns="http://www.w3.org/2000/svg"
+                       fill-rule="evenodd"
+                       clip-rule="evenodd">
+                    <path
+                          d="M8.071 21.586l-7.071 1.414 1.414-7.071 14.929-14.929 5.657 5.657-14.929 14.929zm-.493-.921l-4.243-4.243-1.06 5.303 5.303-1.06zm9.765-18.251l-13.3 13.301 4.242 4.242 13.301-13.3-4.243-4.243z" />
+                  </svg>
+                </button>
+                <button class="button-default">
+                  <svg width="24"
+                       height="24"
+                       xmlns="http://www.w3.org/2000/svg"
+                       fill-rule="evenodd"
+                       clip-rule="evenodd">
+                    <path
+                          d="M9 3h6v-1.75c0-.066-.026-.13-.073-.177-.047-.047-.111-.073-.177-.073h-5.5c-.066 0-.13.026-.177.073-.047.047-.073.111-.073.177v1.75zm11 1h-16v18c0 .552.448 1 1 1h14c.552 0 1-.448 1-1v-18zm-10 3.5c0-.276-.224-.5-.5-.5s-.5.224-.5.5v12c0 .276.224.5.5.5s.5-.224.5-.5v-12zm5 0c0-.276-.224-.5-.5-.5s-.5.224-.5.5v12c0 .276.224.5.5.5s.5-.224.5-.5v-12zm8-4.5v1h-2v18c0 1.105-.895 2-2 2h-14c-1.105 0-2-.895-2-2v-18h-2v-1h7v-2c0-.552.448-1 1-1h6c.552 0 1 .448 1 1v2h7z" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <span class="data_contact_span">Datos de contacto</span>
+      <div class="content_insurance_contact">
+        <ng-container *ngIf="form.invalid">
+          <button class="button-default"
+                  (click)="showModalContact()"
+                  [@fade]="true">
+            <svg width="24"
+                 height="24"
+                 xmlns="http://www.w3.org/2000/svg"
+                 fill-rule="evenodd"
+                 clip-rule="evenodd">
+              <path d="M11 11v-11h1v11h11v1h-11v11h-1v-11h-11v-1h11z" />
+            </svg>
+            <span>Agregar</span>
+          </button>
+        </ng-container>
+        <ng-container *ngIf="form.valid">
+          <div class="insurance_contact_view"
+               [@fade]="true">
+            <div class="list_contact_view">
+              <span>DNI</span>
+              <span>Nombres y Apellidos</span>
+            </div>
+            <div class="list_contact_view">
+              <span>75197879</span>
+              <span>Kevin Harrinson Lugo Díaz</span>
+              <div class="actions_contact_view">
+                <button class="button-default"
+                        (click)="showModalContact()">
+                  <svg width="24"
+                       height="24"
+                       xmlns="http://www.w3.org/2000/svg"
+                       fill-rule="evenodd"
+                       clip-rule="evenodd">
+                    <path
+                          d="M8.071 21.586l-7.071 1.414 1.414-7.071 14.929-14.929 5.657 5.657-14.929 14.929zm-.493-.921l-4.243-4.243-1.06 5.303 5.303-1.06zm9.765-18.251l-13.3 13.301 4.242 4.242 13.301-13.3-4.243-4.243z" />
+                  </svg>
+                </button>
+                <button class="button-default"
+                        (click)="dropContactInsurance()">
+                  <svg width="24"
+                       height="24"
+                       xmlns="http://www.w3.org/2000/svg"
+                       fill-rule="evenodd"
+                       clip-rule="evenodd">
+                    <path
+                          d="M9 3h6v-1.75c0-.066-.026-.13-.073-.177-.047-.047-.111-.073-.177-.073h-5.5c-.066 0-.13.026-.177.073-.047.047-.073.111-.073.177v1.75zm11 1h-16v18c0 .552.448 1 1 1h14c.552 0 1-.448 1-1v-18zm-10 3.5c0-.276-.224-.5-.5-.5s-.5.224-.5.5v12c0 .276.224.5.5.5s.5-.224.5-.5v-12zm5 0c0-.276-.224-.5-.5-.5s-.5.224-.5.5v12c0 .276.224.5.5.5s.5-.224.5-.5v-12zm8-4.5v1h-2v18c0 1.105-.895 2-2 2h-14c-1.105 0-2-.895-2-2v-18h-2v-1h7v-2c0-.552.448-1 1-1h6c.552 0 1 .448 1 1v2h7z" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="content_navigation">
+      <button class="input-u btn-back input_submit-u"
+              type="button">
+        <i class="fa fa-angle-left fa-left"
+           aria-hidden="true"></i>
+        <span>Anterior</span></button>
+      <button class="input-u input_submit-u"
+              type="button">
+        Pagar S/180.00
+      </button>
+    </div>
+  </div>
+</div>
+<ng-template #modalContact>
+  <div id="modal-u">
+    <form class="modal-u"
+          [formGroup]="form"
+          (ngSubmit)="submit()">
+      <div class="modal__header">
+        <h3 class="modal__header--title">Datos de contacto</h3>
+        <button class="modal__header--close"
+                (click)="hideModal()">&times;</button>
+      </div>
+      <div class="modal__body">
+        <div class="frm_contact frm">
+          <div class="frm_contact__content_document">
+            <select class="input-u"
+                    formControlName="tipoDocumento">
+              <option value="2">DNI</option>
+              <option value="4">CE</option>
+            </select>
+            <label for="nDoc-insurance"
+                   class="content_input-u placeholder"
+                   [class.placeholder-active]="f['numeroDocumento'].value"
+                   aria-placeholder="Nro de Documento">
+              <input type="text"
+                     id="nDoc-insurance"
+                     class="input-u"
+                     [class.placeholder-active]="f['numeroDocumento'].value"
+                     [minLength]="limitDocumentNumber.min"
+                     [maxLength]="limitDocumentNumber.max"
+                     formControlName="numeroDocumento">
+            </label>
+          </div>
+          <label for="contact-department"
+                 class="content_input-u placeholder"
+                 [class.placeholder-active]="f['departamento'].value"
+                 aria-placeholder="Departamento">
+            <select class="input-u"
+                    [class.placeholder-active]="f['departamento'].value"
+                    id="contact-department"
+                    formControlName="departamento">
+              <option *ngFor="let data of departamentos$"
+                      [value]="data.id">{{ data.descripcion }}</option>
+            </select>
+          </label>
+          <label for="contact-email"
+                 class="content_input-u placeholder"
+                 [class.placeholder-active]="f['correo'].value"
+                 aria-placeholder="Correo electrónico">
+            <input type="text"
+                   id="contact-email"
+                   class="input-u"
+                   [class.placeholder-active]="f['correo'].value"
+                   formControlName="correo">
+          </label>
+          <label for="contact-province"
+                 class="content_input-u placeholder"
+                 [class.placeholder-active]="f['provincia'].value"
+                 aria-placeholder="Provincia">
+            <select class="input-u"
+                    [class.placeholder-active]="f['provincia'].value"
+                    id="contact-province"
+                    formControlName="provincia">
+              <option *ngFor="let data of provincias$"
+                      [value]="data.idProvincia">{{ data.provincia }}</option>
+            </select>
+          </label>
+          <label for="contact-direccion"
+                 class="content_input-u placeholder"
+                 [class.placeholder-active]="f['direccion'].value"
+                 aria-placeholder="Dirección">
+            <input type="text"
+                   id="contact-direccion"
+                   class="input-u"
+                   [class.placeholder-active]="f['direccion'].value"
+                   formControlName="direccion">
+          </label>
+          <label for="contact-district"
+                 class="content_input-u placeholder"
+                 [class.placeholder-active]="f['distrito'].value"
+                 aria-placeholder="Distrito">
+            <select class="input-u"
+                    id="contact-district"
+                    [class.placeholder-active]="f['distrito'].value"
+                    formControlName="distrito">
+              <option *ngFor="let data of distritos$"
+                      [value]="data.idDistrito">{{ data.distrito }}</option>
+            </select>
+          </label>
+          <label for="contact-cell"
+                 class="content_input-u placeholder"
+                 [class.placeholder-active]="f['numeroCelular'].value"
+                 aria-placeholder="Número de celular">
+            <input type="text"
+                   id="contact-cell"
+                   class="input-u"
+                   [class.placeholder-active]="f['numeroCelular'].value"
+                   [maxLength]="9"
+                   [minLength]="9"
+                   formControlName="numeroCelular">
+          </label>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="input-u input_submit-u button-submit"
+                type="submit"
+                role="button">
+          <span>Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+<ng-template #modalBeneficiario>
+  <div id="modal-u">
+    <div class="modal-u modal_beneficiario">
+      <div class="modal__header">
+        <button class="modal__header--close"
+                (click)="hideModal()">&times;</button>
+      </div>
+      <div class="modal__body ">
+        <app-form-beneficiario></app-form-beneficiario>
+      </div>
+      <!-- <div class="modal__footer">
+        <button class="button-default"
+                (click)="hideModal()">Cancelar</button>
+        <button class="button-primary">Agregar</button>
+      </div> -->
+    </div>
+  </div>
+</ng-template>

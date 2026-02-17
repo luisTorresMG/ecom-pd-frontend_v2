@@ -1,0 +1,264 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="container-fluid">
+        <div class="header-content">
+          <div class="containt-item">
+            <div class="header-item">
+              <span class="title">Reporte Producción</span>
+            </div>
+          </div>
+          <div class="containt-item">
+            <div class="header-item right-item">
+              <button
+                class="full-color btn-export-excel mx-0"
+                (click)="exportar()"
+                [disabled]="!ListBP?.entities?.length"
+              >
+                <img alt="" src="assets/icons/download2.png" />
+                <span> Exportar Excel</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="filter">
+          <div class="form-group row filter-row">
+            <div class="col-lg-5">
+              <form [formGroup]="form" style="display: flex">
+                <div class="row" style="display: block">
+                  <label for="" class="filter-text" style="margin-left: 15px"
+                    >FECHA INICIO:</label
+                  >
+                  <div class="col-6 padding-right-0">
+                    <input
+                      type="text"
+                      class="form-control date-search input-date"
+                      #dp="bsDatepicker"
+                      [bsConfig]="bsConfig"
+                      style="background-color: white; width: 170px"
+                      bsDatepicker
+                      readonly
+                      formControlName="fechaInicio"
+                      [maxDate]="bsValueFin"
+                    />
+                  </div>
+                </div>
+                <div class="row" style="display: block">
+                  <label for="" class="filter-text" style="margin-left: 15px"
+                    >FECHA FIN:</label
+                  >
+                  <div class="col-6 padding-right-0">
+                    <input
+                      type="text"
+                      class="form-control date-search input-date"
+                      #dp="bsDatepicker"
+                      [bsConfig]="bsConfig"
+                      style="background-color: white; width: 170px"
+                      bsDatepicker
+                      readonly
+                      formControlName="fechaFin"
+                      [maxDate]="bsValueFin"
+                    />
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="col-lg-7 margin-top-20">
+              <div class="row float-right mx-0" style="margin-top: 4px">
+                <div class="lg-6">
+                  <button class="full-color margin-right-0" (click)="buscar()">
+                    <span>Buscar</span>
+                  </button>
+                </div>
+                <div class="lg-6">
+                  <button
+                    class="full-color btn-export-excel"
+                    style="margin-right: 0px"
+                    (click)="onEventClear($event)"
+                  >
+                    <img alt="" src="assets/icons/delete.png" />
+                    <span> Limpiar</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="grid form-group row margin-right-0">
+          <div
+            class="table-responsive"
+            style="margin-left: 15px; margin-right: 0px"
+          >
+            <table class="table" style="margin: 0 0rem; margin-right: -2rem">
+              <thead>
+                <tr class="grid-title">
+                  <td class="grid-title-item">Canal</td>
+                  <td class="grid-title-item">Certificado</td>
+                  <td class="grid-title-item">Contratante</td>
+                  <td class="grid-title-item">ID contratante</td>
+                  <td class="grid-title-item">F.I. Vigencia</td>
+                  <td class="grid-title-item">Comprobante</td>
+                  <td class="grid-title-item">Estado</td>
+                  <td class="grid-title-item">
+                    N. contratante del comprobante
+                  </td>
+                  <td class="grid-title-item">
+                    ID N. contratante del comprobante
+                  </td>
+                  <td class="grid-title-item">Fecha comprobante</td>
+                  <td class="grid-title-item">Monto del comprobante</td>
+                  <td class="grid-title-item">N° de interfaz</td>
+                  <td class="grid-title-item">Fecha de interfaz</td>
+                  <td class="grid-title-item">Prima B. certificado</td>
+                  <td class="grid-title-item">Prima N. certificado</td>
+                  <td class="grid-title-item">DE</td>
+                  <td class="grid-title-item">IGV</td>
+                  <td class="grid-title-item">% Comisión</td>
+                  <td class="grid-title-item">Comisión</td>
+                  <td class="grid-title-item">Clase</td>
+                  <td class="grid-title-item">Placa</td>
+                  <td class="grid-title-item">Categoria</td>
+                  <td class="grid-title-item">Uso</td>
+                  <td class="grid-title-item">Carrocería</td>
+                  <td class="grid-title-item">Marca</td>
+                  <td class="grid-title-item">Departamento</td>
+                  <td class="grid-title-item">Provincia</td>
+                  <td class="grid-title-item">Distrito</td>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="!ListBP?.entities?.length">
+                  <tr class="grid-body">
+                    <td
+                      class="grid-body-item"
+                      colspan="28"
+                      style="text-align: center; padding: 15px"
+                    >
+                      No hay informacion para mostrar
+                    </td>
+                  </tr>
+                </ng-container>
+                <ng-container *ngIf="!!ListBP?.entities?.length">
+                  <tr
+                    class="table-body"
+                    *ngFor="
+                      let data of ListBP.entities
+                        | paginate: { itemsPerPage: 10, currentPage: p }
+                    "
+                  >
+                    <td class="table-body-item">{{ data.SPOLICY }}</td>
+                    <td class="table-body-item">{{ data.NPOLESP_COMP }}</td>
+                    <td class="table-body-item">{{ data.S_CLIENTNAME }}</td>
+                    <td class="table-body-item">{{ data.S_CLIENT }}</td>
+                    <td class="table-body-item">
+                      {{ data.DSTARTDATE | date: "dd/MM/yyyy" }}
+                    </td>
+                    <td class="table-body-item">{{ data.NUMDOC }}</td>
+                    <td class="table-body-item">{{ data.SSTATUSPOL }}</td>
+                    <td class="table-body-item">{{ data.NOMCONTRATANTE }}</td>
+                    <td class="table-body-item">{{ data.IDCONTRATANTE }}</td>
+                    <td class="table-body-item">
+                      {{ data.DCOMPDATE | date: "dd/MM/yyyy" }}
+                    </td>
+                    <td class="table-body-item">
+                      {{ data.MONTOCOMPROBANTE.toFixed(2) }}
+                    </td>
+                    <td class="table-body-item">{{ data.NUMINTERFAZ }}</td>
+                    <td class="table-body-item">{{ data.FECINTERFAZ }}</td>
+                    <td class="table-body-item">
+                      {{ data.NMPRIMA.toFixed(2) }}
+                    </td>
+                    <td class="table-body-item">
+                      {{ data.NMONNET.toFixed(2) }}
+                    </td>
+                    <td class="table-body-item">
+                      {{ data.NDEREMI.toFixed(2) }}
+                    </td>
+                    <td class="table-body-item">
+                      {{ data.NMONIGV.toFixed(2) }}
+                    </td>
+                    <td class="table-body-item">
+                      {{ data.COMISION.toFixed(2) }}
+                    </td>
+                    <td class="table-body-item">
+                      {{ data.PORCOMISION.toFixed(2) }}
+                    </td>
+                    <td class="table-body-item">{{ data.DESNCLASS }}</td>
+                    <td class="table-body-item">{{ data.SPLATE }}</td>
+                    <td class="table-body-item">{{ data.DESCATEGORIA }}</td>
+                    <td class="table-body-item">{{ data.DESUSO }}</td>
+                    <td class="table-body-item">{{ data.DESCARROCERIA }}</td>
+                    <td class="table-body-item">{{ data.MARCA }}</td>
+                    <td class="table-body-item">{{ data.DEPARTAMENTO }}</td>
+                    <td class="table-body-item">{{ data.PROVINCIA }}</td>
+                    <td class="table-body-item">{{ data.DISTRITO }}</td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+          <pagination-controls
+            class="my-pagination"
+            (pageChange)="p = $event"
+            style="margin-top: 10px; margin-left: -30px"
+            *ngIf="!!ListBP?.entities?.length"
+            autoHide="true"
+            responsive="true"
+            previousLabel="Anterior"
+            nextLabel="Siguiente"
+            screenReaderPaginationLabel="Paginación"
+            screenReaderPageLabel="pagina"
+            screenReaderCurrentLabel="Estás en la pagina"
+          >
+          </pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #modal="bs-modal"
+  [config]="{
+    backdrop: 'static'
+  }"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content anular">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="ocultarModal()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <h4 class="textanular" style="font-size: 15px">
+          {{ MENSAJE }}
+        </h4>
+      </div>
+      <div
+        class="
+          modal-footer modal-foot-confirm
+          d-flex
+          align-items-center
+          justify-content-center
+        "
+      >
+        <button
+          type="button"
+          class="btn full-color btn-aceptar-modal"
+          (click)="ocultarModal()"
+        >
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

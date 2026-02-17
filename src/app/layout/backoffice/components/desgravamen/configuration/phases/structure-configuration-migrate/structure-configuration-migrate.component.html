@@ -1,0 +1,13 @@
+<section class="section" @fade>
+  <!-- *Notificaciones -->
+  <button class="button-dropdown"
+          [class.active]="dropdownSelected == 'notifications'"
+          (click)="selectDropdown = 'notifications'">
+    <i class="fa fa-angle-right" aria-hidden="true"></i>
+    Notificaciones
+  </button>
+  <div class="content-notifications-table" [hidden]="dropdownSelected !== 'notifications'">
+    <app-structure-configuration-notifications (values)="emitValues($event)"
+                                               phaseType="migration"></app-structure-configuration-notifications>
+  </div>
+</section>

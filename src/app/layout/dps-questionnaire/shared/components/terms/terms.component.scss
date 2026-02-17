@@ -1,0 +1,106 @@
+@import "variables";
+@import "modal";
+
+* {
+  text-align: justify;
+  color: $purple;
+}
+
+.modal__header--close {
+  cursor: pointer;
+}
+
+.modal-u {
+  width: 100%;
+  max-width: 640px;
+  padding: 2rem;
+}
+
+.modal__header--title {
+  text-align: center;
+  margin: 0;
+}
+
+.modal__body {
+  padding-right: 1rem;
+}
+
+ul,
+ol,
+li,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+.mt__group {
+  margin-bottom: 1.5rem;
+}
+
+.mt__group--desc {
+  display: inline-block;
+}
+
+.mt__subtitle {
+  font-weight: bold;
+  font-size: 22px;
+}
+
+.list-square {
+  li {
+    font-weight: bold;
+    font-size: 20px;
+  }
+}
+
+.mt__group--list {
+  &-item {
+    list-style-position: inside;
+  }
+}
+
+.list-square {
+  li {
+    list-style-type: square;
+  }
+}
+
+.list-disc {
+  padding-left: 1rem;
+  margin: 0.5rem 0;
+  li {
+    list-style-type: disc;
+  }
+}
+
+.list-line {
+  padding-left: 1rem;
+  margin: 0.5rem 0;
+  li {
+    list-style-type: none;
+    &::before {
+      content: "- ";
+      padding-right: 1rem;
+      font-size: 18px;
+      color: $purple;
+      display: inline-block;
+    }
+  }
+}
+
+.mt__group--list[type="1"],
+.mt__group--list[type="a"] {
+  padding-left: 1rem;
+  margin: 0.5rem 0;
+  li {
+    margin-bottom: 0.5rem;
+  }
+}
+
+a {
+  text-decoration: underline;
+}
+
+.has-weight {
+  font-weight: 600;
+}

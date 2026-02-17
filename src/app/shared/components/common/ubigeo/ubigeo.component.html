@@ -1,0 +1,47 @@
+<div class="form-group row filter-ubigeo">
+  <div class="col-lg-4 filter-row-cell">
+    <span>POR DEPARTAMENTO:</span>
+    <select
+      name="depName"
+      id="DepSelect"
+      (change)="onSelectDepartment($event.target.value)"
+    >
+      <option value="0" selected>Seleccionar</option>
+      <option
+        *ngFor="let province of provinces"
+        value="{{ province.nprovince }}"
+        >{{ province.sdescript }}</option
+      >
+    </select>
+  </div>
+  <div class="col-lg-4 filter-row-cell">
+    <span>POR PROVINCIA:</span>
+    <select
+      name="proName"
+      id="ProSelect"
+      (change)="onSelectProvince($event.target.value)"
+    >
+      <option value="0" selected>Seleccionar</option>
+      <option
+        *ngFor="let district of districts"
+        value="{{ district.nlocal }}"
+        >{{ district.sdescript }}</option
+      >
+    </select>
+  </div>
+  <div class="col-lg-4 filter-row-cell">
+    <span>POR DISTRITO:</span>
+    <select
+      name="disName"
+      id="DisSelect"
+      (change)="onSelectDistrict($event.target.value)"
+    >
+      <option value="0" selected>Seleccionar</option>
+      <option
+        *ngFor="let municipality of municipalitys"
+        value="{{ municipality.nmunicipality }}"
+        >{{ municipality.sdescript }}</option
+      >
+    </select>
+  </div>
+</div>

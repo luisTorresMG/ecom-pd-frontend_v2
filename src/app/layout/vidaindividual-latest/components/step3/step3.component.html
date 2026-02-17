@@ -1,0 +1,574 @@
+<div class="container-fluid mx-0 my-0 px-0 py-0">
+  <div class="row mx-0 my-0 px-0 py-0">
+    <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+      <app-show-steps [NSTEP]="3"></app-show-steps>
+    </div>
+  </div>
+  <div class="contenedor-all"
+       *ngIf="isValidPerson; else personIsNoApto">
+    <div class="row mx-0 my-0 px-0 py-0 d-flex flex-row align-items-center justify-content-center contenido"
+         [@fade]="true">
+      <form class="col-lg-12 mx-0 my-0 px-5 py-0"
+            [formGroup]="frmPreguntas">
+        <div class="sub-content"
+             *ngIf="msgDX == ''">
+          <h2 class="declaracion-jurada">
+            Proceso de diagnóstico de salud y actividades
+          </h2>
+          <small class="desc-title">Queremos conocerte mejor, responde las siguientes preguntas:</small>
+        </div>
+        <div class="sub-content"
+             *ngIf="msgDX != ''">
+          <h2 class="declaracion-jurada">
+            Proceso de diagnóstico de salud y actividades del asegurado {{ this.msgDX | titlecase}}
+          </h2>
+          <small class="desc-title">Queremos conocerte mejor, responde las siguientes preguntas:</small>
+        </div>
+        <div class="data-questions">
+          <div class="sub-content">
+            <p class="question">1. ¿Cual es su talla y peso?</p>
+            <div class="dbl-quest">
+              <div class="inputs in-w-title">
+                <label for="talla"
+                       class="lbl-titlet"
+                       [class.lbl-title-active]="!!f['talla'].value">Talla (mts)</label>
+                <input type="text"
+                       id="talla"
+                       formControlName="talla"
+                       [class.in-active]="!!f['talla'].value"
+                       [class.lbl-title]="
+                    frmPreguntas.get('talla')?.value?.length > 0
+                  "
+                       aria-label="Talla (m)"
+                       [minlength]="3"
+                       [maxlength]="4"/>
+              </div>
+              <div class="inputs in-w-title">
+                <label for="peso"
+                       class="lbl-titlet"
+                       [class.lbl-title-active]="!!f['peso'].value">Peso (kg)</label>
+                <input type="text"
+                       id="peso"
+                       formControlName="peso"
+                       [class.in-active]="!!f['peso'].value"
+                       [ngClass]="{
+                    'lbl-title': frmPreguntas.get('peso')?.value?.length > 0
+                  }"
+                       aria-label="Peso (kg)"
+                       [minlength]="2"
+                       [maxlength]="3"/>
+              </div>
+            </div>
+            <small class="error-in error-max-w"
+                   *ngIf="f['talla'].invalid && f['talla'].touched">La talla no es válida. Ejemplo: 1.70</small>
+            <small class="error-in error-max-w"
+                   *ngIf="f['peso'].invalid && f['peso'].touched">El peso no es válido</small>
+          </div>
+          <div class="sub-content"></div>
+          <div class="sub-content">
+            <p class="question">2. ¿Fuma?</p>
+            <div class="inputs-radio">
+              <div class="radio">
+                <input type="radio"
+                       id="fuma1"
+                       value="1"
+                       hidden
+                       formControlName="fuma"/>
+                <label for="fuma1"
+                       class="radio-style">Si</label>
+              </div>
+              <div class="radio">
+                <input type="radio"
+                       id="fuma0"
+                       value="0"
+                       formControlName="fuma"
+                       hidden/>
+                <label for="fuma0"
+                       class="radio-style">No</label>
+              </div>
+            </div>
+            <div class="inputs mt-2 d-flex flex-column"
+                 *ngIf="p3FrmVal">
+              <label class="lbl-title-adicional">Indicar consumo diario de cigarrillo(s):</label>
+              <select class="in"
+                      formControlName="fuma_resp"
+                      style="max-width: 75px">
+                <option *ngFor="let n of nCigarrosArray"
+                        [value]="n">
+                  {{ n }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="sub-content">
+            <p class="question">
+              3. ¿Se ha medido la presión arterial en los últimos 2 años?
+            </p>
+            <div class="inputs-radio">
+              <div class="radio">
+                <input type="radio"
+                       id="presion1"
+                       value="1"
+                       hidden
+                       formControlName="presion"/>
+                <label for="presion1"
+                       class="radio-style">Si</label>
+              </div>
+              <div class="radio">
+                <input type="radio"
+                       id="presion0"
+                       value="0"
+                       hidden
+                       formControlName="presion"/>
+                <label for="presion0"
+                       class="radio-style">No</label>
+              </div>
+            </div>
+            <div class="inputs mt-2"
+                 *ngIf="p4FrmVal">
+              <label class="lbl-title-adicional">¿Cual fue el resultado?</label>
+              <div class="inputs-radio">
+                <div class="radio no-margin">
+                  <input type="radio"
+                         id="presion_resp1"
+                         [value]=1
+                         hidden
+                         formControlName="presion_resp"/>
+                  <label for="presion_resp1"
+                         class="radio-style">Bajo</label>
+                </div>
+                <div class="radio no-margin">
+                  <input type="radio"
+                         id="presion_resp2"
+                         [value]=2
+                         hidden
+                         formControlName="presion_resp"/>
+                  <label for="presion_resp2"
+                         class="radio-style">Normal</label>
+                </div>
+                <div class="radio no-margin">
+                  <input type="radio"
+                         id="presion_resp3"
+                         [value]=3
+                         hidden
+                         formControlName="presion_resp"/>
+                  <label for="presion_resp3"
+                         class="radio-style">Alto</label>
+                </div>
+                <div class="radio no-margin">
+                  <input type="radio"
+                         id="presion_resp4"
+                         [value]=0
+                         hidden
+                         formControlName="presion_resp"/>
+                  <label for="presion_resp4"
+                         class="radio-style">Ignoro</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="sub-content">
+            <p class="question">
+              4. ¿Usted tiene, o ha tenido, o se encuentra en tratamiento, o en
+              proceso de diagnóstico, alguna de las siguientes enfemedades,
+              dolencias o situaciones de salud?
+            </p>
+            <div class="content-sub-question">
+              <p class="question sub-question">
+                4.1 ¿Cáncer, tumores, V.I.H., SIDA, Linfomas, Leucemia,
+                Enfermedades Hematológicas, Enfermedades del Pulmón,
+                Enfermedades al Riñón, Insuficiencia Renal Crónica?
+              </p>
+              <div class="inputs-radio">
+                <div class="radio">
+                  <input type="radio"
+                         id="cancer1"
+                         value="1"
+                         hidden
+                         formControlName="cancer"/>
+                  <label for="cancer1"
+                         class="radio-style">Si</label>
+                </div>
+                <div class="radio">
+                  <input type="radio"
+                         id="cancer0"
+                         value="0"
+                         hidden
+                         formControlName="cancer"/>
+                  <label for="cancer0"
+                         class="radio-style">No</label>
+                </div>
+              </div>
+            </div>
+            <div class="content-sub-question">
+              <p class="question sub-question">
+                4.2 ¿Infarto al Miocardio, Infarto Cerebral, Enfermedades
+                Cardiacas, Hipertensión Arterial, Enfermedades Coronarias,
+                Soplos Cardiacos, Aneurismas, Accidentes Cerebrovasculares,
+                Dislipidemia, Hipercolesterolemia, Sobrepreso, Obesidad,
+                Diabetes Mellitus?
+              </p>
+              <div class="inputs-radio">
+                <div class="radio">
+                  <input type="radio"
+                         id="infarto1"
+                         value="1"
+                         hidden
+                         formControlName="infarto"/>
+                  <label for="infarto1"
+                         class="radio-style">Si</label>
+                </div>
+                <div class="radio">
+                  <input type="radio"
+                         id="infarto0"
+                         value="0"
+                         hidden
+                         formControlName="infarto"/>
+                  <label for="infarto0"
+                         class="radio-style">No</label>
+                </div>
+              </div>
+            </div>
+            <div class="content-sub-question">
+              <p class="question sub-question">
+                4.3 ¿Enfermedades Gastrointestinales, Hepatitis (B o C),
+                Cirrosis Hepática, Úlcera Gástrica, Colitis Ulcerosa, Epilepsia,
+                Enfermedad de Alzheimer, Depresión, Enfermedades Psiquiatricas?
+              </p>
+              <div class="inputs-radio">
+                <div class="radio">
+                  <input type="radio"
+                         id="gastro1"
+                         value="1"
+                         hidden
+                         formControlName="gastro"/>
+                  <label for="gastro1"
+                         class="radio-style">Si</label>
+                </div>
+                <div class="radio">
+                  <input type="radio"
+                         id="gastro0"
+                         value="0"
+                         hidden
+                         formControlName="gastro"/>
+                  <label for="gastro0"
+                         class="radio-style">No</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="sub-content">
+            <p class="question">
+              5. ¿Realiza o participa en actividades o deportes riesgosos? se
+              considera como tales actividades o deportes, aquellos que
+              constituyan una clara agravación del riesgo o en el que se ponga
+              en peligro su vida.
+            </p>
+            <div class="content-sub-question">
+              <p class="question sub-question">
+                5.1 ¿Viaja en helicópteros, aviones militares, de instrucción o
+                aviones particulares, vuelos como piloto o estudiante?
+              </p>
+              <div class="inputs-radio">
+                <div class="radio">
+                  <input type="radio"
+                         id="viaja1"
+                         value="1"
+                         hidden
+                         formControlName="viaja"/>
+                  <label for="viaja1"
+                         class="radio-style">Si</label>
+                </div>
+                <div class="radio">
+                  <input type="radio"
+                         id="viaja0"
+                         value="0"
+                         hidden
+                         formControlName="viaja"/>
+                  <label for="viaja0"
+                         class="radio-style">No</label>
+                </div>
+              </div>
+            </div>
+            <div class="content-sub-question">
+              <p class="question sub-question">
+                5.2 ¿Practica paracaidismo, andinismo, automovilismo, buceo,
+                motociclismo o afines, bungee jumping (caída libre con cuerda),
+                pesca submarina, ala delta, planeador, rodeo, surf o cualquier
+                otro deporte o actividad obviamente peligrosa?
+              </p>
+              <div class="inputs-radio">
+                <div class="radio">
+                  <input type="radio"
+                         id="deporte1"
+                         value="1"
+                         hidden
+                         formControlName="deporte"/>
+                  <label for="deporte1"
+                         class="radio-style">Si</label>
+                </div>
+                <div class="radio">
+                  <input type="radio"
+                         id="deporte0"
+                         value="0"
+                         hidden
+                         formControlName="deporte"/>
+                  <label for="deporte0"
+                         class="radio-style">No</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-lg-12 mx-0 my-0 px-0 py-0 content-buttons-actions">
+      <button class="btn-back d-inline-flex align-items-center justify-content-center"
+              (click)="backStep()">
+        <i class="fa fa-chevron-left mr-2"
+           aria-hidden="true"></i>Anterior
+      </button>
+      <div>
+        <button class="btn-next d-inline-flex align-items-center justify-content-center"
+                [disabled]="frmPreguntas.invalid"
+                (click)="nextStep()">
+          Siguiente<i class="fa fa-chevron-right ml-2"
+                      aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #notContinue>
+  <div class="content-no-apto text-center">
+    <h2 class="title-no-apto text-center">
+      Hola. Tu solicitud ha sido recepcionada por un asesor de Protecta
+      Security, nos estaremos comunicando contigo en un máximo de 2 días
+      laborables.
+    </h2>
+    <p class="desc-no-apto text-center">
+      Contáctanos en:<br/>
+      Correo Electrónico: <b>vidadevolucion@protectasecurity.pe</b><br/>
+      Estamos a tu disposición de lunes a viernes de
+      <b>9:00 a.m. a 6:00 p.m.</b>, a excepción de feriados.
+    </p>
+    <button class="btn-back d-flex align-items-center justify-content-center"
+            (click)="backToInitReset()">
+      <i class="fa fa-chevron-left mr-2"
+         aria-hidden="true"></i>Volver al inicio
+    </button>
+  </div>
+</ng-template>
+<ng-template #personIsNoApto>
+  <div class="content-no-apto text-center mb-0"
+       [@fade]="!isValidPerson">
+    <h2 class="title-no-apto text-center">
+      Hola! tu solicitud ha sido recepcionada por un asesor de Protecta
+      Security,nos estaremos comunicando contigo en maximo de 2 dias laborables.
+    </h2>
+    <p class="desc-no-apto text-center">
+      Contáctanos en:<br/>
+      Correo Electrónico: <b>vidadevolucion@protectasecurity.pe</b><br/>
+      Estamos a tu disposición de lunes a viernes de
+      <b>9:00 a.m. a 6:00 p.m.</b> , a excepcion de feriados.
+    </p>
+  </div>
+  <div class="row mx-0 my-0 px-0 py-0">
+    <div class="col-lg-12 mx-0 my-0 px-0 py-0 content-buttons-actions">
+      <button class="btn-back d-inline-flex align-items-center justify-content-center"
+              (click)="backToInit()">
+        <i class="fa fa-chevron-left mr-2"
+           aria-hidden="true"></i>Volver al
+        inicio
+      </button>
+      <button hidden
+              disabled></button>
+    </div>
+  </div>
+</ng-template>
+<div class="modal fade"
+     bsModal
+     #modalDps="bs-modal"
+     [config]="{
+    backdrop: 'static'
+  }">
+  <div class="modal-dialog"
+       role="document">
+    <div class="modal-content px-0 py-0">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                (click)="hideModalDps()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <h4 class="title-modal">Declaración de salud y actividades</h4>
+        <div class="sub-content-modal">
+          <div class="content-resp-quest">
+            <div class="res-quest"
+                 *ngFor="let data of respuestasDPS">
+              <p>{{ data?.quest }}</p>
+              <b>{{ data?.resp }}</b>
+              <div class="content-sbq"
+                   *ngFor="let sb of data?.sub_questions">
+                <div class="sbq"
+                     *ngIf="data?.resp !== 'No'">
+                  <p>{{ sb?.quest }}</p>
+                  <b>{{ sb?.resp }}</b>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="content-info-modal"
+               *ngIf="msgDX == ''">
+            <p class="info-modal">
+              Mediante el presente documento, declaro que la información
+              proporcionada en esta DPS es exacta, veraz, completa, precisa y
+              que no he ocultado u omitido información. Asimismo, es de mi
+              conocimiento que la DPS constituye un elemento indispensable para
+              la apreciación del riesgo por parte de Protecta Security y que una
+              declaración falsa o inexacta de mi parte, implica la nulidad de la
+              póliza a contratar. De otro lado, autorizo expresamente a Protecta
+              Security para que pueda acceder a mis antecedentes médicos en las
+              entidades médicas del país que considere pertinentes para
+              verificar todos los datos o antecedentes clínicos que tenga o haya
+              tenido con motivo de haber recibido alguna prestación de salud.
+              Finalmente, declaro expresamente conocer que el haber suscrito la
+              presente DPS así como la solicitud de seguro, no implica
+              necesariamente la aceptación de la cobertura por parte Protecta
+              Security. Protecta Security comunicará al contratante de la póliza
+              dentro de los 15 días calendario de presentada la solicitud, si
+              esta ha sido rechazada, salvo que haya requerido información
+              adicional al contratante dentro de dicho plazo.
+            </p>
+            <p class="info-modal">
+              <b>Por parte de Protecta Security se reserva el derecho de
+                solicitar exámenes médicos y/o documentación médica, en caso lo
+                estime conveniente para la correcta evaluación y estimación del
+                riesgo, por lo que el Asegurado se compromete a brindar las
+                facilidades del caso a Protecta Security.</b>
+            </p>
+            <p class="info-modal mb-0">
+              Declaro tener conocimiento que la información brindada es para que
+              Protecta Security pueda realizar el análisis del otorgamiento del
+              Seguro, modificaciones de cobertura, análisis de reclamos,
+              investigaciones de siniestros y, en general, todo aquello que
+              tenga relación con los contratos de seguro que celebre con
+              Protecta Security. Con estos mismos fines, declaro haber leído las
+              notas precedentes y firmo en señal de conformidad
+            </p>
+          </div>
+
+          <div class="content-info-modal"
+               *ngIf="msgDX != ''">
+            <p class="info-modal">
+              Mediante el presente documento, yo {{ this.msgDX | titlecase }}
+              con DNI {{ this.step1.nDoc }},
+              declaro que la información
+              proporcionada en esta DPS es exacta, veraz, completa, precisa y
+              que no he ocultado u omitido información. Asimismo, es de mi
+              conocimiento que la DPS constituye un elemento indispensable para
+              la apreciación del riesgo por parte de Protecta Security y que una
+              declaración falsa o inexacta de mi parte, implica la nulidad de la
+              póliza a contratar. De otro lado, autorizo expresamente a Protecta
+              Security para que pueda acceder a mis antecedentes médicos en las
+              entidades médicas del país que considere pertinentes para
+              verificar todos los datos o antecedentes clínicos que tenga o haya
+              tenido con motivo de haber recibido alguna prestación de salud.
+              Finalmente, declaro expresamente conocer que el haber suscrito la
+              presente DPS así como la solicitud de seguro, no implica
+              necesariamente la aceptación de la cobertura por parte Protecta
+              Security. Protecta Security comunicará al contratante de la póliza
+              dentro de los 15 días calendario de presentada la solicitud, si
+              esta ha sido rechazada, salvo que haya requerido información
+              adicional al contratante dentro de dicho plazo.
+            </p>
+            <p class="info-modal">
+              <b>Por parte de Protecta Security se reserva el derecho de
+                solicitar exámenes médicos y/o documentación médica, en caso lo
+                estime conveniente para la correcta evaluación y estimación del
+                riesgo, por lo que el Asegurado se compromete a brindar las
+                facilidades del caso a Protecta Security.</b>
+            </p>
+            <p class="info-modal mb-0">
+              Declaro tener conocimiento que la información brindada es para que
+              Protecta Security pueda realizar el análisis del otorgamiento del
+              Seguro, modificaciones de cobertura, análisis de reclamos,
+              investigaciones de siniestros y, en general, todo aquello que
+              tenga relación con los contratos de seguro que celebre con
+              Protecta Security. Con estos mismos fines, declaro haber leído las
+              notas precedentes y firmo en señal de conformidad
+            </p>
+          </div>
+        </div>
+      </div>
+      <button type="button"
+              class="btn full-color btn-next-modal btn-next"
+              (click)="successStep()">
+        Estoy de acuerdo
+      </button>
+    </div>
+  </div>
+</div>
+<div class="modal fade"
+     bsModal
+     #modalNoValid="bs-modal"
+     [config]="{
+    backdrop: 'static'
+  }">
+  <div class="modal-dialog"
+       role="document">
+    <div class="modal-content modal-content-nv">
+      <div class="modal-header">
+        <h2 class="modal-header__title">Declaración de salud y actividades</h2>
+        <button class="close-modal-nv"
+                (click)="backToInit()">&times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="nvinfo">
+          <div class="nvinfo__item">
+            Hola
+            <span class="nameUser">{{ toLowerCase(vd.contratante.nombres) }}:</span>
+          </div>
+          <div class="nvinfo__item">
+            Hemos recibido tus respuestas a la declaración jurada de salud para
+            nuestro producto Vida Devolución Protecta<sup style="font-size: 15px !important">+</sup>
+            y estas van a requerir un análisis más profundo de parte de nuestros
+            especialistas.
+          </div>
+          <div class="nvinfo__item">
+            En un máximo de 2 días laborables un asesor de Protecta Security se
+            comunicará contigo para brindarte mayor información de manera
+            personalizada sobre la cotización que nos has solicitado de este
+            seguro.
+          </div>
+          <p class="nvinfo__item">Gracias por tu comprensión,</p>
+          <b class="nvinfo__item"> Protecta Security </b>
+        </div>
+        <div class="nvcontact">
+          <span>Contáctanos en:</span>
+          <p>
+            Correo Electrónico:
+            <a href="mailto:clientes@protectasecurity.pe">clientes@protectasecurity.pe</a>
+          </p>
+          <!-- <p>Linea telefónica directa: <b>(01) 391 3000 | Provincias 0-801-1-1278</b></p> -->
+          <p>
+            Estamos a tu disposición de lunes a viernes de
+            <b>9:00 a.m. a 6:00 p.m.</b>, a excepción de feriados.
+          </p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button"
+                class="btn full-color btn-aceptar-modal"
+                (click)="backToInit(true)">
+          Volver al inicio
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

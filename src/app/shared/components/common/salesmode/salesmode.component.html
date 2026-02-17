@@ -1,0 +1,8 @@
+<select id="SalesModeSelect" (change)="onSelectSalesMode($event.target.value)">
+  <option value="0" selected>Seleccionar</option>
+  <option
+    *ngFor="let salesmode of ListSalesMode"
+    value="{{ salesmode.ncodemod }}"
+    >{{ salesmode.sdescript }}</option
+  >
+</select>

@@ -1,0 +1,211 @@
+<main class="container-fluid px-0 py-0 mx-0 my-0">
+  <div class="max-width-to-center">
+    <div class="bc-1"></div>
+    <div class="row px-0 py-0 mx-0 my-0">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+        <app-show-steps [NSTEP]="2"></app-show-steps>
+      </div>
+    </div>
+    <div class="row px-0 py-0 mx-0 my-0">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+        <h1 class="title-step">
+          Datos del <b>contratante</b>
+        </h1>
+      </div>
+    </div>
+    <form class="row mx-0 my-0 px-0 py-0">
+      <div class="col-lg-6 mx-0 my-0 py-0 container-inputs">
+        <div class="content-dbl-input">
+          <div class="content-input">
+            <select class="in">
+              <option value="1">DNI</option>
+              <option value="2">CE</option>
+            </select>
+          </div>
+          <div class="content-input">
+            <!-- [ngClass]="{'in-with-title-active': form.get('ndoc').value.length > 0}" -->
+            <input type="text"
+                   class="in-with-title-desactive in"
+                   id="in-ndoc">
+            <!-- [ngClass]="{'lbl-in-title-active': form.get('ndoc').value.length > 0}" -->
+            <label for="in-ndoc"
+                   class="lbl-in-title-desactive">Número de documento</label>
+          </div>
+        </div>
+        <div class="content-input">
+          <!-- [ngClass]="{'in-with-title-active': form.get('names').value.length > 0}" -->
+          <input type="text"
+                 class="in-with-title-desactive in"
+                 id="in-names">
+          <!-- [ngClass]="{'lbl-in-title-active': form.get('names').value.length > 0}" -->
+          <label for="in-names"
+                 class="lbl-in-title-desactive">Nombres</label>
+        </div>
+        <div class="content-input">
+          <!-- [ngClass]="{'in-with-title-active': form.get('apePaterno').value.length > 0}" -->
+          <input type="text"
+                 class="in-with-title-desactive in"
+                 id="in-lastname">
+          <!-- [ngClass]="{'lbl-in-title-active': form.get('apePaterno').value.length > 0}" -->
+          <label for="in-lastname"
+                 class="lbl-in-title-desactive">Apellido paterno</label>
+        </div>
+        <div class="content-input">
+          <!-- [ngClass]="{'in-with-title-active': form.get('apeMaterno').value.length > 0}" -->
+          <input type="text"
+                 class="in-with-title-desactive in"
+                 id="in-lastname2">
+          <!-- [ngClass]="{'lbl-in-title-active': form.get('apeMaterno').value.length > 0}" -->
+          <label for="in-lastname2"
+                 class="lbl-in-title-desactive">Apellido materno</label>
+        </div>
+        <div class="content-input">
+          <input type="checkbox"
+                 class="chk"
+                 id="contratante-asegurado"
+                 hidden>
+          <label for="contratante-asegurado"
+                 class="chk-style">El contratante también es asegurado</label>
+        </div>
+      </div>
+      <div class="col-lg-6 mx-0 my-0 py-0 container-inputs">
+        <div class="content-input">
+          <select class="in in-width-title-desactive"
+                  id="in-department">
+            <option value="0"
+                    disabled
+                    selected
+                    hidden></option>
+            <option value="1">Lima</option>
+          </select>
+          <!-- [ngClass]="{'lbl-in-title-active': form.get('departamento').value > 0}" -->
+          <label for="in-department"
+                 class="lbl-in-title-desactive">Departamento</label>
+        </div>
+        <div class="content-input">
+          <select class="in in-width-title-desactive"
+                  id="in-province">
+            <option value="0"
+                    disabled
+                    selected
+                    hidden></option>
+            <option value="1">Lima</option>
+          </select>
+          <!-- [ngClass]="{'lbl-in-title-active': form.get('provincia').value > 0}" -->
+          <label for="in-province"
+                 class="lbl-in-title-desactive">Provincia</label>
+        </div>
+        <div class="content-input">
+          <select class="in in-width-title-desactive"
+                  id="in-distric">
+            <option value="0"
+                    disabled
+                    selected
+                    hidden></option>
+            <option value="1">Lima</option>
+          </select>
+          <!-- [ngClass]="{'lbl-in-title-active': form.get('distrito').value > 0}" -->
+          <label for="in-distric"
+                 class="lbl-in-title-desactive">Distrito</label>
+        </div>
+        <div class="content-input">
+          <!-- [ngClass]="{'in-with-title-active': form.get('direccion').value.length > 0}" -->
+          <input type="text"
+                 class="in in-with-title-desactive"
+                 id="in-direccion">
+          <!-- [ngClass]="{'lbl-in-title-active': form.get('direccion').value.length > 0}" -->
+          <label for="in-direccion"
+                 class="lbl-in-title-desactive">Dirección</label>
+        </div>
+        <div class="content-input">
+        </div>
+      </div>
+    </form>
+    <!--
+      ✔ El contratante también es asegurado => CHECKED
+      ngIf="CONTRATANTE_IS_ASEGURADO"
+    -->
+    <form class="form-contratante-asegurado">
+      <div class="row mx-0 my-0 px-0 py-0">
+        <div class="col-lg-6 mx-0 my-0 py-0 container-inputs">
+          <div class="content-input">
+            <select class="in in-width-title-desactive"
+                    id="in-distric">
+              <option value="0"
+                      disabled
+                      selected
+                      hidden></option>
+              <option value="1">Masculino</option>
+              <option value="2">Femenino</option>
+            </select>
+            <!-- [ngClass]="{'lbl-in-title-active': formContratante.get('sexo').value > 0}" -->
+            <label for="in-distric"
+                   class="lbl-in-title-desactive">Sexo</label>
+          </div>
+        </div>
+        <div class="col-lg-6 mx-0 my-0 py-0 container-inputs">
+          <div class="content-input content-country">
+            <select class="in in-width-title-desactive"
+                    id="in-distric">
+              <option value="0"
+                      disabled
+                      selected
+                      hidden></option>
+              <option value="1">Perú</option>
+              <option value="2">Tangamandapio</option>
+            </select>
+            <!-- [ngClass]="{'lbl-in-title-active': formContratante.get('pais').value > 0}" -->
+            <label for="in-distric"
+                   class="lbl-in-title-desactive">País de nacimiento</label>
+          </div>
+        </div>
+      </div>
+      <div class="row mx-0 my-0 px-0 py-0 mt-3">
+        <div class="col-lg-12 mx-0 my-0 py-0 px-0">
+          <label class="lbl-fecha-nac">Fecha de nacimiento</label>
+          <div class="content-inputs-date content-input">
+            <select class="in"
+                    id="in-distric">
+              <option value="0"
+                      disabled
+                      selected>Día</option>
+              <option *ngFor="let dia of dias"
+                      [value]="dia">{{ dia }}</option>
+            </select>
+            <select class="in"
+                    id="in-distric">
+              <option value="0"
+                      disabled
+                      selected>Mes</option>
+              <option *ngFor="let mes of meses"
+                      [value]="mes.val">{{ mes.desc }}</option>
+            </select>
+            <select class="in"
+                    id="in-distric">
+              <option value="0"
+                      disabled
+                      selected>Año</option>
+              <option *ngFor="let anio of anios"
+                      [value]="anio">{{ anio }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="row mx-0 my-0 px-0 py-0 mt-5 text-center">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+        <button type="button"
+                [routerLink]="'/accidentes-personales/step1'"
+                class="btn-back"><i class="fa fa-angle-left mr-2"
+             aria-hidden="true"></i>Anterior</button>
+        <!-- [disabled]="form.invalid" -->
+        <button type="submit"
+                [routerLink]="'/accidentes-personales/step3'"
+                class="btn-submit"
+                [disabled]="true">Siguiente<i class="fa fa-angle-right ml-2"
+             aria-hidden="true"></i></button>
+      </div>
+    </div>
+  </div>
+  <app-questions></app-questions>
+</main>

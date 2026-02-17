@@ -1,0 +1,344 @@
+
+<main class="content" @fade>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="row left mt-4">
+                    <app-breadcrumb>
+                        <a role="button" (click)="backPage()">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                            Desgravamen
+                        </a>
+                        <a role="button" (click)="backPage()">
+                            Configuración de estructuras y reglas
+                        </a>
+                        <a role="button" (click)="backPage()">
+                            Mantenimiento de horarios  
+                        </a>
+                    </app-breadcrumb>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="row pull-right">
+                    <div class="col-sm-12"><span>&nbsp;</span></div>
+                    <app-breadcrumb>
+                        <a role="button" (click)="backPage()">
+                            Regresar  
+                        </a>
+                    </app-breadcrumb>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="content__header">
+        <div class="row">
+            <div class="col-md-4 left">
+                    <h3 class="title header-item">
+                        Mantenimiento de horarios  
+                    </h3>
+            </div>
+            <div class="col-md-4 left"></div>
+            <div class="col-md-1 left"></div>
+            <div class="col-md-2 pull-right">
+                    <section>
+                        <button type="button" class="full-color ml-4" (click)="nuevoHorario(content1)">
+                            <span>Agregar horario</span>
+                        </button>
+                    </section>
+            </div>
+        </div>
+    </section>
+    <section class="content__body">
+      <!-- *Datos generales -->
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr class="grid-title">
+                            <td style="display:none;"></td>
+                            <td style="display:none;"></td>
+                            <td style="display:none;"></td>
+                            <td style="display:none;"></td>
+                            <td style="display:none;"></td>
+                            <td style="display:none;"></td>
+                            <td style="display:none;"></td>
+                            <td style="display:none;"></td>
+                            <td class="grid-title-item">Ramo</td>
+                            <td class="grid-title-item">Producto</td>
+                            <td class="grid-title-item">Día</td>
+                            <td class="grid-title-item">Hora de inicio</td>
+                            <td class="grid-title-item">Hora de fin</td>
+                            <td class="grid-title-item">Opciones</td>
+                        </tr>
+                    </thead>
+                    <ng-container *ngIf="listHorario.length ==0; then hideGrid else showGrid">
+                    </ng-container>
+                    <ng-template #hideGrid>
+                        <tbody>
+                            <tr>
+                                <td class="text-center" colspan="7">No se encontraron registros.</td>
+                            </tr>
+                        </tbody>
+                    </ng-template>
+                    <ng-template #showGrid>
+                        <tbody *ngFor="let item0 of listHorario">
+                            <tr>
+                                <td style="display:none;">{{item0.NBRANCH}}</td>
+                                <td style="display:none;">{{item0.NPRODUCT}}</td>
+                                <td style="display:none;">{{item0.horaIniList}}</td>
+                                <td style="display:none;">{{item0.minutoIniList}}</td>
+                                <td style="display:none;">{{item0.horaFinList}}</td>
+                                <td style="display:none;">{{item0.minutoFinList}}</td>
+                                <td style="display:none;">{{item0.NDIA}}</td>
+                                <td style="display:none;">{{item0.NFLAG_DIA_SIG}}</td>
+                                <td class="data-table-tr-td">{{item0.SBRANCH}}</td>
+                                <td class="data-table-tr-td">{{item0.SPRODUCT}}</td>
+                                <td class="data-table-tr-td">{{item0.SDIA}}</td>
+                                <td class="data-table-tr-td">{{item0.DHORA_INICIO | date:'HH:mm'}}</td>
+                                <td class="data-table-tr-td">{{item0.DHORA_FIN | date:'HH:mm'}}</td>
+                                <td class="data-table-tr-td text-center icons-box">
+                                    <img  src="assets/icons/editar.png" (click)="Editar(item0.INDICE, item0, content2)" title="Editar" alt="Editar" />
+                                    <img src="assets/icons/anular.png" (click)="Borrar(item0.INDICE, item0)" title="Borrar" alt="Borrar" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </ng-template>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <button type="button" class="full-color ml-4" (click)="validarHorarios()"
+                    *ngIf="btnGuardarAct == 'opentype'">
+                    <span>GUARDAR</span>
+                </button>
+            </div>
+        </div>
+    </section>
+</main>
+
+<ng-template #content1
+    let-c="close"
+    let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Nuevo Horario</h4>
+    </div>
+    <div class="modal-body">
+        <div class="filter">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <span>RAMO</span>
+                            <select class="minimal" (change)="getProductsListByBranch()" [(ngModel)]="mSelectedBranchId">
+                                <option value="-1"disabled >SELECCIONAR</option>
+                                <option *ngFor="let item of branchTypeList" value="{{item.id}}">
+                                    {{item.description}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <span>PRODUCTO</span>
+                            <select class="minimal" [(ngModel)]="mSelectedProductoId" >
+                                <option value="-1" disabled>SELECCIONAR</option>
+                                <option *ngFor="let item of listProduct" value="{{item.id}}">
+                                    {{item.description}}</option>
+                            </select>
+                        </div>
+                    </div>    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <span>DÍA</span>
+                            <select class="minimal" [(ngModel)]="Ndia" >
+                                <option value="-1">SELECCIONAR</option>
+                                <option *ngFor="let item of diaList" value="{{item.id}}">
+                                    {{item.description}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <span>&nbsp;</span>
+                        <div class="col-md-12">&nbsp;&nbsp;
+                            <input class="form-check-input" type="checkbox" id="checkboxDiaSig" [(ngModel)]="checkboxDiaSig">
+                            <label class="form-check-label"> Considerar horas del día siguiente </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <span> HORA DE INICIO</span>
+                            <div class="row">
+                                <div class="col-md-12"><span>HH:mm</span></div>
+                                <div class="col-md-5">
+                                    <select class="minimal" (change)="validarHora()" [(ngModel)]="mhoraIniList">
+                                        <option value="-1"></option>
+                                    <option *ngFor="let item of horaIniList" value="{{item.description}}">
+                                        {{item.description}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-5 left">
+                                    <select class="minimal" (change)="validarHora()" [(ngModel)]="mminutoIniList">
+                                        <option value="-1"></option>
+                                    <option *ngFor="let item of minutoIniList" value="{{item.description}}">
+                                        {{item.description}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-12"><span>&nbsp;</span></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <span> HORA DE FIN</span>
+                            <div class="row">
+                                <div class="col-md-12"><span>HH:mm</span></div>
+                                <div class="col-md-5">
+                                    <select class="minimal" (change)="validarHora()" [(ngModel)]="mhoraFinList">
+                                        <option value="-1"></option>
+                                    <option *ngFor="let item of horaFinList" value="{{item.description}}">
+                                        {{item.description}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-5 left">
+                                    <select class="minimal" (change)="validarHora()" [(ngModel)]="mminutoFinList">
+                                        <option value="-1"></option>
+                                    <option *ngFor="let item of minutoFinList" value="{{item.description}}">
+                                        {{item.description}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-12"><span>&nbsp;</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row"><span>&nbsp;</span></div>
+            <div class="row">
+                <div class="col-md-6"><button type="button"
+                    class="full-color" (click)="guardarNuevoHorario()"
+                    *ngIf="btnGuardarHor == 'opentype'">
+                    <span>AGREGAR</span>
+                    </button>
+                </div>
+                <div class="col-md-6"><button type="button"
+                    class="full-color" (click)="cerrar1(content1)">
+                    <span>CANCELAR</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #content2
+    let-c="close"
+    let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Modificar Horario</h4>
+    </div>
+    <div class="modal-body">
+        <div class="filter">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <span>RAMO</span>
+                            <select class="minimal" (change)="getProductsListByBranch()" [(ngModel)]="mSelectedBranchId" [disabled]="disRamo">
+                                <option value=""disabled >SELECCIONAR</option>
+                                <option *ngFor="let item of branchTypeList" value="{{item.id}}">
+                                    {{item.description}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <span>PRODUCTO</span>
+                            <select class="minimal" [(ngModel)]="mSelectedProductoId"  [disabled]="disProducto">
+                                <option value="" disabled>SELECCIONAR</option>
+                                <option *ngFor="let item of listProduct" value="{{item.id}}">
+                                    {{item.description}}</option>
+                            </select>
+                        </div>
+                    </div>    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <span>DÍA</span>
+                            <select class="minimal" [(ngModel)]="Ndia" [disabled]="disDia">
+                                <option value="">SELECCIONAR</option>
+                                <option *ngFor="let item of diaList" value="{{item.id}}">
+                                    {{item.description}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <span>&nbsp;</span>
+                        <div class="col-md-12">&nbsp;&nbsp;
+                            <input class="form-check-input" type="checkbox" id="checkboxDiaSig" [(ngModel)]="checkboxDiaSig">
+                            <label class="form-check-label"> Considerar horas del día siguiente </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <span> HORA DE INICIO</span>
+                            <div class="row">
+                                <div class="col-md-12"><span>HH:mm</span></div>
+                                <div class="col-md-5">
+                                    <select class="minimal" (change)="validarHora()" [(ngModel)]="mhoraIniList">
+                                        <option value="-1"></option>
+                                    <option *ngFor="let item of horaIniList" value="{{item.description}}">
+                                        {{item.description}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-5 left">
+                                    <select class="minimal" (change)="validarHora()" [(ngModel)]="mminutoIniList">
+                                        <option value="-1"></option>
+                                    <option *ngFor="let item of minutoIniList" value="{{item.description}}">
+                                        {{item.description}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-12"><span>&nbsp;</span></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <span> HORA DE FIN</span>
+                            <div class="row">
+                                <div class="col-md-12"><span>HH:mm</span></div>
+                                <div class="col-md-5">
+                                    <select class="minimal" (change)="validarHora()" [(ngModel)]="mhoraFinList">
+                                        <option value="-1"></option>
+                                    <option *ngFor="let item of horaFinList" value="{{item.description}}">
+                                        {{item.description}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-5 left">
+                                    <select class="minimal" (change)="validarHora()" [(ngModel)]="mminutoFinList">
+                                        <option value="-1"></option>
+                                    <option *ngFor="let item of minutoFinList" value="{{item.description}}">
+                                        {{item.description}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-12"><span>&nbsp;</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row"><span>&nbsp;</span></div>
+            <div class="row">
+                <div class="col-md-6"><button type="button"
+                    class="full-color" (click)="actualizarHorario()"
+                    *ngIf="btnActualizarHor == 'opentype'">
+                    <span>ACTUALIZAR</span>
+                    </button>
+                </div>
+                <div class="col-md-6"><button type="button"
+                    class="full-color" (click)="cerrar1(content1)">
+                    <span>CANCELAR</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<div [hidden]="isLoading==false"
+     class="loadingScreen">
+  <div style="display:flex;height: 100%;width:100%">
+        <i style="margin:auto;font-size: 50px"
+           class="fa fa-spinner fa-spin"></i>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<form
+  class="channel-point row d-flex flex-row pl-3"
+  [formGroup]="FORM_CHANNELS"
+>
+  <div class="col-md-6 px-0 mx-0">
+    <div class="content-input">
+      <label class="lbl-in filter-text">CANAL DE VENTA:</label>
+      <ng-select
+        [items]="CANAL_VENTA_DATA"
+        autofocus
+        placeholder="SELECCIONE"
+        bindLabel="sdescript"
+        bindValue="nchannel"
+        formControlName="canalVenta"
+        notFoundText="NO HAY RESULTADOS"
+        [clearable]="IS_ADMIN"
+        [disabled]="true"
+        (change)="changeCanalVentaData($event)"
+      >
+      <ng-template ng-option-tmp let-item="item">
+        <div [title]="item.sdescript" class="title-option">
+          {{ item.sdescript }}
+        </div>
+      </ng-template>
+      </ng-select>
+    </div>
+  </div>
+  <div class="col-md-6 px-0 mx-0 pl-3">
+    <div class="content-input">
+      <label class="lbl-in filter-text">PUNTO DE VENTA:</label>
+      <ng-select
+        [items]="PUNTO_VENTA_DATA.PRO_SALE_POINT"
+        placeholder="SELECCIONE"
+        bindLabel="SDESCRIPT"
+        bindValue="NNUMPOINT"
+        notFoundText="NO HAY RESULTADOS"
+        formControlName="puntoVenta"
+        [clearable]="true"
+        [(ngModel)]="NAME_PUNTO_VENTA"
+        (change)="changePuntoVenta($event)"
+      >
+      <ng-template ng-option-tmp let-item="item">
+        <div [title]="item.SDESCRIPT" class="title-option">
+          {{ item.SDESCRIPT }}
+        </div>
+      </ng-template>
+      </ng-select>
+    </div>
+  </div>
+</form>

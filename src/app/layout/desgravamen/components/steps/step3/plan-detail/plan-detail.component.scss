@@ -1,0 +1,115 @@
+@import "variables";
+@import "ecommerce";
+.background {
+  &::after {
+    max-width: 17vw;
+    left: 2rem;
+    background-image: url("../../../../../../../assets/desgravamen/backgrounds/plan.svg");
+  }
+  &::before {
+    display: none;
+  }
+}
+.content {
+  position: relative;
+  padding: 0;
+  overflow: auto;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #f4f2f6;
+}
+.content_desc {
+  text-align: center;
+  padding: 2rem;
+}
+.content__item--title {
+  font-size: 35px;
+  margin-bottom: 1rem;
+}
+.list,
+.content_desc {
+  max-width: 700px;
+  margin: auto;
+}
+.content__item--close {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  border: none;
+  font-size: 45px;
+  background: transparent;
+}
+.navigator {
+  padding: 1rem;
+  text-align: center;
+}
+.btn-nav {
+  border: none;
+  outline: none;
+  background-color: #fff;
+  padding: 5px 10px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0);
+}
+.btn-nav.active {
+  color: $orange;
+  border-bottom: 2px solid $orange;
+}
+.btn-nav:not(:last-child) {
+  margin-right: 1rem;
+}
+.list {
+  list-style: none;
+  padding: 1rem;
+}
+.list__item {
+  position: relative;
+}
+.list__item--content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  padding: 1rem;
+  width: 100%;
+  background: #fff;
+  border: none;
+}
+.list__item--desc {
+  padding: 0 1rem;
+  height: 0;
+  margin: 0;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+}
+.btn-right {
+  border: none;
+  background-color: #fff;
+  font-size: 25px;
+  color: $orange;
+  transition: 0.2s;
+  -webkit-transition: 0.2s;
+  -moz-transition: 0.2s;
+  -ms-transition: 0.2s;
+  -o-transition: 0.2s;
+}
+.li-selected {
+  padding: 1rem;
+  height: 120px;
+}
+
+.btn-right.selected {
+  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+}

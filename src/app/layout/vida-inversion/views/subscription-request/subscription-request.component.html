@@ -1,0 +1,202 @@
+<div class="form-group row">
+    <div class="col-lg-3">
+        <app-nav-menuprod></app-nav-menuprod>
+    </div>
+    <div class="col-lg-9">
+        <div class="group1"
+             style="border-bottom: 1px solid #553d81; padding-bottom: 8px;">
+            <h2 class="title">
+                Bandeja de solicitudes
+            </h2>
+
+            <div class="col-lg-6 d-flex justify-content-end align-items-end mb-3">
+                <form-button label="Limpiar"
+                             btnClass="btn-secondary-VI text-nowrap"
+                             [slim]="true"
+                             (click)="cleanParameters()"></form-button>
+
+                <form-button label="Buscar"
+                             class="ml-2"
+                             (click)="searchList()"
+                             btnClass="btn-primary-VI text-nowrap"
+                             [slim]="true"></form-button>
+            </div>
+
+        </div>
+        <div class="row">
+
+            <div class="col-lg-3">
+                <form-input-text text_label="PÓLIZA:"
+                                 [onlyInput]="true"
+                                 maxCaracter="10"
+                                 [patternPrevent]="CONSTANTS.REGEX.NUMBER"
+                                 [(value)]="search_params.npolicy"
+                                 [large]="true"></form-input-text>
+            </div>
+            <div class="col-lg-3">
+                <form-input-date text_label="INICIO DE EMISIÓN:"
+                                 [(value)]="search_params.date_start"
+                                 [large]="true"></form-input-date>
+            </div>
+            <div class="col-lg-3">
+                <form-input-date text_label="FIN DE EMISIÓN:"
+                                 [(value)]="search_params.date_end"
+                                 [large]="true"></form-input-date>
+            </div>
+
+            <div class="col-lg-3">
+                <form-input-text text_label="NÚMERO DE SOLICITUD:"
+                                 [onlyInput]="true"
+                                 maxCaracter="10"
+                                 [(value)]="search_params.nid_solicitud"
+                                 [patternPrevent]="CONSTANTS.REGEX[search_params.document_type?.Id]"
+                                 [large]="true"></form-input-text>
+            </div>
+
+            <div class="col-lg-3">
+                <form-input-select text_label="TIPO DE DOCUMENTO:"
+                                   [service]="clientInformationService"
+                                   method="getDocumentTypeList"
+                                   [updateModelOnChange]="true"
+                                   (onSelect)="changeDocumentType()"
+                                   [params]="codProducto"
+                                   [(value)]="search_params.document_type"
+                                   fieldCodigo="Id"
+                                   fieldValor="Name"
+                                   [firstSelect]="true"
+                                   [large]="true"></form-input-select>
+            </div>
+
+            <div class="col-lg-3">
+                <form-input-text text_label="NÚMERO DE DOCUMENTO:"
+                                 [onlyInput]="true"
+                                 [(value)]="search_params.document_number"
+                                 [patternPrevent]="CONSTANTS.REGEX[search_params.document_type?.Id]"
+                                 [large]="true"></form-input-text>
+            </div>
+
+            <div class="col-lg-3">
+                <form-input-text text_label="NOMBRE CONTRATANTE:"
+                                 [onlyInput]="true"
+                                 [(value)]="search_params.contractor_name"
+                                 [patternPrevent]="CONSTANTS.REGEX.LETRAS"
+                                 [large]="true"></form-input-text>
+            </div>
+
+        </div>
+
+        <!-- TABLA -->
+        <div class="grid form-group"
+             style="margin-top: 3px;">
+            <div class="table-responsive div-tableban"
+                 id="table-scroll">
+                <table class="table-u">
+                    <thead class="grid-title">
+                        <th class="grid-title-item">Nro. Solicitud</th>
+                        <th class="grid-title-item">Póliza</th>
+                        <th class="grid-title-item">Doc Contratante</th>
+                        <th class="grid-title-item">Nombre Contratante</th>
+                        <th class="grid-title-item">Aporte</th>
+                        <th class="grid-title-item">Fondo</th>
+                        <th class="grid-title-item">Frecuencia</th>
+                        <th class="grid-title-item">Fecha Emisión</th>
+                        <th class="grid-title-item">Acciones</th>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngIf="!requests_list?.length">
+                            <tr class="grid-body">
+                                <td class="grid-body-item"
+                                    colspan="9"
+                                    style="text-align: center">
+                                    No se encontraron registros.
+                                </td>
+                            </tr>
+                        </ng-container>
+                        <ng-container *ngIf="!!requests_list?.length">
+                            <tr class="grid-body"
+                                *ngFor="let item of requests_list let index = index"
+                                [id]="'row' + index">
+                                <td class="grid-title-item">{{ item.NID_SOLICITUD }}</td>
+                                <td class="grid-title-item">{{ item.NPOLIZA }}</td>
+                                <td class="grid-title-item">{{ item.SDOC_CONT }}</td>
+                                <td class="grid-title-item">{{ item.SNAME_CONT }}</td>
+                                <td class="grid-title-item">{{ item.APORTE }}</td>
+                                <td class="grid-title-item">{{ item.SDES_FONDO }}</td>
+                                <td class="grid-title-item">{{ item.DESC_PAY_FREQ }}</td>
+                                <td class="grid-title-item">{{ item.DSTART_DATE }}</td>
+
+                                <td class="tbl__body-row-item tbl-actions actions p-1"
+                                    ngbDropdown>
+                                    <button class="btn-dropdown-u"
+                                            tabindex="0"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false"
+                                            ngbDropdownToggle>
+                                        <i class="fa fa-ellipsis-v"
+                                           aria-hidden="true"></i>
+                                    </button>
+
+                                    <ul class="dropdown-u"
+                                        display="dynamic"
+                                        ngbDropdownMenu>
+                                        <li class="dropdown-item-u">
+                                            <button class="dropdown-item-btn-u"
+                                                    title="Generar"
+                                                    (click)="goToNuevaSolicitud(item)">
+                                                <i class="fa fa-eye fa-lg"></i>Generar
+                                            </button>
+                                        </li>
+                                        <li class="dropdown-item-u">
+                                            <button class="dropdown-item-btn-u"
+                                                    title="Ver">
+                                                <i class="fa fa-eye fa-lg"></i>Ver
+                                            </button>
+                                        </li>
+
+                                        <li class="dropdown-item-u" *ngIf="item.NID_SOLICITUD !== '-' ">
+                                            <button class="dropdown-item-btn-u"
+                                                    title="Anular"
+                                                    (click)="rejectRequest(item.id_cotizacion)">
+                                                <i class="fa fa-eye fa-lg"></i>Anular
+                                            </button>
+                                        </li>
+
+                                        <!-- <li class="dropdown-item-u">
+                                            <button class="dropdown-item-btn-u"
+                                                    title="Ver Datos PEP"
+                                                    (click)="GoToDataPep(item)">
+                                                <i class="fa fa-eye fa-lg"></i>Datos PEP
+                                            </button>
+                                        </li> -->
+                                    </ul>
+                                </td>
+
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+                <div *ngIf="requests_list != null && requests_list.length > 0"
+                     style="display: flex">
+                    <div class="col-sm-12">
+                        <ngb-pagination [(page)]="currentPage"
+                                        [pageSize]="itemsPerPage"
+                                        [collectionSize]="totalItems"
+                                        [maxSize]="maxSize"
+                                        (pageChange)="pageChangedNV(currentPage)">
+                            <ng-template ngbPaginationPrevious>ANTERIOR</ng-template>
+                            <ng-template ngbPaginationNext>SIGUIENTE</ng-template>
+                        </ngb-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div [hidden]="!isLoading"
+             class="loadingScreen">
+            <div style="display:flex;height: 100%;width:100%">
+                <i style="margin:auto;font-size: 50px"
+                   class="fa fa-spinner fa-spin"></i>
+            </div>
+        </div>
+    </div>
+</div>

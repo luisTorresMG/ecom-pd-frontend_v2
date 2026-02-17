@@ -1,0 +1,27 @@
+<div class="content">
+  <app-show-steps [NSTEP]="4"></app-show-steps>
+  <p class="content__desc">
+    Hola, gracias por confiar lo que más valoras en <b>Protecta Security</b>.
+  </p>
+  <div class="summary">
+    <h2 class="summary__title">Datos del producto</h2>
+    <div class="summary__item">
+      <span class="summary__item--title">Número de pedido</span>
+      <span class="summary__item--desc">{{ pagoEfectivoResponse?.orderNumber }}</span>
+    </div>
+    <div class="summary__item">
+      <span class="summary__item--title">Fecha</span>
+      <span class="summary__item--desc">{{ pagoEfectivoResponse?.transactionDateTime }}</span>
+    </div>
+    <div class="summary__item">
+      <span class="summary__item--title">Total</span>
+      <span class="summary__item--desc">{{ currencyDescription }} {{ tarifario?.primaInicial }}</span>
+    </div>
+    <div class="summary__item">
+      <span class="summary__item--title">Método de pago</span>
+      <span class="summary__item--desc">Pago Efectivo</span>
+    </div>
+  </div>
+  <button class="btn-home"
+          (click)="backToInit()">Ir al inicio</button>
+</div>

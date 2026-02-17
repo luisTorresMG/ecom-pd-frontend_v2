@@ -1,0 +1,222 @@
+<div class="content background">
+  <app-steps-generic [NSTEPS]="5"
+                     [NSTEP]="1"></app-steps-generic>
+  <form class="frm frm_normal"
+        [@fade]="true"
+        [formGroup]="form"
+        (ngSubmit)="submit()">
+    <h1 class="frm_title">Cotiza tu <b>seguro aquí</b></h1>
+    <div class="content-inputs">
+      <div class="content_dbl_input-u">
+        <label for="documentType"
+               class="content_input-u"
+               [class.disabled]="form.disabled">
+          <select id="documentType"
+                  class="input-u"
+                  formControlName="documentType">
+            <option value="2">DNI</option>
+            <option value="4">CE</option>
+          </select>
+        </label>
+        <label for="documentNumber"
+               class="content_input-u placeholder"
+               [class.placeholder-active]="f.documentNumber.value"
+               [class.hasError]="hasErrorDocumentNumber"
+               aria-placeholder="Número de Documento">
+          <input type="text"
+                 id="documentNumber"
+                 class="input-u"
+                 [class.placeholder-active]="f.documentNumber.value"
+                 [class.hasError]="hasErrorDocumentNumber"
+                 formControlName="documentNumber"
+                 [minLength]="documentNumberLimit.min"
+                 [maxLength]="documentNumberLimit.max"
+                 (blur)="requestClientInfo()">
+          <ng-container *ngIf="hasErrorDocumentNumber">
+            <small class="hasError"
+                   [@fade]="true">
+              {{ hasErrorDocumentNumber }}
+            </small>
+          </ng-container>
+        </label>
+      </div>
+      <label for="email"
+             class="content_input-u placeholder"
+             [class.placeholder-active]="f.email.value"
+             [class.hasError]="hasErrorEmail"
+             aria-placeholder="Correo electrónico">
+        <input type="text"
+               id="email"
+               class="input-u"
+               [class.placeholder-active]="f.email.value"
+               [class.hasError]="hasErrorEmail"
+               formControlName="email">
+        <ng-container *ngIf="hasErrorEmail">
+          <small class="hasError"
+                 [@fade]="true">
+            {{ hasErrorEmail }}
+          </small>
+        </ng-container>
+      </label>
+      <label for="phone"
+             class="content_input-u placeholder"
+             [class.placeholder-active]="f.phone.value"
+             [class.hasError]="hasErrorPhone"
+             aria-placeholder="Número de celular">
+        <input type="text"
+               id="phone"
+               class="input-u"
+               [class.placeholder-active]="f.phone.value"
+               [class.hasError]="hasErrorPhone"
+               [minLength]="phoneNumberLimit.min"
+               [maxLength]="phoneNumberLimit.max"
+               formControlName="phone">
+        <ng-container *ngIf="hasErrorPhone">
+          <small class="hasError"
+                 [@fade]="true">
+            {{ hasErrorPhone }}
+          </small>
+        </ng-container>
+      </label>
+      <ng-container *ngIf="dataOfDocument.success && !dataOfDocument.returnBirthDate">
+        <label for="birthDate"
+               class="content_input-u placeholder"
+               [class.placeholder-active]="f.birthDate.value"
+               [class.hasError]="hasErrorBirthDate"
+               aria-placeholder="Fecha de Nacimiento">
+          <input type="text"
+                 id="birthDate"
+                 class="input-u datepicker"
+                 [class.placeholder-active]="f.birthDate.value"
+                 [class.hasError]="hasErrorBirthDate"
+                 [readonly]="true"
+                 #dp="bsDatepicker"
+                 [bsConfig]="bsConfig"
+                 bsDatepicker
+                 formControlName="birthDate">
+          <ng-container *ngIf="hasErrorBirthDate">
+            <small class="hasError"
+                   [@fade]="true">
+              {{ hasErrorBirthDate }}
+            </small>
+          </ng-container>
+        </label>
+      </ng-container>
+      <ng-container *ngIf="dataOfDocument.success && dataOfDocument.returnBirthDate">
+        <div class="birthdate">
+          <svg class="birthdate-icon"
+               xmlns="http://www.w3.org/2000/svg"
+               width="24"
+               height="24"
+               viewBox="0 0 24 24">
+            <path
+                  d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.393 7.5l-5.643 5.784-2.644-2.506-1.856 1.858 4.5 4.364 7.5-7.643-1.857-1.857z" />
+          </svg>
+          <span>Tu fecha de nacimiento es: <b>{{ formatDate }}</b></span>
+        </div>
+      </ng-container>
+      <div class="content_terms">
+        <div class="content_terms__item">
+          <input type="checkbox"
+                 id="terms"
+                 class="chk"
+                 formControlName="terms">
+          <label for="terms"
+                 class="lbl-chk">
+            <span class="content_terms__item-desc">
+              Acepto los <a href=""
+                 class="term_link">Términos y condiciones</a>
+            </span>
+          </label>
+        </div>
+        <div class="content_terms__item">
+          <input type="checkbox"
+                 id="policy"
+                 class="chk"
+                 formControlName="privacy">
+          <label for="policy"
+                 class="lbl-chk">
+            <span class="content_terms__item-desc">
+              Acepto el envío de publicidad de acuerdo a lo señalado en la <a href=""
+                 class="term_link">Política de privacidad</a>
+            </span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="frm__footer">
+      <button role="button"
+              type="submit"
+              class="input-u input_submit-u"
+              [disabled]="!validateForm || form.disabled">Cotiza aquí</button>
+    </div>
+  </form>
+</div>
+<ng-template #modalNeed>
+  <div id="modal-u">
+    <div class="modal-u">
+      <div class="modal__header">
+        <h2 class="modal__header--title">
+          ¿Que necesito para adquirir el <b>seguro</b>?
+        </h2>
+        <button class="modal__header--close"
+                (click)="hideModal()">&times;</button>
+      </div>
+      <div class="modal__body">
+        <p class="modal__body--text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloremque omnis deserunt
+          sunt amet praesentium totam. Qui sint perferendis similique tenetur iusto, numquam in voluptatum aperiam ad
+          commodi doloremque ab veritatis.</p>
+        <p class="modal__body--text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime assumenda nemo,
+          excepturi ex tenetur explicabo temporibus vero libero amet vel ea fuga necessitatibus nobis fugiat laboriosam
+          consequatur placeat non alias!</p>
+        <p class="modal__body--text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam ab labore nulla
+          est corrupti reprehenderit! Quas veritatis obcaecati, eaque earum rerum neque ullam suscipit doloribus beatae
+          fuga veniam facere est?</p>
+      </div>
+      <div class="modal__footer">
+        <button class="modal__footer--btn"
+                (click)="hideModal()">Siguiente</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #modalBenefits>
+  <div id="modal-u">
+    <div class="modal-u">
+      <div class="modal__header">
+        <h2 class="modal__header--title">
+          <b class="capitalize">{{ dataOfDocument.names ? toLowerCase(dataOfDocument.names) : 'Hola' }}</b>, al adquirir
+          nuestro seguro recibe los
+          siguientes beneficios.
+        </h2>
+      </div>
+      <div class="modal__body modal__body_grid">
+        <div class="modal__body_grid--item"
+             *ngFor="let data of benefits">
+          <img [src]="'assets/desgravamen/beneficios/'+data.img"
+               [attr.alt]="data.desc"
+               class="modal__body_grid--item-img">
+          <span class="modal__body_grid--item-desc">
+            {{ data.desc }}
+          </span>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="modal__footer--btn"
+                (click)="nextStep()">Siguiente</button>
+      </div>
+      <small class="references">Beneficios referenciales*</small>
+    </div>
+  </div>
+</ng-template>
+
+<div class="captcha">
+  <re-captcha
+    #recaptchaRef="reCaptcha"
+    (resolved)="resolved($event)"
+    siteKey="{{ siteKey }}"
+    badge="bottomleft"
+    size="invisible"
+  >
+  </re-captcha>
+</div>

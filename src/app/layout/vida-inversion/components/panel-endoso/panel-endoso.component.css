@@ -1,0 +1,124 @@
+.container-modal {
+    margin: auto;
+}
+
+.container-title-modal {
+    background-color: #553d81;
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    padding: 2px 0px;
+}
+
+.container-opcion-endoso {
+    /* width: max-content; */
+    width: 50%;
+    margin: 8px auto;
+}
+
+.container-form-data{
+    padding: 10px;
+}
+.form-grid{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap:10px
+} 
+
+.inputs-document{
+    width: 100%;
+  display: flex;
+  gap:10px
+}
+
+.form-selects{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap:10px
+}
+
+.container-buttons{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.table___beneficiary {
+    min-height: 120px;
+}
+
+.table,
+.table-u {
+    width: 100%;
+
+    thead {
+        background-color: #553d81;
+        position: sticky;
+        top: 0;
+        left: 0;
+
+        tr {
+            th {
+                color: #fff;
+                background-color: transparent;
+
+                &::selection {
+                    background-color: #fff;
+                    color: #553d81;
+                }
+            }
+        }
+    }
+
+    thead,
+    tbody,
+    tfoot {
+        tr {
+
+            th,
+            td {
+                text-align: center;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                font-size: 14px;
+                font-weight: normal;
+                max-width: 340px;
+                vertical-align: middle;
+            }
+        }
+    }
+
+    tbody:not(.no-hover) {
+        tr {
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.035);
+            }
+        }
+    }
+
+    tbody td.actions {
+        padding: 0 !important;
+        overflow: visible !important;
+    }
+}
+
+.button-add{
+    display: flex;
+    justify-content: flex-end;
+    gap:10px;
+    padding: 10px 0 10px 0;
+}
+
+
+@media only screen and (max-width: 1000px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    .inputs-document{
+        display: block;
+    }
+    .form-selects{
+        grid-template-columns: 1fr;
+    }
+}

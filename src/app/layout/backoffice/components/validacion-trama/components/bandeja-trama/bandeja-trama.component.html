@@ -1,0 +1,225 @@
+<section class="content">
+  <div class="header-u">
+    <div class="header-left">
+      <h1 class="title-u">Bandeja de estructuras</h1>
+    </div>
+    <div class="header-right">
+      <button class="button-default" (click)="goToPage('')">
+        <i class="fa fa-angle-left" aria-hidden="true"></i>
+        Regresar
+      </button>
+      <button
+        class="button primary fit button-tab"
+        (click)="goToPage('configuracion')"
+      >
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        Nueva estructura
+      </button>
+    </div>
+  </div>
+  <form class="form form-filters" [formGroup]="formFilters">
+    <label
+      for="f-id-estructura"
+      class="placeholder upper"
+      aria-placeholder="ID Estructura:"
+    >
+      <input type="text" id="f-id-estructura" formControlName="idEstructura" />
+    </label>
+    <label
+      for="f-tipo-archivo"
+      class="placeholder upper"
+      aria-placeholder="Tipo de archivo:"
+    >
+      <select id="f-tipo-archivo" formControlName="tipoArchivo">
+        <option value="1">Excel</option>
+      </select>
+    </label>
+    <label
+      for="f-fecha-inicio"
+      class="placeholder upper"
+      aria-placeholder="Fecha inicio:"
+    >
+      <input
+        type="text"
+        id="f-fecha-inicio"
+        bsDatePicker
+        #dp="bsDatepicker"
+        [bsConfig]="fechaInicioConfig"
+        bsDatepicker
+        readonly
+        formControlName="fechaInicio"
+      />
+    </label>
+    <label
+      for="f-fecha-fin"
+      class="placeholder upper"
+      aria-placeholder="Fecha fin:"
+    >
+      <input
+        type="text"
+        id="f-fecha-fin"
+        #dp="bsDatepicker"
+        [bsConfig]="fechaFinConfig"
+        bsDatepicker
+        readonly
+        formControlName="fechaFin"
+      />
+    </label>
+    <label
+      for="f-tipo-archivo"
+      class="placeholder upper"
+      aria-placeholder="Estado:"
+    >
+      <select id="f-tipo-archivo" formControlName="estado">
+        <option value="TODOS">TODOS</option>
+        <option value="ACTIVO">ACTIVO</option>
+        <option value="ANULADO">ANULADO</option>
+      </select>
+    </label>
+    <div class="actions">
+      <button class="button-default secondary" (click)="resetForm()">
+        Limpiar
+      </button>
+      <button class="button-default primary" (click)="listarEstructuras(true)">
+        Buscar
+      </button>
+    </div>
+  </form>
+  <div class="divider"></div>
+  <div class="content-table">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID Estructura</th>
+          <th>Estructura</th>
+          <th>Tipo de archivo</th>
+          <th>Fila / Columna inicio</th>
+          <th>Tiene cabecera</th>
+          <th>Indice de pestaña</th>
+          <th>Formato de fecha</th>
+          <th>Estado</th>
+          <th>Fecha de registro</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="!estructurasResponse$?.success">
+          <tr>
+            <td colspan="9">No se encontraron resultados</td>
+          </tr>
+        </ng-container>
+        <ng-container *ngIf="estructurasResponse$?.success">
+          <tr
+            *ngFor="
+              let item of estructurasResponse$?.dataEstructura
+                | paginate
+                  : {
+                      id: 'listado-grid',
+                      currentPage: currentPage,
+                      totalItems: estructurasResponse$?.dataEstructura?.length,
+                      itemsPerPage: 10
+                    }
+            "
+          >
+            <td>{{ item.idEstructura }}</td>
+            <td>{{ item.estructura }}</td>
+            <td>{{ item.tipoArchivo }}</td>
+            <td>{{ item.filaInicio + " - " + item.columnaInicio }}</td>
+            <td>{{ item.tieneCabecera == 1 ? "Sí" : "No" }}</td>
+            <td>{{ item.indiceTab }}</td>
+            <td>{{ item.formatoFecha }}</td>
+            <td>{{ item.estado }}</td>
+            <td>{{ item.fechaRegistro }}</td>
+            <td class="actions">
+              <div class="dropdown" ngbDropdown>
+                <button ngbDropdownToggle>
+                  <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                </button>
+                <ul ngbDropdownMenu>
+                  <li>
+                    <button (click)="getDetail(item.idEstructura, 'read')">
+                      <i class="fa fa-eye" aria-hidden="true"></i>
+                      Ver detalle
+                    </button>
+                    <button (click)="getDetail(item.idEstructura, 'write')">
+                      <i class="fa fa-pencil" aria-hidden="true"></i>
+                      Editar
+                    </button>
+                    <button
+                      (click)="showModalOverrideStructure(item)"
+                      *ngIf="item.estado != 'Anulado'"
+                    >
+                      <i class="fa fa-trash" aria-hidden="true"></i>
+                      Anular
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+  <pagination-controls
+    id="listado-grid"
+    [autoHide]="true"
+    previousLabel="Anterior"
+    nextLabel="Siguiente"
+    (pageChange)="changeCurrentPage = $event"
+  ></pagination-controls>
+</section>
+
+<ng-template #modalConfirmOverrideStructure>
+  <div class="content-modal modal-override">
+    <section>
+      <div class="modal-header">
+        <h6>Mensaje de confirmación</h6>
+        <button (click)="closeModals()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="paragraph">
+          ¿Está seguro que desea anular la estructura N°
+          {{ selectedStructure.idEstructura }}?
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="button-default secondary" (click)="closeModals()">
+          Cancelar
+        </button>
+        <button class="button-default primary" (click)="overrideStructure()">
+          Aceptar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalMessage>
+  <div class="content-modal modal-message">
+    <section>
+      <div class="modal-header">
+        <h6>Mensaje</h6>
+        <button (click)="closeModals()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <ng-container *ngIf="responseMessage.showImage">
+          <ng-container *ngIf="!responseMessage.hasError">
+            <img src="assets/backoffice/check-success.png" alt="" />
+          </ng-container>
+          <ng-container *ngIf="responseMessage.hasError">
+            <img src="assets/backoffice/check-error.png" alt="" />
+          </ng-container>
+        </ng-container>
+        <p class="paragraph">
+          {{ responseMessage.message }}
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="button-default primary" (click)="closeModals()">
+          Aceptar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>

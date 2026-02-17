@@ -1,0 +1,112 @@
+<div class="container-fluid">
+    <div class="container-1">
+
+        <div class="container col-sm-12 col-lg-12">
+            <div class="header-u">
+                <div class="header-left">
+                    <h1 class="title-u">Estructura Comercial</h1>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="tab1">
+                    <form class="form-filtros"
+                          [formGroup]="formFilter">
+
+                        <form-input-select text_label="RAMO:"
+                                           [(value)]="selectedBranch"
+                                           [updateModelOnChange]="true"
+                                           fieldCodigo="Id"
+                                           fieldValor="Name"
+                                           (onSelect)="changeBranch()"
+                                           [items]="branchOptions"
+                                           [firstAll]="true"
+                                           [large]="true"
+                                           disabled
+                                           class="w-100"></form-input-select>
+
+                        <form-input-select text_label="PRODUCTO:"
+                                           [(value)]="selectedProduct"
+                                           [updateModelOnChange]="true"
+                                           fieldCodigo="Id"
+                                           fieldValor="Name"
+                                           [items]="productOptions"
+                                           [firstAll]="true"
+                                           [large]="true"
+                                           disabled
+                                           class="w-100"></form-input-select>
+
+                        <div class="form-filter-actions" style="height: 52px;">
+                            <button class="button primary fit"
+                                    (click)="search(true)">
+                                Buscar
+                            </button>
+                            <button class="button primary fit"
+                                    (click)="newEstructura()">
+                                Nuevo
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="divider"></div>
+                    <!-- TABLA -->
+                    <section class="content-table">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>N°</th>
+                                    <th>Estructura Comercial</th>
+                                    <th>Ramo</th>
+                                    <th>Producto</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngIf="!list.length">
+                                    <tr>
+                                        <td colspan="8">No hay información para mostrar</td>
+                                    </tr>
+                                </ng-container>
+                                <ng-container *ngIf="!!list.length">
+                                    <tr *ngFor="
+                                            let data of structure_list;
+                                            let index = index
+                                            ">
+                                        <td>{{ data.NSTRUCTURE_CAB_ID }}</td>
+                                        <td>{{ data.SSTRUCTURE }}</td>
+                                        <td>{{ data.NBRANCH_DESC }}</td>
+                                        <td>{{ data.PRODUCT_DESC }}</td>
+                                        <td>
+                                            <div
+                                                 style="display: flex; gap: 1rem; align-items: center;justify-content: center; width: 100%">
+                                                <p style="cursor: pointer; font-weight: 500;"
+                                                   (click)="viewEstructura(data)">Ver</p>
+                                                |
+                                                <p style="cursor: pointer; font-weight: 500;"
+                                                   (click)="editEstructura(data)">Editar</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </table>
+                    </section>
+                    <div *ngIf="list != null && list.length > 0"
+                         style="display: flex">
+                        <div class="col-sm-12">
+                            <ngb-pagination [(page)]="currentPage"
+                                            [pageSize]="itemsPerPage"
+                                            [collectionSize]="totalItems"
+                                            [maxSize]="maxSize"
+                                            (pageChange)="pageChanged(currentPage)">
+                                <ng-template ngbPaginationPrevious>ANTERIOR</ng-template>
+                                <ng-template ngbPaginationNext>SIGUIENTE</ng-template>
+                            </ngb-pagination>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

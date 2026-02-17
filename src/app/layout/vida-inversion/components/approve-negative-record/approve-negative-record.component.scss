@@ -1,0 +1,144 @@
+.container-title-modal{
+    // background-color: rgba(43, 13, 99, 0.7);
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    margin: auto;
+    padding: 1px 0px;
+  }
+
+  // Inicio Tabla
+.table-responsive {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.table-responsive {
+    padding-right: 0rem;
+    background-color: #fff;
+}
+
+.table {
+    margin: 0 0rem;
+}
+
+.full-color {
+    display: flex;
+    justify-content: center;
+    border: 1px solid #ed6e00;
+    border-radius: 2px;
+    margin: 0 5px;
+    background: #ed6e00;
+    color: #fff;
+    padding: 8px 10px;
+    height: 45px;
+    outline: none;
+}
+
+.full-color span {
+    color: #fff;
+    margin-left: 10px;
+}
+
+.TableMargin {
+    min-height: 175px;
+}
+
+.TableMargin_short {
+    min-height: 104px;
+}
+
+.table,
+.table-u {
+    width: 100%;
+
+    thead {
+        background-color: #553d81;
+        position: sticky;
+        top: 0;
+        left: 0;
+
+        tr {
+            th {
+                color: #fff;
+                background-color: transparent;
+
+                &::selection {
+                    background-color: #fff;
+                    color: #553d81;
+                }
+            }
+        }
+    }
+
+    thead,
+    tbody,
+    tfoot {
+        tr {
+
+            th,
+            td {
+                padding: 0px;
+                text-align: center;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                font-size: 14px;
+                font-weight: normal;
+                max-width: 340px;
+                vertical-align: middle;
+            }
+        }
+    }
+
+    tbody:not(.no-hover) {
+        tr {
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.035);
+            }
+        }
+    }
+
+    tbody td.actions {
+        padding: 0 !important;
+        overflow: visible !important;
+    }
+}
+
+
+.grid-title {
+    background: #553d81;
+    background-color: #553d81;
+    color: #fff !important;
+    text-align: center;
+    height: 46px;
+}
+
+.grid table .grid-title td,
+.thead {
+    background: #553d81;
+    color: #fff !important;
+}
+
+.grid table .grid-title td,
+.grid table .grid-body,
+.table-info-soat {
+    font-family: "Bliss Pro";
+    text-align: center;
+    font-size: 14px;
+}
+
+.btn-orange {
+  text-decoration: none;
+  color: #ffffff;
+  font-family: "Bliss Pro";
+  font-size: 15px;
+  font-weight: bold;
+  padding: 8px;
+  border-radius: 6px;
+  background-color: #ed6e00;
+  cursor: pointer;
+  width: 120px;
+}
+
+// FIN Tabla

@@ -1,0 +1,174 @@
+<div class="padding-modal">
+  <div class="modal-body">
+    <div class="content">
+        <h3>Registro de Beneficiario</h3>
+       <div>
+        <div class="container-form" *ngIf="true">
+            <form-input-select-re
+            [itemsArray]="true"
+            [items]="opcionesTipoDocumentos"
+            fieldValor="valor"
+            fieldCodigo="codigo"
+            fieldValor="valor"
+            label="Tipo Documento (*)"
+            [firstSelect]="true"
+            [(value)]="inputs.TIPO_DOCUMENTO"
+            [defaultValue]="{ codigo: TIPO_DOCUMENTO }"
+            disabled
+            ></form-input-select-re>
+            <form-input-text-re
+              label="Numero Documento (*)"
+              [(value)]="inputs.NUMERO_DOCUMENTO"
+              disabled
+            ></form-input-text-re>
+            <form-input-text-re
+            [(value)]="inputs.APE_PATERNO"
+            label="Apellido Paterno (*)"
+            [disabled]="TIPO_DOCUMENTO == 1"
+            ></form-input-text-re>
+            <form-input-text-re
+            [(value)]="inputs.APE_MATERNO"
+            label="Apellido Materno (*)"
+            [disabled]="TIPO_DOCUMENTO == 1"
+            ></form-input-text-re>
+            <form-input-text-re
+            label="Nombres (*)"
+            [(value)]="inputs.NOMBRES"
+            [disabled]="TIPO_DOCUMENTO == 1"
+
+            ></form-input-text-re>
+        <!-- FECHA NACIMENTO -->
+        <form-input-date-re
+        label="Fecha nacimiento"
+        [(value)]="inputs.FECHA_NACIMENTO"
+        [disabled]="TIPO_DOCUMENTO == 1"
+        [todayPreviousMonth]="true"
+      ></form-input-date-re>
+         <form-input-select-re
+            [itemsArray]="true"
+            fieldCodigo="codigo"
+            fieldValor="valor"
+            [items]="opcionesSexo"
+            [(value)]="inputs.SEXO"
+            label="Sexo (*)"
+            [disabled]="TIPO_DOCUMENTO == 1"
+            [firstSelect]="true"
+            ></form-input-select-re>
+         <form-input-select-re
+            [items]="opcionesEstadoCivil"
+            [itemsArray]="true"
+            fieldCodigo="codigo"
+            fieldValor="valor"
+            [(value)]="inputs.ESTADO_CIVIL"
+            label="Estado Civil (*)"
+            [disabled]="TIPO_DOCUMENTO == 1"
+            [firstSelect]="true"
+            ></form-input-select-re>
+         <form-input-select-re
+            [itemsArray]="true"
+            fieldCodigo="codigo"
+            fieldValor="valor"
+            [items]="opcionesTipoNacionalidad"
+            [(value)]="inputs.TIPO_NACIONALIDAD"
+            label="Nacionalidad (*)"
+            [disabled]="TIPO_DOCUMENTO == 1"
+            [firstSelect]="true"
+            ></form-input-select-re>
+         <form-input-select-re
+            [itemsArray]="true"
+            [items]="opcionesTipoVia"
+            [(value)]="inputs.TIPO_VIA"
+            fieldCodigo="codigo"
+            fieldValor="valor"
+            [disabled]="TIPO_DOCUMENTO == 1"
+            label="Tipo Via (*)"
+            [firstSelect]="true"
+            ></form-input-select-re>
+         <form-input-text-re
+         [(value)]="inputs.DIRECCION"
+         label="Dirección (*)"
+         [disabled]="TIPO_DOCUMENTO == 1"
+            ></form-input-text-re>
+         <form-input-text-re
+         [(value)]="inputs.NUMERO"
+         label="Número (*)"
+         [disabled]="TIPO_DOCUMENTO == 1"
+            ></form-input-text-re>
+         <form-input-text-re
+         [(value)]="inputs.MANZANA"
+         label="Manzana (*)"
+         [disabled]="TIPO_DOCUMENTO == 1"
+            ></form-input-text-re>
+        <form-input-select-re
+            [itemsArray]="true"
+            fieldCodigo="codigo"
+            fieldValor="valor"
+            label="Departamento (*)"
+            [disabled]="TIPO_DOCUMENTO == 1"
+            [items]="opcionesDepartamento"
+            (onSelect)="cambioDepartamento(inputs.DEPARTAMENTO)"
+            [(value)]="inputs.DEPARTAMENTO"
+            [firstSelect]="true"
+            ></form-input-select-re>
+        <form-input-select-re
+            [itemsArray]="true"
+            fieldCodigo="codigo"
+            fieldValor="valor"
+            label="Provincia (*)"
+            [disabled]="TIPO_DOCUMENTO == 1"
+            (onSelect)="cambioProvincia(inputs.PROVINCIA)"
+            [(value)]="inputs.PROVINCIA"
+            [items]="opcionesTipoProvincia"
+            [firstSelect]="true"
+            ></form-input-select-re>
+        <form-input-select-re
+            [itemsArray]="true"
+            fieldCodigo="codigo"
+            fieldValor="valor"
+            [disabled]="TIPO_DOCUMENTO == 1"
+            [items]="opcionesTipoDistrito"
+            [(value)]="inputs.DISTRITO"
+            label="Distrito (*)"
+            [firstSelect]="true"
+            ></form-input-select-re>
+        <form-input-text-re
+        [(value)]="inputs.CORREO"
+        label="Correo (*)"
+        [disabled]="TIPO_DOCUMENTO == 1"
+            ></form-input-text-re>
+        <form-input-select-re
+            [itemsArray]="true"
+            fieldCodigo="codigo"
+            [(value)]="inputs.TIPO_TELEFONO"
+            fieldValor="valor"
+            [disabled]="TIPO_DOCUMENTO == 1"
+            [items]="opcionesTipoTelefono"
+            label="Tipo de teléfono (*)"
+            [firstSelect]="true"
+            ></form-input-select-re>
+         <form-input-text-re
+         [(value)]="inputs.TELEFONO"
+         label="Teléfono (*)"
+         [disabled]="TIPO_DOCUMENTO == 1"
+            ></form-input-text-re>
+        </div>
+       </div>
+      <div class="content-buttons">
+        <button
+          class="button"
+          id="button"
+          (click)="formModalReference.dismiss()"
+        >
+          Cancelar
+        </button>
+        <button
+          class="button"
+          id="button"
+          (click)="Validar()"
+        >
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

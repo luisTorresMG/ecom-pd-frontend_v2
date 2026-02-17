@@ -1,0 +1,351 @@
+<div class="container-fluid">
+  <div class="container-1">
+    <!-- <div class="headText">BACKOFFICE > Validador de Tramas</div> -->
+
+    <div class="container col-sm-12 col-lg-12">
+      <div class="header-u">
+        <div class="header-left">
+          <h1 class="title-u">Bandeja de tramas</h1>
+        </div>
+        <div class="header-right">
+          <button
+            class="button-default secondary"
+            (click)="pageTrayConfigurationPlot()"
+          >
+            <i class="fa fa-cog" aria-hidden="true"></i>
+            Estructuras
+          </button>
+          <button
+            class="button primary fit button-tab"
+            (click)="navigateToNewPlot()"
+          >
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            Nueva trama
+          </button>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="tab1">
+          <form class="form-filtros" [formGroup]="formFilter">
+            <!-- *CANAL DE VENTA -->
+            <label class="placeholder-u" aria-placeholder="CANAL DE VENTA:">
+              <select class="input-u" formControlName="channelSale">
+                <ng-container *ngIf="!channelSales$.length">
+                  <option value="" selected hidden>
+                    NO SE ENCONTRARON RESULTADOS
+                  </option>
+                </ng-container>
+                <ng-container *ngIf="channelSales$.length">
+                  <option value="0" *ngIf="channelSales$.length" selected>
+                    TODOS
+                  </option>
+                  <option *ngFor="let data of channelSales$" [value]="data.id">
+                    {{ data.description }}
+                  </option>
+                </ng-container>
+              </select>
+            </label>
+
+            <!-- *RAMO -->
+            <label class="placeholder-u" aria-placeholder="RAMO:">
+              <select class="input-u" formControlName="branch">
+                <ng-container *ngIf="!branches$.length">
+                  <option value="" selected hidden>
+                    NO SE ENCONTRARON RESULTADOS
+                  </option>
+                </ng-container>
+                <ng-container *ngIf="branches$.length">
+                  <option [value]="0" *ngIf="branches$.length" selected>
+                    TODOS
+                  </option>
+                  <option *ngFor="let data of branches$" [value]="data.id">
+                    {{ data.description }}
+                  </option>
+                </ng-container>
+              </select>
+            </label>
+
+            <!-- *PRODUCTO -->
+            <label class="placeholder-u" aria-placeholder="PRODUCTO:">
+              <select class="input-u" formControlName="product">
+                <option [value]="0" selected>TODOS</option>
+                <ng-container *ngIf="products$.length">
+                  <option *ngFor="let data of products$" [value]="data.id">
+                    {{ data.description }}
+                  </option>
+                </ng-container>
+              </select>
+            </label>
+
+            <!-- *VALIDADOR -->
+            <label
+              for="f-validator"
+              class="placeholder-u"
+              aria-placeholder="ID CARGA:"
+            >
+              <input
+                type="text"
+                id="f-validator"
+                class="input-u"
+                autocomplete="off"
+                formControlName="validator"
+              />
+            </label>
+
+            <!-- *ESTRUCTURAS -->
+            <label
+              class="placeholder form-control--structure"
+              aria-placeholder="ESTRUCTURA:"
+              for="f-structure"
+            >
+              <input type="text" id="f-structure" formControlName="structure" />
+            </label>
+
+            <label
+              for="startDate"
+              class="placeholder-u"
+              aria-placeholder="FECHA DE INICIO:"
+            >
+              <input
+                type="text"
+                id="startDate"
+                class="input-u"
+                #dp="bsDatepicker"
+                [bsConfig]="bsDatePickerConfig"
+                bsDatepicker
+                readonly
+                formControlName="startDate"
+              />
+            </label>
+            <label
+              for="endDate"
+              class="placeholder-u"
+              aria-placeholder="FECHA DE FIN:"
+            >
+              <input
+                type="text"
+                id="endDate"
+                class="input-u"
+                #dp="bsDatepicker"
+                [bsConfig]="bsDatePickerConfig"
+                bsDatepicker
+                readonly
+                formControlName="endDate"
+              />
+            </label>
+            <div class="form-filter-actions">
+              <button class="button secondary fit" (click)="resetFormFilters()">
+                Limpiar
+              </button>
+              <button class="button primary fit" (click)="search(true)">
+                Buscar
+              </button>
+            </div>
+          </form>
+          <div class="divider"></div>
+          <!-- TABLA -->
+          <section class="content-table">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>ID Carga</th>
+                  <th>Ramo</th>
+                  <th>Producto</th>
+                  <th>Canal</th>
+                  <th>Estructura</th>
+                  <th>Fecha</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="!proceduresData$?.listadoTramas.length">
+                  <tr>
+                    <td colspan="8">No hay información para mostrar</td>
+                  </tr>
+                </ng-container>
+                <ng-container *ngIf="!!proceduresData$?.listadoTramas.length">
+                  <tr
+                    *ngFor="
+                      let data of proceduresData$?.listadoTramas
+                        | paginate
+                          : {
+                              itemsPerPage: 10,
+                              currentPage: currentPage,
+                              totalItems: proceduresData$?.cantidadRegistros,
+                              id: 'bdj'
+                            };
+                      let index = index
+                    "
+                  >
+                    <td>{{ data.idCarga }}</td>
+                    <td>{{ data.ramo }}</td>
+                    <td>{{ data.producto }}</td>
+                    <td>{{ data.canal }}</td>
+                    <td>{{ data.estructura }}</td>
+                    <td>{{ data.fechaRegistro }}</td>
+                    <td>{{ data.estado }}</td>
+                    <td
+                      class="actions"
+                      ngbDropdown
+                      [placement]="index > 4 ? 'top-right' : 'bottom-right'"
+                    >
+                      <ng-container>
+                        <button
+                          class="btn-dropdown-u optionsclass"
+                          tabindex="0"
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                          ngbDropdownToggle
+                        >
+                          <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                        </button>
+                        <ul
+                          class="dropdown-u"
+                          display="dynamic"
+                          ngbDropdownMenu
+                        >
+                          <li class="dropdown-item-u">
+                            <button
+                              class="dropdown-item-btn-u"
+                              (click)="downloadFile(data.idCarga, 0)"
+                            >
+                              <i class="fa fa-download" aria-hidden="true"></i>
+                              Excel original
+                            </button>
+                          </li>
+                          <ng-container *ngIf="data.estado == 'CON ERRORES'">
+                            <li class="dropdown-item-u">
+                              <button
+                                class="dropdown-item-btn-u"
+                                (click)="downloadFile(data.idCarga, 4)"
+                              >
+                                <i
+                                  class="fa fa-download"
+                                  aria-hidden="true"
+                                ></i>
+                                Excel con errores
+                              </button>
+                            </li>
+                          </ng-container>
+                          <ng-container
+                            *ngIf="
+                              data.estado != 'ANULADO' &&
+                              data.estado != 'CON ERRORES'
+                            "
+                          >
+                            <li class="dropdown-item-u">
+                              <button
+                                class="dropdown-item-btn-u"
+                                (click)="downloadFile(data.idCarga, 1)"
+                              >
+                                <i
+                                  class="fa fa-download"
+                                  aria-hidden="true"
+                                ></i>
+                                Excel procesado
+                              </button>
+                            </li>
+                            <li class="dropdown-item-u">
+                              <button
+                                class="dropdown-item-btn-u"
+                                (click)="downloadFile(data.idCarga, 3)"
+                              >
+                                <i
+                                  class="fa fa-download"
+                                  aria-hidden="true"
+                                ></i>
+                                CSV procesado
+                              </button>
+                            </li>
+                            <li class="dropdown-item-u">
+                              <button
+                                class="dropdown-item-btn-u"
+                                (click)="downloadFile(data.idCarga, 2)"
+                              >
+                                <i
+                                  class="fa fa-download"
+                                  aria-hidden="true"
+                                ></i>
+                                Archivo de Texto
+                              </button>
+                            </li>
+                            <!-- <li
+                              class="dropdown-item-u"
+                            >
+                              <button
+                                class="dropdown-item-btn-u"
+                                (click)="downloadFile(data.idCarga, 1)"
+                              >
+                                <i
+                                  class="fa fa-file-excel-o"
+                                  aria-hidden="true"
+                                ></i>
+                                Descargar Excel
+                              </button>
+                            </li> -->
+                            <!-- <li
+                              class="dropdown-item-u"
+                            >
+                              <button class="dropdown-item-btn-u">
+                                <i
+                                  class="fa fa-check-circle-o"
+                                  aria-hidden="true"
+                                ></i>
+                                CheckList
+                              </button>
+                            </li> -->
+                          </ng-container>
+                        </ul>
+                      </ng-container>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </section>
+          <pagination-controls
+            class="my-pagination"
+            id="bdj"
+            autoHide="true"
+            responsive="true"
+            previousLabel="Anterior"
+            nextLabel="Siguiente"
+            screenReaderPaginationLabel="Paginación"
+            screenReaderPageLabel="pagina"
+            screenReaderCurrentLabel="Estás en la pagina"
+            (pageChange)="currentPage = $event"
+          >
+          </pagination-controls>
+        </div>
+      </div>
+
+      <ng-container *ngIf="currentTab == 2">
+        <app-configuration-plot></app-configuration-plot>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalMessage>
+  <div class="content-modal">
+    <section>
+      <div class="modal-header">
+        <h6>Mensaje</h6>
+        <button (click)="closeModals()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="paragrapgh">
+          {{ messageInfo$ }}
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="button-default primary" (click)="closeModals()">
+          Aceptar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>

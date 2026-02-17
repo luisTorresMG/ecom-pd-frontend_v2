@@ -1,0 +1,8 @@
+<select id="UseSelect" (change)="onSelectPaymentType($event)">
+  <option value="0" selected>Seleccionar</option>
+  <option
+    *ngFor="let paymenttype of ListPaymentType"
+    value="{{ paymenttype.nidpaidtype }}"
+    >{{ paymenttype.sdescript }}</option
+  >
+</select>

@@ -1,0 +1,365 @@
+/* ========================================
+   ESTILOS PARA REPORTE TÉCNICA VIGP
+   ======================================== */
+
+/* ESTILOS EXISTENTES DEL SISTEMA - MANTENER */
+.g-1 {
+    grid-gap: 0.25rem;
+}
+
+.g-2 {
+    grid-gap: 0.5rem;
+}
+
+.g-3 {
+    grid-gap: 1rem;
+}
+
+.g-4 {
+    grid-gap: 1.5rem;
+}
+
+.title {
+    color: #553d81;
+    font-size: 28px;
+    display: block;
+    margin-top: 1rem;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.group1 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 100%;
+    display: flex;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+.group2 {
+    margin-top: 4px;
+    margin-bottom: 12px;
+    width: 100%;
+    display: flex;
+    -ms-flex-pack: justify;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: row;
+}
+
+.btn-primary-VI {
+    margin-top: 10px;
+    min-width: 120px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #553d81;
+    border-color: #553d81;
+    color: white;
+    font-weight: 500;
+    border-radius: 4px;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+        background-color: #452f6b;
+        border-color: #452f6b;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(85, 61, 129, 0.3);
+    }
+
+    &:disabled {
+        background-color: #a99dbf;
+        border-color: #a99dbf;
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+}
+
+.container {
+    float: left;
+    width: 75%;
+    padding: 10px 30px;
+}
+
+/* ESTILOS ESPECÍFICOS PARA LAYOUT DE FILTROS */
+.filters-row {
+    display: flex;
+    gap: 15px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+    .filter-item {
+        flex: 1;
+        min-width: 180px;
+        max-width: 250px;
+    }
+}
+
+/* ESTILOS PARA RADIO BUTTONS */
+.form-check {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+
+    .form-check-input {
+        width: 1.2em;
+        height: 1.2em;
+        margin-right: 0.5rem;
+        cursor: pointer;
+        border: 2px solid #553d81;
+
+        &:checked {
+            background-color: #553d81;
+            border-color: #553d81;
+            box-shadow: none;
+        }
+
+        &:focus {
+            box-shadow: 0 0 0 0.25rem rgba(85, 61, 129, 0.25);
+            border-color: #553d81;
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    }
+
+    .form-check-label {
+        color: #553d81;
+        font-weight: 500;
+        cursor: pointer;
+        margin-bottom: 0;
+        font-size: 14px;
+
+        &:hover {
+            color: #452f6b;
+        }
+    }
+}
+
+/* ESTILOS PARA VALIDACIÓN DE PÓLIZA */
+.policyValidationClass {
+    font-size: 12px;
+    margin-top: 4px;
+    
+    &.text-info {
+        color: #17a2b8 !important;
+    }
+    
+    &.text-success {
+        color: #28a745 !important;
+    }
+    
+    &.text-danger {
+        color: #dc3545 !important;
+    }
+}
+
+/* ESTILOS PARA ALERTAS */
+.alert-info {
+    background-color: #e3f2fd;
+    border: 1px solid #90caf9;
+    color: #1976d2;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-top: 15px;
+
+    .fa-info-circle {
+        color: #1976d2;
+        margin-right: 8px;
+    }
+
+    small {
+        margin: 0;
+        font-size: 13px;
+        line-height: 1.4;
+    }
+}
+
+/* LOADING SCREEN */
+.loadingScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 10000000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(2px);
+
+    .loading-content {
+        text-align: center;
+        color: #553d81;
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+        .fa-spinner {
+            font-size: 50px;
+            color: #553d81;
+            margin-bottom: 20px;
+        }
+
+        .loading-text {
+            font-size: 16px;
+            font-weight: 500;
+            color: #553d81;
+        }
+    }
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 1200px) {
+    .filters-row {
+        .filter-item {
+            min-width: 160px;
+        }
+    }
+}
+
+@media (max-width: 992px) {
+    .container {
+        width: 100%;
+        padding: 10px 20px;
+    }
+
+    .filters-row {
+        flex-direction: column;
+        gap: 10px;
+
+        .filter-item {
+            min-width: 100%;
+            max-width: none;
+        }
+    }
+
+    .d-flex.justify-content-between {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch !important;
+
+        .d-flex.align-items-center {
+            justify-content: center;
+        }
+
+        .btn-primary-VI {
+            align-self: center;
+            min-width: 150px;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 24px;
+    }
+
+    .d-flex.align-items-center {
+        flex-direction: column;
+        gap: 10px !important;
+        align-items: center !important;
+    }
+
+    .form-check {
+        width: 100%;
+        justify-content: center;
+        padding: 8px 0;
+    }
+}
+
+/* ANIMACIONES */
+.fa-spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* TRANSICIONES SUAVES */
+.form-control, .form-select {
+    transition: all 0.2s ease-in-out;
+
+    &:focus {
+        border-color: #553d81;
+        box-shadow: 0 0 0 0.2rem rgba(85, 61, 129, 0.25);
+        transform: translateY(-1px);
+    }
+
+    &:disabled {
+        background-color: #f8f9fa;
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
+
+/* MEJORAS VISUALES */
+.form-text {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    margin-top: 4px;
+
+    .fa {
+        margin-right: 4px;
+    }
+}
+
+/* ESPACIADO Y ALINEACIÓN */
+.my-3 {
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+}
+
+.gap-15 {
+    gap: 15px;
+}
+
+.gap-30 {
+    gap: 30px;
+}
+
+/* ESTILOS PARA ETIQUETAS */
+form-input-text,
+form-input-select,
+form-input-date {
+    display: block;
+    width: 100%;
+}
+
+/* HOVER EFFECTS */
+.filter-item:hover {
+    transform: translateY(-1px);
+    transition: transform 0.2s ease-in-out;
+}
+
+/* FOCUS STATES MEJORADOS */
+.form-check-input:focus-visible {
+    outline: 2px solid #553d81;
+    outline-offset: 2px;
+}
+
+.btn-primary-VI:focus-visible {
+    outline: 2px solid #553d81;
+    outline-offset: 2px;
+}
+
+.title-with-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}

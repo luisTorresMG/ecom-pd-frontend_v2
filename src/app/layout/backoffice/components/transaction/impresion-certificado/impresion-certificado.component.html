@@ -1,0 +1,566 @@
+<div class="container-fluid">
+  <div class="row content-all">
+    <div class="col-md-12 content">
+      <div class="container-fluid content-page">
+        <div class="row r1-head">
+          <div class="col-12 head-title">
+            <h1 class="title">Impresión de Certificados</h1>
+          </div>
+        </div>
+        <form [formGroup]="form"
+              class="form-filters">
+          <div class="group-inputs content-filters-inputs">
+            <label for="policy"
+                   class="lbl-input-u"
+                   aria-label="CERTIFICADO:">
+              <input type="text"
+                     formControlName="certificado"
+                     [maxlength]="10"
+                     [minlength]="10"
+                     class="input-u"
+                     id="policy">
+            </label>
+          </div>
+          <div class="group-inputs content-filters-actions">
+            <button class="btn-primary-u"
+                    (click)="validar()"
+                    [disabled]="form.invalid">Buscar</button>
+            <button class="btn-primary-u"
+                    (click)="clearDataSearch()">Limpiar</button>
+            <button class="btn-primary-u"
+                    [disabled]="!dataBuscar?.entities?.length"
+                    (click)="imprimir()">Imprimir</button>
+          </div>
+          <div class="row r2-head"
+               *ngIf="false">
+            <div class="col-md-8 content-actions d-flex justify-content-between align-items-end">
+              <div>
+                <div class="content-input"
+                     style="margin: 0 5px 0 0 !important"
+                     *ngIf="typeCertificado === 'I' || typeCertificado === 'M'">
+                  <label for="state"
+                         class="lbl-in filter-text in-policy">CERTIFICADO:</label>
+                  <input type="text"
+                         class="in-action"
+                         formControlName="certificado"
+                         [maxlength]="10"
+                         [minlength]="10" />
+                </div>
+              </div>
+              <div class="d-flex">
+                <button class="full-color"
+                        (click)="validar()"
+                        style="margin-top: 20px"
+                        [disabled]="form.invalid">
+                  Buscar
+                </button>
+                <button class="full-color"
+                        (click)="clearDataSearch()"
+                        style="margin-top: 20px">
+                  Limpiar
+                </button>
+                <button class="full-color"
+                        style="margin-top: 20px"
+                        [disabled]="!dataBuscar?.entities?.length"
+                        (click)="imprimir()">
+                  Imprimir
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-12 content"
+         style="padding-left: 0px; padding-right: 0px"
+         *ngIf="typeCertificado === 'I'">
+      <form [formGroup]="formListar">
+        <div class="col-md-12 content">
+          <div class="container-fluid content-page">
+            <div class="row r3-head">
+              <div class="col-md-12 grid-title table-head">
+                <span class="grid-title-item">Datos de la Póliza</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 content">
+          <div class="container-fluid content-page">
+            <div class="row r3-head">
+              <div class="col-md-4 px-0">
+                <div class="content-input2">
+                  <label for="state"
+                         class="lbl-in filter-text">FECHA DE EMISIÓN:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="fecha_emision"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">HORA DE EMISIÓN:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="hora_emision"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-4 px-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">PRIMA:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="tarifa"
+                         readonly="readonly" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 content">
+          <div class="container-fluid content-page">
+            <div class="row r3-head">
+              <div class="col-md-12 grid-title table-head">
+                <span class="grid-title-item">Datos de Vehículo</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 content">
+          <div class="container-fluid content-page">
+            <div class="row r3-head">
+              <div class="col-md-4 px-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">PLACA:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="placa"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">AÑO:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="año"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-4 px-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">CLASE:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="clase"
+                         readonly="readonly" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 content">
+          <div class="container-fluid content-page">
+            <div class="row r3-head">
+              <div class="col-md-4 px-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">USO:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="uso"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">MARCA:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="marca"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-4 px-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">MODELO:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="modelo"
+                         readonly="readonly" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 content">
+          <div class="container-fluid content-page">
+            <div class="row r3-head">
+              <div class="col-md-3 px-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">NRO DE SERIE:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="numero_serie"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">ASIENTOS:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="asientos"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-3 pl-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">FECHA INICIO VIGENCIA:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="fecha_inicio_vigencia"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-3 px-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">FECHA FIN VIGENCIA:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="fecha_fin_vigencia"
+                         readonly="readonly" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 content">
+          <div class="container-fluid content-page">
+            <div class="row r3-head">
+              <div class="col-md-12 grid-title table-head">
+                <span class="grid-title-item">Datos del Contratante</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 content">
+          <div class="container-fluid content-page">
+            <div class="row r3-head">
+              <div class="col-md-3 px-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">T. DOCUMENTO:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="tipo_documento"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">NRO DOCUMENTO:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="numero_documento"
+                         readonly="readonly" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 content">
+          <div class="container-fluid content-page">
+            <div class="row r3-head">
+              <div class="col-md-7 px-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">RAZÓN SOCIAL:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="razon_social"
+                         readonly="readonly" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 content">
+          <div class="container-fluid content-page">
+            <div class="row r3-head">
+              <div class="col-md-4 px-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">DEPARTAMENTO:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="departamento"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">PROVINCIA:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="provincia"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-4 px-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">DISTRITO:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="distrito"
+                         readonly="readonly" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 content">
+          <div class="container-fluid content-page">
+            <div class="row r3-head">
+              <div class="col-md-4 px-0">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">DIRECCIÓN:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="direccion"
+                         readonly="readonly" />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="content-input">
+                  <label for="state"
+                         class="lbl-in filter-text">CORREO:</label>
+                  <input type="text"
+                         class="lbl-in-action"
+                         formControlName="correo"
+                         readonly="readonly" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!--<div class="row">
+        <div class="col-md-2 content-actions">
+          <button class="full-color">Imprimir</button>
+        </div>
+      </div>-->
+
+    <div class="col-md-12 content"
+         style="padding-right: 0px">
+      <div class="grid form-group row content-table"
+           *ngIf="typeCertificado === 'M' || typeCertificado === 'F'"
+           style="padding-right: 0px">
+        <div class="col-md-12 content"
+             style="padding-right: 0px">
+          <div class="container-fluid content-page">
+            <div class="table-responsive"
+                 style="min-height: 120px">
+              <table class="table">
+                <thead>
+                  <tr class="grid-title table-head">
+                    <td class="grid-title-item">N° Certificado</td>
+                    <td class="grid-title-item">Fecha Emisión</td>
+                    <td class="grid-title-item">Hora Emisión</td>
+                    <td class="grid-title-item">Tarifa</td>
+                    <td class="grid-title-item">Placa</td>
+                    <td class="grid-title-item">Clase</td>
+                    <td class="grid-title-item">Uso</td>
+                    <td class="grid-title-item">Marca</td>
+                    <td class="grid-title-item">Modelo</td>
+                    <td class="grid-title-item">N° Serie</td>
+                    <td class="grid-title-item">Asientos</td>
+                    <td class="grid-title-item">Año</td>
+                    <td class="grid-title-item">F. Inicio</td>
+                    <td class="grid-title-item">F. Fin</td>
+                    <td class="grid-title-item">Tipo Documento</td>
+                    <td class="grid-title-item">N° Documento</td>
+                    <td class="grid-title-item">Cliente</td>
+                    <td class="grid-title-item">Departamento</td>
+                    <td class="grid-title-item">Provincia</td>
+                    <td class="grid-title-item">Distrito</td>
+                    <td class="grid-title-item">Dirección</td>
+                    <td class="grid-title-item">Correo</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="table-body"
+                      *ngFor="
+                      let data of dataBuscar2?.entities
+                        | paginate: { itemsPerPage: 10, currentPage: p }
+                    ">
+                    <td class="grid-title-item">{{ data?.NPOLICY }}</td>
+                    <td class="grid-title-item">{{ data?.FECHA_EMISION }}</td>
+                    <td class="grid-title-item">{{ data?.HORA_EMISION }}</td>
+                    <td class="grid-title-item">{{ data?.NPREMIUM }}</td>
+                    <td class="grid-title-item">{{ data?.SREGIST }}</td>
+                    <td class="grid-title-item">{{ data?.CLASE }}</td>
+                    <td class="grid-title-item">{{ data?.USO }}</td>
+                    <td class="grid-title-item">{{ data?.MARCA }}</td>
+                    <td class="grid-title-item">
+                      {{ data?.MODELO }}
+                    </td>
+                    <td class="grid-title-item">
+                      {{ data?.SCHASSIS }}
+                    </td>
+                    <td class="grid-title-item">
+                      {{ data?.NSEATCOUNT }}
+                    </td>
+                    <td class="grid-title-item">{{ data?.NYEAR }}</td>
+                    <td class="grid-title-item">
+                      {{ data?.INICIO_VIGENCIA }}
+                    </td>
+                    <td class="grid-title-item">
+                      {{ data?.FIN_VIGENCIA }}
+                    </td>
+                    <td class="grid-title-item">
+                      {{ data?.SDOC_TYPE }}
+                    </td>
+                    <td class="grid-title-item">
+                      {{ data?.SIDDOC }}
+                    </td>
+                    <td class="grid-title-item">
+                      {{ data?.SCLIENAME }}
+                    </td>
+                    <td class="grid-title-item">
+                      {{ data?.DEPARTAMENTO }}
+                    </td>
+                    <td class="grid-title-item">
+                      {{ data?.PROVINCIA }}
+                    </td>
+                    <td class="grid-title-item">
+                      {{ data?.DISTRITO }}
+                    </td>
+                    <td class="grid-title-item">
+                      {{ data?.SSTREET }}
+                    </td>
+                    <td class="grid-title-item">
+                      {{ data?.SE_MAIL }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+<pagination-controls class="my-pagination"
+                     (pageChange)="p = $event"
+                     autoHide="true"
+                     responsive="true"
+                     previousLabel="Anterior"
+                     nextLabel="Siguiente"
+                     screenReaderPaginationLabel="Paginación"
+                     screenReaderPageLabel="pagina"
+                     screenReaderCurrentLabel="Estás en la pagina"
+                     *ngIf="typeCertificado === 'M' || typeCertificado === 'F'">
+</pagination-controls>
+<app-modal-message [message]="mensajeModal"
+                   [isShow]="isShowModal"
+                   *ngIf="typeCertificado === 'M' || typeCertificado === 'F'"></app-modal-message>
+
+<div class="modal fade"
+     bsModal
+     #modalValidar="bs-modal"
+     [config]="{
+    backdrop: 'static'
+  }">
+  <div class="modal-dialog"
+       role="document">
+    <div class="modal-content anular">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                (click)="ocultarModalValidar()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <h4 class="textanular"
+            style="font-size: 15px">
+          {{ MENSAJE }}
+        </h4>
+      </div>
+      <div class="
+          modal-footer modal-foot-confirm
+          d-flex
+          align-items-center
+          justify-content-center
+        ">
+        <button type="button"
+                class="btn full-color btn-aceptar-modal"
+                (click)="ocultarModalValidar()">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade"
+     bsModal
+     #modalError="bs-modal"
+     [config]="{
+    backdrop: 'static'
+  }">
+  <div class="modal-dialog"
+       role="document">
+    <div class="modal-content anular">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                (click)="ocultarModalValidar()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <h4 class="textanular"
+            style="font-size: 15px">
+          {{ MENSAJEERROR }}
+        </h4>
+      </div>
+      <div class="
+          modal-footer modal-foot-confirm
+          d-flex
+          align-items-center
+          justify-content-center
+        ">
+        <button type="button"
+                class="btn full-color btn-aceptar-modal"
+                (click)="ocultarModalValidar()">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

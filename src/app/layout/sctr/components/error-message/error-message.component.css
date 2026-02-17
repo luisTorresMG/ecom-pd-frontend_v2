@@ -1,0 +1,39 @@
+.soat-error-message-container {
+  text-align: center;
+  background-color: #f2f2f2;
+  padding: 30px 20px;
+  color: #300764;
+}
+
+.space {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.container {
+  padding: 0;
+}
+
+.soat-container {
+  padding: 48px 0;
+}
+
+.fwb {
+  font-weight: bold;
+}
+
+.bf {
+  font-size: 30px;
+}
+
+.bf-lh {
+  line-height: 30px;
+}
+
+.orange {
+  color: #ff6e00;
+}
+
+.strong {
+  font-size: 17px;
+}

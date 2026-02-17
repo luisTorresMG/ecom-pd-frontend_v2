@@ -1,0 +1,454 @@
+<div class="container-fluid">
+  <div class="row content-all">
+    <div class="col-md-12 content">
+      <div class="container-fluid content-page">
+        <div class="row r1-head">
+          <div class="col-12 head-title">
+            <h1 class="title">Reasignar Solicitud</h1>
+            <button class="full-color btn-with-icon btn-download"
+                    (click)="exportar()">
+              <img class="icon-btn"
+                   src="assets/icons/download2.png" />
+              Exportar
+            </button>
+          </div>
+        </div>
+        <form [formGroup]="form">
+          <div class="row r2-head">
+            <div class="col-md-2 content-actions">
+              <div class="content-input">
+                <label for="state"
+                       class="lbl-in filter-text">FECHA INICIO:</label>
+                <input autocomplete="off"
+                       type="text"
+                       class="form-control date-search input-date in-action"
+                       id="fecha"
+                       #dp="bsDatepicker"
+                       [bsConfig]="bsConfig"
+                       bsDatepicker
+                       formControlName="fecha_ini" />
+              </div>
+            </div>
+            <div class="col-md-2 content-actions">
+              <div class="content-input">
+                <label for="chanel"
+                       class="lbl-in filter-text">FECHA FIN:</label>
+                <input autocomplete="off"
+                       type="text"
+                       class="form-control date-search input-date in-action"
+                       id="fecha"
+                       #dp="bsDatepicker"
+                       [bsConfig]="bsConfig"
+                       bsDatepicker
+                       formControlName="fecha_fin" />
+              </div>
+            </div>
+            <div class="col-md-3 content-actions channel">
+              <div class="content-input">
+                <label for="chanel"
+                       class="lbl-in filter-text">CANAL DE VENTA ORIGEN:</label>
+                <select class="in-action"
+                        formControlName="canal_o">
+                  <option [value]="0"
+                          selected
+                          disabled>SELECCIONE</option>
+                  <option *ngFor="let data of dataCanal?.PRO_POLICY"
+                          [value]="data?.NIDPOLICY">
+                    {{ data?.SCLIENAME }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-3 content-actions channel">
+              <div class="content-input">
+                <label for="chanel"
+                       class="lbl-in filter-text">CANAL DE VENTA DESTINO:</label>
+                <select class="in-action"
+                        formControlName="canal_d">
+                  <option [value]="0"
+                          selected
+                          disabled>SELECCIONE</option>
+                  <option *ngFor="let data of dataCanal?.PRO_POLICY"
+                          [value]="data?.NIDPOLICY">
+                    {{ data?.SCLIENAME }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-12 cont-btn-generar">
+              <button class="full-color"
+                      (click)="buscar()">Buscar</button>
+              <button class="full-color"
+                      (click)="nuevoRegistro()">
+                <img class="icon-btn"
+                     src="assets/icons/add.png" />
+                Nueva Solicitud
+              </button>
+            </div>
+          </div>
+        </form>
+        <div class="grid form-group row content-table"
+             style="margin-bottom: 10 px">
+          <div class="table-responsive">
+            <table class="table tablem"
+                   style="width: 150%">
+              <thead>
+                <tr class="grid-title table-head">
+                  <td class="grid-title-item tbl__head--row-item tbl__head--row-reasignationDate">Fec. Reasignación</td>
+                  <td class="grid-title-item tbl__head--row-item tbl__head--row-originChannel">Canal Origen</td>
+                  <td class="grid-title-item tbl__head--row-item tbl__head--row-originPointSale">Pto. Venta Origen</td>
+                  <td class="grid-title-item tbl__head--row-item tbl__head--row-countPolicy">Nro Certificados</td>
+                  <td class="grid-title-item tbl__head--row-item tbl__head--row-originLot">Lote Origen</td>
+                  <td class="grid-title-item tbl__head--row-item tbl__head--row-quantity">Cantidad</td>
+                  <td class="grid-title-item tbl__head--row-item tbl__head--row-destinyChannel">Canal Destino</td>
+                  <td class="grid-title-item tbl__head--row-item tbl__head--row-destinyPointSale">Pto. Venta Destino
+                  </td>
+                  <td class="grid-title-item tbl__head--row-item tbl__head--row-destinyLot">Lote Destino</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table-body"
+                    *ngFor="
+                    let data of dataBuscar?.entities
+                      | paginate: { itemsPerPage: 10, currentPage: p }
+                  ">
+                  <td class="table-body-item">
+                    {{ data.DREGISTER | date: "dd/MM/yyyy" }}
+                  </td>
+                  <td class="table-body-item">
+                    {{ data.NPOLICY_O_DES
+                    }}
+                    <!-- <small *ngIf="data.canal_origen.length > 20">...</small> -->
+                  </td>
+                  <td class="table-body-item">{{ data.NNUMPOINT_O_DES }}</td>
+                  <td class="table-body-item">{{ data.SRANGE }}</td>
+                  <td class="table-body-item">{{ data.NNUMLOT_O }}</td>
+                  <td class="table-body-item">{{ data.NQUANTITY }}</td>
+                  <td class="table-body-item">
+                    {{ data.NPOLICY_D_DES
+                    }}
+                    <!-- <small *ngIf="data.canal_destino.length > 20">...</small> -->
+                  </td>
+                  <td class="table-body-item">{{ data.NNUMPOINT_D_DES }}</td>
+                  <td class="table-body-item">{{ data.NNUMLOT_D }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <pagination-controls class="my-pagination"
+                             (pageChange)="p = $event"
+                             autoHide="true"
+                             responsive="true"
+                             previousLabel="Anterior"
+                             nextLabel="Siguiente"
+                             screenReaderPaginationLabel="Paginación"
+                             screenReaderPageLabel="pagina"
+                             screenReaderCurrentLabel="Estás en la pagina">
+        </pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade"
+     bsModal
+     #modal="bs-modal"
+     [config]="{
+    backdrop: 'static'
+  }">
+  <div class="modal-dialog"
+       role="document">
+    <form class="modal-content"
+          [formGroup]="formNuevoRegistro">
+      <div class="modal-header">
+        <h5 class="modal-title"
+            id="exampleModalLabel">
+          Registrar Reasignación
+        </h5>
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                (click)="cancelRegistro()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-4">
+            <input type="radio"
+                   formControlName="certOrLote"
+                   [value]="'Certificado'"
+                   id="certificado"
+                   (change)="changeCertOrLote()"
+                   [checked] />
+            <label for="certificado"
+                   class="lbl-modal-form">Certificado</label>
+          </div>
+          <div class="col-md-4">
+            <input type="radio"
+                   formControlName="certOrLote"
+                   [value]="'Lote'"
+                   id="lote"
+                   (change)="changeCertOrLote()" />
+            <label for="lote"
+                   class="lbl-modal-form">Por Lote</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="content-input">
+              <label for="chanel-modal-form"
+                     class="lbl-in filter-text">CANAL DE ORIGEN:</label>
+              <select [disabled]
+                      class="in-action"
+                      formControlName="canalVentaOrigen"
+                      id="chanel-modal-form">
+                <option [value]="0"
+                        selected
+                        disabled>SELECCIONE</option>
+                <option *ngFor="let data of dataCanalO?.PRO_POLICY"
+                        [value]="data?.NIDPOLICY">
+                  {{ data?.SCLIENAME }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="content-input">
+              <label for="chanel-point-modal-form"
+                     class="lbl-in filter-text">PUNTO DE VENTA ORIGEN:</label>
+              <select [disabled]
+                      class="in-action"
+                      formControlName="puntoVentaOrigen"
+                      id="chanel-point-modal-form">
+                <option [value]="0"
+                        selected
+                        disabled>SELECCIONE</option>
+                <option *ngFor="let data of dataPuntoVO?.PRO_SALE_POINT"
+                        [value]="data?.NNUMPOINT">
+                  {{ data?.SDESCRIPT }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="content-input">
+              <label for="certified-type-modal-form"
+                     class="lbl-in filter-text">TIPO DE CERTIFICADO:</label>
+              <select class="in-action"
+                      formControlName="tipoCertificado"
+                      id="certified-type-modal-form"
+                      (change)="changeCertificado()">
+                <option *ngFor="let data of dataTipoDoc?.PRO_MASTER"
+                        [value]="data?.SITEM"
+                        [disabled]="data?.SITEM == '0'">
+                  {{ data?.SDECRIPTION }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="content-input">
+              <label class="lbl-in filter-text">TOTAL DE CERTIFICADOS:</label>
+              <input [disabled]
+                     type="text"
+                     formControlName="totalCertificado"
+                     class="in-action" />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="content-input">
+              <label class="lbl-in filter-text">N° CERTIFICADO / LOTE:</label>
+              <input type="text"
+                     formControlName="nCertificadoLote"
+                     class="in-action"
+                     [minlength]="limitPolicy.min"
+                     [maxlength]="limitPolicy.max"
+                     (blur)="changeCertificado()" />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="content-input">
+              <label for="chanel-destino-modal-form"
+                     class="lbl-in filter-text">CANAL DE DESTINO:</label>
+              <select class="in-action"
+                      formControlName="canalDestino"
+                      id="chanel-destino-modal-form"
+                      (change)="changeCanal($event.target.value)">
+                <option [value]="0"
+                        selected
+                        disabled>SELECCIONE</option>
+                <option *ngFor="let data of dataCanalD?.PRO_POLICY"
+                        [value]="data?.NIDPOLICY">
+                  {{ data?.SCLIENAME }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="content-input">
+              <label for="chanel-point-destino-modal-form"
+                     class="lbl-in filter-text">PUNTO DE VENTA DESTINO:</label>
+              <select class="in-action"
+                      formControlName="puntoVentaDestino"
+                      id="chanel-point-destino-modal-form">
+                <option [value]="0"
+                        selected
+                        disabled>SELECCIONE</option>
+                <option *ngFor="let data of dataPuntoV?.PRO_SALE_POINT"
+                        [value]="data?.NNUMPOINT">
+                  {{ data?.SDESCRIPT }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button"
+                class="btn full-color btn-secondary btn-close-modal"
+                data-dismiss="modal"
+                (click)="cancelRegistro()">
+          Cancelar
+        </button>
+        <button type="submit"
+                class="btn full-color btn-aceptar-modal"
+                (click)="insertar()"
+                [disabled]="formNuevoRegistro.invalid">
+          Aceptar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal fade"
+     bsModal
+     #modalConfirmacion="bs-modal"
+     [config]="{
+    backdrop: 'static'
+  }">
+  <div class="modal-dialog"
+       role="document">
+    <div class="modal-content anular">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                (click)="ocultarModalConfirmacion()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <h4 class="textanular"
+            style="font-size: 15px">
+          {{ MENSAJECONFIRMACION }}
+        </h4>
+      </div>
+      <div class="
+          modal-footer modal-foot-confirm
+          d-flex
+          align-items-center
+          justify-content-center
+        ">
+        <button type="button"
+                class="btn full-color btn-aceptar-modal"
+                (click)="ocultarModalConfirmacion()">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade"
+     bsModal
+     #modalError="bs-modal"
+     [config]="{
+    backdrop: 'static'
+  }"
+     id="myModal">
+  <div class="modal-dialog"
+       role="document">
+    <div class="modal-content anular">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                (click)="ocultarModalError()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <h4 class="textanular"
+            style="font-size: 15px">
+          {{ MENSAJERROR }}
+        </h4>
+      </div>
+      <div class="
+          modal-footer modal-foot-confirm
+          d-flex
+          align-items-center
+          justify-content-center
+        ">
+        <button type="button"
+                data-dismiss="modal"
+                aria-label="Close"
+                class="btn full-color btn-aceptar-modal"
+                (click)="ocultarModalError()">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade"
+     bsModal
+     #modalFalta="bs-modal"
+     [config]="{
+    backdrop: 'static'
+  }"
+     id="myModal">
+  <div class="modal-dialog"
+       role="document">
+    <div class="modal-content anular">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                (click)="ocultarModalFalta()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modal-emitido">
+        <h4 class="textanular"
+            style="font-size: 15px">
+          {{ MENSAJEFALTA }}
+        </h4>
+      </div>
+      <div class="
+          modal-footer modal-foot-confirm
+          d-flex
+          align-items-center
+          justify-content-center
+        ">
+        <button type="button"
+                class="btn full-color btn-aceptar-modal"
+                (click)="ocultarModalFalta()">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

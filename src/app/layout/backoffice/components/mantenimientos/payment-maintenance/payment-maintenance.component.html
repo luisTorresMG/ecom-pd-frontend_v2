@@ -1,0 +1,525 @@
+<section class="section">
+  <div class="section__subheader">
+    <div class="section__subheader--left">
+      <h2 class="title">Mantenimiento Formas de Pago</h2>
+    </div>
+    <div class="section__subheader--right">
+      <button
+        class="button-default secondary"
+        (click)="downloadList()"
+        [disabled]="!listPaymentEnabled$.length"
+      >
+        <i class="fa fa-download" aria-hidden="true"></i>
+        Descargar excel
+      </button>
+    </div>
+  </div>
+
+  <form class="form" [formGroup]="formFilter">
+    <div class="form__content mb-4">
+      <!-- *Aplicattion-->
+      <label
+        for="form-application"
+        class="placeholder"
+        aria-placeholder="APLICACIÓN:"
+      >
+        <select id="form-application" formControlName="application">
+          <option value="0">TODOS</option>
+          <option
+            *ngFor="let item of listApplications$"
+            value="{{ item.idAplicacion }}"
+          >
+            {{ item.aplicacion }}
+          </option>
+        </select>
+        <i class="fa fa-angle-down"></i>
+      </label>
+
+      <!-- *Ramo -->
+      <label for="form-branch" class="placeholder" aria-placeholder="RAMO:">
+        <select id="form-branch" formControlName="branch">
+          <option value="0">TODOS</option>
+          <option *ngFor="let item of listBranchs$" value="{{ item.id }}">
+            {{ item.description }}
+          </option>
+        </select>
+        <i class="fa fa-angle-down"></i>
+      </label>
+
+      <!-- *Product -->
+      <label
+        for="form-product"
+        class="placeholder"
+        aria-placeholder="PRODUCTO:"
+      >
+        <select id="form-product" formControlName="product">
+          <option value="0">TODOS</option>
+          <option *ngFor="let item of listProducts$" value="{{ item.id }}">
+            {{ item.description }}
+          </option>
+        </select>
+        <i class="fa fa-angle-down"></i>
+      </label>
+      <!-- *Channel-->
+      <label for="form-channel" class="placeholder" aria-placeholder="CANAL:">
+        <select id="form-channel" formControlName="channel">
+          <option value="0">TODOS</option>
+          <option
+            *ngFor="let item of listChannels$"
+            value="{{ item.nchannel }}"
+          >
+            {{ item.sdescript }}
+          </option>
+        </select>
+        <i class="fa fa-angle-down"></i>
+      </label>
+    </div>
+    <div>
+      <div class="form__btn-actions">
+        <button
+          class="button-default secondary button-search"
+          (click)="cleanData()"
+        >
+          Limpiar
+        </button>
+        <button
+          class="button-default button-search"
+          (click)="getlistPaymentEnabled(true)"
+        >
+          Buscar
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <div class="content-table table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Aplicación</th>
+          <th scope="col">Ramo</th>
+          <th scope="col">Producto</th>
+          <th scope="col">Canal</th>
+          <th scope="col">Pasarela Niubiz</th>
+          <th scope="col">PagoEfectivo</th>
+          <th scope="col">Pasarela Kushki</th>
+          <th scope="col">Cash Kushki</th>
+          <th scope="col">SmartLink Kushki</th>
+          <th scope="col">Yape Niubiz</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngIf="!listPaymentEnabled$.length">
+          <tr>
+            <td colspan="11">
+              No se encontró coincidencias con los criterios de búsqueda
+            </td>
+          </tr>
+        </ng-container>
+        <ng-container *ngIf="listPaymentEnabled$.length">
+          <tr
+            *ngFor="
+              let item of listPaymentEnabled$
+                | paginate
+                  : {
+                      id: 'table-payment-maintenance',
+                      itemsPerPage: 10,
+                      totalItems: listPaymentEnabled$[0]?.cantidadRegistros,
+                      currentPage: currentPage
+                    };
+              let index = index
+            "
+          >
+            <td>{{ item.aplicacion }}</td>
+            <td>{{ item.ramo }}</td>
+            <td>{{ item.producto }}</td>
+            <td>{{ item.canal }}</td>
+            <td>{{ item.pasarelaNiubiz == 0 ? "INACTIVO" : "ACTIVO" }}</td>
+            <td>{{ item.pagoEfectivo == 0 ? "INACTIVO" : "ACTIVO" }}</td>
+            <td>{{ item.pasarelaKushki == 0 ? "INACTIVO" : "ACTIVO" }}</td>
+            <td>{{ item.cashKushki == 0 ? "INACTIVO" : "ACTIVO" }}</td>
+            <td>{{ item.smartlinkKuhski == 0 ? "INACTIVO" : "ACTIVO" }}</td>
+            <td>{{ item.yapeNiubiz == 0 ? "INACTIVO" : "ACTIVO" }}</td>
+            <td class="dropdown">
+              <div
+                ngbDropdown
+                [placement]="index > 4 ? 'top-right' : 'bottom-right'"
+              >
+                <button class="dropdown__button" ngbDropdownToggle>
+                  <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                </button>
+                <ul class="dropdown__list" ngbDropdownMenu>
+                  <li *ngIf="isAuthorized">
+                    <button (click)="showModalEdit(item)">
+                      <i class="fa fa-edit" aria-hidden="true"></i>
+                      Editar
+                    </button>
+                  </li>
+                  <li>
+                    <button (click)="showModalHistory(item)">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      Ver historial
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+  <pagination-controls
+    id="table-payment-maintenance"
+    autoHide="true"
+    previousLabel="Anterior"
+    nextLabel="Siguiente"
+    responsive="true"
+    (pageChange)="changeCurrentPage = $event"
+    *ngIf="listPaymentEnabled$.length"
+  >
+  </pagination-controls>
+</section>
+
+<ng-template #modalEdit>
+  <div class="content-modal modal-edit">
+    <section>
+      <div class="modal-header">
+        <div class="title-edit">
+          <span
+            >{{ itemEditSelected?.aplicacion }} - {{ itemEditSelected?.ramo }} -
+            {{ itemEditSelected?.producto }}</span
+          >
+          <span>CANAL: {{ itemEditSelected?.canal }}</span>
+        </div>
+        <button
+          type="button"
+          role="button"
+          aria-label="Cerrar modal"
+          (click)="hideModal()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-edit" [formGroup]="formEdit">
+          <!-- *CardNiubiz -->
+          <label
+            for="form-cardNiubiz"
+            class="placeholder"
+            aria-placeholder="PASARELA NIUBIZ:"
+          >
+            <select id="form-cardNiubiz" formControlName="cardNiubiz">
+              <option value="1">ACTIVO</option>
+              <option value="0">INACTIVO</option>
+            </select>
+            <i class="fa fa-angle-down"></i>
+          </label>
+
+          <!-- *CashPayment  -->
+          <label
+            for="form-cashPayment"
+            class="placeholder"
+            aria-placeholder="PAGO EFECTIVO:"
+          >
+            <select id="form-cashPayment" formControlName="cashPayment">
+              <option value="1">ACTIVO</option>
+              <option value="0">INACTIVO</option>
+            </select>
+            <i class="fa fa-angle-down"></i>
+          </label>
+
+          <!-- *CardKushki -->
+          <label
+            for="form-cardKushki"
+            class="placeholder"
+            aria-placeholder="PASARELA KUSHKI:"
+          >
+            <select id="form-cardKushki" formControlName="cardKushki">
+              <option value="1">ACTIVO</option>
+              <option value="0">INACTIVO</option>
+            </select>
+            <i class="fa fa-angle-down"></i>
+          </label>
+
+          <!-- *CashKushki -->
+          <label
+            for="form-cashKushki"
+            class="placeholder"
+            aria-placeholder="CASH KUSHKI:"
+          >
+            <select id="form-cashKushki" formControlName="cashKushki">
+              <option value="1">ACTIVO</option>
+              <option value="0">INACTIVO</option>
+            </select>
+            <i class="fa fa-angle-down"></i>
+          </label>
+
+          <!-- *TransferKushki -->
+          <label
+            for="form-transferKushki"
+            class="placeholder"
+            aria-placeholder="SMARTLINK KUSHKI:"
+          >
+            <select id="form-transferKushki" formControlName="transferKushki">
+              <option value="1">ACTIVO</option>
+              <option value="0">INACTIVO</option>
+            </select>
+            <i class="fa fa-angle-down"></i>
+          </label>
+
+          <!-- *Yape -->
+          <label
+            for="form-yapeNiubiz"
+            class="placeholder"
+            aria-placeholder="YAPE NIUBIZ:"
+          >
+            <select id="form-yapeNiubiz" formControlName="yapeNiubiz">
+              <option value="1">ACTIVO</option>
+              <option value="0">INACTIVO</option>
+            </select>
+            <i class="fa fa-angle-down"></i>
+          </label>
+        </form>
+        <ng-container *ngIf="isAllInactivePayment">
+          <span class="message-edit"
+            >Al menos una forma de pago debe permanecer activo</span
+          >
+        </ng-container>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          role="button"
+          class="button-default secondary"
+          (click)="hideModal()"
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          role="button"
+          class="button-default"
+          (click)="showModalConfirm()"
+          [disabled]="!changeFormEdit || isAllInactivePayment"
+        >
+          Guardar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalConfirm>
+  <div class="content-modal modal-confirm">
+    <section>
+      <div class="modal-header">
+        <h6 class="title">Mensaje de confirmación</h6>
+        <button
+          type="button"
+          role="button"
+          aria-label="Cerrar modal"
+          (click)="hideModal()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>¿Estás seguro que deseas editar las formas de pago?</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="button-default secondary"
+          (click)="hideModalConfirm()"
+        >
+          No
+        </button>
+        <button type="button" class="button-default" (click)="saveEdit()">
+          Sí
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalSuccess>
+  <div class="content-modal">
+    <section class="modal-confirmTrue">
+      <div class="modal-header">
+        <button
+          type="button"
+          role="button"
+          aria-label="Cerrar modal"
+          (click)="hideModal()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal-body d-flex justify-content-center">
+        <div class="d-flex justify-content-center">
+          <img
+            src="assets/backoffice/check-success.png"
+            alt="image succes"
+            width="100px"
+            height="100px"
+          />
+        </div>
+        <div class="col-lg-12 mt-4 text-center">
+          <h5>Se guardaron los cambios con éxito</h5>
+          <ng-template *ngIf="!responseStatus">
+            <h5>Ocurrió un error al procesar la información</h5>
+          </ng-template>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          role="button"
+          class="button-default"
+          (click)="hideModal()"
+        >
+          Cerrar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalRejected>
+    <div class="content-modal">
+      <section class="modal-confirmTrue">
+        <div class="modal-header">
+          <button
+            type="button"
+            role="button"
+            aria-label="Cerrar modal"
+            (click)="hideModal()"
+          >
+            &times;
+          </button>
+        </div>
+        <div class="modal-body d-flex justify-content-center">
+          <div class="d-flex justify-content-center">
+            <img
+              src="assets/backoffice/check-error.png"
+              alt="image succes"
+              width="100px"
+              height="100px"
+            />
+          </div>
+          <div class="col-lg-12 mt-4 text-center">
+            <h5>Ocurrió un error al procesar la información</h5>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            role="button"
+            class="button-default"
+            (click)="hideModal()"
+          >
+            Cerrar
+          </button>
+        </div>
+      </section>
+    </div>
+  </ng-template>
+
+<ng-template #modalHistory>
+  <div class="content-modal modal-history">
+    <section>
+      <div class="modal-header">
+        <div class="title-history">
+          <span>
+            {{ itemHistorySelected.aplicacion }} -
+            {{ itemHistorySelected.ramo }} - {{ itemHistorySelected.producto }}
+          </span>
+          <span>
+            HISTORIAL FORMAS DE PAGO DEL CANAL: {{ itemHistorySelected.canal }}
+          </span>
+        </div>
+        <button
+          type="button"
+          role="button"
+          aria-label="cerrar modal"
+          (click)="hideModal()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table-u">
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>Pasarela Niubiz</th>
+              <th>PagoEfectivo</th>
+              <th>Pasarela Kushki</th>
+              <th>Cash Kushki</th>
+              <th>SmartLink Kushki</th>
+              <th>Yape Niubiz</th>
+              <th>Usuario</th>
+              <th>Fecha registro</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <ng-container *ngIf="!listHistory$.length">
+              <tr>
+                <td colspan="9">No se encontraron resultados</td>
+              </tr>
+            </ng-container>
+            <ng-container *ngIf="listHistory$.length">
+              <tr
+                *ngFor="
+                  let item of listHistory$
+                    | paginate
+                      : {
+                          id: 'table-history',
+                          itemsPerPage: 10,
+                          totalItems: listHistory$.length,
+                          currentPage: currentPageHistory
+                        };
+                  let index = index
+                "
+              >
+                <td>
+                  {{ (currentPageHistory - 1) * 10 + index + 1 }}
+                </td>
+                <td>{{ item.pasarelaNiubiz == 1 ? "ACTIVO" : "INACTIVO" }}</td>
+                <td>{{ item.pagoEfectivo == 1 ? "ACTIVO" : "INACTIVO" }}</td>
+                <td>{{ item.pasarelaKushki == 1 ? "ACTIVO" : "INACTIVO" }}</td>
+                <td>{{ item.cashKushki == 1 ? "ACTIVO" : "INACTIVO" }}</td>
+                <td>{{ item.smartlinkKushki == 1 ? "ACTIVO" : "INACTIVO" }}</td>
+                <td>{{ item.yapeNiubiz == 1 ? "ACTIVO" : "INACTIVO" }}</td>
+                <td>{{ item.usuario }}</td>
+                <td>{{ item.fechaRegistro }}</td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+      <pagination-controls
+        id="table-history"
+        [autoHide]="true"
+        previousLabel="Anterior"
+        nextLabel="Siguiente"
+        responsive="true"
+        (pageChange)="currentPageHistory = $event"
+        *ngIf="listHistory$?.length"
+      ></pagination-controls>
+      <div class="modal-footer">
+        <button
+          type="button"
+          role="button"
+          class="button-default"
+          (click)="hideModal()"
+        >
+          Cerrar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>

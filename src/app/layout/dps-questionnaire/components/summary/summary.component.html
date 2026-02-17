@@ -1,0 +1,18 @@
+<div class="content">
+  <section class="content__section">
+    <img src="./assets/dps/facial-recognition-verified.png" alt="" />
+    <p class="paragraph">
+      {{ summary.description }}
+    </p>
+    <p class="paragraph">
+      {{ summary.message }}
+    </p>
+    <button
+      class="button-default orange"
+      (click)="tryAgain()"
+      *ngIf="summary.hasError"
+    >
+      Reintentar
+    </button>
+  </section>
+</div>

@@ -1,0 +1,191 @@
+.form-input-select {
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+.form-input-select select {
+  width: 100%;
+  border: none;
+  display: block;
+  line-height: 1.5em;
+  padding: 8px 5px;
+  border: 1px solid rgb(146, 138, 163);
+  border-radius: 2px;
+  margin-top: 5px;
+  color: rgb(146, 138, 163);
+  font-family: "Bliss Pro";
+  font-size: 14px;
+  height: 40px !important;
+  padding-left: 12px;
+  font-weight: 300;
+  color: #aa9ec0;
+  border: 1px solid #aa9ec0;
+  background-color: white;
+  text-transform: uppercase;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.form-input-select select.minimal {
+  background-image: linear-gradient(45deg, transparent 50%, #999 50%),
+                    linear-gradient(135deg, #999 50%, transparent 50%),
+                    linear-gradient(to right, #999, #999) !important;
+  background-position: calc(100% - 16px) calc(1em + 1px),
+                       calc(100% - 10px) calc(1em + 1px), calc(100% - 2.5em) 0.5em !important;
+  background-size: 4px 4px, 6px 6px, 0 0 !important;
+  background-repeat: no-repeat !important;
+  border-color: #d10a2b;
+}
+
+.form-input-select select:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #000;
+  box-shadow: none;
+}
+
+.form-input-select span {
+  margin-top: 0.7em;
+  display: block;
+}
+
+.form-input-select.label-inline span {
+  display: inline-block;
+}
+.form-input-select.label-inline select {
+  display: inline-block;
+}
+.form-input-select.small-input select {
+  width: 50%;
+}
+.form-input-select select.only-input {
+  margin-top: 0!important;
+}
+
+.form-input-select input[type="text"] {
+  border-radius: 2px !important;
+  padding: 0px 10px 0 12px !important;
+  margin-top: 5px;
+  font-size: 14px !important;
+  width: 100%;
+  border: 1px solid #aa9ec0;
+  color: #aa9ec0;
+  height: 40px !important;
+  font-weight: 300 !important;
+  text-transform: uppercase;
+}
+
+.form-input-select input.only-input {
+  margin-top: 0!important;
+}
+
+.form-input-select ng-select {
+    width: 100% !important;
+    border-color: #aa9ec0;
+    border-radius: 2px !important;
+    color: #aa9ec0;
+    margin-bottom: 1px !important;
+    margin-top: 2px !important;
+
+    
+}
+
+.form-input-select ng-select .ng-dropdown-panel .ng-option{
+    white-space: nowrap;   /* una sola línea */
+    overflow: visible;     /* NO ocultar */
+    text-overflow: unset;  /* sin ... */
+}
+
+.form-input-select ng-select .ng-dropdown-panel {
+  min-width: max-content;   /* se adapta al texto */
+}
+
+.form-input-select ng-select .ng-select-opt{
+    white-space: nowrap !important;   /* una sola línea */
+  overflow: visible !important;     /* NO ocultar */
+  text-overflow: unset !important;  /* sin ... */
+    min-width: max-content !important;   /* se adapta al texto */
+}
+
+.form-input-select ng-select ng-option-tmp{
+    white-space: nowrap !important;   /* una sola línea */
+  overflow: visible !important;     /* NO ocultar */
+  text-overflow: unset !important;  /* sin ... */
+    min-width: max-content !important;   /* se adapta al texto */
+}
+
+.ng-select-opt{
+    white-space: nowrap !important;   /* una sola línea */
+  overflow: visible !important;     /* NO ocultar */
+  text-overflow: unset !important;  /* sin ... */
+    min-width: max-content !important;   /* se adapta al texto */
+}
+
+
+
+
+.form-input-select ng-select.minimal .ng-placeholder {
+  color: #eb0f0f;
+}
+
+
+.ng-dropdown-panel.panel-expand {
+  min-width: max-content !important;
+  width: auto !important;
+}
+
+.ng-dropdown-panel.panel-expand {
+  min-width: max-content !important;
+  white-space: nowrap !important;   /* una sola línea */
+    overflow: visible !important;     /* NO ocultar */
+    text-overflow: unset !important;
+}
+
+
+.text-select{
+  font-family: "Bliss Pro";
+  font-size: 14px;
+  font-weight: 300;
+  padding-top: 0px !important;
+  margin-top: 0px !important;
+   white-space: nowrap ;   /* una sola línea */
+  overflow: visible;     /* NO ocultar */
+  text-overflow: unset;  /* sin ... */
+    min-width: max-content;
+}
+
+::ng-deep ng-select.minimal .ng-select-container {
+  border-color: #d10a2b;
+}
+
+
+.ng-select .ng-select-container {
+
+    color: #d10a2b !important;
+}
+
+
+.ng-dropdown-panel{
+    color: #d10a2b !important;
+}
+
+.form-input-select .dropdown-custom{
+ color: #11e70a !important;
+ width: 1000px !important;
+}
+
+
+.form-input-select .ng-dropdown-panel .ng-option:hover {
+  color: #07d65d;
+  background-color: #a907be;
+}
+
+
+.form-input-select ng-select:-moz-focusring {
+  color: transparent;
+  text-shadow: 0 0 0 #000;
+  box-shadow: none;
+}
+

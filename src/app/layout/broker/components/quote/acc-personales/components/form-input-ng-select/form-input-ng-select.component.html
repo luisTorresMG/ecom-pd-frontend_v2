@@ -1,0 +1,41 @@
+<div class="form-input-select" 
+     [class.label-inline]="labelInline" 
+     [class.small-input]="small">
+
+  <span *ngIf="!!label">
+    {{label}}
+    <ng-template [ngIf]="required === true">(*)</ng-template>&nbsp;
+  </span>
+
+  <ng-select
+    *ngIf="!detail"
+    [items]="items"
+    [ngModel]="value" 
+    bindLabel="text"
+    (ngModelChange)="onChange($event)"
+    (change)="onSelectItem();"
+    class="minimal"
+    [class.only-input]="onlyInput"
+    [disabled]="disabled"
+    [searchable]="true"
+    [clearable]="false"
+    notFoundText="No se encontro tarifario"
+    appendTo="body"
+    (open)="onOpen()"
+    #mySelect
+    >
+
+    <!-- Si el item es valor directo -->
+    <ng-template ng-option-tmp let-item="item">
+      <span class="text-select">{{ isValue ? item : item.text }}</span>
+    </ng-template>
+
+  </ng-select>
+
+  <input
+    *ngIf="detail"
+    type="text"
+    [value]="isValue ? value : value?.text"
+    [class.only-input]="onlyInput"
+    [disabled]="true"/>
+</div>

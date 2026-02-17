@@ -1,0 +1,81 @@
+<label
+  [class]="'placeholder ' + class"
+  [class.inside]="inside"
+  [class.active]="inside && formControl['label'].value"
+  [class.disabled]="formControl['label'].disabled"
+  [attr.aria-placeholder]="placeholder"
+  [class.placeholder-empty]="!inside && !placeholder"
+  [formGroup]="form"
+  (clickOutside)="closeList()"
+>
+  <div class="content-input">
+    <input
+      [class.clearable]="clearable"
+      type="search"
+      aria-label="buscador"
+      autocomplete="nope"
+      formControlName="label"
+      (click)="openList(); focusInput()"
+      (focusin)="openList()"
+      [placeholder]="!inside ? 'Seleccione' : ''"
+      #inputSelect
+    />
+    <button
+      class="arrow-times"
+      type="button"
+      role="button"
+      [disabled]="formControl['label'].disabled"
+      (click)="clearInput()"
+      *ngIf="clearable"
+    >
+      <span>&times;</span>
+    </button>
+    <i
+      class="fa fa-angle-right"
+      [class.active]="showList"
+      [class.disabled]="formControl['label'].disabled"
+      arua-hidden="true"
+    ></i>
+    <ul class="list" *ngIf="showList" @fade>
+      <ng-container *ngIf="!filteredItems?.length">
+        <li class="empty">Sin resultados</li>
+      </ng-container>
+      <ng-container *ngIf="filteredItems?.length">
+        <li
+          *ngFor="let item of filteredItems; let index = index"
+          [class.selected]="
+            formControl['itemSelectedLabel'].value == item[label] && !multi
+          "
+          [class.is-multi]="multi"
+        >
+          <div
+            class="selection ellipsis"
+            [class.orange]="config.checkboxColor == 'orange'"
+            *ngIf="multi"
+          >
+            <input
+              type="checkbox"
+              [id]="'pro-select-chk-' + index"
+              [checked]="item.checked"
+              (change)="checkOption($event.target.checked, item)"
+            />
+            <label [for]="'pro-select-chk-' + index">
+              <span>
+                {{ item[label] }}
+              </span>
+            </label>
+          </div>
+
+          <button
+            (click)="writeValue(item)"
+            [attr.title]="item[label]"
+            class="button-option"
+            *ngIf="!multi"
+          >
+            {{ item[label] }}
+          </button>
+        </li>
+      </ng-container>
+    </ul>
+  </div>
+</label>

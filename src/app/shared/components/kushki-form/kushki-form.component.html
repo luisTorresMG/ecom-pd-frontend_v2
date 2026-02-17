@@ -1,0 +1,291 @@
+<div id="payment-form" class="payment-form">
+  <ng-container *ngIf="!paymentInfo.payment.isSubscription">
+    <ng-container *ngIf="paymentInfo.payment.allowedMethods.length == 1">
+      <ng-container *ngIf="paymentInfo.buttons.showCardPayment">
+        <h2 class="subtitle" @fade>
+          <i class="fa fa-credit-card" aria-hidden="true"></i>
+          Tarjeta de crédito o débito
+        </h2>
+      </ng-container>
+      <ng-container *ngIf="paymentInfo.buttons.showCashPayment">
+        <h2 class="subtitle" @fade>
+          <i class="fa fa-money" aria-hidden="true"></i>
+          Efectivo
+        </h2>
+      </ng-container>
+      <ng-container *ngIf="paymentInfo.buttons.showPaymentTransfer">
+        <h2 class="subtitle" @fade>
+          <i class="fa fa-exchange" aria-hidden="true"></i>
+          Transferencia
+        </h2>
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="paymentInfo.payment.allowedMethods.length > 1">
+      <h2 class="subtitle" @fade>Método de pago</h2>
+      <div class="payment-methods" @fade>
+        <button
+          type="button"
+          class="button button-selection"
+          [class.active]="paymentMethod == 'card'"
+          (click)="paymentMethod = 'card'"
+          *ngIf="paymentInfo.buttons.showCardPayment"
+        >
+          <i class="fa fa-credit-card" aria-hidden="true"></i>
+          <span>Tarjeta</span>
+        </button>
+        <button
+          type="button"
+          class="button button-selection"
+          [class.active]="paymentMethod == 'cash'"
+          (click)="paymentMethod = 'cash'"
+          *ngIf="paymentInfo.buttons.showCashPayment"
+        >
+          <i class="fa fa-money" aria-hidden="true"></i>
+          <span>Efectivo</span>
+        </button>
+        <button
+          type="button"
+          class="button button-selection"
+          [class.active]="paymentMethod == 'transfer'"
+          (click)="paymentMethod = 'transfer'"
+          *ngIf="paymentInfo.buttons.showPaymentTransfer"
+        >
+          <i class="fa fa-exchange" aria-hidden="true"></i>
+          <span>Transferencia</span>
+        </button>
+      </div>
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="paymentInfo.payment.isSubscription">
+    <h2 class="subtitle" @fade>
+      <i class="fa fa-credit-card" aria-hidden="true"></i>
+      Tarjeta de crédito o débito
+    </h2>
+  </ng-container>
+
+  <ng-container *ngIf="paymentMethod == 'card'">
+    <form class="payment-form__info" [formGroup]="formCardPayment" @fade>
+      <label class="placeholder" aria-placeholder="Nombre y apellido">
+        <input
+          type="text"
+          placeholder="Escribe tu nombre y apellido"
+          formControlName="names"
+        />
+      </label>
+
+      <label class="placeholder" aria-placeholder="Email">
+        <div>
+          <input
+            [class.invalid]="
+                formCardControl['email'].hasError('pattern') &&
+                formCardControl['email'].touched
+              "
+            type="text"
+            placeholder="Escribe tu email"
+            formControlName="email"
+          />
+        </div>
+      </label>
+
+      <div class="card-number">
+        <label class="placeholder" aria-placeholder="Número de tarjeta">
+          <div class="card-number-input">
+            <input
+              type="text"
+              placeholder="Digita tu número de tarjeta"
+              formControlName="cardNumber"
+              maxlength="16"
+              (blur)="binInfo()"
+            />
+            <ng-container *ngIf="cardType">
+              <img
+                [src]="'assets/logos/payments/visa.svg'"
+                class="card-type-image"
+                width="40"
+                height="auto"
+                *ngIf="cardType == 'visa'"
+              />
+              <img
+                [src]="'assets/logos/payments/mastercard.svg'"
+                class="card-type-image"
+                width="40"
+                height="auto"
+                *ngIf="cardType == 'mastercard'"
+              />
+              <img
+                [src]="'assets/logos/payments/diners.svg'"
+                class="card-type-image"
+                width="40"
+                height="auto"
+                *ngIf="cardType == 'diners'"
+              />
+              <img
+                [src]="'assets/logos/payments/amex.svg'"
+                class="card-type-image"
+                width="40"
+                height="auto"
+                *ngIf="cardType == 'amex'"
+              />
+            </ng-container>
+          </div>
+        </label>
+      </div>
+
+      <div class="form-group-2">
+        <label class="placeholder" aria-placeholder="Fecha de vencimiento">
+          <div>
+            <input
+              [class.invalid]="
+                formCardControl['dueDate'].hasError('pattern') &&
+                formCardControl['dueDate'].touched
+              "
+              type="text"
+              placeholder="MM/AA"
+              maxlength="5"
+              formControlName="dueDate"
+            />
+            <i class="fa fa-calendar-o" aria-hidden="true"></i>
+          </div>
+        </label>
+
+        <label class="placeholder" aria-placeholder="Código de seguridad">
+          <div>
+            <input
+              type="password"
+              placeholder="CVV"
+              maxlength="4"
+              autocomplete="off"
+              formControlName="cvv"
+            />
+            <i class="fa fa-lock" aria-hidden="true"></i>
+          </div>
+        </label>
+      </div>
+    </form>
+    <button
+      type="button"
+      class="button button-default orange"
+      [disabled]="formCardPayment.invalid"
+      (click)="onSubmit()"
+    >
+      {{ currencies[paymentInfo.payment.currency] }} {{ paymentInfo.payment.amount }}
+    </button>
+  </ng-container>
+
+  <ng-container *ngIf="paymentMethod == 'cash'">
+    <form class="payment-form__info" [formGroup]="formCashPayment" @fade>
+      <label class="placeholder" aria-placeholder="Nombres">
+        <input
+          type="text"
+          placeholder="Escribe tus nombres"
+          formControlName="names"
+        />
+      </label>
+
+      <label class="placeholder" aria-placeholder="Apellidos">
+        <input
+          type="text"
+          placeholder="Escribe tus apellidos"
+          formControlName="surnames"
+        />
+      </label>
+
+      <div class="content-document">
+        <label class="placeholder select" aria-placeholder="Tipo de documento">
+          <select formControlName="documentType">
+            <option value="RUC">RUC</option>
+            <option value="DNI">DNI</option>
+            <option value="CE">CE</option>
+          </select>
+        </label>
+        <label class="placeholder" aria-placeholder="Número de documento">
+          <input
+            type="text"
+            placeholder="Número de documento"
+            formControlName="documentNumber"
+          />
+        </label>
+      </div>
+
+      <label class="placeholder" aria-placeholder="Correo electrónico">
+        <input
+          type="text"
+          placeholder="Escribe tu correo electrónico"
+          formControlName="email"
+        />
+      </label>
+    </form>
+    <button
+      type="button"
+      class="button button-default orange"
+      [disabled]="formCashPayment.invalid"
+      (click)="onSubmit()"
+    >
+      Generar orden de pago
+    </button>
+  </ng-container>
+
+  <ng-container *ngIf="paymentMethod == 'transfer'">
+    <form class="payment-form__info" [formGroup]="formPaymentTransfer" @fade>
+      <div class="content-document">
+        <label class="placeholder select" aria-placeholder="Tipo de documento">
+          <select formControlName="documentType">
+            <option value="RUC">RUC</option>
+            <option value="DNI">DNI</option>
+            <option value="CE">CE</option>
+          </select>
+        </label>
+        <label class="placeholder" aria-placeholder="Número de documento">
+          <input
+            type="text"
+            placeholder="Número de documento"
+            formControlName="documentNumber"
+          />
+        </label>
+      </div>
+      <label class="placeholder" aria-placeholder="Correo electrónico">
+        <input
+          type="text"
+          placeholder="Escribe tu correo electrónico"
+          formControlName="email"
+        />
+      </label>
+    </form>
+    <button
+      type="button"
+      class="button button-default orange"
+      [disabled]="formPaymentTransfer.invalid"
+      (click)="onSubmit()"
+    >
+      Pagar
+    </button>
+  </ng-container>
+
+  <small class="has-error">
+    {{ messageInfo }}
+  </small>
+
+  <div class="secure-payment">
+    <div class="secure-payment__info">
+      <img
+        src="/assets/logos/pci_certificate.svg"
+        alt="pci certificate"
+        width="83px"
+        height="42px"
+      />
+      <p class="paragraph">
+        Este pago es procesado de forma segura por Kushki, un proveedor de pagos
+        certificado PCI Nivel 1. Leer más
+      </p>
+    </div>
+    <div class="powered-by" hidden>
+      <img
+        src="/assets/logos/powered_by_kushki.svg"
+        alt="powered by kushki"
+        width="130px"
+        height="auto"
+      />
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="panel-info-estado">
+    <panel-widget title="DPS">
+  
+      <div class="row">
+        <div class="col-sm-3">
+          <form-input-text label="Estado" [(value)]="cotizacion.poliza.dps.estado"
+          [disabled]="detail"   >
+          </form-input-text>
+        </div>
+      </div>
+      <div class="row" [hidden]="true">
+        <div class="col-sm-3">
+          <form-input-text label="Id Estado" [(value)]="cotizacion.poliza.dps.idestado"
+          [disabled]="detail"   >
+          </form-input-text>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-3"
+          *ngIf="detail && (cotizacion.poliza.dps.idestado == 1 || cotizacion.poliza.dps.idestado == 2 || cotizacion.poliza.dps.idestado == 3 || cotizacion.poliza.dps.idestado == 7) ">
+          <form-button label="Reenviar DPS" (click)="ReenviarDPS()" btnClass="btn-primary coberturas-cal">
+          </form-button>
+        </div>
+      </div>
+  
+
+    </panel-widget>
+  </div>

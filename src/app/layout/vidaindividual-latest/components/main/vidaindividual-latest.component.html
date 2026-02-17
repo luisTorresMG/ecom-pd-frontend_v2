@@ -1,0 +1,26 @@
+<app-header-ecommerce
+  [title]="title"
+  [banner]="'assets/vidaindividual/banner.png'"
+></app-header-ecommerce>
+<div class="steps">
+  <router-outlet></router-outlet>
+</div>
+<app-footer></app-footer>
+<ng-template #modalUnauthorized>
+  <div class="content-modal-u">
+    <div class="modal-u mua">
+      <div class="modal__body">
+        <img
+          src="assets/icons/warning.png"
+          alt="warning png"
+          class="warning-image"
+          width="140"
+          height="auto"
+        />
+        <p class="paragraph">
+          Cierra tu sesión de la plataforma digital para poder continuar
+        </p>
+      </div>
+    </div>
+  </div>
+</ng-template>

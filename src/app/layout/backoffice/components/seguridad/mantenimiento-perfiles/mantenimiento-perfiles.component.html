@@ -1,0 +1,494 @@
+<div class="content">
+  <div class="content__item content__header">
+    <h1 class="title-u">Mantenimiento de Perfiles</h1>
+    <div class="content__header--group">
+      <button
+        class="btn-export-u"
+        type="button"
+        role="button"
+        (click)="exportProfiles()"
+      >
+        <i class="fa fa-download" aria-hidden="true"></i>
+        Exportar
+      </button>
+    </div>
+  </div>
+  <form class="content__item form" [formGroup]="form" (ngSubmit)="search()">
+    <!-- TODO: FILTERS -->
+    <div
+      class="form__group form__filters"
+      [class.grid-4]="f['profileType'].value == 1"
+    >
+      <!-- *FILTER TYPE -->
+      <label
+        for="filter-profileType"
+        class="lbl-input-u"
+        aria-label="Tipo de Perfil"
+      >
+        <select
+          id="filter-profileType"
+          class="input-u"
+          formControlName="profileType"
+        >
+          <option [value]="null" selected disabled>SELECCIONE</option>
+          <option *ngFor="let data of systemTypes$.items" [value]="data.id">
+            {{ data.description }}
+          </option>
+        </select>
+      </label>
+
+      <!-- *FILTER PRODUCT TYPE" -->
+      <ng-container *ngIf="f['profileType'].value == 1">
+        <label
+          for="filter-productType"
+          class="lbl-input-u"
+          aria-label="Tipo de Producto"
+        >
+          <select
+            id="filter-productType"
+            class="input-u"
+            formControlName="productType"
+          >
+            <option [value]="null" selected disabled>SELECCIONE</option>
+            <option *ngFor="let data of productTypes$.items" [value]="data.id">
+              {{ data.description }}
+            </option>
+          </select>
+        </label>
+      </ng-container>
+
+      <!-- *FILTER NAME -->
+      <label for="filter-name" class="lbl-input-u" aria-label="Nombre">
+        <input
+          type="text"
+          id="filter-name"
+          class="input-u"
+          formControlName="name"
+        />
+      </label>
+
+      <!-- *FILTER DESCRIPTION -->
+      <label
+        for="filter-description"
+        class="lbl-input-u"
+        aria-label="Descripción"
+      >
+        <input
+          type="text"
+          id="filter-description"
+          class="input-u"
+          formControlName="description"
+        />
+      </label>
+    </div>
+    <div class="form__group form__actions">
+      <button class="btn-primary-u" type="submit" role="button">Buscar</button>
+      <button
+        class="btn-primary-u"
+        type="button"
+        role="button"
+        (click)="showModalProfile(1)"
+      >
+        Nuevo
+      </button>
+      <button
+        class="btn-primary-u"
+        type="button"
+        role="button"
+        (click)="resetFormFilters()"
+      >
+        Limpiar
+      </button>
+    </div>
+  </form>
+  <div class="divider"></div>
+  <div class="content__item content__table">
+    <table class="tbl">
+      <thead class="tbl__head">
+        <tr class="tbl__head--row">
+          <th class="tbl__head--row-item" rowspan="2">ID</th>
+          <th class="tbl__head--row-item" rowspan="2">Tipo de Perfil</th>
+          <th class="tbl__head--row-item" rowspan="2">Nombre</th>
+          <th class="tbl__head--row-item" rowspan="2">Description</th>
+          <th class="tbl__head--row-item" colspan="2">Actualización</th>
+          <th class="tbl__head--row-item" colspan="2">Creación</th>
+          <th class="tbl__head--row-item" rowspan="2">Acciones</th>
+        </tr>
+        <tr class="tbl__head-row">
+          <th class="tbl__head--row-item">Usuario</th>
+          <th class="tbl__head--row-item">Fecha</th>
+          <th class="tbl__head--row-item">Usuario</th>
+          <th class="tbl__head--row-item">Fecha</th>
+        </tr>
+      </thead>
+      <tbody class="tbl__body">
+        <tr
+          class="tbl__body--row"
+          *ngFor="
+            let data of profiles$.items
+              | paginate
+                : {
+                    id: 'pfilters',
+                    itemsPerPage: pagination.itemsPerPage,
+                    currentPage: pagination.currentPage,
+                    totalItems: profiles$.totalItems
+                  }
+          "
+        >
+          <td class="tbl__body--row-item">{{ data.profile.id }}</td>
+          <td class="tbl__body--row-item">{{ data.profile.description }}</td>
+          <td class="tbl__body--row-item">{{ data.name }}</td>
+          <td class="tbl__body--row-item">
+            {{ data.description === "NULL" ? "-" : data.description }}
+          </td>
+          <td class="tbl__body--row-item">{{ data.update.userDescription }}</td>
+          <td class="tbl__body--row-item">
+            {{ data.update.date | date : "dd/MM/yyyy" }}
+          </td>
+          <td class="tbl__body--row-item">
+            {{ data.register.userDescription }}
+          </td>
+          <td class="tbl__body--row-item">
+            {{ data.register.date | date : "dd/MM/yyyy" }}
+          </td>
+          <td class="tbl__body--row-item" ngbDropdown>
+            <button
+              class="btn-dropdown-u"
+              tabindex="0"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+              ngbDropdownToggle
+            >
+              <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+            </button>
+            <ul class="dropdown-u" display="dynamic" ngbDropdownMenu>
+              <li class="dropdown-item-u">
+                <button
+                  class="dropdown-item-btn-u"
+                  (click)="showModalProfile(2, data)"
+                >
+                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                  Editar
+                </button>
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot class="tbl__footer">
+        <tr class="tbl__foot--row">
+          <td class="tbl__foot--row--item" colspan="9">
+            <pagination-controls
+              class="my-pagination"
+              (pageChange)="currentPage = $event"
+              id="pfilters"
+              autoHide="true"
+              responsive="true"
+              previousLabel="Anterior"
+              nextLabel="Siguiente"
+              screenReaderPaginationLabel="Paginación"
+              screenReaderPageLabel="pagina"
+              screenReaderCurrentLabel="Estás en la pagina"
+            >
+            </pagination-controls>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+<ng-template #modalProfile>
+  <div class="content-modal-u">
+    <form
+      class="modal-u modal-profile"
+      [formGroup]="formProfile"
+      (ngSubmit)="validateProfile()"
+    >
+      <div class="modal__header">
+        <h6 class="modal__header--title">
+          {{ typeModalProfile == 1 ? "Nuevo Perfil" : "Actualizar Perfil" }}
+        </h6>
+        <button
+          class="modal__header--close"
+          type="button"
+          role="button"
+          (click)="closeAllModals()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <div class="modal-profile-inputs">
+          <!-- *FP NAME -->
+          <label for="fp-name" class="lbl-input-u" aria-label="Nombre">
+            <input
+              type="text"
+              id="fp-name"
+              class="input-u"
+              formControlName="name"
+            />
+          </label>
+
+          <!-- *FP PROFILE TYPE -->
+          <label
+            for="fp-profile-type"
+            class="lbl-input-u"
+            aria-label="Tipo de Perfil"
+          >
+            <select
+              id="fp-profile-type"
+              class="input-u"
+              formControlName="profileType"
+            >
+              <option [value]="null" selected disabled>SELECCIONE</option>
+              <option *ngFor="let data of systemTypes$.items" [value]="data.id">
+                {{ data.description }}
+              </option>
+            </select>
+          </label>
+
+          <!-- *FP PRODUCT TYPE -->
+          <ng-container *ngIf="fp['profileType'].value == 1">
+            <label
+              for="fp-product-type"
+              class="lbl-input-u"
+              aria-label="Productos (*)"
+            >
+              <select
+                id="fp-product-type"
+                class="input-u"
+                formControlName="productType"
+              >
+                <option [value]="null" selected disabled>SELECCIONE</option>
+                <option
+                  *ngFor="let data of productTypes$.items"
+                  [value]="data.id"
+                >
+                  {{ data.description }}
+                </option>
+              </select>
+            </label>
+          </ng-container>
+
+          <!-- *FP DESCRIPTION -->
+          <label
+            for="fp-description"
+            class="lbl-input-u"
+            aria-label="Descripción"
+          >
+            <input
+              type="text"
+              id="fp-description"
+              class="input-u"
+              formControlName="description"
+            />
+          </label>
+        </div>
+        <h6 class="subtitle-u mt-3">Recursos</h6>
+        <!-- *FP RESOURCES -->
+        <div class="content-table">
+          <table class="tbl">
+            <thead class="tbl__head">
+              <tr class="tbl__head--row">
+                <th class="tbl__head--row-item">Nombre</th>
+                <th class="tbl__head--row-item">Descripción</th>
+              </tr>
+            </thead>
+            <tbody class="tbl__body">
+              <ng-container
+                *ngFor="let ff of fpResources.controls; let i1 = index"
+              >
+                <ng-container [formGroup]="ff">
+                  <tr class="tbl__body--row">
+                    <td class="tbl__body--row-item">
+                      <div class="content-chk">
+                        <ng-container
+                          *ngIf="!!ff.get('childrens').controls?.length"
+                        >
+                          <button
+                            class="btn-open-sub-list"
+                            [class.list-selected]="
+                              childSelected == ff.get('id').value
+                            "
+                            role="button"
+                            type="button"
+                            (click)="selectChild(ff.get('id').value)"
+                          >
+                            <i class="fa fa-angle-down" aria-hidden="true"></i>
+                          </button>
+                        </ng-container>
+                        <input
+                          type="checkbox"
+                          class="chk"
+                          formControlName="active"
+                          (change)="selectAllChild(ff, $event.target.checked)"
+                          [id]="'fp-chk-f' + i1"
+                        />
+                        <label
+                          [for]="'fp-chk-f' + i1"
+                          class="lbl-chk"
+                          [class.child-selected]="
+                            selectedChilds(ff.get('childrens').controls)
+                          "
+                          >{{ ff.get("name").value }}</label
+                        >
+                      </div>
+                    </td>
+                    <td class="tbl__body--row-item">
+                      {{ ff.get("description").value }}
+                    </td>
+                  </tr>
+                </ng-container>
+                <ng-container formArrayName="resources">
+                  <ng-container
+                    *ngIf="
+                      !!ff.get('childrens').controls?.length &&
+                      childSelected == ff.get('id').value
+                    "
+                  >
+                    <ng-container
+                      *ngFor="
+                        let ffc of ff.get('childrens')?.controls;
+                        let i2 = index
+                      "
+                    >
+                      <ng-container [formGroup]="ffc">
+                        <tr
+                          class="tbl__body--row tbl__body--child2"
+                          [@fade]="true"
+                        >
+                          <td class="tbl__body--row-item">
+                            <div class="content-chk">
+                              <ng-container
+                                *ngIf="!!ffc.get('childrens').value?.length"
+                              >
+                                <button
+                                  class="btn-open-sub-list"
+                                  role="button"
+                                  type="button"
+                                  (click)="selectChild2(ffc.get('id').value)"
+                                >
+                                  <i
+                                    class="fa fa-angle-down"
+                                    aria-hidden="true"
+                                  ></i>
+                                </button>
+                              </ng-container>
+
+                              <input
+                                type="checkbox"
+                                class="chk"
+                                formControlName="active"
+                                (change)="
+                                  selectAllChild2(ffc, $event.target.checked)
+                                "
+                                (change)="selectedChild(ff)"
+                                [id]="'fp-chk-c' + i2"
+                              />
+                              <label
+                                [for]="'fp-chk-c' + i2"
+                                class="lbl-chk"
+                                [class.child-selected]="
+                                  selectedChilds(ffc.get('childrens').controls)
+                                "
+                                >{{ ffc.get("name").value }}</label
+                              >
+                            </div>
+                          </td>
+                          <td class="tbl__body--row-item">
+                            {{ ffc.get("description").value }}
+                          </td>
+                        </tr>
+                        <ng-container
+                          *ngIf="
+                            !!ffc.get('childrens').controls?.length &&
+                            child2Selected == ffc.get('id').value
+                          "
+                        >
+                          <ng-container
+                            *ngFor="
+                              let ffcc of ffc.get('childrens').controls;
+                              let i3 = index
+                            "
+                          >
+                            <ng-container [formGroup]="ffcc">
+                              <tr
+                                class="tbl__body--row tbl__body--child3"
+                                [@fade]="true"
+                              >
+                                <td class="tbl__body--row-item">
+                                  <div class="content-chk">
+                                    <input
+                                      type="checkbox"
+                                      class="chk"
+                                      formControlName="active"
+                                      (change)="selectedChild(ffc)"
+                                      [id]="'fp-chk-cc' + i2 + '' + i3"
+                                    />
+                                    <label
+                                      [for]="'fp-chk-cc' + i2 + '' + i3"
+                                      class="lbl-chk"
+                                      >{{ ffcc.get("name").value }}</label
+                                    >
+                                  </div>
+                                </td>
+                                <td class="tbl__body--row-item">
+                                  {{ ffcc.get("description").value }}
+                                </td>
+                              </tr>
+                            </ng-container>
+                          </ng-container>
+                        </ng-container>
+                      </ng-container>
+                    </ng-container>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button
+          class="btn-secondary-u mr-3"
+          type="button"
+          role="button"
+          (click)="closeAllModals()"
+        >
+          Cancelar
+        </button>
+        <button
+          class="btn-primary-u"
+          type="submit"
+          role="button"
+          [disabled]="formProfile.invalid || !resourcesProfile.length"
+        >
+          Guardar
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+<ng-template #modalMessage>
+  <div class="content-modal-u">
+    <div class="modal-u">
+      <div class="modal__header">
+        <h6 class="modal__header--title">Mensaje</h6>
+        <button class="modal__header--close" (click)="closeLastModal()">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <p class="modal__body--desc">
+          {{ message }}
+        </p>
+      </div>
+      <div class="modal__footer">
+        <button class="btn-primary-u" (click)="closeLastModal()">
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

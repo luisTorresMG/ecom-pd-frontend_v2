@@ -1,0 +1,17 @@
+<form [formGroup]="form"
+      (ngSubmit)="submit()">
+  <input type="number"
+         formControlName="ammount"
+         placeholder="Monto">
+  <input type="submit"
+         value="Enviar">
+</form>
+<button class="btn-pago"
+        role="button"
+        (click)="pagar()">
+  <img src="assets/soat/img/visa-logo.png"
+       *ngIf="!!visaSessionToken"
+       alt="VISA"
+       class="visaBtn"
+       #visaPay>
+</button>

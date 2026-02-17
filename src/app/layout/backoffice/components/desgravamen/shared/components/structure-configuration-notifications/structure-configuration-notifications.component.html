@@ -1,0 +1,197 @@
+<div class="content-table">
+  <table class="table table-fields">
+    <thead>
+      <tr>
+        <th>Canal de venta</th>
+        <th>Póliza</th>
+        <th>Contratante</th>
+        <th>Transacción</th>
+        <th>Asunto</th>
+        <th>Para</th>
+        <th>Cc</th>
+        <th>CCO</th>
+        <th *ngIf="this.structureDetail.action != 'detalle'">Eliminar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let form of policyForm.controls; let index = index">
+        <tr [formGroup]="form">
+          <td>
+            <select formControlName="salesChannel">
+              <option value="" disabled selected>Seleccione</option>
+              <option *ngFor="let item of salesChannels" [value]="item">
+                {{ item }}
+              </option>
+            </select>
+          </td>
+          <td>
+            <select formControlName="policy">
+              <option value="" disabled selected>Seleccione</option>
+              <option *ngFor="let item of policies" [value]="item">
+                {{ item }}
+              </option>
+            </select>
+          </td>
+          <td>
+            <select formControlName="contractor">
+              <option value="" disabled selected>Seleccione</option>
+              <option *ngFor="let item of contractors" [value]="item">
+                {{ item }}
+              </option>
+            </select>
+          </td>
+          <td>
+            <select formControlName="transaction">
+              <option value="" disabled selected>Seleccione</option>
+              <option *ngFor="let item of transactions" [value]="item">
+                {{ item }}
+              </option>
+            </select>
+          </td>
+          <td>
+            <select formControlName="issue">
+              <option value="" disabled selected>Seleccione</option>
+              <option *ngFor="let item of issues" [value]="item">
+                {{ item }}
+              </option>
+            </select>
+          </td>
+          <td>
+            <button class="button-icon" (click)="showModalEmails('to', index)">
+              <i class="fa fa-envelope-o" aria-hidden="true"></i>
+            </button>
+          </td>
+          <td>
+            <button class="button-icon" (click)="showModalEmails('cc', index)">
+              <i class="fa fa-envelope-o" aria-hidden="true"></i>
+            </button>
+          </td>
+          <td>
+            <button class="button-icon" (click)="showModalEmails('cco', index)">
+              <i class="fa fa-envelope-o" aria-hidden="true"></i>
+            </button>
+          </td>
+          <td *ngIf="this.structureDetail.action != 'detalle'">
+            <button class="button-icon" (click)="removeRowNotification(index)">
+              <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>
+<button
+  class="button fit secondary no-border orange"
+  [disabled]="policyForm.invalid"
+  (click)="addNotification()"
+  *ngIf="structureDetail.action != 'detalle'"
+>
+  <i class="fa fa-plus" aria-hidden="true"></i>
+  Agregar elemento
+</button>
+
+<ng-template #modalEmails>
+  <div class="content-modal modal-emails">
+    <section>
+      <div class="modal-header" *ngIf="structureDetail.action == 'detalle'">
+        <h6>Lista de correos</h6>
+        <button aria-label="close modal" (click)="closeModals()">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="content-radios" *ngIf="structureDetail.action != 'detalle'">
+          <div class="selection orange radio">
+            <input
+              type="radio"
+              [formControl]="controlMailDestinationType"
+              value="everyone"
+              id="everyone-type"
+            />
+            <label for="everyone-type">Todos</label>
+          </div>
+          <div class="selection orange radio">
+            <input
+              type="radio"
+              [formControl]="controlMailDestinationType"
+              value="internal"
+              id="internal-type"
+            />
+            <label for="internal-type">Internos</label>
+          </div>
+        </div>
+
+        <ng-container>
+          <div
+            class="content-input content-input-search-email"
+            *ngIf="structureDetail.action != 'detalle'"
+          >
+            <label class="placeholder">
+              <i class="fa fa-search" aria-hidden="true"></i>
+              <input
+                type="text"
+                placeholder="Buscar correo"
+                [formControl]="controlMailDestinationTypeValue"
+              />
+              <i class="fa fa-angle-down" aria-hidden="true"></i>
+            </label>
+            <div class="content-list-emails">
+              <ng-container *ngFor="let obj of listEmailsFiltered">
+                <button
+                  class="button"
+                  [class.active]="emailHasIncluded(obj.correo)"
+                  (click)="selectEmail(obj.correo)"
+                  *ngIf="
+                    (controlMailDestinationType.value == 'internal' &&
+                      obj.tipo == 2) ||
+                    controlMailDestinationType.value == 'everyone'
+                  "
+                >
+                  {{ obj.correo }}
+                </button>
+              </ng-container>
+            </div>
+          </div>
+
+          <div
+            class="selected-items"
+            [class.is-detail]="structureDetail.action == 'detalle'"
+          >
+            <div
+              class="selected-items-email"
+              *ngFor="let email of emailsSelected"
+              [attr.title]="email"
+            >
+              <span>{{ email }}</span>
+              <button
+                class="button fit"
+                aria-label="eliminar correo"
+                (click)="removeEmail(email)"
+                *ngIf="structureDetail.action != 'detalle'"
+              >
+                &times;
+              </button>
+            </div>
+            <ng-container
+              *ngIf="
+                structureDetail.action == 'detalle' &&
+                emailsSelected.length == 0
+              "
+            >
+              <span>No se ha seleccionado ningún correo</span>
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+      <div class="modal-footer" *ngIf="structureDetail.action != 'detalle'">
+        <button class="button secondary orange fit" (click)="closeModals()">
+          Cancelar
+        </button>
+        <button class="button primary orange fit" (click)="onSubmit()">
+          Agregar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>

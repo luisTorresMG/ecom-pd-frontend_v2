@@ -1,0 +1,32 @@
+<div class="form-group row filter-puntoventa">
+  <div class="col-lg-6 filter-row-cell">
+    <span>POR CANAL DE VENTA (*):</span>
+    <select
+      id="ChannelSalesSelect"
+      [(ngModel)]="channelSalesIdSelected"
+      (change)="onSelectChannelSales($event.target.value)"
+    >
+      <!-- <option value="0" selected>Seleccionar</option> -->
+      <option
+        *ngFor="let channelsales of ListChannelSales"
+        value="{{ channelsales.nchannel }}"
+        >{{ channelsales.sdescript }}</option
+      >
+    </select>
+  </div>
+  <div class="col-lg-6 filter-row-cell">
+    <span>POR PUNTO DE VENTA:</span>
+    <select
+      id="ChannelSalesSelect"
+      (change)="onSelectChannelPoint($event.target.value)"
+      [(ngModel)]="salesPointIdSelected"
+    >
+      <!-- <option value="0" selected>Seleccionar</option> -->
+      <option
+        *ngFor="let channelpoint of ListChannelPoint"
+        value="{{ channelpoint.nnumpoint }}"
+        >{{ channelpoint.sdescript }}</option
+      >
+    </select>
+  </div>
+</div>

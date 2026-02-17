@@ -1,0 +1,168 @@
+<div class="container-modal">
+  <div class="container-title-modal">
+    <h3>Declaración Jurada Orígenes de Fondo y Antecedentes</h3>
+  </div>
+  <div class="container-form d-flex flex-wrap">
+    <div class="d-flex align-items-center col-lg-12 mb-0">
+      <div class="col-lg-12 mb-0">
+        <div>
+          Los fondos que entregaré con ocasión de la relación comercial
+          provienen de (ingresos / actividad económica)
+        </div>
+      </div>
+    </div>
+    <div class="d-flex align-items-center col-lg-12 mb-0">
+      <div class="col-lg-12 mb-0">
+        <textarea 
+                 rows="3"
+                 [(ngModel)]="data_quotation_pep.P_SDECJUR"
+                 class="p-2"
+                 maxlength="500"
+                 [disabled]="profile_id == 192"
+                 style="border: 1px solid #a99dbf; color: #553d81; border-radius: 10px;outline: none; resize: none;width: 100%;"></textarea>
+                
+        <!-- <form-input-text [large]="false" [(value)]="data_quotation_pep.P_SDECJUR" [onlyInput]="true" maxCaracter="200" [patternPrevent]="CONSTANTS.REGEX.LETRAS" [disabled]="profile_id == 192" ></form-input-text> -->
+      </div>
+    </div>  
+    <div class="d-flex align-items-center col-lg-12 mb-0">
+      <div class="col-lg-3">
+        <div style="margin-top: 1px; display: flex; align-items: center">
+          <div class="content-radio-u mr-4" style="font-size:smaller; -ms-text-kashida-space:0%;">
+            <input type="radio" name="status_contractor" id="client_yes_contractor" class="mark-u orange" [value]="0"
+              [checked]="check_input_value == 1" (click)="changeValue(1, 1)" [disabled]="profile_id == 192" />
+            <label for="client_yes_contractor" class="radio-label-u orange mark-u" >
+              SI
+            </label>
+          </div>
+          <div class="content-radio-u ml-4" style="font-size:smaller; -ms-text-kashida-space:0%;">
+            <input type="radio" name="status_contractor" id="client_no_contractor" class="mark-u orange" [value]="1"
+              [checked]="check_input_value == 0" (click)="changeValue(0, 1)" [disabled]="profile_id == 192" />
+            <label for="client_no_contractor" class="radio-label-u orange mark-u">
+              NO
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9 mb-0">
+        <div style="font-size:smaller; -ms-text-kashida-space:0%;">¿Tiene antecedentes penales?</div>
+      </div>
+    </div>
+
+    <div class="d-flex align-items-center col-lg-12 mb-0">
+      <div class="col-lg-3">
+        <div style="margin-top: 1px; display: flex; align-items: center">
+          <div class="content-radio-u mr-4" style="font-size:smaller; -ms-text-kashida-space:0%;">
+            <input type="radio" name="status_contractor2" id="client_yes_contractor2" class="mark-u orange" [value]="0"
+              [checked]="check_input_value2 == 1" (click)="changeValue(1, 2)" [disabled]="profile_id == 192" />
+            <label for="client_yes_contractor2" class="radio-label-u orange mark-u">
+              SI
+            </label>
+          </div>
+          <div class="content-radio-u ml-4" style="font-size:smaller; -ms-text-kashida-space:0%;">
+            <input type="radio" name="status_contractor2" id="client_no_contractor2" class="mark-u orange" [value]="1"
+              [checked]="check_input_value2 == 0" (click)="changeValue(0, 2)" [disabled]="profile_id == 192" />
+            <label for="client_no_contractor2" class="radio-label-u orange mark-u">
+              NO
+            </label>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-lg-9 mb-0">
+        <div style="font-size:smaller; -ms-text-kashida-space:0%;">¿Tiene antecedentes judiciales?</div>
+      </div>
+    </div>
+    <div class="d-flex align-items-center col-lg-12 mb-0">
+      <div class="col-lg-3">
+        <div style="margin-top: 1px; display: flex; align-items: center">
+          <div class="content-radio-u mr-4" style="font-size:smaller; -ms-text-kashida-space:0%;">
+            <input type="radio" name="status_contractor3" id="client_yes_contractor3" class="mark-u orange" [value]="0"
+              [checked]="check_input_value3 == 1" (click)="changeValue(1, 3)" [disabled]="profile_id == 192" />
+            <label for="client_yes_contractor3" class="radio-label-u orange mark-u">
+              SI
+            </label>
+          </div>
+          <div class="content-radio-u ml-4" style="font-size:smaller; -ms-text-kashida-space:0%;">
+            <input type="radio" name="status_contractor3" id="client_no_contractor3" class="mark-u orange" [value]="1"
+              [checked]="check_input_value3 == 0" (click)="changeValue(0, 3)" [disabled]="profile_id == 192" />
+            <label for="client_no_contractor3" class="radio-label-u orange mark-u">
+              NO
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9 mb-0">
+        <div style="font-size:smaller; -ms-text-kashida-space:0%;">¿Tiene antecedentes policiales?</div>
+      </div>
+    </div>
+
+    <div class="d-flex align-items-center col-lg-12 mb-0" style="display: flex; align-items: flex-start !important;"> 
+      <div class="col-lg-3 mb-0">
+        <div style="margin-top: 0px; display: flex; align-items: center">
+          <div class="content-radio-u mr-4" style="font-size:smaller; -ms-text-kashida-space:0%;">
+            <input type="radio" name="status_contractor4" id="client_yes_contractor4" class="mark-u orange" [value]="0"
+              [checked]="check_input_value4 == 1" (click)="changeValue(1, 4)" [disabled]="profile_id == 192" />
+            <label for="client_yes_contractor4" class="radio-label-u orange mark-u">
+              SI
+            </label>
+          </div>
+          <div class="content-radio-u ml-4" style="font-size:smaller; -ms-text-kashida-space:0%;">
+            <input type="radio" name="status_contractor4" id="client_no_contractor4" class="mark-u orange" [value]="1"
+              [checked]="check_input_value4 == 0" (click)="changeValue(0, 4)" [disabled]="profile_id == 192" />
+            <label for="client_no_contractor4" class="radio-label-u orange mark-u">
+              NO
+            </label>
+          </div>
+        </div>
+      </div>  
+      <div class="col-lg-9 mb-0">
+        <div style="text-align: justify;font-size:smaller; -ms-text-kashida-space:0%;" >
+          ¿Los recursos que componen mi patrimonio no provienen de lavado de
+          activos, financiación del terrorismo y/o actividades vinculadas, de
+          igual manera, los recursos que se recibirán mientras dure el presente
+          contrato no serán destinados a ninguna de las actividades antes
+          descritas?
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex align-items-center col-lg-12 mb-0 mt-2" style="display: flex; align-items: flex-start !important;">
+      <div class="col-lg-3 mb-0">
+        <div style="margin-top: 0px; display: flex; align-items: center">
+          <div class="content-radio-u mr-4" style="font-size:smaller; -ms-text-kashida-space:0%;">
+            <input type="radio" name="status_contractor5" id="client_yes_contractor5" class="mark-u orange" [value]="0"
+              [checked]="check_input_value5 == 1" (click)="changeValue(1, 5)" [disabled]="profile_id == 192" />
+            <label for="client_yes_contractor5" class="radio-label-u orange mark-u">
+              SI
+            </label>
+          </div>
+          <div class="content-radio-u ml-4" style="font-size:smaller; -ms-text-kashida-space:0%;">
+            <input type="radio" name="status_contractor5" id="client_no_contractor5" class="mark-u orange" [value]="1"
+              [checked]="check_input_value5 == 0" (click)="changeValue(0, 5)" [disabled]="profile_id == 192" />
+            <label for="client_no_contractor5" class="radio-label-u orange mark-u">
+              NO
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9 mb-0">
+        <div style="text-align: justify;font-size:smaller; -ms-text-kashida-space:0%;">
+          __ me encuentro involucrado(a) y __ he sido vinculado(a) con
+          anterioridad por las autoridades nacionales o internacionales a temas
+          relacionados en materia de lavado de activos y financiamiento del
+          terrorismo y delito precedentes; además, __ me encuentro incluido(a)
+          en alguna de las listas sancionadoras y/o terroristas o relacionadas
+          al lavado de activos y financiamiento del terrorismo administradas por
+          cualquier autoridad nacional o extranjera.
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-12 mb-0">
+      <input type="hidden" id="postId" name="postId" value="" />
+    </div>    
+    <div class="d-flex justify-content-between align-items-center col-lg-12 mt-3 px-0">
+      <form-button label="Guardar" btnClass="btn-primary-VI" (click)="saveDeclaration()" *ngIf="profile_id == 191"></form-button>
+      <form-button label="Cerrar" btnClass="btn-primary-VI" (click)="reference.close()"></form-button>
+    </div>
+
+  </div>

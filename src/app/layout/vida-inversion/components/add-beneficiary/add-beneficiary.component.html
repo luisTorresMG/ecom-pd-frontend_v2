@@ -1,0 +1,164 @@
+<div class="container-title-modal"
+     style="position: relative;">
+    <h3 class="p-0 m-0">Datos del beneficiario</h3>
+    <i class="fa fa-close"
+       style="position: absolute; top: 25%; right: 2%; cursor: pointer; color: #fff;"
+       aria-hidden="true"
+       (click)="reference.close()"></i>
+</div>
+<div class="p-3">
+    <div class="row mx-4">
+
+        <div class="col-lg-2 my-0">
+            <form-input-select text_label="DOC."
+                               [(value)]="data_beneficiary.type_document"
+                               [service]="clientInformationService"
+                               [firstSelect]="true"
+                               method="getDocumentTypeList"
+                               [updateModelOnChange]="true"
+                               (onSelect)="changeDocumentType()"
+                               [params]="COD_PROD_PROFILE"
+                               fieldCodigo="Id"
+                               fieldValor="Name"
+                               [disabled]="data_beneficiary.type_document_disabled"
+                               ></form-input-select>
+        </div>
+
+        <div class="col-lg-4 my-0">
+            <form-input-text text_label="NÚMERO DE DOCUMENTO"
+                             [onlyInput]="true"
+                             [(value)]="data_beneficiary.document_number"
+                             (onKeyenter)="clickBuscar()"
+                             [patternPrevent]="CONSTANTS.REGEX[data_beneficiary.type_document?.Id]"
+                             (valueChange)="changeDocumentNumber($event)"
+                             [disabled]="data_beneficiary.document_number_disabled"
+                             ></form-input-text>
+        </div>
+
+        <div class="col-lg-6 my-0">
+            <form-input-select text_label="NACIONALIDAD"
+                               [service]="clientInformationService"
+                               method="getNationalityList"
+                               [params]="CONSTANTS.WITHOUT_PARAMS"
+                               fieldCodigo="NNATIONALITY"
+                               fieldValor="SDESCRIPT"
+                               [firstSelect]="true"
+                               [(value)]="data_beneficiary.nationality"
+                               [updateModelOnChange]="true"
+                             [disabled]="data_beneficiary.nationality_disabled"
+                             [large]="false"
+                               ></form-input-select>
+        </div>
+
+
+        <div class="col-lg-6 my-0">
+            <form-input-text text_label="NOMBRES"
+                             [onlyInput]="true"
+                             maxCaracter="19"
+                             [patternPrevent]="CONSTANTS.REGEX.LETRAS"
+                             [(value)]="data_beneficiary.names"
+                             [disabled]="data_beneficiary.names_disabled"
+                             ></form-input-text>
+        </div>
+
+        <div class="col-lg-6 my-0">
+            <form-input-text text_label="APELLIDO PATERNO"
+                             maxCaracter="19"
+                             [patternPrevent]="CONSTANTS.REGEX.LETRAS"
+                             [(value)]="data_beneficiary.last_name"
+                             [onlyInput]="true"
+                             [disabled]="data_beneficiary.last_name_disabled"
+                             ></form-input-text>
+        </div>
+
+        <div class="col-lg-6 my-0">
+            <form-input-text text_label="APELLIDO MATERNO"
+                             maxCaracter="19"
+                             [patternPrevent]="CONSTANTS.REGEX.LETRAS"
+                             [(value)]="data_beneficiary.last_name2"
+                             [onlyInput]="true"
+                             [disabled]="data_beneficiary.last_name2_disabled"
+                             ></form-input-text>
+        </div>
+
+
+        <div class="col-lg-6 my-0">
+            <form-input-date text_label="FECHA NACIMIENTO"
+                             [(value)]="data_beneficiary.birthday_date"
+                             [disabled]="data_beneficiary.birthday_date_disabled"
+                             ></form-input-date>
+        </div>
+
+
+        <div class="col-lg-6 mt-0 mb-2">
+            <form-input-select text_label="SEXO"
+                               [service]="clientInformationService"
+                               method="getGenderList"
+                               [params]="CONSTANTS.WITHOUT_PARAMS"
+                               fieldCodigo="SSEXCLIEN"
+                               fieldValor="SDESCRIPT"
+                               [firstSelect]="true"
+                               [(value)]="data_beneficiary.gender"
+                               [updateModelOnChange]="true"
+                               [disabled]="data_beneficiary.gender_disabled"
+                               ></form-input-select>
+        </div>
+
+        <div class="col-lg-6 my-0 mb-2">
+            <form-input-select text_label="VÍNCULO"
+                               [large]="false"
+                               [service]="quotationService"
+                               method="getRelationBenefeciaries"
+                               [params]="CONSTANTS.WITHOUT_PARAMS"
+                               fieldCodigo="COD_ELEMENTO"
+                               fieldValor="GLS_ELEMENTO"
+                               [firstSelect]="true"
+                               [(value)]="data_beneficiary.relation"
+                               [updateModelOnChange]="true"
+                               [disabled]="data_beneficiary.relation_disabled"
+                              ></form-input-select>
+                               
+        </div>
+
+        <div class="col-lg-6 my-0">
+            <form-input-text text_label="ASIGNACIÓN (%)"
+                             [(value)]="data_beneficiary.assignment"
+                             [patternPrevent]="CONSTANTS.REGEX.PORCENTAJE"
+                             maxCaracter="5"
+                             [onlyInput]="true"></form-input-text>
+            <!-- [patternPrevent]="CONSTANTS.REGEX.PORCENTAJE" -->
+
+        </div>
+
+        <div class="col-lg-6 my-0">
+            <form-input-text text_label="CORREO ELECTRÓNICO"
+                             [(value)]="data_beneficiary.email"
+                             [disabled]="data_beneficiary.email_disabled"
+                             ></form-input-text>
+        </div>
+
+        <div class="col-lg-6 my-0">
+            <form-input-text text_label="CELULAR"
+                             [(value)]="data_beneficiary.phone"
+                             maxCaracter="9"
+                             [patternPrevent]="CONSTANTS.REGEX.NUMBER"
+                             [disabled]="data_beneficiary.phone_disabled"
+                             ></form-input-text>
+        </div>
+
+    </div>
+
+    <div style="display: flex;justify-content: center;">
+        <form-button label="Agregar"
+                     btnClass="btn-primary-VI text-nowrap"
+                     (click)="addBenefeciary()"></form-button>
+    </div>
+
+    <div [hidden]="!isLoading"
+        class="loadingScreen">
+        <div style="display: flex; height: 100%; width: 100%">
+            <i style="margin: auto; font-size: 50px"
+            class="fa fa-spinner fa-spin"></i>
+        </div>
+    </div>
+</div>

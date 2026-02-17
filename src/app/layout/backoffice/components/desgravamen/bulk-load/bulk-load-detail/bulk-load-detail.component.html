@@ -1,0 +1,397 @@
+<main class="content">
+  <!-- *Navegación -->
+  <section class="content__navigation df aic jcsb">
+    <app-breadcrumb>
+      <a>
+        <i class="fa fa-home"
+           aria-hidden="true"></i>
+        Desgravamen
+      </a>
+      <a routerLink="/backoffice/desgravamen/carga-masiva/bandeja">
+        Bandeja de carga masiva
+      </a>
+      <a> Detalle ID {{ processId }} </a>
+    </app-breadcrumb>
+    <a
+      class="button-default secondary no-outline button-back"
+      routerLink="/backoffice/desgravamen/carga-masiva/bandeja"
+    >
+      <i class="fa fa-angle-left"
+         aria-hidden="true"></i>
+      Regresar
+    </a>
+  </section>
+
+  <!-- *Cabecera -->
+  <section class="content__header">
+    <h1 class="title">
+      Detalle
+      <div>
+        <span> {{ detail$.contratante }} </span>|
+        <span> {{ detail$.canalVenta }} </span>|
+        <span> {{ detail$.producto }} </span>|
+        <span> {{ detail$.numeroPoliza }} </span>|
+        <span> {{ detail$.transaccion }} </span>|
+        <span> {{ detail$.fechaCreacion | date : "dd/MM/yyyy" }} </span>
+      </div>
+    </h1>
+    <button
+      class="button-default orange"
+      [disabled]="
+        tabSelected == 1
+          ? !errorsRead$.length
+          : tabSelected == 2
+          ? !errorsValidate$.length
+          : !errorsMigrate$.length
+      "
+      (click)="getUrlErrorsByPhase()"
+      *ngIf="detail$.fase != '0' && detail$.fase != '11'"
+    >
+      <i class="fa fa-download"
+         aria-hidden="true"></i>
+      Descargar
+    </button>
+  </section>
+
+  <!-- *Tabs -->
+  <section class="section__tabs">
+    <button [class.active]="tabSelected == 1"
+            (click)="tab = 1">Leer
+    </button>
+    <button [class.active]="tabSelected == 2"
+            (click)="tab = 2">Validar
+    </button>
+    <button [class.active]="tabSelected == 3"
+            (click)="tab = 3">Emitir
+    </button>
+    <button [class.active]="tabSelected == 4"
+            (click)="tab = 4">Facturar
+    </button>
+  </section>
+
+  <section class="section__tables">
+    <div class="content-table">
+      <span class="table-type">
+        <i class="fa fa-file-text-o"
+           aria-hidden="true"></i>
+        Resumen
+      </span>
+      <table class="table-u">
+        <thead>
+        <tr>
+          <th>Transacción</th>
+          <th>Cargado</th>
+          <th>Errores</th>
+          <th>% Error</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngIf="tabSelected == 1">
+          <tr>
+            <td>{{ detail$.transaccion }}</td>
+            <td>
+              {{
+              summaryRead$.numeroExitos + summaryRead$.numeroErrores || 0
+              }}
+            </td>
+            <td>{{ summaryRead$.numeroErrores || 0 }}</td>
+            <td>{{ summaryRead$.tasaError || 0 }} %</td>
+          </tr>
+        </ng-container>
+        <ng-container *ngIf="tabSelected == 2">
+          <tr>
+            <td>{{ detail$.transaccion }}</td>
+            <td>
+              {{
+              summaryValidate$.numeroExitos +
+              summaryValidate$.numeroErrores || 0
+              }}
+            </td>
+            <td>{{ summaryValidate$.numeroErrores || 0 }}</td>
+            <td>{{ summaryValidate$.tasaError || 0 }} %</td>
+          </tr>
+        </ng-container>
+        <ng-container *ngIf="tabSelected == 3">
+          <tr>
+            <td>{{ detail$.transaccion }}</td>
+            <td>
+              {{
+              summaryMigrate$.numeroExitos +
+              summaryMigrate$.numeroErrores || 0
+              }}
+            </td>
+            <td>{{ summaryMigrate$.numeroErrores || 0 }}</td>
+            <td>{{ summaryMigrate$.tasaError || 0 }} %</td>
+          </tr>
+        </ng-container>
+        <ng-container *ngIf="tabSelected == 4">
+          <tr>
+            <td>{{ detail$.transaccion }}</td>
+            <td>
+              {{
+              summaryBilling$.numeroExitos +
+              summaryBilling$.numeroErrores || 0
+              }}
+            </td>
+            <td>{{ summaryBilling$.numeroErrores || 0 }}</td>
+            <td>{{ summaryBilling$.tasaError || 0 }} %</td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-container *ngIf="tabSelected == 2">
+      <div class="content-table">
+        <span class="table-type">
+          <i class="fa fa-file-text-o"
+             aria-hidden="true"></i>
+          Resumen extraprima
+        </span>
+        <table class="table-u">
+          <thead>
+          <tr>
+            <th>Nombre y apellido</th>
+            <th>Tipo de cliente</th>
+            <th>Tipo de documento</th>
+            <th># Documento</th>
+            <th>Monto del Préstamo</th>
+            <th>Cargo</th>
+            <th>Tasa comercial - Póliza</th>
+            <th>Motivo de recargo</th>
+            <th>Tasa con recargo</th>
+          </tr>
+          </thead>
+          <tbody>
+          <ng-container *ngIf="!extraPremium$?.length">
+            <tr>
+              <td colspan="9">
+                <span>No se encontraron resultados</span>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="extraPremium$?.length">
+            <tr *ngFor="let obj of extraPremium$">
+              <td>{{ obj.nombreCompleto }}</td>
+              <td>{{ obj.tipoCliente == 2 ? "Titular" : "Conyugue" }}</td>
+              <td>
+                {{
+                obj.tipoDocumento == 1
+                  ? "RUC"
+                  : obj.tipoDocumento == 2
+                    ? "DNI"
+                    : obj.tipoDocumento == 4
+                      ? "CE"
+                      : "-"
+                }}
+              </td>
+              <td>{{ obj.numeroDocumento }}</td>
+              <td>S/{{ obj.montoPrestamo | number : "1.2-2" }}</td>
+              <td>{{ obj.recargo }}%</td>
+              <td>{{ obj.tarifaComercial }}%</td>
+              <td>{{ obj.motivoRecargo }}</td>
+              <td>{{ obj.tasaRecargo }}%</td>
+            </tr>
+          </ng-container>
+          </tbody>
+        </table>
+      </div>
+      <pagination-controls
+        id="paginate-extrapremium"
+        [autoHide]="true"
+        (pageChange)="currentPageExtraPremium = $event"
+      ></pagination-controls>
+    </ng-container>
+
+    <div class="content-table">
+      <span class="table-type">
+        <i class="fa fa-times-circle-o"
+           aria-hidden="true"></i>
+        Reporte de errores
+      </span>
+      <table class="table-u">
+        <thead>
+        <tr>
+          <th>Transacción</th>
+          <th>Fila</th>
+          <th>Crédito</th>
+          <th>Asegurado</th>
+          <th>Atributo</th>
+          <th>Regla</th>
+          <th>Tipo de error</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngIf="tabSelected == 1">
+          <ng-container *ngIf="!errorsRead$.length">
+            <tr class="no-hover">
+              <td colspan="7">
+                <span>No se encontraron errores</span>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="errorsRead$.length">
+            <tr
+              *ngFor="
+                  let obj of errorsRead$
+                    | paginate
+                      : {
+                          id: 'paginate-errors1',
+                          currentPage: currentPageErrors,
+                          totalItems: errorsRead$.length,
+                          itemsPerPage: 10
+                        }
+                "
+            >
+              <td>{{ obj.transaction }}</td>
+              <td>{{ obj.registry }}</td>
+              <td>{{ obj.credit }}</td>
+              <td>
+                <div class="insurance">
+                  <span>{{ obj.client }}</span>
+                  <small>{{ obj.idDocument }}</small>
+                </div>
+              </td>
+              <td>{{ obj.attribute }}</td>
+              <td>{{ obj.function }}</td>
+              <td>{{ obj.error }}</td>
+            </tr>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="tabSelected == 2">
+          <ng-container *ngIf="!errorsValidate$.length">
+            <tr class="no-hover">
+              <td colspan="7">
+                <span>No se encontraron errores</span>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="errorsValidate$.length">
+            <tr
+              *ngFor="
+                  let obj of errorsValidate$
+                    | paginate
+                      : {
+                          id: 'paginate-errors2',
+                          currentPage: currentPageErrors,
+                          totalItems: errorsValidate$.length,
+                          itemsPerPage: 10
+                        }
+                "
+            >
+              <td>{{ obj.transaction }}</td>
+              <td>{{ obj.registry }}</td>
+              <td>{{ obj.credit }}</td>
+              <td>
+                <div class="insurance">
+                  <span>{{ obj.client }}</span>
+                  <small>{{ obj.idDocument }}</small>
+                </div>
+              </td>
+              <td>{{ obj.attribute }}</td>
+              <td>{{ obj.function }}</td>
+              <td>{{ obj.error }}</td>
+            </tr>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="tabSelected == 3">
+          <ng-container *ngIf="!errorsMigrate$.length">
+            <tr class="no-hover">
+              <td colspan="7">
+                <span>No se encontraron errores</span>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="errorsMigrate$.length">
+            <tr
+              *ngFor="
+                  let obj of errorsMigrate$
+                    | paginate
+                      : {
+                          id: 'paginate-errors3',
+                          currentPage: currentPageErrors,
+                          totalItems: errorsMigrate$.length,
+                          itemsPerPage: 10
+                        }
+                "
+            >
+              <td>{{ obj.transaction }}</td>
+              <td>{{ obj.registry }}</td>
+              <td>{{ obj.credit }}</td>
+              <td>
+                <div class="insurance">
+                  <span>{{ obj.client }}</span>
+                  <small>{{ obj.idDocument }}</small>
+                </div>
+              </td>
+              <td>{{ obj.attribute }}</td>
+              <td>{{ obj.function }}</td>
+              <td>{{ obj.error }}</td>
+            </tr>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="tabSelected == 4">
+          <ng-container *ngIf="!errorsBilling$.length">
+            <tr class="no-hover">
+              <td colspan="7">
+                <span>No se encontraron errores</span>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-container *ngIf="errorsBilling$.length">
+            <tr
+              *ngFor="
+                  let obj of errorsBilling$
+                    | paginate
+                      : {
+                          id: 'paginate-errors4',
+                          currentPage: currentPageErrors,
+                          totalItems: errorsBilling$.length,
+                          itemsPerPage: 10
+                        }
+                "
+            >
+              <td>{{ obj.transaction }}</td>
+              <td>{{ obj.registry }}</td>
+              <td>{{ obj.credit }}</td>
+              <td>
+                <div class="insurance">
+                  <span>{{ obj.client }}</span>
+                  <small>{{ obj.idDocument }}</small>
+                </div>
+              </td>
+              <td>{{ obj.attribute }}</td>
+              <td>{{ obj.function }}</td>
+              <td>{{ obj.error }}</td>
+            </tr>
+          </ng-container>
+        </ng-container>
+        </tbody>
+      </table>
+    </div>
+    <pagination-controls
+      id="paginate-errors1"
+      [autoHide]="true"
+      (pageChange)="currentPageErrors = $event"
+      *ngIf="tabSelected == 1"
+    ></pagination-controls>
+    <pagination-controls
+      id="paginate-errors2"
+      [autoHide]="true"
+      (pageChange)="currentPageErrors = $event"
+      *ngIf="tabSelected == 2"
+    ></pagination-controls>
+    <pagination-controls
+      id="paginate-errors3"
+      [autoHide]="true"
+      (pageChange)="currentPageErrors = $event"
+      *ngIf="tabSelected == 3"
+    ></pagination-controls>
+    <pagination-controls
+      id="paginate-errors4"
+      [autoHide]="true"
+      (pageChange)="currentPageErrors = $event"
+      *ngIf="tabSelected == 4"
+    ></pagination-controls>
+  </section>
+</main>

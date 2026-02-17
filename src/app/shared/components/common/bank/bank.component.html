@@ -1,0 +1,15 @@
+<select id="bankSelect" (change)="onSelectBank($event)">
+  <option value="0" selected>Seleccionar</option>
+  <option *ngFor="let bank of banks" value="{{ bank.nidbank }}">{{
+    bank.sdescription
+  }}</option>
+</select>
+
+<select id="AccountBankSelect" (change)="onSelectAccountBank($event)">
+  <option value="0" selected>Seleccionar</option>
+  <option
+    *ngFor="let accountbank of ListAccountBank"
+    value="{{ accountbank.nidaccountbank }}"
+    >{{ accountbank.sdescript }}</option
+  >
+</select>

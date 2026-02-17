@@ -1,0 +1,220 @@
+.max-width-to-center {
+  max-width: 520px;
+  margin: auto;
+}
+.back-step {
+  font-size: 18px;
+  color: #2b0d61 !important;
+  text-decoration: underline !important;
+}
+.back-step i {
+  font-size: 25px;
+  margin-right: 0.2rem !important;
+}
+.title-step {
+  font-size: 23px;
+  margin-bottom: 2rem;
+  color: #2b0d61;
+  margin-top: 0.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+.content-input {
+  position: relative;
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+.in {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+select.in,
+.in-with-title-desactive {
+  padding: 8px 15px;
+}
+.in-with-title-active {
+  padding: 15px 15px 3px 15px;
+}
+.lbl-in-title-desactive {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  font-size: 14px;
+  transition: 0.2s;
+  -webkit-transition: 0.2s;
+  -moz-transition: 0.2s;
+  -ms-transition: 0.2s;
+  -o-transition: 0.2s;
+}
+.lbl-in-title-active {
+  position: absolute;
+  top: 6px;
+  left: 15px;
+  font-size: 11px;
+  transition: 0.2s;
+  -webkit-transition: 0.2s;
+  -moz-transition: 0.2s;
+  -ms-transition: 0.2s;
+  -o-transition: 0.2s;
+}
+.container-inputs {
+  grid-template-columns: 1fr;
+}
+.content-dbl-input {
+  grid-template-columns: 0.5fr 1fr;
+}
+.container-inputs,
+.content-dbl-input {
+  display: grid;
+  grid-gap: 0.5rem;
+}
+.container-inputs:first-child {
+  padding-right: 0.75rem;
+  padding-left: 0;
+}
+.container-inputs:last-child {
+  padding-left: 0.75rem;
+  padding-right: 0;
+}
+.btn-submit {
+  min-width: 189px;
+  font-size: 22px;
+  font-weight: bold;
+  height: 50px;
+  border: 1px solid #ed6e00;
+  background-color: #ed6e00;
+  color: #fff;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+}
+.btn-submit:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+.chk-style {
+  user-select: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 13px;
+}
+.chk-style::before {
+  content: "";
+  background-color: #fff;
+  display: inline-flex;
+  margin-right: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  height: 18px;
+  width: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+}
+.chk:checked + .chk-style::before {
+  content: "✔";
+  background-color: #ed6e00;
+  color: #fff;
+  border: 1px solid #ed6e00;
+  font-size: 12px;
+}
+.link-chk {
+  text-decoration: underline;
+  color: #000 !important;
+}
+.content-inputs-date {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 0.5rem;
+}
+/* BACKGROUND */
+.bc-1 {
+  background-image: url("assets/vidaindividual/resources/Elementos-09.png");
+  position: absolute;
+  left: 0%;
+  top: 263px;
+  width: 25%;
+  max-width: 500px;
+  height: 69%;
+  max-height: 400px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.bc-1::before {
+  display: block;
+  content: "";
+  width: 244%;
+  max-width: 1300px;
+  height: 189%;
+  max-height: 800px;
+  background: #f4f2f6;
+  position: absolute;
+  top: -526px;
+  left: -450px;
+  z-index: -1;
+  border-radius: 210px;
+  -ms-transform: rotate(-55deg);
+  transform: rotate(-55deg);
+  -webkit-transform: rotate(-55deg);
+  -moz-transform: rotate(-55deg);
+  -o-transform: rotate(-55deg);
+}
+@media (max-width: 1137px) {
+  .bc-1 {
+    display: none;
+    background-image: none;
+  }
+  .bc-1::before {
+    display: none;
+  }
+}
+/* END BACKGROUND */
+@media (max-width: 992px) {
+  .max-width-to-center {
+    padding: 2rem;
+  }
+  .container-inputs {
+    padding: 0 !important;
+  }
+  .content-country {
+    margin-top: 0.5rem;
+  }
+}
+.btn-back,
+.btn-submit {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  height: 40px;
+  width: fit-content;
+  min-width: 125px;
+  max-width: 125px;
+  font-weight: normal;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+.btn-back {
+  background-color: #fff;
+  color: #ed6e00;
+  margin-right: 1rem;
+}
+.btn-submit {
+  background-color: #ed6e00;
+  color: #fff;
+}

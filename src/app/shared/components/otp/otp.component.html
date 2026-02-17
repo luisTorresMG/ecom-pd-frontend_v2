@@ -1,0 +1,60 @@
+<ng-template #modalMethods>
+  <div class="content-modal-u">
+    <div class="modal-u mam">
+      <div class="modal__header">
+        <button class="modal__header--close" (click)="closeModal(true)">
+          &times;
+        </button>
+      </div>
+      <div class="modal__body">
+        <h6 class="mam__subtitle">Proceso de validación</h6>
+        <p class="mam__desc">¿Que tipo de autenticación deseas hacer?</p>
+        <div class="mam__actions">
+          <button
+            class="btn-auth-method"
+            (click)="selectMethod(1)"
+            *ngIf="showMethod(1)"
+          >
+            <img
+              class="face-ia"
+              [src]="'assets/vidaindividual/biometric/face-ia.png'"
+            />
+            Biométrica
+          </button>
+          <button
+            class="btn-auth-method"
+            (click)="selectMethod(2)"
+            *ngIf="showMethod(2)"
+          >
+            <i class="fa fa-comment" aria-hidden="true"></i>
+            Mensaje de texto
+          </button>
+          <button
+            class="btn-auth-method"
+            (click)="selectMethod(3)"
+            *ngIf="showMethod(3)"
+          >
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+            Correo electrónico
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalBiometric>
+  <protecta-biometric-step1
+    [data]="data"
+    (result)="resultEvent($event)"
+    (close)="closeModal($event)"
+  ></protecta-biometric-step1>
+</ng-template>
+
+<ng-template #modalOtp>
+  <protecta-otp-token
+    [data]="data"
+    (result)="resultEvent($event)"
+    (close)="closeModal($event)"
+  ></protecta-otp-token>
+</ng-template>

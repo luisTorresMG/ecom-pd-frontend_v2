@@ -1,0 +1,184 @@
+<div class="content">
+  <h2 class="content__title">Agregar datos del beneficiario</h2>
+  <form class="form"
+        [formGroup]="form"
+        (ngSubmit)="submit()">
+    <div class="form__item">
+      <h4 class="form__item--title">
+        Datos personales
+      </h4>
+      <div class="form__item--dbl">
+        <select class="input-u"
+                formControlName="tipoDocumento">
+          <option value="2">DNI</option>
+          <option value="4">CE</option>
+        </select>
+        <label for="numeroDocumento"
+               class="content__input-u placeholder"
+               [class.placeholder-active]="f['numeroDocumento'].value"
+               aria-placeholder="Número de documento">
+          <input type="text"
+                 class="input-u"
+                 [class.placeholder-active]="f['numeroDocumento'].value"
+                 formControlName="numeroDocumento">
+        </label>
+      </div>
+      <label for="apellidoPaterno"
+             class="content__input-u placeholder"
+             [class.placeholder-active]="f['apellidoPaterno'].value"
+             [class.no-editable]="f['apellidoPaterno'].disabled"
+             aria-placeholder="Apellido paterno">
+        <input type="text"
+               class="input-u"
+               [class.placeholder-active]="f['apellidoPaterno'].value"
+               formControlName="apellidoPaterno">
+      </label>
+      <label for="apellidoMaterno"
+             class="content__input-u placeholder"
+             [class.placeholder-active]="f['apellidoMaterno'].value"
+             [class.no-editable]="f['apellidoMaterno'].disabled"
+             aria-placeholder="Apellido materno">
+        <input type="text"
+               class="input-u"
+               [class.placeholder-active]="f['apellidoMaterno'].value"
+               formControlName="apellidoMaterno">
+      </label>
+      <label for="nombres"
+             class="content__input-u placeholder"
+             [class.placeholder-active]="f['nombres'].value"
+             [class.no-editable]="f['nombres'].disabled"
+             aria-placeholder="Nombres">
+        <input type="text"
+               class="input-u"
+               [class.placeholder-active]="f['nombres'].value"
+               formControlName="nombres">
+      </label>
+      <label for="sexo"
+             class="content__input-u placeholder"
+             [class.placeholder-active]="f['sexo'].value"
+             [class.no-editable]="f['sexo'].disabled"
+             aria-placeholder="Género">
+        <select class="input-u"
+                [class.placeholder-active]="f['sexo'].value"
+                formControlName="sexo">
+          <option value="2">Masculino</option>
+          <option value="1">Femenino</option>
+          <option value="3">No informado</option>
+        </select>
+      </label>
+      <label for="fechaNacimiento"
+             class="content__input-u placeholder"
+             [class.placeholder-active]="f['fechaNacimiento'].value"
+             [class.no-editable]="f['fechaNacimiento'].disabled"
+             aria-placeholder="Fecha de nacimiento">
+        <input type="text"
+               class="input-u"
+               [class.placeholder-active]="f['fechaNacimiento'].value"
+               formControlName="fechaNacimiento">
+        <i class="fa fa-calendar"
+           aria-hidden="true"></i>
+      </label>
+      <label for="nacionalidad"
+             class="content__input-u placeholder"
+             [class.placeholder-active]="f['nacionalidad'].value"
+             [class.no-editable]="f['nacionalidad'].disabled"
+             aria-placeholder="Nacionalidad">
+        <select class="input-u"
+                [class.placeholder-active]="f['nacionalidad'].value"
+                formControlName="nacionalidad">
+          <option *ngFor="let data of nacionalidades$"
+                  [value]="data.id">{{ data.descripcion }}</option>
+        </select>
+      </label>
+    </div>
+    <div class="form__item">
+      <h4 class="form__item--title">Lugar de residencia</h4>
+      <label for="departamento"
+             class="content__input-u placeholder"
+             [class.placeholder-active]="f['departamento'].value"
+             [class.no-editable]="f['departamento'].disabled"
+             aria-placeholder="Departamento">
+        <select class="input-u"
+                [class.placeholder-active]="f['departamento'].value"
+                formControlName="departamento">
+          <option *ngFor="let data of departamentos$"
+                  [value]="data.id">{{ data.descripcion }}</option>
+        </select>
+      </label>
+      <label for="provincia"
+             class="content__input-u placeholder"
+             [class.placeholder-active]="f['provincia'].value"
+             [class.no-editable]="f['provincia'].disabled"
+             aria-placeholder="Provincia">
+        <select class="input-u"
+                [class.placeholder-active]="f['provincia'].value"
+                formControlName="provincia">
+          <option *ngFor="let data of provincias$"
+                  [value]="data.idProvincia">{{ data.provincia }}</option>
+        </select>
+      </label>
+      <label for="distrito"
+             class="content__input-u placeholder"
+             [class.placeholder-active]="f['distrito'].value"
+             [class.no-editable]="f['distrito'].disabled"
+             aria-placeholder="Distrito">
+        <select class="input-u"
+                [class.placeholder-active]="f['distrito'].value"
+                formControlName="distrito">
+          <option *ngFor="let data of distritos$"
+                  [value]="data.idDistritos">{{ data.distrito }}</option>
+        </select>
+      </label>
+      <label for="direccion"
+             class="content__input-u placeholder"
+             [class.placeholder-active]="f['direccion'].value"
+             [class.no-editable]="f['direccion'].disabled"
+             aria-placeholder="Direccion">
+        <input type="text"
+               class="input-u"
+               [class.placeholder-active]="f['direccion'].value"
+               formControlName="direccion">
+      </label>
+    </div>
+    <div class="form__item">
+      <h4 class="form__item--title">Porcentaje de participación</h4>
+      <label for="porcentajeParticipacion"
+             class="content__input-u placeholder"
+             [class.placeholder-active]="f['porcentajeParticipacion'].value"
+             [class.no-editable]="f['porcentajeParticipacion'].disabled"
+             aria-placeholder="Porcentaje participacion(%)">
+        <input type="text"
+               class="input-u"
+               [class.placeholder-active]="f['porcentajeParticipacion'].value"
+               formControlName="porcentajeParticipacion">
+      </label>
+    </div>
+    <div class="form__item">
+      <h4 class="form__item--title">Datos de contacto</h4>
+      <label for="correo"
+             class="content__input-u placeholder"
+             [class.placeholder-active]="f['correo'].value"
+             [class.no-editable]="f['correo'].disabled"
+             aria-placeholder="Correo electrónico">
+        <input type="text"
+               class="input-u"
+               [class.placeholder-active]="f['correo'].value"
+               formControlName="correo">
+      </label>
+      <label for="numeroCelular"
+             class="content__input-u placeholder"
+             [class.placeholder-active]="f['numeroCelular'].value"
+             [class.no-editable]="f['numeroCelular'].disabled"
+             aria-placeholder="Número de celular">
+        <input type="text"
+               class="input-u"
+               [class.placeholder-active]="f['numeroCelular'].value"
+               formControlName="numeroCelular">
+      </label>
+    </div>
+  </form>
+  <div class="content__footer">
+    <button class="button-default">Cancelar</button>
+    <button class="button-primary">Agregar</button>
+  </div>
+</div>

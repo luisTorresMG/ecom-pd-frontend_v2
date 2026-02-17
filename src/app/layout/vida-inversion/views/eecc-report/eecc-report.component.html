@@ -1,0 +1,113 @@
+<div class="row">
+    <div class="col-lg-3">
+        <app-nav-menuprod></app-nav-menuprod>
+    </div>
+    <div class="col-lg-9">
+        <div class="header-content">
+            <div class="containt-item">
+                <div class="header-item">
+                    <span class="title">CARGA DE INFORMACIÓN PARA EECC</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-3">
+                <span>MES:</span>
+                <select class="form-control" [(ngModel)]="mes">
+                    <option value="">SELECCIONE</option>
+                    <!-- <option *ngFor="let x of meses" value="{{ x.DESC_MONTH }}">{{ x.DESC_MONTH }}</option> -->
+                    <option *ngFor="let x of meses" value="{{x.NID_MONTH}}">{{ x.DESC_MONTH }}</option>
+                </select>
+            </div>
+            <div class="col-sm-3">
+                <span>AÑO:</span>
+                <select class="form-control" [(ngModel)]="anio">
+                    <option value="">SELECCIONE</option>
+                    <option *ngFor="let x of anios" value="{{ x.NID_YEAR }}">{{ x.NID_YEAR }}</option>
+                </select>
+            </div>
+            <div class="col-sm-3">
+                <span>ARCHIVO:</span>
+                <div class="search-container">
+                    <input class="form-control search-input" type="text" readonly [(ngModel)]="archivoNombre" />
+                    <button class="search-button" (click)="fileInput.click()">
+                        <i class="fa fa-paperclip"></i>
+                    </button>
+                    <input hidden #fileInput type="file" (change)="onFileChange($event)" accept=".xlsx">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <span>&nbsp;</span>
+                <button class="full-color" (click)="upload()">
+                    <span>CARGAR</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="row m-2">
+                <div class="grid form-group">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr class="grid-title">
+                                    <td class="grid-title-item text-center">ID</td>
+                                    <td class="grid-title-item text-center">NOMBRE ARCHIVO</td>
+                                    <td class="grid-title-item text-center">PERIODO</td>
+                                    <td class="grid-title-item text-center">USUARIO</td>
+                                    <td class="grid-title-item text-center">FECHA DE PROCESO</td>
+                                </tr>
+                            </thead>
+                            <ng-container *ngIf="listToShow == null || listToShow.length == 0; then hideGrid else showGrid"></ng-container>
+                        </table>
+                        <ng-template #hideGrid>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center" colspan="5">No se encontraron registros.</td>
+                                </tr>
+                            </tbody>
+                        </ng-template>
+                        <ng-template #showGrid>
+                            <tbody *ngFor="let item of listToShow">
+                                <tr>
+                                    <td class="data-table-tr-td text-center">
+                                        {{ item.NID_RECORD }}
+                                    </td>
+                                    <td class="data-table-tr-td text-center">
+                                        {{ item.DESC_RECORD }}
+                                    </td>
+                                    <td class="data-table-tr-td text-center">
+                                        {{ item.DESC_MONTH }} - {{ item.NID_YEAR }}
+                                    </td>
+                                    <td class="data-table-tr-td text-center">
+                                        {{ item.SUSERCODE }}
+                                    </td>
+                                    <td class="data-table-tr-td text-center">
+                                        {{ item.DPROCDATE }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </ng-template>
+                    </div>
+                </div>
+                <div *ngIf="listToShow != null && listToShow.length > 0" class="row" style="display: flex">
+                    <div class="col-sm-12">
+                        <ngb-pagination [(page)]="currentPage" [pageSize]="itemsPerPage" [collectionSize]="totalItems" [maxSize]="maxSize" (pageChange)="pageChanged(currentPage)">
+                            <ng-template ngbPaginationPrevious>ANTERIOR</ng-template>
+                            <ng-template ngbPaginationNext>SIGUIENTE</ng-template>
+                        </ngb-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div [hidden]="!isLoading"
+     class="loadingScreen">
+    <div style="display: flex; height: 100%; width: 100%">
+        <i style="margin: auto; font-size: 50px"
+           class="fa fa-spinner fa-spin"></i>
+    </div>
+</div>

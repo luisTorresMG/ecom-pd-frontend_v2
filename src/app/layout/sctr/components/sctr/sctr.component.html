@@ -1,0 +1,8 @@
+<app-new-menu></app-new-menu>
+<app-banner-sctr></app-banner-sctr>
+<app-step-navigation></app-step-navigation>
+<div style="position: relative;">
+    <router-outlet (activate)="onActivate()"></router-outlet>
+    <app-steps-info-sctr *ngIf="!hide"></app-steps-info-sctr>
+</div>
+<app-footer></app-footer>

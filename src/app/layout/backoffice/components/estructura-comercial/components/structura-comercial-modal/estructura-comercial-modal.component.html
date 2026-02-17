@@ -1,0 +1,379 @@
+<div style="padding-left: 1.5rem;padding-right: 1.5rem; padding-top: 2rem;">
+    <div style="position: relative; margin-bottom: 3rem; border-bottom: 2px solid #553d81;">
+        <h1 style="color: #553d81;">{{titleModal}}</h1>
+        <i class="fa fa-close"
+           style="position: absolute; top: 25%; right: 1%; cursor: pointer; color: #553d81;"
+           aria-hidden="true"
+           (click)="reference.close()"></i>
+    </div>
+
+
+    <div class=""
+         style="display: flex; width: 80%;">
+        <div class="table-responsive"
+             id="table-scroll">
+            <table class="table">
+                <thead style="border: 1px solid rgb(165, 167, 203);">
+                    <tr>
+                        <th class="p-2">RAMO</th>
+                        <th class="p-2">PRODUCTO</th>
+                        <th class="p-2">ESTRUCTURA COMERCIAL</th>
+                    </tr>
+                </thead>
+                <tbody style="color: #553d81;">
+
+                    <tr class="">
+                        <td class="px-2"
+                            style="border: 1px solid #ccc;">
+                            <select style="border: none; width: 100%; height: 35px; color: #553d81; "
+                                    [(ngModel)]="estructura.branch_id"
+                                    disabled>
+                                <ng-container *ngIf="!branchOptions.length">
+                                    <option [ngValue]=""
+                                            selected
+                                            hidden
+                                            style="height: 35px;width: 100%;color: #553d81;">
+                                        No se encontraron resultados
+                                    </option>
+                                </ng-container>
+                                <ng-container *ngIf="branchOptions.length">
+                                    <option [ngValue]="0"
+                                            *ngIf="branchOptions.length"
+                                            selected
+                                            style="height: 35px;width: 100%;color: #553d81;">
+                                        Todos
+                                    </option>
+                                    <option *ngFor="let data of branchOptions"
+                                            [ngValue]="data.NBRANCH"
+                                            style="height: 35px;width: 100%;color: #553d81;">
+                                        {{ data.SDESCRIPT }}
+                                    </option>
+                                </ng-container>
+                            </select>
+                        </td>
+                        <td class="px-2"
+                            style="border: 1px solid #ccc;">
+                            <select style="border: none; width: 100%; height: 35px; color: #553d81; "
+                                    [(ngModel)]="estructura.product_id"
+                                    disabled>
+                                <ng-container *ngIf="!productOptions.length">
+                                    <option [ngValue]=""
+                                            selected
+                                            hidden
+                                            style="height: 35px;width: 100%;color: #553d81;">
+                                        No se encontraron resultados
+                                    </option>
+                                </ng-container>
+                                <ng-container *ngIf="productOptions.length">
+                                    <option [ngValue]="0"
+                                            *ngIf="productOptions.length"
+                                            selected
+                                            style="height: 35px;width: 100%;color: #553d81;">
+                                        Todos
+                                    </option>
+                                    <option *ngFor="let data of productOptions"
+                                            [ngValue]="data.NPRODUCT"
+                                            style="height: 35px;width: 100%;color: #553d81;">
+                                        {{ data.SDESCRIPT }}
+                                    </option>
+                                </ng-container>
+                            </select>
+                        </td>
+                        <td class="px-2"
+                            style="border: 1px solid #ccc;">
+                            <input type="text"
+                                   [disabled]="accion == 'VIEW'"
+                                   [(ngModel)]="estructura.name"
+                                   (keypress)="validarCaracter($event)"
+                                   style="border:none; width: 100%; height: 35px;color: #553d81;" />
+
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="mt-4"
+         style="display: flex; flex-direction: column;">
+        <div class="table-responsive"
+             id="table-scroll">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="p-2">N°</th>
+                        <th class="p-2">TIPO INTERMEDIARIO</th>
+                        <th class="p-2">INMEDIATO SUPERIOR</th>
+                        <th class="p-2">PERFIL USUARIO</th>
+                        <th class="p-2"
+                            *ngIf="accion != 'VIEW'">ACCIONES</th>
+                    </tr>
+                </thead>
+                <tbody style="color: #553d81;">
+
+                    <tr class="grid-body"
+                        *ngIf="accion != 'VIEW'">
+                        <td class="grid-title-item p-1"
+                            style="border: 1px solid #ccc;">0</td>
+                        <td class="px-2"
+                            style="border: 1px solid #ccc;">
+                            <select style="border: none; width: 100%; height: 35px; color: #553d81;"
+                                    [(ngModel)]="currentEstructure.intertype"
+                                    (change)="onChangeInterType(currentEstructure.intertype)">
+                                <ng-container *ngIf="!interTypeOptions.length">
+                                    <option [ngValue]=""
+                                            selected
+                                            hidden
+                                            style="height: 35px;width: 100%;color: #553d81;">
+                                        No se encontraron resultados
+                                    </option>
+                                </ng-container>
+                                <ng-container *ngIf="interTypeOptions.length">
+                                    <option [ngValue]="0"
+                                            *ngIf="interTypeOptions.length"
+                                            selected
+                                            style="height: 35px;width: 100%;color: #553d81;">
+                                        Seleccionar Tipo
+                                    </option>
+                                    <option *ngFor="let data of interTypeOptions"
+                                            [ngValue]="data.NINTERTYP"
+                                            style="height: 35px;width: 100%;color: #553d81;">
+                                        {{ data.SDESCRIPT }}
+                                    </option>
+                                </ng-container>
+                            </select>
+                        </td>
+                        <td class="px-2"
+                            style="border: 1px solid #ccc;">
+                            <select style="border: none; width: 100%; height: 35px;  color: #553d81;"
+                                    [(ngModel)]="currentEstructure.intersup">
+                                <ng-container *ngIf="!interTypeSupOptions.length">
+                                    <option [ngValue]=""
+                                            selected
+                                            hidden
+                                            style="height: 35px;width: 100%;color: #553d81;">
+                                        No se encontraron resultados
+                                    </option>
+                                </ng-container>
+                                <ng-container *ngIf="interTypeSupOptions.length">
+                                    <option [ngValue]="0"
+                                            *ngIf="interTypeSupOptions.length"
+                                            selected
+                                            style="height: 35px;width: 100%;color: #553d81;">
+                                        Seleccionar Usuario
+                                    </option>
+                                    <ng-container *ngFor="let data of interTypeSupOptions">
+                                        <option *ngIf="data.show"
+                                                [ngValue]="data.NINTERTYP"
+                                                style="height: 35px;width: 100%;color: #553d81;">
+                                            {{ data.SDESCRIPT }}
+                                        </option>
+                                    </ng-container>
+                                </ng-container>
+                            </select>
+                        </td>
+                        <td class="px-2"
+                            style="border: 1px solid #ccc;">
+                            <select style="border: none; width: 100%; height: 35px; color: #553d81; "
+                                    [(ngModel)]="currentEstructure.profile">
+                                <ng-container *ngIf="!profileOptions.length">
+                                    <option [ngValue]=""
+                                            selected
+                                            hidden
+                                            style="height: 35px;width: 100%;color: #553d81;">
+                                        No se encontraron resultados
+                                    </option>
+                                </ng-container>
+                                <ng-container *ngIf="profileOptions.length">
+                                    <option [ngValue]="0"
+                                            *ngIf="profileOptions.length"
+                                            selected
+                                            style="height: 35px;width: 100%;color: #553d81;">
+                                        Seleccionar Perfil
+                                    </option>
+                                    <option *ngFor="let data of profileOptions"
+                                            [ngValue]="data.NIDPROFILE"
+                                            style="height: 35px;width: 100%;color: #553d81;">
+                                        {{ data.SNAME }}
+                                    </option>
+                                </ng-container>
+                            </select>
+                        </td>
+                        <td class="grid-title-item p-1"
+                            *ngIf="accion != 'VIEW'"
+                            style="border: 1px solid #ccc;">
+                            <div style="display: flex; justify-content: center; align-items: center;">
+                                <i class="fa fa-plus"
+                                   style="color: #553d81; cursor: pointer;"
+                                   aria-hidden="true"
+                                   (click)="addEstructure()"></i>
+
+                                <!-- <i class="fa fa-trash ml-3"
+                                   style="color: #553d81; cursor: pointer;"
+                                   aria-hidden="true"></i> -->
+                                <!-- (click)="eliminarSocietario(index)" -->
+                            </div>
+                        </td>
+                    </tr>
+
+                    <ng-container *ngFor="let item of detPaginate; let index = index">
+                        <tr>
+                            <td class="grid-title-item p-1"
+                                style="border: 1px solid #ccc;">{{index+1}}</td>
+                            <td class="px-2"
+                                style="border: 1px solid #ccc;">
+                                <select style="border: none; width: 100%; height: 35px; color: #553d81;"
+                                        [(ngModel)]="item.intertype"
+                                        (change)="onChangeInterTypeItem(item)"
+                                        [disabled]="accion == 'VIEW'">
+                                    <ng-container *ngIf="!item.intertypeList.length">
+                                        <option [ngValue]=""
+                                                selected
+                                                hidden
+                                                style="height: 35px;width: 100%;color: #553d81;">
+                                            No se encontraron resultados
+                                        </option>
+                                    </ng-container>
+                                    <ng-container *ngIf="item.intertypeList.length">
+                                        <option [ngValue]="0"
+                                                *ngIf="item.intertypeList.length"
+                                                selected
+                                                style="height: 35px;width: 100%;color: #553d81;">
+                                            Seleccionar Tipo
+                                        </option>
+                                        <option *ngFor="let data of item.intertypeList"
+                                                [ngValue]="data.NINTERTYP"
+                                                style="height: 35px;width: 100%;color: #553d81;">
+                                            {{ data.SDESCRIPT }}
+                                        </option>
+                                    </ng-container>
+                                </select>
+                            </td>
+                            <td class="px-2"
+                                style="border: 1px solid #ccc;">
+                                <select style="border: none; width: 100%; height: 35px;  color: #553d81;"
+                                        *ngIf="(accion == 'VIEW' && item.intersup > 0) || accion != 'VIEW'; else showNoSelected"
+                                        [(ngModel)]="item.intersup"
+                                        (change)="onChangeInterTypeSupItem(item)"
+                                        [disabled]="accion == 'VIEW'">
+                                    <ng-container *ngIf="!item.intersupList.length">
+                                        <option [ngValue]=""
+                                                selected
+                                                hidden
+                                                style="height: 35px;width: 100%;color: #553d81;">
+                                            No se encontraron resultados
+                                        </option>
+                                    </ng-container>
+                                    <ng-container *ngIf="item.intersupList.length">
+                                        <option [ngValue]="0"
+                                                *ngIf="item.intersupList.length"
+                                                selected
+                                                style="height: 35px;width: 100%;color: #553d81;">
+                                            Seleccionar Usuario
+                                        </option>
+                                        <ng-container *ngFor="let data of item.intersupList">
+                                            <option *ngIf="data.show"
+                                                    [ngValue]="data.NINTERTYP"
+                                                    style="height: 35px;width: 100%;color: #553d81;">
+                                                {{ data.SDESCRIPT }}
+                                            </option>
+                                        </ng-container>
+                                    </ng-container>
+                                </select>
+                                <ng-template #showNoSelected>
+                                    <span style="display: flex; justify-content: start;">-</span>
+                                </ng-template>
+                            </td>
+                            <td class="px-2"
+                                style="border: 1px solid #ccc;">
+                                <select style="border: none; width: 100%; height: 35px; color: #553d81; "
+                                        [(ngModel)]="item.profile"
+                                        (change)="onChangeProfileItem(item)"
+                                        [disabled]="accion == 'VIEW'">
+                                    <ng-container *ngIf="!item.profileList.length">
+                                        <option [ngValue]=""
+                                                selected
+                                                hidden
+                                                style="height: 35px;width: 100%;color: #553d81;">
+                                            No se encontraron resultados
+                                        </option>
+                                    </ng-container>
+                                    <ng-container *ngIf="item.profileList.length">
+                                        <option [ngValue]="0"
+                                                *ngIf="item.profileList.length"
+                                                selected
+                                                style="height: 35px;width: 100%;color: #553d81;">
+                                            Seleccionar Perfil
+                                        </option>
+                                        <option *ngFor="let data of item.profileList"
+                                                [ngValue]="data.NIDPROFILE"
+                                                style="height: 35px;width: 100%;color: #553d81;">
+                                            {{ data.SNAME }}
+                                        </option>
+                                    </ng-container>
+                                </select>
+                            </td>
+                            <td class="grid-title-item p-1"
+                                *ngIf="accion != 'VIEW'"
+                                style="border: 1px solid #ccc;">
+                                <div style="display: flex; justify-content: center; align-items: center;">
+                                    <!-- <i class="fa fa-plus"
+                                       style="color: #553d81; cursor: pointer;"
+                                       aria-hidden="true"></i> -->
+
+                                    <i class="fa fa-trash"
+                                       style="color: #553d81; cursor: pointer;"
+                                       aria-hidden="true"
+                                       (click)="removeItem(item)"></i>
+                                    <!-- (click)="eliminarSocietario(index)" -->
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+
+                </tbody>
+            </table>
+        </div>
+        <div *ngIf="estructuraDet != null && estructuraDet.length > 0"
+             style="display: flex">
+            <ngb-pagination [(page)]="currentPage"
+                            [pageSize]="itemsPerPage"
+                            [collectionSize]="totalItems"
+                            [maxSize]="maxSize"
+                            (pageChange)="pageChanged(currentPage)">
+                <ng-template ngbPaginationPrevious>ANTERIOR</ng-template>
+                <ng-template ngbPaginationNext>SIGUIENTE</ng-template>
+            </ngb-pagination>
+        </div>
+    </div>
+
+
+
+    <div class="p-3">
+
+        <div class="row mt-4 flex justify-content-end">
+            <form-button label="Guardar"
+                         *ngIf="accion == 'CREATE'"
+                         btnClass="btn-primary-VI"
+                         (click)="registrarEstructura()"></form-button>
+
+            <form-button label="Actualizar"
+                         *ngIf="accion == 'UPDATE'"
+                         btnClass="btn-primary-VI"
+                         (click)="actualizarEstructura()"></form-button>
+
+            <!-- <form-button label="Cerrar"
+                         btnClass="btn-primary-VI"
+                         (click)="reference.close()"></form-button> -->
+        </div>
+
+        <div [hidden]="!isLoading"
+             class="loadingScreen">
+            <div style="display: flex; height: 100%; width: 100%">
+                <i style="margin: auto; font-size: 50px"
+                   class="fa fa-spinner fa-spin"></i>
+            </div>
+        </div>
+    </div>
+</div>

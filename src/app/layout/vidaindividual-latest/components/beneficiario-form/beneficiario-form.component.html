@@ -1,0 +1,291 @@
+<!-- CAPTCHA -->
+<div class="captcha">
+    <re-captcha #recaptchaRef="reCaptcha"
+                (resolved)="resolved($event)"
+                siteKey="{{ siteKey }}"
+                badge="bottomleft"
+                size="invisible">
+    </re-captcha>
+</div>
+
+<form [formGroup]="formBeneficiario"
+      class="row frmAddBenf mx-0 my-0 px-0 py-0 form-plan mt-0 flex-column">
+    <div class="col-lg-12 mx-0 my-0 px-0 py-0 title-data-benf">
+        <span class="data-benf">Datos del beneficiario {{ index }}</span>
+        <button class="drop-bend"
+                type="button"
+                role="button"
+                (click)="eliminarBeneficiario()"
+                *ngIf="!disableField">
+            &times; Eliminar
+        </button>
+    </div>
+    <div class="col-lg-12 mx-0 my-0 px-0 py-0 grid-benf">
+        <input type="hidden"
+               formControlName="index" />
+        <div class="ct-in">
+            <div class="ct-in-dbl">
+                <div class="content-input-benf">
+                    <select class="input-benf input-benf-normal"
+                            [class.lbl-small-error]="isFormControlError('idTipoDocumento')"
+                            [class.control-error]="isFormControlError('idTipoDocumento')"
+                            formControlName="idTipoDocumento">
+                        <option value="2">DNI</option>
+                        <option value="4">CE</option>
+                    </select>
+                </div>
+                <div class="content-input-benf">
+                    <label class="lbl-small"
+                           for="numeroDocumento + {{ index }}"
+                           [class.lbl-small-error]="isFormControlError('numeroDocumento')"
+                           [class.lbl-small-active]="!!f['numeroDocumento'].value">Número de Documento</label>
+                    <input type="text"
+                           class="input-benf"
+                           id="numeroDocumento + {{ index }}"
+                           formControlName="numeroDocumento"
+                           [class.input-benf-active]="!!f['numeroDocumento'].value"
+                           [class.control-error]="isFormControlError('numeroDocumento')"
+                           [minlength]="numberDocumentLimit.min"
+                           [maxlength]="numberDocumentLimit.max"
+                           (focusout)="requestClientInfo()" />
+                </div>
+            </div>
+        </div>
+        <!-- <div class="ct-in">
+      <div class="content-input-benf">
+        <label class="lbl-small"
+               for="direccion + {{ index }}"
+               [class.lbl-small-error]="isFormControlError('direccion')"
+               [class.lbl-small-active]="!!f['direccion'].value">Dirección</label>
+        <input type="text"
+               class="input-benf"
+               id="direccion + {{ index }}"
+               formControlName="direccion"
+               [class.input-benf-active]="!!f['direccion'].value"
+               [class.control-error]="isFormControlError('direccion')">
+      </div>
+    </div> -->
+        <!-- <div class="ct-in">
+      <div class="content-input-benf">
+        <label class="lbl-small-select lbl-small-select-active"
+               [class.lbl-small-error]="isFormControlError('idNacionalidad')"
+               [class.lbl-small-disabled]="f['idNacionalidad'].disabled"
+               *ngIf="!!f['idNacionalidad'].value">Nacionalidad</label>
+        <select class="input-benf"
+                formControlName="idNacionalidad"
+                [class.input-benf-active]="!!f['idNacionalidad'].value"
+                [class.control-error]="isFormControlError('idNacionalidad')">
+          <option [value]=undefined
+                  [disabled]=true>Nacionalidad</option>
+          <option *ngFor="let data of parameters$?.nacionalidades"
+                  [value]=data?.id>{{ data?.descripcion }}</option>
+        </select>
+      </div>
+    </div> -->
+        <div class="ct-in">
+            <div class="content-input-benf">
+                <label class="lbl-small-select lbl-small-select-active"
+                       *ngIf="!!f['relacion'].value">Parentesco</label>
+                <select class="input-benf"
+                        formControlName="relacion"
+                        [class.lbl-small-error]="isFormControlError('relacion')"
+                        [class.input-benf-active]="!!f['relacion'].value"
+                        [class.control-error]="isFormControlError('relacion')">
+                    <option [value]="undefined"
+                            [disabled]="true">Parentesco</option>
+                    <option *ngFor="let data of parameters$?.parentescos"
+                            [value]="data.id">
+                        {{ data.descripcion }}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="ct-in">
+            <div class="content-input-benf">
+                <label class="lbl-small"
+                       for="nombres + {{ index }}"
+                       [class.lbl-small-error]="isFormControlError('nombre')"
+                       [class.lbl-small-active]="!!f['nombre'].value">Nombres</label>
+                <input type="text"
+                       class="input-benf"
+                       id="nombres + {{ index }}"
+                       formControlName="nombre"
+                       [class.input-benf-active]="!!f['nombre'].value"
+                       [class.control-error]="isFormControlError('nombre')" />
+            </div>
+        </div>
+        <div class="ct-in">
+            <div class="content-input-benf">
+                <label class="lbl-small-select lbl-small-select-active"
+                       *ngIf="!!f['porcentajeParticipacion'].value">Asignación (%)</label>
+                <select class="input-benf"
+                        formControlName="porcentajeParticipacion"
+                        [class.lbl-small-error]="
+            isFormControlError('porcentajeParticipacion')
+          "
+                        [class.input-benf-active]="!!f['porcentajeParticipacion'].value"
+                        [class.control-error]="isFormControlError('porcentajeParticipacion')">
+                    <option [value]="undefined"
+                            [disabled]="true">Asignación (%)</option>
+                    <option *ngFor="let n of percents"
+                            [value]="n">{{ n }}%</option>
+                </select>
+            </div>
+        </div>
+        <!-- <div class="ct-in">
+      <div class="content-input-benf">
+        <label class="lbl-small-select lbl-small-select-active"
+               [class.lbl-small-disabled]="f['departamento'].disabled"
+               *ngIf="!!f['departamento'].value">Departamento</label>
+        <select class="input-benf"
+                formControlName="departamento"
+                [class.lbl-small-error]="isFormControlError('departamento')"
+                [class.input-benf-active]="!!f['departamento'].value"
+                [class.control-error]="isFormControlError('departamento')">
+          <option [value]=undefined
+                  [disabled]=true>Departamento</option>
+          <option *ngFor="let data of parameters$?.ubigeos"
+                  [value]="data.id">{{ data?.descripcion }}
+          </option>
+        </select>
+      </div>
+    </div> -->
+        <div class="ct-in">
+            <div class="content-input-benf">
+                <label class="lbl-small"
+                       for="apellidoPaterno + {{ index }}"
+                       [class.lbl-small-error]="isFormControlError('apellidoPaterno')"
+                       [class.lbl-small-active]="!!f['apellidoPaterno'].value">Apellido Paterno</label>
+                <input type="text"
+                       class="input-benf"
+                       id="apellidoPaterno + {{ index }}"
+                       formControlName="apellidoPaterno"
+                       [class.input-benf-active]="!!f['apellidoPaterno'].value"
+                       [class.control-error]="isFormControlError('apellidoPaterno')" />
+            </div>
+        </div>
+
+        <!-- <div class="ct-in">
+      <div class="content-input-benf">
+        <label class="lbl-small-select lbl-small-select-active"
+               [class.lbl-small-disabled]="f['provincia'].disabled"
+               *ngIf="!!f['provincia'].value">Provincia</label>
+        <select class="input-benf"
+                formControlName="provincia"
+                [class.lbl-small-error]="isFormControlError('provincia')"
+                [class.input-benf-active]="!!f['provincia'].value"
+                [class.control-error]="isFormControlError('provincia')">
+          <option [value]=undefined
+                  [disabled]=true>Provincia</option>
+          <option *ngFor="let data of provincias$"
+                  [value]="data.idProvincia">{{ data?.provincia }}</option>
+        </select>
+      </div>
+    </div> -->
+        <div class="ct-in">
+            <div class="content-input-benf">
+                <label class="lbl-small"
+                       role="button"
+                       for="fechaNacimiento + {{ index }}"
+                       (click)="openCalendar()"
+                       [class.lbl-small-error]="isFormControlError('fechaNacimiento')"
+                       [class.lbl-small-active]="!!f['fechaNacimiento'].value">Fecha de Nacimiento</label>
+                <input type="text"
+                       class="input-benf"
+                       id="fechaNacimiento + {{ index }}"
+                       [readonly]="true"
+                       #dp="bsDatepicker"
+                       #inputFechaNacimiento
+                       [bsConfig]="bsConfig"
+                       bsDatepicker
+                       formControlName="fechaNacimiento"
+                       [class.input-benf-active]="!!f['fechaNacimiento'].value"
+                       [class.control-error]="isFormControlError('fechaNacimiento')" />
+                <i role="button"
+                   (click)="openCalendar()"
+                   class="fa fa-calendar"
+                   [class.lbl-small-error]="isFormControlError('fechaNacimiento')"
+                   aria-hidden="true"></i>
+            </div>
+        </div>
+        <div class="ct-in">
+            <div class="content-input-benf">
+                <label class="lbl-small"
+                       for="apellidoMaterno + {{ index }}"
+                       [class.lbl-small-error]="isFormControlError('apellidoMaterno')"
+                       [class.lbl-small-active]="!!f['apellidoMaterno'].value">Apellido Materno</label>
+                <input type="text"
+                       class="input-benf"
+                       id="apellidoMaterno + {{ index }}"
+                       formControlName="apellidoMaterno"
+                       [class.input-benf-active]="!!f['apellidoMaterno'].value"
+                       [class.control-error]="isFormControlError('apellidoMaterno')" />
+            </div>
+        </div>
+
+        <!-- <div class="ct-in">
+      <div class="content-input-benf">
+        <label class="lbl-small-select lbl-small-select-active"
+               [class.lbl-small-disabled]="f['distrito'].disabled"
+               *ngIf="!!f['distrito'].value">Distrito</label>
+        <select class="input-benf"
+                formControlName="distrito"
+                [class.lbl-small-error]="isFormControlError('distrito')"
+                [class.input-benf-active]="!!f['distrito'].value"
+                [class.control-error]="isFormControlError('distrito')">
+          <option [value]=undefined
+                  [disabled]=true>Distrito</option>
+          <option *ngFor="let data of distritos$"
+                  [value]="data.idDistrito">{{ data?.distrito }}</option>
+        </select>
+      </div>
+    </div> -->
+        <!-- <div class="ct-in">
+      <div class="content-input-benf">
+        <label class="lbl-small"
+               for="correo + {{ index }}"
+               [class.lbl-small-error]="isFormControlError('email')"
+               [class.lbl-small-active]="!!f['email'].value">Correo</label>
+        <input type="text"
+               class="input-benf"
+               id="correo + {{ index }}"
+               formControlName="email"
+               [class.input-benf-active]="!!f['email'].value"
+               [class.control-error]="isFormControlError('email')">
+      </div>
+    </div> -->
+        <!-- <div class="ct-in">
+      <div class="content-input-benf">
+        <label class="lbl-small"
+               for="telefono + {{ index }}"
+               [class.lbl-small-error]="isFormControlError('telefono')"
+               [class.lbl-small-active]="!!f['telefono'].value">Número de Celular</label>
+        <input type="text"
+               class="input-benf"
+               id="telefono + {{ index }}"
+               formControlName="telefono"
+               [class.input-benf-active]="!!f['telefono'].value"
+               [class.control-error]="isFormControlError('telefono')">
+      </div>
+    </div> -->
+        <div class="ct-in">
+            <div class="content-input-benf">
+                <label class="lbl-small-select lbl-small-select-active"
+                       *ngIf="!!f['idSexo'].value">Género</label>
+                <select class="input-benf"
+                        formControlName="idSexo"
+                        [class.lbl-small-error]="isFormControlError('idSexo')"
+                        [class.input-benf-active]="!!f['idSexo'].value"
+                        [class.control-error]="isFormControlError('idSexo')">
+                    <option [value]="undefined"
+                            [disabled]="true">Género</option>
+                    <option value="2">Masculino</option>
+                    <option value="1">Femenino</option>
+                    <option value="3">No Informado</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <span class="errorForm"
+          #errorForm></span>
+</form>

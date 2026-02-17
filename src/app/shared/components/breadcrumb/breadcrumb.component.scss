@@ -1,0 +1,39 @@
+@import "variables";
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  width: fit-content;
+
+  & ::ng-deep a {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-decoration: none;
+    color: $purple;
+    white-space: nowrap;
+    user-select: none;
+
+    i {
+      font-size: 18px;
+      color: $purple;
+      margin-right: 10px;
+    }
+
+    &.disabled {
+      cursor: default;
+      opacity: 0.7;
+    }
+
+    &:not(:last-child)::after {
+      content: "\f105";
+      display: block;
+      width: fit-content;
+      margin: 0 7px;
+      color: $purple;
+      font: normal normal normal 18px/1 FontAwesome;
+    }
+  }
+}

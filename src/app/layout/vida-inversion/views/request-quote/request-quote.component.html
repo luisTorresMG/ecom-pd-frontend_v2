@@ -1,0 +1,485 @@
+<div class="form-group row">
+    <div class="col-lg-3">
+        <app-nav-menuprod></app-nav-menuprod>
+    </div>
+
+    <div class="col-lg-9">
+
+        <div class="container-form-quotes">
+
+            <div class="row group2 mx-0 pb-0 mb-0">
+                <h2 class="title">
+                    Bandeja de Cotizaciones
+                </h2>
+                <div class="d-flex flex-row-reverse g-3">
+                    <form-button label="Buscar"
+                                 (click)="searchQuotations()"
+                                 btnClass="btn-primary-VI text-nowrap"></form-button>
+                    <form-button label="Limpiar"
+                                 (click)="clearParameters()"
+                                 btnClass="btn-secondary-VI text-nowrap"></form-button>
+                </div>
+            </div>
+
+            <div class="form-filters">
+
+                <form-input-select text_label="CANAL:"
+                                   fieldCodigo="COD_CHANNEL"
+                                   fieldValor="DES_CHANNEL"
+                                   [large]="true"
+                                   [disabled]="true"
+                                   [items]="CHANNEL"></form-input-select>
+
+
+
+                <form-input-select text_label="PRODUCTO:"
+                                   fieldCodigo="COD_PRODUCT"
+                                   fieldValor="DES_PRODUCT"
+                                   [large]="true"
+                                   [disabled]="true"
+                                   [items]="PRODUCT"
+                                   ></form-input-select>
+
+                <form-input-text text_label="COTIZACIÓN:"
+                                 [onlyInput]="true"
+                                 [(value)]="search_params.quotation"
+                                 maxCaracter="10"
+                                 [patternPrevent]="CONSTANTS.REGEX.NUMBER"
+                                 [large]="true"></form-input-text>
+
+
+                <form-input-select text_label="ESTADO:"
+                                   [(value)]="search_params.state_type"
+                                   [updateModelOnChange]="true"
+                                   fieldCodigo="Id"
+                                   fieldValor="Name"
+                                   [items]="TYPE_STATE"
+                                   [firstAll]="true"
+                                   [large]="true"></form-input-select>
+
+                <form-input-select text_label="TIPO DE CLIENTE:"
+                                   [(value)]="search_params.client_type"
+                                   [updateModelOnChange]="true"
+                                   fieldCodigo="COD_PRODUCT"
+                                   fieldValor="DES_PRODUCT"
+                                   [items]="TYPE_CLIENT"
+                                   [large]="true"></form-input-select>
+            </div>
+            <div class="form-filters">
+
+
+                <form-input-select text_label="TIPO DE DOCUMENTO:"
+                                   [service]="clientInformationService"
+                                   method="getDocumentTypeList"
+                                   [(value)]="search_params.document_type"
+                                   [params]="cod_prod_channel"
+                                   [firstSelect]="true"
+                                   [updateModelOnChange]="true"
+                                   (onSelect)="changeDocumentType()"
+                                   fieldCodigo="Id"
+                                   fieldValor="Name"
+                                   style="margin-top: -4px;"
+                                   [large]="true"></form-input-select>
+
+
+                <form-input-text text_label="NÚMERO DE DOCUMENTO:"
+                                 [onlyInput]="true"
+                                 [large]="true"
+                                 [(value)]="search_params.document_number"
+                                 [patternPrevent]="CONSTANTS.REGEX[search_params.document_type?.Id]"
+                                 style="margin-top: -4px;"></form-input-text>
+
+
+                <form-input-text text_label="NOMBRES:"
+                                 [onlyInput]="true"
+                                 [large]="true"
+                                 [(value)]="search_params.names"
+                                 maxCaracter="19"
+                                 style="margin-top: -4px;"></form-input-text>
+
+                <form-input-text text_label="APELLIDO 1:"
+                                 [onlyInput]="true"
+                                 [large]="true"
+                                 style="margin-top: -4px;"
+                                 [(value)]="search_params.last_name"
+                                 maxCaracter="19"
+                                 [patternPrevent]="CONSTANTS.REGEX.LETRAS"></form-input-text>
+
+                <form-input-text text_label="APELLIDO 2:"
+                                 [onlyInput]="true"
+                                 [large]="true"
+                                 style="margin-top: -4px;"
+                                 [(value)]="search_params.last_name2"
+                                 maxCaracter="19"
+                                 [patternPrevent]="CONSTANTS.REGEX.LETRAS"></form-input-text>
+
+
+                <form-input-select text_label="JEFE COMERCIAL:"
+                                   [(value)]="search_params.type_boss"
+                                   [updateModelOnChange]="true"
+                                   fieldCodigo="Id"
+                                   fieldValor="Name"
+                                   [items]="TYPE_BOSS"
+                                   (onSelect)="onSelectBoss()"
+                                   [large]="true"
+                                   style="margin-top: -12px;"
+                                   [disabled]="(profile_id == 191 || profile_id == 194 || profile_id == 195) ? true: false"></form-input-select>
+                                   <!-- [firstAll]="profile_id === '192' ? true: false" -->
+
+
+                <form-input-select text_label="SUPERVISOR COMERCIAL:"
+                                   [(value)]="search_params.type_supervision"
+                                   [updateModelOnChange]="true"
+                                   fieldCodigo="Id"
+                                   fieldValor="Name"
+                                   [items]="TYPE_SUPERVIS"
+                                   [large]="true"
+                                   style="margin-top: -12px;"
+                                   (onSelect)="onSelectSupervision()"
+                                   [disabled]="(profile_id == '191' || profile_id == '194' ) ? true: false"></form-input-select>
+                                   <!-- [firstAll]="(profile_id == '195' || profile_id == '192') ? true: false" -->
+
+
+                <form-input-select text_label="ASESOR COMERCIAL:"
+                                   [(value)]="search_params.type_adviser"
+                                   [updateModelOnChange]="true"
+                                   fieldCodigo="Id"
+                                   fieldValor="Name"
+                                   [items]="TYPE_ADVISER"
+                                   [large]="true"
+                                   style="margin-top: -12px;"
+                                   [firstAll]="[194,196,192].includes(profile_id)"
+                                   [disabled]="(profile_id == 191) ? true: false"></form-input-select>
+                                   <!-- [firstAll]="(profile_id == '194' || profile_id == '195' || profile_id == '192') ? true: false" -->
+
+            </div>
+        </div>
+
+        <!-- TABLAAA -->
+        <div class="grid mt-2 scrollable-div">
+            <div class="table-responsive"
+                 style="overflow-x:revert"
+                 id="table-scroll">
+                <table class="table-u" >
+                   <thead class="grid-title">
+                        <th class="grid-title-item">Nro. Cotización</th>
+                        <th class="grid-title-item">Doc. Identidad Contratante</th>
+                        <th class="grid-title-item">Nombre Contratante</th>
+                        <th class="grid-title-item">Doc. Identidad Asegurado</th>
+                        <th class="grid-title-item">Nombre Asegurado</th>
+                        <th class="grid-title-item">Aporte</th>
+                        <th class="grid-title-item">Fondo</th>
+                        <th class="grid-title-item">Asesor Comercial</th>
+                        <th class="grid-title-item">Estado</th>
+                        <th class="grid-title-item">Fecha de Cotización</th>
+                        <th class="grid-title-item">
+                            <button style="background-color: #553d81; color:#fff; border: #553d81;cursor: help;text-align:left;"
+                                    title="Ver Leyenda"
+                                    (click)="openModal('see-leyend1')">
+                                Avance Preliminar
+                                <i class="fa fa-info-circle"
+                                   aria-hidden="true"
+                                   style="font-size: 13px;"></i>
+                            </button>
+
+                        </th>
+                        <th class="grid-title-item"><button
+                                    style="background-color: #553d81; color: #fff; border: #553d81;cursor: help;text-align: left;"
+                                    title="Ver Leyenda"
+                                    (click)="openModal('see-leyend2')">
+                                Avance Definitivo
+                                <i class="fa fa-info-circle"
+                                   aria-hidden="true"
+                                   style="font-size: 13px;"></i>
+                            </button></th>
+                        <th class="grid-title-item">Acciones</th>
+                    </thead> 
+                    <tbody>
+                        <ng-container *ngIf="!listToShowNV?.length">
+                            <tr class="grid-body">
+                                <td class="grid-body-item"
+                                    colspan="12"
+                                    style="text-align: center">
+                                    No se encontraron registros.
+                                </td>
+                            </tr>
+                        </ng-container>
+                        <ng-container *ngIf="!!listToShowNV?.length">
+                            <tr class="grid-body"
+                                *ngFor="
+                          let item of listToShowNV
+                          let index = index
+                        "
+                                [id]="'row' + index">
+                                <td class="grid-title-item p-1">{{ item.id_cotizacion }}</td>
+                                <td class="grid-title-item">
+                                    {{ item.doc_contratante}}
+                                </td>
+                                <td class="grid-title-item">{{ item.nom_contratante }}</td>
+                                <td class="grid-title-item">
+                                    {{ item.doc_aseg}}
+                                </td>
+
+                                <td class="grid-title-item">
+                                    {{ item.nom_aseg}}
+                                </td>
+
+                                <td class="grid-title-item">{{item.desc_currency}}{{ item.contribution }}</td>
+                                <td class="grid-title-item">{{ item.background }}</td>
+                                <td class="grid-title-item">{{ item.nom_asesor }}</td>
+                                <td class="grid-title-item">{{ item.desc_state }}</td>
+                                <td class="grid-title-item">
+                                    {{item.date_preliminar}}
+                                    <br>
+                                    {{item.date_definitiva}}
+                                </td>
+                                <!-- INI Semaforos -->
+
+
+                                <td *ngIf="item.state_pre == 6"
+                                    class="grid-title-item">
+                                    <img src="./assets/vida-inversion/check_circle_green.svg"
+                                         alt=""
+                                         style="width: 30px; height: 30px;">
+                                </td>
+
+                                <td *ngIf="item.state_pre == 5"
+                                    class="grid-title-item"
+                                    title="Cotización anulada"
+                                    style="cursor: pointer;">
+                                    <img src="./assets/vida-inversion/check_cancel_red.svg"
+                                         alt=""
+                                         style="width: 30px; height: 30px; margin-left: 15px;">
+                                </td>
+
+                                <td *ngIf="item.state_pre == 3"
+                                    class="grid-title-item"
+                                    title="Semáforo Verde"
+                                    style="cursor: pointer;">
+                                    <div class="contenedor">
+                                        <img src="./assets/vida-inversion/Pre_green.svg"
+                                             alt=""
+                                             style="width: 50px; height: 50px;">
+                                        <div class="superior">Día</div>
+                                        <div class="centrado">{{item.remaining_days_pre}}</div>
+                                    </div>
+                                </td>
+
+
+
+
+                                <td *ngIf="item.state_pre == 2"
+                                    class="grid-title-item"
+                                    title="Semáforo Amarillo"
+                                    style="cursor: pointer;">
+                                    <div class="contenedor">
+                                        <img src="./assets/vida-inversion/Pre_yellow.svg"
+                                             alt=""
+                                             style="width: 50px; height: 50px;">
+                                        <div class="superior">Día</div>
+                                        <div class="centrado">{{item.remaining_days_pre}}</div>
+                                    </div>
+                                </td>
+
+
+                                <td *ngIf="item.state_pre == 1"
+                                    class="grid-title-item"
+                                    title="Semáforo Rojo"
+                                    style="cursor: pointer;">
+                                    <div class="contenedor">
+                                        <img src="./assets/vida-inversion/Pre_red.svg"
+                                             alt=""
+                                             style="width: 50px; height: 50px;">
+                                        <div class="superior">Día</div>
+                                        <div class="centrado">{{item.remaining_days_pre}}</div>
+                                    </div>
+                                </td>
+
+
+                                
+                                <td *ngIf="item.state_def == 5"
+                                    class="grid-title-item"
+                                    title="Cotización anulada"
+                                    style="cursor: pointer;">
+                                    <img src="./assets/vida-inversion/check_cancel_red.svg"
+                                         alt=""
+                                         style="width: 30px; height: 30px; margin-left: 15px;">
+                                </td>
+
+
+                                <td *ngIf="item.state_def == 7"
+                                    class="grid-title-item">
+                                    <img src="./assets/vida-inversion/check_circle_green.svg"
+                                         alt=""
+                                         style="width: 30px; height: 30px;">
+                                </td>
+
+                                <td *ngIf="item.state_def == 3"
+                                    class="grid-title-item"
+                                    title="Semáforo Verde"
+                                    style="cursor: pointer;">
+                                    <div class="contenedor">
+                                        <img src="./assets/vida-inversion/Def_green.svg"
+                                             alt=""
+                                             style="width: 50px; height: 50px;">
+                                        <div class="superior">Día</div>
+                                        <div class="centrado">{{item.remaining_days_def}}</div>
+                                    </div>
+                                </td>
+
+                                <td *ngIf="item.state_def == 2"
+                                    class="grid-title-item"
+                                    title="Semáforo Amarillo"
+                                    style="cursor: pointer;">
+                                    <div class="contenedor">
+                                        <img src="./assets/vida-inversion/Def_yellow.svg"
+                                             alt=""
+                                             style="width: 50px; height: 50px;">
+                                        <div class="superior">Día</div>
+                                        <div class="centrado">{{item.remaining_days_def}}</div>
+                                    </div>
+                                </td>
+
+                                <td *ngIf="item.state_def == 1"
+                                    class="grid-title-item"
+                                    title="Semáforo Rojo"
+                                    style="cursor: pointer;">
+                                    <div class="contenedor">
+                                        <img src="./assets/vida-inversion/Def_red.svg"
+                                             alt=""
+                                             style="width: 50px; height: 50px;">
+                                        <div class="superior">Día</div>
+                                        <div class="centrado">{{item.remaining_days_def}}</div>
+                                    </div>
+                                </td>
+
+
+
+                                <!-- Elemento cuando no se ha creado todavía la cot. definitiva -->
+                                <td *ngIf="item.state_def == 6"
+                                    class="grid-title-item">
+                                </td>
+                                <!-- FIN Semaforos -->
+
+                                <td class="tbl__body-row-item tbl-actions actions p-1"
+                                    ngbDropdown>
+                                    <button class="btn-dropdown-u"
+                                            tabindex="0"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true"
+                                            aria-expanded="false"
+                                            ngbDropdownToggle>
+                                        <i class="fa fa-ellipsis-v"
+                                           aria-hidden="true"></i>
+                                    </button>
+                                    <!-- (click)="viewQuotation(item)">-->
+                                    <ul class="dropdown-u"
+                                        display="dynamic"
+                                        ngbDropdownMenu>
+                                        <li class="dropdown-item-u">
+                                            <button class="dropdown-item-btn-u"
+                                                    title="Ver Cotización"
+                                                    (click)="viewQuotation(item)">
+                                                <i class="fa fa-eye fa-lg"></i>Ver Cotización
+                                            </button>
+                                        </li>
+                                        <li class="dropdown-item-u">
+                                            <button class="dropdown-item-btn-u"
+                                             title="Descargar"
+                                            (click)="downloadQuotation(item)">
+                                            <i class="fa fa-eye fa-lg"></i>Descargar
+                                            </button>
+                                        </li>
+
+
+                                        <li class="dropdown-item-u">
+                                            <button class="dropdown-item-btn-u"
+                                                    title="Enviar"
+                                                    (click)="SendQuotation(item.id_cotizacion)">
+                                                <i class="fa fa-eye fa-lg"></i>Enviar
+                                            </button>
+                                        </li>
+
+                                        <!-- ARJG VIGP-->
+                                        <li class="dropdown-item-u"
+                                            *ngIf="DatosPepOption(item)">
+                                            <button class="dropdown-item-btn-u"
+                                                    title="Ver Datos PEP"
+                                                    (click)="GoToDataPep(item)">
+                                                <i class="fa fa-eye fa-lg"></i>Datos PEP
+                                            </button>
+                                        </li>
+
+                                        <!-- si La preliminar esta anulada o la definitiva esta Anulada no debe poder crear la Definitiva o poder anularse -->
+                                        <!-- *ngIf="((profile_id == 194 || profile_id == 195) && item.NID_STATE == 15) && (item.state_def == 6 && item.state_pre !== 5)" -->
+                                        <li class="dropdown-item-u"
+                                            *ngIf="DefinitivaOption(item)"
+                                        >
+                                            <button class="dropdown-item-btn-u"
+                                                    title="Definitiva"
+                                                    (click)="GoToQuoteDefinitiveUpd(item)">
+                                                <i class="fa fa-eye fa-lg"></i>Definitiva
+                                            </button>
+                                        </li>
+                                        <li class="dropdown-item-u"
+                                            *ngIf="AttendOption(item) && !carmbioFirmaOption(item)">
+                                            <button class="dropdown-item-btn-u"
+                                                    title="Atender"
+                                                    (click)="GoToQuoteDefinitive(item)">
+                                                <i class="fa fa-eye fa-lg"></i>Atender
+                                            </button>
+                                        </li>
+
+                                        <li class="dropdown-item-u"
+                                            *ngIf="carmbioFirmaOption(item)">
+                                            <button class="dropdown-item-btn-u"
+                                                    title="Cambiar Firma"
+                                                    (click)="GoToChangeFirma(item)">
+                                                <i class="fa fa-eye fa-lg"></i>Cambiar Firma
+                                            </button>
+                                        </li>
+
+                                        <li class="dropdown-item-u"
+                                            *ngIf="AnularOption(item)">
+                                            <button class="dropdown-item-btn-u"
+                                                    title="Anular"
+                                                    (click)="GotoAnular(item)">
+                                                <i class="fa fa-times fa-lg"></i>Anular
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </td>
+
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+                <div *ngIf="listToShowNV != null && listToShowNV.length > 0"
+                     style="display: flex">
+                    <div class="col-sm-12">
+                        <ngb-pagination [(page)]="currentPageNV"
+                                        [pageSize]="itemsPerPageNV"
+                                        [collectionSize]="totalItemsNV"
+                                        [maxSize]="maxSizeNV"
+                                        (pageChange)="pageChangedNV(currentPageNV)">
+                            <ng-template ngbPaginationPrevious>ANTERIOR</ng-template>
+                            <ng-template ngbPaginationNext>SIGUIENTE</ng-template>
+                        </ngb-pagination>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>
+<div [hidden]="!isLoading"
+     class="loadingScreen">
+    <div style="display: flex; height: 100%; width: 100%">
+        <i style="margin: auto; font-size: 50px"
+           class="fa fa-spinner fa-spin"></i>
+    </div>
+</div>

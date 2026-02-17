@@ -1,0 +1,92 @@
+.insurance-types {
+  display: flex;
+  flex-direction: column;
+}
+
+.insurance-card {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  width: 175px;
+  text-align: center;
+
+  position: static;
+  left: 0px;
+  top: 0px;
+
+  background: #ffffff;
+  box-shadow: 0px 0px 10px #faebd7;
+  border-radius: 8px;
+
+  flex: none;
+  order: 0;
+  align-self: center;
+  margin: 30px 0px;
+}
+
+.insurance-card label {
+  cursor: pointer;
+}
+
+.insurance-name {
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 19px;
+  color: #828282;
+}
+
+.insurance-icon {
+  margin: 8px 0;
+}
+
+.minimumPremium {
+  color: red;
+  font-size: 11px;
+  margin-bottom: -0px !important;
+}
+
+.insurance-amount {
+  font-style: normal;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 48px;
+  color: #828282;
+}
+
+.insurance-info {
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  color: #828282;
+}
+
+.insurance-info span {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.active .insurance-name,
+.active .insurance-amount,
+.active .insurance-info {
+  color: #300764;
+}
+
+.active .insurance-amount {
+  color: #ff6e00;
+}
+
+.justify-centered {
+  justify-content: center !important;
+}
+
+@media (min-width: 768px) {
+  .insurance-types {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .insurance-types-center {
+    flex-direction: row;
+    justify-content: center;
+  }
+}

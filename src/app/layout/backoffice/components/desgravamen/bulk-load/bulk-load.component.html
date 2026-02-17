@@ -1,0 +1,787 @@
+<div class="content">
+  <!-- *Navegación -->
+  <section class="content__breadcrumb">
+    <app-breadcrumb>
+      <a>
+        <i class="fa fa-home"
+           aria-hidden="true"></i>
+        Desgravamen
+      </a>
+      <a> Bandeja de carga masiva </a>
+    </app-breadcrumb>
+  </section>
+
+  <!-- *Cabecera -->
+  <section class="content__header">
+    <h1 class="title">Bandeja de carga masiva</h1>
+    <a
+      class="button-default orange"
+      routerLink="/backoffice/desgravamen/carga-masiva/nuevo"
+    >
+      <i class="fa fa-plus"
+         aria-hidden="true"></i>
+      Agregar trama
+    </a>
+  </section>
+
+  <!-- *Filtro de búsqueda -->
+  <section class="content__filter">
+    <label class="placeholder filter-search">
+      <i class="fa fa-search"
+         aria-hidden="true"></i>
+      <input type="text"
+             placeholder="Buscar"
+             [formControl]="controlSearch"/>
+      <button (click)="showModalAdvancedFilters()"
+              *ngIf="showAdvancedFilters">
+        <i class="fa fa-sliders"
+           aria-hidden="true"></i>
+      </button>
+    </label>
+    <button class="button-default secondary orange button-filter"
+            type="button"
+            (click)="showHideBillingFilters = !showBillingFilters"
+            *ngIf="showButtonBillingFilter">
+      Filtros de facturación
+    </button>
+  </section>
+
+  <!-- Filtros de facturación -->
+  <ng-container *ngIf="showBillingFilters">
+    <section class="content__billing-filter">
+      <form [formGroup]="billingFiltersForm">
+        <!-- Filtro estado -->
+        <label class="placeholder">
+          <div class="content-input">
+            <select formControlName="state">
+              <option [value]="''"
+                      disabled
+                      hidden>
+                Estado
+              </option>
+              <option [value]="5">
+                Emisión completa
+              </option>
+              <option [value]="18">
+                Facturación suspendida
+              </option>
+            </select>
+          </div>
+        </label>
+
+        <!-- Filtro de perioso -->
+        <label class="placeholder">
+          <div class="content-input">
+            <select formControlName="period">
+              <option [value]="''"
+                      disabled
+                      hidden>Filtrar periodo
+              </option>
+              <option *ngFor="let item of payPeriods$"
+                      [value]="item.value">
+                {{ item.label }}
+              </option>
+            </select>
+          </div>
+        </label>
+
+        <!-- Filtro de póliza -->
+        <label class="placeholder">
+          <div class="content-input">
+            <select formControlName="policy">
+              <option [value]="''"
+                      disabled
+                      hidden>Filtrar póliza
+              </option>
+              <option *ngFor="let item of policies$"
+                      [value]="item.id">
+                {{ item.label }}
+              </option>
+            </select>
+          </div>
+        </label>
+
+        <button class="button default secondary orange no-border clear-filters"
+                (click)="resetFormBillingFilters()">
+          Limpiar filtros
+        </button>
+      </form>
+    </section>
+  </ng-container>
+
+  <section class="content__list">
+    <ng-container *ngIf="checkedProcessesLength">
+      <div class="content__list--biller"
+           @fade>
+        <span>
+          {{ checkedProcessesLength }} Items seleccionado
+        </span>
+        <button class="button-default primary orange"
+                (click)="showCloseModalBiller(true)">
+          Facturar
+        </button>
+      </div>
+    </ng-container>
+    <div class="content-table">
+      <table class="table-u">
+        <thead>
+        <tr>
+          <th>
+            <div class="selection orange"
+                 *ngIf="checkedProcessesLength">
+              <input type="checkbox"
+                     id="mark-all-table"
+                     [checked]="isAllItemsChecked"
+                     (change)="checkAllProcesses($event.target.checked)">
+              <label for="mark-all-table"></label>
+            </div>
+          </th>
+          <th>ID Proceso</th>
+          <th>Transacción</th>
+          <th>Contratante</th>
+          <th>Producto/Póliza</th>
+          <th>Canal de venta</th>
+          <th>Moneda/Monto de prima</th>
+          <th>Asegurados</th>
+          <th>Periodo de declaración</th>
+          <th>Fecha y hora de carga</th>
+          <th>Fecha de estado</th>
+          <th>Planilla</th>
+          <th>Fase</th>
+          <th>Estado</th>
+          <th>Resultado</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngIf="!listFilteredProcesses$.length">
+          <tr>
+            <td colspan="15">
+              <span>No se encontraron resultados</span>
+            </td>
+          </tr>
+        </ng-container>
+        <ng-container *ngIf="listFilteredProcesses$.length">
+          <tr *ngFor=" let obj of listFilteredProcesses$ | paginate
+                    : { id: 'list-processes',
+                        currentPage: currentPage,
+                        totalItems: listFilteredProcesses$.length,
+                        itemsPerPage: 10
+                      };
+                let index = index
+              " >
+            <td class="no-padding"
+                [title]="obj.estado != 5 && obj.estado != 18 ? 'No se puede facturar este proceso' : ''">
+              <div class="selection orange"
+                   *ngIf="obj.estado == 5 || obj.estado == 18">
+                <input type="checkbox"
+                       [id]="obj.idProceso"
+                       [checked]="obj.checked"
+                       (change)="checkProcess(obj)">
+                <label [for]="obj.idProceso"></label>
+              </div>
+            </td>
+            <td>{{ obj.idProceso }}</td>
+            <td>{{ obj.transaccion }}</td>
+            <td>{{ obj.contratante }}</td>
+            <td>{{ obj.producto }} - {{ obj.numeroPoliza }}</td>
+            <td>{{ obj.canalVenta }}</td>
+            <td>{{ obj.moneda == 0 ? "S/" : "$"}}{{ obj.precio | number : "1.2-2" }}</td>
+            <td>{{ obj.numeroClientes }}</td>
+            <td>{{ obj.periodoDeclaracion }}</td>
+            <td>{{ obj.fechaCreacion | date : "dd/MM/yyyy hh:mm:ss a" }}</td>
+            <td>{{ obj.estadoFecha ? (obj.estadoFecha | date: "dd/MM/yyyy  hh:mm:ss a") : '-' }}</td>
+            <td>{{ obj.trabajoFacturacion || '-' }}</td>
+            <td><div
+                class="progress-bar"
+                [class.orange]="obj.fase == 1"
+                [class.blue]="obj.fase == 2"
+                [class.green]="obj.fase == 3"
+                [class.billing]="obj.fase == 4"
+              >
+                {{ obj.fase == 1 ? 'Leer' : obj.fase == 2 ? 'Validar' : obj.fase == 3 ? 'Emitir' : obj.fase == 4 ? 'Facturar' : 'Pendiente' }}
+              </div>
+            </td>
+            <td>{{ obj.stateDescription || '-' }}</td>
+            <td><div class="result">
+                <div class="result__success">
+                    <span>
+                      <i class="fa fa-thumbs-o-up"
+                         aria-hidden="true"></i>
+                      {{ obj.tasaExito }}%
+                    </span>
+                  <small>{{ obj.numeroExitos }} éxitos</small>
+                </div>
+                <div class="result__errors">
+                    <span>
+                      <i class="fa fa-thumbs-o-down"
+                         aria-hidden="true"></i>
+                      {{ obj.tasaError }}%
+                    </span>
+                  <small>{{ obj.numeroErrores }} errores</small>
+                </div>
+              </div>
+            </td>
+            <td class="dropdown">
+              <div ngbDropdown [placement]="index >= 5 ? 'top-right' : 'bottom-right'">
+                <button ngbDropdownToggle class="dropdown__button">
+                  <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                </button>
+                <ul ngbDropdownMenu class="dropdown__list">
+                  <li>
+                    <button (click)="getProcessDetail(obj.idProceso)">
+                      <i class="fa fa-eye"></i>
+                      Visualizar carga
+                    </button>
+                  </li>
+                  <li>
+                    <button (click)="navigate('/backoffice/desgravamen/carga-masiva/detalle/' + obj.idProceso)">
+                      <i class="fa fa-file-o"
+                         aria-hidden="true"></i>
+                      Ver detalle
+                    </button>
+                  </li>
+                  <ng-container *ngIf="obj.estado == 3 || obj.estado == 17">
+                    <li>
+                      <button (click)="showModalConfirmEmitProcess(obj, 1)">
+                        <i class="fa fa-file-text-o"
+                           aria-hidden="true"></i>
+                        Emitir y generar recibos
+                      </button>
+                    </li>
+                    <li>
+                      <button (click)="showModalConfirmEmitProcess(obj, 2)">
+                        <i class="fa fa-files-o" aria-hidden="true"></i>
+                        Emitir, generar recibos y facturar
+                      </button>
+                    </li>
+                  </ng-container>
+                  <ng-container *ngIf="false">
+                    <li>
+                        <button (click)="showModalDropFile()">
+                            <i class="fa fa-upload" aria-hidden="true"></i>
+                            Reprocesar
+                        </button>
+                    </li>
+                    <li>
+                      <button (click)="navigate('/backoffice/desgravamen/carga-masiva/historial-reproceso/' + obj.idProceso)">
+                        <i class="fa fa-clock-o" aria-hidden="true"></i>
+                        Historial de reprocesos
+                      </button>
+                    </li>
+                  </ng-container>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+    </div>
+    <pagination-controls
+      id="list-processes"
+      [autoHide]="true"
+      previousLabel="Anterior"
+      nextLabel="Siguiente"
+      (pageChange)="currentPage = $event"
+      *ngIf="listFilteredProcesses$.length"
+    ></pagination-controls>
+  </section>
+</div>
+
+<ng-template #modalAdvancedFilters>
+  <div class="content-modal modal-filters">
+    <section>
+      <div class="modal-header">
+        <button (click)="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form class="form-filter"
+              [formGroup]="formFilters">
+          <div>
+            <pro-select
+              placeholder="Canal"
+              [clearable]="false"
+              [items]="salesChannel$"
+              value="id"
+              label="label"
+              formControlName="salesChannel"
+            ></pro-select>
+          </div>
+          <label
+            for="form-process"
+            class="placeholder"
+            aria-placeholder="ID Proceso"
+          >
+            <input type="text"
+                   id="form-process"
+                   formControlName="processId"/>
+          </label>
+          <div>
+            <pro-select
+              placeholder="Producto"
+              [clearable]="false"
+              [items]="products$"
+              value="id"
+              label="label"
+              formControlName="product"
+            ></pro-select>
+          </div>
+          <div>
+            <pro-select
+              placeholder="Contratante"
+              [clearable]="false"
+              [items]="contractors$"
+              value="id"
+              label="label"
+              formControlName="contractor"
+            ></pro-select>
+          </div>
+          <div>
+            <pro-select
+              placeholder="Estado"
+              [multi]="true"
+              [items]="listStates$"
+              value="id"
+              label="estado"
+              formControlName="state"></pro-select>
+          </div>
+          <div>
+            <pro-select
+              placeholder="Póliza"
+              [clearable]="false"
+              [items]="policies$"
+              value="id"
+              label="label"
+              formControlName="policy"
+            ></pro-select>
+          </div>
+          <div>
+            <pro-select
+              placeholder="Transacción"
+              [clearable]="false"
+              [items]="transactions$"
+              value="id"
+              label="label"
+              formControlName="transaction"
+            ></pro-select>
+          </div>
+          <div class="period-payment-control">
+            <pro-select
+              placeholder="Periodo de pago"
+              [clearable]="false"
+              [items]="payPeriods$"
+              value="value"
+              label="label"
+              class="pay-periods"
+              formControlName="paymentPeriod"
+            ></pro-select>
+          </div>
+          <label
+            for="form-range"
+            class="placeholder dbl-input"
+            aria-placeholder="Rango de carga"
+          >
+            <div>
+              <input
+                type="text"
+                id="form-range"
+                placeholder="Desde"
+                #dp="bsDatepicker"
+                bsDatepicker
+                [bsConfig]="startDateConfig"
+                readonly
+                formControlName="startDate"
+              />
+              <i class="fa fa-calendar"
+                 aria-hidden="true"></i>
+            </div>
+            <div>
+              <input
+                type="text"
+                placeholder="Hasta"
+                #dp="bsDatepicker"
+                bsDatepicker
+                [bsConfig]="endDateConfig"
+                readonly
+                formControlName="endDate"
+              />
+              <i class="fa fa-calendar"
+                 aria-hidden="true"></i>
+            </div>
+          </label>
+        </form>
+      </div>
+      <div class="modal-footer jce">
+        <button
+          class="button-default secondary orange"
+          (click)="resetFormFilters()"
+        >
+          Limpiar
+        </button>
+        <button class="button-default orange"
+                (click)="submitFilters()">
+          Filtrar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalDropFile>
+  <div class="content-modal modal-drop-file">
+    <section>
+      <div class="modal-header">
+        <h6>Reprocesar</h6>
+        <button
+          type="button"
+          role="button"
+          aria-label="cerrar modal"
+          (click)="closeModal()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <ngx-file-drop>
+          <ng-template
+            ngx-file-drop-content-tmp
+            let-openFileSelector="openFileSelector"
+          >
+            <div class="file__drop">
+              <i class="fa fa-cloud-upload"
+                 aria-hidden="true"></i>
+              <div class="file__drop--info">
+                <span>Arrastre y suelte su archivo aquí o</span>
+                <span role="button"
+                      (click)="openFileSelector()"
+                >elija un archivo</span
+                >
+              </div>
+            </div>
+          </ng-template>
+        </ngx-file-drop>
+        <div class="progress">
+          <div class="progress__info">
+            <i class="fa fa-file-o"
+               aria-hidden="true"></i>
+            <span>lorem.xlsx</span>
+          </div>
+          <button class="button-close">
+            <i class="fa fa-times"
+               aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          class="button-default secondary orange"
+          type="button"
+          role="button"
+          (click)="closeModal()"
+        >
+          Cancelar
+        </button>
+        <button class="button-default orange"
+                type="button"
+                role="button">
+          Reprocesar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalViewLoad>
+  <div class="content-modal modal-view-load">
+    <section>
+      <div class="modal-header">
+        <button
+          type="button"
+          role="button"
+          aria-label="cerrar modal"
+          (click)="closeModal()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="load read">
+          <div class="load__title">
+            <span>Leer</span>
+            <!-- <span>
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              30m
+              <i class="fa fa-check-circle" aria-hidden="true"></i>
+            </span> -->
+          </div>
+          <div class="load__progress">
+            <div [class.active]="processDetail$.phase1.tasaExito > 0"></div>
+            <div [class.active]="processDetail$.phase1.tasaExito >= 20"></div>
+            <div [class.active]="processDetail$.phase1.tasaExito >= 40"></div>
+            <div [class.active]="processDetail$.phase1.tasaExito >= 60"></div>
+            <div [class.active]="processDetail$.phase1.tasaExito >= 80"></div>
+            <div [class.active]="processDetail$.phase1.tasaExito == 100"></div>
+          </div>
+          <div class="load__result">
+            <div class="result__success">
+              <div class="result__success--icon">
+                <i class="fa fa-thumbs-o-up"
+                   aria-hidden="true"></i>
+                <span> {{ processDetail$.phase1.tasaExito || 0 }}% </span>
+              </div>
+              <span>{{ processDetail$.phase1.numeroExitos || 0 }} éxitos</span>
+            </div>
+            <div class="result__errors">
+              <div class="result__errors--icon">
+                <i class="fa fa-thumbs-o-down"
+                   aria-hidden="true"></i>
+                <span> {{ processDetail$.phase1.tasaError || 0 }}% </span>
+              </div>
+              <span
+              >{{ processDetail$.phase1.numeroErrores || 0 }} errores</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="load validate">
+          <div class="load__title">
+            <span>Validar</span>
+            <!-- <span>
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              30m
+              <i class="fa fa-check-circle" aria-hidden="true"></i>
+            </span> -->
+          </div>
+          <div class="load__progress">
+            <div [class.active]="processDetail$.phase2.tasaExito > 0"></div>
+            <div [class.active]="processDetail$.phase2.tasaExito >= 20"></div>
+            <div [class.active]="processDetail$.phase2.tasaExito >= 40"></div>
+            <div [class.active]="processDetail$.phase2.tasaExito >= 60"></div>
+            <div [class.active]="processDetail$.phase2.tasaExito >= 80"></div>
+            <div [class.active]="processDetail$.phase2.tasaExito == 100"></div>
+          </div>
+          <div class="load__result">
+            <div class="result__success">
+              <div class="result__success--icon">
+                <i class="fa fa-thumbs-o-up"
+                   aria-hidden="true"></i>
+                <span> {{ processDetail$.phase2.tasaExito || 0 }}% </span>
+              </div>
+              <span>{{ processDetail$.phase2.numeroExitos || 0 }} éxitos</span>
+            </div>
+            <div class="result__errors">
+              <div class="result__errors--icon">
+                <i class="fa fa-thumbs-o-down"
+                   aria-hidden="true"></i>
+                <span> {{ processDetail$.phase2.tasaError || 0 }}% </span>
+              </div>
+              <span
+              >{{ processDetail$.phase2.numeroErrores || 0 }} errores</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="load migrate">
+          <div class="load__title">
+            <span>Emitir</span>
+            <!-- <span>
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              30m
+              <i class="fa fa-check-circle" aria-hidden="true"></i>
+            </span> -->
+          </div>
+          <div class="load__progress">
+            <div [class.active]="processDetail$.phase3.tasaExito > 0"></div>
+            <div [class.active]="processDetail$.phase3.tasaExito >= 20"></div>
+            <div [class.active]="processDetail$.phase3.tasaExito >= 40"></div>
+            <div [class.active]="processDetail$.phase3.tasaExito >= 60"></div>
+            <div [class.active]="processDetail$.phase3.tasaExito >= 80"></div>
+            <div [class.active]="processDetail$.phase3.tasaExito == 100"></div>
+          </div>
+          <div class="load__result">
+            <div class="result__success">
+              <div class="result__success--icon">
+                <i class="fa fa-thumbs-o-up"
+                   aria-hidden="true"></i>
+                <span> {{ processDetail$.phase3.tasaExito || 0 }}% </span>
+              </div>
+              <span>{{ processDetail$.phase3.numeroExitos || 0 }} éxitos</span>
+            </div>
+            <div class="result__errors">
+              <div class="result__errors--icon">
+                <i class="fa fa-thumbs-o-down"
+                   aria-hidden="true"></i>
+                <span> {{ processDetail$.phase3.tasaError || 0 }}% </span>
+              </div>
+              <span
+              >{{ processDetail$.phase3.numeroErrores || 0 }} errores</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="load migrate">
+          <div class="load__title">
+            <span>Facturar</span>
+            <!-- <span>
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              30m
+              <i class="fa fa-check-circle" aria-hidden="true"></i>
+            </span> -->
+          </div>
+          <div class="load__progress">
+            <div [class.active]="processDetail$.phase4.tasaExito > 0"></div>
+            <div [class.active]="processDetail$.phase4.tasaExito >= 20"></div>
+            <div [class.active]="processDetail$.phase4.tasaExito >= 40"></div>
+            <div [class.active]="processDetail$.phase4.tasaExito >= 60"></div>
+            <div [class.active]="processDetail$.phase4.tasaExito >= 80"></div>
+            <div [class.active]="processDetail$.phase4.tasaExito == 100"></div>
+          </div>
+          <div class="load__result">
+            <div class="result__success">
+              <div class="result__success--icon">
+                <i class="fa fa-thumbs-o-up"
+                   aria-hidden="true"></i>
+                <span> {{ processDetail$.phase4.tasaExito || 0 }}% </span>
+              </div>
+              <span>{{ processDetail$.phase4.numeroExitos || 0 }} éxitos</span>
+            </div>
+            <div class="result__errors">
+              <div class="result__errors--icon">
+                <i class="fa fa-thumbs-o-down"
+                   aria-hidden="true"></i>
+                <span> {{ processDetail$.phase4.tasaError || 0 }}% </span>
+              </div>
+              <span
+              >{{ processDetail$.phase4.numeroErrores || 0 }} errores</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalBiller>
+  <div class="content-modal modal-biller">
+    <section>
+      <div class="modal-header">
+        <h6 class="modal__header--tile">Facturar</h6>
+        <button class="modal__header--close"
+                role="button"
+                type="button"
+                aria-label="cerrar"
+                (click)="showCloseModalBiller(false)">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="content-table">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>ID Proceso</th>
+              <th>Póliza</th>
+              <th>Periodo</th>
+              <th>Cantidad de recibos</th>
+              <th>Monto soles</th>
+              <th>Tipo de facturación</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of listCheckedProcesses | paginate: {
+              id: 'list-biller',
+              currentPage: currentPageBiller,
+              totalItems: listCheckedProcesses.length,
+              itemsPerPage: 10
+            }; let index = index">
+              <td>{{ item.idProceso }}</td>
+              <td>{{ item.numeroPoliza }}</td>
+              <td>{{ item.periodoDeclaracion }}</td>
+              <td>{{ item.numeroExitos }}</td>
+              <td>{{ item.precio | number: "1.2-2" }}</td>
+              <td>{{ item.billingTypeDescription || '-' }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <pagination-controls
+          id="list-biller"
+          [autoHide]="true"
+          (pageChange)="currentPageBiller = $event"
+          previousLabel="Anterior"
+          nextLabel="Siguiente"></pagination-controls>
+      </div>
+      <div class="modal-footer">
+        <button class="button fit secondary orange"
+                (click)="showCloseModalBiller(false)">
+          Cancelar
+        </button>
+        <button class="button fit primary orange"
+                (click)="billingProcess()">
+          Facturar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalConfirmEmitProcess>
+  <div class="content-modal">
+    <section class="modal-confirm-emit-process">
+      <div class="modal-header">
+        <h6>
+          {{ processSelected.processType == 1 ? 'Emitir y generar recibos' : 'Emitir, generar recibos y facturar' }}
+        </h6>
+      </div>
+      <div class="modal-body">
+        <p class="paragraph">
+          ¿Está seguro de continuar con el proceso elegido?
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="button secondary orange fit"
+                (click)="closeModal()">
+          Cancelar
+        </button>
+        <button class="button primary orange fit"
+                (click)="emitProcess()">
+          Continuar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalResponse>
+  <div class="content-modal">
+    <section class="modal-response">
+      <div class="modal-header">
+        <h6>Mensaje</h6>
+        <button aria-label="close modal"
+                (click)="closeModalResponse()">&times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <ng-container *ngIf="responseInfo.showImage">
+          <i class="fa fa-check"
+             aria-hidden="true"
+             *ngIf="responseInfo.success"></i>
+          <i class="fa fa-times"
+             aria-hidden="true"
+             *ngIf="!responseInfo.success"></i>
+        </ng-container>
+        <p class="paragraph">
+          {{ responseInfo.message }}
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="button primary orange fit"
+                (click)="closeModalResponse()">
+          Aceptar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>

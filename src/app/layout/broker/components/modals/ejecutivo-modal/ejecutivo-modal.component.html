@@ -1,0 +1,78 @@
+<div class="padding-modal">
+  <div class="modal-header border-none">
+    <h4 class="modal-title title-re" id="modal-basic-title">
+      Asignar Analista
+    </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="formModalReference.dismiss()"
+      value="&times;"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container-one-section">
+      <form-input-select-re
+        [items]="opcionesEjecutivos"
+        [itemsArray]="true"
+        fieldCodigo="codigo"
+        fieldValor="valor"
+        [firstSelect]="true"
+        [disabled]="listActions.ASIGNAR_EJECUTIVO_LIST == 'TRUE' ? false : true"
+        [(value)]="inputs.P_EJECUTIVO"
+      ></form-input-select-re>
+    </div>
+    <div class="container-two-section">
+      <div class="table-responsive">
+        <table class="table">
+          <thead class="t-head">
+            <tr class="grid-title">
+              <th class="grid-title-item">Analista responsable</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+          <tbody>
+            <ng-container>
+              <tr *ngIf="ejecutivos.length === 0" class="grid-title row-item">
+                <td class="grid-item">
+                  Debes seleccionar un Analista responsable
+                </td>
+              </tr>
+              <tr *ngIf="ejecutivos.length > 0" class="grid-title row-item">
+                <td class="grid-item">{{ inputs.P_EJECUTIVO.valor }}</td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer border-none">
+    <button
+      [style.background]="
+        listActions?.ASIGNAR_EJECUTIVO_C == 'TRUE' ? '#fff' : '#8385B4'
+      "
+      [disabled]="listActions.ASIGNAR_EJECUTIVO_C == 'TRUE' ? false : true"
+      class="button-cancelar"
+      (click)="formModalReference.dismiss()"
+      class="button-cancelar"
+      (click)="formModalReference.dismiss()"
+    >
+      <span>Cancelar</span>
+    </button>
+    <button
+      [style.background]="
+        listActions?.ASIGNAR_EJECUTIVO_A == 'TRUE' ? '#79CB33' : '#8385B4'
+      "
+      [disabled]="listActions.ASIGNAR_EJECUTIVO_A == 'TRUE' ? false : true"
+      class="button-Guardar"
+      (click)="select()"
+    >
+      <span>Seleccionar</span>
+    </button>
+  </div>
+</div>

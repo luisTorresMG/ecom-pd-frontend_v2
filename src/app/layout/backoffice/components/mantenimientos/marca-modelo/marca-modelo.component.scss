@@ -1,0 +1,239 @@
+@import "backoffice";
+@import "modal";
+@import "variables";
+
+.content {
+    padding: 1rem;
+}
+
+.form {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid $purple;
+}
+
+.content__filters {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.formFilters__group {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1rem;
+    align-items: flex-end;
+    max-width: 1040px;
+}
+
+.ffg2 {
+    margin-top: 1rem;
+}
+
+.marcas__actions,
+.modelos__actions,
+.versiones__actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.content__table {
+    overflow: auto;
+
+    @media (min-width: 640px) {
+        overflow: visible;
+    }
+}
+
+.tblMarca__head--row-actions,
+.tblModelo__head--row-actions,
+.tblVersiones__head--row-actions {
+    width: 80px;
+    min-width: 80px;
+}
+
+.tblMarca__head--row-createdat,
+.tblMarca__head--row-dateupdate,
+.tblModelo__head--row-createdat,
+.tblModelo__head--row-dateupdate,
+.tblVersiones__head--row-createdat,
+.tblVersiones__head--row-dateupdate {
+    min-width: 135px;
+    width: 135px;
+}
+
+.tblMarca__head--row-desc,
+.tblModelo__head--row-desc,
+.tblVersiones__head--row-desc,
+.tblVersion__head--row-descDetail {
+    width: 220px;
+}
+
+.tblMarca__head--row-code,
+.tblModelo__head--row-code,
+.tblVersiones__head--row-code {
+    min-width: 90px;
+    width: 90px;
+}
+
+.tblMarca__head--row-state,
+.tblModelo__head--row-state,
+.tblVersiones__head--row-state {
+    min-width: 105px;
+    width: 105px;
+}
+
+@media (min-width: 640px) {
+    .ffg1 {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 840px;
+    }
+
+    .ffg2 {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 420px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .content__filters {
+        flex-direction: row;
+        align-items: flex-end;
+    }
+
+    .ffg2 {
+        margin-top: 0;
+        margin-left: 1rem;
+    }
+}
+
+.modal__header {
+    margin-top: 0;
+    justify-content: center;
+}
+
+.modal__header--title {
+    margin: 0;
+    text-align: center;
+}
+
+.row-selected {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.tbl__body--row:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.modal__body--desc {
+    font-size: 18px;
+    text-align: center;
+    color: #553d81;
+}
+
+.frmCreateModel,
+.frmCreateVersion {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1rem;
+
+    span.input-u {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.modalCreateMark {
+    width: 450px;
+    max-height: 500px;
+    color: #553d81;
+
+    .modal__header--title {
+        text-align: center;
+    }
+
+    .modal__body {
+        max-height: 400px;
+
+        input {
+            text-transform: uppercase;
+        }
+    }
+}
+
+.modalCreateModel {
+    width: 600px;
+    max-width: 900px;
+    max-height: 600px !important;
+    color: #553d81;
+
+    .modal__header--title {
+        text-align: center;
+    }
+
+    .modal__body {
+        max-height: 400px;
+
+        input {
+            text-transform: uppercase;
+        }
+    }
+}
+
+.modalCreateVersion {
+    max-width: 780px;
+    color: #553d81;
+
+    .modal__header--title {
+        text-align: center;
+    }
+
+    .modal__body {
+        input {
+            text-transform: uppercase;
+        }
+    }
+}
+
+.has-error {
+    color: red;
+}
+
+
+.btn-created {
+    border: none;
+    background-color: #fff;
+    color: #553d81;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+}
+
+.list-modal {
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: 1PX 1px 1PX rgba(0, 0, 0, 0.15);
+
+    ul {
+        box-shadow: 1PX 1px 1PX rgba(0, 0, 0, 0.15);
+    }
+
+    li {
+        list-style: none;
+        color: #aa9ec0;
+        padding-left: 3px;
+    }
+}
+
+.dropdown-mark {
+  transform: translate(-35px, 42px) !important; 
+}
+.dropdown-model {
+  transform: translate(-25px, 42px) !important;
+}
+.dropdown-version {
+  transform: translate(-18px, 42px) !important;
+}

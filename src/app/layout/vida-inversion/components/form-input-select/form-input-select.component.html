@@ -1,0 +1,12 @@
+
+<label class="placeholder-u" [class.label-inline]="labelInline" [attr.aria-placeholder]="text_label" [title]="text_label">
+  <select *ngIf="!detail" [ngModel]="value" (ngModelChange)="onChange($event)" (change)="onSelectItem();" [class.input-u]="default"
+    [style]="formStyle"
+    [class.input-u-large]="large"  [class.input-u-extralarge]="extra_large"  [disabled]="disabled">
+    <option *ngFor="let item of items" [ngValue]="item">
+      {{isValue ? item : item?.text}}
+    </option>
+  </select>
+
+  <!-- <input *ngIf="detail" type="text" value="{{isValue ? value : value?.text}}" [disabled]="true" /> -->
+</label>

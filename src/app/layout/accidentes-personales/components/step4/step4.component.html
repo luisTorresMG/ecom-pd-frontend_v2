@@ -1,0 +1,242 @@
+<main class="container-fluid px-0 py-0 mx-0 my-0">
+  <div class="max-width-to-center">
+    <div class="bc-1"></div>
+    <div class="row px-0 py-0 mx-0 my-0">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+        <app-show-steps [NSTEP]="4"></app-show-steps>
+      </div>
+    </div>
+    <div class="row px-0 py-0 mx-0 my-0">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+        <a class="back-step"
+           [routerLink]="'../step3'">
+          <i class="fa fa-caret-left fa-lg mr-2"
+             aria-hidden="true"></i>
+          Regresar al paso 3</a>
+      </div>
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+        <h1 class="title-step">
+          4. Valida los datos de <b>cotización</b>
+        </h1>
+      </div>
+    </div>
+    <div class="row px-0 py-0 mx-0 my-0">
+      <div class="col-lg-6 mx-0 my-0 px-0 py-0 col-type-plan">
+        <div class="type-plan d-flex flex-column align-items-center">
+          <span>Plan 1</span>
+          <b>S/100</b>
+          <small>Mensual</small>
+        </div>
+      </div>
+      <div class="col-lg-6 mx-0 my-0 px-0 py-0 col-desc-plan">
+        <div class="desc-plan">
+          <small class="desc-plan-small">Categoría</small>
+          <span class="desc-plan-span">Seguros Personales</span>
+          <small class="desc-plan-small mt-2">Producto</small>
+          <span class="desc-plan-span">Familiar</span>
+        </div>
+      </div>
+    </div>
+    <div class="row mx-0 my-0 px-0 py-0 mt-5">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0 mb-2">
+        <span class="count-asegurados">Tienes (1) asegurado agregado</span>
+      </div>
+    </div>
+    <div class="row mx-0 my-0 px-0 py-0 mb-4">
+      <div class="content-list-asegurados col-lg-12 mx-0 my-0 px-0 py-0">
+        <div class="content-asegurado d-flex flex-row align-items-center justify-content-between">
+          <span>32165478</span>
+          <span>Cooper</span>
+          <span>Fox</span>
+          <span>James</span>
+          <span>Masculino</span>
+          <span>15/08/99</span>
+          <span>Perú</span>
+        </div>
+        <div class="cont-actions-asegurados mt-2 d-flex align-items-center justify-content-between">
+          <button class="btn-action-aseg btn-aseg-add">
+            <i class="fa fa-plus mr-2"
+               aria-hidden="true"></i>Agregar</button>
+          <button class="btn-action-aseg btn-aseg-drop">
+            <i class="fa fa-times mr-2"
+               aria-hidden="true"></i>Eliminar</button>
+        </div>
+      </div>
+    </div>
+    <form class="row mx-0 my-0 px-0 py-0">
+      <div class="col-lg-6 mx-0 my-0 py-0 container-inputs">
+        <div class="content-dbl-input">
+          <div class="content-input">
+            <select class="in">
+              <option value="1">DNI</option>
+              <option value="2">CE</option>
+            </select>
+          </div>
+          <div class="content-input">
+            <!-- [ngClass]="{'in-with-title-active': form.get('ndoc').value.length > 0}" -->
+            <input type="text"
+                   class="in-with-title-desactive in"
+                   id="in-ndoc">
+            <!-- [ngClass]="{'lbl-in-title-active': form.get('ndoc').value.length > 0}" -->
+            <label for="in-ndoc"
+                   class="lbl-in-title-desactive">Número de documento</label>
+          </div>
+        </div>
+        <div class="content-input">
+          <!-- [ngClass]="{'in-with-title-active': form.get('apepat').value.length > 0}" -->
+          <input type="text"
+                 class="in-with-title-desactive in"
+                 id="in-lastname">
+          <!-- [ngClass]="{'lbl-in-title-active': form.get('apepat').value.length > 0}" -->
+          <label for="in-lastname"
+                 class="lbl-in-title-desactive">Apellido Paterno</label>
+        </div>
+        <div class="content-input">
+          <select class="in in-width-title-desactive"
+                  id="in-department">
+            <option value="0"
+                    disabled
+                    selected
+                    hidden></option>
+            <option value="1">Hombre</option>
+            <option value="2">Mujer</option>
+          </select>
+          <!-- [ngClass]="{'lbl-in-title-active': form.get('departamento').value > 0}" -->
+          <label for="in-department"
+                 class="lbl-in-title-desactive">Sexo</label>
+        </div>
+      </div>
+      <div class="col-lg-6 mx-0 my-0 py-0 container-inputs">
+        <div class="content-input">
+          <!-- [ngClass]="{'in-with-title-active': form.get('names').value.length > 0}" -->
+          <input type="text"
+                 class="in-with-title-desactive in"
+                 id="in-names">
+          <!-- [ngClass]="{'lbl-in-title-active': form.get('names').value.length > 0}" -->
+          <label for="in-names"
+                 class="lbl-in-title-desactive">Nombres</label>
+        </div>
+        <div class="content-input">
+          <!-- [ngClass]="{'in-with-title-active': form.get('apemat').value.length > 0}" -->
+          <input type="text"
+                 class="in-with-title-desactive in"
+                 id="in-apemat">
+          <!-- [ngClass]="{'lbl-in-title-active': form.get('apemat').value.length > 0}" -->
+          <label for="in-apemat"
+                 class="lbl-in-title-desactive">Apellido Materno</label>
+        </div>
+        <div class="content-input">
+          <select class="in in-width-title-desactive"
+                  id="in-distric">
+            <option value="0"
+                    disabled
+                    selected
+                    hidden></option>
+            <option value="1">Perú</option>
+          </select>
+          <!-- [ngClass]="{'lbl-in-title-active': form.get('distrito').value > 0}" -->
+          <label for="in-distric"
+                 class="lbl-in-title-desactive">País de nacimiento</label>
+        </div>
+      </div>
+    </form>
+    <div class="col-lg-12 mx-0 my-0 py-0 px-0 mt-3">
+      <label class="lbl-fecha-nac">Fecha de nacimiento</label>
+      <div class="content-inputs-date content-input">
+        <select class="in"
+                id="in-distric">
+          <option value="0"
+                  disabled
+                  selected>Día</option>
+          <option value="1">1</option>
+        </select>
+        <select class="in"
+                id="in-distric">
+          <option value="0"
+                  disabled
+                  selected>Mes</option>
+          <option value="2">Febrero</option>
+        </select>
+        <select class="in"
+                id="in-distric">
+          <option value="0"
+                  disabled
+                  selected>Año</option>
+          <option value="1999">1999</option>
+        </select>
+      </div>
+    </div>
+    <div class="row mx-0 my-0 px-0 py-0 mt-5 text-center">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+        <button type="button"
+                [routerLink]="'/accidentes-personales/step3'"
+                class="btn-back"><i class="fa fa-angle-left mr-2"
+             aria-hidden="true"></i>Anterior</button>
+        <!-- [disabled]="form.invalid" -->
+        <button type="submit"
+                class="btn-submit"
+                [routerLink]="'/accidentes-personales/step5'"
+                [disabled]="false">Siguiente<i class="fa fa-angle-right ml-2"
+             aria-hidden="true"></i></button>
+      </div>
+    </div>
+  </div>
+  <app-questions></app-questions>
+</main>
+<div class="modal fade"
+     bsModal
+     #modalBenf="bs-modal">
+  <div class="modal-dialog"
+       role="document">
+    <form class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"
+            id="exampleModalLabel">AÑADE LOS SIGUIENTES DATOS DEL BENEFICIARIO</h5>
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="content-modal-inputs">
+          <div class="inputs2">
+            <select class="in-action"
+                    formControlName="docType">
+              <option value="DNI">DNI</option>
+            </select>
+            <input type="number"
+                   class="in-action"
+                   formControlName="nDocument"
+                   placeholder="Número de documento">
+          </div>
+          <input type="text"
+                 class="in-action"
+                 formControlName="nombres"
+                 placeholder="Nombres">
+          <input type="text"
+                 class="in-action"
+                 formControlName="apePat"
+                 placeholder="Apellido Paterno">
+          <input type="text"
+                 class="in-action"
+                 formControlName="apeMat"
+                 placeholder="Apellido Materno">
+          <select class="in-action"
+                  formControlName="parentesco">
+            <option value="Parentesco">Parentesco</option>
+          </select>
+          <input type="number"
+                 class="in-action"
+                 formControlName="porcentaje"
+                 placeholder="Porcentaje asignado (%)">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit"
+                class="btn full-color btn-aceptar-modal">Agregar</button>
+      </div>
+    </form>
+  </div>
+</div>

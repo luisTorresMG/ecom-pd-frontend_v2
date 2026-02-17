@@ -1,0 +1,207 @@
+.mx-wd {
+  max-width: 900px;
+  margin: 0 auto !important;
+}
+@media (max-width: 998px) {
+  .bc1,
+  .bc1::before {
+    display: none;
+  }
+  .content-ifo-ap {
+    justify-content: center !important;
+  }
+}
+.bc1 {
+  background-image: url("/assets/accidentes-personales/bc-step0.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 470px;
+  height: 461px;
+  background-position: right;
+  margin-right: 2rem;
+}
+.bc1::before {
+  content: "";
+  border-radius: 400px;
+  width: 1327px;
+  z-index: -1;
+  height: 1189px;
+  display: block;
+  transform: rotate(-63deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  position: absolute;
+  top: -779px;
+  right: -0px;
+  background-color: #f3f1f6;
+  -webkit-border-radius: 400px;
+  -moz-border-radius: 400px;
+  -ms-border-radius: 400px;
+  -o-border-radius: 400px;
+}
+.info-ap {
+  text-align: center;
+  max-width: 500px;
+}
+.title-ap {
+  color: #2b0d61;
+  font-size: 40px;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+.desc-ap {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 23px;
+}
+.select-cat {
+  display: block;
+  text-align: center;
+  font-size: 35px;
+  color: #2b0d61;
+  margin-bottom: 4rem;
+  margin-top: 3rem;
+  line-height: normal;
+}
+.product-ap {
+  text-align: center;
+  cursor: pointer;
+  height: 100%;
+}
+.product-ap:hover > .title-product {
+  color: #ed6e00 !important;
+}
+.title-product {
+  font-size: 30px;
+  color: #2b0d61;
+  margin: 1rem 0;
+  line-height: normal;
+  display: block;
+}
+.sub-products {
+  max-width: 100% !important;
+  background-color: #f3f1f6;
+  padding: 4rem 0 !important;
+}
+.cont-sb-prod {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-around;
+  margin: auto;
+  max-width: 1056px;
+}
+.content-sub-product {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  max-width: 265px;
+  min-width: 265px;
+}
+.csp-chld {
+  margin-right: 2rem;
+}
+.csp-chld:last-child {
+  margin-right: 0 !important;
+}
+.btn-action-sub-product {
+  background-color: #fff;
+  color: #ed6e00;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  min-width: 140px;
+  padding: 0.25rem;
+  margin-top: 2rem;
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+}
+.btn-action-sub-product:hover {
+  background-color: #ed6e00;
+  color: #fff;
+  border: 1px solid #ed6e00;
+}
+.product-ap:hover .img-product path {
+  stroke: #ed6e00;
+  fill: #fff0e5;
+}
+.product-ap:hover .img-product path:first-child {
+  stroke: none !important;
+}
+.more-info {
+  margin-top: 1rem;
+  text-decoration: underline;
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.6);
+}
+.more-info:hover {
+  color: #ed6e00 !important;
+}
+.title-sub-product {
+  margin-top: 1rem;
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.65);
+}
+.title-sub-products {
+  font-weight: bold;
+  color: #2b0d61;
+  font-size: 40px;
+  text-align: center;
+  width: 100%;
+  display: block;
+  margin-bottom: 3rem;
+}
+.chk-style::before {
+  width: 19px;
+  height: 19px;
+  font-size: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  content: "✔";
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  background-color: #fff;
+  color: #fff;
+  margin-right: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.chk:checked + .chk-style::before {
+  content: "✔";
+  background-color: #ed6e00;
+  border: 1px solid #ed6e00;
+  color: #fff;
+}
+.chk-style {
+  margin-top: 1rem;
+  max-width: 265px;
+  font-size: 14px;
+  user-select: none;
+  text-align: center;
+}
+@media (max-width: 1180px) {
+  .cont-sb-prod {
+    flex-direction: column !important;
+  }
+  .csp-chld {
+    margin-right: 0;
+    margin-bottom: 2rem;
+  }
+  .csp-chld:last-child {
+    margin: 0 !important;
+  }
+}

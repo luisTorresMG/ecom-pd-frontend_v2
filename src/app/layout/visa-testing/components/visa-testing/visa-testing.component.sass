@@ -1,0 +1,39 @@
+@import "variables"
+@import "standard"
+
+.content
+  padding: 1.5rem
+  display: flex
+  align-items: center
+  justify-content: center
+  flex-direction: column
+  gap: 1.5rem
+  width: 100%
+  min-height: 100vh
+
+.visa-image
+  width: 100%
+  max-width: 215px
+  margin: auto
+  margin-top: 1rem
+
+  @media (min-width: 440px)
+    grid-column-end: 3
+    grid-column-start: 1
+
+.form
+  width: 100%
+  max-width: 480px
+  display: grid
+  grid-template-columns: 1fr
+  gap: 1rem
+  align-items: flex-end
+
+  button
+    margin-left: auto
+
+  @media (min-width: 440px)
+    grid-template-columns: repeat(2, 1fr)
+
+    button
+      grid-column-end: 3

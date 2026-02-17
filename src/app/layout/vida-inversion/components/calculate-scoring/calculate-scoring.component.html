@@ -1,0 +1,36 @@
+<div class="row justify-content-md-center mt-3" *ngIf="isScoreDisplayed">
+  <div class="col col-lg-12 border rounded-5 px-5 py-4">
+    <div class="text-center">
+      <h5 class="text-color font-weight-bold">Scoring del {{getTitle()}}</h5>
+    </div>
+
+    <div class="text-center mt-2">
+      <!-- Show "Calcular" button only if the score hasn't been calculated -->
+      <button
+        class="btn btn-gray py-2 px-4 rounded-5"
+        type="button"
+        (click)="getCalculatedScore()"
+        *ngIf="isAllowToCalculate"
+        [disabled]="isLoading"
+      >
+        <span *ngIf="!isLoading">Calcular</span>
+        <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      </button>
+
+      <!-- Score Display with Tooltip (if applicable) -->
+      <h4
+        class="my-3 qualification-color font-weight-bold text-center"
+        [attr.title]="scoreMessage || null"
+      >
+        {{ scoreQualification }}
+      </h4>
+    </div>
+
+    <!-- Show comments if available -->
+    <div class="text-center mt-2" *ngIf="comments?.length > 0">
+      <small class="text-color font-weight-bold">
+        ({{ comments[0].SDESCRIPTION }})
+      </small>
+    </div>
+  </div>
+</div>

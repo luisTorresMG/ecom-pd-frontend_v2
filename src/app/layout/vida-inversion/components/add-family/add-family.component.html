@@ -1,0 +1,199 @@
+<div class="container-modal">
+
+    <div class="container-title-modal">
+        <h3>Relación de Parientes - Contratante</h3>
+    </div>
+
+    <div class="container-form d-flex flex-wrap">
+
+        <div class="d-flex align-items-center col-lg-6 mb-0  px-0">
+            <div class="col-lg-4 mb-0 px-0">
+                <div>Tipo de Pariente</div>
+            </div>
+            <div class="col-lg-8 mb-0 px-0">
+                <form-input-select [extra_large]="true"
+                                   [items]="list_relationship_type"
+                                   [updateModelOnChange]="true"
+                                   fieldCodigo="COD_ELEMENTO"
+                                    fieldValor="GLS_ELEMENTO"
+                                   [(value)]="relatives.pnrelation"
+                                   [itemsArray]="true"
+                                   [firstSelect]="true"
+                                   [disabled]="profile_id == 192"></form-input-select>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center col-lg-6 mb-0 ">
+            <div class="col-lg-4 mb-0 px-0">
+                <div>Nacionalidad</div>
+            </div>
+            <div class="col-lg-8 mb-0 px-0"
+                 style="margin-bottom: -8px !important;">
+                <form-input-text [(value)]="relatives.psnationality"
+                [patternPrevent]="CONSTANTS.REGEX.LETRAS"
+                [disabled]="profile_id == 192"></form-input-text>
+
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center col-lg-6 mb-0  px-0">
+            <div class="col-lg-4 mb-0 px-0">
+                <div>Tipo de documento</div>
+            </div>
+            <div class="col-lg-8 mb-0 px-0">
+                <form-input-select [extra_large]="true"
+                                   [items]="list_document_type"
+                                   [itemsArray]="true"
+                                   [firstSelect]="true"
+                                   [updateModelOnChange]="true"
+                                   fieldCodigo="Id"
+                                   fieldValor="Name"
+                                   [(value)]="relatives.pntypedoc"
+                                   (onSelect)="changeDocumentType()"
+                                   [disabled]="profile_id == 192"></form-input-select>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center col-lg-6 mb-0">
+            <div class="col-lg-4 mb-0 px-0">
+                <div>Número de documento</div>
+            </div>
+            <div class="col-lg-8 mb-0 px-0"
+                 style="margin-bottom: -8px !important;">
+                <form-input-text [(value)]="relatives.psnumdoc"
+                [patternPrevent]="CONSTANTS.REGEX[relatives.pntypedoc?.Id]"
+                [disabled]="profile_id == 192"></form-input-text>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center col-lg-6 mb-0  px-0">
+            <div class="col-lg-4 mb-0 px-0">
+                <div>Nombres</div>
+            </div>
+            <div class="col-lg-8 mb-0 px-0"
+                 style="margin-bottom: -8px !important;">
+                <form-input-text [(value)]="relatives.psnames"
+                [patternPrevent]="CONSTANTS.REGEX.LETRAS"
+                [disabled]="profile_id == 192"></form-input-text>
+
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center col-lg-6 mb-0">
+            <div class="col-lg-4 mb-0 px-0">
+                <div>Apellidos</div>
+            </div>
+            <div class="col-lg-8 mb-0 px-0"
+                 style="margin-bottom: -8px !important;">
+                <form-input-text [(value)]="relatives.pslastnames"
+                [patternPrevent]="CONSTANTS.REGEX.LETRAS"
+                [disabled]="profile_id == 192"></form-input-text>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center col-lg-6 mb-0  px-0">
+            <div class="col-lg-4 px-0">
+                <div></div>
+            </div>
+            <div class="col-lg-8 px-0"
+                 style="display: flex;flex-direction: row; gap: 4px; justify-content: space-evenly;">
+                <form-button label="Grabar"
+                             btnClass="btn-primary-VI"
+                             *ngIf="toggle_edit_relative && profile_id == 191"
+                             (click)="updateRelative()"></form-button>
+                <form-button label="Cancelar"
+                             btnClass="btn-primary-VI"
+                             *ngIf="toggle_edit_relative && profile_id == 191"
+                             (click)="cancelRelative()"></form-button>
+            </div>
+
+        </div>
+
+        <div class="d-flex align-items-center col-lg-12 mb-1 px-0">
+            <form-button label="Agregar"
+                         btnClass="btn-primary-VI"
+                         *ngIf="toggle_add_relative && profile_id == 191"
+                         (click)="addRelative()"></form-button>
+        </div>
+
+
+
+        <div class="grid form-group col-lg-12 mb-3 px-0">
+            <div class="table-responsive "
+                 id="table-scroll"
+                 style="margin-top: 9px;">
+                <table class="table-u">
+                    <thead class="grid-title">
+                        <th class="grid-title-item">Descripción</th>
+                        <th class="grid-title-item">Tipo de pariente</th>
+                        <th class="grid-title-item">Apellidos y Nombres</th>
+                        <th class="grid-title-item">Doc Identidad</th>
+                        <th class="grid-title-item">Nacionalidad</th>
+                        <th class="grid-title-item">Acciones</th>
+                    </thead>
+                    <tbody style="text-transform: uppercase;">
+                        <ng-container *ngIf="!relatives_list?.length">
+                            <tr class="grid-body">
+                                <td class="grid-body-item"
+                                    colspan="12"
+                                    style="text-align: center">
+                                    No hay informacion para mostrar
+                                </td>
+                            </tr>
+                        </ng-container>
+                        <ng-container *ngIf="!!relatives_list?.length">
+                            <tr class="grid-body"
+                                *ngFor="let item of relatives_list">
+                                <td class="grid-title-item">{{ item.psdescript }}</td>
+                                <td class="grid-title-item">{{ item.pnomrelation }}</td>
+                                <td class="grid-title-item">{{ item.pscliename}} </td>
+                                <td class="grid-title-item">{{ item.pntnumdoc }}</td>
+                                <td class="grid-title-item">{{ item.psnationality}}</td>
+                                <td>
+                                    <div style="display: flex; justify-content: center; text-transform: capitalize;" *ngIf="profile_id == 191">
+                                        <div class="p-2"
+                                             (click)="editRelative(item)">
+                                            <i class="fa fa-edit"
+                                               style=" margin-right: 2px; color: #553d81;"></i>
+                                            <span>Editar</span>
+                                        </div>
+
+                                        <div class="p-2"
+                                             (click)="deleteRelative(item.id)">
+                                            <i class="fa fa-trash"
+                                               style=" margin-right: 2px; color:red"></i>
+                                            <span>Eliminar</span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center col-lg-12 mt-0 px-0">
+            <form-button label="Guardar"
+                         btnClass="btn-primary-VI"
+                         (click)="SaveRelativePep()"
+                         *ngIf="profile_id == 191"></form-button>
+            <form-button label="Cerrar"
+                         btnClass="btn-primary-VI"
+                         (click)="reference.close()"></form-button>
+        </div>
+
+
+
+
+    </div>
+
+    <div [hidden]="!isLoading"
+        class="loadingScreen">
+        <div style="display: flex; height: 100%; width: 100%">
+            <i style="margin: auto; font-size: 50px"
+            class="fa fa-spinner fa-spin"></i>
+        </div>
+    </div>
+
+</div>
