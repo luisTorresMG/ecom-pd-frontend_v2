@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /extranet
+Disallow: /ecommerce/extranet
+Allow: /accidentesperonales
+Allow: /ecommerce/accidentesperonales
+
+Sitemap: https://plataformadigital.ecom.qas.protectasecuritycloud.pe/sitemap.xml
