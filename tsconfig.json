@@ -3,6 +3,16 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "paths": {
+      "@shared/*": [
+        "./src/app/shared/*"
+      ],
+      "@root/*": [
+        "./src/app/*"
+      ],
+      "@screen-splash": [
+        "./src/app/shared/services/screen-splash/screen-splash.service.ts"
+      ],
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,

@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AppConfig } from '../../../../app.config';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ClientInformationService } from '../../services/shared/client-information.service';
-import { RecaptchaComponent } from 'ng-recaptcha';
+import { RecaptchaComponent } from 'ng-recaptcha-2';
 import { environment } from '../../../../../environments/environment';
 import { SidebarService } from '@shared/services/sidebar/sidebar.service';
 import { ProductService } from '../../services/product/panel/product.service';

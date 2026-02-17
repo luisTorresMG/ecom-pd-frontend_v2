@@ -1,29 +1,15 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
+    "baseUrl": "./",
     "paths": {
-      "@shared/*": [
-        "app/shared/*"
-      ],
-      "@root/*": [
-        "app/*"
-      ],
-      "@screen-splash": [
-        "app/shared/services/screen-splash/screen-splash.service.ts"
-      ]
+      "@shared/*": ["app/shared/*"],
+      "@root/*": ["app/*"],
+      "@screen-splash": ["app/shared/services/screen-splash/screen-splash.service"]
     },
     "outDir": "../out-tsc/app",
-    "baseUrl": "./",
-    "types": [
-      "node",
-      "jquery"
-    ]
+    "types": ["node", "jquery"]
   },
-  "files": [
-    "main.ts",
-    "polyfills.ts"
-  ],
-  "include": [
-    "src/**/*.d.ts"
-  ]
+  "files": ["main.ts", "polyfills.ts"],
+  "include": ["**/*.d.ts"]
 }
