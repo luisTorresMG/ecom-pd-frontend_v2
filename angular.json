@@ -29,17 +29,33 @@
           "builder": "@angular/build:application",
           "options": {
             "browser": "src/main.ts",
-            "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+             "aot": true,
+            "outputPath": "dist",
+            "index": "src/index.html",
+            "tsConfig": "src/tsconfig.app.json",           
             "assets": [
+              "src/assets",
+              "src/favicon-protecta.ico",
+              "src/web.config",
+              "src/manifest.json",
               {
                 "glob": "**/*",
-                "input": "public"
+                "input": "node_modules/ngx-extended-pdf-viewer/assets/",
+                "output": "/assets/"
               }
             ],
             "styles": [
               "src/styles.scss"
-            ]
+            ],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "./src/app/shared/styles"
+              ]
+            }
           },
           "configurations": {
             "production": {

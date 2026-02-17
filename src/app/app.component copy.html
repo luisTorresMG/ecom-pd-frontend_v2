@@ -1,0 +1,11 @@
+<router-outlet></router-outlet>
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.85)"
+  type="ball-triangle-path"
+  size="medium"
+></ngx-spinner>
+<app-chat-bot *ngIf="habilitarChat"></app-chat-bot>
+<pro-screen-splash
+  *ngIf="showScreenSplash"
+  [message]="messageScreenSplash"
+></pro-screen-splash>

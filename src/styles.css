@@ -1,0 +1,889 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~ngx-bootstrap/datepicker/bs-datepicker.css";
+@import url("./assets/fonts/fontawesome/css/font-awesome.min.css");
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import "~ngx-toastr/toastr";
+@import "./app/layout/soat/soat.css";
+
+@font-face {
+  font-family: "Bliss Pro";
+  font-display: swap;
+  src: url("./assets/fonts/bliss/BlissPro-Light.otf");
+}
+
+@font-face {
+  font-family: "Bliss Pro Bold";
+  font-display: swap;
+  src: url("./assets/fonts/bliss/BlissPro-Bold.otf");
+}
+
+html,
+body,
+input,
+select,
+button,
+* {
+  font-family: "Bliss Pro";
+}
+
+.dropdown-toggle::after {
+  content: none !important;
+  display: none !important;
+}
+
+.container-main {
+  width: 70%;
+  min-height: 750px;
+  float: left;
+  margin-left: 2%;
+}
+
+.mensaje-error {
+  color: red;
+  font-size: 13px;
+}
+
+.mensaje-error-control {
+  color: #fd2f21;
+  font-family: "Bliss Pro";
+  font-size: 13px;
+  line-height: 12px;
+  /*border: 1px solid #000;*/
+}
+
+.porcentaje {
+  position: absolute;
+  right: 15px;
+  top: 12px;
+  color: #aa9ec0;
+}
+
+.deshabilitado {
+  pointer-events: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: #eceeef !important;
+}
+
+.deshabilitado-boton {
+  pointer-events: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: #2b0d61 !important;
+}
+
+.white-overlay {
+  background: rgba(255, 255, 255, 0.8) !important;
+  opacity: 1 !important;
+}
+
+.extra-modal {
+  background-color: rgb(255, 255, 255, 0.85) !important;
+}
+
+.extra-modal .modal-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
+
+.mi-paginado ul.pagination {
+  width: fit-content !important;
+  margin: auto !important;
+}
+
+.input-text-help {
+  background: url(assets/icons/help-orange.png) 97% no-repeat;
+}
+
+.select-chevron {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: url(assets/icons/chevron-small-down.png) 97% no-repeat;
+}
+
+.volver {
+  width: 100%;
+  height: 16px;
+  margin-bottom: 30px;
+}
+
+.volver a {
+  color: #2b0d61;
+  font-family: "Bliss Pro";
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  margin-left: 5px;
+}
+
+.volver a img {
+  /* float: left;
+  margin-left: 5px;
+  margin-top: 5px; */
+  margin-bottom: 2px;
+  vertical-align: middle;
+}
+
+.no-left {
+  padding-left: 0px !important;
+  margin-left: 0px !important;
+}
+
+.bs-datepicker-container {
+  padding: 0px;
+}
+
+.bs-datepicker-head {
+  background-color: #fff !important;
+  color: #2b0d61;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.bs-datepicker-head button.current {
+  border-radius: 15px;
+  max-width: 155px;
+  padding: 0 13px;
+  color: #2b0d61;
+  font-family: "Bliss Pro";
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+.bs-datepicker-head button.next,
+.bs-datepicker-head button.previous {
+  color: #2b0d61 !important;
+}
+
+.bs-datepicker-body table td span.selected,
+bs-datepicker-body table td.selected span,
+.bs-datepicker-body table td span[class*="select-"]:after,
+.bs-datepicker-body table td[class*="select-"] span:after {
+  background-color: #c0bcc4 !important;
+  color: #fff !important;
+}
+
+.bs-datepicker-body table th {
+  font-size: 10px;
+  color: #2b0d61;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 10px;
+  font-family: "Bliss Pro";
+}
+
+.error-validate {
+  border: 1px solid red !important;
+  color: red !important;
+}
+
+.error-validate::placeholder {
+  color: red !important;
+}
+
+.error-validate:focus {
+  border: 1px solid red !important;
+  outline: 0;
+}
+
+/* Menu */
+
+.nav-list {
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.nav-open {
+  display: none;
+}
+
+.nav-panel {
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  /* transition: max-height .1s, visibility .3s, opacity .3s; */
+}
+
+.nav-open:checked ~ .nav-panel {
+  max-height: 100%;
+  visibility: visible;
+  opacity: 1;
+}
+
+/* .collapse-border {
+    padding: .5rem 1.25rem 1.25rem;
+    border: 1px solid rgba(0, 0, 0, 0.125) !important;
+    margin-top: -1px;
+    margin-bottom: 10px;
+} */
+
+.nav-list .nav-btn {
+  cursor: pointer;
+  display: block;
+  transition: background-color 0.2s ease;
+}
+
+@media screen and (max-width: 768px) {
+  .mobile-display .modal-dialog {
+    max-width: 95%;
+  }
+}
+
+.page-item.active .page-link {
+  z-index: 1;
+  color: #fff;
+  background-color: rgb(130, 77, 230);
+  border-color: #aeff5e;
+}
+
+.page-link {
+  position: relative;
+  display: block;
+  padding: 0.5rem 0.75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: rgb(91, 80, 150);
+  background-color: #eaeaee;
+}
+
+.page-item.disabled .page-link {
+  color: #868e96;
+  pointer-events: none;
+  cursor: auto;
+  background-color: rgb(227, 206, 255);
+  /* border-color: #718393; */
+}
+
+.page-link:focus,
+.page-link:hover {
+  color: #fff;
+  text-decoration: none;
+  background-color: rgb(139, 105, 184);
+  border-color: #aeff5e;
+}
+
+button.start-js-btn {
+  /*background-color: #45b1e8; background-image: linear-gradient(#45b1e8, #055a85);*/
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  border: 0 none;
+  border-radius: 4px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+  padding: 1px;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1); /*padding: 10px;*/
+  text-decoration: none;
+  font-family: Helvetica, Arial, Sans-serif; /*min-width: 100px;*/
+  display: inline-block;
+  text-align: center;
+  user-select: none;
+}
+
+button.start-js-btn:hover {
+  /*background-color: #3d9ccc; background-image: linear-gradient(#3d9ccc, #055a85);*/
+}
+
+button.start-js-btn:active {
+  /*background-color: #055a85; background-image: linear-gradient(#055a85, #3d9ccc);*/
+}
+
+.visanet-opened {
+  overflow: hidden;
+  position: fixed;
+}
+
+button.small {
+  width: 86px;
+  height: 73px;
+}
+
+button.medium {
+  width: 130px;
+  height: 45px;
+}
+
+button.large {
+  width: 223px;
+  height: 49px;
+}
+
+button.default {
+  width: 187px;
+  height: 40px;
+}
+
+/* Swal Alert */
+.swal2-styled.swal2-confirm {
+  font-size: 16px !important;
+  font-weight: 900 !important;
+  line-height: 20px !important;
+  text-align: center !important;
+  background: #ed6e00 !important;
+  border-color: #ed6e00 !important;
+}
+
+.swal2-styled.swal2-cancel {
+  font-size: 16px !important;
+  font-weight: 900 !important;
+  line-height: 20px !important;
+  text-align: center !important;
+}
+
+.swal2-content {
+  font-size: 16px !important;
+  color: #aa9ec0 !important;
+  font-weight: 300 !important;
+}
+
+.swal2-title {
+  font-size: 24px !important;
+  color: #2b0d61 !important;
+}
+
+/* Custom Modal SCTR */
+@media (min-width: 992px) {
+  .modalCustom .modal-lg,
+  .modalCustom .modal-xl {
+    max-width: 960px;
+  }
+}
+
+/* Toast SCTR */
+.rmaClass {
+  width: 450px !important;
+  background: #ed6d00;
+  font-family: "Bliss Pro";
+}
+
+/* Estilos para Inputs deshabilitados */
+input:disabled,
+select:disabled,
+textarea:disabled {
+  /*  background-color: #f9f9f9 !important; */
+  opacity: 1 !important;
+}
+
+/* Estilos para Márgenes */
+.margin-0 {
+  margin: 0 !important;
+}
+
+.margin-top-0 {
+  margin-top: 0 !important;
+}
+
+.margin-top-5 {
+  margin-top: 5px !important;
+}
+
+.margin-top-10 {
+  margin-top: 10px !important;
+}
+
+.margin-top-15 {
+  margin-top: 15px !important;
+}
+
+.margin-top-20 {
+  margin-top: 20px !important;
+}
+
+.margin-top-60 {
+  margin-top: 60px !important;
+}
+
+.margin-right-0 {
+  margin-right: 0 !important;
+}
+
+.margin-right-5 {
+  margin-right: 5px !important;
+}
+
+.margin-right-10 {
+  margin-right: 10px !important;
+}
+
+.margin-right-15 {
+  margin-right: 15px !important;
+}
+
+.margin-right-20 {
+  margin-right: 20px !important;
+}
+
+.margin-bottom-0 {
+  margin-bottom: 0 !important;
+}
+
+.margin-bottom-5 {
+  margin-bottom: 5px !important;
+}
+
+.margin-bottom-10 {
+  margin-bottom: 10px !important;
+}
+
+.margin-bottom-15 {
+  margin-bottom: 15px !important;
+}
+
+.margin-bottom-20 {
+  margin-bottom: 20px !important;
+}
+
+.margin-left-0 {
+  margin-left: 0 !important;
+}
+
+.margin-left-5 {
+  margin-left: 5px !important;
+}
+
+.margin-left-10 {
+  margin-left: 10px !important;
+}
+
+.margin-left-15 {
+  margin-left: 15px !important;
+}
+
+.margin-left-20 {
+  margin-left: 20px !important;
+}
+
+/* Estilos para Padding */
+.padding-0 {
+  padding: 0 !important;
+}
+
+.padding-top-0 {
+  padding-top: 0 !important;
+}
+
+.padding-top-5 {
+  padding-top: 5px !important;
+}
+
+.padding-top-10 {
+  padding-top: 10px !important;
+}
+
+.padding-top-15 {
+  padding-top: 15px !important;
+}
+
+.padding-top-20 {
+  padding-top: 20px !important;
+}
+
+.padding-right-0 {
+  padding-right: 0 !important;
+}
+
+.padding-right-5 {
+  padding-right: 5px !important;
+}
+
+.padding-right-10 {
+  padding-right: 10px !important;
+}
+
+.padding-right-15 {
+  padding-right: 15px !important;
+}
+
+.padding-right-20 {
+  padding-right: 20px !important;
+}
+
+.padding-bottom-0 {
+  padding-bottom: 0 !important;
+}
+
+.padding-bottom-5 {
+  padding-bottom: 5px !important;
+}
+
+.padding-bottom-10 {
+  padding-bottom: 10px !important;
+}
+
+.padding-bottom-15 {
+  padding-bottom: 15px !important;
+}
+
+.padding-bottom-20 {
+  padding-bottom: 20px !important;
+}
+
+.padding-left-0 {
+  padding-left: 0 !important;
+}
+
+.padding-left-5 {
+  padding-left: 5px !important;
+}
+
+.padding-left-10 {
+  padding-left: 10px !important;
+}
+
+.padding-left-15 {
+  padding-left: 15px !important;
+}
+
+.padding-left-20 {
+  padding-left: 20px !important;
+}
+
+/* Estilos para cursor */
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* Estilos para width */
+.width-10 {
+  width: 10px !important;
+}
+
+.width-20 {
+  width: 20px !important;
+}
+
+.width-30 {
+  width: 30px !important;
+}
+
+.width-40 {
+  width: 40px !important;
+}
+
+.width-50 {
+  width: 50 v !important;
+}
+
+.width-60 {
+  width: 60px !important;
+}
+
+.width-70 {
+  width: 70px !important;
+}
+
+.width-80 {
+  width: 80px !important;
+}
+
+.width-90 {
+  width: 90px !important;
+}
+
+.width-100 {
+  width: 100px !important;
+}
+
+.width-110 {
+  width: 110px !important;
+}
+
+.width-120 {
+  width: 120px !important;
+}
+
+.width-130 {
+  width: 130px !important;
+}
+
+.width-140 {
+  width: 140px !important;
+}
+
+.width-150 {
+  width: 150px !important;
+}
+
+.width-160 {
+  width: 160px !important;
+}
+
+.width-170 {
+  width: 170px !important;
+}
+
+.width-180 {
+  width: 180px !important;
+}
+
+.width-190 {
+  width: 190px !important;
+}
+
+.width-200 {
+  width: 200px !important;
+}
+
+/* Estilos placeholder */
+::placeholder {
+  color: #aa9ec0;
+}
+
+/* Estilos divider */
+.divider-bottom {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.subtitle-underlined {
+  margin-top: 15px;
+  font-size: 15px;
+  color: #553d81;
+  border-bottom: 1px solid #553d81;
+  font-weight: bold;
+}
+
+.table-th-underlined {
+  text-align: center;
+  color: #7b7ea6;
+  font-size: 1rem;
+  border-bottom: 2px solid #878aae !important;
+}
+
+/****** ALINEACION *********/
+.text-center {
+  text-align: center !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.text-left {
+  text-align: left !important;
+}
+
+.vertical-center {
+  vertical-align: middle !important;
+}
+
+.vertical-top {
+  vertical-align: top !important;
+}
+
+.vertical-bottom {
+  vertical-align: bottom !important;
+}
+
+/****** FUENTES *********/
+.font-bold {
+  font-weight: bold;
+}
+
+#visaNetJS {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.pic img {
+  width: 110px !important;
+}
+
+/* #reko canvas {
+  max-width: 286px !important;
+  min-width: 200px;
+  width: 45vw;
+  position: absolute;
+  top: 66px;
+  left: 0px;
+}
+#reko canvas {
+  top: 90px;
+}
+@media (min-width: 450px) {
+  #reko canvas {
+    top: 70px;
+  }
+}
+@media (min-width: 650px) {
+  #reko canvas {
+    top: 65px;
+  }
+} */
+/* Toast VL */
+.toast-vl {
+  width: 450px !important;
+  font-family: "Bliss Pro";
+}
+
+#reko {
+  top: 60px;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.video {
+  width: 320px;
+  height: 320px;
+}
+
+@media (min-width: 700px) {
+  .video {
+    width: 600px;
+    height: 450px;
+  }
+}
+
+canvas {
+  position: absolute;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* Botones - AVS*/
+.Boton_Confirmar {
+  align-content: center;
+  text-align: center;
+  background: #ed6e00;
+  border-color: #ed6e00;
+  color: white;
+  padding: 0.625em 2em;
+  margin: 0.3125em;
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 20px;
+  border-radius: 0.25rem;
+  transition: color .15s;
+}
+
+.Boton_Confirmar:disabled,
+.Boton_Confirmar[disabled] {
+  align-content: center;
+  text-align: center;
+  background: grey;
+  border-color: grey;
+  color: white;
+  padding: 0.625em 2em;
+  margin: 0.3125em;
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 20px;
+  border-radius: 0.25rem;
+  transition: color .15s;
+}
+
+.Boton_Prueba_Visa {
+  align-content: center;
+  text-align: center;
+  background: #ed6e00;
+  border-color: #ed6e00;
+  color: white;
+  padding: 0.625em 2em;
+  margin: 0.3125em;
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 20px;
+  border-radius: 0.25rem;
+  transition: color .15s;
+}
+
+.Boton_Cancelar {
+  align-content: center;
+  text-align: center;
+  background: white;
+  padding: 0.625em 2em;
+  margin: 0.3125em;
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 20px;
+  border-radius: 0.25rem;
+  transition: color .15s;
+}
+
+.CreTitulo {
+  position: relative;
+  max-width: 100%;
+  margin: 0 0 0.4em;
+  padding: 0;
+  font-weight: 600;
+  text-align: center;
+  text-transform: none;
+  word-wrap: break-word;
+  font-size: 24px !important;
+  color: #2b0d61 !important;
+}
+
+.parrafo {
+  text-align: center;
+  font-size: 16px !important;
+  color: #aa9ec0 !important;
+  font-weight: 300 !important;
+}
+
+.totalCRE {
+  position: relative;
+  top: 1px;
+  right: 563px;
+  width: 20px;
+  font-weight: 900;
+}
+
+.totalCRE2 {
+  position: relative;
+  top: 1px;
+  right: 537px;
+  width: 20px;
+}
+
+.totalCRE3 {
+  position: relative;
+  top: 1px;
+  right: 412px;
+  width: 20px;
+}
+
+.totalPago {
+  position: relative;
+  top: 1px;
+  right: 720px;
+  width: 20px;
+}
+
+.loadingScreen {
+  opacity: 0.7;
+  transition: opacity 0.8s ease-in-out;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: #000;
+  z-index: 10000000000;
+}
+
+.top-agency{
+    position: absolute;
+    top: -150px;
+}

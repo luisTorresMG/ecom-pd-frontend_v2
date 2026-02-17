@@ -1,13 +1,2442 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>EcomPdFrontendV2</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-</head>
-<body>
-  <app-root></app-root>
-</body>
+<!DOCTYPE html>
+<html lang="es"
+      id="html-document">
+
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-type"
+          content="text/html; charset=utf-8"/>
+    <meta name="description"
+          content="PROTEGEMOS LO QUE MÁS VALORAS. Ahora comprar tu SOAT electrónico con Protecta Security es rápido, seguro y viene con premio."/>
+    <meta name="keywords"
+          content="Soat, Soat Delivery, Soat Online, Soat La Positiva, Interseguros, Soat Pacifico, Soat Rimac, Soat Mapfre, Soat en Peru, Donde Comprar Soat, Soat barato, El mejor soat, Soat domicilio, Soat oferta, Soat por internet, Precio soat, Precio del soat, Costo soat, Soat para vehiculos, Soat camionetas, Soat web, Renovar soat, Compra soat, Comprar soat online, Comprar soat por internet, Valor de soat"/>
+    <title>PROTECTA :: Plataforma Digital</title>
+    <base href="/"/>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1"/>
+    <meta name="apple-mobile-web-app-capable"
+          content="yes"/>
+    <link rel="icon"
+          type="image/x-icon"
+          href="favicon-protecta.ico"/>
+    <meta name="apple-mobile-web-app-capable"
+          content="yes"/>
+    <script
+      src="assets/js/jquery.min.js"
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <script
+      type="text/javascript"
+      src="assets/js/visa-antifraude-script/dfp_devs.js"
+      defer
+    ></script>
+    <script src="https://cdn.kushkipagos.com/kushki-checkout.js"></script>
+
+    <script>
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod
+            ? n.callMethod.apply(n, arguments)
+            : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = "2.0";
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(
+        window,
+        document,
+        "script",
+        "https://connect.facebook.net/en_US/fbevents.js"
+      );
+      fbq("init", "324119621477079");
+      fbq("track", "PageView");
+    </script>
+    <script>
+      function getCookie(name) {
+        var re = new RegExp(name + "=([^;]+)");
+        var value = re.exec(document.cookie);
+        return value != null ? unescape(value[1]) : null;
+      }
+
+      function getClientID() {
+        try {
+          var cookie = getCookie("_ga").split(".");
+          return cookie[2] + "." + cookie[3];
+        } catch (e) {
+          console.log("No Universal Analytics cookie found");
+        }
+      }
+
+      const dataClientID = getClientID();
+      const dataInsurance = sessionStorage.getItem("insurance");
+
+      if (
+        window.location.pathname.includes("accidentespersonales") &&
+        !dataInsurance?.processId
+      ) {
+        window["dataLayer"] = [
+          {
+            estado: "Sin Login",
+            clientID: dataClientID,
+            user_id: "not available",
+            TipoCliente: "not available",
+            Canal: "Venta Directa",
+          },
+        ];
+      }
+
+      if (location.pathname.includes("vidadevolucion") && !sessionStorage.getItem('idProcess')) {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const processId = urlParams.get('processId');
+
+        window["dataLayer"] = [
+          {
+            estado: "Sin Login",
+            user_id: "not available",
+            TipoCliente: "not available",
+            Canal: processId ? "Broker" : "Venta Directa",
+          },
+        ];
+      }
+    </script>
+    <!-- Hotjar Tracking Code for https://plataformadigital.protectasecurity.pe -->
+    <script>
+      (function (h, o, t, j, a, r) {
+        h.hj =
+          h.hj ||
+          function () {
+            (h.hj.q = h.hj.q || []).push(arguments);
+          };
+        h._hjSettings = {hjid: 3576480, hjsv: 6};
+        a = o.getElementsByTagName("head")[0];
+        r = o.createElement("script");
+        r.async = 1;
+        r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+        a.appendChild(r);
+      })(window, document, "https://static.hotjar.com/c/hotjar-", ".js?sv=");
+    </script>
+    <link rel="manifest"
+          href="manifest.json"
+          crossorigin="use-credentials"/>
+    <meta name="theme-color"
+          content="#1976d2"/>
+  </head>
+
+  <body>
+    <div id="accidentespersonales-mask">
+      <div class="container-ap">
+        <nav class="align-items-center justify-content-start">
+          <div class="navbar-ap">
+            <img
+              src="assets/accidentes-personales/protecta-logo-navbar.svg"
+              alt="Protecta Security"
+              class="logo"
+            />
+            <h1 clas="title-ap">Seguro contra Accidentes Personales</h1>
+          </div>
+        </nav>
+      </div>
+
+      <div class="banner">
+        <img
+          src="assets/accidentes-personales/resources/banner-ap.webp"
+          alt="banner ap"
+          class="banner-desktop"
+        />
+
+        <span class="info-fixed banner-desktop"> Comprar ahora </span>
+      </div>
+      <section class="section-reverse insurance-info mb-6 py-6">
+        <img
+          src="assets/accidentes-personales/resources/seguro-ap.webp"
+          class="img-section"
+          alt="insurance"
+          width="320"
+          height="320"
+        />
+        <div class="section__info">
+          <h2 class="title-ap mb-2">
+            ¿Qué es el
+            <span class="orange">Seguro de Accidentes Personales?</span>
+          </h2>
+          <p class="paragraph">
+            El Seguro de Accidentes Personales ofrece una cobertura económica a
+            el o los asegurados en caso sean víctimas de un accidente.
+          </p>
+          <p class="paragraph">
+            Cubre la muerte accidental principalmente, pero también te ofrece la
+            opción de contratar coberturas adicionales, como Gastos de Curación
+            por accidente, Invalidez total y permanente por accidente, así como
+            los Gastos de sepelio por muerte accidental, entre otros.
+          </p>
+        </div>
+      </section>
+      <section class="coverages"
+               id="coverages">
+        <div class="container mb-6">
+          <div class="complements">
+            <h2>
+              <span class="title-ap">Con planes hechos a tu medida,</span><br/>
+              <span class="orange">coberturas y más beneficios</span>
+            </h2>
+            <ul class="coverages_list">
+              <li class="coverages_list--item">
+                <img
+                  src="assets/accidentes-personales/resources/muerte-acc.svg"
+                  alt="muerte accidental"
+                />
+                <p>
+                  En caso de muerte accidental, tus beneficiarios reciben una
+                  indemnización
+                </p>
+              </li>
+              <li class="coverages_list--item">
+                <img
+                  src="assets/accidentes-personales/resources/invalidez.svg"
+                  alt="Invalidez total"
+                />
+                <p>
+                  Recibes una indemnización en caso de invalidez total y
+                  permanente
+                </p>
+              </li>
+              <li class="coverages_list--item">
+                <img
+                  src="assets/accidentes-personales/resources/gastos-sepelio.svg"
+                  alt="fallecimiento accidental"
+                />
+                <p>
+                  Cubrimos los gastos de Sepelio en caso de fallecimiento
+                  accidental
+                </p>
+              </li>
+              <li class="coverages_list--item">
+                <img
+                  src="assets/accidentes-personales/resources/asistencia-medica.svg"
+                  alt="asistencia medica"
+                />
+                <p>
+                  Afíliate al programa de asistencias médicas, viales y
+                  servicios para el hogar
+                </p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section class="proccess-insurance">
+        <div class="proccess">
+          <h2 class="title">¿Cómo adquiero mi seguro contra accidentes?</h2>
+          <div class="container">
+            <div class="slider-content">
+              <div>
+                <div class="content-card">
+                  <div class="card">
+                    <img
+                      src="assets/accidentes-personales/resources/process-step1.webp"
+                      alt="Paso 1"
+                    />
+                    <div class="detail">
+                      <p class="title-detail">Paso 1</p>
+                      <div>
+                        <p class="desc2">
+                          Ingresa con tu DNI y correo electrónico
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="content-card">
+                  <div class="card">
+                    <img
+                      src="assets/accidentes-personales/resources/process-step2.webp"
+                      alt="Paso 2"
+                    />
+                    <div class="detail">
+                      <p class="title-detail">Paso 2</p>
+                      <div>
+                        <p class="desc2">Completa tus datos</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="content-card">
+                  <div class="card">
+                    <img
+                      src="assets/accidentes-personales/resources/process-step3.webp"
+                      alt="Paso 3"
+                    />
+                    <div class="detail">
+                      <p class="title-detail">Paso 3</p>
+                      <div>
+                        <p class="desc2">
+                          Elige tus beneficiarios y plan favorito
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="content-card">
+                  <div class="card">
+                    <img
+                      src="assets/accidentes-personales/resources/process-step4.webp"
+                      alt="Paso 4"
+                    />
+                    <div class="detail">
+                      <p class="title-detail">Paso 4</p>
+                      <div>
+                        <p class="desc2">Valida tu identidad, paga y ¡Listo!</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="container__quest section">
+        <div class="info">
+          <h4 class="title-ap">Siéntete seguro, aclaramos tus dudas</h4>
+          <div class="tabs">
+            <ul>
+              <li class="is-active">
+                <button class="navtab__item">Sobre el seguro</button>
+              </li>
+              <li>
+                <button class="navtab__item">Sobre la contratación</button>
+              </li>
+              <li>
+                <button class="navtab__item">En caso de un siniestro</button>
+              </li>
+            </ul>
+          </div>
+          <div class="container">
+            <ul class="list">
+              <li class="list__item">
+                <div class="list__item-title"
+                     role="button">
+                  <div>
+                    <h3>¿Qué es el Seguro contra accidentes personales?</h3>
+                  </div>
+                  <img
+                    src="assets/accidentes-personales/resources/chevron-down.svg"
+                    alt="chevron down icon"
+                    width="20px"
+                    height="20px"
+                  />
+                </div>
+                <div class="list__item-desc"
+                     hidden>
+                  <ul class="list__child">
+                    <li class="list__child-item">
+                      <div class="list-text">
+                        El Seguro de Accidentes Personales es aquel que cubre la
+                        muerte accidental del asegurado a consecuencia de un
+                        accidente ocurrido durante la vigencia del seguro.
+                        Además, ofrece la posibilidad de contratar coberturas
+                        adicionales como gastos de curación por accidente,
+                        invalidez total y permanente por accidente, entre otras.
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="list__item">
+                <div class="list__item-title"
+                     role="button">
+                  <div>
+                    <h3>¿Qué se entiende por accidente?</h3>
+                  </div>
+                  <img
+                    src="assets/accidentes-personales/resources/chevron-down.svg"
+                    alt="chevron down icon"
+                    width="20px"
+                    height="20px"
+                  />
+                </div>
+                <div class="list__item-desc"
+                     hidden>
+                  <ul class="list__child">
+                    <li class="list__child-item">
+                      <div class="list-text">
+                        Es toda lesión corporal que pueda ser determinada por
+                        los médicos de una manera cierta, sufrida por el
+                        Asegurado independientemente de su voluntad, por la
+                        acción repentina y violenta o con un agente externo.
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="list__item">
+                <div class="list__item-title"
+                     role="button">
+                  <div>
+                    <h3>
+                      ¿Qué coberturas tiene el seguro de accidentes personales?
+                    </h3>
+                  </div>
+                  <img
+                    src="assets/accidentes-personales/resources/chevron-down.svg"
+                    alt="chevron down icon"
+                    width="20px"
+                    height="20px"
+                  />
+                </div>
+                <div class="list__item-desc"
+                     hidden>
+                  <ul class="list__child">
+                    <li class="list__child-item list--disc">
+                      <div class="list-text">
+                        Es toda lesión corporal que pueda ser determinada por
+                        los médicos de una manera cierta, sufrida por el
+                        Asegurado independientemente de su voluntad, por la
+                        acción repentina y violenta o con un agente externo.
+                      </div>
+                    </li>
+                    <li class="list__child-item list--disc">
+                      <div class="list-text">
+                        Gastos de Sepelio por Muerte Accidental
+                      </div>
+                    </li>
+                    <li class="list__child-item list--disc">
+                      <div class="list-text">
+                        Gastos de Curación por Accidente
+                      </div>
+                    </li>
+                    <li class="list__child-item list--disc">
+                      <div class="list-text">
+                        Invalidez Total y Permanente por Accidente
+                      </div>
+                    </li>
+                    <li class="list__child-item list--disc">
+                      <div class="list-text">Otras coberturas adicionales</div>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="list__item">
+                <div class="list__item-title"
+                     role="button">
+                  <div>
+                    <h3>¿Para quién está dirigido este tipo de Seguro?</h3>
+                  </div>
+                  <img
+                    src="assets/accidentes-personales/resources/chevron-down.svg"
+                    alt="chevron down icon"
+                    width="20px"
+                    height="20px"
+                  />
+                </div>
+                <div class="list__item-desc"
+                     hidden>
+                  <ul class="list__child">
+                    <li class="list__child-item list--disc">
+                      <div class="list-text">
+                        1. Personas Naturales: Ofrece respaldo económico a los
+                        beneficiarios del contratante ante algún accidente que
+                        pudiera ocurrirle
+                      </div>
+                    </li>
+                    <li class="list__child-item list--disc">
+                      <div class="list-text">
+                        2. Familias: Este seguro ofrece un respaldo ante un
+                        suceso súbito o inesperado que pueda afectar al
+                        contratante o a su familia (Cónyuge e Hijos).
+                      </div>
+                    </li>
+                    <li class="list__child-item list--disc">
+                      <div class="list-text">
+                        3. Estudiantes: Puede ser contratado por personas que
+                        quieran contratar una póliza exclusiva para asegurar a
+                        un menor de edad o joven en edad estudiantil. El
+                        contratante sí debe ser mayor de edad.
+                      </div>
+                    </li>
+                    <li class="list__child-item list--disc">
+                      <div class="list-text">
+                        4. Empresas: Este seguro proporciona a las Empresas
+                        protección para aquellas personas con quienes mantengan
+                        una relación contractual o comercial frente al riesgo de
+                        accidentarse.
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="container"
+               hidden>
+            <ul class="list">
+              <li class="list__item">
+                <div class="list__item-title"
+                     role="button">
+                  <div>
+                    <h3>
+                      ¿Qué modalidades de contratación existen en el seguro de
+                      Accidentes Personales?
+                    </h3>
+                  </div>
+                  <img
+                    src="assets/accidentes-personales/resources/chevron-down.svg"
+                    alt="chevron down icon"
+                    width="20px"
+                    height="20px"
+                  />
+                </div>
+                <div class="list__item-desc"
+                     hidden>
+                  <ul class="list__child">
+                    <li class="list__child-item">
+                      <div class="list-text">
+                        Considerando el tipo de Contratante de la Póliza, la
+                        cobertura se puede contratar mediante el Seguro
+                        Individual o un Seguro Grupal, el cual es adquirido por
+                        una persona natural o una persona jurídica,
+                        respectivamente. En el caso del seguro Familiar, la
+                        póliza podrá tener hasta 05 asegurados como parte de la
+                        familia.
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="list__item">
+                <div class="list__item-title"
+                     role="button">
+                  <div>
+                    <h3>¿Qué necesito para adquirir el seguro?</h3>
+                  </div>
+                  <img
+                    src="assets/accidentes-personales/resources/chevron-down.svg"
+                    alt="chevron down icon"
+                    width="20px"
+                    height="20px"
+                  />
+                </div>
+                <div class="list__item-desc"
+                     hidden>
+                  <ul class="list__child">
+                    <li class="list__child-item">
+                      <div class="list-text">
+                        Puedes solicitar tu seguro de accidentes personales de
+                        manera 100% digital completando los pasos indicados en
+                        nuestra página web. Además, dependiendo del seguro
+                        elegido deberás cumplir con lo siguiente:
+                      </div>
+                    </li>
+                    <li class="list__child-item">
+                      <div class="list-text">
+                        <div class="content-table">
+                          <table>
+                            <thead>
+                              <tr>
+                                <th scope="col">EDADES DEL TITULAR</th>
+                                <th scope="col">PERFIL INDIVIDUAL</th>
+                                <th scope="col">PERFIL FAMILIAR*</th>
+                                <th scope="col">PERFIL ESTUDIANTIL</th>
+                                <th scope="col">PERFIL EMPRESAS</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>Edad mínima de ingreso</td>
+                                <td>18</td>
+                                <td>18</td>
+                                <td>3</td>
+                                <td>18</td>
+                              </tr>
+                              <tr>
+                                <td>Edad mínima de ingreso</td>
+                                <td>65</td>
+                                <td>65</td>
+                                <td>30</td>
+                                <td>65</td>
+                              </tr>
+                              <tr>
+                                <td>Edad máxima de permanencia</td>
+                                <td>70</td>
+                                <td>70</td>
+                                <td>35</td>
+                                <td>70</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="list__child-item">
+                      <div class="list-text">
+                        *Plan Familiar permite asegurar niños desde 03 años.
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="list__item">
+                <div class="list__item-title"
+                     role="button">
+                  <div>
+                    <h3>¿Quiénes podrán ser beneficiarios de la Póliza?</h3>
+                  </div>
+                  <img
+                    src="assets/accidentes-personales/resources/chevron-down.svg"
+                    alt="chevron down icon"
+                    width="20px"
+                    height="20px"
+                  />
+                </div>
+                <div class="list__item-desc"
+                     hidden>
+                  <ul class="list__child">
+                    <li class="list__child-item list--disc">
+                      <div class="list-text">
+                        Para la cobertura de Muerte Accidental, se considerará
+                        como Beneficiarios a los designados por el Asegurado en
+                        la Póliza o en caso de no existir tal designación, se
+                        entenderán por Beneficiarios a los Herederos Legales del
+                        Asegurado, de acuerdo a lo establecido en el artículo
+                        816° del Código Civil. Para el resto de coberturas, el
+                        asegurado podrá ser el beneficiario o los designados por
+                        él.
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="container"
+               hidden>
+            <ul class="list">
+              <li class="list__item">
+                <div class="list__item-title"
+                     role="button">
+                  <div>
+                    <h3>
+                      ¿Qué debo hacer en caso de un accidente (emergencia)?
+                    </h3>
+                  </div>
+                  <img
+                    src="assets/accidentes-personales/resources/chevron-down.svg"
+                    alt="chevron down icon"
+                    width="20px"
+                    height="20px"
+                  />
+                </div>
+                <div class="list__item-desc"
+                     hidden>
+                  <ul class="list__child">
+                    <li class="list__child-item">
+                      <div class="list-text">
+                        Contáctate de inmediato en cualquier día y hora con
+                        nuestra Central de Atención al Cliente llamando al (01)
+                        391 3000 en Lima o al 0801-1-1278 en Provincias, opción
+                        1 – 2. Te brindaremos la asesoría que necesitas en ese
+                        momento.
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="list__item">
+                <div class="list__item-title"
+                     role="button">
+                  <div>
+                    <h3>
+                      ¿Qué necesito hacer o presentar si necesito
+                      hospitalización?
+                    </h3>
+                  </div>
+                  <img
+                    src="assets/accidentes-personales/resources/chevron-down.svg"
+                    alt="chevron down icon"
+                    width="20px"
+                    height="20px"
+                  />
+                </div>
+                <div class="list__item-desc"
+                     hidden>
+                  <ul class="list__child">
+                    <li class="list__child-item">
+                      <div class="list-text">
+                        En caso de sufrir un accidente, solo deberá acercarse
+                        con su documento de identidad a la clínica u hospital e
+                        informar que tienen Seguro por Accidentes con Protecta
+                        Security, ellos validaran la cobertura.
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="list__item">
+                <div class="list__item-title"
+                     role="button">
+                  <div>
+                    <h3>
+                      ¿En cuánto tiempo recibiré una respuesta por parte de
+                      Protecta Security?
+                    </h3>
+                  </div>
+                  <img
+                    src="assets/accidentes-personales/resources/chevron-down.svg"
+                    alt="chevron down icon"
+                    width="20px"
+                    height="20px"
+                  />
+                </div>
+                <div class="list__item-desc"
+                     hidden>
+                  <ul class="list__child">
+                    <li class="list__child-item list--disc">
+                      <div class="list-text">
+                        Una vez que el Contratante, Asegurado o Beneficiario(s)
+                        hayan cumplido con presentar todos los documentos
+                        referidos al Siniestro, la Compañía, cuenta con treinta
+                        (30) días calendario para la evaluación del Siniestro y
+                        proceder con la aprobación o rechazo del Siniestro.
+                      </div>
+                    </li>
+                    <li class="list__child-item list--disc">
+                      <div class="list-text">
+                        En caso de que la Compañía requiera aclaraciones o
+                        precisiones adicionales respecto de la documentación e
+                        información presentada por el Contratante o
+                        Beneficiario(s), deberá solicitarlas dentro de los
+                        primeros veinte (20) días calendario como plazo límite
+                        otorgado para la evaluación del Siniestro; lo que
+                        suspenderá el plazo hasta que se presente la
+                        documentación e información correspondiente.
+                      </div>
+                    </li>
+                    <li class="list__child-item list--disc">
+                      <div class="list-text">
+                        En caso de que la Compañía no se pronunciase dentro del
+                        plazo señalado de 30 días, se entenderá que el Siniestro
+                        ha quedado consentido, salvo que ésta solicite una
+                        prórroga, de conformidad con lo dispuesto en las normas
+                        legales vigentes. Una vez consentido el Siniestro, la
+                        Compañía deberá proceder a pagar la indemnización
+                        correspondiente dentro de los treinta (30) días
+                        siguientes de producido el consentimiento.
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="list__item">
+                <div class="list__item-title"
+                     role="button">
+                  <div>
+                    <h3>¿Cuáles son sus exclusiones?</h3>
+                  </div>
+                  <img
+                    src="assets/accidentes-personales/resources/chevron-down.svg"
+                    alt="chevron down icon"
+                    width="20px"
+                    height="20px"
+                  />
+                </div>
+                <div class="list__item-desc"
+                     hidden>
+                  <ul class="list__child">
+                    <li class="list__child-item list--disc">
+                      <div class="list-text">
+                        a. Suicidio consciente y voluntario estando o el
+                        Asegurado en su sano juicio, salvo que hubiese
+                        transcurrido dos (2) años completos desde la fecha de
+                        contratación del seguro o desde la última
+                        rehabilitación.
+                      </div>
+                    </li>
+                    <li class="list__child-item list--disc">
+                      <div class="list-text">
+                        b. Guerra o guerra civil, invasión, actos de enemigos
+                        extranjeros, hostilidades u operaciones bélicas,
+                        declarada o no, rebelión, revolución, insurrección,
+                        sublevación, sedición, motín, terrorismo, conmoción
+                        civil.
+                      </div>
+                    </li>
+                    <li class="list__child-item list--disc">
+                      <div class="list-text">
+                        c. Por acto delictivo contra el Asegurado cometido en
+                        calidad de autor o cómplice por el Beneficiario o
+                        heredero, dejando a salvo el derecho de recibir la suma
+                        asegurada de los restantes Beneficiarios o herederos, si
+                        los hubiere, así como su derecho de acrecer.
+                      </div>
+                    </li>
+                    <li class="list__child-item list--disc">
+                      <div class="list-text">
+                        d. Detonación nuclear, reacción nuclear, radiación
+                        nuclear o contaminación radiactiva.
+                      </div>
+                    </li>
+                    <li class="list__child-item list--disc">
+                      <div class="list-text">
+                        e. Viajes o vuelo en vehículo aéreo de cualquier clase,
+                        excepto como pasajero en uno operado por una empresa de
+                        transporte aéreo comercial, sobre una ruta establecida
+                        oficialmente para el transporte de pasajeros y sujeta a
+                        itinerario
+                      </div>
+                    </li>
+                    <li class="list__child-item list--disc">
+                      <div class="list-text">
+                        f. Participación del Asegurado como conductor o
+                        acompañante en carreras de automóviles, motocicletas,
+                        lanchas a motor o avionetas, incluyendo carreras de
+                        entrenamiento.
+                      </div>
+                    </li>
+                    <li class="list__child-item list--disc">
+                      <div class="list-text">
+                        f. Participación del Asegurado como conductor o
+                        acompañante en carreras de automóviles, motocicletas,
+                        lanchas a motor o avionetas, incluyendo carreras de
+                        entrenamiento.
+                      </div>
+                    </li>
+                    <li class="list__child-item list--disc">
+                      <div class="list-text">
+                        g. Realización de las siguientes actividades riesgosas
+                        y/o deportes riesgosos: escalamiento, alpinismo,
+                        andinismo, montañismo, paracaidismo, parapente, ala
+                        delta, aeronaves ultraligeras, salto desde puentes o
+                        puntos elevados al vacío, buceo profesional o de recreo,
+                        inmersión o caza submarina, canotaje y práctica de surf.
+                      </div>
+                    </li>
+                    <li class="list__child-item list--disc">
+                      <div class="list-text">
+                        h. Consecuencias no accidentales de embarazos o partos.
+                      </div>
+                    </li>
+                    <li class="list__child-item list--disc">
+                      <div class="list-text">
+                        i. Consecuencias de enfermedades de cualquier naturaleza
+                        física, mental o nerviosa.
+                      </div>
+                    </li>
+                    <li class="list__child-item list--disc">
+                      <div class="list-text">
+                        j. Cualquier accidente que se produzca bajo la
+                        influencia de alcohol (en grado igual o superior a 0.5
+                        gr./lt. de alcohol en la sangre), salvo que el Asegurado
+                        haya sido sujeto pasivo al momento del Siniestro; y/o
+                        bajo la influencia de drogas, estupefacientes o en
+                        estado de sonambulismo.
+                      </div>
+                    </li>
+                    <li class="list__child-item list--disc">
+                      <div class="list-text">
+                        k. Participación activa en cualquier acto violatorio de
+                        la ley, ya sea como autor, coautor o cómplice.
+                      </div>
+                    </li>
+                    <li class="list__child-item list--disc">
+                      <div class="list-text">
+                        En caso de contratar coberturas adicionales, considerar
+                        que presentan sus propias exclusiones, las cuales se
+                        encuentran definidas en la misma Cláusula Adicional.
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="pill">
+          <img
+            src="assets/accidentes-personales/resources/faqs-ap.webp"
+            alt="familia icon svg"
+            class="pill-image"
+            width="420px"
+            height="420px"
+          />
+        </div>
+      </section>
+      <section class="container__contact section reverse">
+        <div class="container-info">
+          <div class="form-contact">
+            <div class="info"></div>
+            <span class="title">¿No resolvimos tus dudas?</span>
+            <p class="paragraph subtitle">
+              Completa el formulario y uno de nuestros asesores te ayudará a
+              responder todas tus consultas.
+            </p>
+            <form class="form form-contact mt-5">
+              <div class="form-inputs">
+                <label for="form-documentType"
+                       class="content-input">
+                  <p class="paragraph">Tipo de documento</p>
+                  <select
+                    id="form-documentType"
+                    class="form-input"
+                    name="documentType"
+                  >
+                    <option value="4">CE</option>
+                    <option value="2"
+                            selected>DNI
+                    </option>
+                    <option value="1">RUC</option>
+                  </select>
+                  <!-- <i class="fa fa-angle-down"></i> -->
+                </label>
+                <label class="content-input inside"
+                       for="f-documentNumber">
+                  <p class="paragraph">Número documento</p>
+                  <input
+                    type="text"
+                    class="form-input"
+                    id="f-documentNumber"
+                    name="documentNumber"
+                  />
+                </label>
+                <label for="f-names"
+                       class="content-input">
+                  <p class="paragraph">Nombres</p>
+                  <input
+                    type="text"
+                    name="names"
+                    id="f-names"
+                    class="form-input"
+                  />
+                </label>
+                <label for="f-lastNames"
+                       class="content-input">
+                  <p class="paragraph">Apellidos</p>
+                  <input
+                    type="text"
+                    name="lastNames"
+                    id="f-lastNames"
+                    class="form-input"
+                  />
+                </label>
+
+                <label for="f-email"
+                       class="content-input">
+                  <p class="paragraph">Correo electrónico</p>
+                  <input
+                    type="text"
+                    formControlName="email"
+                    id="f-email"
+                    class="form-input"
+                  />
+                </label>
+                <label class="content-input"
+                       aria-placeholder="Celular">
+                  <p class="paragraph">Celular</p>
+                  <input
+                    type="text"
+                    name="phone"
+                    id="f-phone"
+                    class="form-input"
+                  />
+                </label>
+              </div>
+              <div class="content-checkbox mt-2">
+                <div class="checkbox-accept">
+                  <input
+                    type="checkbox"
+                    formControlName="privacy"
+                    id="privacy"
+                  />
+                  <label for="privacy"
+                         class="checkbox-personalizado">
+                    <div class="input-privacy">
+                      Acepto el envío de comunicaciones comerciales, publicidad
+                      y encuestas de calidad de servicio y/o productos de
+                      acuerdo a lo señalado en la
+                      <a
+                        href="https://protectasecurity.pe/politica-de-privacidad/"
+                        class="politica-privacity"
+                        target="_blank"
+                      >
+                        Política de privacidad
+                      </a>
+                    </div>
+                  </label>
+                </div>
+                <button type="submit"
+                        class="btn-submit">
+                  Quiero que me contacten
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="pill">
+            <img
+              src="assets/accidentes-personales/resources/contact-us.webp"
+              alt="contact svg"
+              class="pill-image"
+              width="320px"
+              height="320px"
+            />
+          </div>
+        </div>
+      </section>
+      <footer class="footer">
+        <section class="content2 groupOrange">
+          <div class="content__group">
+            <div class="content__group--info">
+              <div>
+                <span class="protecta-logo"></span>
+              </div>
+              <div class="legal-name">
+                <p class="subtitle2 h6">Razón Social:</p>
+                <ul class="list">
+                  <li class="list__item">Protecta S.A Compañía de Seguros</li>
+                </ul>
+              </div>
+              <div class="ruc">
+                <p class="subtitle2 h6">RUC:</p>
+                <ul class="list">
+                  <li class="list__item">20517207331</li>
+                </ul>
+              </div>
+              <p class="subtitle2 h6">Síguenos:</p>
+              <ul class="list social">
+                <li class="list__item">
+                  <a href="#"
+                     aria-label="enlace whatsapp">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"
+                      />
+                    </svg>
+                  </a>
+                </li>
+                <li class="list__item">
+                  <a
+                    href="https://www.instagram.com/protectasecurity/"
+                    aria-label="enlace instagram"
+                    target="_blank"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                      />
+                    </svg>
+                  </a>
+                </li>
+                <li class="list__item">
+                  <a
+                    href="https://www.facebook.com/ProtectaSecurity/"
+                    aria-label="enlace facebook"
+                    target="_blank"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"
+                      />
+                    </svg>
+                  </a>
+                </li>
+                <li class="list__item">
+                  <a
+                    href="https://www.youtube.com/channel/UCLDUNm7ULAC4jbie_7S8beQ"
+                    aria-label="enlace youtube"
+                    target="_blank"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"
+                      />
+                    </svg>
+                  </a>
+                </li>
+                <li class="list__item">
+                  <a
+                    href="https://www.linkedin.com/company/359787/admin/"
+                    aria-label="enlace linkedin"
+                    target="_blank"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
+                      />
+                    </svg>
+                  </a>
+                </li>
+                <li class="list__item">
+                  <a
+                    href="https://www.protectasecurity.pe/"
+                    aria-label="enlace pagina principal protecta security"
+                    target="_blank"
+                  >
+                    <svg
+                      width="24"
+                      height="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                    >
+                      <path
+                        d="M12.02 0c6.614.011 11.98 5.383 11.98 12 0 6.623-5.376 12-12 12-6.623 0-12-5.377-12-12 0-6.617 5.367-11.989 11.981-12h.039zm3.694 16h-7.427c.639 4.266 2.242 7 3.713 7 1.472 0 3.075-2.734 3.714-7m6.535 0h-5.523c-.426 2.985-1.321 5.402-2.485 6.771 3.669-.76 6.671-3.35 8.008-6.771m-14.974 0h-5.524c1.338 3.421 4.34 6.011 8.009 6.771-1.164-1.369-2.059-3.786-2.485-6.771m-.123-7h-5.736c-.331 1.166-.741 3.389 0 6h5.736c-.188-1.814-.215-3.925 0-6m8.691 0h-7.685c-.195 1.8-.225 3.927 0 6h7.685c.196-1.811.224-3.93 0-6m6.742 0h-5.736c.062.592.308 3.019 0 6h5.736c.741-2.612.331-4.835 0-6m-12.825-7.771c-3.669.76-6.671 3.35-8.009 6.771h5.524c.426-2.985 1.321-5.403 2.485-6.771m5.954 6.771c-.639-4.266-2.242-7-3.714-7-1.471 0-3.074 2.734-3.713 7h7.427zm-1.473-6.771c1.164 1.368 2.059 3.786 2.485 6.771h5.523c-1.337-3.421-4.339-6.011-8.008-6.771"
+                      />
+                    </svg>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="social-networks"></div>
+            <div class="content__group--info">
+              <p class="subtitle2 h6">
+                Código de buenas prácticas de atención del usuario
+              </p>
+              <ul class="list">
+                <li class="list__item">
+                  <a
+                    href="https://www.protectasecurity.pe/wp-content/uploads/2019/08/CBP_espa%C3%B1ol_compressed-3.pdf"
+                    target="_blank"
+                  >
+                    Código de buenas prácticas - Español
+                  </a>
+                </li>
+                <li class="list__item">
+                  <a
+                    href="https://www.protectasecurity.pe/wp-content/uploads/2019/08/CBP_quechua_compressed-2.pdf"
+                    target="_blank"
+                  >
+                    Código de buenas prácticas - Quechua
+                  </a>
+                </li>
+                <li class="list__item">
+                  <a
+                    href="https://www.protectasecurity.pe/wp-content/uploads/2020/06/Codigo_de_Buenas_Practicas_APESEG.pdf"
+                    target="_blank"
+                  >
+                    Código de buenas prácticas - APESEG
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="content__group--info">
+              <p class="subtitle2 h6">
+                Código de buenas prácticas de atención al usuario
+              </p>
+            </div>
+            <div class="content__group--info">
+              <ul class="list">
+                <li class="list__item">Regulada y supervisada por:</li>
+              </ul>
+              <div>
+                <span class="sbs-logo"></span>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="content groupBlue">
+          <div class="content__group">
+            <div class="content__group--info">
+              <p class="subtitle h6">Transparencia de la información</p>
+              <ul class="list">
+                <li class="list__item">
+                  <a
+                    href="https://protectasecurity.pe/personas"
+                    target="_blank"
+                  >
+                    Otros seguros
+                  </a>
+                </li>
+                <li class="list__item">
+                  <a
+                    href="https://www.protectasecurity.pe/informacion-importante"
+                    target="_blank"
+                  >Información importante para el usuario</a
+                  >
+                </li>
+                <li class="list__item">
+                  <a
+                    href="https://www.protectasecurity.pe/transparencia-de-la-informacion/"
+                    target="_blank"
+                  >
+                    Información Pública - SMV
+                  </a>
+                </li>
+                <li class="list__item">
+                  <a
+                    href="https://www.protectasecurity.pe/informacion-publica-sbs/"
+                    target="_blank"
+                  >
+                    Información Pública - SBS
+                  </a>
+                </li>
+                <li class="list__item">
+                  <a
+                    href="https://www.protectasecurity.pe/reportes-normativos-reclamos/"
+                    target="_blank"
+                  >
+                    Reportes normativos
+                  </a>
+                </li>
+                <li class="list__item">
+                  <a
+                    href="https://www.protectasecurity.pe/enlaces-de-interes/"
+                    target="_blank"
+                  >
+                    Enlaces de interés
+                  </a>
+                </li>
+                <li class="list__item">
+                  <a
+                    href="https://www.protectasecurity.pe/formulario-reclamo/"
+                    target="_blank"
+                  >
+                    Reclamos
+                  </a>
+                </li>
+                <li class="list__item">
+                  <a
+                    href="https://www.protectasecurity.pe/preguntas-frecuentes/"
+                    target="_blank"
+                  >
+                    Preguntas frecuentes
+                  </a>
+                </li>
+                <li class="list__item">
+                  <a
+                    href="https://www.apeseg.org.pe/heredero-seguro/"
+                    target="_blank"
+                  >
+                    Heredero seguro - APESEG
+                  </a>
+                </li>
+                <li class="list__item">
+                  <a
+                    href="https://www.protectasecurity.pe/terminos-y-condiciones/"
+                    target="_blank"
+                  >
+                    Términos y Condiciones
+                  </a>
+                </li>
+                <li class="list__item">
+                  <a
+                    href="https://www.protectasecurity.pe/proceso-de-atencion-en-clinicas/"
+                    target="_blank"
+                  >
+                    Proceso de atención en clínicas (SINIESTRO)
+                  </a>
+                </li>
+                <li class="list__item">
+                  <a
+                    href="https://www.protectasecurity.pe/politica-de-privacidad/"
+                    target="_blank"
+                  >
+                    Política de Privacidad
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="content__group--info">
+              <p class="subtitle h6">Decálogos de APESEG</p>
+              <ul class="list">
+                <li class="list__item">
+                  <a
+                    href="https://protectasecurity.pe/wp-content/uploads/2021/08/Decalogo-del-Asegurado.pdf"
+                    target="_blank"
+                  >
+                    Decálogo del Asegurado
+                  </a>
+                </li>
+                <li class="list__item">
+                  <a
+                    href="https://protectasecurity.pe/wp-content/uploads/2021/08/Decalogo-de-Atencion-al-Usuario.pdf"
+                    target="_blank"
+                  >
+                    Decálogo de Atención al Usuario
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="content__group--info">
+              <p class="subtitle h6">
+                Indemnizaciones por muertes pendientes de pago
+              </p>
+              <ul class="list">
+                <li class="list__item">
+                  <a
+                    href="https://www.protectasecurity.pe/wp-content/uploads/2022/10/2da-quincena-setiembre.pdf"
+                    target="_blank"
+                  >
+                    Indemnizaciones por muertes pendientes de pago
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="content__group">
+            <div class="content__group--info">
+              <p class="subtitle h6">Gobierno Corporativo</p>
+              <ul class="list">
+                <li class="list__item">
+                  <a
+                    href="https://www.protectasecurity.pe/gobierno-corporativo/"
+                    target="_blank"
+                  >
+                    Gobierno corporativo
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="content__group--info">
+              <p class="subtitle h6">Nuestra alianza con Sanitas</p>
+              <ul class="list">
+                <li class="list__item">
+                  <a
+                    href="https://protectasecurity.sanitasperu.com/"
+                    target="_blank"
+                  >
+                    Portal de brokers de SCTR
+                  </a>
+                </li>
+                <li class="list__item">
+                  <a
+                    href="https://pagosenlinea.sanitasperu.com/#202cb962ac59075b964b07152d234b70"
+                    target="_blank"
+                  >
+                    Pagos en línea de SCTR
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="content__group--info">
+              <p class="subtitle h6">Net Privada</p>
+              <ul class="list">
+                <li class="list__item">
+                  <a
+                    href="https://netprivada.protectasecurity.pe/"
+                    target="_blank"
+                  >
+                    Ingresa a tu Net Privada
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="content__group--info">
+              <p class="subtitle h6">Canal de Denuncias</p>
+              <ul class="list">
+                <li class="list__item">
+                  <a
+                    href="https://protecta.ines.cl/protecta/formulario/"
+                    target="_blank"
+                  >
+                    Canal de Denuncias General
+                  </a>
+                </li>
+                <li class="list__item">
+                  <a href="mailto:denuncia@protectasecurity.pe">
+                    Canal de Denuncias "Hostigamiento Sexual":
+                  </a>
+                </li>
+                <li class="list__item">
+                  <a href="mailto:denuncia@protectasecurity.pe">
+                    denuncia@protectasecurity.pe
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="content__group--info">
+              <p class="subtitle h6">Facturas electrónicas</p>
+              <ul class="list">
+                <li class="list__item">
+                  <a
+                    href="https://efacturacion.protectasecurity.pe/descarga/"
+                    target="_blank"
+                  >
+                    Consulta comprobantes
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="content__group">
+            <div class="content__group--info">
+              <p class="subtitle h6">Contáctanos</p>
+              <ul class="list">
+                <li class="list__item">Lima: 01-391-3000</li>
+                <li class="list__item">Provincias: 0801-1-1278</li>
+                <li class="list__item">
+                  <a href="mailto:clientes@protectasecurity.pe">
+                    clientes@protectasecurity.pe
+                  </a>
+                </li>
+                <li class="list__item">
+                  <a
+                    href="https://www.google.com/maps/place/Protecta+Security/@-12.1080802,-77.025989,20.28z/data=!4m13!1m7!3m6!1s0x9105c813369b036d:0x1cd23d08159a98e5!2sAv.+Domingo+Oru%C3%A9+165,+Surquillo+15047!3b1!8m2!3d-12.1081034!4d-77.0259506!3m4!1s0x9105c81330b89749:0xbb5f81a9f254ae35!8m2!3d-12.108274!4d-77.0258003"
+                    target="_blank"
+                  >
+                    Av. Domingo Orué N° 165 <br/>
+                    8vo. Piso, Lima 34 - Perú
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="content__group--info">
+              <ul class="list">
+                <li class="list__item">Horario de atención:</li>
+                <li class="list__item">
+                  Lunes a viernes de 9:00 am a <br/>
+                  06:00 pm, excepto feriados.
+                </li>
+              </ul>
+              <a
+                href="https://protectasecurity.pe/oficinas-y-agencias/"
+                target="_blank"
+                class="office-link"
+              >
+                <small>Listado de oficinas a nivel nacional</small>
+              </a>
+            </div>
+          </div>
+        </section>
+      </footer>
+    </div>
+    <style>
+      #accidentespersonales-mask .container-ap {
+        display: inline-block;
+        width: 100%;
+        height: 60px;
+        top: 0;
+        left: 0;
+        padding: 0.5rem 1rem;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #f7f6f8;
+      }
+
+      #accidentespersonales-mask .container-ap .navbar-ap {
+        display: flex;
+        flex-wrap: wrap;
+        padding-top: 10px;
+        gap: 12px;
+        align-items: center;
+      }
+
+      #accidentespersonales-mask .container-ap .navbar-ap img {
+        width: 110px;
+        height: 25px;
+      }
+
+      #accidentespersonales-mask .container-ap .navbar-ap h1 {
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 24px;
+        color: #2b0d61;
+        font-family: "Titillium Web", sans-serif !important;
+      }
+
+      @media (min-width: 890px) {
+        #accidentespersonales-mask .container-ap {
+          padding: 1rem 5rem;
+          height: 80px;
+        }
+
+        #accidentespersonales-mask .container-ap .navbar-ap img {
+          width: 164px;
+          height: 35px;
+        }
+
+        #accidentespersonales-mask .container-ap .navbar-ap h1 {
+          font-size: 20px;
+        }
+      }
+
+      #accidentespersonales-mask .banner {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+      }
+
+      #accidentespersonales-mask .banner img {
+        width: 100%;
+        height: auto;
+      }
+
+      #accidentespersonales-mask .banner .info-fixed {
+        position: fixed;
+        top: 50vh;
+        transform: rotate(-90deg);
+        right: calc(-4.5rem - 4px);
+        padding: 8px 30px 3px;
+        border-radius: 30px 30px 0 0;
+        background-color: #ff5100;
+        color: #fff;
+        font-size: 22px;
+        font-family: "Titillium Web", sans-serif !important;
+        cursor: pointer;
+        z-index: 99;
+      }
+
+      #accidentespersonales-mask .section {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-direction: column;
+      }
+
+      #accidentespersonales-mask .section-reverse {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-direction: column-reverse;
+      }
+
+      #accidentespersonales-mask .insurance-info {
+        margin: 1rem;
+        padding: 1rem;
+      }
+
+      #accidentespersonales-mask .insurance-info img {
+        display: none;
+      }
+
+      #accidentespersonales-mask .insurance-info .section__info {
+        max-width: 450px;
+        padding: 5px;
+        text-align: center;
+      }
+
+      #accidentespersonales-mask .insurance-info .paragraph {
+        font-size: 16px;
+        text-align: center;
+        color: #2b0d61;
+        letter-spacing: 0.04px;
+        font-family: "Titillium Web", sans-serif !important;
+      }
+
+      #accidentespersonales-mask .coverages {
+        text-align: center;
+        padding-top: 2rem;
+      }
+
+      #accidentespersonales-mask .coverages .insurances h2 {
+        margin-bottom: 2rem;
+      }
+
+      #accidentespersonales-mask .coverages .complements {
+        padding-top: 2rem;
+        margin: 0.5rem;
+      }
+
+      #accidentespersonales-mask .proccess-insurance {
+        margin: 2rem 0;
+        padding: 2rem 0;
+        display: flex;
+        flex-direction: column;
+        background-color: #ededef;
+      }
+
+      #accidentespersonales-mask .proccess-insurance .proccess {
+        margin: 2rem;
+      }
+
+      #accidentespersonales-mask .proccess-insurance .proccess .slider-content {
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      #accidentespersonales-mask
+      .proccess-insurance
+      .proccess
+      .content-card
+      img {
+        width: 100%;
+      }
+
+      #accidentespersonales-mask
+      .proccess-insurance
+      .proccess
+      .content-card
+      .card {
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: column;
+        border-radius: 10px;
+        overflow: hidden;
+        background-color: #fff;
+        width: 220px;
+        height: 280px;
+      }
+
+      #accidentespersonales-mask
+      .proccess-insurance
+      .proccess
+      .content-card
+      .card
+      .detail {
+        padding: 1rem;
+      }
+
+      #accidentespersonales-mask
+      .proccess-insurance
+      .proccess
+      .content-card
+      .card
+      .detail
+      > p {
+        font-weight: bold;
+      }
+
+      #accidentespersonales-mask .proccess-insurance .title {
+        color: #ff5100;
+        font-size: 38px;
+        font-weight: bold;
+        margin-bottom: 3rem;
+        text-align: center;
+        font-family: "Faustina", serif !important;
+      }
+
+      #accidentespersonales-mask .title-ap {
+        color: #2b0d61;
+        font-size: 38px;
+        font-weight: bold;
+        text-align: center;
+        font-family: "Faustina", serif !important;
+      }
+
+      #accidentespersonales-mask .orange {
+        font-size: 38px;
+        font-weight: bold;
+        color: #ff5100;
+        font-family: "Faustina", serif !important;
+      }
+
+      #accidentespersonales-mask .message-end p {
+        font-size: 12px;
+        color: #2b0d61;
+        padding: 0 10px;
+        font-family: "Titillium Web", sans-serif !important;
+      }
+
+      #accidentespersonales-mask .coverages_list {
+        padding: 2rem 0;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 1rem 0;
+        gap: 0.5rem;
+      }
+
+      #accidentespersonales-mask .coverages_list--item {
+        padding: 16px;
+        background-color: #fff;
+        min-width: 150px;
+        width: 100%;
+        max-width: 150px;
+        height: 200px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        border-radius: 10px;
+        position: relative;
+        box-shadow: 0px 5px 15px 0px rgba(83, 80, 77, 0.15);
+      }
+
+      #accidentespersonales-mask .coverages_list--item img {
+        max-width: 50px;
+        max-height: 50px;
+      }
+
+      #accidentespersonales-mask .coverages_list--item p {
+        margin-top: 1rem;
+        font-size: 14px;
+        color: #2b0d61;
+        font-family: "Titillium Web", sans-serif !important;
+      }
+
+      .container__quest {
+        margin: 2rem 0;
+        padding: 2rem 1rem;
+      }
+
+      .container__quest .info {
+        text-align: left;
+      }
+
+      .container__quest .info .title-ap {
+        padding-bottom: 1rem;
+        font-weight: 700;
+        border-bottom: 2px solid #ff5100;
+        font-family: "Titillium Web", sans-serif !important;
+        letter-spacing: 0.08px;
+      }
+
+      .container__quest .tabs {
+        margin: 2rem 0;
+      }
+
+      .container__quest .tabs ul {
+        display: flex;
+        gap: 16px;
+        list-style: none;
+        width: fit-content;
+        border-bottom: 1px solid #ededef;
+        padding: 0 !important;
+      }
+
+      .container__quest .tabs .navtab__item {
+        cursor: pointer;
+        border: none;
+        outline: none;
+        background-color: #fff;
+        color: #b3b2b7;
+        padding: 0 10px 10px 0px;
+        font-size: 16px;
+        font-family: "Titillium Web", sans-serif !important;
+      }
+
+      .container__quest .tabs .is-active button {
+        font-weight: 400;
+        color: #ff5100;
+        border-bottom: 1px solid #ff5100;
+      }
+
+      #accidentespersonales-mask .container__quest .container {
+        padding: 0;
+      }
+
+      #accidentespersonales-mask .container__quest .list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        font-family: "Titillium Web", sans-serif !important;
+        font-weight: bold !important;
+        font-size: 16px;
+        font-style: normal;
+        padding: 0;
+      }
+
+      #accidentespersonales-mask .container__quest .list__child {
+        padding: 0;
+      }
+
+      #accidentespersonales-mask .container__quest .list__item {
+        border: 1px solid #b3b2b7;
+        border-radius: 8px;
+      }
+
+      #accidentespersonales-mask .container__quest .list:not(:last-child) {
+        margin-bottom: 0.75rem;
+      }
+
+      #accidentespersonales-mask .container__quest .item-selected {
+        border: 2px solid #2b0d61;
+      }
+
+      #accidentespersonales-mask
+      .container__quest
+      .item-selected
+      .list__item-title
+      > img {
+        transform: rotate(0deg);
+      }
+
+      #accidentespersonales-mask .container__quest .list__item-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        padding: 24px;
+      }
+
+      #accidentespersonales-mask .container__quest .list__item-title > div {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+      }
+
+      #accidentespersonales-mask .container__quest .list__item-title > div img {
+        margin-right: 0.75rem;
+      }
+
+      #accidentespersonales-mask .container__quest .list__item-title h3 {
+        color: #2b0d61;
+        font-family: "Titillium Web", sans-serif !important;
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      #accidentespersonales-mask .container__quest .list__item-title > img {
+        margin-left: 1rem;
+        transition: 0.2s;
+        transform: rotate(-90deg);
+      }
+
+      #accidentespersonales-mask .container__quest .list__item-desc {
+        padding: 24px;
+        padding-top: 0;
+      }
+
+      #accidentespersonales-mask .container__quest .list__child-item {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-direction: row;
+      }
+
+      #accidentespersonales-mask
+      .container__quest
+      .list__child-item
+      .list-text {
+        font-size: 16px;
+        color: #757371;
+        font-family: "Titillium Web", sans-serif !important;
+        line-height: 24px;
+        font-weight: normal;
+      }
+
+      #accidentespersonales-mask .container__quest .list__child-item.bold {
+        font-weight: bold;
+      }
+
+      #accidentespersonales-mask
+      .container__quest
+      .list__child-item:not(:last-child) {
+        margin-bottom: 0.5rem;
+      }
+
+      #accidentespersonales-mask .container__quest .list--disc::before,
+      .list--check::before {
+        display: inline-block;
+        min-width: 20px;
+        min-height: 20px;
+        font-size: 30px;
+        color: #ff5100;
+      }
+
+      #accidentespersonales-mask .container__quest .list--disc::before {
+        content: "•";
+      }
+
+      #accidentespersonales-mask .container__quest .list--check::before {
+        content: "✓";
+        font-size: 12px;
+        font-weight: 700;
+        border: 1px solid #ff5100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        min-height: 22px;
+        min-width: 22px;
+        max-height: 22px;
+        max-width: 22px;
+        margin-right: 10px;
+        transform: translateY(3px);
+      }
+
+      #accidentespersonales-mask .container__quest .margin-list {
+        margin-left: 2rem;
+      }
+
+      #accidentespersonales-mask .container__quest .content-table thead tr {
+        border: 1px solid #8a888f;
+        background-color: #8a888f;
+      }
+
+      #accidentespersonales-mask .container__quest .content-table thead tr th {
+        color: #fff;
+        padding: 2px;
+        text-align: center;
+        font-size: 10px;
+        font-family: "Titillium Web", sans-serif !important;
+      }
+
+      @media (min-width: 890px) {
+        #accidentespersonales-mask
+        .container__quest
+        .content-table
+        thead
+        tr
+        th {
+          font-size: 14px;
+          padding: 10px;
+        }
+      }
+
+      #accidentespersonales-mask .container__quest .content-table tbody tr {
+        border: 1px solid #8a888f;
+      }
+
+      #accidentespersonales-mask .container__quest .content-table tbody tr td {
+        border: 1px solid #8a888f;
+        color: #8a888f;
+        text-align: center;
+        font-size: 10px;
+        font-weight: normal;
+        font-family: "Titillium Web", sans-serif !important;
+      }
+
+      @media (min-width: 890px) {
+        #accidentespersonales-mask
+        .container__quest
+        .content-table
+        tbody
+        tr
+        td {
+          font-size: 14px;
+        }
+      }
+
+      @media (min-width: 890px) {
+        #accidentespersonales-mask .section {
+          justify-content: center;
+          flex-direction: row;
+          max-width: 1160px;
+          margin: auto;
+        }
+
+        #accidentespersonales-mask .section__info {
+          width: 100%;
+        }
+
+        #accidentespersonales-mask .section__info .title-ap {
+          text-align: left;
+        }
+
+        #accidentespersonales-mask .section-reverse {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: row;
+        }
+
+        #accidentespersonales-mask .insurance-info {
+          padding: 3rem;
+        }
+
+        #accidentespersonales-mask .insurance-info img {
+          display: flex;
+          margin-right: 3rem;
+        }
+
+        #accidentespersonales-mask .insurance-info .section__info {
+          margin-left: 3rem;
+          text-align: left;
+        }
+
+        #accidentespersonales-mask .insurance-info .paragraph {
+          text-align: left;
+        }
+
+        #accidentespersonales-mask .coverages .complements {
+          margin: 2rem;
+        }
+      }
+
+      #accidentespersonales-mask .container__contact {
+        padding-bottom: 2rem;
+      }
+
+      #accidentespersonales-mask .container-info {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-direction: column-reverse;
+        text-align: center;
+        padding: 1rem;
+      }
+
+      #accidentespersonales-mask .container-info .form-contact {
+        max-width: 680px;
+      }
+
+      #accidentespersonales-mask .container-info .form-contact .title {
+        color: #2b0d61;
+        font-size: 38px;
+        font-weight: bold;
+        text-align: center;
+        font-family: "Faustina", serif !important;
+      }
+
+      #accidentespersonales-mask .container-info .form-contact .subtitle {
+        font-size: 16px;
+        font-weight: 400;
+      }
+
+      #accidentespersonales-mask .container-info .form-contact .paragraph {
+        margin-top: 1rem;
+        font-size: 16px;
+        color: #2b0d61;
+        max-width: 450px;
+        text-align: left;
+        font-family: "Titillium Web", sans-serif !important;
+      }
+
+      #accidentespersonales-mask .container-info .pill {
+        display: none;
+      }
+
+      #accidentespersonales-mask .form-inputs {
+        display: grid;
+        grid-gap: 20px;
+        grid-template-columns: 1fr;
+      }
+
+      #accidentespersonales-mask .form-inputs .content-input {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      }
+
+      #accidentespersonales-mask .form-inputs .form-input {
+        border: 1px solid #403e49;
+        border-radius: 8px;
+        padding: 10px 12px;
+        font-size: 14px;
+        font-family: "Titillium Web", sans-serif !important;
+      }
+
+      #accidentespersonales-mask .content-checkbox {
+        display: flex;
+        gap: 1rem;
+        flex-direction: column;
+      }
+
+      #accidentespersonales-mask .content-checkbox .checkbox-accept {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+      }
+
+      #accidentespersonales-mask .content-checkbox .input-privacy {
+        margin-left: 0.6rem;
+        font-size: 14px;
+        text-align: left;
+        font-family: "Titillium Web", sans-serif !important;
+      }
+
+      #accidentespersonales-mask
+      .content-checkbox
+      .input-privacy
+      .politica-privacity {
+        font-weight: bold;
+        color: #201751;
+        text-decoration: underline;
+      }
+
+      #accidentespersonales-mask .content-checkbox input[type="checkbox"] {
+        display: none;
+      }
+
+      #accidentespersonales-mask
+      .content-checkbox
+      input[type="checkbox"]:checked
+      + .checkbox-personalizado::before {
+        content: "✓";
+        background-color: #ed6e00;
+        color: #fff;
+        font-size: 10px;
+        font-weight: bold;
+        margin-top: 0.5rem;
+      }
+
+      #accidentespersonales-mask .content-checkbox .checkbox-personalizado {
+        cursor: pointer;
+        user-select: none;
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 5px;
+      }
+
+      #accidentespersonales-mask
+      .content-checkbox
+      .checkbox-personalizado::before {
+        display: inline-block;
+        margin-top: 0.4rem;
+        background-color: #fff;
+        text-align: center;
+        vertical-align: middle;
+        content: "";
+        min-width: 17px;
+        width: 17px;
+        height: 17px;
+        border-radius: 2px;
+        border: 1px solid #ed6e00;
+        box-shadow: 0 0 0 3px solid #ed6e00;
+        transform: translateY(-1px);
+      }
+
+      #accidentespersonales-mask .content-checkbox .btn-submit {
+        width: 100%;
+        font-size: 14px;
+        font-weight: 700;
+        background-color: #ff5100;
+        color: #fff;
+        padding: 10px;
+        margin-top: 1rem;
+        border: none;
+        border-radius: 4px;
+        font-family: "Titillium Web", sans-serif !important;
+      }
+
+      #accidentespersonales-mask .content-checkbox .btn-submit:disabled {
+        opacity: 0.5;
+      }
+
+      @media (min-width: 890px) {
+        #accidentespersonales-mask .section .container-info {
+          justify-content: center;
+          flex-direction: row;
+          max-width: 1130px;
+          margin: auto;
+          text-align: left;
+        }
+
+        #accidentespersonales-mask .section .form-contact {
+          text-align: left;
+        }
+
+        #accidentespersonales-mask .section .form-contact .title {
+          text-align: left;
+        }
+
+        #accidentespersonales-mask .section .form-contact .subtitle {
+          font-size: 20px;
+        }
+
+        #accidentespersonales-mask .section .form-contact .paragraph {
+          text-align: left;
+        }
+
+        #accidentespersonales-mask .section__info {
+          width: 100%;
+        }
+
+        #accidentespersonales-mask .section.reverse {
+          flex-direction: row-reverse;
+        }
+
+        #accidentespersonales-mask .section.reverse .pill {
+          margin-left: 3rem;
+        }
+
+        #accidentespersonales-mask .section .pill {
+          display: flex;
+        }
+
+        #accidentespersonales-mask .section .pill-image {
+          min-width: 280px;
+          width: 100%;
+          min-height: auto;
+        }
+
+        #accidentespersonales-mask .content-checkbox .btn-submit {
+          width: 200px;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        #accidentespersonales-mask .form-inputs {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      #accidentespersonales-mask .footer {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      #accidentespersonales-mask .groupOrange {
+        background-color: #ff5100;
+        width: auto;
+        padding: 4rem;
+      }
+
+      #accidentespersonales-mask .groupBlue {
+        background-color: #261551;
+        width: auto;
+        display: flex;
+        justify-content: space-around;
+        padding: 4rem;
+      }
+
+      #accidentespersonales-mask .content {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      #accidentespersonales-mask .content__group--info {
+        margin-bottom: 1.5rem;
+        text-align: left;
+      }
+
+      #accidentespersonales-mask .content2 {
+        display: grid;
+        grid-template-columns: 1fr;
+        overflow: hidden;
+      }
+
+      #accidentespersonales-mask .content2__group--info .protecta-logo {
+        margin-bottom: 1rem;
+      }
+
+      #accidentespersonales-mask .protecta-logo {
+        display: block;
+        width: 300px;
+        height: 72px;
+        object-fit: contain;
+        background-repeat: no-repeat;
+        margin-bottom: 1rem;
+      }
+
+      #accidentespersonales-mask .protecta-logo {
+        background-image: url("../../../../../assets/accidentes-personales/protecta-logo-footer.svg");
+        max-width: 100%;
+      }
+
+      @media (min-width: 720px) {
+        #accidentespersonales-mask .protecta-logo {
+          max-width: 100%;
+          height: 55px;
+          margin-bottom: 1.5rem;
+        }
+      }
+
+      @media (min-width: 1470px) {
+        #accidentespersonales-mask .protecta-logo {
+          margin-bottom: 1.5rem;
+        }
+      }
+
+      #accidentespersonales-mask .sbs-logo {
+        display: block;
+        object-fit: contain;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+
+      #accidentespersonales-mask .sbs-logo {
+        background-image: url("../../../../../assets/accidentes-personales/resources/sbs-logo.svg");
+        width: 198px;
+        height: 50px;
+        margin: auto;
+        margin-top: 1rem;
+      }
+
+      @media (min-width: 720px) {
+        #accidentespersonales-mask .sbs-logo {
+          margin: 0;
+          margin-top: 1rem;
+        }
+      }
+
+      #accidentespersonales-mask .subtitle {
+        font-size: 16px;
+        font-weight: bold;
+        color: #ff5100;
+        margin-bottom: 0.5rem;
+        font-family: "Titillium Web", sans-serif !important;
+      }
+
+      #accidentespersonales-mask .subtitle span {
+        font-weight: normal;
+        color: #b1b1b1;
+      }
+
+      #accidentespersonales-mask .subtitle2 {
+        font-size: 16px;
+        font-weight: bold;
+        color: #fff;
+        margin-bottom: 0.5rem;
+        font-family: "Titillium Web", sans-serif !important;
+      }
+
+      #accidentespersonales-mask .list {
+        padding: 0;
+      }
+
+      #accidentespersonales-mask .list.social {
+        margin-top: 1.5rem;
+        display: flex;
+        flex-direction: row;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+      }
+
+      @media (min-width: 720px) {
+        #accidentespersonales-mask .list.social {
+          justify-content: flex-start;
+        }
+      }
+
+      #accidentespersonales-mask .list.social .list__item a {
+        display: flex;
+        width: 25px;
+        height: 25px;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #accidentespersonales-mask .list.social .list__item a svg {
+        fill: #fff;
+        transition: 0.2s;
+        transform: scale(1.2);
+      }
+
+      #accidentespersonales-mask .list.social .list__item a:hover svg {
+        fill: #fff;
+        transform: scale(1);
+      }
+
+      #accidentespersonales-mask .list__item {
+        font-size: 14px;
+        color: #fff;
+        list-style: none;
+      }
+
+      #accidentespersonales-mask .list__item a {
+        font-size: 14px;
+        color: #fff;
+        text-decoration: none !important;
+        font-family: "Titillium Web", sans-serif !important;
+      }
+
+      #accidentespersonales-mask .list__item:not(:last-child) {
+        margin-bottom: 0.25rem;
+      }
+
+      @media (min-width: 720px) and (max-width: 1399px) {
+        #accidentespersonales-mask .footer {
+          display: flex;
+          flex-direction: row;
+        }
+
+        #accidentespersonales-mask .groupOrange {
+          width: 30%;
+        }
+
+        #accidentespersonales-mask .groupBlue {
+          width: 70%;
+        }
+
+        #accidentespersonales-mask .content {
+          max-width: 75%;
+          grid-template-columns: repeat(2, 1fr);
+          grid-gap: 2rem;
+        }
+
+        #accidentespersonales-mask .content__group--info {
+          text-align: left;
+        }
+      }
+
+      @media (min-width: 1400px) {
+        #accidentespersonales-mask .footer {
+          display: flex;
+          flex-direction: row;
+        }
+
+        #accidentespersonales-mask .groupOrange {
+          width: 25%;
+        }
+
+        #accidentespersonales-mask .groupBlue {
+          width: 75%;
+        }
+
+        #accidentespersonales-mask .content {
+          grid-template-columns: repeat(3, 1fr);
+          grid-gap: 3rem;
+        }
+
+        #accidentespersonales-mask .content__group--info {
+          text-align: left;
+        }
+      }
+
+      #accidentespersonales-mask .office-link {
+        margin-top: 1rem;
+        display: block;
+      }
+
+      #accidentespersonales-mask .office-link small {
+        color: #fff;
+        font-weight: 600;
+      }
+
+      #accidentespersonales-mask .legal-name,
+      .ruc {
+        margin-bottom: 0.5rem;
+      }
+
+      #accidentespersonales-mask .legal-name .subtitle2,
+      .ruc .subtitle2 {
+        margin: 0;
+      }
+    </style>
+    <script>
+      const apRoutes = [
+        "/accidentespersonales",
+        "/ecommerce/accidentespersonales",
+      ];
+      if (!apRoutes.includes(location.pathname)) {
+        const apElement = document.getElementById("accidentespersonales-mask");
+        apElement.remove();
+      }
+    </script>
+    <app-root></app-root>
+  </body>
 </html>
