@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AppConfig } from '../../../../app.config';
 import { AuthenticationService } from '../../services/authentication.service';
-import { RecaptchaComponent } from 'ng-recaptcha';
+import { RecaptchaComponent } from 'ng-recaptcha-2';
 import { environment } from '../../../../../environments/environment';
 import { SidebarService } from '../../../../shared/services/sidebar/sidebar.service';
 import { NgxSpinnerService } from 'ngx-spinner';
