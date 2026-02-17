@@ -1,0 +1,99 @@
+<ng-container *ngIf="isCalledConsultaEstado && isSucess === 2">
+  <div class="container-payment">
+    <div class="container-payed">
+      <div class="row">
+        <div class="col-lg-9">
+          <h3 class="title-payed text-center">
+            ¡Completaste <b>la compra de tu seguro Protecta Security!</b>
+          </h3>
+          <div class="content-desc-payed text-center">
+            <p class="desc-payed">
+              Hola<b> {{ nombreCotizador }}</b
+              >, gracias por confiar lo que más valoras en Protecta Security.
+            </p>
+            <p class="desc-payed">
+              Hemos enviado tu póliza al siguiente correo:
+              <b>{{ insurance?.contratanteInfo?.correo }}</b>
+            </p>
+          </div>
+          <div class="summary">
+            <h5 class="summary__title">Datos del producto</h5>
+            <div class="summary__group">
+              <span class="summary__group--item">Número de pedido</span>
+              <span class="summary__group--item">{{
+                insurance?.cotizacionInfo?.idProceso
+              }}</span>
+            </div>
+            <div class="summary__group">
+              <span class="summary__group--item">Número de póliza</span>
+              <span class="summary__group--item">
+                {{ responseConsultaPago?.numeroPoliza }}</span
+              >
+            </div>
+            <div class="summary__group">
+              <span class="summary__group--item">Fecha</span>
+              <span class="summary__group--item">{{
+                insurance?.cotizacionInfo?.fechaInicio
+              }}</span>
+            </div>
+            <div class="summary__group">
+              <span class="summary__group--item">Total</span>
+              <span class="summary__group--item"
+                >{{ currencyType }}
+                {{ (+insurance?.cotizacionInfo?.primaTotal).toFixed(2) }}</span
+              >
+            </div>
+            <div class="summary__group">
+              <span class="summary__group--item">Frecuencia de pago</span>
+              <span class="summary__group--item">{{
+                insurance?.cotizacionInfo?.frecuenciaPago
+              }}</span>
+            </div>
+            <div class="summary__group">
+              <span class="summary__group--item">Método de pago</span>
+              <span class="summary__group--item">VISA</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<div *ngIf="isSucess === 3">
+  <div
+    class="content-load w-100 d-flex align-items-center justify-content-center flex-column py-5"
+  >
+    <h3 class="title-payed text-center">
+      Ocurrió un error al procesar el pago de tu seguro
+    </h3>
+    <span class="errorDesc">
+      {{ errorDesc }}
+    </span>
+    <a class="action-back" role="button" (click)="intentarDeNuevo()"
+      >Intentar nuevamente</a
+    >
+  </div>
+</div>
+
+<div *ngIf="isSucess === 1">
+  <div
+    class="content-load w-100 d-flex align-items-center justify-content-start flex-column py-5"
+  >
+    <h3 class="title-payed text-center">
+      Estamos procesando tu pago, <b>por favor espere</b>
+    </h3>
+    <img src="./assets/icons/loading.gif" alt="loading..." />
+  </div>
+</div>
+
+<ng-template #emissionError>
+  <div class="emissionError">
+    <h2 class="title-payed text-center">
+      ¡Completaste
+      <b>la compra de tu seguro Vida Grupo</b>
+    </h2>
+    <p>
+      {{ errorEmision.desc }}
+    </p>
+  </div>
+</ng-template>

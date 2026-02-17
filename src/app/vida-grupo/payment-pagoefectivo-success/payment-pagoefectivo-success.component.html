@@ -1,0 +1,31 @@
+<div class="content">
+  <section class="summary">
+    <h2 class="summary__title">Datos del producto</h2>
+    <div class="summary__group">
+      <span class="summary__group--item">Número de pedido</span>
+      <span class="summary__group--item">{{ session?.numeroOperacion }}</span>
+    </div>
+    <div class="summary__group">
+      <span class="summary__group--item">Fecha</span>
+      <span class="summary__group--item">{{
+        session?.transactionDateTime
+      }}</span>
+    </div>
+    <div class="summary__group">
+      <span class="summary__group--item">Total</span>
+      <span class="summary__group--item"
+        >{{ currencyType }} {{ session?.montoAutorizado }}</span
+      >
+    </div>
+    <div class="summary__group">
+      <span class="summary__group--item">Frecuencia de pago</span>
+      <span class="summary__group--item">{{
+        this.session?.cotizacionInfo?.frecuenciaPago
+      }}</span>
+    </div>
+    <div class="summary__group">
+      <span class="summary__group--item">Método de pago</span>
+      <span class="summary__group--item">Pago Efectivo</span>
+    </div>
+  </section>
+</div>

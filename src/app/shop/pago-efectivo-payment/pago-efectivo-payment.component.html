@@ -1,0 +1,124 @@
+<div class="container soat-container">
+  <div *ngIf="successfullPayment">
+    <div class="soat-header">
+      <h2 class="title">El proceso de su compra ya fue finalizado.</h2>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col soat-text-align-center space">
+        <button class="soat-button ripple stretch" (click)="goToMain()">
+          <i class="fa fa-circle-o-notch fa-spin" *ngIf="loading"></i>
+          Realizar otra Compra
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="loading && !successfullPayment">
+    <div class="soat-header">
+      <h2 class="title">
+        Por favor espere unos segundos mientras generamos su código de pago...
+      </h2>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && approve && valid && !successfullPayment">
+    <div class="soat-header">
+      <h2 class="title">
+        ¡Estás a punto de culminar la compra de tu seguro Vida Ley Protecta
+        Security!
+      </h2>
+    </div>
+    <p>
+      Acércate dentro de las próximas 24 horas con tu código de pago al
+      establecimiento elegido de tu preferencia para pagar tu seguro Vida Ley
+      Protecta Security y estar protegido.
+    </p>
+    <div class="row justify-content-center">
+      <div class="col soat-text-align-center space">
+        <button class="soat-button ripple stretch" (click)="goToMain()">
+          <i class="fa fa-circle-o-notch fa-spin" *ngIf="loading"></i>
+          Realizar otra Compra
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !approve && valid && !successfullPayment">
+    <div class="soat-header">
+      <h2 class="title">
+        Lamentablemente el código de pago no se realizó satisfactoriamente.
+      </h2>
+    </div>
+    <p>
+      Estimado cliente, ha ocurrido un error al intentar comunicarnos con la
+      entidad que seleccionaste, vuelve a intentar nuevamente por favor
+    </p>
+    <div class="row justify-content-center">
+      <div class="col soat-text-align-center space">
+        <button
+          class="soat-button ripple stretch"
+          routerLink="/shop/checkout"
+        >
+          <i class="fa fa-circle-o-notch fa-spin" *ngIf="loading"></i>
+          Volver a Intentar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !valid && !successfullPayment">
+    <div class="soat-header">
+      <h2 class="title">No se realizó la generación de Código de Pago.</h2>
+    </div>
+    <p>
+      Lamentablemente, los valores ingresados para la emisión no cumplen con las
+      validaciones necesarias:
+    </p>
+    <p *ngFor="let message of messages">- {{ message }}</p>
+    <div class="row justify-content-center">
+      <div class="col soat-text-align-center space">
+        <button
+          class="soat-button ripple stretch"
+          routerLink="/shop/checkout"
+        >
+          <i class="fa fa-circle-o-notch fa-spin" *ngIf="loading"></i>
+          Volver a Intentar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #payment>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">PagoEfectivo</h4>
+    <button
+      type="button"
+      class="close pull-right"
+      aria-label="Close"
+      (click)="modalRef.hide()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body iframe">
+    <div id="scroller" style="height: 95%; width: 100%; overflow: auto">
+      <iframe
+        [src]="paymentUrl"
+        width="100%"
+        height="100%"
+        frameborder="0"
+      ></iframe>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="row justify-content-center">
+      <div class="col soat-text-align-center">
+        <button class="soat-button ripple stretch" (click)="modalRef.hide()">
+          <i class="fa fa-circle-o-notch fa-spin" *ngIf="loading"></i>
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

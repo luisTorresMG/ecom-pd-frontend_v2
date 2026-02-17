@@ -1,0 +1,403 @@
+<div class="content-checkout" *ngIf="isValid">
+  <div class="content-info">
+    <div class="row">
+      <div class="col-lg-12">
+        <h1 class="title-checkout w-100 text-center">
+          Datos de la cotización y selección del <b>medio de pago</b>
+        </h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <p class="info-pago">
+          <b class="price"
+            >{{ currencyType }}
+            {{ (+dataResumen?.cotizacionInfo?.primaTotal).toFixed(2) }}</b
+          ><span> (con IGV)</span>
+        </p>
+        <p class="info-pago">
+          <b class="price2"
+            >{{ currencyType }}
+            {{ (+dataResumen?.cotizacionInfo?.primaNeta).toFixed(2) }}</b
+          ><span> (sin IGV)</span>
+          <br />
+          Costo de prima de tu {{ dataResumen?.cotizacionInfo?.producto }}
+        </p>
+        <span class="cod-transac">
+          Cod. Transacción <b>{{ dataResumen?.cotizacionInfo?.idProceso }}</b>
+        </span>
+      </div>
+    </div>
+    <div class="row content-info-gray">
+      <div class="col-lg-12">
+        <h2 class="title-info">Datos de la cotización</h2>
+        <div class="content-datos-cotiz">
+          <div class="datos-cotiz-item">Plan</div>
+          <div class="datos-cotiz-item-desc">
+            {{ dataResumen?.cotizacionInfo?.plan }}
+          </div>
+          <ng-container>
+            <div class="datos-cotiz-item">Nro de Asegurados</div>
+            <div class="datos-cotiz-item-desc">
+              {{ dataResumen?.cotizacionInfo?.cantidadAsegurados }}
+            </div>
+          </ng-container>
+          <ng-container>
+            <div class="datos-cotiz-item">Nro de Beneficiarios</div>
+            <div class="datos-cotiz-item-desc">
+              {{ dataResumen?.cotizacionInfo?.cantidadBeneficiarios }}
+            </div>
+          </ng-container>
+        </div>
+        <br />
+        <h2 class="title-info title-datos">Datos del contratante</h2>
+        <div class="content-datos-cotiz">
+          <div class="datos-cotiz-item">Número de documento</div>
+          <div class="datos-cotiz-item-desc">
+            {{ dataResumen?.contratanteInfo?.numeroDocumento }}
+          </div>
+          <div class="datos-cotiz-item">
+            {{ isRuc ? "Razón Social" : "Nombres" }}
+          </div>
+          <div class="datos-cotiz-item-desc">
+            {{
+              isRuc
+                ? dataResumen?.contratanteInfo?.razonSocial
+                : dataResumen?.contratanteInfo?.nombres
+            }}
+          </div>
+          <ng-container *ngIf="!!dataResumen?.contratanteInfo?.apellidoPaterno">
+            <div class="datos-cotiz-item">Apellidos</div>
+            <div class="datos-cotiz-item-desc">
+              {{
+                dataResumen?.contratanteInfo?.apellidoPaterno +
+                  " " +
+                  dataResumen?.contratanteInfo?.apellidoMaterno
+              }}
+            </div>
+          </ng-container>
+          <div class="datos-cotiz-item">Dirección</div>
+          <div class="datos-cotiz-item-desc">
+            {{ dataResumen?.contratanteInfo?.direccion }}
+          </div>
+          <div class="datos-cotiz-item">Correo</div>
+          <div class="datos-cotiz-item-desc">
+            {{ dataResumen?.contratanteInfo?.correo }}
+          </div>
+          <div class="datos-cotiz-item">Nro de Celular</div>
+          <div class="datos-cotiz-item-desc">
+            {{ dataResumen?.contratanteInfo?.telefono }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-container
+      *ngIf="
+        !otpResponse?.success &&
+        dataResumen?.contratanteInfo?.idTipoDocumento != 1
+      "
+    >
+      <div class="col-lg-12 btn-continue text-center">
+        <!-- <button type="button" class="btn-back">
+              <i class="fa fa-angle-left mr-2" aria-hidden="true"></i>Anterior
+            </button> -->
+        <button
+          type="button"
+          class="btn-next"
+          (click)="showHideModalBiometrico()"
+        >
+          Continuar
+        </button>
+      </div>
+    </ng-container>
+    <ng-container
+      *ngIf="
+        (otpResponse?.success && !otpResponse?.hasError) ||
+        dataResumen?.contratanteInfo?.idTipoDocumento == 1
+      "
+    >
+      <div
+        class="finish-validate mt-4 mb-4"
+        *ngIf="dataResumen?.contratanteInfo?.idTipoDocumento != 1"
+      >
+        <img
+          src="./assets/insurance/check-circle-2.svg"
+          class="face-check"
+          alt=""
+        />
+        <span class="title-finish"> ¡La validación se realizó con éxito! </span>
+      </div>
+
+      <div class="checkbox-accept mt-4">
+        <input
+          type="checkbox"
+          id="policy"
+          class="checkbox-payment"
+          [checked]="acceptTerms"
+          (change)="acceptTerms = !acceptTerms"
+        />
+        <div for="policy" [class.parpadeo]="!acceptTerms">
+          <div>
+            He leído y acepto la cotización del seguro y los servicios de
+            asistencia (en caso lo hubiese contratado), así como los
+            <a class="policy">Términos y Condiciones</a>
+            de la póliza.
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="otpResponse?.hasError">
+      <div class="finish-validate mt-4 mb-4" [@fade]="fade">
+        <span class="error-biometric">
+          {{ otpResponse?.message }}
+        </span>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="acceptTerms" [@fade]="fade">
+      <div class="row mt-4">
+        <div class="col-lg-12">
+          <small class="small-promo"
+            >Mediante la elección de cualquiera de los métodos de pago que se
+            muestran a continuación el contratante acepta la promoción del
+            Seguro de Vida Grupo brindada mediante cotización Nº
+            {{ dataResumen?.cotizacionInfo?.idCotizacion }}</small
+          >
+        </div>
+      </div>
+      <div class="row content-info-gray mb-5">
+        <div class="col-lg-12">
+          <h2 class="title-info text-center">Método de pago</h2>
+          <div class="content-metodo-pago">
+            <img
+              src="./assets/soat/img/pago-efectivo2.png"
+              alt=""
+              role="button"
+              (click)="pagarPagoEfectivo()"
+              class="pagoefectivo-img"
+            />
+            <span *ngIf="paymentType$.kushki || paymentType$.niubiz">o</span>
+            <ng-container *ngIf="paymentType$.kushki">
+              <img
+                src="./assets/soat/img/visa-logo.png"
+                alt="VISA"
+                role="button"
+                class="ml-3 visaBtn visa-img"
+                (click)="pay(6)"
+                #visaPay
+              />
+            </ng-container>
+            <ng-container *ngIf="paymentType$.niubiz">
+              <img
+                src="./assets/soat/img/visa-logo.png"
+                alt="VISA"
+                role="button"
+                class="ml-3 visaBtn visa-img"
+                (click)="pay(2)"
+                #visaPay
+              />
+            </ng-container>
+          </div>
+          <span class="select-metodo-pago"
+            >Para finalizar tu compra, escoge tu método de pago</span
+          >
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  bsModal
+  #modalPagoEfectivo="bs-modal"
+  [config]="{
+    backdrop: 'static'
+  }"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content px-0 py-0">
+      <div class="modal-body modal-emitido">
+        <iframe [src]="sourcePagoEfectivo" frameborder="0"></iframe>
+      </div>
+      <button type="button" class="btn-submit" (click)="finalizePayment()">
+        Finalizar
+      </button>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalKushkiPayment>
+  <div class="content-modal modal-kushki">
+    <section>
+      <div class="modal-header">
+        <button
+          class="modal__header--close"
+          aria-label="close"
+          (click)="closeModal()"
+        >
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <img
+          src="./assets/logos/logo-PS.svg"
+          alt="logo protecta"
+          class="logo-protecta"
+        />
+        <form [formGroup]="kushkiForm">
+          <div class="content-input">
+            <label
+              class="placeholder inside"
+              [class.active]="kushkiFormControl['cardNumber'].value"
+              aria-placeholder="Número de tarjeta"
+            >
+              <input
+                type="text"
+                formControlName="cardNumber"
+                [class.has-error]="
+                  kushkiFormControl['cardNumber'].touched &&
+                  kushkiFormControl['cardNumber'].errors
+                "
+                maxlength="16"
+                autocomplete="nope"
+                (blur)="binInfo()"
+              />
+              <i class="fa fa-credit-card" aria-hidden="true"></i>
+              <ng-container *ngIf="cardType">
+                <img
+                  [src]="'./assets/logos/payments/visa.svg'"
+                  class="card-type-image"
+                  width="40"
+                  height="auto"
+                  *ngIf="cardType == 'visa'"
+                />
+                <img
+                  [src]="'./assets/logos/payments/mastercard.svg'"
+                  class="card-type-image"
+                  width="40"
+                  height="auto"
+                  *ngIf="cardType == 'mastercard'"
+                />
+                <img
+                  [src]="'./assets/logos/payments/diners.svg'"
+                  class="card-type-image"
+                  width="40"
+                  height="auto"
+                  *ngIf="cardType == 'diners'"
+                />
+                <img
+                  [src]="'./assets/logos/payments/amex.svg'"
+                  class="card-type-image"
+                  width="40"
+                  height="auto"
+                  *ngIf="cardType == 'amex'"
+                />
+              </ng-container>
+            </label>
+          </div>
+          <div class="content-expiredate-cvv">
+            <div class="content-input">
+              <label
+                class="placeholder inside"
+                [class.active]="kushkiFormControl['dueDate'].value"
+                aria-placeholder="MM/AA"
+              >
+                <input
+                  type="text"
+                  formControlName="dueDate"
+                  [class.has-error]="
+                    kushkiFormControl['dueDate'].touched &&
+                    kushkiFormControl['dueDate'].errors
+                  "
+                  autocomplete="nope"
+                />
+                <i class="fa fa-calendar-o" aria-hidden="true"></i>
+              </label>
+            </div>
+            <div class="content-input">
+              <label
+                class="placeholder inside"
+                [class.active]="kushkiFormControl['cvv'].value"
+                aria-placeholder="CVV"
+              >
+                <input
+                  type="password"
+                  formControlName="cvv"
+                  [class.has-error]="
+                    kushkiFormControl['cvv'].touched &&
+                    kushkiFormControl['cvv'].errors
+                  "
+                  autocomplete="nope"
+                  maxlength="4"
+                />
+                <i class="fa fa-lock" aria-hidden="true"></i>
+              </label>
+            </div>
+          </div>
+          <button
+            class="button primary orange"
+            [disabled]="kushkiForm.invalid"
+            (click)="kushkiSubmit()"
+          >
+            {{ dataResumen?.cotizacionInfo?.idMoneda == 1 ? "S/" : "US$" }}
+            {{ dataResumen?.cotizacionInfo?.primaTotal | number : "1.2-2" }}
+          </button>
+          <small class="has-error" *ngIf="messageInfoKushki">
+            {{ messageInfoKushki }}
+          </small>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="modal-footer__left">
+          <img
+            src="./assets/logos/pci_certificate.svg"
+            alt="pci certificate"
+            width="72"
+          />
+        </div>
+        <div class="modal-footer__right">
+          <img
+            src="./assets/logos/payments/diners.svg"
+            class="diners logo"
+            width="43"
+          />
+          <img
+            src="./assets/logos/payments/amex.svg"
+            class="amex logo"
+            width="43"
+          />
+          <img
+            src="./assets/logos/payments/visa-2.svg"
+            alt="visa logo"
+            width="43"
+          />
+          <img
+            src="./assets/logos/payments/mastercard.svg"
+            alt="mastercard logo"
+            width="43"
+          />
+        </div>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-container *ngIf="showAuthentication">
+  <app-auth-method
+    (showModalAuthMethod)="showModalAuthMethod($event)"
+    [data]="authMethodData"
+    (otpResult)="otpResult($event)"
+    (selectedAuthMethod)="selectedAuthMethod($event)"
+  ></app-auth-method>
+</ng-container>
+
+<ng-container *ngIf="!isValid">
+  <div class="content-no-apto text-center">
+    <h2 class="title-no-apto text-center">
+      Hola, ocurrió un problema al procesar la información, vuelve a intentarlo
+      en unos momentos.
+    </h2>
+  </div>
+</ng-container>

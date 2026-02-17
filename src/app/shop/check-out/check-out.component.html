@@ -1,0 +1,303 @@
+<div class="container">
+  <div class="row content-list-items">
+    <div class="list-items">
+      <h1 class="title"><i class="fa fa-shopping-cart mr-2 fa-lg"
+           aria-hidden="true"></i>Carrito de compras ({{NTOTAL_ITEMS_CART}})</h1>
+      <div class="product-list">
+        <div class="product-container">
+          <div class="soat-title">
+            <h2 class="subtitle">SOAT</h2>
+          </div>
+          <div class="product-item"
+               *ngFor="let item of shoppingCart.soat; let i = index">
+            <div class="row">
+              <div class="col-md-2 d-none d-md-block align-self-center">
+                <img src="assets/ecommerce/soat.png"
+                     alt=""
+                     class="img-fluid" />
+              </div>
+              <div class="col-6">
+                <div class="row">
+                  <div class="col-md-5 label">Nro de Placa:</div>
+                  <div class="col text">{{ item.soat._license }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-md-5 label">Asegurado:</div>
+                  <div class="col text">
+                    {{ item.soat._name + " " + item.soat._lastName }}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-5 label">Contratante:</div>
+                  <div class="col text"
+                       *ngIf="item.billing.p_SCLIENT_NAME !== ''">
+                    {{ item.billing.p_SCLIENT_NAME + " " + item.billing.p_SCLIENT_APPPAT }}
+                  </div>
+                  <div class="col text"
+                       *ngIf="item.billing.p_SCLIENT_NAME == ''">
+                    {{ item.billing.p_SLEGALNAME }}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-4 align-self-center price">
+                S/ {{ item.rate.precio | number: "1.2-2" }}
+              </div>
+              <div class="col-md-1 col-2 cta align-self-center">
+                <!-- <button
+                  class="btn-small"
+                  type="button"
+                  (click)="onProductSelected('soat', i)"
+                >
+                  <i class="edit"></i>
+                </button> -->
+                <button class="btn-small"
+                        type="button"
+                        (click)="removeItem('soat', i, item)">
+                  <i class="delete"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="empty-container"
+               *ngIf="shoppingCart.soat.length === 0">
+            No hay productos agregados
+          </div>
+        </div>
+        <!--  <div class="product-container">
+          <h2 class="subtitle">SCTR</h2>
+          <div class="product-item"
+               *ngFor="let item of shoppingCart.sctr; let i = index">
+            <div class="row">
+              <div class="col-2 d-none d-md-block align-self-center">
+                <img src="assets/ecommerce/sctr.png"
+                     alt=""
+                     class="img-fluid" />
+              </div>
+              <div class="col-6 align-self-center">
+                <div class="row">
+                  <div class="col-md-3 label">Ruc:</div>
+                  <div class="col text">{{ item.sctr.ruc }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3 label">Empresa:</div>
+                  <div class="col text">
+                    {{
+                    item.sctr.businessName ||
+                    item.sctr.lastName +
+                    " " +
+                    item.sctr.surname +
+                    " " +
+                    item.sctr.name
+                    }}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-4 align-self-center price">
+                S/ {{ item.sctr.amount | number: "1.2-2" }}
+              </div>
+              <div class="col-md-1 col-2 cta align-self-center">
+                <button class="btn-small"
+                        type="button"
+                        (click)="removeItem('sctr', i)">
+                  <i class="delete"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="empty-container"
+               *ngIf="shoppingCart.sctr.length === 0">
+            No hay productos agregados
+          </div>
+        </div> -->
+        <div class="product-container">
+          <h2 class="subtitle">VIDA LEY</h2>
+          <div class="product-item"
+               *ngFor="let item of shoppingCart.vidaley; let i = index">
+            <div class="row">
+              <div class="col-2 d-none d-md-block align-self-center">
+                <img src="assets/ecommerce/vidaley.png"
+                     alt=""
+                     class="img-fluid" />
+              </div>
+              <div class="col-6 align-self-center">
+                <div class="row">
+                  <div class="col-md-3 label">Ruc:</div>
+                  <div class="col text">{{ item.vidaley.ruc }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3 label">Empresa:</div>
+                  <div class="col text">
+                    {{
+                    item.vidaley.businessName ||
+                    item.vidaley.lastName +
+                    " " +
+                    item.vidaley.surname +
+                    " " +
+                    item.vidaley.name
+                    }}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 col-4 align-self-center price">
+                S/ {{ item.vidaley.amount | number: "1.2-2" }}
+              </div>
+              <div class="col-md-1 col-2 cta align-self-center">
+                <!-- <button
+                  class="btn-small"
+                  type="button"
+                  (click)="onProductSelected('vidaley', i)"
+                >
+                  <i class="edit"></i>
+                </button> -->
+                <button class="btn-small"
+                        type="button"
+                        (click)="removeItem('vidaley', i, item)">
+                  <i class="delete"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="empty-container"
+               *ngIf="shoppingCart.vidaley.length === 0">
+            No hay productos agregados
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="list-items">
+      <div class="checkout-container d-flex flex-column"
+           [ngClass]="{'checkout-container-whith-items': shoppingCart.soat.length !== 0 ||
+      shoppingCart.vidaley.length !== 0 ||
+      shoppingCart.sctr.length !== 0}"
+           *ngIf="shoppingCart.soat.length > 0 ||
+           shoppingCart.sctr.length > 0 ||
+           shoppingCart.vidaley.length > 0">
+        <div class="row px-0">
+          <h1 class="title mt-5 mb-3">RESUMEN DE COMPRA</h1>
+          <div class="col check-label text-right">Precio total:</div>
+          <div class="col check-price text-left">S/ {{ total | number: "1.2-2" }}</div>
+        </div>
+        <div class="row px-0 btns-actions">
+          <a role="button"
+             class="back_shop d-flex align-items-center justify-content-center"
+             (click)="keepBuying()">
+            <span>Seguir comprando</span>
+          </a>
+          <button class="full-color btn-procesar-pago"
+                  (click)="showModalProcesoPago()">Procesar Pago</button>
+        </div>
+      </div>
+      <div class="checkout-container no-products flex-column"
+           *ngIf="shoppingCart.soat.length == 0 &&
+           shoppingCart.vidaley.length == 0 &&
+           shoppingCart.sctr.length == 0">
+        <span class="no-products-add mb-3">No hay productos agregados</span>
+        <a class="back_shop d-flex align-items-center justify-content-center"
+           [routerLink]="['/shop']">
+          <span>Seguir comprando</span>
+        </a>
+      </div>
+      <div class="adicional">
+        <div class="adicional__item">
+          <i class="fa fa-lock fa-lg"
+             aria-hidden="true"></i>
+          <div class="adicional__item--desc">
+            <h4>Compra segura</h4>
+          </div>
+        </div>
+        <div class="adicional__item">
+          <i class="fa fa-thumbs-up fa-lg"
+             aria-hidden="true"></i>
+          <div class="adicional__item--desc">
+            <h4>Satisfacción garantizada</h4>
+          </div>
+        </div>
+        <div class="adicional__item">
+          <i class="fa fa-phone fa-lg"
+             aria-hidden="true"></i>
+          <div class="adicional__item--desc">
+            <h4>¿Necesitas ayuda?</h4>
+            <span>Si necesitas ayuda comunícate con nosotros:</span><br>
+            <span class="n-help">
+              (51-1) 391-3000 (Lima)<br>
+              0801-1-1278 (Provincias)<br>
+              Correo: <a href="email:clientes@protectasecurity.pe">clientes@protectasecurity.pe</a>
+            </span>
+          </div>
+        </div>
+      </div>
+      <!--<div class="product-list-container"
+           hidden>
+        <p>SEGUIR COMPRANDO</p>
+        <button class="btn btn-purple"
+                (click)="onProductSelected('soat')">
+          SOAT
+        </button>
+        <button class="btn btn-purple"
+                (click)="onProductSelected('vidaley')">
+          Vida Ley
+        </button>
+        <button class="btn btn-purple"
+                (click)="onProductSelected('sctr')">
+          SCTR
+        </button>
+      </div>-->
+    </div>
+  </div>
+</div>
+<div class="modal fade"
+     bsModal
+     #modalProcesoPago="bs-modal">
+  <div class="modal-dialog"
+       role="document">
+    <form class="modal-content"
+          enctype="multipart/form-data">
+      <div class="modal-header">
+        <h5 class="modal-title"
+            id="exampleModalLabel">Proceso de Pago</h5>
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                (click)="hideModalProcesoPago()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body pb-0">
+        <label class="lbl-modal-body">Selecciona tu método de pago.</label>
+        <div class="check-payment">
+          <div class="pago-efectivo">
+            <img src="assets/soat/img/pagoefectivo.png"
+                 alt=""
+                 class="img-fluid"
+                 (click)="onPagoEfectivoClick()" />
+          </div>
+          <div *ngIf="!!visaSessionToken"
+               (click)="hideModalProcesoPago()">
+            <img src="assets/soat/img/visa-logo.png"
+                 alt=""
+                 class="img-fluid"
+                 *ngIf="!!visaSessionToken"
+                 appVisaButton
+                 [config]="visaSessionToken"
+                 [amount]="total" />
+          </div>
+          <div *ngIf="!visaSessionToken"
+               style="display:flex;height: 100%;width: fit-content">
+            <i style="margin:auto;font-size: 25px;color: #ff6e00; "
+               class="fa fa-spinner fa-pulse"></i>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer d-flex justify-content-center mx-auto w-100">
+        <button type="button"
+                class="btn full-color mx-auto"
+                data-dismiss="modal"
+                (click)="hideModalProcesoPago()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,172 @@
+<div class="shopping-cart-modal">
+  <div class="modal-header">
+    <h5 class="modal-title">
+      <div class="icon">
+        <img src="assets/ecommerce/cart-icon.png"
+             alt="" />
+        <img src="assets/ecommerce/check.png"
+             alt=""
+             class="check-icon" />
+      </div>
+      <span>Producto agregado:</span>
+      <span class="product-name">{{ info.productName }}</span>
+    </h5>
+    <button type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+            (click)="onClose()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-2 product-image">
+        <img src="assets/ecommerce/{{ info.productImage }}.png"
+             alt="" />
+      </div>
+      <div class="col-6">
+        <ng-container *ngIf="ecommerceType === 'soat'">
+          <div class="row">
+            <div class="col label">
+              <p>Contratante:</p>
+            </div>
+            <div class="col text">
+              <p>
+                {{
+                info.billing.p_SCLIENT_NAME +
+                " " +
+                info.billing.p_SCLIENT_APPPAT
+                }}
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col label">
+              <p>Asegurado:</p>
+            </div>
+            <div class="col text">
+              <p>{{ info.soat.name + " " + info.soat.lastName }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col label">
+              <p>N° de placa:</p>
+            </div>
+            <div class="col text">
+              <p>{{ info.soat.license }}</p>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="ecommerceType === 'vidaley'">
+          <div class="row">
+            <div class="col label">
+              <p>Ruc:</p>
+            </div>
+            <div class="col text">
+              <p>
+                {{ info.vidaley.ruc }}
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col label">
+              <p>Empresa:</p>
+            </div>
+            <div class="col text">
+              <p>
+                {{
+                info.vidaley.businessName ||
+                info.vidaley.lastName +
+                " " +
+                info.vidaley.surname +
+                " " +
+                info.vidaley.name
+                }}
+              </p>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="ecommerceType === 'sctr'">
+          <div class="row">
+            <div class="col label">
+              <p>Ruc:</p>
+            </div>
+            <div class="col text">
+              <p>
+                {{ info.sctr.ruc }}
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col label">
+              <p>Empresa:</p>
+            </div>
+            <div class="col text">
+              <p>
+                {{
+                info.sctr.businessName ||
+                info.sctr.lastName +
+                " " +
+                info.sctr.surname +
+                " " +
+                info.sctr.name
+                }}
+              </p>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <div class="col-4 amount">
+        <ng-container *ngIf="ecommerceType === 'soat'">
+          <span>S/ {{ info.rate.precio }}</span>
+        </ng-container>
+        <ng-container *ngIf="ecommerceType === 'vidaley'">
+          <span>S/ {{ info.vidaley.amount }}</span>
+        </ng-container>
+        <ng-container *ngIf="ecommerceType === 'sctr'">
+          <span>S/ {{ info.sctr.amount }}</span>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="cta-container">
+      <button type="button"
+              class="btn-buy-more"
+              (click)="showProductList()">
+        Seguir Comprando
+      </button>
+      <button type="button"
+              class="btn btn-orange"
+              data-dismiss="modal"
+              (click)="goToCheckout()">
+        Ir al Carrito
+      </button>
+    </div>
+
+    <div class="product-container row"
+         *ngIf="showProducts">
+      <div class="col">
+        <button class="btn btn-purple"
+                (click)="onProductSelected('soat')">
+          SOAT
+        </button>
+      </div>
+      <div class="col">
+        <button class="btn btn-purple"
+                (click)="onProductSelected('vidaley')">
+          Vida Ley
+        </button>
+      </div>
+      <!-- <div class="col">
+        <button class="btn btn-purple"
+                (click)="onProductSelected('sctr')">
+          SCTR
+        </button>
+      </div> -->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,566 @@
+
+<div class="main-container-header" style="padding-top: 50px !important;">
+</div>
+<br>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<div class="container-fluid my-4">
+
+    <div class="m-4">
+        <div class="box-grey">
+
+                <div class="row justify-content">
+                    <div class="col-md-12">
+                        <a aria-label="Protecta Security"
+                        href="https://protectasecurity.pe/"
+                        target="_self">
+                        <img src="assets/logos/logo-PS.svg" alt="Protecta Security"style="width: 280px; height: 48px; float left !important; margin-top: 20px;">
+                        </a>
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-4">
+                  <div class="col-lg-12 columna">
+                        <h2 style="color:darkblue; font-weight: 600;"> FORMULARIO DE SOLICITUDES DE SINIESTRO SOAT</h2>
+                        <br>
+                 </div>
+                </div>
+                <br>
+                <form  [formGroup]="formregister" class="justify-content-center" >
+                <div class="row justify-content-center">
+                    <!--Datos de solicitante-->
+                        <div class="col-md-8  justify-content-center">
+                            <div class="card" >
+                                <div class="card-header" style="background-color: rgb(74, 74, 194) !important;">
+                                    <h4 style="color:rgb(255, 255, 255);">DATOS DEL SOLICITANTE</h4>
+                                </div>
+                              <div class="card-body justify-content-center">
+                                <div class="form-group">
+                                    <div class="row mt-3 justify-content-center">
+                                        <div class="col-md-2">
+                                             <label for="TipoDocumento" class="tipodocimentosol">Tipo de Documento</label>
+                                        </div>
+                                      <!--  <div class="col-md-2">
+                                            <select formControlName="tipodocumentosol" class="form-control" (change)="changeTipoDocumento($event)">
+                                                <option *ngFor="let tipoDocumentosol of ListarTipoDocumentSol" [value]="tipoDocumentosol.sncode_sol"> {{tipoDocumentosol.sdescription}}</option>
+                                            </select>
+                                        </div>-->
+                                        <div class="col-md-2">
+                                            <select formControlName="tipodocumentosol" class="form-control" (change)="changeTipoDocumento($event)">
+                                                <option value="13652" >DNI</option>                                          
+                                                <option value="13653">CE</option>
+                                                 <option value="13654">RUC</option>
+                                                <option value="15467">PASAPORTE</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3 grouptipodocumentosol">
+                                            <div class="form-group">
+                                                <label for="documentosol" class="nrodocsol" style="float:right" >Nro de Documento</label>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" formControlName="documentosol" FormControl="documentosol" class="form-control"
+                                              (paste)="noPermitirPegar($event)" (ngModelChange)="handleChange()" (keypress)="validaNumericos($event)" style="text-transform: uppercase;">
+
+                                            <span style="color:#dc3545; font-size: 12px; margin-left: 13px;" *ngIf="txtvalidanrodoc && txtvalidanrodoc !== 'Correcto'">
+                                              {{txtvalidanrodoc}} <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                                            </span>
+
+                                            <span style="color:#448051; font-size: 12px; margin-left: 13px;" *ngIf="txtvalidanrodoc === 'Correcto'">
+                                              {{txtvalidanrodoc}} <i class="fa fa-check" aria-hidden="true"></i>
+                                            </span>
+                                          </div>
+
+
+
+
+                                    </div>
+                                    <div class="row mt-3 justify-content-center" *ngIf="tipodocumentosol.value == 13654">
+                                        <div class="col-md-2">
+                                        <!--<label for="rucsolicitante">Razón social &nbsp;&nbsp;<span style="color:brown">(*)</span>:</label> -->
+                                        <label for="rucsolicitante">Razón social</label>
+
+                                        </div>
+                                          <div class="col-md-8">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" formControlName="rucsolicitante" style="text-transform: uppercase;" (paste)="noPermitirPegar($event)" (keypress)="soloLetrasrsocial($event)" (ngModelChange)="validarTextoRsocial($event)" >
+                                                <span [style.color]="txtvalidaColorRS" style="color:#dc3545; font-size: 12px; margin-left: 13px;" *ngIf="txtvalidaRsocial && txtvalidaRsocial !== 'Correcto'">{{txtvalidaRsocial}}<i class="fa fa-exclamation-circle" aria-hidden="true"></i></span>
+                                                <span style="color:#448051; font-size: 12px; margin-left: 13px;" *ngIf="txtvalidaRsocial ==='Correcto'">{{txtvalidaRsocial}} <i class="fa fa-check" aria-hidden="true"></i></span>
+
+                                            </div>
+                                          </div>
+                                    </div>
+                                    <div class="row mt-3 justify-content-center" *ngIf="tipodocumentosol.value != 13654">
+                                            <div class="col-md-2">
+                                                <label for="nombressolicitante">Nombres</label>
+
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" formControlName="nombressolicitante" (paste)="noPermitirPegar($event)" (keypress)="soloLetras($event)" (ngModelChange)="validarTexto($event)" style="text-transform: uppercase;">
+                                                    <span [style.color]="txtvalidaColor" style="color:#dc3545; font-size: 12px; margin-left: 13px;" *ngIf="txtvalidanombres && txtvalidanombres !=='Correcto'">{{txtvalidanombres}} <i class="fa fa-exclamation-circle" aria-hidden="true"></i></span>
+                                                    <span style="color:#448051; font-size: 12px; margin-left: 13px;" *ngIf="txtvalidanombres ==='Correcto'">{{txtvalidanombres}} <i class="fa fa-check" aria-hidden="true"></i></span>
+
+                                                </div>
+
+                                              </div>
+                                    </div>
+                                    <div class="row mt-3 justify-content-center" *ngIf="tipodocumentosol.value != 13654">
+                                        <div class="col-md-2">
+                                            <label for="apellidosssolicitante">Apellidos</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" formControlName="apellidosssolicitante" (paste)="noPermitirPegar($event)" (keypress)="soloLetras($event)" (ngModelChange)="validarText2($event)" style="text-transform: uppercase;">
+                                            <span [style.color]="txtvalidacolorapellidos" style="color:#dc3545; font-size: 12px; margin-left: 13px;" *ngIf="txtvalidaapellidsol && txtvalidaapellidsol !=='Correcto'">{{txtvalidaapellidsol}} <i class="fa fa-exclamation-circle" aria-hidden="true"></i></span>
+                                            <span style="color:#448051; font-size: 12px; margin-left: 13px;" *ngIf="txtvalidaapellidsol ==='Correcto'">{{txtvalidaapellidsol}} <i class="fa fa-check" aria-hidden="true"></i></span>
+                                          </div>
+
+
+                                    </div>
+                                    <div class="row mt-3 justify-content-center">
+                                      <div class="col-md-2"><label for="emailsolicitante">Correo Eléctronico</label></div>
+                                    <!--  <div class="col-md-8">
+                                          <input type="email" formControlName="emailsolicitante" class="form-control" style="text-transform: uppercase;">
+                                          <span style="color:rgb(74, 32, 179)" *ngIf="!emailsolicitante.valid">Ingrese el formato correcto</span>
+                                          <span style="color:rgb(177, 122, 28)" *ngIf="emailsolicitante.valid && emailsolicitante.value !=''">Formato correcto</span>
+                                      </div> -->
+                                      <div class="col-md-8">
+                                        <input type="email" formControlName="emailsolicitante" class="form-control" style="text-transform: uppercase;" (input)="inputChange($event)">
+                                        <span style="color: rgb(74, 32, 179)" *ngIf="!emailsolicitante.valid">Ingrese el formato correcto</span>
+                                        <span style="color: rgb(177, 122, 28)" *ngIf="emailsolicitante.valid && emailsolicitante.value !== ''">{{ valueemail }}</span>
+                                      </div>
+                                      
+                                  </div>
+                                   <div class="row mt-3 justify-content-center">
+                                        <div class="col-md-2"><label for="nrotelefono">Nro Teléfono</label></div>
+                                        <div class="col-md-8"><input type="text" class="form-control "   formControlName="nrotelefonosolicitante" (paste)="noPermitirPegar($event)" (keypress)="validaNrotelefono($event)">
+                                        </div>
+                                   </div>
+                                   <div class="row mt-3 justify-content-center">
+                                        <div class="col-md-2">
+                                            <label for="direccionsolicitante">Dirección</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" formControlName="direccionsolicitante" style="text-transform: uppercase;">
+                                            <span style="color:#dc3545; font-size: 12px; margin-left: 13px;" *ngIf="!direccionsolicitante.valid">Campo obligatorio <i class="fa fa-exclamation-circle" aria-hidden="true"></i></span>
+                                                <span style="color:#448051; font-size: 12px;  margin-left: 13px;" *ngIf="direccionsolicitante.valid">Completado <i class="fa fa-check" aria-hidden="true"></i></span>
+                                        </div>
+                                   </div>
+                                   <div class="row mt-3 justify-content-center checkboxI" *ngIf="tipodocumentosol.value != 13654 && direccionsolicitante.value != '' && documentosol.value !='' && nombressolicitante.value != '' && apellidosssolicitante.value != ''">
+                                        <div class="col-md-10">
+                                            <input type="checkbox" class="form-check-input" formControlName="checksol" (change)="changechecksol($event)"  style="width: 17px; height: 20px;">
+                                            <label class="form-check-label checkboxII" for="checksol" >Marque la casilla si los datos del solicitante son los mismos que el lesionado</label>
+
+                                        </div>
+                                   </div>
+
+
+                                </div>
+
+                              </div>
+                            </div>
+                        </div>
+                    <!--Fin de datos del solicitnate-->
+
+                    <!--Datos del agraviado-->
+                    <div class="col-md-8" >
+                            <div class="card" id="datosdelagraviado" >
+                                <div class="card-header" style="background-color: rgb(74, 74, 194) !important;">
+                                    <h4 style="color:rgb(255, 255, 255);">DATOS DEL AGRAVIADO</h4>
+                                </div>
+                              <div class="card-body">
+                                <div class="form-group">
+                                  <div class="row mt-3 justify-content-center">
+                                    <div class="col-md-2"> <label for="tipodocumentoagraviado">Tipo de Documento</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <select  class="form-control" [attr.disabled]="disableagraviado == true ? true : null" formControlName="tipodocumentoagraviado" (change)="changeTipoDocumentoagrav($event)">
+                                          <option value="15473" >DNI</option>
+                                           <!--<option value="15474">RUC</option> -->
+                                         <option value="16201">CE</option>
+                                          <option value="16202">PASAPORTE</option>
+
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 grouptipodocumentosol"> <label for="nrodocumento" style="float: right;">Nro de Documento</label></div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" FormControl="documentoagraviado" [readonly]="disableagraviado" formControlName="documentoagraviado"  (paste)="noPermitirPegar($event)" (ngModelChange)="handleChange2()" (keypress)="validaNumericos($event)" style="text-transform: uppercase;">
+                                        <span style="color:#dc3545; font-size: 12px; margin-left: 13px;" *ngIf="txtvalidanrodocagrav && txtvalidanrodocagrav !== 'Correcto'">{{txtvalidanrodocagrav}} <i class="fa fa-exclamation-circle" aria-hidden="true"></i></span>
+                                          <span style="color:#448051; font-size: 12px;  margin-left: 13px;" *ngIf="txtvalidanrodocagrav ==='Correcto'">{{txtvalidanrodocagrav}} <i class="fa fa-check" aria-hidden="true"></i></span>
+                                    </div>
+                                </div>
+                                    <div class="row mt-3 justify-content-center">
+                                        <div class="col-md-2">
+                                            <label for="nombresagraviado">Nombres</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control"  formControlName="nombresagraviado" [readonly]="disableagraviado" (paste)="noPermitirPegar($event)" (keypress)="soloLetras($event)" style="text-transform: uppercase;" (ngModelChange)="validarTextoagra($event)">
+                                            <span [style.color]="colornombreagrav" style="color:#dc3545; font-size: 12px; margin-left: 13px;" *ngIf="txtvalidanombresagra && txtvalidanombresagra !=='Correcto'">{{txtvalidanombresagra}} <i class="fa fa-exclamation-circle" aria-hidden="true"></i></span>
+                                            <span style="color:#448051; font-size: 12px;  margin-left: 13px;" *ngIf="txtvalidanombresagra ==='Correcto'">{{txtvalidanombresagra}} <i class="fa fa-check" aria-hidden="true"></i></span>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3 justify-content-center">
+                                        <div class="col-md-2">
+                                            <label for="apellidosagraviado">Apellidos</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control"  formControlName="apellidosagraviado" style="text-transform: uppercase;" [readonly]="disableagraviado" (paste)="noPermitirPegar($event)" (keypress)="soloLetras($event)" (ngModelChange)="validarTextagraapel($event)" style="text-transform: uppercase;">
+                                            <span [style.color]="colorapellidagrav" style="color:#dc3545; font-size: 12px; margin-left: 13px;" *ngIf="txtvalidaapellidoagra && txtvalidaapellidoagra !=='Correcto'">{{txtvalidaapellidoagra}}<i class="fa fa-exclamation-circle" aria-hidden="true"></i></span>
+                                            <span style="color:#448051; font-size: 12px;  margin-left: 13px;" *ngIf="txtvalidaapellidoagra ==='Correcto'">{{txtvalidaapellidoagra}} <i class="fa fa-check" aria-hidden="true"></i></span>
+
+                                        </div>
+                                    </div>
+
+                                  </div>
+                                   <div class="row mt-3 justify-content-center">
+                                    <div class="col-md-2">
+                                        <label for="direccion">Dirección</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="text" formControlName="direccionagraviado" class="form-control" [readonly]="disableagraviado" style="text-transform: uppercase;">
+                                        <span style="color:#dc3545; font-size: 12px; margin-left: 13px;" *ngIf="!direccionagraviado.valid">Campo obligatorio <i class="fa fa-exclamation-circle" aria-hidden="true"></i></span>
+                                        <span style="color:#448051; font-size: 12px;  margin-left: 13px;" *ngIf="direccionagraviado.valid">Completado <i class="fa fa-check" aria-hidden="true"></i></span>
+                                    </div>
+                                   </div>
+                                   <div class="row mt-3 justify-content-center">
+                                    <div class="col-md-2"><label for="nroplacavehiculoagraviado">Nro. Placa del Vehículo </label></div>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control" formControlName="nroplacavehiculoagraviado" style="text-transform: uppercase;" (paste)="noPermitirPegar($event)" (keypress)="bloquearCaracteresEspeciales($event)" (ngModelChange)="handleChangePlaca()">
+                                        <span style="color:#dc3545; font-size: 12px; margin-left: 13px;" *ngIf="!nroplacavehiculoagraviado.valid">{{txtplaca}} <i class="fa fa-exclamation-circle" aria-hidden="true"></i></span>
+                                        <span style="color:#448051; font-size: 12px;  margin-left: 13px;" *ngIf="nroplacavehiculoagraviado.valid">Correcto <i class="fa fa-check" aria-hidden="true"></i></span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="fechasiniestroagraviado" class="lblfchasiniestro" style="float: right;">Fecha del siniestro</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                         <input type="date" id="fechasiniestroagraviado" [max]="maxFecha()" class="form-control" formControlName="fechasiniestroagraviado" (change)="pruebafecha()">
+                                    </div>
+                                   </div>
+                                   <div class="row mt-3 justify-content-center">
+                                        <div class="col-md-2"><label for="activarcobertura">Activar Cobertura
+                                        </label>
+                                        </div>
+                                        <div class="col-md-8" *ngIf="tipodocumentosol.value == '13654'">
+                                            <select  class="form-control" formControlName="activarcoberturaR" (change)="changeactivarcobertura($event)">
+                                           <!-- <option *ngFor="let LstCverR of ListarActivarCoverturaR" [value]="LstCverR.nid"> {{LstCverR.sdescription}}</option> -->
+                                           <option value="16290" >GASTOS DE SEPELIO</option>
+                                            </select>
+
+                                        </div>
+                                        <div class="col-md-8" *ngIf="tipodocumentosol.value == '13652' || tipodocumentosol.value == '13653' || tipodocumentosol.value == '15467'" >
+                                          <!--  <select  class="form-control" formControlName="activarcobertura" (change)="changeactivarcobertura($event)">
+                                                <option *ngFor="let LstCverR of LisrtarActivarCobertura" [value]="LstCverR.sncode_cobertura" >{{LstCverR.sdescription}}</option>
+
+                                            </select> -->
+                                            <select  class="form-control" (ngModelChange)="handleChangecobertura()" formControlName="activarcobertura" (change)="changeactivarcobertura($event)">
+                                                <option value="16000" >SELECCIONE UNA COBERTURA</option>
+                                                <option value="16286" >INCAPACIDAD TEMPORAL</option>
+                                                <option value="16287" >INVALIDEZ PERMANENTE</option>
+                                                <option value="16288" >MUERTE</option>
+                                                <option value="16289" >GASTOS MÉDICOS</option>
+                                                <option value="16290-1" >GASTOS DE SEPELIO</option>
+                                            </select>
+
+                                            <span style="color:brown" *ngIf="!coberturaSeleccionada">Debe seleccionar una cobertura a activar</span>
+                                        </div>
+                                   </div>
+                              </div>
+                            </div>
+                        </div>
+                   <!--Fin de datos del agraviado-->
+
+                    <!--Icinio de datos de pago-->
+                        <div class="col-md-8" >
+                            <div class="card" id="datosdepago" >
+                                <div class="card-header" style="background-color: rgb(74, 74, 194) !important;">
+                                    <h4 style="color:rgb(255, 255, 255);">DATOS DE PAGO</h4>
+                                </div>
+                              <div class="card-body">
+                                <div class="form-group">
+                                    <div class="row mt-3 justify-content-center">
+                                        <div class="col-md-2">
+                                            <label for="metodopago">Método de pago:</label>
+                                        </div>
+                                       <!-- <div class="col-md-8">
+                                            <select name="tipoDocumento" class="form-control"  formControlName="slectmetodopago" (change)="changemetodopago($event)">
+                                                <option *ngFor="let LstMetpago of ListarMetodoPago"
+                                                [value]="LstMetpago.nid">{{LstMetpago.sdescription}}</option>
+
+                                            </select>
+                                        </div> -->
+                                        <div class="col-md-8">
+                                            <select name="tipoDocumento" class="form-control"  formControlName="slectmetodopago" (change)="changemetodopago($event)">
+                                                <option value="16173" >PAGO EN VENTANILLA (BANCO DE CRÉDITO DEL PERÚ)</option>
+                                                <option value="16174" >TRANSFERENCIA BANCARIA</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3 justify-content-center" *ngIf="slectmetodopago.value == '16174'">
+                                        <div class="col-md-2">
+                                            <label for="exampleInputPassword1">Entidad Bancaria:</label>
+                                        </div>
+                                      <!--  <div class="col-md-8">
+                                            <select name="tipoDocumento" class="form-control" formControlName="slecentidadbancaria" (change)="changeentidadbancaria($event)">
+                                                <option *ngFor="let LstEntBanck of ListarEntidadBancaria"
+                                                [value]="LstEntBanck.sncode_cobertura">{{LstEntBanck.sdescription}}</option>
+                                            </select>
+                                        </div>-->
+                                        <div class="col-md-8">
+                                            <select name="tipoDocumento" class="form-control" formControlName="slecentidadbancaria" (change)="changeentidadbancaria($event)">
+                                                <option value="100" >SELECCIONE UNA OPCIÓN</option>
+                                                <option value="BCP" >BCP</option>
+                                                <option value="BBVA" >BBVA</option>
+                                                <option value="INTERBANK" >INTERBANK</option>
+                                                <option value="SCOTIABANK" >SCOTIABANK</option>
+                                                <option value="OTRO" >OTRO</option>
+
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3 justify-content-center" *ngIf="slecentidadbancaria.value == 'OTRO' && slectmetodopago.value == '16174'">
+                                        <div class="col-md-2"> <label for="nameentidad">Nombre de entidad</label></div>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" formControlName="nameentidad" (paste)="noPermitirPegar($event)" (keypress)="soloLetras($event)" (ngModelChange)="validarnombreEB($event)" style="text-transform: uppercase;">
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3 justify-content-center" *ngIf="(slecentidadbancaria.value != '100') && slectmetodopago.value == '16174'">
+                                        <div class="col-md-2"> <label for="nrocuenta">Nro. Cuenta</label></div>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" formControlName="nrocuenta" (paste)="noPermitirPegar($event)" (keypress)="validaNroGion($event)" style="text-transform: uppercase;">
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3 justify-content-center" *ngIf="( slecentidadbancaria.value != '100') && slectmetodopago.value == '16174'">
+                                    <div class="col-md-2"><label for="codigointerbancario">Código interbancario</label>
+                                    </div>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" formControlName="codigointerbancario" (keypress)="validaNroGion($event)" (paste)="noPermitirPegar($event)" style="text-transform: uppercase;" >
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+
+
+                              </div>
+                            </div>
+                        </div>
+                    <!--Fin de datos de pago-->
+
+                    <!-- Documentos requeridos-->
+                        <div class="col-md-8">
+                            <div class="card" id="documentosrequeridos">
+                                <div class="card-header" style="background-color: rgb(74, 74, 194) !important;" >
+                                    <h4 style="color:rgb(255, 255, 255);">DOCUMENTOS</h4>
+                                </div>
+                                <div class="card-body">
+                                  <div class="form-group">
+                                 <!--   <div class="row mt-3 justify-content-center" >
+                                      <div class="col-lg-10 justify-content-center" *ngIf="activarcobertura.value != '16022' || activarcobertura.value != '16024' || activarcobertura.value != '16023' || activarcobertura.value != '16023-gs'" >
+                                        <h5 style="color:rgb(104, 104, 104); font-weight: 600; text-align: center;">Debe seleccionar una cobertura a activar</h5>
+                                      </div>
+                                    </div>-->
+                                  </div>
+
+                                    <div class="form-group">
+                                        <div class="row mt-3 justify-content-center" >
+                                            <div class="col-md-10">
+                                                <label for="adjdocumentos" class="titledocument"><strong>Adjuntar los siguientes documentos para completar la solicitud</strong></label>
+                                            </div>
+                                        </div>
+                                        <!--Adj. Incapacidad temporal y Invalidez permanente-->
+                                        <div class="row mt-3 justify-content-center" *ngIf="tipodocumentoagraviado.value == '15474' || activarcobertura.value == '16286'">
+                                           <div class="col-md-10">
+                                                <div class="card-body bglistadocu">
+                                                    <ol>
+                                                        <li>Solicitud de Cobertura <a href="https://drive.google.com/u/0/uc?id=13t91sa9F9GWGOWKITGcWYar6UdVrT7rU&export=download">Descargar Plantilla</a></li>
+                                                        <li> Documento de Identidad del Solicitante. </li>
+                                                        <li> Documento de Identidad del Lesionado. </li>
+                                                        <li> Denuncia Policial.</li>
+                                                        <li> Copia del Certificado SOAT.</li>
+                                                        <li> Original del Certificado Médico del Lesionado, indicando el menoscabo o porcentaje de Invalidez.</li>
+                                                        <li> Original del Certificado médico, donde se señale los días de descanso médico y el diagnóstico</li>
+                                                    </ol>
+                                                </div>
+
+                                           </div>
+                                        </div>
+                                        <!--iNCAPACIDAD PERMANENTE-->
+                                        <div class="row mt-3 justify-content-center" *ngIf="tipodocumentoagraviado.value == '15474' || activarcobertura.value == '16287'">
+                                            <div class="col-md-10">
+                                                 <div class="card-body bglistadocu">
+                                                     <ol>
+                                                         <li>Solicitud de Cobertura <a href="https://drive.google.com/u/0/uc?id=1kg4AexebSBUtk9_6ucO_W6rOioHbtXQ6&export=download">Descargar Plantilla</a></li>
+                                                         <li> Documento de Identidad del Solicitante. </li>
+                                                         <li> Documento de Identidad del Lesionado. </li>
+                                                         <li> Denuncia Policial.</li>
+                                                         <li> Copia del Certificado SOAT.</li>
+                                                         <li> Original del Certificado Médico del Lesionado, indicando el menoscabo o porcentaje de Invalidez.</li>
+                                                         <li> Original del Certificado médico, donde se señale los días de descanso médico y el diagnóstico</li>
+                                                     </ol>
+                                                 </div>
+
+                                            </div>
+                                         </div>
+
+                                        <!--FIN DE INCAPACIDAD PERMANENTE-->
+                                        <!-- Lista de documentos cuando sea MUERTE -->
+                                        <div class="row mt-3 justify-content-center" *ngIf="activarcobertura.value == '16288'">
+                                          <div class="col-md-10">
+                                               <div class="card-body bglistadocu">
+                                                   <ol>
+                                                       <li>Solicitud de Cobertura <a href="https://drive.google.com/u/0/uc?id=1enpeYmhHxwo1j9y4paCOTo1LFT97GxkF&export=download">Descargar Plantilla</a></li>
+                                                       <li> Documento de Identidad del Solicitante. </li>
+                                                       <li> Documento de Identidad del Beneficiario. </li>
+                                                       <li> Certificada de la Denuncia Policial.</li>
+                                                       <li>Certificado SOAT.</li>
+                                                       <li>Certificado de Defunción del Fallecido.</li>
+                                                       <li>Original o Copia Legalizada del Acta o Partida de Matrimonio del Fallecido.</li>
+                                                       <li>Original o Copia Legalizada del Acta o Partida de Nacimiento del Beneficiario.
+                                                       </li>
+                                                       <li>Original de Declaración Jurada con firma legalizada de no existir otros beneficiarios con mayor prioridad.
+                                                      </li>
+                                                      <li>
+                                                        Constancia de apertura de cuenta de ahorros en moneda nacional a nombre del beneficiario menor de 18 años o mayor de 18 años con incapacidad.
+                                                      </li>
+                                                      <li>
+                                                        Copia certificada de la Sentencia Judicial consentida que nombre al Tutor legal/Curador del beneficiario menor de 18 años o mayor de 18 años con incapacidad.
+                                                      </li>
+                                                   </ol>
+                                               </div>
+
+                                          </div>
+                                       </div>
+                                        <!-- Fin de documentos de MUERTE -->
+
+                                        <!-- Lista de documentos cuando sea GASTOS MEDICOS -->
+                                        <div class="row mt-3 justify-content-center" *ngIf="activarcobertura.value == '16289'">
+                                          <div class="col-md-10">
+                                               <div class="card-body bglistadocu">
+                                                   <ol>
+                                                       <li>Solicitud de Cobertura <a href="https://drive.google.com/u/0/uc?id=1eW4vMW4cleWxk8Va1VBJ56pvRTrgbQeK&export=download">Descargar Plantilla</a></li>
+                                                       <li>Documento de Identidad del Solicitante. </li>
+                                                       <li>Documento de Identidad del Lesionado o Fallecido. </li>
+                                                       <li>Documento de Identidad de la persona a quien se le hará el reembolso.</li>
+                                                       <li>Denuncia Policial.</li>
+                                                       <li>Copia del Certificado SOAT.</li>
+                                                       <li>Comprobantes de Pago originales por gastos médicos a nombre de la persona que incurrió en el gasto.</li>
+                                                       <li>Original de la Documentación de sustento de la atención médica al Lesionado.
+                                                       </li>
+
+                                                   </ol>
+                                               </div>
+
+                                          </div>
+                                       </div>
+                                        <!-- Fin de documentos de GASTOS MEDICOS -->
+                                        <!-- Lista de documentos cuando sea GASTOS SEPELIO -->
+                                        <div class="row mt-3 justify-content-center" *ngIf="activarcobertura.value == '16290-1' || activarcoberturaR.value == '16290' || tipodocumentosol.value == '13654'">
+                                        <div class="col-md-10">
+                                            <div class="card-body bglistadocu">
+                                                <ol>
+                                                    <li>Solicitud de Cobertura <a href="https://drive.google.com/u/0/uc?id=1w43B7Var647fdKSM98Q4qfWg_fzF1GYg&export=download">Descargar Plantilla</a></li>
+                                                    <li>Documento de Identidad del Solicitante. </li>
+                                                    <li>Documento de Identidad del Lesionado o Fallecido. </li>
+                                                    <li>Documento de Identidad de la persona a quien se le hará el reembolso.</li>
+                                                    <li>Denuncia Policial.
+                                                        </li>
+                                                    <li>Copia del Certificado SOAT.</li>
+                                                    <li>Comprobantes de Pago originales por gastos médicos a nombre de la persona que incurrió en el gasto.</li>
+                                                    <li>Original de la Documentación de sustento de la atención médica al Lesionado.
+                                                    </li>
+
+                                                </ol>
+                                            </div>
+
+                                        </div>
+                                        </div>
+                                        <!-- Fin de documentos de GASTOS DE SEPELIO -->
+
+                                        <div class="row mt-3 justify-content-center">
+                                            <div class="col-md-5">
+                                                Es obligatorio agregar al menos un adjunto.
+                                                Formatos: PDF, JPEG o PNG. Max 15MB c/u
+                                            </div>
+                                              <div class="col-md-5" style="float: right !important; border-top-width:2px;">
+                                                <label class="custom-file-upload mobileupload" *ngIf="totalfile > 0 && totalfile > uploadedFiles.length">
+                                                  <input type="file" formControlName="uploadfiledocument" (change)="onFileSelected($event)" multiple accept=".jpeg, .pdf, .jpg, .png," style="border-top: 2px solid dimgrey;"> Agregar Archivos
+                                                </label>
+                                              </div>
+
+                                        </div>
+                                    <div class="row mt-3 justify-content-center">
+                                           <div class="col-md-10">
+                                            <table class="table">
+                                                <thead>
+                                                  <tr style="text-align:center;">
+                                                    <th>Nombre</th>
+                                                    <th>Tamaño</th>
+                                                    <th>Acciones</th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+                                                  <tr *ngFor="let file of uploadedFiles">
+                                                    <td>{{ file.name }}</td>
+                                                    <td style="text-align:center;">{{ file.size }} / MB</td>
+                                                    <td style="text-align:center;"><i class="fa fa-trash-o cursor-pointer" (click)="deleteFile(file)" ></i></td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                           </div>
+                                    </div>
+                                        <br>
+                                        <br>
+                                       
+                                        <div class="row justify-content-center mt-3">
+                                            <div class="col-md-10 text-center" style="display: flex; justify-content: center;">
+                                              <ngx-recaptcha2 #captchaElem [siteKey]="sitekey" formControlName="recaptcha"></ngx-recaptcha2>
+                                            </div>
+                                          </div>
+                                    
+                                       
+                                       
+
+                                    <div class="row justify-content-center mt-5">
+                                            <div class="col-md-5">
+                                                <button class="btn btnRegistrar mb-2 btn-lg btn-block" type="button" [disabled]="!formregister.valid" (click)="registrar()" >Guardar</button>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <button class="btn btn-secondary btn-lg btn-block mb-2" (click)="CleanFormgroup()"  >Limpiar</button>
+                                            </div>
+                                    </div>
+                                    </div>
+
+                                    <div class="form-group">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!--Fin de documentos requeridos-->
+
+
+                </div>
+              </form>
+        </div>
+    </div>
+       <div [hidden]="isLoading == false" class="loadingScreen">
+         <div style="display: flex; flex-direction: column; height: 100%; justify-content: center; align-items: center;">
+          <div class="spinner"></div>
+          <p style="margin-top: 10px; color:#eeebe8; font-size: 13px;">Por favor espere..</p>
+        </div>
+      </div>
+      <div [hidden]="isButtonClicked == false" class="loadingScreen">
+        <div style="display: flex; flex-direction: column; height: 100%; justify-content: center; align-items: center;">
+          <div class="spinner"></div>
+          <p style="margin-top: 10px; color:#eeebe8; font-size: 13px;">Por favor espere..</p>
+        </div>
+     </div>
+
+</div>
+

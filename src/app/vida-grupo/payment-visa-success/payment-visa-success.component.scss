@@ -1,0 +1,171 @@
+@import "variables";
+
+.container-payment {
+    display: flex;
+    justify-content: center;
+}
+
+.container-payed {
+    max-width: 870px;
+    margin: 3rem 0;
+}
+
+.title-payed {
+    color: #2b0d61;
+}
+
+.desc-payed {
+    color: rgba(0, 0, 0, 0.5);
+    margin: 0;
+}
+
+.content-desc-payed {
+    margin-bottom: 1rem;
+}
+
+.btn-init,
+.btn-download {
+    width: 150px !important;
+}
+
+.container-payed {
+    padding-bottom: 2rem !important;
+}
+
+.content-desc-payed {
+    margin: 1rem 0;
+}
+
+.summary {
+    width: 100%;
+    max-width: 490px;
+    background-color: $purplebc;
+    padding: 2rem;
+    border-radius: 20px;
+}
+
+.summary__title {
+    margin-bottom: 1.5rem;
+    font-size: 27px;
+    color: $purple;
+    font-weight: bold;
+}
+
+.summary__group {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    grid-gap: 1rem;
+
+    &:not(:first-child) {
+        margin-top: 0.5rem;
+    }
+}
+
+.summary__group--item {
+    font-size: 17px;
+    color: $purple;
+
+    &:last-child {
+        font-weight: bold;
+    }
+}
+
+
+@media (max-width: 992px) {
+    .container-payed>.row:nth-child(2) {
+        flex-direction: column-reverse !important;
+    }
+
+    .desc-payed,
+    .title-payed {
+        text-align: center;
+    }
+
+    .content-data-product {
+        margin: 2rem auto 0.5rem auto !important;
+    }
+
+    .background-payed {
+        height: 170px;
+        margin-bottom: 1rem !important;
+    }
+}
+
+.content-buttons-actions button {
+    padding: 5px 12px;
+    color: #ed6e00;
+    border: 1px solid #ed6e00;
+    background-color: #fff;
+    width: 120px;
+    border-radius: 5px;
+}
+
+.content-buttons-actions button:last-child {
+    padding: 7px 15px;
+    color: #fff;
+    border: 1px solid #ed6e00;
+    background-color: #ed6e00;
+    margin-left: 1rem;
+}
+
+.content-load {
+    min-height: 420px;
+}
+
+.content-load img {
+    width: 32px;
+    margin-top: 2rem;
+}
+
+.content-load h3 {
+    font-size: 37px;
+    max-width: 482px;
+}
+
+.action-back {
+    margin-top: 3rem;
+    border: none;
+    background: #ed6e00;
+    padding: 10px;
+    border-radius: 5px;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 15px;
+    text-decoration: none !important;
+}
+
+.emissionError {
+    max-width: 640px;
+    text-align: center;
+    margin: auto;
+    padding: 4rem 1rem;
+}
+
+.emissionError h2 {
+    font-size: 34px;
+    color: #2b0d61;
+}
+
+.emissionError p {
+    display: block;
+    max-width: 480px;
+    margin-top: 2.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 18px;
+}
+
+.emissionError .btn-back {
+    margin-top: 2rem;
+    padding: 5px 10px;
+    background-color: #ed6e00;
+    height: 40px;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+}
+
+.errorDesc {
+    margin-top: 1rem;
+}
