@@ -36,9 +36,18 @@ export class InicioComponent implements OnInit {
   }
 
   trackBroker() {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const raw = localStorage.getItem('currentUser');
 
-    if (currentUser && currentUser.forwardAccount) {
+    let currentUser: any = null;
+    if (raw) {
+      try {
+        currentUser = JSON.parse(raw);
+      } catch {
+        currentUser = null;
+      }
+    }
+
+    if (currentUser?.forwardAccount) {
       this.router.navigate(['/extranet/welcome']);
       return;
     }
@@ -48,6 +57,7 @@ export class InicioComponent implements OnInit {
     this.router.navigate(['extranet']);
   }
 
+
   trackAllye() {
     this.spinner.show();
     this.trackAnalitycs('Soy un Canal Aliado');
@@ -55,12 +65,13 @@ export class InicioComponent implements OnInit {
     this.router.navigate(['extranet']);
   }
 
-  trackAnalitycs(description) {
-    this.appConfig.pixelEvent(
-      'virtualEvent',
-      'SOAT Digital - Home',
-      'Clic en botón',
-      description
-    );
-  }
+  trackAnalitycs(description: string): void {
+  this.appConfig.pixelEvent(
+    'virtualEvent',
+    'SOAT Digital - Home',
+    'Clic en botón',
+    description
+  );
+}
+
 }
