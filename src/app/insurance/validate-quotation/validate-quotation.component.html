@@ -1,0 +1,881 @@
+<main class="container-fluid px-0 py-0 mx-0 my-0" *ngIf="!derivationAdvisor">
+  <div class="max-width-to-center">
+    <div class="row px-0 py-0 mx-0 my-0" [@fade]="true">
+      <ng-container *ngIf="insurance.categoryId == 1">
+        <!--
+          <ng-container
+            *ngIf="
+              this.planSelectedInFa.key === 'individual_hits' ||
+              this.planSelectedInFa.key === 'individual'
+            "
+          >
+            <div
+              class="contract-insurance flex-column"
+              [formGroup]="formContractInsurance"
+            >
+              <input
+                type="checkbox"
+                id="contract-insurance-chk"
+                formControlName="active"
+              />
+              <label for="contract-insurance-chk" class="lbl-chk">
+                El contratante también es asegurado
+              </label>
+              <small class="error mt-3" *ngIf="!!hasErrorContractInsurance">{{
+                hasErrorContractInsurance
+              }}</small>
+              <!-
+            <pro-select
+              [items]="arrayTest"
+              value="id"
+              label="label"
+              formControlName="labelTest"
+            ></pro-select>
+  ->
+              <small>{{ formContractInsurance.get("labelTest").value }}</small>
+            </div>
+          </ng-container>
+      -->
+      </ng-container>
+    </div>
+    <div
+      class="row mx-0 my-0 px-0 py-0 mt-5"
+      *ngIf="!agregarBeneficiariosPorTrama; else addBenfTrama"
+    >
+      <div
+        class="col-lg-12 mx-0 my-0 px-0 py-0 mb-3 d-flex align-items-center justify-content-between"
+      >
+        <span class="count-asegurados">{{ getNumeroAsegurados }}</span>
+        <ng-container
+          *ngIf="validityInsuranceLimit && isStudentProductSelected"
+        >
+          <button
+            class="btn-action-aseg btn-aseg-add"
+            [disabled]="!validityInsuranceLimit"
+            (click)="
+              showHideModalBeneficiario(
+                true,
+                'AÑADE LOS SIGUIENTES DATOS DEL ASEGURADO',
+                1
+              )
+            "
+          >
+            Agregar asegurado
+          </button>
+        </ng-container>
+      </div>
+    </div>
+    <div class="row mx-0 my-0 px-0 py-0 mb-4" *ngIf="dataAsegurados.length > 0">
+      <div class="content-list-asegurados col-lg-12 mx-0 my-0 px-0 py-0">
+        <div
+          class="content-asegurado d-flex flex-column"
+          [@fade]="true"
+          *ngFor="let data of dataAsegurados; let i = index"
+        >
+          <div
+            class="d-flex flex-row justify-content-between align-items-center border-asegurado"
+          >
+            <div class="data-info">
+              <span class="data-info__desc title-asegurado">{{
+                data.nombre +
+                  " " +
+                  maskNameClient(data.apellidoPaterno) +
+                  " " +
+                  (maskNameClient(data.apellidoMaterno) || "")
+              }}</span>
+              <span class="data-info__desc">{{
+                getParentesco(data.relacion.id)
+              }}</span>
+            </div>
+            <div class="actions">
+              <ng-container *ngIf="!hideEdit(i)">
+                <button
+                  class="btn-action-aseg btn-aseg-drop"
+                  (click)="editAsegurado(data, i)"
+                  title="Editar"
+                >
+                  <i class="fa fa-edit" aria-hidden="true"></i>
+                </button>
+              </ng-container>
+              <ng-container *ngIf="validityInsuranceLimit">
+                <button
+                  class="btn-action-aseg btn-aseg-drop"
+                  (click)="eliminarAsegurado(i)"
+                  title="Eliminar"
+                  [disabled]="!validityInsuranceLimit"
+                >
+                  <i class="fa fa-trash" aria-hidden="true"></i>
+                </button>
+              </ng-container>
+            </div>
+          </div>
+
+          <div>
+            <!-- showBenefits: variable para mostrar beneficiarios cuando no sea individual -->
+            <div class="benefits">
+              <div class="row mx-0 my-0 px-0 py-0 mt-3">
+                <div
+                  class="col-lg-12 mx-0 my-0 px-0 py-0 mb-3 d-flex align-items-center justify-content-between"
+                >
+                  <span class="list-beneficiaries"
+                    >Lista de beneficiarios
+                  </span>
+                  <button
+                    class="btn-action-aseg btn-aseg-add"
+                    [disabled]="
+                      isCompletePorcentajeAsignacion(data.beneficiarios) ||
+                      getCountBeneficiaries(data.codigoCliente) >= 4
+                    "
+                    (click)="
+                      showHideModalBeneficiario(
+                        true,
+                        'AÑADE LOS SIGUIENTES DATOS DEL BENEFICIARIO',
+                        2,
+                        data
+                      )
+                    "
+                  >
+                    Agregar beneficiario
+                  </button>
+                </div>
+              </div>
+              <div class="row mx-0 my-0 px-0 py-0 mb-4">
+                <div
+                  class="content-list-asegurados col-lg-12 mx-0 my-0 px-0 py-0"
+                >
+                  <ng-container *ngIf="!data.beneficiarios.length">
+                    <small class="desc text-center">
+                      {{ data.nombre }} ¿quieres declarar beneficiarios?
+                    </small>
+                    <small class="desc text-center">
+                      Si no lo haces, tus beneficiarios serán tus herederos
+                      legales.
+                    </small>
+                  </ng-container>
+
+                  <div
+                    class="mx-0 my-0 px-0 py-0 content-beneficiario ctn-benf"
+                    [@fade]="true"
+                    *ngFor="let benf of data.beneficiarios; let i = index"
+                  >
+                    <div class="data-info data-beneficiaries">
+                      <span class="data-info__desc title-beneficiario">{{
+                        benf.nombre +
+                          " " +
+                          maskNameClient(benf.apellidoPaterno) +
+                          " " +
+                          maskNameClient(benf.apellidoMaterno)
+                      }}</span>
+                      <span class="data-info__desc title-beneficiario">{{
+                        getParentesco(benf.relacion.id)
+                      }}</span>
+                      <span class="data-info__desc title-beneficiario"
+                        >{{ benf.porcentaje }} %</span
+                      >
+                    </div>
+                    <div class="actions">
+                      <button
+                        class="btn-action-aseg btn-aseg-drop"
+                        (click)="editBenefits(data, i)"
+                        title="Editar"
+                      >
+                        <i class="fa fa-edit" aria-hidden="true"></i>
+                      </button>
+                      <button
+                        class="btn-action-aseg btn-aseg-drop"
+                        (click)="eliminarBeneficiario(data, i)"
+                        title="Eliminar"
+                      >
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ng-container
+                *ngIf="validateSumaBeneficiaries(data.beneficiarios)"
+              >
+                <small class="error">
+                  La suma de los porcentajes debe ser 100%
+                </small>
+              </ng-container>
+              <ng-container
+                *ngIf="
+                  !isCompletePorcentajeAsignacion(data.beneficiarios) &&
+                  getCountBeneficiaries(data.codigoCliente) == 4
+                "
+              >
+                <small class="hasError">
+                  La cantidad máxima es de 4 beneficiarios por asegurado
+                </small>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <span class="error mt-3">{{ hasErrorExistTitular }}</span>
+
+    <ng-template #addBenfTrama>
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0 mt-5">
+        <button class="formatoTrama" (click)="formatoTrama()">
+          <i class="fa fa-download mr-2" aria-hidden="true"></i>
+          Descargar Formato
+        </button>
+      </div>
+      <form
+        [formGroup]="formDataTrama"
+        class="row mx-0 my-0 px-0 py-0 mt-5 text-center"
+      >
+        <div
+          class="col-lg-12 mx-0 my-0 px-0 py-0 mb-3 d-flex align-items-center justify-content-center"
+        >
+          <span class="count-asegurados"
+            >Agrega la trama de tus asegurados y beneficiarios</span
+          >
+        </div>
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <input
+            type="file"
+            id="tramaBeneficiarios"
+            formControlName="archivo"
+            (change)="validarTramaBeneficiario($event)"
+            hidden
+          />
+          <div
+            class="content-upload-file d-flex align-items-center justify-content-center mx-auto my-auto text-center"
+          >
+            <label
+              role="button"
+              for="tramaBeneficiarios"
+              class="btn-submit btn-upload-file d-flex align-items-center justify-content-center"
+              (click)="tagUploadFile()"
+              ><i class="fa fa-upload mr-2" aria-hidden="true"></i>Adjuntar
+              Archivo
+            </label>
+            <small
+              class="name-file ml-3"
+              *ngIf="!!nombreArchivoExcel"
+              [@fade]="nombreArchivoExcel"
+              >{{ nombreArchivoExcel }}</small
+            >
+            <small class="file-error ml-2" #fileError></small>
+          </div>
+        </div>
+      </form>
+    </ng-template>
+    <ng-container *ngIf="errorTrama$">
+        <div class="error-trama mt-4">
+            Se encontraron errores en la trama, haz
+            <a role="button" (click)="downloadFile()"
+              >clic aquí</a
+            >
+            para descargar
+            <span><i class="fa fa-file-excel-o" aria-hidden="true"></i></span>
+        </div>
+    </ng-container>
+    <div class="col-lg-12 mx-0 my-0 px-0 py-0 content-actions-step mt-5">
+      <button
+        type="button"
+        (click)="backStep()"
+        class="button-default secondary orange"
+      >
+        <i class="fa fa-angle-left mr-2" aria-hidden="true"></i>Anterior
+      </button>
+      <!-- [disabled]="form.invalid" -->
+      <button
+        type="submit"
+        class="button-default primary orange"
+        (click)="nextStep()"
+      >
+        <ng-container *ngIf="idTypeCategoria === 2">
+          Validar Trama
+        </ng-container>
+        <ng-container *ngIf="idTypeCategoria === 1">
+          Siguiente
+          <i class="fa fa-angle-right ml-2" aria-hidden="true"></i>
+        </ng-container>
+      </button>
+    </div>
+  </div>
+</main>
+
+<div class="captcha">
+  <re-captcha
+    #recaptchaRef="reCaptcha"
+    (resolved)="resolved($event)"
+    siteKey="{{ siteKey }}"
+    badge="bottomleft"
+    size="invisible"
+  >
+  </re-captcha>
+</div>
+
+<ng-template #modalInsurance>
+  <div class="content-modal modal-insurance">
+    <section>
+      <form
+        class="modal-content"
+        [formGroup]="formInsurance"
+        (ngSubmit)="agregarDataForm()"
+      >
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            {{ titleModalForm }}
+          </h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+            (click)="showHideModalBeneficiario(false)"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div
+            class="content-modal-inputs"
+            [class.document-invalid]="!getDocumentIsCalled"
+          >
+            <div class="container-input-form">
+              <div class="inputs2">
+                <label
+                  class="placeholder inside"
+                  [class.disabled]="fb['tipoDocumento'].disabled"
+                >
+                  <select formControlName="tipoDocumento">
+                    <option value="2">DNI</option>
+                    <option value="4">C.E</option>
+                  </select>
+                </label>
+                <label
+                  for="numeroDocumento"
+                  class="placeholder inside"
+                  [class.active]="fb.numeroDocumento.value"
+                  aria-placeholder="Número de Documento"
+                  [class.disabled]="fb['numeroDocumento'].disabled"
+                >
+                  <input
+                    type="text"
+                    [class.has-error]="
+                      fb['numeroDocumento'].errors &&
+                      fb['numeroDocumento'].touched
+                    "
+                    id="numeroDocumento"
+                    [minlength]="documentNumberLimit.min"
+                    [maxlength]="documentNumberLimit.max"
+                    (keyup)="validarDocumento()"
+                    (keypress)="validarDocumento()"
+                    formControlName="numeroDocumento"
+                    [value]="isDocumentMasked ? documentMasked : fb['numeroDocumento'].value"
+                  />
+                  <small class="error" *ngIf="hasErrorInputForm('numeroDocumento')">{{
+                    validarInputForm("numeroDocumento")
+                  }}</small>
+                </label>
+              </div>
+            </div>
+            <label
+                for="fechaNac"
+                class="placeholder inside form-fechaNac"
+                [class.disabled]="fb.fechaNac.disabled"
+                [class.active]="fb.fechaNac.value"
+                aria-placeholder="Fecha de Nacimiento"
+              >
+                <input
+                  type="text"
+                  [class.has-error]="
+                    fb['fechaNac'].errors && fb['fechaNac'].touched
+                  "
+                  #dp="bsDatepicker"
+                  [bsConfig]="bsConfig"
+                  [readonly]="true"
+                  bsDatepicker
+                  formControlName="fechaNac"
+                  id="fechaNac"
+                  (click)="onFechaNacClick()"
+                />
+                <small class="error" *ngIf="hasErrorInputForm('fechaNac')">{{
+                  validarInputForm("fechaNac")
+                }}</small>
+            </label>
+
+            <ng-container *ngIf="getDocumentIsCalled">
+              <label
+                class="placeholder inside form-names"
+                for="nombres"
+                aria-placeholder="Nombres"
+                [class.active]="fb.nombres.value"
+                [class.disabled]="fb.nombres.disabled"
+              >
+                <input
+                  id="nombres"
+                  type="text"
+                  autocomplete="nope"
+                  [maxlength]="20"
+                  [class.has-error]="
+                    fb['nombres'].error && fb['nombres'].touched
+                  "
+                  formControlName="nombres"
+                />
+                <small class="error" *ngIf="hasErrorInputForm('nombres')">{{
+                  validarInputForm("nombres")
+                }}</small>
+              </label>
+              <ng-container *ngIf="fb['tipoDocumento'].value == 2">
+                <label
+                  class="placeholder inside select form-department"
+                  for="department"
+                  aria-placeholder="Departamento"
+                  [class.disabled]="fb.department.disabled"
+                  [class.active]="fb.department.value"
+                >
+                  <select
+                    formControlName="department"
+                    [class.has-error]="
+                      fb['department'].errors && fb['department'].touched
+                    "
+                  >
+                    <option [value]="null" disabled hidden selected>
+                      Departamento
+                    </option>
+                    <option *ngFor="let item of departments$" [value]="item.id">
+                      {{ item.descripcion }}
+                    </option>
+                  </select>
+                  <small
+                    class="error"
+                    *ngIf="hasErrorInputForm('department')"
+                    >{{ validarInputForm("department") }}</small
+                  >
+                </label>
+              </ng-container>
+              <label
+                for="apePaterno"
+                class="placeholder inside form-last-name"
+                [class.active]="fb.apePaterno.value"
+                aria-placeholder="Apellido Paterno"
+                [class.disabled]="fb.apePaterno.disabled"
+              >
+                <input
+                  type="text"
+                  formControlName="apePaterno"
+                  [value]="isLastnameMasked ? lastnameMasked : fb['apePaterno'].value"
+                  id="apePaterno"
+                  autocomplete="nope"
+                  [class.has-error]="
+                    fb['apePaterno'].errors && fb['apePaterno'].touched
+                  "
+                  [maxlength]="20"
+                />
+                <small class="error" *ngIf="hasErrorInputForm('apePaterno')">{{
+                  validarInputForm("apePaterno")
+                }}</small>
+              </label>
+              <ng-container *ngIf="fb['tipoDocumento'].value == 2">
+                <label
+                  for="province"
+                  class="placeholder inside select"
+                  [class.active]="fb.province.value"
+                  aria-placeholder="Provincia"
+                  [class.disabled]="fb.province.disabled"
+                >
+                  <select formControlName="province">
+                    <option [value]="null" disabled hidden selected>
+                      Provincia
+                    </option>
+                    <option
+                      [class.has-error]="
+                        fb['province'].errors && fb['province'].touched
+                      "
+                      *ngFor="let item of provinces$"
+                      [value]="item.idProvincia"
+                    >
+                      {{ item.provincia }}
+                    </option>
+                  </select>
+                  <small class="error" *ngIf="hasErrorInputForm('province')">{{
+                    validarInputForm("province")
+                  }}</small>
+                </label>
+              </ng-container>
+              <label
+                for="apeMaterno"
+                class="placeholder inside form-last-name2"
+                [class.active]="fb.apeMaterno.value"
+                aria-placeholder="Apellido Materno"
+                [class.disabled]="fb.apeMaterno.disabled"
+              >
+                <input
+                  id="apeMaterno"
+                  [class.has-error]="hasErrorInputForm('apeMaterno')"
+                  type="text"
+                  autocomplete="nope"
+                  [maxlength]="20"
+                  formControlName="apeMaterno"
+                  [value]="isSurnameMasked ? surnameMasked : fb['apeMaterno'].value"
+                />
+                <small class="error" *ngIf="hasErrorInputForm('apeMaterno')">{{
+                  validarInputForm("apeMaterno")
+                }}</small>
+              </label>
+              <ng-container *ngIf="fb['tipoDocumento'].value == 2">
+                <label
+                  class="placeholder inside select"
+                  for="district"
+                  aria-placeholder="Distrito"
+                  [class.active]="fb.district.value"
+                  [class.disabled]="fb.district.disabled"
+                >
+                  <select formControlName="district">
+                    <option [value]="null" disabled hidden selected>
+                      Distrito
+                    </option>
+                    <option
+                      [class.has-error]="
+                        fb['district'].errors && fb['district'].touched
+                      "
+                      *ngFor="let item of districts$"
+                      [value]="item.idDistrito"
+                    >
+                      {{ item.distrito }}
+                    </option>
+                  </select>
+                  <small class="error" *ngIf="hasErrorInputForm('district')">{{
+                    validarInputForm("district")
+                  }}</small>
+                </label>
+              </ng-container>
+              <label
+                for="direccion"
+                class="placeholder inside"
+                [class.disabled]="fb.direccion.disabled"
+                [class.active]="fb.direccion.value"
+                aria-placeholder="Dirección"
+              >
+                <input
+                  type="text"
+                  formControlName="direccion"
+                  [value]="isAddressMasked ? addressMasked : fb['direccion'].value"
+                  id="direccion"
+                  [class.has-error]="
+                    fb['direccion'].errors && fb['direccion'].touched
+                  "
+                  [maxlength]="80"
+                />
+                <small class="error" *ngIf="hasErrorInputForm('direccion')">
+                  {{ validarInputForm("direccion") }}
+                </small>
+              </label>
+              <label
+                class="placeholder inside emailSuggestion"
+                for="email"
+                [class.disabled]="fb.email.disabled"
+                [class.active]="fb.email.value"
+                aria-placeholder="Correo Electrónico"
+              >
+                <input
+                  id="email"
+                  type="text"
+                  autocomplete="nope"
+                  [maxlength]="40"
+                  [class.has-error]="fb['email'].errors && fb['email'].touched"
+                  formControlName="email"
+                  [value]="isEmailMasked ? emailMasked : fb['email'].value"
+                />
+                <app-email-suggestions
+                  [email]="fb['email'].value"
+                  (suggestion)="emailSuggestion($event)"
+                ></app-email-suggestions>
+                <small class="error" *ngIf="hasErrorInputForm('email')">{{
+                  validarInputForm("email")
+                }}</small>
+              </label>
+              <label
+                class="placeholder inside select"
+                for="relacion"
+                aria-placeholder="Relación con el asegurado"
+                [class.disabled]="fb.relacion.disabled"
+                [class.active]="fb.relacion.value"
+                *ngIf="tipoFormulario == 2"
+              >
+                <select formControlName="relacion">
+                  <option [value]="null" disabled hidden selected>
+                    Relación con el asegurado
+                  </option>
+                  <option
+                    *ngFor="let item of parametros$?.parentescos"
+                    [value]="item.id"
+                  >
+                    {{ item.descripcion }}
+                  </option>
+                </select>
+                <small class="error" *ngIf="hasErrorInputForm('relacion')">
+                  {{ validarInputForm("relacion") }}
+                </small>
+              </label>
+              <label
+                class="placeholder inside"
+                for="telefono"
+                aria-placeholder="Número de Celular"
+                [class.disabled]="fb.telefono.disabled"
+                [class.active]="fb.telefono.value"
+              >
+                <input
+                  id="telefono"
+                  type="text"
+                  [maxlength]="9"
+                  [class.has-error]="
+                    fb['telefono'].errors && fb['telefono'].touched
+                  "
+                  formControlName="telefono"
+                  [value]="isPhoneMasked ? phoneMasked : fb['telefono'].value"
+                />
+                <small class="error" *ngIf="hasErrorInputForm('telefono')">{{
+                  validarInputForm("telefono")
+                }}</small>
+                <small class="error" *ngIf="!phoneValid">
+                  Número de celular no permitido
+                </small>
+              </label>
+              <label
+                for="porcentaje"
+                class="placeholder inside select"
+                [class.active]="fb.porcentaje.value"
+                [class.disabled]="fb.porcentaje.disabled"
+                aria-placeholder="% Participación"
+                *ngIf="tipoFormulario == 2"
+              >
+                <select
+                  [class.has-error]="
+                    fb['porcentaje'].errors && fb['porcentaje'].touched
+                  "
+                  formControlName="porcentaje"
+                  id="porcentaje"
+                >
+                  <option [value]="null" disabled hidden selected>
+                    % Participación
+                  </option>
+                  <!--
+                  <ng-container *ngFor="let data of percents">
+                    <option *ngIf="sumaTotalBenefiValidate(data)" [value]="data">
+                      {{ data }}
+                    </option>
+                  </ng-container>
+                  -->
+
+                  <option *ngFor="let data of percents" [value]="data">
+                    {{ data }}
+                  </option>
+                </select>
+                <small
+                  class="error"
+                  *ngIf="
+                    fb['porcentaje'].hasError('required') &&
+                    fb['porcentaje'].touched
+                  "
+                >
+                  Este campo es obligatorio y debe sumar 100%
+                </small>
+              </label>
+              <label
+                for="sexo"
+                class="placeholder inside select"
+                [class.disabled]="fb.sexo.disabled"
+                [class.active]="fb.sexo.value"
+                aria-placeholder="Sexo"
+              >
+                <select
+                  id="sexo"
+                  formControlName="sexo"
+                  [class.has-error]="fb['sexo'].errors && fb['sexo'].touched"
+                >
+                  <option [value]="null" disabled hidden selected>Sexo</option>
+                  <option value="2">Masculino</option>
+                  <option value="1">Femenino</option>
+                </select>
+                <small class="error" *ngIf="hasErrorInputForm('sexo')">{{
+                  validarInputForm("sexo")
+                }}</small>
+              </label>
+              <label
+                class="placeholder inside select"
+                for="civilStatus"
+                aria-placeholder="Estado civil"
+                [class.disabled]="fb.civilStatus.disabled"
+                [class.active]="fb.civilStatus.value"
+              >
+                <select
+                  formControlName="civilStatus"
+                  id="civilStatus"
+                  class="in-action"
+                  [class.has-error]="fb['civilStatus'].errors && fb['civilStatus'].touched"
+                >
+                  <option [value]="null" disabled hidden selected>
+                    Estado civil
+                  </option>
+                  <option
+                    *ngFor="let item of listStatusCivil$"
+                    [value]="item.id"
+                  >
+                    {{ item.descripcion }}
+                  </option>
+                </select>
+                <small
+                  class="error"
+                  *ngIf="
+                    fb['civilStatus'].hasError('required') &&
+                    fb['civilStatus'].touched
+                  "
+                >
+                  Este campo es obligatorio
+                </small>
+              </label>
+              <label
+                class="placeholder inside select form-country"
+                for="pais"
+                aria-placeholder="Nacionalidad"
+                [class.active]="fb.pais.value"
+                [class.disabled]="fb.pais.disabled"
+              >
+                <select formControlName="pais">
+                  <option [value]="null" disabled hidden selected>
+                    Nacionalidad
+                  </option>
+                  <option
+                    *ngFor="let item of parametros$?.nacionalidades"
+                    [value]="item.id"
+              >
+                    {{ item.descripcion }}
+                  </option>
+                </select>
+                <small class="error" *ngIf="hasErrorInputForm('pais')">
+                  {{ validarInputForm("pais") }}
+                </small>
+              </label>
+              <label
+                class="placeholder inside select"
+                aria-placeholder="Relación con el contratante"
+                [class.active]="fb['relationshipContractor'].value"
+                [class.disabled]="fb['relationshipContractor'].disabled"
+                *ngIf="typeOfModal == 1"
+              >
+                <select
+                  formControlName="relationshipContractor"
+                  [class.has-error]="
+                    fb['relationshipContractor'].errors &&
+                    fb['relationshipContractor'].touched
+                  "
+                >
+                  <option [value]="null" disabled hidden selected>
+                    Relación con el contratante
+                  </option>
+                  <option
+                    *ngFor="let item of relationshipContractor$"
+                    [value]="item.id"
+                  >
+                    {{ item.descripcion }}
+                  </option>
+                </select>
+              </label>
+            </ng-container>
+          </div>
+        </div>
+        <div class="modal-footer d-flex flex-column">
+          <small class="error-form">{{ errorFormInsurance }}</small>
+          <input type="hidden" formControlName="aseguradoIndex" />
+          <button
+            type="submit"
+            class="btn full-color btn-aceptar-modal"
+            [disabled]="
+              getDocumentIsCalled
+                ? formInsurance.invalid || !phoneValid
+                : fb['numeroDocumento'].invalid || fb['fechaNac'].invalid
+            "
+          >
+            {{
+              !getDocumentIsCalled
+                ? "Continuar"
+                : edit
+                ? "Actualizar"
+                : "Agregar"
+            }}
+          </button>
+        </div>
+      </form>
+    </section>
+  </div>
+</ng-template>
+<ng-container *ngIf="derivationAdvisor">
+  <section class="derivation">
+    <app-show-steps [NSTEP]="4"></app-show-steps>
+    <div class="derivation__advisor">
+      <h2 class="derivation__advisor--title">
+        Hola. Tu solicitud ha sido recepcionada por un asesor de Protecta
+        Security, nos estaremos comunicando contigo en un máximo de 2 días
+        laborables.
+      </h2>
+      <p class="derivation__advisor--desc">
+        Contáctanos en:<br />
+        Correo Electrónico: <b>cotizacionaccidentes&#64;protectasecurity.pe</b
+        ><br />
+        Estamos a tu disposición de lunes a viernes de
+        <b>9:00 a.m. a 6:00 p.m.</b>, a excepción de feriados.
+      </p>
+      <button type="button" class="btn-primary-u" (click)="backToHome()">
+        Volver al inicio
+      </button>
+    </div>
+  </section>
+</ng-container>
+
+<ng-template #modalInvalidInsuranceLength>
+  <div class="content-modal modal-invalid-insurance">
+    <section>
+      <div class="modal-header">
+        <button aria-label="close modal" (click)="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <img src="./assets/icons/error.svg" alt="error icon" width="120" />
+        <p class="text">Debes agregar un asegurado para esta póliza</p>
+      </div>
+      <div class="modal-footer">
+        <button class="button primary orange fit" (click)="closeModal()">
+          Entendido
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>
+
+<ng-template #modalDocumentInvalid>
+    <div class="content-modal modal-document-invalid">
+      <section>
+        <div class="modal-header">
+          <button (click)="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <h4>
+            Hola, no es posible validar el número de documento ingresado. Por
+            favor, verificar que la información sea correcta
+          </h4>
+          <div class="modal-body--info">
+            <p class="paragrah">Contáctanos en:</p>
+            <p class="paragrah">
+              Correo Electrónico: <b>cotizacionaccidentes&#64;protectasecurity.pe</b>
+            </p>
+            <p class="paragrah">
+              Estamos a tu disposición de lunes a viernes de
+              <b>9:00 a.m. a 6:00 p.m.</b>, a excepción de feriados.
+            </p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="button primary orange fit" (click)="closeModal()">
+            Cerrar
+          </button>
+        </div>
+      </section>
+    </div>
+  </ng-template>

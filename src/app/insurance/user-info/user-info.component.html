@@ -1,0 +1,596 @@
+<main class="container-fluid px-0 py-0 mx-0 my-0">
+  <ng-container *ngIf="!showDerivation">
+    <div class="max-width-to-center">
+      <div class="bc-1"></div>
+      <div class="row px-0 py-0 mx-0 my-0">
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <app-show-steps [NSTEP]="2"></app-show-steps>
+        </div>
+      </div>
+      <div class="row px-0 py-0 mx-0 my-0">
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <h1 class="title-step">Datos del contratante</h1>
+        </div>
+      </div>
+      <form
+        class="row mx-0 my-0 px-0 py-0"
+        [@fade]="true"
+        [formGroup]="form"
+        (ngSubmit)="onSubmit()"
+      >
+        <div class="col-lg-12 mx-0 my-0 py-0 container-inputs container-inputs-grid"
+             [class.is-person]="session.documentType != 1">
+          <!-- GROUP INPUTS -->
+          <div class="content-dbl-input">
+            <!-- DOCUMENT TYPE -->
+            <div class="content-input ctn-document-type">
+              <select
+                class="in in-with-title-desactive"
+                formControlName="documentType"
+              >
+                <option *ngFor="let doc of docTypes"
+                        [value]="doc.idDoc">
+                  {{ doc.sDoc }}
+                </option>
+              </select>
+            </div>
+            <!-- DOCUMENT NUMBER -->
+            <div class="content-input ctn-document-number">
+              <input
+                type="text"
+                class="in-with-title-active in"
+                id="in-ndoc"
+                formControlName="documentNumber"
+                [value]="isDocumentMasked ? documentMasked : f['documentNumber'].value"
+              />
+              <label for="in-ndoc"
+                     class="lbl-in-title-active">
+                Número de Documento
+              </label>
+            </div>
+          </div>
+          <!-- DEPARTMENT -->
+          <ng-container *ngIf="session.documentType != 4">
+            <div
+              class="content-input ctn-department"
+              [class.gc-2]="session.documentType == 2"
+            >
+              <ng-select
+                [items]="departments"
+                [selectOnTab]="true"
+                bindValue="id"
+                autofocus
+                bindLabel="descripcion"
+                placeholder="Departamento"
+                formControlName="department"
+                notFoundText="No hay resultados"
+                [clearable]="false"
+                class="in in-width-title-desactive ui-ng-select"
+                [class.with-value]="f['department'].value"
+                [class.withouth-value]="!f['department'].value"
+                [class.input-active]="!!f['department'].value"
+                id="in-department"
+              >
+              </ng-select>
+              <label
+                class="lbl-title lbl-title-active"
+                *ngIf="!!f['department'].value"
+              >Departamento</label
+              >
+
+              <div class="soat-error-message"
+                   *ngIf="showError('department')">
+                <i></i><span>Necesitamos conocer tu departamento</span>
+              </div>
+            </div>
+          </ng-container>
+          <!-- NAMES / BUSINESS NAME -->
+          <div
+            class="content-input ctn-names"
+            [class.gr-2]="session.documentType == 4 || session.documentType == 2"
+          >
+            <input
+              type="text"
+              class="in-with-title-desactive in"
+              id="in-names"
+              formControlName="name"
+              AllowOnlyTextDirective
+              [minlength]="2"
+              [maxlength]="limitMaxLengthName"
+              [ngClass]="{
+                'in-with-title-active': form.get('name')?.value?.length > 0
+              }"
+            />
+            <label
+              for="in-names"
+              class="lbl-in-title-desactive"
+              [ngClass]="{
+                'lbl-in-title-active': form.get('name')?.value?.length > 0
+              }"
+            >
+              {{ namesOrRazonSocial }}
+            </label>
+            <div class="soat-error-message"
+                 *ngIf="showError('name')">
+              <ng-container *ngIf="f['name'].errors.required">
+                <i></i>
+                <span *ngIf="!legalUser">Necesitamos conocer tus nombres</span>
+                <span *ngIf="legalUser">
+                  Necesitamos conocer tus razón social
+                </span>
+              </ng-container>
+            </div>
+          </div>
+          <!-- PROVINCE -->
+          <ng-container *ngIf="session.documentType != 4">
+            <div
+              class="content-input ctn-province"
+              [class.gc-2]="session.documentType == 2"
+            >
+              <ng-select
+                [items]="provinces"
+                [selectOnTab]="true"
+                bindValue="idProvincia"
+                bindLabel="provincia"
+                placeholder="Provincia"
+                formControlName="province"
+                notFoundText="No hay resultados"
+                [clearable]="false"
+                class="in in-width-title-desactive ui-ng-select"
+                [class.with-value]="f['province'].value"
+                [class.withouth-value]="!f['province'].value"
+                [class.input-active]="!!f['province'].value"
+              >
+              </ng-select>
+              <label
+                class="lbl-title lbl-title-active"
+                *ngIf="!!f['province'].value"
+              >Provincia</label
+              >
+              <div class="soat-error-message"
+                   *ngIf="showError('province')">
+                <i></i><span>Necesitamos conocer tu provincia</span>
+              </div>
+            </div>
+          </ng-container>
+          <!-- LAST NAME -->
+          <div
+            class="content-input ctn-last-name"
+            [class.gr-3]="session.documentType == 2"
+            *ngIf="!legalUser"
+          >
+            <input
+              type="text"
+              class="in-with-title-desactive in"
+              id="in-lastname"
+              minlength="2"
+              AllowOnlyTextDirective
+              formControlName="lastname"
+              [value]="isLastnameMasked ? lastnameMasked : f['lastname'].value"
+              maxlength="30"
+              [ngClass]="{
+                'in-with-title-active': form.get('lastname')?.value?.length > 0
+              }"
+            />
+            <label
+              for="in-lastname"
+              class="lbl-in-title-desactive"
+              [ngClass]="{
+                'lbl-in-title-active': form.get('lastname')?.value?.length > 0
+              }"
+            >
+              Apellido Paterno
+            </label>
+            <div class="soat-error-message"
+                 *ngIf="showError('lastname')">
+              <ng-container *ngIf="f['lastname'].errors.required">
+                <i></i><span>Necesitamos conocer tu apellido paterno</span>
+              </ng-container>
+            </div>
+          </div>
+          <!-- DISTRICT -->
+          <ng-container *ngIf="session.documentType != 4">
+            <div
+              class="content-input ctn-district"
+              [class.gc-2]="
+                session.categoryId == 2 || session.documentType == 2
+              "
+            >
+              <ng-select
+                [items]="districts"
+                [selectOnTab]="true"
+                bindValue="idDistrito"
+                bindLabel="distrito"
+                placeholder="Distrito"
+                notFoundText="No hay resultados"
+                formControlName="district"
+                [clearable]="false"
+                class="in in-width-title-desactive ui-ng-select"
+                [class.with-value]="f['district'].value"
+                [class.withouth-value]="!f['district'].value"
+                [class.input-active]="!!f['district'].value"
+              >
+              </ng-select>
+              <label
+                class="lbl-title lbl-title-active"
+                *ngIf="!!f['district'].value"
+              >Distrito</label
+              >
+              <div class="soat-error-message"
+                   *ngIf="showError('district')">
+                <i></i><span>Necesitamos conocer tu distrito</span>
+              </div>
+            </div>
+          </ng-container>
+          <!-- LAST NAME 2 -->
+          <div
+            class="content-input ctn-last-name-2"
+            [class.gc-1]="session.documentType == 4"
+            [class.gr-4]="
+              session.documentType == 4 || session.documentType == 2
+            "
+            *ngIf="!legalUser"
+          >
+            <input
+              type="text"
+              class="in-with-title-desactive in"
+              id="in-lastname2"
+              AllowOnlyTextDirective
+              formControlName="surname"
+              [value]="isSurnameMasked ? surnameMasked : f['surname'].value"
+              [ngClass]="{
+                'in-with-title-active': form.get('surname')?.value?.length > 0
+              }"
+              minlength="2"
+              maxlength="30"
+            />
+            <label
+              for="in-lastname2"
+              class="lbl-in-title-desactive"
+              [ngClass]="{
+                'lbl-in-title-active': form.get('surname')?.value?.length > 0
+              }"
+            >
+              Apellido Materno
+            </label>
+            <div class="soat-error-message"
+                 *ngIf="showError('surname')">
+              <ng-container *ngIf="f['surname'].errors.required">
+                <i></i><span>Necesitamos conocer tu apellido materno</span>
+              </ng-container>
+            </div>
+          </div>
+          <!-- ADDRESS -->
+          <div
+            class="content-input ctn-address"
+            [class.gr-3]="session.categoryId == 2"
+            [class.gc-2]="session.documentType == 2"
+          >
+            <input
+              type="text"
+              class="in in-with-title-desactive"
+              id="in-direccion"
+              formControlName="address"
+              [value]="isAddressMasked ? addressMasked : f['address'].value"
+              minlength="2"
+              maxlength="80"
+              [ngClass]="{
+                'in-with-title-active': !!form.get('address')?.value
+              }"
+            />
+            <label
+              for="in-direccion"
+              class="lbl-in-title-desactive"
+              [ngClass]="{
+                'lbl-in-title-active': !!form.get('address')?.value
+              }"
+            >
+              Dirección
+            </label>
+            <div class="soat-error-message"
+                 *ngIf="showError('address')">
+              <ng-container
+                *ngIf="
+                  f['address'].errors.required || f['address'].hasError('space')
+                "
+              >
+                <i></i><span>Necesitamos conocer tu dirección</span>
+              </ng-container>
+            </div>
+          </div>
+          <!-- PHONE -->
+          <div
+            class="content-input ctn-phone"
+            [class.gc-2]="session.documentType == 4"
+            [class.gr-2]="session.documentType == 4"
+            [class.gr-5]="session.documentType == 2"
+          >
+            <input
+              type="text"
+              class="in in-with-title-desactive"
+              id="in-phonenumber"
+              autocomplete="nope"
+              formControlName="phoneNumber"
+              [value]="isPhoneMasked ? phoneMasked : f['phoneNumber'].value"
+              minlength="9"
+              maxlength="9"
+              [ngClass]="{
+                'in-with-title-active': !!form.get('phoneNumber')?.value
+              }"
+            />
+            <label
+              for="in-phonenumber"
+              class="lbl-in-title-desactive"
+              [ngClass]="{
+                'lbl-in-title-active': !!form.get('phoneNumber')?.value
+              }"
+            >
+              Celular
+            </label>
+            <div class="soat-error-message"
+                 *ngIf="showError('phoneNumber')">
+              <ng-container *ngIf="f['phoneNumber'].errors.required">
+                <i></i><span>Necesitamos conocer tu celular</span>
+              </ng-container>
+              <ng-container *ngIf="f['phoneNumber'].errors.pattern">
+                <i></i><span>Formato de celular inválido</span>
+              </ng-container>
+            </div>
+            <div class="soat-error-message"
+                 *ngIf="!phoneNumberValid">
+              <i></i><span>Celular no permitido</span>
+            </div>
+          </div>
+          <!-- SEX -->
+          <ng-container *ngIf="!isRuc">
+            <label
+              class="placeholder inside ctn-civilstatus"
+              [class.active]="f['sex'].value"
+              aria-placeholder="Sexo"
+            >
+              <select 
+                formControlName="sex" 
+                class="in in-width-title-desactive ui-ng-select">
+                <option
+                  value=""
+                  *ngFor="let item of sexTypes"
+                  [value]="item.value"
+                >
+                  {{ item.label }}
+                </option>
+              </select>
+              <ng-container *ngIf="f['sex'].touched">
+                <div
+                  class="soat-error-message"
+                  *ngIf="f['sex'].hasError('required')"
+                >
+                  <i></i>
+                  <span>Necesitamos conocer tu sexo</span>
+                </div>
+              </ng-container>
+            </label>
+            <label
+              class="placeholder inside ctn-civilstatus"
+              [class.active]="f['civilStatus'].value"
+              aria-placeholder="Estado civil"
+            >
+              <select formControlName="civilStatus">
+                <option
+                  value=""
+                  *ngFor="let item of listStatusCivil"
+                  [value]="item.id"
+                >
+                  {{ item.descripcion }}
+                </option>
+              </select>
+              <ng-container *ngIf="f['civilStatus'].touched">
+                <div
+                  class="soat-error-message"
+                  *ngIf="f['civilStatus'].hasError('required')"
+                >
+                  <i></i>
+                  <span>Necesitamos conocer tu estado civil</span>
+                </div>
+              </ng-container>
+            </label>
+            <div
+              class="content-input content-country ctn-country"
+              [class.gc-2]="
+                session.documentType == 4 || session.documentType == 2
+              "
+              [class.gr-1]="
+                session.documentType == 4 || session.documentType == 2
+              "
+              [class.ctn-in-disabled]="f['country'].disabled"
+            >
+              <ng-select
+                [items]="countries"
+                [selectOnTab]="true"
+                bindValue="id"
+                bindLabel="descripcion"
+                placeholder="Nacionalidad"
+                formControlName="country"
+                [class.input-active]="f['country'].value"
+                class="in in-width-title-desactive ui-ng-select"
+                [class.with-value]="f['country'].value"
+                [class.withouth-value]="!f['country'].value"
+              >
+              </ng-select>
+              <label
+                class="lbl-title lbl-title-active"
+                *ngIf="f['country'].value"
+              >Nacionalidad</label
+              >
+              <div class="soat-error-message"
+                   *ngIf="showError('country')">
+                <i></i><span>Necesitamos conocer tu nacionalidad</span>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+        <!-- DATOS DEL REPRESENTANTE LEGAL -->
+        <ng-container *ngIf="productSelected?.idTipoPoliza == 2">
+          <section
+            class="content-legal-representative"
+            formGroupName="legalRepresentative"
+          >
+            <h2 class="subitle">Representante Legal</h2>
+            <div class="legal-representative">
+              <div class="content-double-input">
+                <label for="flr-document-type"
+                       class="placeholder inside">
+                  <select id="flr-document-type"
+                          formControlName="documentType">
+                    <option value="2">DNI</option>
+                    <option value="4">C.E.</option>
+                  </select>
+                </label>
+                <label
+                  for="flr-document-number"
+                  class="placeholder inside"
+                  [class.active]="
+                    formLegalRepresentativeControl['documentNumber'].value
+                  "
+                  aria-placeholder="Número de documento"
+                >
+                  <input
+                    type="text"
+                    id="flr-document-number"
+                    formControlName="documentNumber"
+                    [value]="isDocumentRLMasked ? documentRLMasked : formLegalRepresentativeControl['documentNumber'].value"
+                    [maxlength]="limitDocumentNumberLegalRepresentative.max"
+                    (blur)="requestClientInfo()"
+                  />
+                </label>
+              </div>
+              <label
+                for="flr-names"
+                class="placeholder inside"
+                [class.active]="formLegalRepresentativeControl['names'].value"
+                aria-placeholder="Nombres"
+              >
+                <input type="text"
+                       class="in"
+                       id="flr-names"
+                       formControlName="names"/>
+              </label>
+              <label
+                for="flr-lastname"
+                class="placeholder inside"
+                [class.active]="
+                  formLegalRepresentativeControl['lastName'].value
+                "
+                aria-placeholder="Apellido Paterno"
+              >
+                <input
+                  type="text"
+                  class="in"
+                  id="flr-lastname"
+                  formControlName="lastName"
+                  [value]="isLastnameRLMasked ? lastnameRLMasked : formLegalRepresentativeControl['lastName'].value"
+                />
+              </label>
+              <label
+                for="flr-lastname2"
+                class="placeholder inside"
+                [class.active]="
+                  formLegalRepresentativeControl['lastName2'].value
+                "
+                aria-placeholder="Apellido Materno"
+              >
+                <input
+                  type="text"
+                  class="in"
+                  id="flr-lastname2"
+                  formControlName="lastName2"
+                  [value]="isSurnameRLMasked ? surnameRLMasked : formLegalRepresentativeControl['lastName2'].value"
+                />
+              </label>
+            </div>
+            <small class="extra">
+              El CONTRATANTE declara ser el representante legal facultado para
+              contratar productos de seguro
+            </small>
+          </section>
+        </ng-container>
+        <div class="row mx-0 my-0 px-0 py-0 mt-4 text-center w-100">
+          <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+            <button type="button"
+                    class="btn-back"
+                    (click)="backStep()">
+              <i class="fa fa-angle-left mr-2"
+                 aria-hidden="true"></i>Anterior
+            </button>
+            <button
+              type="submit"
+              class="btn-submit"
+              [disabled]="
+                form.invalid ||
+                !phoneNumberValid ||
+                hasErrorSubmit == 'Ocurrió un error al obtener el ubigeo'
+              "
+            >
+              Siguiente
+            </button>
+          </div>
+          <ng-container *ngIf="hasErrorSubmit">
+            <small class="hasError-submit">{{ hasErrorSubmit }}</small>
+          </ng-container>
+        </div>
+      </form>
+    </div>
+  </ng-container>
+
+  <div class="captcha">
+    <re-captcha
+      #recaptchaRef="reCaptcha"
+      (resolved)="resolved($event)"
+      siteKey="{{ siteKey }}"
+      badge="bottomleft"
+      size="invisible"
+    >
+    </re-captcha>
+  </div>
+  <ng-container *ngIf="showDerivation">
+    <app-recept-asesor
+      email="cotizacionaccidentes@protectasecurity.pe"
+      path="/accidentespersonales"
+      [message]="messageDerivation"
+    ></app-recept-asesor>
+  </ng-container>
+  <ng-container *ngIf="!showDerivation">
+    <app-questions></app-questions>
+  </ng-container>
+
+  <ng-template #modalDocumentInvalid>
+    <div class="content-modal modal-document-invalid">
+      <section>
+        <div class="modal-header">
+          <button (click)="refreshPage()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <h4>
+            Hola, no es posible validar el número de documento ingresado. Por
+            favor, verificar que la información sea correcta
+          </h4>
+          <div class="modal-body--info">
+            <p class="paragraph">Contáctanos en:</p>
+            <p class="paragraph">
+              Correo Electrónico: <b>cotizacionaccidentes&#64;protectasecurity.pe</b>
+            </p>
+            <p class="paragraph">
+              Estamos a tu disposición de lunes a viernes de
+              <b>9:00 a.m. a 6:00 p.m.</b>, a excepción de feriados.
+            </p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="button-default primary orange" (click)="refreshPage()">
+            Cerrar
+          </button>
+        </div>
+      </section>
+    </div>
+  </ng-template>
+</main>

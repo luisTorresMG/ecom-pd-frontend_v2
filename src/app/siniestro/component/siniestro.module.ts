@@ -3,21 +3,23 @@ import { BrowserModule } from "@angular/platform-browser";
 import { RegistSiniestroSoatComponent } from '../component/regist-siniestro-soat/regist-siniestro-soat.component';
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { AppRoutingModule } from "@root/app-routing.module";
+import { AppRoutingModule } from "../../app-routing-module";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { BsDatepickerModule } from "ngx-bootstrap";
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgxCaptchaModule } from "ngx-captcha";
 import { DragDropModule } from "@angular/cdk/drag-drop";
-import { MatInputModule } from "@angular/material/input";
-import { MatDatepickerModule } from "@angular/material/datepicker";
-import { MAT_DATE_LOCALE, MatNativeDateModule } from "@angular/material/core";
-import { MatInputModule } from "@angular/material/input";
-import { MatDatepickerModule } from "@angular/material/datepicker";
-import { MAT_DATE_LOCALE, MatNativeDateModule } from "@angular/material/core";
-import { RecaptchaFormsModule, RecaptchaModule, RecaptchaV3Module } from "ng-recaptcha";
+
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
+// import { RecaptchaFormsModule, RecaptchaModule, RecaptchaV3Module } from "ng-recaptcha";
 import { ToastrModule } from "ngx-toastr";
 import { SessionStorageService } from "@shared/services/storage/storage-service";
 import { AuthInterceptor } from "@shared/interceptors/auth.interceptor";
@@ -63,9 +65,10 @@ registerLocaleData(localeEs, 'es');
       DragDropModule,
       MatInputModule,      
       MatCheckboxModule,
-      RecaptchaV3Module,
-      RecaptchaModule,
-      RecaptchaFormsModule,
+      // RecaptchaV3Module,
+      // RecaptchaModule,
+      // RecaptchaFormsModule,
+        NgxCaptchaModule,
       ToastrModule.forRoot({
         timeOut: 10000,
         positionClass: 'toast-top-right',

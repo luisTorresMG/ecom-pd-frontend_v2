@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Faustina:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap');
+
+$orange: #ed6e00;
+$orange-100: #e78129;
+$purple: #2b0d61;
+$very-light-brown: #f6f6f6;
+$grey-300: #828282;
+$grey-100: #7a7a7a;
+
+@mixin tablet {
+  @media (min-width: 577px) and (max-width: 1023px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}

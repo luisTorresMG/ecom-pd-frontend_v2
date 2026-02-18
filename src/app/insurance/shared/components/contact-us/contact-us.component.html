@@ -1,0 +1,283 @@
+<section class="container__contact section reverse">
+  <div class="container-info">
+    <div class="form-contact">
+      <div class="info"></div>
+      <span class="title">¿No resolvimos tus dudas?</span>
+      <p class="paragraph subtitle">
+        Completa el formulario y uno de nuestros asesores te ayudará a responder
+        todas tus consultas.
+      </p>
+      <form
+        class="form form-contact mt-5"
+        [formGroup]="form"
+        (ngSubmit)="onSubmit()"
+      >
+        <div class="form-inputs">
+          <label for="form-documentType" class="content-input">
+            <p class="paragraph">Tipo de documento</p>
+            <select
+              id="form-documentType"
+              class="form-input"
+              formControlName="documentType"
+            >
+              <option value="4">CE</option>
+              <option value="2">DNI</option>
+              <option value="1">RUC</option>
+            </select>
+            <!-- <i class="fa fa-angle-down"></i> -->
+          </label>
+          <label
+            class="content-input inside"
+            for="f-documentNumber"
+            [class.active]="formControl['documentNumber'].value"
+          >
+            <p class="paragraph">Número documento</p>
+            <input
+              type="text"
+              class="form-input"
+              id="f-documentNumber"
+              formControlName="documentNumber"
+              [class.placeholder-active]="formControl['documentNumber'].value"
+              [maxlength]="limitLengthDocumentNumber.max"
+              (blur)="requestClientInfo()"
+            />
+            <ng-container
+              *ngIf="
+                formControl['documentNumber'].touched &&
+                (formControl['documentNumber'].errors || documentNumberHasError)
+              "
+            >
+              <small
+                class="has-error"
+                *ngIf="formControl['documentNumber'].hasError('required')"
+              >
+                El número de documento es obligatorio
+              </small>
+              <small
+                class="has-error"
+                *ngIf="
+                  documentNumberHasError && formControl['documentNumber'].value
+                "
+              >
+                El número de documento no es válido
+              </small>
+            </ng-container>
+          </label>
+
+          <ng-container
+            *ngIf="
+              formControl['documentType'].value != 1 ||
+              (rucType != 20 && formControl['documentType'].value == 1)
+            "
+          >
+            <label for="f-names" class="content-input">
+              <p class="paragraph">Nombres</p>
+              <input
+                type="text"
+                formControlName="names"
+                id="f-names"
+                class="form-input"
+                [maxlength]="30"
+              />
+              <ng-container
+                *ngIf="
+                  formControl['names'].errors && formControl['names'].touched
+                "
+              >
+                <small
+                  class="has-error"
+                  *ngIf="formControl['names'].hasError('required')"
+                >
+                  Los nombres son obligatorios
+                </small>
+              </ng-container>
+            </label>
+            <label for="f-lastNames" class="content-input">
+              <p class="paragraph">Apellidos</p>
+              <input
+                type="text"
+                formControlName="lastNames"
+                [value]="isLastnameMasked ? lastnameMasked : formControl['lastNames'].value"
+                id="f-lastNames"
+                class="form-input"
+                [maxlength]="60"
+              />
+              <ng-container
+                *ngIf="
+                  formControl['lastNames'].errors &&
+                  formControl['lastNames'].touched
+                "
+              >
+                <small
+                  class="has-error"
+                  *ngIf="formControl['lastNames'].hasError('required')"
+                >
+                  Los apellidos son obligatorios
+                </small>
+              </ng-container>
+            </label>
+          </ng-container>
+
+          <ng-container
+            *ngIf="formControl['documentType'].value == 1 && rucType == 20"
+          >
+            <div class="container-legalname">
+              <label for="f-legalname" class="content-input">
+                <p class="paragraph">Razón Social</p>
+                <input
+                  type="text"
+                  formControlName="legalName"
+                  id="f-legalname"
+                  class="form-input"
+                  [maxlength]="80"
+                />
+                <ng-container
+                  *ngIf="
+                    formControl['legalName'].errors &&
+                    formControl['legalName'].touched
+                  "
+                >
+                  <small
+                    class="has-error"
+                    *ngIf="formControl['legalName'].hasError('required')"
+                  >
+                    La razón social es obligatoria
+                  </small>
+                </ng-container>
+              </label>
+            </div>
+          </ng-container>
+
+          <label for="f-email" class="content-input">
+            <p class="paragraph">Correo electrónico</p>
+            <input
+              type="text"
+              formControlName="email"
+              [value]="isEmailMasked ? emailMasked : formControl['email'].value"
+              id="f-email"
+              class="form-input"
+            />
+            <ng-container
+              *ngIf="
+                formControl['email'].errors && formControl['email'].touched
+              "
+            >
+              <small
+                class="has-error"
+                *ngIf="formControl['email'].hasError('pattern')"
+              >
+                El correo electrónico no es válido
+              </small>
+              <small
+                class="has-error"
+                *ngIf="formControl['email'].hasError('required')"
+              >
+                El correo electrónico es obligatorio
+              </small>
+            </ng-container>
+          </label>
+          <label
+            form="f-phone"
+            class="content-input"
+            aria-placeholder="Celular"
+          >
+            <p class="paragraph">Celular</p>
+            <input
+              type="text"
+              formControlName="phone"
+              [value]="isPhoneMasked ? phoneMasked : formControl['phone'].value"
+              id="f-phone"
+              class="form-input"
+              [minlength]="9"
+              [maxlength]="9"
+            />
+            <ng-container
+              *ngIf="
+                formControl['phone'].errors && formControl['phone'].touched
+              "
+            >
+              <small
+                class="has-error"
+                *ngIf="formControl['phone'].hasError('required')"
+              >
+                El número de celular es obligatorio
+              </small>
+            </ng-container>
+          </label>
+        </div>
+        <div class="content-checkbox mt-2">
+          <div class="checkbox-accept">
+            <input type="checkbox" formControlName="privacy" id="privacy" />
+            <label for="privacy" class="checkbox-personalizado">
+              <div class="input-privacy">
+                Acepto el envío de comunicaciones comerciales, publicidad y
+                encuestas de calidad de servicio y/o productos de acuerdo a lo
+                señalado en la
+                <a
+                  href="https://protectasecurity.pe/politica-de-privacidad/"
+                  class="politica-privacity"
+                  target="_blank"
+                >
+                  Política de privacidad
+                </a>
+              </div>
+            </label>
+          </div>
+          <button
+            type="submit"
+            class="btn-submit"
+            [disabled]="form.invalid || documentNumberHasError"
+          >
+            Quiero que me contacten
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="pill">
+      <img
+        src="assets/accidentes-personales/resources/contact-us.webp"
+        alt="contact svg"
+        class="pill-image"
+        width="320px"
+        height="320px"
+      />
+    </div>
+  </div>
+</section>
+
+<div class="captcha">
+  <re-captcha
+    #recaptchaRef="reCaptcha"
+    (resolved)="resolved($event)"
+    siteKey="{{ siteKey }}"
+    badge="bottomleft"
+    size="invisible"
+  >
+  </re-captcha>
+</div>
+
+<ng-template #modalSuccessContactForm>
+  <div class="content-modal modal-contact">
+    <section>
+      <div class="modal-header">
+        <button (click)="closeModals()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-body--info">
+          <div class="contact-image">
+            <img
+              src="assets/accidentes-personales/resources/success.svg"
+              alt="img-digito-dni"
+            />
+          </div>
+          <h5 class="paragraph">Su solicitud fue enviada correctamente.</h5>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="button-default primary orange" (click)="closeModals()">
+          Aceptar
+        </button>
+      </div>
+    </section>
+  </div>
+</ng-template>

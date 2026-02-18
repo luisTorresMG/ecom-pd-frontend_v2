@@ -1,0 +1,252 @@
+.footer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.groupOrange {
+  background-color: #ff5100;
+  width: auto;
+  padding: 2rem;
+}
+
+.groupBlue {
+  background-color: #261551;
+  width: auto;
+  padding: 0;
+  display: flex;
+  justify-content: space-around;
+  padding: 2rem;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  &__group--info {
+    margin-bottom: 1.5rem;
+    text-align: left;
+  }
+}
+
+.content2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  overflow: hidden;
+
+  &__group--info {
+    margin-bottom: 1.5rem;
+    text-align: left;
+    .protecta-logo {
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+.protecta-logo {
+  display: block;
+  width: 300px;
+  height: 72px;
+  object-fit: contain;
+  background-repeat: no-repeat;
+  margin-bottom: 1rem;
+}
+
+.protecta-logo {
+  background-image: url("../../../../../assets/accidentes-personales/protecta-logo-footer.svg");
+  width: 110px;
+  @media (min-width: 720px) {
+    max-width: 180px;
+    height: 55px;
+    margin-bottom: 1.5rem;
+  }
+  @media (min-width: 1470px) {
+    width: 180px;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.sbs-logo {
+  display: block;
+  object-fit: contain;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.sbs-logo {
+  background-image: url("../../../../../assets/accidentes-personales/resources/sbs-logo.svg");
+  width: 198px;
+  height: 50px;
+  margin: auto;
+  margin-top: 1rem;
+
+  @media (min-width: 720px) {
+    margin: 0;
+    margin-top: 1rem;
+  }
+}
+
+.subtitle {
+  font-size: 16px;
+  font-weight: bold;
+  color: #ff5100;
+  margin-bottom: 0.5rem;
+  font-family: 'Titillium Web', sans-serif !important;
+
+  & span {
+    font-weight: normal;
+    color: #b1b1b1;
+  }
+}
+
+.subtitle2 {
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  font-family: 'Titillium Web', sans-serif !important;
+}
+
+.list {
+  padding: 0;
+  &.social {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+
+    @media (min-width: 720px) {
+      justify-content: flex-start;
+    }
+
+    .list__item {
+      a {
+        display: flex;
+        width: 25px;
+        height: 25px;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+          fill: #fff;
+          transition: 0.2s;
+          transform: scale(1.2);
+        }
+
+        &:hover {
+          svg {
+            fill: #fff;
+            transform: scale(1);
+          }
+        }
+      }
+    }
+  }
+}
+
+.list__item {
+  font-size: 14px;
+  color: #fff;
+  list-style: none;
+
+  a {
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none !important;
+    font-family: 'Titillium Web', sans-serif !important;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 0.25rem;
+  }
+}
+
+.sanitas-logo {
+  display: block;
+  width: 150px;
+  height: 50px;
+  object-fit: contain;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.sanitas-logo {
+  // background-image: url(../../../assets/svg/sanitas.svg);
+  margin: auto;
+
+  @media (min-width: 720px) {
+    margin: 0;
+  }
+}
+
+@media (min-width: 720px) and (max-width: 1399px) {
+  .footer {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .groupOrange {
+    width: 30%;
+    padding: 4rem;
+  }
+
+  .groupBlue {
+    width: 70%;
+    padding: 2rem
+  }
+
+  .content {
+    max-width: 75%;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 2rem;
+
+    &__group--info {
+      text-align: left;
+    }
+  }
+}
+
+@media (min-width: 1400px) {
+  .footer {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .groupOrange {
+    width: 25%;
+  }
+
+  .groupBlue {
+    width: 75%;
+  }
+  .content {
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 3rem;
+
+    &__group--info {
+      text-align: left;
+    }
+  }
+}
+
+.office-link {
+  margin-top: 1rem;
+  display: block;
+
+  small {
+    color: #fff;
+    font-weight: 600;
+  }
+}
+
+.legal-name,
+.ruc {
+  .subtitle2 {
+    margin: 0;
+  }
+
+  margin-bottom: .5rem;
+}

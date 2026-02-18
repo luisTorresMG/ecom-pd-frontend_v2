@@ -1,0 +1,147 @@
+.content-questions {
+  padding: 0 2rem;
+}
+.tienes-preguntas {
+  background-color: #f3f1f6;
+  padding: 2.5rem !important;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  max-width: 600px;
+  margin: auto !important;
+  margin-top: 2rem !important;
+  margin-bottom: 2rem !important;
+}
+.background-chanchito {
+  background-image: url("/assets/accidentes-personales/person-audifonos.svg");
+  width: 300px;
+  height: 340px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.btn-precio-especial {
+  display: block;
+  border: 1px solid #ed6e00;
+  color: #ed6e00;
+  background-color: #fff;
+  padding: 0.25rem 1.5rem;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 21px;
+}
+.content-preguntas {
+  overflow-y: auto;
+  max-height: 250px;
+  padding-right: 1rem;
+  width: 100%;
+}
+.content-preguntas span {
+  color: rgba(0, 0, 0, 0.7);
+}
+.tp-title {
+  color: #2b0d61;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+.content-preguntas::-webkit-scrollbar {
+  width: 10px;
+  background-color: #fff;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}
+.content-preguntas::-webkit-scrollbar-thumb {
+  background-color: #2b0d61;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+.modal-body::-webkit-scrollbar {
+  width: 13px;
+  background-color: #fff;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}
+.modal-body::-webkit-scrollbar-thumb {
+  background-color: #ed6e00;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border: 3px solid #fff;
+}
+.title {
+  font-size: 24px;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+.btn.full-color {
+  background-color: #ed6e00;
+  color: #fff;
+  min-width: 112px;
+  box-shadow: none;
+  border: none;
+}
+.modal-body {
+  max-height: 500px;
+  overflow: auto;
+  padding: 1.5rem 2rem;
+  color: #2b0d61;
+}
+.btn-return {
+  margin-bottom: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  height: 40px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  min-width: 155px;
+  max-width: 155px;
+  font-weight: normal;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  background-color: #fff;
+  color: #ed6e00;
+  border: 1px solid #ed6e00;
+}
+.fa {
+  font-size: 18px;
+}
+.modal-footer {
+  justify-content: center;
+}
+.modal-content {
+  position: relative;
+}
+.close {
+  position: absolute;
+  right: 1.25rem;
+  top: 1.25rem;
+  z-index: 9999;
+}
+.title {
+  margin-top: 2.5rem;
+}
+.respuestas {
+  text-align: justify;
+}

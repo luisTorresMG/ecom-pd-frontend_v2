@@ -12,7 +12,8 @@ import {NgxCaptchaModule} from 'ngx-captcha';
 import {siniestroservice} from '../services/siniestro.service';
 import { exit } from 'process';
 //import { FileReader } from 'rxjs';
-import * as moment from 'moment';
+// import * as moment from 'moment';
+import moment from 'moment';
 import { fromEvent } from 'rxjs';
 //import { event } from 'jquery';
 import { Router } from '@angular/router';
@@ -81,6 +82,7 @@ export class RegistSiniestroSoatComponent implements OnInit, AfterViewInit {
   coberturaSeleccionada: boolean = false;
 
   nrodocusolglobal: boolean = true;
+   formregister!: FormGroup;
 
     constructor(
     public fb:FormBuilder,
@@ -89,13 +91,37 @@ export class RegistSiniestroSoatComponent implements OnInit, AfterViewInit {
    // private http:HttpClient,
     private siniestroservice: siniestroservice,
     private router: Router,
-
      ) {
-
+      this.formregister = this.fb.group({
+      tipodocumentosol : ["13652", Validators.required],
+      documentosol: ['',[Validators.required, Validators.minLength(8), Validators.maxLength(8), Validators.pattern(/^[0-9]+$/)]],
+      "nombressolicitante" : ['',[Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      "apellidosssolicitante" : ['',[Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      "emailsolicitante" :  ['', [Validators.email, Validators.pattern(this.emailRegex), Validators.maxLength(50)]],
+      "rucsolicitante" : [''],
+      "nrotelefonosolicitante": ['',[Validators.minLength(7), Validators.maxLength(9)]],
+      "direccionsolicitante" : ['', Validators.required],
+      "checksol" :[false],
+      "tipodocumentoagraviado" : ["15473", Validators.required],
+      "documentoagraviado" : ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8), Validators.pattern(/^[0-9]+$/)]],
+      "nombresagraviado" : ['',[Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+    /* "rucagraviado" : ['',[Validators.required, Validators.minLength(20), Validators.maxLength(20)]],*/
+      "apellidosagraviado" : ['',[Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      "direccionagraviado" : ['', Validators.required],
+      "nroplacavehiculoagraviado" : ['',[Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
+      "fechasiniestroagraviado" : [moment(this.fecha).format('YYYY-MM-DD')],
+      "activarcobertura" : ["16000"],
+      "activarcoberturaR" : ["16289"],
+      "slectmetodopago" : ["16173"],
+      "slecentidadbancaria" : ["100"],
+      "nameentidad": [''],
+      "nrocuenta": [''],
+      "codigointerbancario" : [''],
+      "uploadfiledocument": ['', Validators.required],
+      "recaptcha": ['',Validators.required],
+  });
      // this.sitekey='6Lcd-gAmAAAAAI_HuFKZX8lG2oXacMIozX3xRT3R';
       }
-
-
 
   get tipodocumentosol(){
     return this.formregister.get('tipodocumentosol') as FormControl;
@@ -186,36 +212,7 @@ export class RegistSiniestroSoatComponent implements OnInit, AfterViewInit {
 
    fecha = new Date();
 
-  formregister = this.fb.group({
-    tipodocumentosol : ["13652", Validators.required],
-    documentosol: ['',[Validators.required, Validators.minLength(8), Validators.maxLength(8), Validators.pattern(/^[0-9]+$/)]],
-    "nombressolicitante" : ['',[Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-    "apellidosssolicitante" : ['',[Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-    "emailsolicitante" :  ['', [Validators.email, Validators.pattern(this.emailRegex), Validators.maxLength(50)]],
-    "rucsolicitante" : [''],
-    "nrotelefonosolicitante": ['',[Validators.minLength(7), Validators.maxLength(9)]],
-    "direccionsolicitante" : ['', Validators.required],
-    "checksol" :[false],
-    "tipodocumentoagraviado" : ["15473", Validators.required],
-    "documentoagraviado" : ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8), Validators.pattern(/^[0-9]+$/)]],
-    "nombresagraviado" : ['',[Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-   /* "rucagraviado" : ['',[Validators.required, Validators.minLength(20), Validators.maxLength(20)]],*/
-    "apellidosagraviado" : ['',[Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-    "direccionagraviado" : ['', Validators.required],
-    "nroplacavehiculoagraviado" : ['',[Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
-    "fechasiniestroagraviado" : [moment(this.fecha).format('YYYY-MM-DD')],
-    "activarcobertura" : ["16000"],
-    "activarcoberturaR" : ["16289"],
-    "slectmetodopago" : ["16173"],
-    "slecentidadbancaria" : ["100"],
-    "nameentidad": [''],
-    "nrocuenta": [''],
-    "codigointerbancario" : [''],
-    "uploadfiledocument": ['', Validators.required],
-    "recaptcha": ['',Validators.required],
-
-
-  });
+ 
   maxFecha(): string {
     const fechaActual = new Date().toISOString().split('T')[0];
    //console.log("maxfecha", fechaActual);

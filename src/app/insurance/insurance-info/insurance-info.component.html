@@ -1,0 +1,474 @@
+<main class="container-fluid px-0 py-0 mx-0 my-0"
+      *ngIf="!derivationAdvisor">
+  <div class="max-width-to-center">
+    <div class="bc-1"></div>
+    <div class="row px-0 py-0 mx-0 my-0">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+        <app-show-steps [NSTEP]="3"
+                        *ngIf="!derivationAdvisor"></app-show-steps>
+      </div>
+    </div>
+    <div class="paso-3A">
+      <div class="row px-0 py-0 mx-0 my-0">
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <h1 class="title-step">
+            {{ productSelected == '3' ? 'Agregue al asegurado e ingrese los datos del seguro' : 'Ingresa los datos para tu seguro' }}
+          </h1>
+        </div>
+      </div>
+      <form [formGroup]="form"
+            [@fade]="true">
+        <div class="row content-form mx-0 my-0 py-0 px-0">
+          <div class="col-lg-12 mx-0 my-0 py-0 px-0 container-inputs container-inputs-grid ctn-dbl-in">
+            <label class="content-input placeholder ng-placeholder placeholder-active"
+                   aria-placeholder="Vigencia"
+                   for="validityType">
+              <select formControlName="validityType"
+                      id="validityType"
+                      class="in in-width-title-desactive ii-ng-select placeholder-active">
+                <option [value]="item.id"
+                        *ngFor="let item of validityTypes">
+                  {{ item.description }}
+                </option>
+              </select>
+              <div class="soat-error-message"
+                   *ngIf="showError('validityType')">
+                <i></i><span>Completa este campo para continuar*</span>
+              </div>
+            </label>
+            <label class="content-input placeholder placeholder-active"
+                   aria-placeholder="Tipo de Moneda"
+                   for="tipomoneda">
+              <select class="in-with-title-desactive in placeholder-active"
+                      id="tipomoneda"
+                      formControlName="idMoneda">
+                <option value="1">Soles</option>
+                <option value="2">Dólares</option>
+              </select>
+              <div class="soat-error-message"
+                   *ngIf="showError('idMoneda')">
+                <i></i><span>Completa este campo para continuar*</span>
+              </div>
+            </label>
+          </div>
+          <div class="col-lg-12 mx-0 my-0 py-0 px-0 container-inputs container-inputs-grid ctn-dbl-in">
+            <label class="content-input placeholder placeholder-active"
+                   aria-placeholder="Inicio de Vigencia"
+                   for="startValidity">
+              <input type="text"
+                     class="in-with-title-desactive in placeholder-active"
+                     formControlName="startValidity"
+                     id="startValidity"
+                     #dp="bsDatepicker"
+                     bsDatepicker
+                     readonly
+                     [bsConfig]="startValidityConfig"/>
+              <div class="soat-error-message"
+                   *ngIf="showError('startValidity')">
+                <ng-container *ngIf="
+                    f['startValidity'].errors.required ||
+                    f['startValidity'].errors.date">
+                  <i></i>
+                  <span>
+                    Completa este campo para continuar*
+                  </span>
+                </ng-container>
+              </div>
+            </label>
+            <label class="content-input placeholder placeholder-active"
+                   [class.lbl-disable]="!validityUnico"
+                   aria-placeholder="Fin de Vigencia"
+                   for="endValidity">
+              <input type="text"
+                     class="in-with-title-desactive in placeholder-active"
+                     id="endValidity"
+                     formControlName="endValidity"
+                     #dp="bsDatepicker"
+                     bsDatepicker
+                     readonly
+                     [disabled]="!validityUnico"
+                     [bsConfig]="endValidityConfig"/>
+              <div class="soat-error-message"
+                   *ngIf="showError('endValidity')">
+                <ng-container *ngIf="
+                    f['endValidity'].errors.required ||
+                    f['endValidity'].errors.date ">
+                  <i></i>
+                  <span>
+                    Completa este campo para continuar*
+                  </span>
+                </ng-container>
+              </div>
+            </label>
+          </div>
+          <div class="col-lg-12 mx-0 my-0 py-0 px-0 content_activity">
+            <div class="content-input">
+              <label for="activities"
+                     class="lbl-in-title-desactive lbl-in-title-active ng-placeholder">
+                {{ placeholderActivities }}
+              </label>
+              <ng-select [items]="activities"
+                         [selectOnTab]="true"
+                         bindValue="id"
+                         bindLabel="description"
+                         id="activities"
+                         formControlName="activity"
+                         #activity
+                         class="in in-width-title-desactive ii-ng-select with-value ng-in ">
+              </ng-select>
+            </div>
+            <div class="soat-error-message"
+                 *ngIf="showError('activity')">
+              <i></i><span>Completa este campo para continuar*</span>
+            </div>
+          </div>
+          <div class="col-lg-12 mx-0 my-0 py-0 px-0"
+               *ngIf="isTypeProductViajes">
+            <label class="content-input placeholder ng-placeholder placeholder-active"
+                   aria-placeholder="Destino">
+              <select class="in in-width-title-desactive ii-ng-select placeholder-active"
+                      formControlName="typeDestiny">
+                <option [value]="item.value"
+                        *ngFor="let item of flightTypes">
+                  {{ item.label }}
+                </option>
+              </select>
+            </label>
+            <div class="soat-error-message"
+                 *ngIf="showError('typeDestiny')">
+              <i></i><span>Completa este campo para continuar*</span>
+            </div>
+          </div>
+
+          <!-- VIAJES -->
+          <div class="col-lg-12 mx-0 my-0 py-0 px-0 container-inputs container-inputs-grid ctn-dbl-in"
+               *ngIf="isProductTravel">
+            <label class="content-input placeholder ng-placeholder placeholder-active"
+                   aria-placeholder="Nacionalidad"
+                   for="idZone">
+              <ng-select [items]="nacionalidades$"
+                         [selectOnTab]="true"
+                         bindValue="id"
+                         bindLabel="descripcion"
+                         formControlName="idZone"
+                         class="in in-width-title-desactive ii-ng-select placeholder-active"
+                         id="idZone"
+                         #idZone
+                         [disabled]="true">
+              </ng-select>
+            </label>
+            <label class="content-input placeholder ng-placeholder placeholder-active"
+                   aria-placeholder="Ubicación"
+                   for="idZonaRiesgo"
+                   *ngIf="f['idZone'].value == 1">
+              <ng-select [items]="departamentos$"
+                         [selectOnTab]="true"
+                         bindValue="id"
+                         bindLabel="descripcion"
+                         notFoundText="No hay resultados"
+                         formControlName="idZonaRiesgo"
+                         class="in in-width-title-desactive ii-ng-select with-value placeholder-active"
+                         id="idZonaRiesgo"
+                         #idZonaRiesgo>
+              </ng-select>
+              <small class="soat-error-message"
+                     *ngIf="f['idZonaRiesgo'].hasError('required') && f['idZonaRiesgo'].touched">
+                <i></i>Completa este campo para continuar*
+              </small>
+            </label>
+          </div>
+
+          <!-- LABORALES -->
+          <div
+            class="col-lg-12 mx-0 my-0 py-0 px-0 container-inputs container-inputs-grid ctn-dbl-in"
+            *ngIf="isTypeProductLaboral"
+          >
+            <label class="content-input placeholder ng-placeholder placeholder-active"
+                   aria-placeholder="Cantidad de trabajadores"
+                   for="cantidadTrabajadores">
+              <input class="in-with-title-desactive in placeholder-active"
+                     id="cantidadTrabajadores"
+                     type="text"
+                     formControlName="cantidadTrabajadores"/>
+            </label>
+            <div class="soat-error-message"
+                 *ngIf="showError('cantidadTrabajadores')">
+              <i></i><span>Completa este campo para continuar*</span>
+            </div>
+          </div>
+
+          <!-- LABORALES -->
+          <ng-container *ngIf="productIdSelected == 6">
+            <div class="col-lg-12 mx-0 my-0 py-0 px-0 container-inputs container-inputs-grid ctn-dbl-in">
+              <div class="content-input">
+                <label for="idZonaRiesgo"
+                       class="lbl-in-title-desactive lbl-in-title-active ng-placeholder"
+                       *ngIf="f['idZonaRiesgo'].value">
+                  Ubicación de la Empresa
+                </label>
+                <ng-select [items]="departamentos$"
+                           [selectOnTab]="true"
+                           bindValue="id"
+                           bindLabel="descripcion"
+                           notFoundText="No hay resultados"
+                           formControlName="idZonaRiesgo"
+                           placeholder="Ubicación de la Empresa"
+                           class="in in-width-title-desactive ii-ng-select with-value placeholder-active"
+                           id="idZonaRiesgo"
+                           #idZonaRiesgo>
+                </ng-select>
+                <div class="soat-error-message"
+                     *ngIf="showError('idZonaRiesgo')">
+                  <i></i><span>Completa este campo para continuar*</span>
+                </div>
+              </div>
+              <!-- <label
+                  class="content-input placeholder ng-placeholder"
+                  aria-placeholder="Ubicación de la Empresa"
+                  for="idZonaRiesgo"
+                  [class.placeholder-active]="f.idZonaRiesgo.value"
+                >
+
+                </label> -->
+              <label class="content-input placeholder ng-placeholder placeholder-active"
+                     aria-placeholder="Cantidad de personas"
+                     for="cantidadTrabajadores">
+                <input class="in-with-title-desactive in placeholder-active"
+                       id="cantidadTrabajadores"
+                       type="text"
+                       formControlName="cantidadTrabajadores"/>
+                <div class="soat-error-message"
+                     *ngIf="showError('cantidadTrabajadores')">
+                  <i></i><span>Completa este campo para continuar*</span>
+                </div>
+              </label>
+            </div>
+          </ng-container>
+
+          <!-- VIAJES -->
+          <ng-container *ngIf="showCountry">
+            <div class="col-lg-12 mx-0 my-0 py-0 px-0 container-inputs container-inputs-grid ctn-dbl-in">
+              <div class="content-input">
+                <label for="idPaisOrigen"
+                       class="lbl-in-title-desactive lbl-in-title-active ng-placeholder"
+                       *ngIf="f['idPaisOrigen'].value">
+                  País de Origen
+                </label>
+                <ng-select [items]="nacionalidades$"
+                           [selectOnTab]="true"
+                           bindValue="id"
+                           bindLabel="descripcion"
+                           formControlName="idPaisOrigen"
+                           placeholder="País de Origen"
+                           class="in in-width-title-desactive ii-ng-select placeholder-active with-value"
+                           id="idPaisOrigen"
+                           #idPaisOrigen>
+                </ng-select>
+                <div class="soat-error-message"
+                     *ngIf="showError('idPaisOrigen')">
+                  <i></i><span>Completa este campo para continuar*</span>
+                </div>
+              </div>
+              <div class="content-input">
+                <label for="idPaisDestino"
+                       class="lbl-in-title-desactive lbl-in-title-active ng-placeholder"
+                       *ngIf="f['idPaisDestino'].value">
+                  País de Destino
+                </label>
+                <ng-select [items]="nacionalidadesCopy$"
+                           [selectOnTab]="true"
+                           bindValue="id"
+                           bindLabel="descripcion"
+                           formControlName="idPaisDestino"
+                           placeholder="País de Destino"
+                           class="in in-width-title-desactive ii-ng-select with-value placeholder-active"
+                           id="idPaisDestino"
+                           #idPaisDestino>
+                </ng-select>
+                <div class="soat-error-message"
+                     *ngIf="showError('idPaisDestino')">
+                  <i></i><span>Completa este campo para continuar*</span>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="showDepartments">
+            <div class="col-lg-12 mx-0 my-0 py-0 px-0 container-inputs container-inputs-grid ctn-dbl-in">
+              <div class="content-input">
+                <label for="idDepartamentoOrigen"
+                       class="lbl-in-title-desactive lbl-in-title-active ng-placeholder"
+                       *ngIf="f['idDepartamentoOrigen'].value">
+                  Departamento de Origen
+                </label>
+                <ng-select [items]="departamentos$"
+                           [selectOnTab]="true"
+                           bindValue="id"
+                           bindLabel="descripcion"
+                           formControlName="idDepartamentoOrigen"
+                           notFoundText="No hay resultados"
+                           placeholder="Departamento de Origen"
+                           class="in in-width-title-desactive ii-ng-select with-value placeholder-active"
+                           id="idDepartamentoOrigen"
+                           #idDepartamentoOrigen>
+                </ng-select>
+                <div class="soat-error-message"
+                     *ngIf="showError('idDepartamentoOrigen')">
+                  <i></i
+                  ><span>Completa este campo para continuar*</span>
+                </div>
+              </div>
+              <div class="content-input">
+                <label for="idDepartamentoDestino"
+                       class="lbl-in-title-desactive lbl-in-title-active ng-placeholder"
+                       *ngIf="f['idDepartamentoDestino'].value">
+                  Departamento de Destino
+                </label>
+                <ng-select [items]="departamentosCopy$"
+                           [selectOnTab]="true"
+                           bindValue="id"
+                           bindLabel="descripcion"
+                           formControlName="idDepartamentoDestino"
+                           placeholder="Departamento de Destino"
+                           notFoundText="No hay resultados"
+                           class="in in-width-title-desactive ii-ng-select with-value placeholder-active"
+                           id="idDepartamentoDestino"
+                           #idDepartamentoDestino>
+                </ng-select>
+                <div class="soat-error-message"
+                     *ngIf="showError('idDepartamentoDestino')">
+                  <i></i
+                  ><span>Completa este campo para continuar*</span>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <div class="ctn-dbl-in"
+               hidden>
+            <div class="mx-0 my-0 py-0 px-0 no-padd">
+              <label class="content-input placeholder ng-placeholder placeholder-active"
+                     aria-placeholder="Temporalidad"
+                     for="temporality">
+                <ng-select [items]="temporalities"
+                           [selectOnTab]="true"
+                           bindValue="id"
+                           bindLabel="descripcion"
+                           placeholder="Temporalidad"
+                           formControlName="temporality"
+                           class="in in-width-title-desactive ii-ng-select placeholder-active"
+                           id="temporality"
+                           #temporality>
+                </ng-select>
+              </label>
+              <div class="soat-error-message"
+                   *ngIf="showError('temporality')">
+                <i></i><span>Completa este campo para continuar*</span>
+              </div>
+            </div>
+            <div class="mx-0 my-0 py-0 px-0 no-padd">
+              <label class="content-input placeholder ng-placeholder placeholder-active"
+                     aria-placeholder="Alcance"
+                     for="scope">
+                <ng-select [items]="scopes"
+                           [selectOnTab]="true"
+                           bindValue="id"
+                           bindLabel="descripcion"
+                           placeholder="Alcance"
+                           formControlName="scope"
+                           class="in in-width-title-desactive ii-ng-select placeholder-active"
+                           id="scope"
+                           #scope>
+                </ng-select>
+              </label>
+              <div class="soat-error-message"
+                   *ngIf="showError('scope')">
+                <i></i><span>Completa este campo para continuar*</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12 mx-0 my-3 py-0 px-0"
+               hidden>
+            <input type="checkbox"
+                   name="sinister"
+                   class="chk"
+                   formControlName="sinister"
+                   id="siniestros"
+                   hidden/>
+            <label for="siniestros"
+                   class="chk-style">¿Tuvo siniestros?</label>
+          </div>
+        </div>
+        <div class="row mx-0 my-0 px-0 py-0 px-0"
+             [@fade]="true"
+             *ngIf="f['sinister'].value">
+          <div class="ctn-dbl-in">
+            <div class="mx-0 my-0 py-0 px-0 no-padd">
+              <div class="content-input">
+                <input type="number"
+                       class="in-with-title-desactive in in-with-title-active"
+                       formControlName="sinisterAmount"
+                       id="in-amount"/>
+                <label for="in-amount"
+                       class="lbl-in-title-desactive lbl-in-title-active">
+                  Monto del Siniestro
+                </label>
+              </div>
+              <div class="soat-error-message"
+                   *ngIf="showError('sinisterAmount')">
+                <i></i><span>Completa este campo para continuar*</span>
+              </div>
+            </div>
+            <div class="mx-0 my-0 py-0 px-0 no-padd">
+              <div class="content-input">
+                <input type="number"
+                       class="in-with-title-desactive in in-with-title-active"
+                       id="in-premium"
+                       formControlName="premium"/>
+                <label for="in-premium"
+                       class="lbl-in-title-desactive lbl-in-title-active">
+                  Prima Pagada
+                </label>
+              </div>
+              <div class="soat-error-message"
+                   *ngIf="showError('premium')">
+                <i></i><span>Completa este campo para continuar*</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <ng-container *ngIf="hasErrorParameters">
+        <small class="hasError">Ocurrió un error al obtener el ubigeo</small>
+      </ng-container>
+    </div>
+    <app-validate-quotation
+      (derivationAdvisorInfo)="derivationAdvisorClose($event)"
+      (onClickSubmit)="onClickSubmit()"
+      [insuranceInfo]="rawValues"
+    ></app-validate-quotation>
+  </div>
+  <app-questions></app-questions>
+</main>
+
+<ng-container *ngIf="derivationAdvisor">
+  <section class="derivation">
+    <div class="derivation__advisor">
+      <h2 class="derivation__advisor--title">
+        Hola. Tu solicitud ha sido recepcionada por un asesor de Protecta
+        Security, nos estaremos comunicando contigo en un máximo de 2 días
+        laborables.
+      </h2>
+      <p class="derivation__advisor--desc">
+        Contáctanos en:<br/>
+        Correo Electrónico: <b>cotizacionaccidentes@protectasecurity.pe</b
+      ><br/>
+        Estamos a tu disposición de lunes a viernes de
+        <b>9:00 a.m. a 6:00 p.m.</b>, a excepción de feriados.
+      </p>
+      <button type="button"
+              class="btn-submit"
+              (click)="backToHome()">
+        Volver al inicio
+      </button>
+    </div>
+  </section>
+</ng-container>

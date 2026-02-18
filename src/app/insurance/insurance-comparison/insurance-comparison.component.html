@@ -1,0 +1,198 @@
+<main class="container-fluid px-0 py-0 mx-0 my-0"
+      *ngIf="!derivationAdvisor">
+  <div class="max-width-to-center">
+    <div class="bc-1"></div>
+    <div class="row px-0 py-0 mx-0 my-0">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+        <app-show-steps [NSTEP]="3"></app-show-steps>
+      </div>
+    </div>
+    <!-- PASO 3 - 2 -->
+    <div class="paso-3BA"
+         [@fade]="true">
+      <div class="row px-0 py-0 mx-0 my-0 content-select-plan">
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0 my-3">
+          <h1 class="title-step text-center">
+            Compara y elige el plan de tu preferencia
+          </h1>
+        </div>
+        <div class="plans"
+             #contentPlans>
+          <!--<button
+            class="btn-slide slide-left"
+            (click)="changePlan(0)"
+            [disabled]="indexGroup == 1">
+            <i class="fa fa-angle-left"
+               aria-hidden="true"></i>
+          </button>-->
+          <ng-container *ngFor="let plan of insurance?.plans; let index = index">
+            <div class="plan"
+                 [class.selected]="plan.id == sessionPlanSelected?.plan?.id">
+              <div class="plan__info">
+                <h6 class="plan__info--title">
+                  {{ plan.descripcion }}
+                </h6>
+                <span class="plan__info--amount">
+                {{ currencyDescription }}{{ ammountTransform(plan.prima) }}
+              </span>
+                <small class="plan__info--frequency">{{ session.frecuenciaPago.descripcion }}</small>
+              </div>
+              <div class="plan__coverages">
+                <h6 class="plan__coverages--title">Coberturas</h6>
+                <ng-container *ngFor="let coverage of plan.coberturas; let ic = index">
+                  <div class="plan__coverages--item"
+                       *ngIf="((ic + 1) >= 7 && isPLanSelected(plan.id)) || ((ic + 1) <= 6)">
+                    <span>{{ coverage.descripcion }}</span>
+                    <b>{{ currencyDescription }}{{ coverage.capital | number: "1.2-2" }}</b>
+                  </div>
+                </ng-container>
+                <button class="button is-primary is-underline"
+                        (click)="showAssistanceList()"
+                        *ngIf="plan.asistencias.length">
+                  <span>Programa de asistencias</span>
+                </button>
+                <button class="button is-secondary is-outline no-border"
+                        [class.is-plan-selected]="isPLanSelected(plan.id)"
+                        (click)="showMoreCoverages(plan.id)"
+                        *ngIf="plan.coberturas.length >= 7">
+                  <i class="fa fa-angle-down"
+                     aria-hidden="true"></i>
+                  <span>
+                  {{ isPLanSelected(plan.id) ? 'Ver menos coberturas' : 'Ver más coberturas' }}
+                </span>
+                </button>
+
+                <ng-container *ngIf="plan.descripcion != 'PLAN PERSONALIZADO'; else buttonCustomPlan">
+                  <button class="button is-secondary is-outline select-plan"
+                          (click)="onPlanSelected(plan)">
+                    <span>Elige este plan</span>
+                  </button>
+                </ng-container>
+
+                <ng-template #buttonCustomPlan>
+                  <button class="button is-secondary is-outline select-plan"
+                          (click)="goToPlanDetail(plan)">
+                    <span>Personaliza tu plan</span>
+                  </button>
+                </ng-template>
+              </div>
+            </div>
+          </ng-container>
+
+          <!--<button
+            class="btn-slide slide-right"
+            (click)="changePlan(1)"
+            [disabled]="(itemsPerView * (indexGroup + 1)) - itemsPerView > insurance?.plans?.length">
+            <i class="fa fa-angle-right"
+               aria-hidden="true"></i>
+          </button>-->
+        </div>
+        <div class="content-check-equal-price">
+          <ng-container *ngIf="sessionPlanSelected?.plan?.asistencias?.length">
+            <div class="selection orange content-check-assistance">
+              <input type="checkbox"
+                     id="chk-assistance"
+                     [formControl]="checkAssistanceControl">
+
+              <label for="chk-assistance">
+                <div class="chk-desc">
+                  He leído y acepto los términos y condiciones del
+                  <a role="button"
+                     (click)="downloadPdfAssistance($event)">programa de asistencia</a>
+                </div>
+              </label>
+            </div>
+          </ng-container>
+
+          <p class="text extra"
+             *ngIf="isEveryPricingEquals">
+            Si los planes te salen al mismo precio, <b>elige el que más te convenga.</b>
+          </p>
+        </div>
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0 text-center content_navigate">
+          <button type="button"
+                  class="button secondary orange fit"
+                  (click)="backStep()">
+            <i class="fa fa-angle-left mr-2"
+               aria-hidden="true"></i>Anterior
+          </button>
+          <button
+            class="button primary orange fit"
+            type="button"
+            [disabled]="isInvalidStep"
+            (click)="nextStep()">
+            Siguiente
+            <i class="fa fa-angle-right ml-2"
+               aria-hidden="true"></i>
+          </button>
+        </div>
+        <ng-container *ngIf="hasErrorSubmit">
+          <small class="hasError-submit"
+          >Ocurrió un error al grabar el plan</small
+          >
+        </ng-container>
+        <ng-container *ngIf="hasErrorPlans">
+          <small class="hasError-submit"
+          >Ocurrió un error al obtener planes</small
+          >
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <app-questions></app-questions>
+</main>
+<ng-container *ngIf="derivationAdvisor">
+  <section class="derivation">
+    <app-show-steps [NSTEP]="3"></app-show-steps>
+    <div class="derivation__advisor">
+      <h2 class="derivation__advisor--title">
+        Hola. Tu solicitud ha sido recepcionada por un asesor de Protecta
+        Security, nos estaremos comunicando contigo en un máximo de 2 días
+        laborables.
+      </h2>
+      <p class="derivation__advisor--desc">
+        Contáctanos en:<br/>
+        Correo Electrónico: <b>cotizacionaccidentes@protectasecurity.pe</b
+      ><br/>
+        Estamos a tu disposición de lunes a viernes de
+        <b>9:00 a.m. a 6:00 p.m.</b>, a excepción de feriados.
+      </p>
+      <button type="button"
+              class="btn-primary-u"
+              (click)="backToHome()">
+        Volver al inicio
+      </button>
+    </div>
+  </section>
+</ng-container>
+
+<ng-template #modalAssistance>
+  <div class="content-modal">
+    <section class="modal-assistance">
+      <div class="modal-header">
+        <button (click)="closeModals()">
+          &times;
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <table class="table">
+          <thead class="">
+            <tr>
+              <th>Perfil {{ productSelected?.name }}</th>
+              <th>Monto Máximo</th>
+              <th>Atenciones por año</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of productAssistanceList">
+              <td>{{ data.desc }}</td>
+              <td>{{ data.coverage }}</td>
+              <td>{{ data.amount }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</ng-template>

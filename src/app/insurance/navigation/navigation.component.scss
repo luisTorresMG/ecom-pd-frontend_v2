@@ -1,0 +1,54 @@
+@import "../style.scss";
+@import "variables";
+
+.container-ap {
+  display: inline-block;
+  width: 100%;
+  height: 60px;
+  top: 0;
+  left: 0;
+  padding: 0.5rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #F7F6F8;
+
+  .navbar-ap {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 8px;
+    gap: 12px;
+    align-items: center;
+
+    img {
+      width: 110px;
+      height: 25px;
+    }
+
+    h1 {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 24px;
+      color: #2b0d61;
+      font-family: 'Titillium Web', sans-serif !important;
+    }
+
+  }
+}
+
+@media (min-width: 890px) {
+  .container-ap {
+    padding: 1rem 5rem;
+    height: 80px;
+
+    .navbar-ap {
+      img {
+        width: 180px;
+        height: 35px;
+      }
+
+      h1 {
+        font-size: 20px;
+      }
+    }
+  }
+}

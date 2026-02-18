@@ -1,0 +1,66 @@
+<div class="content-questions mt-5">
+  <div class="row mx-0 my-0 px-0 py-0 d-flex align-items-center justify-content-center tienes-preguntas flex-column">
+    <h4 class="tp-title">¿Tienes preguntas?</h4>
+    <div class="content-preguntas d-flex align-items-start justify-content-start flex-column">
+      <label role="button"
+             *ngFor="let quest of preguntasFrecuentes"
+             (click)="openModalRespuestas(quest)">{{ quest.pregunta }}</label>
+    </div>
+  </div>
+</div>
+<div class="modal fade"
+     bsModal
+     #modalQuestion="bs-modal"
+     [config]="{
+      backdrop: 'static'
+     }">
+  <div class="modal-dialog"
+       role="document">
+    <div class="modal-content">
+      <button type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+              (click)="hideModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <div class="modal-body">
+        <div class="quest">
+          <h2 class="title">
+            {{ preguntaSelected?.pregunta }}
+          </h2>
+          <div class="content-res">
+            <div class="respuestas"
+                 *ngFor="let data of preguntaSelected?.data?.respuesta">
+              {{ data }}
+            </div>
+            <ol>
+              <li *ngFor="let data of preguntaSelected?.data?.list">
+                {{ data.respuesta }}
+              </li>
+            </ol>
+            <ol type="a">
+              <li *ngFor="let data of preguntaSelected?.data?.letterList">
+                {{ data.respuesta }}
+              </li>
+            </ol>
+            <ul>
+              <li *ngFor="let data of preguntaSelected?.data?.pointList">
+                {{ data.respuesta }}
+              </li>
+            </ul>
+            <div class="respuestas"
+                 *ngFor="let data of preguntaSelected?.data?.respuestaFoot">
+              {{ data }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button"
+                (click)="hideModal()"
+                class="btn full-color btn-aceptar-modal btn-aceptar-message-modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>

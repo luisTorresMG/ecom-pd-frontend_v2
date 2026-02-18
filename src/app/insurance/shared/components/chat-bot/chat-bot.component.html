@@ -1,0 +1,60 @@
+<div class="content">
+  <div class="content__section">
+    <ng-container *ngIf="showForm">
+      <form [formGroup]="form"
+            class="form"
+            @fade
+            (ngSubmit)="openChat()">
+        <h5 class="subtitle">¡Hola no soy un robot!</h5>
+        <div class="content__section--info">
+          <p class="paragraph paragraph-16">
+            Chatea con uno de nuestros ejecutivos de servicio.
+          </p>
+          <p class="paragraph">
+            Es importante que nuestros clientes sepan que estamos a su servicio.
+          </p>
+          <p class="paragraph">
+            A través de este live chat, te ayudaremos con la compra online de tu
+            seguro de <b>Accidentes Personales</b> de
+            <b>lunes a viernes de 9 a.m. a 6 p.m. a</b>
+            excepción de los días feriado.
+          </p>
+          <p class="paragraph">
+            Para otras consultas llámanos al <b>391-3000</b> en Lima,
+            <b>0801 1 1278</b> en provincias o escríbenos a nuestro correo
+            electrónico
+            <b>clientes@protectasecurity.pe</b>
+          </p>
+        </div>
+        <label class="placeholder"
+               aria-placeholder="Correo electrónico*">
+          <input
+            type="text"
+            id="form-email"
+            formControlName="email"
+            placeholder="Ingresa tu correo electrónico"
+          />
+        </label>
+        <button class="button primary orange"
+                [disabled]="formControlEmail.invalid">
+          Conversemos
+        </button>
+      </form>
+    </ng-container>
+    <button
+      *ngIf="showButtonChat"
+      (click)="showForm = !showForm"
+      class="toggle-button"
+      [class.chat-is-open]="showForm"
+    >
+      <img src="assets/icons/asesor-chat.svg"
+           alt="asesor icon"/>
+      ¿En que podemos ayudarte?
+      <img
+        src="assets/icons/chevron-down-chat.svg"
+        alt="chevron down"
+        class="chevron-down"
+      />
+    </button>
+  </div>
+</div>

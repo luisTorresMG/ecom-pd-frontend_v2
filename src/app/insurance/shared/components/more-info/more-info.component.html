@@ -1,0 +1,78 @@
+<div class="content">
+  <div class="content__item header">
+
+    <div class="background"
+         [style.background-image]="'url('+info.background+')'"></div>
+    <div class="header__product">
+      <button class="content__close"
+              (click)="closePage()">
+        <i class="fa fa-angle-left"
+           aria-hidden="true"></i>
+        <span>Regresar</span>
+      </button>
+      <div class="product">
+        <img [src]="info.icon"
+             alt="protección familiar icon"
+             class="header__product--image">
+        <h3 class="header__product--title">
+          {{ info.title }}
+        </h3>
+      </div>
+    </div>
+  </div>
+  <div class="content__item quests">
+    <div class="quests__item">
+      <ul class="quests__item--list">
+        <li class="quests__item--list-item"
+            *ngFor="let data of info.descriptions">{{ data }}</li>
+      </ul>
+      <h3 class="quests__item--subtitle">¡Este seguro es parar ti!</h3>
+      <div class="quests__item--actions">
+        <button class="quests__item--actions-button actions__btn--secondary"
+                *ngIf="false">Para saber más</button>
+        <button class="quests__item--actions-button actions__btn--primary"
+                (click)="goToPage(info.url)">Adquiérelo aquí</button>
+      </div>
+    </div>
+  </div>
+  <div class="content__item services"
+       hidden>
+    <div class="services__list">
+      <div class="services__list--item">
+        <img [src]="'assets/accidentes-personales/more-info/familiar.png'"
+             alt=""
+             class="services__list--item-image">
+        <h4 class="services__list--item-title">Cuidamos a los que más quieres</h4>
+        <div class="services__list--item-footer">
+          <img [src]="'assets/accidentes-personales/familiar.svg'"
+               alt="">
+          <a>Entérate como ></a>
+        </div>
+      </div>
+      <div class="services__list--item">
+        <img [src]="'assets/accidentes-personales/more-info/familiar.png'"
+             alt=""
+             class="services__list--item-image">
+        <h4 class="services__list--item-title">Cuidamos a los que más quieres</h4>
+        <div class="services__list--item-footer">
+          <img [src]="'assets/accidentes-personales/familiar.svg'"
+               alt="">
+          <a>Entérate como ></a>
+        </div>
+      </div>
+      <div class="services__list--item">
+        <img [src]="'assets/accidentes-personales/more-info/familiar.png'"
+             alt=""
+             class="services__list--item-image">
+        <h4 class="services__list--item-title">Cuidamos a los que más quieres</h4>
+        <div class="services__list--item-footer">
+          <img [src]="'assets/accidentes-personales/familiar.svg'"
+               alt="">
+          <a>Entérate como ></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-questions [showButton]="false"
+                 class="app-quest"></app-questions>
+</div>

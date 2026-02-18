@@ -1,0 +1,576 @@
+@import "variables";
+@import "standard";
+@import "modal";
+
+.max-width-to-center {
+  max-width: 560px;
+  margin: auto;
+}
+
+.back-step {
+  font-size: 18px;
+  color: #2b0d61 !important;
+  text-decoration: underline !important;
+}
+
+.back-step i {
+  font-size: 25px;
+  margin-right: 0.2rem !important;
+}
+
+.title-step {
+  font-size: 23px;
+  margin-bottom: 2rem;
+  color: #2b0d61;
+  margin-top: 0.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.content-input {
+  position: relative;
+  height: auto;
+  min-height: 50px;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.in,
+.placeholder input,
+.placeholder select {
+  color: $purple_input;
+  height: 50px;
+  max-height: 50px;
+  width: 100%;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid $purple_input;
+
+  &[disabled] {
+    opacity: 1 !important;
+  }
+}
+
+select.in,
+.in-with-title-desactive {
+  padding: 8px 15px;
+}
+
+.in-with-title-active {
+  padding: 15px 15px 3px 15px !important;
+}
+
+select.in-with-title-active {
+  padding-left: 11px !important;
+}
+
+.lbl-in-title-desactive {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  color: $purple;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.lbl-in-title-active {
+  position: absolute;
+  top: 4px;
+  left: 15px;
+  font-size: 13px;
+  transition: 0.2s;
+}
+
+.container-inputs {
+  grid-template-columns: 1fr;
+}
+
+.content-dbl-input {
+  grid-template-columns: 0.5fr 1fr;
+}
+
+@media (max-width: 420px) {
+  .content-dbl-input {
+    grid-template-columns: 1fr !important;
+  }
+
+  .container-inputs {
+    grid-template-columns: 1fr !important;
+  }
+
+  .ctn-names {
+    grid-row: 2;
+  }
+
+  .legal-representative {
+    grid-template-columns: 1fr !important;
+  }
+
+  .legal-representative {
+    .content-double-input {
+      grid-template-columns: 1fr !important;
+    }
+  }
+
+  .is-person {
+    .ctn-last-name {
+      grid-row: 3;
+    }
+
+    .ctn-last-name-2 {
+      grid-row: 4;
+    }
+
+    .content-country {
+      grid-row: 5;
+    }
+  }
+}
+
+@media (min-width: 420px) and (max-width: 560px) {
+  .content-dbl-input {
+    grid-template-columns: 1fr;
+  }
+  .content-country {
+    margin-top: auto !important;
+  }
+
+  .legal-representative {
+    .content-double-input {
+      grid-column-start: 1;
+      grid-column-end: 3;
+      grid-template-columns: 1fr 1fr !important;
+    }
+  }
+}
+
+.container-inputs,
+.content-dbl-input {
+  display: grid;
+  grid-gap: 0.75rem;
+}
+
+.container-inputs:first-child {
+  padding-left: 0;
+}
+
+.container-inputs:last-child {
+  padding-right: 0;
+}
+
+.btn-submit {
+  min-width: 189px;
+  font-size: 22px;
+  font-weight: bold;
+  height: 50px;
+  border: 1px solid $orange;
+  background-color: $orange;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.btn-submit:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.chk-style {
+  user-select: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 13px;
+}
+
+.chk-style::before {
+  content: "";
+  background-color: #fff;
+  display: inline-flex;
+  margin-right: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  height: 18px;
+  width: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  border-radius: 2px;
+}
+
+.chk:checked + .chk-style::before {
+  content: "✔";
+  background-color: $orange;
+  color: #fff;
+  border: 1px solid $orange;
+  font-size: 12px;
+}
+
+.link-chk {
+  text-decoration: underline;
+  color: #000 !important;
+}
+
+.content-inputs-date {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 0.75rem;
+}
+
+/* BACKGROUND */
+.bc-1 {
+  background-image: url("assets/vidaindividual/resources/Elementos-09.png");
+  position: absolute;
+  left: 0%;
+  top: 263px;
+  width: 25%;
+  max-width: 500px;
+  height: 69%;
+  max-height: 400px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.bc-1::before {
+  display: block;
+  content: "";
+  width: 244%;
+  max-width: 1300px;
+  height: 189%;
+  max-height: 800px;
+  background: #f4f2f6;
+  position: absolute;
+  top: -526px;
+  left: -450px;
+  z-index: -1;
+  border-radius: 210px;
+  transform: rotate(-55deg);
+}
+
+.captcha {
+  width: 305px;
+  margin: auto;
+  position: absolute;
+  z-index: 9;
+}
+
+@media (max-width: 1137px) {
+  .bc-1 {
+    display: none;
+    background-image: none;
+  }
+
+  .bc-1::before {
+    display: none;
+  }
+
+  .in-birth {
+    max-width: 100%;
+  }
+}
+
+/* END BACKGROUND */
+@media (max-width: 992px) {
+  .max-width-to-center {
+    padding: 2rem;
+  }
+
+  .container-inputs {
+    padding: 0 !important;
+  }
+}
+
+.btn-back,
+.btn-submit {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  height: 40px;
+  width: fit-content;
+  min-width: 125px;
+  max-width: 125px;
+  font-weight: normal;
+}
+
+.btn-back {
+  background-color: #fff;
+  color: $orange;
+  margin-right: 1rem;
+  border: 1px solid;
+
+  i {
+    color: $orange;
+  }
+}
+
+.btn-submit {
+  background-color: $orange;
+  color: #fff;
+}
+
+.soat-error-message,
+.in {
+  margin: 0;
+}
+
+.content-birth {
+  width: 100%;
+}
+
+.in-birth {
+  max-width: 248px;
+}
+
+.container-inputs {
+  height: 100%;
+}
+
+.container-inputs-grid {
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 1.15rem;
+}
+
+::ng-deep .ui-ng-select .ng-value,
+::ng-deep .ui-ng-select .ng-placeholder {
+  text-transform: capitalize;
+  color: $purple_input !important;
+  display: block;
+  width: 100%;
+  transform: translate(2px, 2px);
+  height: 100%;
+}
+
+::ng-deep .ui-ng-select .ng-has-value {
+  box-shadow: none;
+  border: none;
+}
+
+.placeholder {
+  &::before {
+    color: $purple !important;
+  }
+}
+
+.lbl-title {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  font-size: 15px;
+  display: block;
+  margin: 0;
+  z-index: 100;
+}
+
+.lbl-title-active {
+  top: 6px;
+  left: 13px;
+  font-size: 11px;
+}
+
+::ng-deep .ui-ng-select.input-active .ng-value-label {
+  margin: 20px 0px 0px 1px !important;
+  display: block;
+}
+
+::ng-deep .ui-ng-select .ng-select-container {
+  box-shadow: none !important;
+  background-color: transparent !important;
+}
+
+.double-input {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 0.75rem;
+  grid-column-gap: 1.15rem;
+}
+
+::ng-deep .ng-select-disabled,
+.in[disabled] {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+  cursor: not-allowed !important;
+}
+
+@media (min-width: 420px) {
+  .gr-1 {
+    grid-row: 1;
+  }
+
+  .gr-2 {
+    grid-row: 2;
+  }
+
+  .gr-3 {
+    grid-row: 3;
+  }
+
+  .gr-4 {
+    grid-row: 4;
+  }
+
+  .gr-5 {
+    grid-row: 5;
+  }
+
+  .gc-1 {
+    grid-column: 1;
+  }
+
+  .gc-2 {
+    grid-column: 2;
+  }
+}
+
+.hasError-submit {
+  display: block;
+  text-align: center;
+  width: 100%;
+  margin-top: 2rem;
+  font-size: 18px;
+  font-weight: bold;
+  color: red;
+}
+
+button[disabled] {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
+
+::ng-deep ng-select {
+  &.with-value {
+
+    .ng-value-label,
+    .ng-input input {
+      margin-top: 5px;
+    }
+  }
+
+  &.withouth-value {
+
+    .ng-value-label,
+    .ng-input input {
+      margin-top: 0px;
+    }
+  }
+}
+
+.content-legal-representative {
+  margin-top: 2rem;
+
+  .subitle {
+    color: $purple;
+    font-size: 23px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .legal-representative {
+    width: 100%;
+    display: grid;
+    row-gap: 1rem;
+    column-gap: 1.15rem;
+    grid-template-columns: 1fr;
+    margin-top: 1rem;
+
+    @media (min-width: 360px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .content-double-input {
+      display: grid;
+      grid-template-columns: .5fr 1fr;
+      gap: 1rem;
+    }
+  }
+
+  .extra {
+    display: block;
+    margin: 1.5rem auto 0 auto;
+    font-size: 14px;
+  }
+}
+
+input,
+select {
+  color: $purple !important;
+
+  &[disabled] {
+    opacity: 1 !important;
+  }
+}
+
+::ng-deep {
+  pro-select {
+    input {
+      height: 50px !important;
+      border-radius: 5px !important;
+    }
+  }
+
+  app-recept-asesor {
+    .content-no-apto {
+      background-color: #fff !important;
+    }
+
+    .btn-back {
+      background-color: $orange !important;
+      color: #fff !important;
+      height: 45px !important;
+      border-radius: 7px !important;
+      min-width: 180px !important;
+
+      i {
+        display: none !important;
+      }
+    }
+  }
+}
+
+.modal-document-invalid {
+    & > section {
+      max-width: 660px;
+    }
+  
+    .modal-body {
+      display: flex;
+      gap: 2rem;
+  
+      img {
+        width: 270px;
+        height: 170px;
+        margin: 0.5rem;
+      }
+  
+      .image-digit {
+        text-align: center;
+      }
+  
+      h4 {
+        text-align: center;
+      }
+  
+      h5 {
+        font-weight: bolder;
+        text-align: center;
+      }
+  
+      &--info {
+        text-align: center;
+  
+        .paragrah {
+          margin: 0;
+        }
+      }
+  
+      &--info-digit {
+        text-align: left;
+  
+        .paragraph-digit {
+          font-weight: bolder;
+          font-size: 16px;
+        }
+      }
+    }
+  }

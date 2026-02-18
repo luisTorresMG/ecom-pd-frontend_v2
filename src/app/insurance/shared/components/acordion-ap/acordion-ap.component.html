@@ -1,0 +1,83 @@
+<div class="container">
+  <ul class="list">
+    <ng-container *ngFor="let list of data; let index = index">
+      <li
+        class="list__item"
+        [class.item-selected]="
+          itemSelected == index && (list.items.length || list.hasTemplate)
+        "
+      >
+        <div
+          class="list__item-title"
+          role="button"
+          (click)="selectItem(list, index)"
+        >
+          <div>
+            <img
+              [src]="list.icon"
+              *ngIf="list.icon"
+              width="20px"
+              height="20px"
+            />
+            <h3>{{ list.title }}</h3>
+          </div>
+          <img
+            src="assets/accidentes-personales/resources/chevron-down.svg"
+            alt="chevron down icon"
+            width="20px"
+            height="20px"
+          />
+        </div>
+        <ng-container
+          *ngIf="
+            itemSelected == index && (list.items.length || list.hasTemplate)
+          "
+        >
+          <div class="list__item-desc" @fade [class.margin-list]="list?.icon">
+            <ul class="list__child">
+              <li
+                *ngFor="let item of list.items"
+                class="list__child-item"
+                [ngClass]="{
+                  'list--disc': item?.type == 'disc',
+                  'list--check': item?.type == 'check',
+                  bold: item?.weight == 'bold'
+                }"
+              >
+                <ng-container *ngIf="item.desc != 'tabla edades'">
+                  <div class="list-text">{{ item.desc }}</div>
+                </ng-container>
+
+                <ng-container *ngIf="item.desc == 'tabla edades'">
+                  <div class="content-table">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th scope="col">EDADES DEL TITULAR</th>
+                          <th scope="col">PERFIL INDIVIDUAL</th>
+                          <th scope="col">PERFIL FAMILIAR*</th>
+                          <th scope="col">PERFIL ESTUDIANTIL</th>
+                          <th scope="col">PERFIL EMPRESAS</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of dataQuest">
+                          <td>{{ item.name }}</td>
+                          <td>{{ item.individual }}</td>
+                          <td>{{ item.familiar }}</td>
+                          <td>{{ item.estudiantil }}</td>
+                          <td>{{ item.empresas }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </ng-container>
+              </li>
+            </ul>
+            <ng-content></ng-content>
+          </div>
+        </ng-container>
+      </li>
+    </ng-container>
+  </ul>
+</div>

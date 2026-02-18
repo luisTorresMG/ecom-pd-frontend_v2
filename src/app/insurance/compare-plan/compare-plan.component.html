@@ -1,0 +1,268 @@
+<main class="container-fluid px-0 py-0 mx-0 my-0">
+  <div class="max-width-to-center">
+    <div class="bc-1"></div>
+    <div class="row px-0 py-0 mx-0 my-0">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+        <app-show-steps [NSTEP]="3"></app-show-steps>
+      </div>
+    </div>
+    <!-- PASO 3 - 3 COMPARE LOS PLANES-->
+    <div class="paso-3B"
+         [@fade]="true">
+      <div class="row px-0 py-0 mx-0 my-0">
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <h1 class="title-step">Compare los planes</h1>
+        </div>
+      </div>
+      <div class="row mx-0 my-0 px-0 py-0 content-info-compare-plan">
+        <div class="content-menu-plan col-lg-12 mx-0 my-0 px-0 py-0">
+          <!-- ngClass "menu_plan_selected" -->
+          <button
+            class="menu_plan"
+            [class.menu_plan_selected]="optionPlan == 1"
+            (click)="changeOptionPlan = 1"
+          >
+            Coberturas
+          </button>
+          <button
+            class="menu_plan"
+            [class.menu_plan_selected]="optionPlan == 2"
+            (click)="changeOptionPlan = 2"
+            [disabled]="assists.length == 0"
+          >
+            Asistencias
+          </button>
+          <button
+            class="menu_plan"
+            [class.menu_plan_selected]="optionPlan == 3"
+            (click)="changeOptionPlan = 3"
+            [disabled]="benefits.length == 0"
+          >
+            Beneficios
+          </button>
+        </div>
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <div class="content-info-compare-planes table-responsive">
+            <div class="list-planes"
+                 *ngIf="session?.plans?.length >= 2">
+              <button
+                class="btn-slide slide-left"
+                (click)="changePlanToCompare(0)"
+                [disabled]="slideIndex === 1"
+              >
+                <i class="fa fa-angle-left"
+                   aria-hidden="true"></i>
+              </button>
+              <div
+                *ngFor="let data of session.plans; let index = index"
+                [class.plans-compare-visible]="validityShowItemSlide(index)"
+              >
+                <button
+                  class="list-planes__item"
+                  [class.plan-selected]="findPlanSelected(data.id)"
+                  *ngIf="validityShowItemSlide(index)"
+                  (click)="selectPlan(data.id)"
+                >
+                  {{ data.descripcion }}
+                </button>
+              </div>
+              <button
+                class="btn-slide slide-right"
+                (click)="changePlanToCompare(1)"
+                [disabled]="
+                  slideIndex === insurance?.plans?.length - 1 ||
+                  session.plans?.length <= 3
+                "
+              >
+                <i class="fa fa-angle-right"
+                   aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="tbl">
+              <div id="tbl__content">
+                <div
+                  class="tbl__plan"
+                  [class.tbl__plan--selected]="optionPlan == 1"
+                >
+                  <div
+                    class="tbl__plan--item"
+                    colspan="2"
+                    *ngFor="let data of planesInfo"
+                  >
+                    <span>{{ data?.descripcion }}</span>
+                    <small
+                    >{{ currencyDescription }}
+                      <span class="premium_plan">{{
+                        getPrimaSinIGV(data?.prima)
+                        }}</span
+                      >/{{ session?.frecuenciaPago?.descripcion }}</small
+                    >
+                  </div>
+                </div>
+                <!-- IF COBERTURAS SELECT -->
+                <div
+                  class="tbl__header tbl__header--coverage"
+                  *ngIf="optionPlan == 1"
+                >
+                  <div class="tbl__header--item">COBERTURAS</div>
+                  <div class="tbl__header--item">APLICA COBERTURA</div>
+                  <div class="tbl__header--item">SUMA COBERTURA</div>
+                  <div class="tbl__header--item">APLICA COBERTURA</div>
+                  <div class="tbl__header--item">SUMA COBERTURA</div>
+                </div>
+                <!-- IF ASISTENCIAS SELECT -->
+                <div
+                  class="tbl__header tbl__header--assists"
+                  *ngIf="optionPlan == 2"
+                >
+                  <div class="tbl__header--item">ASISTENCIAS</div>
+                  <div class="tbl__header--item assist-desc">DESCRIPCCIÓN</div>
+                  <div
+                    class="tbl__header--item"
+                    colspan="2"
+                    *ngFor="let data of planesInfo"
+                  >
+                    APLICA ASISTENCIA
+                  </div>
+                </div>
+                <!-- IF BENEFICIOS SELECT -->
+                <div
+                  class="tbl__header tbl__header--benefits"
+                  *ngIf="optionPlan == 3"
+                >
+                  <div class="tbl__header--item">BENEFICIOS</div>
+                  <div
+                    class="tbl__header--item"
+                    colspan="2"
+                    *ngFor="let data of planesInfo"
+                  >
+                    APLICA BENEFICIOS
+                  </div>
+                </div>
+              </div>
+              <!-- IF COBERTURAS SELECT -->
+              <div *ngIf="optionPlan == 1"
+                   class="body-plan">
+                <div
+                  class="tbl__body tbl__body--coverage"
+                  *ngFor="let data of coverages"
+                >
+                  <div class="tbl__body--desc">
+                    {{ data.descripcion }}
+                  </div>
+                  <div
+                    class="tbl__body--item coverage-apply"
+                    *ngFor="let plan of planesInfo; let index = index"
+                  >
+                    <div
+                      class="ammount-coverage"
+                      [class.ammount-coverage2]="index + 1 == 2"
+                    >
+                      <i
+                        class="fa fa-check"
+                        aria-hidden="true"
+                        *ngIf="applyCoverage(data.id, plan.id)"
+                      ></i>
+                      <i
+                        class="fa fa-times"
+                        aria-hidden="true"
+                        *ngIf="!applyCoverage(data.id, plan.id)"
+                      ></i>
+                    </div>
+                    <div class="text-center tbl__body--item-ammount">
+                      <ng-container *ngIf="applyCoverage(data.id, plan.id)">
+                        {{ currencyDescription
+                        }}{{ ammoutCoverage(data.id, plan.id) | number: "1.2-2" }}
+                      </ng-container>
+                      <ng-container *ngIf="!applyCoverage(data.id, plan.id)">
+                        No aplica
+                      </ng-container>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- IF ASISTENCIAS SELECT -->
+              <div *ngIf="optionPlan == 2"
+                   class="body-plan">
+                <div
+                  class="tbl__body tbl__body--assists"
+                  *ngFor="let data of assists"
+                >
+                  <div class="tbl__body--desc pl">
+                    {{ data.descripcion }}
+                  </div>
+                  <div class="tbl__body--desc pl">
+                    {{ findDetailAssist(data.id) }}
+                  </div>
+                  <div
+                    class="tbl__body--item"
+                    [class.pr]="index == 0"
+                    [class.prf]="index == 1"
+                    colspan="2"
+                    *ngFor="let plan of planesInfo; let index = index"
+                  >
+                    <i
+                      class="fa fa-check"
+                      aria-hidden="true"
+                      *ngIf="
+                        applyServices(data.id, plan.id) ||
+                        selectedProduct.key == 'individual_hits'
+                      "
+                    ></i>
+                    <i
+                      class="fa fa-times"
+                      aria-hidden="true"
+                      *ngIf="
+                        !applyServices(data.id, plan.id) &&
+                        selectedProduct.key != 'individual_hits'
+                      "
+                    ></i>
+                  </div>
+                </div>
+              </div>
+              <!-- IF BENEFICIOS SELECT -->
+              <div *ngIf="optionPlan == 3"
+                   class="body-plan">
+                <div
+                  class="tbl__body tbl__body--benefits"
+                  *ngFor="let data of benefits"
+                >
+                  <div class="tbl__body--desc pl">
+                    {{ data.descripcion }}
+                  </div>
+                  <div
+                    class="tbl__body--item"
+                    colspan="2"
+                    [class.pr]="index == 0"
+                    [class.prf]="index == 1"
+                    *ngFor="let plan of planesInfo; let index = index"
+                  >
+                    <i
+                      class="fa fa-check"
+                      aria-hidden="true"
+                      *ngIf="applyBenefits(data.id, plan.id)"
+                    ></i>
+                    <i
+                      class="fa fa-times"
+                      aria-hidden="true"
+                      *ngIf="!applyBenefits(data.id, plan.id)"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content_navigation">
+        <button type="button"
+                class="btn-back"
+                (click)="backStep3Comparison()">
+          <i class="fa fa-angle-left mr-2"
+             aria-hidden="true"></i>Anterior
+        </button>
+      </div>
+    </div>
+  </div>
+  <app-questions></app-questions>
+</main>

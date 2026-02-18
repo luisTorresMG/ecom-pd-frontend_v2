@@ -1,0 +1,111 @@
+<ng-container *ngIf="isCalledConsultaEstado && isSucess === 2">
+  <div class="container-fluid container-payed mx-0 my-0 px-0 py-0">
+    <div class="row mx-auto my-0 px-4 py-0">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+        <app-show-steps [NSTEP]="5"></app-show-steps>
+      </div>
+    </div>
+    <div class="row mx-auto my-0 px-4 py-0">
+      <div class="col-lg-9 mx-0 my-0 px-0 py-0 mx-auto">
+        <h3 class="title-payed text-center">
+          ¡Completaste <b>la compra de tu seguro Protecta Security!</b>
+        </h3>
+        <div class="content-desc-payed text-center">
+          <p class="desc-payed">
+            Hola<b *ngIf="!!nombreCotizador"> {{ nombreCotizador }}</b
+            >, gracias por confiar lo que más valoras en Protecta Security.
+          </p>
+          <p class="desc-payed">
+            Hemos enviado tu póliza al siguiente correo:
+            <b>{{ insurance?.email }}</b>
+          </p>
+        </div>
+        <div class="content-data-product mx-auto">
+          <h5 class="title-data-product">Datos del producto</h5>
+          <div class="detail-data-product">
+            <div class="detail-dp-item">
+              <span>Número de pedido</span>
+              <span>{{ dataPago?.idProcess }}</span>
+            </div>
+            <div class="detail-dp-item">
+              <span>Número de póliza</span>
+              <span>{{ responseConsultaPago?.policy }}</span>
+            </div>
+            <div class="detail-dp-item">
+              <span>Fecha</span>
+              <span>{{ fecha }}</span>
+            </div>
+            <div class="detail-dp-item">
+              <span>Total</span>
+              <span
+                >{{ currencyDescription }} {{ planSelected?.plan?.prima }}</span
+              >
+            </div>
+            <div class="detail-dp-item">
+              <span>Frecuencia de pago</span>
+              <span>{{ insurance?.frecuenciaPago?.descripcion }}</span>
+            </div>
+            <div class="detail-dp-item">
+              <span>Método de pago</span>
+              <span>VISA</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mx-auto my-0 px-4 py-0 mt-4 content-buttons-actions">
+      <div
+        class="col-lg-12 mx-0 my-0 px-0 py-0 d-flex align-items-center justify-content-center"
+      >
+        <button
+          class="btn-back btn-init d-inline-flex align-items-center justify-content-center"
+          (click)="backToInit()"
+        >
+          Volver al inicio
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<div *ngIf="isSucess === 3">
+  <div
+    class="content-load w-100 d-flex align-items-center justify-content-center flex-column py-5"
+  >
+    <h3 class="title-payed text-center">
+      Ocurrió un error al procesar el pago de tu seguro
+    </h3>
+    <span class="errorDesc">
+      {{ errorDesc }}
+    </span>
+    <a class="action-back" role="button" (click)="intentarDeNuevo()"
+      >Intentar nuevamente</a
+    >
+  </div>
+</div>
+<div *ngIf="isSucess === 1">
+  <div
+    class="content-load w-100 d-flex align-items-center justify-content-start flex-column py-5"
+  >
+    <h3 class="title-payed text-center">
+      Estamos procesando tu pago, <b>por favor espere</b>
+    </h3>
+    <img [src]="'assets/icons/loading.gif'" alt="loading..." />
+  </div>
+</div>
+<ng-template #emissionMessage>
+  <div class="emissionError">
+    <h2 class="title-payed text-center">
+      ¡Completaste
+      <b>la compra de tu seguro Vida Devolución Protecta<sup>+</sup>!</b>
+    </h2>
+    <p>
+      {{ errorEmision?.desc }}
+    </p>
+    <button
+      class="btn-back btn-init d-inline-flex align-items-center justify-content-center"
+      (click)="backToInit()"
+    >
+      Volver al inicio
+    </button>
+  </div>
+</ng-template>

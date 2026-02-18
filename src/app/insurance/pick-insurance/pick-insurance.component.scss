@@ -1,0 +1,574 @@
+@import "../style.scss";
+@import "variables";
+
+.banner {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    img.banner {
+        &-desktop,
+        &-mobile {
+            width: 100%;
+        }
+    }
+
+    .banner-desktop {
+        display: none;
+    }
+
+    .banner-mobile {
+        display: flex;
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    .info-fixed {
+        position: fixed;
+        top: 50vh;
+        transform: rotate(-90deg);
+        right: calc(-4.5rem - 4.5px);
+        padding: 8px 30px 25px 30px;
+        border-radius: 30px 30px 0 0;
+        background-color: #ff5100;
+        color: #fff;
+        font-size: 16px;
+        font-family: 'Titillium Web', sans-serif !important;
+        cursor: pointer;
+        z-index: 99;
+    }
+}
+
+.section {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.section-reverse {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column-reverse;
+}
+
+.insurance-info {
+    margin: 1rem;
+    padding: 1rem;
+
+    img {
+        display: none;
+    }
+
+    .section__info {
+        max-width: 450px;
+        padding: 5px;
+        text-align: center;
+    }
+
+    .paragraph {
+        font-size: 16px;
+        text-align: center;
+        color: #2b0d61;
+        letter-spacing: 0.04px;
+        font-family: 'Titillium Web', sans-serif !important;
+    }
+}
+
+.list-product {
+    display: flex;
+    justify-content: center;
+
+    .button-product {
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        width: 340px;
+        background-color: #ededef;
+        border: none;
+        border-radius: 100px;
+    }
+
+    button {
+        height: 40px;
+        min-width: 140px;
+        font-size: 14px;
+        font-weight: bold;
+        background-color: #ededef;
+        color: $purple_low;
+        border: none;
+        border-radius: 100px;
+        margin: 0.5rem;
+        font-family: 'Titillium Web', sans-serif !important;
+    }
+
+    button:disabled {
+        background-color: #ff5100;
+        color: #fff;
+    }
+}
+
+.coverages {
+    text-align: center;
+    padding-top: 2rem;
+
+    .insurances {
+        margin: 2rem;
+
+        h2 {
+            margin-bottom: 2rem;
+        }
+
+        ::ng-deep app-slider {
+            .container {
+                height: 360px;
+
+                .slider-content {
+                    height: 350px;
+                }
+
+                .card {
+                    background-color: #EDEDEF;
+                    overflow: visible;
+
+                    img {
+                        border-top-left-radius: 10px;
+                        border-top-right-radius: 10px;
+                    }
+
+                    .detail {
+                        display: flex;
+                        justify-content: flex-start;
+                        padding: 0.7rem
+                    }
+
+                    .title-detail {
+                        color: #ff5100;
+                        padding-left: 3rem;
+                        padding-right: 3rem;
+                        font-size: 14px;
+                        font-weight: 700;
+                    }
+
+                    p {
+                        text-align: center;
+                        margin-bottom: 0.5rem;
+                    }
+
+                    .desc2 {
+                        font-size: 14px;
+                    }
+
+                    .btn_select_product {
+                        bottom: -10px;
+                    }
+                }
+            }
+        }
+    }
+
+    .complements {
+        padding-top: 2rem;
+        margin: 0.5rem;
+
+        .coverages_list--item {
+            padding: 16px;
+            background-color: #fff;
+            min-width: 150px;
+            width: 100%;
+            max-width: 150px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0px 5px 15px 0px rgba(83, 80, 77, 0.15);
+
+            img {
+                max-width: 50px;
+                max-height: 50px;
+            }
+
+            p {
+                margin-top: 1rem;
+                font-size: 14px;
+                color: #2b0d61;
+                font-family: 'Titillium Web', sans-serif !important;
+            }
+        }
+
+        .coverages_list {
+            padding: 2rem 0;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+            gap: 0.5rem;
+        }
+    }
+}
+
+.proccess-insurance {
+    margin: 2rem 0;
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    background-color: #ededef;
+
+    .proccess {
+        margin: 2rem;
+    }
+
+    .title {
+        color: #ff5100;
+        font-size: 38px;
+        font-weight: bold;
+        margin-bottom: 3rem;
+        text-align: center;
+        font-family: "Faustina", serif !important;
+    }
+
+    ::ng-deep app-slider {
+        .container {
+            .slider-content {
+                height: 320px;
+
+                .card {
+                    height: 280px;
+
+                    .detail {
+                        display: flex;
+                        justify-content: flex-start;
+                    }
+
+                    p {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+.container__quest {
+    margin: 2rem 0;
+    padding: 2rem 1rem;
+
+    .info {
+        max-width: 420px;
+        text-align: left;
+
+        .title-ap {
+            padding-bottom: 1rem;
+            font-weight: 700;
+            border-bottom: 2px solid #ff5100;
+            font-family: 'Titillium Web', sans-serif !important;
+            letter-spacing: 0.08px;
+        }
+    }
+
+    .tabs {
+        margin: 2rem 0;
+
+        ul {
+            display: flex;
+            gap: 16px;
+            list-style: none;
+            width: fit-content;
+            border-bottom: 1px solid #ededef;
+            padding: 0 !important;
+        }
+
+        .navtab__item {
+            cursor: pointer;
+            border: none;
+            outline: none;
+            background-color: #fff;
+            color: #B3B2B7;
+            padding: 0 10px 10px 0px;
+            font-size: 16px;
+            font-family: 'Titillium Web', sans-serif !important;
+        }
+
+        .is-active {
+            button {
+                font-weight: 400;
+                color: #ff5100;
+                border-bottom: 1px solid #ff5100;
+            }
+        }
+    }
+
+    .pill {
+        display: none;
+    }
+}
+
+.pqp {
+    margin: 2rem 0;
+    padding: 2rem 0;
+    background-color: #ededef;
+    text-align: center;
+
+    img {
+        width: 320px;
+    }
+
+    p {
+        margin: 1rem 0 2rem;
+        color: #2b0d61;
+        font-size: 20px;
+        padding: 0 1rem;
+        font-family: 'Titillium Web', sans-serif !important;
+    }
+
+    .pqp-premia {
+        font-weight: 600;
+        font-family: 'Titillium Web', sans-serif !important;
+    }
+
+    .content-pqp-loading {
+        margin: 2rem;
+        color: #2b0d61;
+        font-size: 20px;
+        font-weight: bold;
+        font-family: 'Titillium Web', sans-serif !important;
+    }
+
+    .content-pqp-slider {
+        margin: 2rem auto 2rem auto;
+        padding: 0 4rem;
+    }
+}
+
+.title-ap {
+    color: #2b0d61;
+    font-size: 38px;
+    font-weight: bold;
+    text-align: center;
+    font-family: "Faustina", serif !important;
+}
+
+.orange {
+    font-size: 38px;
+    font-weight: bold;
+    color: #ff5100;
+    font-family: "Faustina", serif !important;
+}
+
+.message-end {
+    text-align: center;
+
+    p {
+        font-size: 12px;
+        color: #2b0d61;
+        padding: 0 10px;
+        font-family: 'Titillium Web', sans-serif !important;
+    }
+}
+
+
+@media (min-width: 890px) {
+    .section {
+        justify-content: center;
+        flex-direction: row;
+        max-width: 1160px;
+        margin: auto;
+
+    & .img-section {
+      margin-right: 7rem;
+    }
+
+    &__info {
+      width: 100%;
+
+      .title-ap {
+        text-align: left;
+      }
+
+    }
+  }
+
+  .section-reverse {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+  }
+
+  .insurance-info {
+    padding: 3rem;
+
+    img {
+      display: flex;
+      margin-right: 3rem;
+    }
+
+    .section__info {
+      margin-left: 3rem;
+      text-align: left;
+      .title-ap {
+        text-align: left;
+      }
+    }
+
+    .paragraph {
+      text-align: left;
+    }
+  }
+
+  .banner {
+    .banner-desktop {
+      display: flex;
+    }
+
+    .banner-mobile {
+      display: none;
+    }
+
+    .info-fixed {
+      padding: 8px 30px 3px 30px;
+      font-size: 22px;
+    }
+  }
+
+  .list-product {
+    .button-product {
+      width: 450px;
+      padding: 5px;
+    }
+
+    button {
+      height: 50px;
+      min-width: 200px;
+      font-size: 16px;
+    }
+  }
+
+  .coverages {
+
+        ::ng-deep app-slider {
+            .container {
+                max-width: fit-content;
+
+                .slider-content {
+                    max-width: 1200px;
+                    gap: 30px;
+                }
+
+                .button-slider {
+                    display: none;
+                }
+            }
+        }
+
+        .complements {
+            margin: 2rem;
+
+            .coverages_list {
+                margin: 2rem;
+                gap: 32px
+            }
+
+            .coverages_list--item {
+                padding: 1.5rem;
+                min-width: 220px;
+                max-width: 220px;
+                height: 300px;
+
+                img {
+                    max-width: 130px;
+                    max-height: 120px;
+                }
+
+                p {
+                    font-size: 16px;
+                }
+            }
+
+        }
+
+    }
+
+    .proccess-insurance {
+        ::ng-deep app-slider {
+
+            .container {
+                max-width: 990px;
+
+                .button-slider {
+                    display: none;
+                }
+
+                .slider-content {
+                    max-width: 980px;
+                    gap: 20px;
+
+                    .card {
+                        box-shadow: 0px 5px 15px 0px rgba(83, 80, 77, 0.15);
+
+                        p {
+                            font-size: 16px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .pqp {
+
+        ::ng-deep app-slider {
+            .button-slider:last-child {
+                right: 5px;
+            }
+
+            .slider-content {
+                max-width: 880px;
+
+                .card {
+                    width: 210px;
+                    box-shadow: 0 6px 2px -2px rgba(83, 80, 77, 0.15);
+                }
+            }
+        }
+
+        p {
+            font-size: 26px;
+        }
+    }
+
+    .container__quest {
+        align-items: flex-start;
+
+        .title-ap {
+            text-align: left;
+        }
+
+        .info {
+            width: 850px;
+            ;
+            max-width: 850px;
+            margin: 2rem;
+        }
+
+        .pill {
+            display: flex;
+            margin-left: 2rem;
+        }
+
+        .tabs {
+            ul {
+                gap: 32px
+            }
+        }
+    }
+}

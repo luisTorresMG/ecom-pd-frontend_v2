@@ -1,0 +1,63 @@
+<section class="container">
+  <button
+    class="button-slider"
+    aria-label="previous"
+    [disabled]="limitLeft"
+    (click)="scrollPrevious()"
+  >
+    <i class="fa fa-angle-left"></i>
+  </button>
+  <div #contentSlider
+       class="slider-content"
+       (scroll)="validateContainer()">
+    <div *ngFor="let item of data; let index = index">
+      <div class="content-card">
+        <div class="card">
+          <img src="{{ item.img }}"
+               loading="lazy"
+               width="220"
+               height="auto"
+               [attr.alt]="'imagen slider pos-'+index"/>
+          <div class="detail">
+            <ng-container *ngIf="isProducts">
+              <h2 class="title-detail">
+                {{ item.title ? item.title : item.name }}
+              </h2>
+            </ng-container>
+            <ng-container *ngIf="!isProducts">
+              <p class="title-detail">
+                {{ item.title ? item.title : item.name }}
+              </p>
+            </ng-container>
+            <div *ngIf="item.date">
+              <p class="desc">Vigencia:</p>
+              <p class="desc">{{ item.date }}</p>
+            </div>
+            <div *ngIf="item.desc">
+              <p class="desc2">{{ item.desc }}</p>
+            </div>
+            <div *ngIf="item.infoDescription">
+              <p class="desc2">
+                {{ item.infoDescription }} <b>{{ item.infoDescription2 }}</b>
+              </p>
+            </div>
+          </div>
+          <button
+            *ngIf="item.infoDescription"
+            class="btn_select_product"
+            aria-label="comprar seguro"
+            (click)="selectItem(item)"
+          >
+            Comprar aquí
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="button-slider"
+          aria-label="next"
+          [disabled]="limitRight"
+          (click)="scrollNext()">
+    <i class="fa fa-angle-right"></i>
+  </button>
+</section>

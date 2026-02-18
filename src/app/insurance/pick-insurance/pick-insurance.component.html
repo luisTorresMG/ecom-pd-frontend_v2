@@ -1,0 +1,189 @@
+<ng-container>
+  <div class="banner">
+    <img
+      src="assets/accidentes-personales/resources/banner-ap.webp"
+      width="auto"
+      alt="banner landing ap"
+      class="banner-desktop"
+    />
+
+    <img
+      src="assets/accidentes-personales/resources/bannermobile-ap.webp"
+      width="auto"
+      alt="banner landing ap"
+      class="banner-mobile"
+    />
+
+    <span class="info-fixed"
+          (click)="redirect()"> Comprar ahora </span>
+  </div>
+  <section class="section-reverse insurance-info mb-6 py-6">
+    <img
+      src="assets/accidentes-personales/resources/seguro-ap.webp"
+      loading="lazy"
+      class="img-section"
+      alt="insurance"
+      width="320"
+      height="320"
+    />
+    <div class="section__info">
+      <h2 class="title-ap mb-2">
+        ¿Qué es el <span class="orange">Seguro de Accidentes Personales?</span>
+      </h2>
+      <p class="paragraph">
+        El Seguro de Accidentes Personales ofrece una cobertura económica a el o
+        los asegurados en caso sean víctimas de un accidente.
+      </p>
+      <p class="paragraph">
+        Cubre la muerte accidental principalmente, pero también te ofrece la
+        opción de contratar coberturas adicionales, como Gastos de Curación por
+        accidente, Invalidez total y permanente por accidente, así como los
+        Gastos de sepelio por muerte accidental, entre otros.
+      </p>
+    </div>
+  </section>
+  <section #switchCoverages
+           class="list-product">
+    <div class="row button-product">
+      <button
+        *ngFor="let category of categories"
+        (click)="onCategoryClick(category)"
+        [disabled]="categoryId === category.id"
+      >
+        {{
+          category.descripcion == "Seguros Personales" ? "Personas" : "Empresas"
+        }}
+      </button>
+    </div>
+  </section>
+  <section class="coverages"
+           id="coverages">
+    <div class="container mb-6">
+      <div class="insurances mt-6">
+        <ng-container *ngIf="subcategorySelected == 1">
+          <h2>
+            <span class="title-ap">Con planes hechos a tu medida,</span><br />
+            <span class="orange">coberturas y más beneficios</span>
+          </h2>
+        </ng-container>
+        <ng-container *ngIf="subcategorySelected == 2">
+          <h2>
+            <span class="title-ap">Adquiere un seguro</span><br/>
+            <span class="orange">a la medida de tu empresa</span>
+          </h2>
+        </ng-container>
+        <app-slider
+          [data]="subcategories"
+          (event)="selectedProduct($event)"
+          [isProducts]="true"
+        ></app-slider>
+      </div>
+      <div class="complements">
+        <h2>
+          <span class="title-ap">Con planes hechos a tu medida,</span><br/>
+          <span class="orange">coberturas y más beneficios</span>
+        </h2>
+        <ul class="coverages__item--list coverages_list">
+          <li
+            class="coverages__item--list-li coverages_list--item"
+            *ngFor="let data of coverages"
+          >
+            <img
+              [src]="'assets/accidentes-personales/resources/' + data.img"
+              [attr.alt]="data.description"
+            />
+            <p>
+              {{ data.description }}
+            </p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section class="proccess-insurance">
+    <div class="proccess">
+      <h2 class="title">¿Cómo adquiero mi seguro contra accidentes?</h2>
+      <app-slider [data]="process"></app-slider>
+    </div>
+  </section>
+  <section class="container__quest section">
+    <div class="info">
+      <h4 class="title-ap">Siéntete seguro, aclaramos tus dudas</h4>
+      <div class="tabs">
+        <ul>
+          <li [class.is-active]="faqTabSelected == 1">
+            <button class="navtab__item"
+                    (click)="faqTabSelected = 1">
+              Sobre el seguro
+            </button>
+          </li>
+          <li [class.is-active]="faqTabSelected == 2">
+            <button class="navtab__item"
+                    (click)="faqTabSelected = 2">
+              Sobre la contratación
+            </button>
+          </li>
+          <li [class.is-active]="faqTabSelected == 3">
+            <button class="navtab__item"
+                    (click)="faqTabSelected = 3">
+              En caso de un siniestro
+            </button>
+          </li>
+        </ul>
+      </div>
+      <ng-container *ngIf="faqTabSelected == 1">
+        <app-acordion-ap
+          [data]="faqs.coverages"
+          (event)="questionEvent($event)"
+        ></app-acordion-ap>
+      </ng-container>
+      <ng-container *ngIf="faqTabSelected == 2">
+        <app-acordion-ap
+          [data]="faqs.hiring"
+          (event)="questionEvent($event)"
+        ></app-acordion-ap>
+      </ng-container>
+      <ng-container *ngIf="faqTabSelected == 3">
+        <app-acordion-ap
+          [data]="faqs.sinister"
+          (event)="questionEvent($event)"
+        ></app-acordion-ap>
+      </ng-container>
+    </div>
+
+    <div class="pill">
+      <img
+        src="assets/accidentes-personales/resources/faqs-ap.webp"
+        alt="familia icon svg"
+        class="pill-image"
+        width="420px"
+        height="420px"
+      />
+    </div>
+  </section>
+  <section class="pqp">
+    <img
+      src="assets/accidentes-personales/resources/logo_club_protecta.webp"
+      alt="protección que premia"
+    />
+    <p>
+      <span class="pqp-premia">
+        Beneficios exclusivos para ti en salud, restaurantes y para tu
+        auto.</span>
+    </p>
+    <ng-container *ngIf="!pqpList.length">
+      <p class="content-pqp-loading">Cargando Beneficios...</p>
+    </ng-container>
+    <ng-container class="content-pqp-slider"
+                  *ngIf="pqpList.length">
+      <app-slider [data]="pqpList"></app-slider>
+    </ng-container>
+  </section>
+  <app-contact-us></app-contact-us>
+  <div class="message-end mb-5">
+    <p>
+      (*) Todos los clientes de Protecta Security forman parte del programa de
+      beneficios exclusivos “Club Protecta Security”.
+    </p>
+  </div>
+</ng-container>

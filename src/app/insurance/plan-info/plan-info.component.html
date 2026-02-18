@@ -1,0 +1,86 @@
+<main class="content"
+      @fade>
+  <section class="content__steps">
+    <app-show-steps [NSTEP]="3"></app-show-steps>
+  </section>
+  <h2 class="subtitle">Personaliza tu plan</h2>
+  <section class="content__info">
+    <p class="price">
+      {{ insuranceInfo.idMoneda == 1 ? "S/ " : "$ " }}
+      {{ ammountTransformNoIgv(insurance.plan.prima) }}
+    </p>
+    <small class="igv">(sin IGV) / {{ insuranceInfo.tipoPeriodo.descripcion }}</small>
+  </section>
+  <h3 class="subtitle">
+    Coberturas
+  </h3>
+  <ng-container [formGroup]="form">
+    <section class="content__coverages coverages"
+             formArrayName="coverage">
+      <div class="coverages__item"
+           *ngFor="let item of form.get('coverage')['controls']; let i = index">
+        <ng-container [formGroupName]="i">
+          <span class="coverages__item--col">
+            {{ insurance.plan.coberturas[i].descripcion }}
+          </span>
+          <div class="coverages__item--col">
+            <div class="content-input">
+              <button type="button"
+                      (click)="onDecrease(insurance.plan.coberturas[i], i)">
+                <i class="fa fa-minus"
+                   aria-hidden="true"></i>
+              </button>
+              <input class="cell-amount"
+                     formControlName="amount"
+                     type="numeric"
+                     currencyMask
+                     [options]="currencyConfiguration"
+                     (blur)="onInputChange(insurance.plan.coberturas[i], $event.target.value, i)"/>
+              <button type="button"
+                      (click)="onIncrease(insurance.plan.coberturas[i], i)">
+                <i class="fa fa-plus"
+                   aria-hidden="true"></i>
+              </button>
+            </div>
+            <ng-container *ngIf="form.controls.coverage.controls[i].invalid">
+              <span clasS="error-amount">
+                   Rango permitido entre
+                   <br/>
+                {{ ammountTransform(insurance.plan.coberturas[i].capitalMinima) | number: "1.2-2" }}
+                   - {{ ammountTransform(insurance.plan.coberturas[i].capitalMaxima) | number: "1.2-2" }}
+              </span>
+            </ng-container>
+          </div>
+        </ng-container>
+        <div class="coverages__item--col">
+          <div class="selection radio orange">
+            <input type="checkbox"
+                   [id]="'checkbox-' + i"
+                   [disabled]="insurance.plan.coberturas[i].obligatoria == '1'"
+                   [checked]="insurance.plan.coberturas[i].obligatoria == '1' || insurance.plan.coberturas[i].selected"
+                   hidden
+                   (change)="onCheckboxSelected(insurance.plan.coberturas[i])"/>
+            <label [for]="'checkbox-' + i"></label>
+          </div>
+        </div>
+      </div>
+    </section>
+  </ng-container>
+  <section class="content__actions">
+    <button class="button secondary orange fit"
+            (click)="applyDataPlanSelected()"
+            [disabled]="!asistenciasValido">
+      <i class="fa fa-angle-left"
+         aria-hidden="true"></i>
+      Ver planes
+    </button>
+    <button class="button primary orange fit"
+            (click)="applyDataPlanSelected(true)"
+            [disabled]="!asistenciasValido">
+      Aplicar
+    </button>
+  </section>
+</main>
+<div class="quest">
+  <app-questions></app-questions>
+</div>

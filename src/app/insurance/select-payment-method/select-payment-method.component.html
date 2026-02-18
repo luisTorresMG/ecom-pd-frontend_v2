@@ -1,0 +1,317 @@
+<main class="container-fluid px-0 py-0 mx-0 my-0" *ngIf="!derivationAdvisor">
+  <div class="max-width-to-center"
+       *ngIf="!successPay; else isPayed">
+    <div class="bc-1"></div>
+    <div class="row px-0 py-0 mx-0 my-0">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+        <app-show-steps [NSTEP]="4"></app-show-steps>
+      </div>
+    </div>
+    <div class="row px-0 py-0 mx-0 my-0">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+        <h1 class="title-step w-100 text-center"
+            *ngIf="(otpResponse?.success && !otpResponse?.hasError) || insurance?.documentType == 1; else titleSuccessValidation">
+          Revisa la cotización y selecciona el <br>
+          medio de pago
+        </h1>
+        <ng-template #titleSuccessValidation>
+          <h1 class="title-step w-100 text-center">
+            Esta será la tarifa de tu nuevo <br>
+            seguro de accidentes
+          </h1>
+        </ng-template>
+      </div>
+    </div>
+    <div class="row mx-0 my-0 px-0 py-0">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0 text-center">
+        <p class="info-pago">
+          <b class="price"
+          >{{
+              currencyDescription
+            }}{{ ammountTransform(planSelected.plan.prima) }}</b
+          ><span> (con IGV)</span><span> / {{ insurance.tipoPeriodo.descripcion }}</span>
+        </p>
+        <p class="info-pago">
+          <b class="price2">
+            {{ currencyDescription }}
+            {{ ammountTransformWithoutIGV(planSelected.plan.prima) }}</b
+          ><span> (sin IGV)</span>
+          <br/>
+          Costo de prima de tu {{ productSelectedDescription }}
+        </p>
+        <!--<span class="cod-transac">
+          Cod. Transacción <b>{{ this.insurance.processId }}</b>
+        </span>-->
+      </div>
+    </div>
+    <div class="row mx-0 my-0 px-0 py-0 content-info-gray mt-4">
+      <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+        <h2 class="title-info title-datos">Datos de la cotización</h2>
+        <div class="content-datos-cotiz">
+          <div class="datos-cotiz-item">Plan</div>
+          <div class="datos-cotiz-item-desc">
+            {{ planSelected.plan.descripcion }}
+          </div>
+          <ng-container *ngIf="idProductSelected != 6"></ng-container>
+          <ng-container *ngIf="!!asegurados?.length || !!cantidadAsegurados">
+            <div class="datos-cotiz-item">Nro de Asegurados</div>
+            <div class="datos-cotiz-item-desc">
+              {{ asegurados?.length || cantidadAsegurados }}
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!!countBeneficiarios || !!cantidadBeneficiarios">
+            <div class="datos-cotiz-item">Nro de Beneficiarios</div>
+            <div class="datos-cotiz-item-desc">
+              {{ countBeneficiarios || cantidadBeneficiarios }}
+            </div>
+          </ng-container>
+          <div class="datos-cotiz-item">Cod. Transacción</div>
+          <div class="datos-cotiz-item-desc">
+            {{ this.insurance.processId }}
+          </div>
+        </div>
+        <br/>
+        <h2 class="title-info title-datos">Datos del contratante</h2>
+        <div class="content-datos-cotiz">
+          <div class="datos-cotiz-item">Número de documento</div>
+          <div class="datos-cotiz-item-desc">
+            {{ insurance?.documentNumber }}
+          </div>
+          <div class="datos-cotiz-item">
+            {{ isRuc ? "Razón Social" : "Nombres" }}
+          </div>
+          <div class="datos-cotiz-item-desc">
+            {{ insurance?.name }}
+          </div>
+          <ng-container *ngIf="!!insurance?.lastname">
+            <div class="datos-cotiz-item">Apellidos</div>
+            <div class="datos-cotiz-item-desc">
+              {{ maskNameClient(insurance?.lastname) + " " + maskNameClient(insurance?.surname) }}
+            </div>
+          </ng-container>
+          <div class="datos-cotiz-item">Dirección</div>
+          <div class="datos-cotiz-item-desc"
+               [title]="insurance?.address">
+            {{ maskAddressClient(insurance?.address) }}
+          </div>
+          <div class="datos-cotiz-item">Correo</div>
+          <div class="datos-cotiz-item-desc"
+               [title]="insurance?.email">
+            {{ maskEmailClient(insurance?.email) }}
+          </div>
+          <div class="datos-cotiz-item">Nro de Celular</div>
+          <div class="datos-cotiz-item-desc">
+            {{ maskPhoneClient(insurance?.phoneNumber.toString()) }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="(otpResponse?.success && !otpResponse?.hasError && experianComplete) ||
+        insurance?.documentType == 1">
+      <div class="finish-step mt-4 mb-4">
+        <img
+          [src]="'assets/insurance/check-circle-2.svg'"
+          class="face-check"
+          alt=""
+        />
+        <span class="title-finish"> ¡La validación se realizó con éxito! </span>
+      </div>
+
+      <div class="checkbox-accept px-0 mb-4">
+        <input
+          type="checkbox"
+          id="policy"
+          class="checkbox-payment"
+          [checked]="acceptTerms"
+          (change)="changeTerms()"
+        />
+        <div for="policy"
+             [class.parpadeo]="!acceptTerms">
+          <div>
+            He leído y acepto la cotización del seguro y los servicios de
+            asistencia (en caso lo hubiese contratado), así como los
+            <a class="policy"
+               (click)="showTerms()">Términos y Condiciones</a>
+            de la póliza.
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="otpResponse?.hasError">
+      <div class="finish-step mt-4 mb-4"
+           @fade>
+        <span class="title-finish error-biometric">
+          {{ otpResponse?.message }}
+        </span>
+      </div>
+    </ng-container>
+
+    <ng-template #modalTerms>
+      <app-terms-ap (close)="closeModals($event)"></app-terms-ap>
+    </ng-template>
+
+    <span class="accept-terms-message"
+          *ngIf="!acceptTerms && ((otpResponse?.success && !otpResponse?.hasError && insurance?.documentType != 1) || insurance?.documentType == 1)">
+      Se deben aceptar los términos y condiciones para poder realizar el pago
+    </span>
+
+    <ng-container *ngIf="(otpResponse?.success && !otpResponse?.hasError && insurance?.documentType != 1 && experianComplete) || insurance?.documentType == 1">
+      <div class="row mx-0 my-0 px-0 py-0 content-info-gray">
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <h2 class="title-info title-metodo-pago text-center">
+            Método de pago
+          </h2>
+          <div class="content-metodo-pago"
+               [class.disabled]="!acceptTerms">
+            <img
+              [src]="'assets/soat/img/pago-efectivo2.png'"
+              alt=""
+              role="button"
+              (click)="pagarPagoEfectivo()"
+              class="pagoefectivo-img"
+            />
+            <span *ngIf="!!this.dataNiubiz?.sessionNiubiz">o</span>
+            <img
+              src="assets/soat/img/visa-logo.png"
+              *ngIf="!!this.dataNiubiz?.sessionNiubiz"
+              alt="VISA"
+              role="button"
+              class="visaBtn visa-img"
+              (click)="pay()"
+              #visaPay
+            />
+          </div>
+          <span class="select-metodo-pago"
+          >Para finalizar tu compra, escoge tu método de pago</span
+          >
+        </div>
+      </div>
+      <div class="row mx-0 my-0 px-0 py-0">
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <small class="small-promo"
+          >Mediante la elección de cualquiera de los métodos de pago que se
+           muestran a continuación el contratante acepta la promoción del
+           Seguro de Accidentes Personales brindada mediante cotización Nº
+            {{ contizacion }}</small
+          >
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="col-lg-12 mx-0 my-0 px-0 py-0 mt-4 mb-5 text-center d-flex justify-content-center">
+    <button type="button"
+            (click)="backStep()"
+            class="btn-back">
+      <i class="fa fa-angle-left mr-2"
+         aria-hidden="true"></i>Anterior
+    </button>
+    <button
+      type="button"
+      (click)="showHideModalBiometrico()"
+      class="btn-next"
+      #btnSubmit
+      [hidden]="otpResponse?.success || insurance?.documentType == 1"
+    >
+      Siguiente
+    </button>
+  </div>
+
+  <ng-template #isPayed>
+    <div class="success-pago max-width-to-center">
+      <div class="row px-0 py-0 mx-0 my-0">
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <app-show-steps [NSTEP]="5"></app-show-steps>
+        </div>
+      </div>
+      <div class="row mx-0 my-0 px-0 py-0">
+        <div class="col-lg-12 row mx-0 my-0 px-0 py-0">
+          <h2 class="title-success">
+            ¡Estás a punto de culminar la compra de
+            <b>Seguro Familiar Accidentes Personales!</b>
+          </h2>
+        </div>
+        <div class="col-lg-12 row mx-0 my-0 px-0 py-0">
+          <p class="desc-success">
+            Acércate dentro de las próximas 24 horas con tu código de pago al
+            establecimiento elegido de tu preferencia para pagar tu
+            <b>Seguro Familiar Accidentes Personales Protecta Security</b>
+          </p>
+        </div>
+      </div>
+      <div class="row mx-0 my-0 px-0 py-0 mt-4 text-center">
+        <div class="col-lg-12 mx-0 my-0 px-0 py-0">
+          <button
+            type="button"
+            [routerLink]="'/accidentespersonales'"
+            class="btn-submit"
+          >
+            Realizar otra compra
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <app-questions></app-questions>
+</main>
+<ng-container *ngIf="modalBiometric">
+  <app-step-biometric
+    [insurance]="dataBiometric"
+    (uploadFileBiometricResult)="funcUploadFileBiometricResult($event)"
+    (modalBiometric)="closeBiometric($event)"
+    (biometricResult)="funcBiometricResult($event)"
+  ></app-step-biometric>
+</ng-container>
+<div
+  class="modal fade"
+  bsModal
+  #modalPagoEfectivo="bs-modal"
+  [config]="{
+    backdrop: 'static'
+  }">
+  <div class="modal-dialog"
+       role="document">
+    <div class="modal-content px-0 py-0">
+      <div class="modal-body modal-emitido">
+        <iframe [src]="sourcePagoEfectivo"
+                frameborder="0"></iframe>
+      </div>
+      <button type="button"
+              class="btn-submit"
+              (click)="finalizePayment()">
+        Finalizar
+      </button>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="showAuthentication">
+  <app-auth-method
+    (showModalAuthMethod)="showModalAuthMethod($event)"
+    [data]="authMethodData"
+    (otpResult)="otpResult($event)"
+    (selectedAuthMethod)="selectedAuthMethod($event)"
+  ></app-auth-method>
+</ng-container>
+
+<ng-container *ngIf="derivationAdvisor">
+    <section class="derivation">
+      <div class="advisor">
+        <h2 class="advisor title">
+          Hola. Tu solicitud ha sido recepcionada por un asesor de Protecta
+          Security, nos estaremos comunicando contigo en un máximo de 2 días
+          laborables.
+        </h2>
+        <p class="advisor desc">
+          Contáctanos en:<br />
+          Correo Electrónico: <b>cotizacionaccidentes@protectasecurity.pe</b
+          ><br />
+          Estamos a tu disposición de lunes a viernes de
+          <b>9:00 a.m. a 6:00 p.m.</b>, a excepción de feriados.
+        </p>
+        <button type="button" class="advisor btn-primary-u" (click)="backToHome()">
+          Volver al inicio
+        </button>
+      </div>
+    </section>
+  </ng-container>

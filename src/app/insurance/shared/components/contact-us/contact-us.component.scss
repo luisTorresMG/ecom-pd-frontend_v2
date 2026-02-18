@@ -1,0 +1,308 @@
+@import "variables";
+@import "modal";
+@import "standard";
+
+.container__contact {
+  padding-bottom: 2rem;
+}
+
+.derivation{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
+  background-color: #fff;
+  overflow: auto;
+  z-index: 9999999;
+}
+
+.container-info {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column-reverse;
+  text-align: center;
+  padding: 1rem;
+
+  .form-contact {
+    max-width: 680px;
+    .title {
+      color: #2b0d61;
+      font-size: 38px;
+      font-weight: bold;
+      text-align: center;
+      font-family: "Faustina", serif !important;
+    }
+    .subtitle {
+      font-size: 16px;
+      font-weight: 400;
+    }
+    .paragraph {
+      margin-top: 1rem;
+      font-size: 16px;
+      color: #2b0d61;
+      max-width: 450px;
+      text-align: left;
+      font-family: 'Titillium Web', sans-serif !important;
+    }
+  }
+
+  .pill {
+    display: none;
+  }
+}
+
+.form-inputs {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: 1fr;
+
+  .content-input {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .form-input {
+    border: 1px solid #403E49;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-family: 'Titillium Web', sans-serif !important;
+  }
+
+}
+
+.content-checkbox {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+    
+  .checkbox-accept {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  .input-privacy {
+    margin-left: 0.6rem;
+    font-size: 14px;
+    text-align: left;
+    font-family: 'Titillium Web', sans-serif !important;
+
+    .politica-privacity {
+      font-weight: bold;
+      color: #201751;
+      text-decoration: underline;
+    }
+  }
+
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  input[type="checkbox"]:checked+.checkbox-personalizado::before {
+    content: "✓";
+    background-color: #ed6e00;
+    color: #fff;
+    font-size: 10px;
+    font-weight: bold;
+    margin-top: 0.5rem;
+  }
+
+  .checkbox-personalizado {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  
+  .checkbox-personalizado::before {
+    display: inline-block;
+    margin-top: 0.4rem;
+    background-color: #fff;
+    text-align: center;
+    vertical-align: middle;
+    content: "";
+    min-width: 17px;
+    width: 17px;
+    height: 17px;
+    border-radius: 2px;
+    border: 1px solid #ed6e00;
+    box-shadow: 0 0 0 3px solid #ed6e00;
+    transform: translateY(-1px);
+  }
+
+  .btn-submit {
+    width: 100%;
+    font-size: 14px;
+    font-weight: 700;
+    background-color: #ff5100;
+    color: #fff;
+    padding: 10px;
+    margin-top: 1rem;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Titillium Web', sans-serif !important;
+  }
+
+  .btn-submit:disabled {
+    opacity: 0.5;
+  }
+}
+
+.container-legalname {
+  @media (min-width: 1024px) {
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+}
+
+.has-error {
+  color: red;
+  margin-top: 5px;
+  font-size: 12px;
+  text-align: left;
+  font-family: 'Titillium Web', sans-serif !important;
+}
+
+.captcha {
+  width: 305px;
+  margin: auto;
+  position: absolute;
+  z-index: 9;
+}
+
+@media (min-width: 890px) {
+  .section {
+    .container-info {
+      justify-content: center;
+      flex-direction: row;
+      max-width: 1130px;
+      margin: auto;
+      text-align: left;
+    }
+
+    .form-contact {
+      text-align: left;
+      .title {
+        text-align: left;
+      }
+
+      .subtitle {
+        font-size: 20px;
+      }
+
+      .paragraph {
+        text-align: left;
+      }
+    }
+
+    &__info {
+      width: 100%;
+
+      &.center {
+        text-align: left;
+      }
+    }
+
+    &.reverse {
+      flex-direction: row-reverse;
+
+      .pill {
+        margin-left: 3rem;
+      }
+    }
+
+    .pill {
+      display: flex;
+    }
+
+    .pill-image {
+      min-width: 280px;
+      width: 100%;
+      min-height: auto;
+    }
+  }
+
+  .content-checkbox {
+    .btn-submit {
+      width: 200px;
+    }
+  }
+}
+
+.mscf {
+  .button-modal-close {
+    background-color: #fff;
+    font-size: 30px;
+    border: none;
+    cursor: pointer;
+    width: 40px;
+  }
+
+  .modal-card {
+    max-width: 470px;
+  }
+
+  .modal-card-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+
+    img {
+      width: 120px;
+    }
+
+    .paragraph {
+      font-size: 22px;
+      max-width: 320px;
+      line-height: 28px;
+      text-align: center;
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .form-inputs {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.modal-contact {
+  &>section {
+    max-width: 450px;
+    text-align: center;
+  }
+
+  .modal-body {
+    display: flex;
+    gap: 2rem;
+
+    &--info {
+      text-align: center;
+
+      img {
+        width: 100px;
+        height: 100px;
+        margin: 0.5rem;
+      }
+
+      h5 {
+        text-align: center;
+      }
+
+      .paragrah {
+        margin: 0;
+      }
+    }
+  }
+
+}

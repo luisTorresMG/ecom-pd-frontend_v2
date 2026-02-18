@@ -1,0 +1,151 @@
+
+.container {
+  margin-bottom: 2rem;
+  max-width: 249px;
+  position: relative;
+}
+
+.button-slider {
+  height: 35px;
+  width: 35px;
+  color: #fff;
+  background-color: #ff5100;
+  text-align: center;
+  line-height: 35px;
+  border: none;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  position: absolute;
+  z-index: 9;
+}
+
+.button-slider:disabled {
+  background-color: #E1E0E2;
+}
+
+.button-slider:first-child {
+  left: -30px;
+
+  @media (min-width: 1070px) {
+    left: -30px;
+  }
+}
+
+.button-slider:last-child {
+  right: -30px;
+
+  @media (min-width: 1070px) {
+    right: -30px;
+  }
+}
+
+.slider-content::-webkit-scrollbar {
+  width: 0;
+}
+
+.slider-content {
+  max-width: 930px;
+  height: 350px;
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  scroll-behavior: smooth;
+  overflow: auto;
+
+  .content-card {
+    display: flex;
+    justify-content: center;
+    width: 220px;
+  }
+
+  .card {
+    width: 210px;
+    height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border-radius: 10px;
+    border: none;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 6px 2px -2px rgba(83, 80, 77, 0.15);
+
+    img {
+      width: 100%;
+    }
+
+    .detail {
+      display: flex;
+      flex: 1 1 auto;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1rem;
+    }
+
+    p {
+      color: #2b0d61;
+      font-size: 14px;
+      font-weight: bold;
+      font-family: 'Titillium Web', sans-serif !important;
+      text-align: left;
+    }
+
+    .desc {
+      color: #B3B2B6;
+      font-size: 12px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .desc2 {
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    .btn_select_product {
+      height: 30px;
+      width: 130px;
+      font-size: 14px;
+      background-color: #ff5100;
+      color: #fff;
+      border: none;
+      border-radius: 24px;
+      position: absolute;
+      bottom: 0;
+      left: 2.8rem;
+      z-index: 10;
+      font-family: 'Titillium Web', sans-serif !important;
+    }
+  }
+}
+
+@media (min-width: 650px) {
+  .container {
+    max-width: 500px;
+  }
+
+  .slider-content {
+    margin: 0.5rem;
+  }
+
+}
+
+@media (min-width: 890px) {
+  .container {
+    max-width: 960px;
+  }
+
+  .slider-content {
+    .card {
+      width: 220px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+
+      .desc {
+        font-size: 14px;
+      }
+    }
+  }
+}
