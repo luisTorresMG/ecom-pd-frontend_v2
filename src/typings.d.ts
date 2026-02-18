@@ -9,3 +9,5 @@ declare global {
     dataLayer?: Array<Record<string, any>>;
   }
 }
+
+declare module 'crypto-js';

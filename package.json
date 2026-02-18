@@ -85,6 +85,7 @@
     "@angular/cli": "^21.1.4",
     "@angular/compiler-cli": "^21.1.0",
     "@angular/language-service": "^21.1.4",
+    "@types/crypto-js": "^4.2.2",
     "@types/jasmine": "~2.8.3",
     "@types/jasminewd2": "~2.0.2",
     "@types/jquery": "^3.5.32",
