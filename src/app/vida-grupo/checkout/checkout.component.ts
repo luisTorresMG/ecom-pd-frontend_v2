@@ -54,31 +54,33 @@ export class CheckoutComponent implements OnInit {
   //Data de la cotización obtenido de la api
   dataResumen: any = {};
 
-  private kushki: Kushki;
+  private kushki: Kushki | null = null;
+  kushkiForm!: FormGroup;
+
   cardType: string = '';
-  kushkiForm: FormGroup = this.builder.group({
-    cardNumber: [
-      '',
-      [
-        Validators.required,
-        Validators.pattern(RegularExpressions.numbers),
-        Validators.minLength(16),
-        Validators.maxLength(16),
-      ],
-    ],
-    dueDate: [
-      '',
-      [
-        Validators.pattern('^(0[1-9]|1[0-2])/(0[1-9]|[1-2][0-9]|3[0-1])$'),
-        Validators.required,
-        Validators.maxLength(5),
-      ],
-    ],
-    cvv: [
-      '',
-      [Validators.required, Validators.minLength(3), Validators.maxLength(4)],
-    ],
-  });
+  // kushkiForm: FormGroup = this.builder.group({
+  //   cardNumber: [
+  //     '',
+  //     [
+  //       Validators.required,
+  //       Validators.pattern(RegularExpressions.numbers),
+  //       Validators.minLength(16),
+  //       Validators.maxLength(16),
+  //     ],
+  //   ],
+  //   dueDate: [
+  //     '',
+  //     [
+  //       Validators.pattern('^(0[1-9]|1[0-2])/(0[1-9]|[1-2][0-9]|3[0-1])$'),
+  //       Validators.required,
+  //       Validators.maxLength(5),
+  //     ],
+  //   ],
+  //   cvv: [
+  //     '',
+  //     [Validators.required, Validators.minLength(3), Validators.maxLength(4)],
+  //   ],
+  // });
   messageInfoKushki: string = '';
 
   @ViewChild('visaPay', { static: false, read: ElementRef })
@@ -101,6 +103,29 @@ export class CheckoutComponent implements OnInit {
     private readonly builder: FormBuilder,
     private readonly viewContainerRef: ViewContainerRef
   ) {
+     this.kushkiForm = this.builder.group({
+      cardNumber: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(RegularExpressions.numbers),
+          Validators.minLength(16),
+          Validators.maxLength(16),
+        ],
+      ],
+      dueDate: [
+        '',
+        [
+          Validators.pattern('^(0[1-9]|1[0-2])/(0[1-9]|[1-2][0-9]|3[0-1])$'),
+          Validators.required,
+          Validators.maxLength(5),
+        ],
+      ],
+      cvv: [
+        '',
+        [Validators.required, Validators.minLength(3), Validators.maxLength(4)],
+      ],
+    });
     this.paymentType$ = {
       niubiz: false,
       kushki: false,

@@ -13,16 +13,26 @@ export class PaymentPagoefectivoSuccessComponent implements OnInit {
   }
 
   get session(): any {
-    const pagoEfectivo = JSON.parse(
-      sessionStorage.getItem('pago-efectivo-response') || '{}'
-    );
-    const insurance = JSON.parse(sessionStorage.getItem('insurance') || '{}');
-    return (
-      {
-        ...insurance,
-        ...pagoEfectivo,
-      } || null
-    );
+    const pagoEfectivoRaw = sessionStorage.getItem('pago-efectivo-response');
+    const insuranceRaw = sessionStorage.getItem('insurance');
+
+    const pagoEfectivo =
+      (pagoEfectivoRaw ? JSON.parse(pagoEfectivoRaw) : {}) as Record<string, any>;
+
+    const insurance =
+      (insuranceRaw ? JSON.parse(insuranceRaw) : {}) as Record<string, any>;
+
+    // si JSON.parse devolviera null (por ejemplo si guardaron "null"), lo convertimos a {}
+    const safePagoEfectivo =
+      pagoEfectivo && typeof pagoEfectivo === 'object' ? pagoEfectivo : {};
+
+    const safeInsurance =
+      insurance && typeof insurance === 'object' ? insurance : {};
+
+    return {
+      ...safeInsurance,
+      ...safePagoEfectivo,
+    };
   }
 
   get currencyType(): string {
