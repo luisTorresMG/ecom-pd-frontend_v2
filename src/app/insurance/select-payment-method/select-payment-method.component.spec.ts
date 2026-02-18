@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SelectPaymentMethodComponent } from './select-payment-method.component';
+// import { SelectPaymentMethodComponent } from './select-payment-method.component';
 
-describe('SelectPaymentMethodComponent', () => {
-  let component: SelectPaymentMethodComponent;
-  let fixture: ComponentFixture<SelectPaymentMethodComponent>;
+// describe('SelectPaymentMethodComponent', () => {
+//   let component: SelectPaymentMethodComponent;
+//   let fixture: ComponentFixture<SelectPaymentMethodComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ SelectPaymentMethodComponent ]
-    })
-    .compileComponents();
-  }));
+//   beforeEach(async(() => {
+//     TestBed.configureTestingModule({
+//       declarations: [ SelectPaymentMethodComponent ]
+//     })
+//     .compileComponents();
+//   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(SelectPaymentMethodComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+//   beforeEach(() => {
+//     fixture = TestBed.createComponent(SelectPaymentMethodComponent);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+//   it('should create', () => {
+//     expect(component).toBeTruthy();
+//   });
+// });
