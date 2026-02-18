@@ -212,7 +212,7 @@ input::-ms-clear {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background: url(assets/icons/dropdown_icon.png) no-repeat 97%;
+  background: url(/assets/icons/dropdown_icon.png) no-repeat 97%;
 }
 .input-text-formulario {
   height: 46px !important;
@@ -236,7 +236,7 @@ select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background: url(assets/icons/chevron-small-down.png) 97% no-repeat;
+  background: url(/assets/icons/chevron-small-down.png) 97% no-repeat;
 }
 
 .volver {

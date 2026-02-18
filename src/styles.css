@@ -101,14 +101,14 @@ button,
 }
 
 .input-text-help {
-  background: url(assets/icons/help-orange.png) 97% no-repeat;
+  background: url(/assets/icons/help-orange.png) 97% no-repeat;
 }
 
 .select-chevron {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background: url(assets/icons/chevron-small-down.png) 97% no-repeat;
+  background: url(/assets/icons/chevron-small-down.png) 97% no-repeat;
 }
 
 .volver {

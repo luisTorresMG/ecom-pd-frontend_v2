@@ -167,46 +167,46 @@ li .glyphicon {
 }
 
 .icon-home .li-img {
-  background-image: url(assets/main/mipanel.svg) !important;
+  background-image: url(/assets/main/mipanel.svg) !important;
   background-repeat: no-repeat !important;
 }
 
 .icon-productos .li-img {
-  background-image: url(assets/main/productos.svg) !important;
+  background-image: url(/assets/main/productos.svg) !important;
   background-repeat: no-repeat !important;
 }
 
 .icon-productos:hover .li-img,
 .icon-productos.active .li-img {
-  background-image: url(assets/main/productos_hover.svg) !important;
+  background-image: url(/assets/main/productos_hover.svg) !important;
   background-repeat: no-repeat !important;
 }
 
 .icon-home:hover .li-img,
 .icon-home.active .li-img {
-  background-image: url(assets/main/mipanel_hover.svg) !important;
+  background-image: url(/assets/main/mipanel_hover.svg) !important;
   background-repeat: no-repeat !important;
 }
 
 .icon-historial .li-img {
-  background-image: url(assets/main/historialventas.svg) !important;
+  background-image: url(/assets/main/historialventas.svg) !important;
   background-repeat: no-repeat !important;
 }
 
 .icon-historial:hover .li-img,
 .icon-historial.active .li-img {
-  background-image: url(assets/main/historialventas_hover.svg) !important;
+  background-image: url(/assets/main/historialventas_hover.svg) !important;
   background-repeat: no-repeat !important;
 }
 
 .icon-planillas .li-img {
-  background-image: url(assets/main/misplanillas.svg) !important;
+  background-image: url(/assets/main/misplanillas.svg) !important;
   background-repeat: no-repeat !important;
 }
 
 .icon-planillas:hover .li-img,
 .icon-planillas.active .li-img {
-  background-image: url(assets/main/misplanillas_hover.svg) !important;
+  background-image: url(/assets/main/misplanillas_hover.svg) !important;
   background-repeat: no-repeat !important;
 }
 
@@ -215,7 +215,7 @@ li .glyphicon {
 .icon-rv-protecta .li-img,
 .icon-rc-protecta .li-img,
 .icon-rc-canal-ventas .li-img {
-  background-image: url(assets/main/misproductos.svg) !important;
+  background-image: url(/assets/main/misproductos.svg) !important;
   background-repeat: no-repeat !important;
 }
 
@@ -229,18 +229,18 @@ li .glyphicon {
 .icon-rv-protecta.active .li-img,
 .icon-rc-protecta.active .li-img,
 .icon-rc-canal-ventas.active .li-img {
-  background-image: url(assets/main/misproductos_hover.svg) !important;
+  background-image: url(/assets/main/misproductos_hover.svg) !important;
   background-repeat: no-repeat !important;
 }
 
 .icon-pre-planillas .li-img {
-  background-image: url(assets/main/coin.svg) !important;
+  background-image: url(/assets/main/coin.svg) !important;
   background-repeat: no-repeat !important;
 }
 
 .icon-pre-planillas:hover .li-img,
 .icon-pre-planillas.active .li-img {
-  background-image: url(assets/main/coin_hover.svg) !important;
+  background-image: url(/assets/main/coin_hover.svg) !important;
   background-repeat: no-repeat !important;
 }
 

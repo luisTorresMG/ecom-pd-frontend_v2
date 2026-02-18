@@ -62,7 +62,7 @@
   pointer-events: none;
   color: #999;
   background-size: 16px 16px;
-  background-image: url(assets/soat/img/caret-down.png);
+  background-image: url(/assets/soat/img/caret-down.png);
   display: block;
   width: 16px;
   height: 16px;
@@ -184,7 +184,7 @@
 }
 
 .soat-error-message > i {
-  background-image: url(assets/soat/img/error-ico.png);
+  background-image: url(/assets/soat/img/error-ico.png);
   background-size: 13px;
   display: block;
   width: 13px;

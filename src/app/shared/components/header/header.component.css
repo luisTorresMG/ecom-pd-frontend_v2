@@ -78,7 +78,7 @@ a {
   display: inline-block;
   width: 25px;
   height: 25px;
-  background-image: url(assets/ecommerce/cart-icon.png);
+  background-image: url(/assets/ecommerce/cart-icon.png);
   background-repeat: no-repeat;
   background-position: center;
 }

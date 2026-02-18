@@ -105,7 +105,7 @@
 }
 
 .chat-error-message > i {
-  background-image: url(assets/soat/img/error-ico.png);
+  background-image: url(/assets/soat/img/error-ico.png);
   background-size: 13px;
   display: block;
   width: 13px;

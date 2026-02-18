@@ -31,7 +31,7 @@
   height: auto;
   min-height: 700px;
   max-height: 750px;
-  background: url(assets/template/banner_soat.webp) no-repeat;
+  background: url(/assets/template/banner_soat.webp) no-repeat;
   background-size: cover;
   padding: 0;
 }

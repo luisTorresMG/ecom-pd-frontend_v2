@@ -195,7 +195,7 @@ input[type="date"] {
 }
 
 .checkbox[type="checkbox"]:before {
-    background: #2b0d61 url(assets/icons/check.png);
+    background: #2b0d61 url(/assets/icons/check.png);
     background-size: 10px 8px;
     background-repeat: no-repeat;
     background-position: 2px 3px;

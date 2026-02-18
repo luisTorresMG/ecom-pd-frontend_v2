@@ -28,7 +28,7 @@
 .col-banner {
   width: 100%;
   height: 0;
-  background: url(assets/images/banner_certificado_electronico.png) no-repeat;
+  background: url(/assets/images/banner_certificado_electronico.png) no-repeat;
   background-size: contain;
   padding: 24.64%;
 }

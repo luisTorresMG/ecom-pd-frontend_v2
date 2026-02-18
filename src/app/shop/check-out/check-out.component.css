@@ -75,11 +75,11 @@
 }
 
 .edit {
-  background-image: url(assets/ecommerce/edit.png);
+  background-image: url(/assets/ecommerce/edit.png);
 }
 
 .delete {
-  background-image: url(assets/ecommerce/delete.png);
+  background-image: url(/assets/ecommerce/delete.png);
 }
 
 .cta .btn-small {

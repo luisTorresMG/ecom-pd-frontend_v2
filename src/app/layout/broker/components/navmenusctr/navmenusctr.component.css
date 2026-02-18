@@ -234,35 +234,35 @@ li .glyphicon {
 }
 
 .icon-home .li-img {
-  background-image: url(assets/main/mipanel.svg) !important;
+  background-image: url(/assets/main/mipanel.svg) !important;
   background-repeat: no-repeat !important;
 }
 
 .icon-home:hover .li-img,
 .icon-home.active .li-img {
-  background-image: url(assets/main/mipanel_hover.svg) !important;
+  background-image: url(/assets/main/mipanel_hover.svg) !important;
   background-repeat: no-repeat !important;
 }
 
 .icon-historial .li-img {
-  background-image: url(assets/main/historialventas.svg) !important;
+  background-image: url(/assets/main/historialventas.svg) !important;
   background-repeat: no-repeat !important;
 }
 
 .icon-historial:hover .li-img,
 .icon-historial.active .li-img {
-  background-image: url(assets/main/historialventas_hover.svg) !important;
+  background-image: url(/assets/main/historialventas_hover.svg) !important;
   background-repeat: no-repeat !important;
 }
 
 .icon-planillas .li-img {
-  background-image: url(assets/main/misplanillas.svg) !important;
+  background-image: url(/assets/main/misplanillas.svg) !important;
   background-repeat: no-repeat !important;
 }
 
 .icon-planillas:hover .li-img,
 .icon-planillas.active .li-img {
-  background-image: url(assets/main/misplanillas_hover.svg) !important;
+  background-image: url(/assets/main/misplanillas_hover.svg) !important;
   background-repeat: no-repeat !important;
 }
 
@@ -271,7 +271,7 @@ li .glyphicon {
 .icon-rv-protecta .li-img,
 .icon-rc-protecta .li-img,
 .icon-rc-canal-ventas .li-img {
-  background-image: url(assets/main/misproductos.svg) !important;
+  background-image: url(/assets/main/misproductos.svg) !important;
   background-repeat: no-repeat !important;
 }
 
@@ -285,73 +285,73 @@ li .glyphicon {
 .icon-rv-protecta.active .li-img,
 .icon-rc-protecta.active .li-img,
 .icon-rc-canal-ventas.active .li-img {
-  background-image: url(assets/main/misproductos_hover.svg) !important;
+  background-image: url(/assets/main/misproductos_hover.svg) !important;
   background-repeat: no-repeat !important;
 }
 
 .icon-pre-planillas .li-img {
-  background-image: url(assets/main/coin.svg) !important;
+  background-image: url(/assets/main/coin.svg) !important;
   background-repeat: no-repeat !important;
 }
 
 .icon-pre-planillas:hover .li-img,
 .icon-pre-planillas.active .li-img {
-  background-image: url(assets/main/coin_hover.svg) !important;
+  background-image: url(/assets/main/coin_hover.svg) !important;
   background-repeat: no-repeat !important;
 }
 
 .icon-mantenimiento .li-img {
-  background-image: url(assets/main/mantenimiento.svg) !important;
+  background-image: url(/assets/main/mantenimiento.svg) !important;
   background-repeat: no-repeat !important;
 }
 
 .icon-mantenimiento:hover .li-img,
 .icon-mantenimiento.active .li-img {
-  background-image: url(assets/main/mantenimiento_hover.svg) !important;
+  background-image: url(/assets/main/mantenimiento_hover.svg) !important;
   background-repeat: no-repeat !important;
 }
 
 .icon-cotizacion .li-img {
-  background-image: url(assets/main/cotizacion.svg) !important;
+  background-image: url(/assets/main/cotizacion.svg) !important;
   background-repeat: no-repeat !important;
 }
 
 .icon-cotizacion:hover .li-img,
 .icon-cotizacion.active .li-img {
-  background-image: url(assets/main/cotizacion_hover.svg) !important;
+  background-image: url(/assets/main/cotizacion_hover.svg) !important;
   background-repeat: no-repeat !important;
 }
 
 .icon-poliza .li-img {
-  background-image: url(assets/main/poliza.svg) !important;
+  background-image: url(/assets/main/poliza.svg) !important;
   background-repeat: no-repeat !important;
 }
 
 .icon-poliza:hover .li-img,
 .icon-poliza.active .li-img {
-  background-image: url(assets/main/poliza_hover.svg) !important;
+  background-image: url(/assets/main/poliza_hover.svg) !important;
   background-repeat: no-repeat !important;
 }
 
 .icon-reportes .li-img {
-  background-image: url(assets/main/reportes.svg) !important;
+  background-image: url(/assets/main/reportes.svg) !important;
   background-repeat: no-repeat !important;
 }
 
 .icon-reportes:hover .li-img,
 .icon-reportes.active .li-img {
-  background-image: url(assets/main/reportes_hover.svg) !important;
+  background-image: url(/assets/main/reportes_hover.svg) !important;
   background-repeat: no-repeat !important;
 }
 
 .icon-productos .li-img {
-  background-image: url(assets/main/productos.svg) !important;
+  background-image: url(/assets/main/productos.svg) !important;
   background-repeat: no-repeat !important;
 }
 
 .icon-productos:hover .li-img,
 .icon-productos.active .li-img {
-  background-image: url(assets/main/productos_hover.svg) !important;
+  background-image: url(/assets/main/productos_hover.svg) !important;
   background-repeat: no-repeat !important;
 }
 
