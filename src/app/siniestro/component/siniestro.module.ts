@@ -14,9 +14,9 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
 import { MatInputModule } from "@angular/material/input";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MAT_DATE_LOCALE, MatNativeDateModule } from "@angular/material/core";
-import { MatButtonModule } from "@angular/material/button";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatInputModule } from "@angular/material/input";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MAT_DATE_LOCALE, MatNativeDateModule } from "@angular/material/core";
 import { RecaptchaFormsModule, RecaptchaModule, RecaptchaV3Module } from "ng-recaptcha";
 import { ToastrModule } from "ngx-toastr";
 import { SessionStorageService } from "@shared/services/storage/storage-service";
@@ -96,6 +96,6 @@ registerLocaleData(localeEs, 'es');
   
     ],
     bootstrap: [RegistSiniestroSoatComponent],
-    entryComponents: [LogoutDialogComponent],
+    // entryComponents: [LogoutDialogComponent],
   })
   export class SiniestroModule {}
