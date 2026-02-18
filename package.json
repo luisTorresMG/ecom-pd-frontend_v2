@@ -52,6 +52,7 @@
     "md5": "^2.3.0",
     "mime-db": "^1.52.0",
     "minimist": "^1.2.5",
+    "ng-recaptcha": "^13.2.1",
     "ng-recaptcha-2": "^21.0.1",
     "ng2-charts": "^2.4.2",
     "ngx-bootstrap": "^5.1.0",
