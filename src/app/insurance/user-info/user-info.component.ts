@@ -93,66 +93,8 @@ export class UserInfoComponent implements OnInit, OnDestroy, AfterViewChecked {
     max: 8,
   };
   limitMaxLengthName: number = 50;
-  form = this.builder.group({
-    documentType: [
-      {
-        value: this.session.documentType,
-        disabled: false,
-      },
-      [Validators.required],
-    ],
-    documentNumber: [
-      null,
-      [Validators.required],
-    ],
-    lastname: [
-      null,
-      Validators.compose([
-        Validators.pattern(RegularExpressions.text),
-        Validators.required,
-      ]),
-    ],
-    surname: [
-      null,
-      Validators.compose([
-        Validators.pattern(RegularExpressions.text),
-        +this.session?.documentType == 4 ? null : Validators.required,
-      ]),
-    ],
-    name: [
-      null,
-      Validators.compose([
-        Validators.pattern(RegularExpressions.text),
-        Validators.required,
-      ]),
-    ],
-    address: [null, [Validators.required, this.spaceValidator]],
-    department: [this.session.department, [Validators.required]],
-    province: [this.session.provincia, [Validators.required]],
-    district: [this.session.district, [Validators.required]],
-    phoneNumber: [
-      null,
-      [Validators.required, Validators.pattern(/^[0-9]*$/)],
-    ],
-    contractInsurance: [this.session.contractInsurance || false],
-    sex: [
-      this.session.sex,
-      this.session.documentType == 1 ? null : Validators.required,
-    ],
-    civilStatus: [
-      this.session.civilStatus,
-      this.session.documentType == 1 ? null : Validators.required,
-    ],
-    country: [this.session.country || 1, []],
-    legalRepresentative: this.builder.group({
-      documentType: [this.session.legalRepresentative?.documentType || 2],
-      documentNumber: [this.session.legalRepresentative?.documentNumber],
-      names: [this.session.legalRepresentative?.names],
-      lastName: [this.session.legalRepresentative?.lastName],
-      lastName2: [this.session.legalRepresentative?.lastName2],
-      approvedClient: [this.session.legalRepresentative?.approvedClient || false],
-    }),
-  });
+  form!: FormGroup;  
+ 
 
   saveClientResponse: any;
   showDerivation = false;
@@ -197,6 +139,66 @@ export class UserInfoComponent implements OnInit, OnDestroy, AfterViewChecked {
     private readonly gts: GoogleTagService,
     private readonly vc: ViewContainerRef,
   ) {
+     this.form = this.builder.group({
+      documentType: [
+        {
+          value: this.session.documentType,
+          disabled: false,
+        },
+        [Validators.required],
+      ],
+      documentNumber: [
+        null,
+        [Validators.required],
+      ],
+      lastname: [
+        null,
+        Validators.compose([
+          Validators.pattern(RegularExpressions.text),
+          Validators.required,
+        ]),
+      ],
+      surname: [
+        null,
+        Validators.compose([
+          Validators.pattern(RegularExpressions.text),
+          +this.session?.documentType == 4 ? null : Validators.required,
+        ]),
+      ],
+      name: [
+        null,
+        Validators.compose([
+          Validators.pattern(RegularExpressions.text),
+          Validators.required,
+        ]),
+      ],
+      address: [null, [Validators.required, this.spaceValidator]],
+      department: [this.session.department, [Validators.required]],
+      province: [this.session.provincia, [Validators.required]],
+      district: [this.session.district, [Validators.required]],
+      phoneNumber: [
+        null,
+        [Validators.required, Validators.pattern(/^[0-9]*$/)],
+      ],
+      contractInsurance: [this.session.contractInsurance || false],
+      sex: [
+        this.session.sex,
+        this.session.documentType == 1 ? null : Validators.required,
+      ],
+      civilStatus: [
+        this.session.civilStatus,
+        this.session.documentType == 1 ? null : Validators.required,
+      ],
+      country: [this.session.country || 1, []],
+      legalRepresentative: this.builder.group({
+        documentType: [this.session.legalRepresentative?.documentType || 2],
+        documentNumber: [this.session.legalRepresentative?.documentNumber],
+        names: [this.session.legalRepresentative?.names],
+        lastName: [this.session.legalRepresentative?.lastName],
+        lastName2: [this.session.legalRepresentative?.lastName2],
+        approvedClient: [this.session.legalRepresentative?.approvedClient || false],
+      }),
+    });
     this.hasErrorSubmit = null;
 
     if (this.productSelected?.idTipoPoliza == 2) {

@@ -7,7 +7,7 @@ import {
   ElementRef,
   ChangeDetectorRef,
 } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   BsModalRef,
@@ -59,21 +59,10 @@ export class UserDocumentComponent implements OnInit {
   datePickerConfig: Partial<BsDatepickerConfig>;
 
   documentTypes: Array<{ value: string; label: string }> = [];
+  
+  form!: FormGroup;  
 
-  form = this.fb.group({
-    documentType: [this.session.documentType, [Validators.required]],
-    documentNumber: [this.session.documentNumber, [Validators.required]],
-    email: [
-      this.session.email,
-      Validators.compose([
-        Validators.pattern(AppConfig.CUSTOM_MAIL_DOMAIN),
-        Validators.required,
-      ]),
-    ],
-    fechaNac: [this.session.fechaNac, Validators.required],
-    privacy: [this.session.privacy || false],
-    terms: [1 || false],
-  });
+ 
 
   documentNumberLimit = {
     min: 8,
@@ -127,7 +116,7 @@ export class UserDocumentComponent implements OnInit {
 
   constructor(
     private readonly router: ActivatedRoute,
-    private readonly fb: FormBuilder,
+    private readonly builder: FormBuilder,
     private readonly route: Router,
     private readonly clientInfoService: ClientInfoService,
     private readonly insuranceTypesService: InsuranceTypesService,
@@ -141,6 +130,22 @@ export class UserDocumentComponent implements OnInit {
     private readonly cdr: ChangeDetectorRef,
     private readonly gts: GoogleTagService
   ) {
+
+     this.form = this.builder.group({
+      documentType: [this.session.documentType, [Validators.required]],
+      documentNumber: [this.session.documentNumber, [Validators.required]],
+      email: [
+        this.session.email,
+        Validators.compose([
+          Validators.pattern(AppConfig.CUSTOM_MAIL_DOMAIN),
+          Validators.required,
+        ]),
+      ],
+      fechaNac: [this.session.fechaNac, Validators.required],
+      privacy: [this.session.privacy || false],
+      terms: [1 || false],
+    });
+  
     this.hasErrorSubmit = false;
     this.ACEPT_TERMS = true;
     this.datePickerConfig = Object.assign(

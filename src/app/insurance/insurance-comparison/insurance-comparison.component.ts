@@ -81,7 +81,8 @@ export class InsuranceComparisonComponent implements OnInit, AfterViewInit {
 
   plansSelected: any[] = [];
 
-  checkAssistanceControl: FormControl = this.builder.control(true);
+  // checkAssistanceControl: FormControl = this.builder.control(true);
+   checkAssistanceControl!: FormControl ;
 
   indexGroup = 1;
   itemsPerView = 3;
@@ -103,7 +104,9 @@ export class InsuranceComparisonComponent implements OnInit, AfterViewInit {
     private readonly el: ElementRef,
     private readonly renderer: Renderer2,
     private readonly gts: GoogleTagService
-  ) {}
+  ) {
+    this.checkAssistanceControl = this.builder.control(true);
+  }
 
   ngOnInit(): void {
     window.scrollTo(0, 0);

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import moment from 'moment';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
@@ -59,28 +59,7 @@ export class InsuranceInfoComponent implements OnInit, OnDestroy {
   insuranceCategory: string;
   paymentFrequency: string;
 
-  form = this.builder.group({
-    idMoneda: [null, Validators.required],
-    validityType: [null, [Validators.required]],
-    paymentFrequency: [null, [Validators.required]],
-    startValidity: [null, [Validators.required]],
-    endValidity: [null, [Validators.required]],
-    activity: [null, [Validators.required]],
-    temporality: [null, [Validators.required]],
-    sinister: [null],
-    sinisterAmount: [null],
-    premium: [null],
-    scope: [null, [Validators.required]],
-    idZone: [null],
-    idZonaRiesgo: [null],
-    idPaisDestino: [null],
-    idPaisOrigen: [null],
-    idDepartamentoOrigen: [null],
-    idDepartamentoDestino: [null],
-    tipoPlan: [null],
-    typeDestiny: [null],
-    cantidadTrabajadores: [null, Validators.pattern(/^[0-9]*$/)]
-  });
+  form!: FormGroup;  
 
   loaders = {
     validityType: true,
@@ -140,6 +119,28 @@ export class InsuranceInfoComponent implements OnInit, OnDestroy {
     private readonly mainService: MainService,
     private readonly spinner: NgxSpinnerService,
   ) {
+    this.form = this.builder.group({
+    idMoneda: [null, Validators.required],
+    validityType: [null, [Validators.required]],
+    paymentFrequency: [null, [Validators.required]],
+    startValidity: [null, [Validators.required]],
+    endValidity: [null, [Validators.required]],
+    activity: [null, [Validators.required]],
+    temporality: [null, [Validators.required]],
+    sinister: [null],
+    sinisterAmount: [null],
+    premium: [null],
+    scope: [null, [Validators.required]],
+    idZone: [null],
+    idZonaRiesgo: [null],
+    idPaisDestino: [null],
+    idPaisOrigen: [null],
+    idDepartamentoOrigen: [null],
+    idDepartamentoDestino: [null],
+    tipoPlan: [null],
+    typeDestiny: [null],
+    cantidadTrabajadores: [null, Validators.pattern(/^[0-9]*$/)]
+  });
   }
 
   ngOnInit(): void {
