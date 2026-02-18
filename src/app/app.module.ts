@@ -83,7 +83,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
       multi: true,
     },
   ],
-  bootstrap: [AppComponent],
-  entryComponents: [LogoutDialogComponent],
+  bootstrap: [AppComponent]
+  // entryComponents: [LogoutDialogComponent],
 })
 export class AppModule {}
