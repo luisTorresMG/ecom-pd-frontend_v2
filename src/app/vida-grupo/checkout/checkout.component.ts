@@ -39,11 +39,11 @@ declare var VisanetCheckout: any;
   styleUrls: ['./checkout.component.scss'],
 })
 export class CheckoutComponent implements OnInit {
-  acceptTerms: boolean = false;
+  acceptTerms: boolean;
   showAuthentication: boolean = false;
-  authMethodData: IRegisterOtp | null = null;
-  biometricResult: BiometricResultDto | null = null;
-  otpResponse: IValidateOtpResponse | null = null;
+  authMethodData: IRegisterOtp;
+  biometricResult: BiometricResultDto;
+  otpResponse: IValidateOtpResponse;
   codeLink: string = '';
   isValid: boolean = true;
   sourcePagoEfectivo: SafeUrl;
@@ -54,32 +54,9 @@ export class CheckoutComponent implements OnInit {
   //Data de la cotización obtenido de la api
   dataResumen: any = {};
 
-  private kushki: Kushki | null = null;
+  private kushki: Kushki;
   cardType: string = '';
-  kushkiForm!: FormGroup;
-  messageInfoKushki: string = '';
-
-  @ViewChild('visaPay', { static: false, read: ElementRef })
-  visaPay!: ElementRef<HTMLElement>;
-  @ViewChild('btnSubmit', { static: false, read: ElementRef })
-  btnSubmit!: ElementRef;
-  @ViewChild('modalPagoEfectivo', { static: false, read: ModalDirective })
-  modalPagoEfectivo!: ModalDirective;
-  @ViewChild('modalKushkiPayment', { static: true, read: TemplateRef })
-  modalKushkiPayment!: TemplateRef<ElementRef>;
-
-  constructor(
-    private readonly spinner: NgxSpinnerService,
-    private readonly appConfig: AppConfig,
-    private readonly activatedRoute: ActivatedRoute,
-    private readonly router: Router,
-    private readonly checkoutService: CheckoutService,
-    private readonly domSanitizer: DomSanitizer,
-    private readonly kushkiService: KushkiService,
-    private readonly builder: FormBuilder,
-    private readonly viewContainerRef: ViewContainerRef
-  ) {
-     this.kushkiForm = this.builder.group({
+  kushkiForm: FormGroup = this.builder.group({
     cardNumber: [
       '',
       [
@@ -102,15 +79,37 @@ export class CheckoutComponent implements OnInit {
       [Validators.required, Validators.minLength(3), Validators.maxLength(4)],
     ],
   });
+  messageInfoKushki: string = '';
+
+  @ViewChild('visaPay', { static: false, read: ElementRef })
+  visaPay: ElementRef;
+  @ViewChild('btnSubmit', { static: false, read: ElementRef })
+  btnSubmit: ElementRef;
+  @ViewChild('modalPagoEfectivo', { static: false, read: ModalDirective })
+  modalPagoEfectivo: ModalDirective;
+  @ViewChild('modalKushkiPayment', { static: true, read: TemplateRef })
+  modalKushkiPayment: TemplateRef<ElementRef>;
+
+  constructor(
+    private readonly spinner: NgxSpinnerService,
+    private readonly appConfig: AppConfig,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly router: Router,
+    private readonly checkoutService: CheckoutService,
+    private readonly domSanitizer: DomSanitizer,
+    private readonly kushkiService: KushkiService,
+    private readonly builder: FormBuilder,
+    private readonly viewContainerRef: ViewContainerRef
+  ) {
     this.paymentType$ = {
       niubiz: false,
       kushki: false,
     };
-    this.codeLink = this.activatedRoute.snapshot.paramMap.get('idProcess') ?? '';
+    this.codeLink = this.activatedRoute.snapshot.paramMap.get('idProcess');
     this.sourcePagoEfectivo =
       this.domSanitizer.bypassSecurityTrustResourceUrl('');
-    this.idClientGoogle = this.checkoutService.getClientID() ?? '';
-    this.idTransactionSession = this.checkoutService.getSessionID() ?? '';
+    this.idClientGoogle = this.checkoutService.getClientID();
+    this.idTransactionSession = this.checkoutService.getSessionID();
   }
 
   ngOnInit() {
