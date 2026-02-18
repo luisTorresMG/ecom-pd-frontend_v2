@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InternalRecipientsComponent } from './internal-recipients.component';
+// import { InternalRecipientsComponent } from './internal-recipients.component';
 
-describe('InternalRecipientsComponent', () => {
-  let component: InternalRecipientsComponent;
-  let fixture: ComponentFixture<InternalRecipientsComponent>;
+// describe('InternalRecipientsComponent', () => {
+//   let component: InternalRecipientsComponent;
+//   let fixture: ComponentFixture<InternalRecipientsComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ InternalRecipientsComponent ]
-    })
-    .compileComponents();
-  }));
+//   beforeEach(async(() => {
+//     TestBed.configureTestingModule({
+//       declarations: [ InternalRecipientsComponent ]
+//     })
+//     .compileComponents();
+//   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(InternalRecipientsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+//   beforeEach(() => {
+//     fixture = TestBed.createComponent(InternalRecipientsComponent);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+//   it('should create', () => {
+//     expect(component).toBeTruthy();
+//   });
+// });

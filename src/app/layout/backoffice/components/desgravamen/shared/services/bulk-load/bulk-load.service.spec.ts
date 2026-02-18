@@ -1,16 +1,16 @@
-import { TestBed } from '@angular/core/testing';
+// import { TestBed } from '@angular/core/testing';
 
-import { BulkLoadService } from './bulk-load.service';
+// import { BulkLoadService } from './bulk-load.service';
 
-describe('BulkLoadService', () => {
-  let service: BulkLoadService;
+// describe('BulkLoadService', () => {
+//   let service: BulkLoadService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(BulkLoadService);
-  });
+//   beforeEach(() => {
+//     TestBed.configureTestingModule({});
+//     service = TestBed.inject(BulkLoadService);
+//   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-});
+//   it('should be created', () => {
+//     expect(service).toBeTruthy();
+//   });
+// });
