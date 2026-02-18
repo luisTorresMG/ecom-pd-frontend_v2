@@ -31,7 +31,42 @@ import { maskEmail, maskPhone, maskName } from '../../utils/maskDataClient';
   styleUrls: ['./contact-us.component.scss'],
 })
 export class ContactUsComponent implements OnInit {
-  form: FormGroup = this.builder.group({
+  form!: FormGroup;
+
+  
+
+  limitLengthDocumentNumber: { min: number; max: number } = {
+    min: 8,
+    max: 8,
+  };
+
+  documentInfoResponse: any;
+
+  documentNumberHasError: boolean = false;
+  isLastnameMasked: boolean = false;
+  isPhoneMasked: boolean = false;
+  isEmailMasked: boolean = false;
+  lastnameMasked: string = '';
+  phoneMasked: string = '';
+  emailMasked: string = '';
+
+  siteKey = AppConfig.CAPTCHA_KEY;
+
+  @ViewChild('modalSuccessContactForm', { static: true, read: TemplateRef })
+  modalContactForm!: TemplateRef<ElementRef>;
+
+  @ViewChild('recaptchaRef', { static: true }) recaptcha!: RecaptchaComponent;
+
+  constructor(
+    private readonly builder: FormBuilder,
+    private readonly utilsService: UtilsService,
+    private readonly clienteInfoService: ClientInfoService,
+    private readonly spinner: NgxSpinnerService,
+    private readonly cd: ChangeDetectorRef,
+    private readonly vc: ViewContainerRef,
+    private readonly gts: GoogleTagService
+  ) {
+    this.form = this.builder.group({
     legalName: [null],
     names: [
       null,
@@ -75,37 +110,7 @@ export class ContactUsComponent implements OnInit {
     privacy: [false, Validators.required],
   });
 
-  limitLengthDocumentNumber: { min: number; max: number } = {
-    min: 8,
-    max: 8,
-  };
-
-  documentInfoResponse: any;
-
-  documentNumberHasError: boolean = false;
-  isLastnameMasked: boolean = false;
-  isPhoneMasked: boolean = false;
-  isEmailMasked: boolean = false;
-  lastnameMasked: string = '';
-  phoneMasked: string = '';
-  emailMasked: string = '';
-
-  siteKey = AppConfig.CAPTCHA_KEY;
-
-  @ViewChild('modalSuccessContactForm', { static: true, read: TemplateRef })
-  modalContactForm!: TemplateRef<ElementRef>;
-
-  @ViewChild('recaptchaRef', { static: true }) recaptcha!: RecaptchaComponent;
-
-  constructor(
-    private readonly builder: FormBuilder,
-    private readonly utilsService: UtilsService,
-    private readonly clienteInfoService: ClientInfoService,
-    private readonly spinner: NgxSpinnerService,
-    private readonly cd: ChangeDetectorRef,
-    private readonly vc: ViewContainerRef,
-    private readonly gts: GoogleTagService
-  ) {}
+  }
 
   ngOnInit(): void {
     this.formValidations();

@@ -42,9 +42,9 @@ export class ChatBotComponent implements OnInit {
     '',
     Validators.compose([Validators.pattern(RegularExpressions.email), Validators.required])
   );
-  form: FormGroup = this.builder.group({
-    email: this.formControlEmail,
-  });
+
+  form!: FormGroup;  
+
 
   showForm: boolean = false;
   showButtonChat: boolean = true;
@@ -53,7 +53,11 @@ export class ChatBotComponent implements OnInit {
     private readonly renderer: Renderer2,
     private readonly builder: FormBuilder,
     private readonly spinner: NgxSpinnerService,
-  ) {}
+  ) {
+      this.form =  this.builder.group({
+      email: this.formControlEmail,
+    });
+  }
 
   ngOnInit(): void {
     const scriptId = 'genesys-bootstrap';
