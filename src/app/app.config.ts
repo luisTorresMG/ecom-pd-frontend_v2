@@ -17,33 +17,38 @@ export class AppConfig {
   }
 
   public static get IS_PROTECTA(): boolean {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    if (currentUser.canal?.toString() === '2018000011') {
-      return true;
+    const raw = localStorage.getItem('currentUser');
+    if (!raw) return false;
+
+    try {
+      const currentUser = JSON.parse(raw) as { canal?: string | number };
+      return currentUser?.canal?.toString() === '2018000011';
+    } catch {
+      return false;
     }
-    return false;
   }
 
   public static get FILTER_CHANNEL_ONLY_BROKER(): {
     res: boolean;
-    channel: string;
+    channel: string | null;
   } {
-    if (AppConfig.PROFILE_ADMIN_STORE !== null) {
-      const simulateChannel = JSON.parse(
-        localStorage.getItem(AppConfig.PROFILE_ADMIN_STORE)
-      );
-      if (simulateChannel) {
-        return {
-          res: true,
-          channel: simulateChannel.nchannel
-        };
+    const key = AppConfig.PROFILE_ADMIN_STORE;
+    if (!key) return { res: false, channel: null };
+
+    const raw = localStorage.getItem(key);
+    if (!raw) return { res: false, channel: null };
+
+    try {
+      const simulateChannel = JSON.parse(raw) as { nchannel?: string };
+      if (simulateChannel?.nchannel) {
+        return { res: true, channel: simulateChannel.nchannel };
       }
+    } catch {
+      // ignore
     }
-    return {
-      res: false,
-      channel: null
-    };
+    return { res: false, channel: null };
   }
+
 
   public static get ACTION_FORM_VISA_BROKER(): string {
     return environment.backendapi + '/pago/formresponse/2';
@@ -305,12 +310,11 @@ export class AppConfig {
     oBody.appendChild(oScript);
   }
 
-  public pageEvent(config) {
-    const oBody = document.getElementsByTagName('body')[0];
-    const oScript = document.createElement('script');
-    oScript.setAttribute('type', 'text/javascript');
-    window['dataLayer'].push(config);
+  public pageEvent(config: Record<string, any>): void {
+    window.dataLayer = window.dataLayer ?? [];
+    window.dataLayer.push(config);
   }
+
 
   public pixelEventDetail(
     productID: string,
@@ -499,10 +503,11 @@ export class AppConfig {
         };
       }
 
-      script.onerror = (error) => {
+      script.onerror = (error: Event) => {
         console.error(error);
         reject(false);
       };
+
     });
   }
 
@@ -536,7 +541,7 @@ export class AppConfig {
         };
       }
 
-      script.onerror = (error) => {
+     script.onerror = (error: Event) => {
         console.error(error);
         reject(false);
       };

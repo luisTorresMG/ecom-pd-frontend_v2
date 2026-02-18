@@ -1,4 +1,4 @@
-import { environment } from 'environments/environment';
+import { environment } from '../environments/environment';
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 

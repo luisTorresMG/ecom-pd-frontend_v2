@@ -4,9 +4,9 @@
     "baseUrl": ".",
     "moduleResolution": "bundler",
     "paths": {
-      "@shared/*": ["./src/app/shared/*"],
-      "@root/*": ["./src/app/*"],
-      "@screen-splash": ["./src/app/shared/services/screen-splash/screen-splash.service"]
+      "@shared/*": ["src/app/shared/*"],
+      "@root/*": ["src/app/*"],
+      "@screen-splash": ["src/app/shared/services/screen-splash/screen-splash.service"]
     },
 
     "strict": true,
@@ -29,7 +29,7 @@
   },
   "files": [],
   "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.spec.json" }
+    { "path": "./src/tsconfig.app.json" },
+    { "path": "./src/tsconfig.spec.json" }
   ]
 }

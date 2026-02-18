@@ -31,7 +31,7 @@ import { RedirectUrlComponent } from './layout/redirect-url/redirect-url.compone
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { RegistSiniestroSoatComponent } from './siniestro/component/regist-siniestro-soat/regist-siniestro-soat.component';
 import { NgxCaptchaModule } from 'ngx-captcha';
-import { ScreenSplashComponent } from '@shared/components/screen-splash/screen-splash.component';
+import { ScreenSplashComponent } from './shared/components/screen-splash/screen-splash.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
