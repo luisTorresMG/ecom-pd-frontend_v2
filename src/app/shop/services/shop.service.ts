@@ -1,7 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { isNullOrUndefined } from 'util';
+// import { isNullOrUndefined } from 'util';
 import { ApiService } from '../../shared/services/api.service';
 import { ConfigService } from '../../shared/services/general/config.service';
 import { UtilityService } from '../../shared/services/general/utility.service';
@@ -92,12 +92,14 @@ export class ShopService {
       .pipe(map((response) => response));
   }
 
-  getToken() {
-    let token = '';
-    if (!isNullOrUndefined(JSON.parse(localStorage.getItem('currentUser')))) {
-      token = JSON.parse(localStorage.getItem('currentUser'))['token'];
+ getToken(): string {
+  const raw = localStorage.getItem('currentUser'); // string | null
+  if (!raw) return '';
+  try {
+    const user = JSON.parse(raw) as { token?: string } | null;
+    return user?.token ?? '';
+    } catch {
+      return '';
     }
-
-    return token;
   }
 }

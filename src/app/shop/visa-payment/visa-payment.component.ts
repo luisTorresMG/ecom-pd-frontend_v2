@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { finalize } from 'rxjs/operators';
 import { ShopService } from '../services/shop.service';
 import { Autorizacion } from '../../layout/client/shared/models/autorizacion.model';
@@ -19,8 +19,9 @@ export class VisaPaymentComponent implements OnInit, OnDestroy {
 
   visaToken: string;
   visaSession: any;
-
-  pdf = this.sanitizer.bypassSecurityTrustResourceUrl('about:blank');
+  
+  pdf!: SafeResourceUrl;
+  // pdf = this.sanitizer.bypassSecurityTrustResourceUrl('about:blank');
 
   successfullPayment = false;
   valid = false;
@@ -43,7 +44,9 @@ export class VisaPaymentComponent implements OnInit, OnDestroy {
     private readonly router: Router,
     private readonly shopService: ShopService,
     private readonly _appConfig: AppConfig
-  ) { }
+  ) {
+      this.pdf = this.sanitizer.bypassSecurityTrustResourceUrl('about:blank');
+   }
 
   ngOnInit() {
     this.shoppingCart = JSON.parse(sessionStorage.getItem('shoppingCart'));

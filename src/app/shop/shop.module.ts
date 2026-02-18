@@ -38,7 +38,7 @@ import { CommonComponentsModule } from '@shared/modules/common-components.module
     SharedAppModule,
     CommonComponentsModule,
   ],
-  entryComponents: [HomeComponent],
+  // entryComponents: [HomeComponent],
   providers: [
     SessionStorageService,
     ApiService,
