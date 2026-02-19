@@ -3,7 +3,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PlanesAsistenciasService } from '../../../../services/maintenance/planes-asistencias/planes-asistencias.service';
 import swal from 'sweetalert2';
-import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
+// import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
 import { extend } from 'jquery';
 
 @Component({

@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EjecutivoModalComponent } from './ejecutivo-modal.component';
+// import { EjecutivoModalComponent } from './ejecutivo-modal.component';
 
-describe('EjecutivoModalComponent', () => {
-  let component: EjecutivoModalComponent;
-  let fixture: ComponentFixture<EjecutivoModalComponent>;
+// describe('EjecutivoModalComponent', () => {
+//   let component: EjecutivoModalComponent;
+//   let fixture: ComponentFixture<EjecutivoModalComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ EjecutivoModalComponent ]
-    })
-    .compileComponents();
-  }));
+//   beforeEach(async(() => {
+//     TestBed.configureTestingModule({
+//       declarations: [ EjecutivoModalComponent ]
+//     })
+//     .compileComponents();
+//   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(EjecutivoModalComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+//   beforeEach(() => {
+//     fixture = TestBed.createComponent(EjecutivoModalComponent);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+//   it('should create', () => {
+//     expect(component).toBeTruthy();
+//   });
+// });

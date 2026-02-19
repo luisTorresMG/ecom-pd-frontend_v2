@@ -12,6 +12,14 @@ export class ParameterSettingsService {
 
     constructor(private http: HttpClient) { }
 
+    public insertPercentageRate(data: any): Observable<any> {
+    return this.http.post<any>(`${this.Url}/insertPercentageRate`, data);
+  }
+
+    public getPercentageRateList(data: any): Observable<any> {
+        return this.http.post<any>(`${this.Url}/getPercentageRateList`, data);
+    }
+
     public getTransactionsByProduct(data: any): Observable<any> {
         const body = JSON.stringify(data)
         return this.http.post(this.Url + '/Maintenance/transactionsByProduct', body, {headers: this.headers})

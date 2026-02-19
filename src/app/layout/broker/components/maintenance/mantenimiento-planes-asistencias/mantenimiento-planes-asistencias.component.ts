@@ -12,7 +12,7 @@ import { FormBuilder, Validators, } from '@angular/forms';//INI <RQ2024-57 - 03/
 import moment from 'moment';//INI <RQ2024-57 - 03/04/2024> 
 import { GlobalValidators } from '../../global-validators';
 import { CommonMethods } from '../../common-methods';
-import { THIS_EXPR, isNull } from '@angular/compiler/src/output/output_ast';
+// import { THIS_EXPR, isNull } from '@angular/compiler/src/output/output_ast';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { formatDate } from '@angular/common';
 import { parseDate } from 'ngx-bootstrap/chronos';
@@ -840,13 +840,14 @@ export class MantenimientoPlanAsistComponent implements OnInit {
         this.NRol = 0;
 
         this.diaActual = new Date(this.diaActual.getFullYear(), this.diaActual.getMonth(), this.diaActual.getDate());
-        this.filterForm = this.formBuilder.group({
-            startDate: [this.diaActual, [Validators.required, GlobalValidators.notValidDate, GlobalValidators.tooOldDateValidator]],
-            endDate:'',
-            //endDate: [this.diaActual, [Validators.required, GlobalValidators.notValidDate, GlobalValidators.tooOldDateValidator]],
-            VALIDADOR: ['']
-        });
-        
+
+        // this.filterForm = this.formBuilder.group({
+        //     startDate: [this.diaActual, [Validators.required, GlobalValidators.notValidDate, GlobalValidators.tooOldDateValidator]],
+        //     endDate:'',
+        //     //endDate: [this.diaActual, [Validators.required, GlobalValidators.notValidDate, GlobalValidators.tooOldDateValidator]],
+        //     VALIDADOR: ['']
+        // });        
+
     }
     
     ChangeRamo2() {

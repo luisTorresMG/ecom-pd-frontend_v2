@@ -7,7 +7,7 @@ import { AtpReportService } from '../../../services/atp-reports/atp-report.servi
 import { ComisionesDiferenciadasService } from '../../../services/maintenance/comisiones-diferenciadas/comisiones-diferenciadas.service';
 import { LoadMassiveService } from '../../../services/LoadMassive/load-massive.service';
 import { MantenimientoComiDifModalConfigComponent} from './modal-config/modal-config.component'
-import { isNull } from '@angular/compiler/src/output/output_ast';
+// import { isNull } from '@angular/compiler/src/output/output_ast';
 import { error } from 'console';
 
 @Component({

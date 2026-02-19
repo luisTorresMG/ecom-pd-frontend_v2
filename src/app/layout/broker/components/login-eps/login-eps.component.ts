@@ -50,11 +50,8 @@ const transitionTime: number = 500;
 })
 export class LoginEpsComponent implements OnInit {
 
-  form: FormGroup = this.builder.group({
-    username: ['', Validators.required],
-    password: ['', Validators.required],
-    forward: [false]
-  });
+  form!: FormGroup;
+  
 
   responseInfo: string = '';
   message: string = '';
@@ -76,6 +73,11 @@ export class LoginEpsComponent implements OnInit {
     private readonly sessionStorageService: SessionStorageService,
     private readonly vc: ViewContainerRef
   ) {
+    this.form = this.builder.group({
+    username: ['', Validators.required],
+    password: ['', Validators.required],
+    forward: [false]
+  });
   }
 
   ngOnInit(): void {
