@@ -100,7 +100,7 @@ import { RecaptchaModule } from 'ng-recaptcha';
     EndorseeViewComponent,
     VcfReserveReportComponent,
     ],
-  entryComponents: [EndorseeViewComponent],
+//   entryComponents: [EndorseeViewComponent],
   exports: [],
     providers: [
         DesgravamenService,
