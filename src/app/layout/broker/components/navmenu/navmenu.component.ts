@@ -28,7 +28,8 @@ export class NavMenuComponent implements OnInit {
   showNavBar = false;
   featureList: Observable<Features[]>;
   menu = null;
-  rutaBase = this.config.apiUrl;
+  rutaBase!: any;
+  
   nombre = '';
   ApellidoPat = '';
   lNombre = '';
@@ -48,6 +49,7 @@ export class NavMenuComponent implements OnInit {
     private config: AppConfig,
     private sidebarService: SidebarService
   ) {
+    this.rutaBase = this.config.apiUrl;
     let productId: any;
     if (JSON.parse(localStorage.getItem('codProducto')) == null) {
       this.route.queryParams

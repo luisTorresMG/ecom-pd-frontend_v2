@@ -24,7 +24,7 @@ import {
   import { ChannelSales } from '../../../../shared/models/channelsales/channelsales';
   import { ChannelSalesService } from '../../../../shared/services/channelsales/channelsales.service';
   import { NgxSpinnerService } from 'ngx-spinner';
-  import { isNullOrUndefined } from 'util';
+  import { isNullOrUndefined } from '@shared/helpers/null-check';
   import { TableType } from '../../models/payroll/tabletype';
   import { Currency } from '../../models/currency/currency';
   import { PayrollHist } from '../../models/payroll/PayrollHist';

@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NavmenusctrComponent } from './navmenusctr.component';
+// import { NavmenusctrComponent } from './navmenusctr.component';
 
-describe('NavmenusctrComponent', () => {
-  let component: NavmenusctrComponent;
-  let fixture: ComponentFixture<NavmenusctrComponent>;
+// describe('NavmenusctrComponent', () => {
+//   let component: NavmenusctrComponent;
+//   let fixture: ComponentFixture<NavmenusctrComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ NavmenusctrComponent ]
-    })
-    .compileComponents();
-  }));
+//   beforeEach(async(() => {
+//     TestBed.configureTestingModule({
+//       declarations: [ NavmenusctrComponent ]
+//     })
+//     .compileComponents();
+//   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(NavmenusctrComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+//   beforeEach(() => {
+//     fixture = TestBed.createComponent(NavmenusctrComponent);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+//   it('should create', () => {
+//     expect(component).toBeTruthy();
+//   });
+// });

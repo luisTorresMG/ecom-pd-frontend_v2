@@ -72,8 +72,9 @@ export class NotaCreditoSaldoComponent implements OnInit {
     showDescarga = false;
     IS_ADMIN: number;
     frmSearchForAdmin: FormGroup;
-    startDateControl: FormControl = this.formBuilder.control(this.bsStartValue);
-    endDateControl: FormControl = this.formBuilder.control(this.bsEndValue);
+    startDateControl!: FormControl
+    endDateControl!: FormControl
+   
     dataNc: any[] = [];
     contador: any;
     isProtecta: boolean;
@@ -91,6 +92,8 @@ export class NotaCreditoSaldoComponent implements OnInit {
         private reporteNotaCreditoService: ReporteNotaCreditoService,
         private formBuilder: FormBuilder
     ) {
+        this.startDateControl = this.formBuilder.control(this.bsStartValue);
+        this.endDateControl = this.formBuilder.control(this.bsEndValue);
         this.bsConfig = Object.assign(
             {},
             {

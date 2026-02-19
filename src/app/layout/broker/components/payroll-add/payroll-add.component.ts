@@ -45,7 +45,7 @@ import {
   DomSanitizer,
   SafeResourceUrl
 } from '@angular/platform-browser';
-import { isNullOrUndefined } from 'util';
+import { isNullOrUndefined } from '@shared/helpers/null-check';
 import { EventStrings } from '../../shared/events/events';
 import { EmisionService } from '../../../client/shared/services/emision.service';
 import { PolicyemitService } from '../../services/policy/policyemit.service';
@@ -190,8 +190,8 @@ export class PayrollAddComponent implements OnInit, OnDestroy {
   bPagoEfectivo = false;
   bBotonesActividad = true;
   bPagoEfectivoProduct = false;
-
-  contractorControl: FormControl = this.builder.control('');
+  contractorControl!: FormControl;
+  
   listContractors$: any[] = [];
   contractorSelected: Partial<{ id: string; name: string }> = {};
 
@@ -204,36 +204,8 @@ export class PayrollAddComponent implements OnInit, OnDestroy {
     cash: 5,
     transfer: 6
   };
-
-  kushkiForm: FormGroup = this.builder.group({
-    cardNumber: [
-      '',
-      [
-        Validators.required,
-        Validators.pattern(RegularExpressions.numbers),
-        Validators.minLength(14),
-        Validators.maxLength(16)
-      ]
-    ],
-    dueDate: [
-      '',
-      [
-        Validators.pattern('^(0[1-9]|1[0-2])/(0[1-9]|[1-2][0-9]|3[0-1])$'),
-        Validators.required,
-        Validators.maxLength(5)
-      ]
-    ],
-    cvv: [
-      '',
-      [
-        Validators.required,
-        Validators.pattern(RegularExpressions.numbers),
-        Validators.minLength(3),
-        Validators.maxLength(4)
-      ]
-    ]
-  });
-
+  kushkiForm!: FormGroup;
+ 
   DOCUMENTTYPES = {
     '1': 'RUC',
     '2': 'DNI',
@@ -256,30 +228,12 @@ export class PayrollAddComponent implements OnInit, OnDestroy {
     minLength: 8,
     maxLength: 8
   };
-  formContractor: FormGroup = this.builder.group({
-    searchType: [this.SEARCHTYPES.document],
-    personType: [this.PERSONTYPES.natural],
-    documentType: ['2', [Validators.required]],
-    documentNumber: [
-      '',
-      [
-        Validators.pattern(RegularExpressions.numbers),
-        Validators.minLength(
-          this.documentNumberContractorValidations.minLength
-        ),
-        Validators.maxLength(
-          this.documentNumberContractorValidations.maxLength
-        )
-      ]
-    ],
-    legalName: [''],
-    names: [''],
-    apePat: [''],
-    apeMat: ['']
-  });
+  formContractor!: FormGroup;
+ 
 
   currentPageListContractors: number = 1;
-  clientCodeContractorControl: FormControl = this.builder.control('');
+  clientCodeContractorControl!: FormControl;
+  
   visaFormInitialized: boolean = false;
   siteKey = AppConfig.CAPTCHA_KEY;
 
@@ -327,6 +281,57 @@ export class PayrollAddComponent implements OnInit, OnDestroy {
     private readonly cd: ChangeDetectorRef,
     private readonly ngZone: NgZone
   ) {
+    this.contractorControl = this.builder.control('');
+    this.kushkiForm = this.builder.group({
+    cardNumber: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(RegularExpressions.numbers),
+        Validators.minLength(14),
+        Validators.maxLength(16)
+      ]
+    ],
+    dueDate: [
+      '',
+      [
+        Validators.pattern('^(0[1-9]|1[0-2])/(0[1-9]|[1-2][0-9]|3[0-1])$'),
+        Validators.required,
+        Validators.maxLength(5)
+      ]
+    ],
+    cvv: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern(RegularExpressions.numbers),
+        Validators.minLength(3),
+        Validators.maxLength(4)
+      ]
+    ]
+  });
+  this.clientCodeContractorControl = this.builder.control('');
+   this.formContractor = this.builder.group({
+    searchType: [this.SEARCHTYPES.document],
+    personType: [this.PERSONTYPES.natural],
+    documentType: ['2', [Validators.required]],
+    documentNumber: [
+      '',
+      [
+        Validators.pattern(RegularExpressions.numbers),
+        Validators.minLength(
+          this.documentNumberContractorValidations.minLength
+        ),
+        Validators.maxLength(
+          this.documentNumberContractorValidations.maxLength
+        )
+      ]
+    ],
+    legalName: [''],
+    names: [''],
+    apePat: [''],
+    apeMat: ['']
+  });
     this.bsConfig = Object.assign(
       {},
       {
@@ -2348,8 +2353,8 @@ export class PayrollAddComponent implements OnInit, OnDestroy {
         documentType: 'DNI',
         documentNumber: '43580056',
         paymentDescription: 'ESTO ES UNA PRUEBA',
-        email: 'PRUEBA123@GMAIL.COM',
-        currency: (this.currencyAcron = 'S/' ? 'PEN' : ('USD' as any)),
+        email: 'PRUEBA123@GMAIL.COM',   
+        currency: (this.currencyAcron == 'S/' ? 'PEN' : ('USD' as any)),
         amount: {
           subtotalIva: 0,
           subtotalIva0: +this.totalplanilla,

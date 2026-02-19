@@ -22,7 +22,8 @@ export class NavmenusctrComponent implements OnInit {
   menuTotal = null;
   arrayMenu = [];
   menuSCTR = null;
-  rutaBase = this.config.apiUrl;
+  rutaBase!: any;
+  
   nombre: string;
   ApellidoPat: string;
   lNombre: string;
@@ -40,7 +41,7 @@ export class NavmenusctrComponent implements OnInit {
     private config: AppConfig,
     private sidebarService: SidebarService,
   ) {
-
+    this.rutaBase = this.config.apiUrl;
     let productId: any;
     this.route.queryParams.subscribe(
       params => {
