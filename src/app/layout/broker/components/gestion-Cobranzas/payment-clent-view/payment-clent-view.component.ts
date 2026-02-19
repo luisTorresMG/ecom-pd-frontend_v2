@@ -5,7 +5,7 @@ import { CommonMethods } from './../../common-methods';
 import swal from 'sweetalert2';
 import { ClientInformationService } from '../../../services/shared/client-information.service';
 import { CobranzasService } from '../../../services/cobranzas/cobranzas.service';
-import * as moment from 'moment';
+import  moment from 'moment';
 
 @Component({
   selector: 'app-payment-clent-view',

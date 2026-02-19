@@ -28,34 +28,10 @@ import moment from 'moment';
   styleUrls: ['./linea-credito-general.component.sass'],
 })
 export class LineaCreditoGeneralComponent implements OnInit {
-  formFilter: FormGroup = this.builder.group({
-    search: [''],
-    credit: [''],
-  });
+  formFilter!: FormGroup;
+  formConfiguration!: FormGroup;
 
-  formConfiguration: FormGroup = this.builder.group({
-    enableNightlyBilling: [0, Validators.required],
-    enableVisa: [0, Validators.required],
-    enablePagoEfectivo: [0, Validators.required],
-    proposal: [0, Validators.required],
-    creditAmmount: [
-      null,
-      Validators.compose([
-        Validators.pattern(RegularExpressions.decimal),
-        Validators.required,
-        Validators.maxLength(10),
-      ]),
-    ],
-    creditDays: [
-      null,
-      Validators.compose([
-        Validators.pattern(RegularExpressions.numbers),
-        Validators.required,
-        Validators.maxLength(5),
-      ]),
-    ],
-  });
-
+ 
   // *Lista de canales de venta para la grilla
   salesChannels$: Array<any> = [];
   salesChannelsFiltered$: Array<any> = [];
@@ -90,7 +66,36 @@ export class LineaCreditoGeneralComponent implements OnInit {
     private readonly viewContainerRef: ViewContainerRef,
     private readonly lineaCreditoGeneralService: LineaCreditoGeneralService,
     private readonly utilsService: UtilsService
-  ) {}
+  ) {
+     this.formFilter = this.builder.group({
+    search: [''],
+    credit: [''],
+  });
+
+  this.formConfiguration = this.builder.group({
+    enableNightlyBilling: [0, Validators.required],
+    enableVisa: [0, Validators.required],
+    enablePagoEfectivo: [0, Validators.required],
+    proposal: [0, Validators.required],
+    creditAmmount: [
+      null,
+      Validators.compose([
+        Validators.pattern(RegularExpressions.decimal),
+        Validators.required,
+        Validators.maxLength(10),
+      ]),
+    ],
+    creditDays: [
+      null,
+      Validators.compose([
+        Validators.pattern(RegularExpressions.numbers),
+        Validators.required,
+        Validators.maxLength(5),
+      ]),
+    ],
+  });
+
+  }
 
   ngOnInit(): void {
     this.getSalesChannels();

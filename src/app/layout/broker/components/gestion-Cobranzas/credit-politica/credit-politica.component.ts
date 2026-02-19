@@ -4,7 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ClientInformationService } from '../../../services/shared/client-information.service';
 import { CobranzasService } from '../../../services/cobranzas/cobranzas.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
-import * as moment from 'moment';
+import  moment from 'moment';
 import swal from 'sweetalert2';
 @Component({
   selector: 'app-credit-politica',

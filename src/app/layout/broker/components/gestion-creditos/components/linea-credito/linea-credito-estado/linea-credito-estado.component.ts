@@ -27,40 +27,11 @@ import { LineaCreditoEstadoService } from '../../../shared/services/linea-credit
   styleUrls: ['./linea-credito-estado.component.sass'],
 })
 export class LineaCreditoEstadoComponent implements OnInit {
-  formFilter: FormGroup = this.builder.group({
-    search: [''],
-    state: [''],
-    active: [''],
-    locked: [''],
-    initialDate: [''],
-    expirationDate: [''],
-  });
+  formFilter!: FormGroup;
+  formEdit!: FormGroup;
+  formCreate!: FormGroup;
 
-  formEdit: FormGroup = this.builder.group({
-    creditEdit: [
-      '',
-      [Validators.required, Validators.pattern(RegularExpressions.numbers)],
-    ],
-    expirationDateEdit: ['', Validators.required],
-    typeContract: ['', Validators.required],
-  });
 
-  formCreate: FormGroup = this.builder.group({
-    channelCreate: ['', Validators.required],
-    contractorCreate: ['', Validators.required],
-    tdrCreate: ['', Validators.required],
-    tcCreate: ['', Validators.required],
-    creditCreate: [
-      '',
-      [
-        Validators.required,
-        Validators.min(1),
-        Validators.pattern(RegularExpressions.numbers),
-      ],
-    ],
-    initialDateCreate: [{ value: '', disabled: true }, Validators.required],
-    expirationDateCreate: ['', Validators.required],
-  });
 
   // tslint:disable-next-line:no-inferrable-types
   private pageTableStateChannels: number = 1;
@@ -131,6 +102,40 @@ export class LineaCreditoEstadoComponent implements OnInit {
     private readonly lineaCreditoEstadoService: LineaCreditoEstadoService,
     private readonly utilsService: UtilsService
   ) {
+      this.formFilter = this.builder.group({
+    search: [''],
+    state: [''],
+    active: [''],
+    locked: [''],
+    initialDate: [''],
+    expirationDate: [''],
+  });
+
+  this.formEdit = this.builder.group({
+    creditEdit: [
+      '',
+      [Validators.required, Validators.pattern(RegularExpressions.numbers)],
+    ],
+    expirationDateEdit: ['', Validators.required],
+    typeContract: ['', Validators.required],
+  });
+
+  this.formCreate = this.builder.group({
+    channelCreate: ['', Validators.required],
+    contractorCreate: ['', Validators.required],
+    tdrCreate: ['', Validators.required],
+    tcCreate: ['', Validators.required],
+    creditCreate: [
+      '',
+      [
+        Validators.required,
+        Validators.min(1),
+        Validators.pattern(RegularExpressions.numbers),
+      ],
+    ],
+    initialDateCreate: [{ value: '', disabled: true }, Validators.required],
+    expirationDateCreate: ['', Validators.required],
+  });
     this.datePickerConfig = Object.assign(
       {},
       {

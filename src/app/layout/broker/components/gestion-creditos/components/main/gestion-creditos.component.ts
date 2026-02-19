@@ -7,7 +7,7 @@ import { LineaCreditoGeneralService } from '../../shared/services/linea-credito-
 
 @Component({
   selector: 'app-creditos',
-  moduleId: module.id,
+  // moduleId: module.id,
   templateUrl: 'gestion-creditos.component.html',
   styleUrls: ['gestion-creditos.component.sass'],
 })
