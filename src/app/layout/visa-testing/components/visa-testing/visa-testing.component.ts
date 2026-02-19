@@ -29,7 +29,25 @@ import { IParamaters } from '../../shared/interfaces/parameters.interface';
   styleUrls: ['./visa-testing.component.sass'],
 })
 export class VisaTestingComponent implements OnInit, OnDestroy {
-  form: FormGroup = this.builder.group({
+  form!: FormGroup;
+ 
+  parameters$: any;
+  channelTypes$: Array<any>;
+  currencyTypes$: Array<any>;
+  merchanIdList$: Array<any>;
+
+  sessionVisa: any = null;
+
+  @ViewChild('visaPay', { static: false, read: ElementRef })
+  visaPay: ElementRef;
+
+  constructor(
+    private readonly builder: FormBuilder,
+    private readonly spinner: NgxSpinnerService,
+    private readonly utilsService: UtilsService,
+    private readonly visaTestingService: VisaTestingService
+  ) {
+    this.form = this.builder.group({
     branch: [
       null,
       Validators.compose([
@@ -90,22 +108,7 @@ export class VisaTestingComponent implements OnInit, OnDestroy {
     processId: [null],
   });
 
-  parameters$: any;
-  channelTypes$: Array<any>;
-  currencyTypes$: Array<any>;
-  merchanIdList$: Array<any>;
-
-  sessionVisa: any = null;
-
-  @ViewChild('visaPay', { static: false, read: ElementRef })
-  visaPay: ElementRef;
-
-  constructor(
-    private readonly builder: FormBuilder,
-    private readonly spinner: NgxSpinnerService,
-    private readonly utilsService: UtilsService,
-    private readonly visaTestingService: VisaTestingService
-  ) {}
+  }
 
   ngOnInit(): void {
     this.valueChangesForm();
