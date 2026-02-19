@@ -184,7 +184,30 @@ export class Step05Component implements OnInit, OnDestroy {
     transfer: 6
   };
 
-  kushkiForm: FormGroup = this._FormBuilder.group({
+  kushkiForm!: FormGroup;
+
+  
+
+  constructor(
+    private emisionService: EmisionService,
+    private visaService: VisaService,
+    private viewContainerRef: ViewContainerRef,
+    private factoryResolver: ComponentFactoryResolver,
+    private pagoEfectivoService: PagoEfectivoService,
+    private step05service: Step05Service,
+    private router: Router,
+    public cd: ChangeDetectorRef,
+    private spinner: NgxSpinnerService,
+    private readonly _FormBuilder: FormBuilder,
+    private readonly sanitizer: DomSanitizer,
+    private readonly _builder: FormBuilder,
+    private readonly _ActivatedRoute: ActivatedRoute,
+    private readonly utilsService: UtilsService,
+    private readonly _Step4Service: Step4Service,
+    private readonly kushkiService: KushkiService,
+    private readonly ngZone: NgZone
+  ) {
+    this.kushkiForm = this._FormBuilder.group({
     cardNumber: [
       '',
       [
@@ -212,26 +235,6 @@ export class Step05Component implements OnInit, OnDestroy {
       ]
     ]
   });
-
-  constructor(
-    private emisionService: EmisionService,
-    private visaService: VisaService,
-    private viewContainerRef: ViewContainerRef,
-    private factoryResolver: ComponentFactoryResolver,
-    private pagoEfectivoService: PagoEfectivoService,
-    private step05service: Step05Service,
-    private router: Router,
-    public cd: ChangeDetectorRef,
-    private spinner: NgxSpinnerService,
-    private readonly _FormBuilder: FormBuilder,
-    private readonly sanitizer: DomSanitizer,
-    private readonly _builder: FormBuilder,
-    private readonly _ActivatedRoute: ActivatedRoute,
-    private readonly utilsService: UtilsService,
-    private readonly _Step4Service: Step4Service,
-    private readonly kushkiService: KushkiService,
-    private readonly ngZone: NgZone
-  ) {
     this.tipoEnvio = [];
     this.formTipoEnvio = _FormBuilder.group({
       tipo: [null]

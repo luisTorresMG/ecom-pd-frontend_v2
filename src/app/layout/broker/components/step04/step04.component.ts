@@ -16,7 +16,8 @@ import { Plan } from '../../models/plan/plan';
 import { PlanFilter } from '../../models/plan/planfilter';
 import { Cliente } from '../../models/cliente/cliente';
 import { EmisionService } from '../../../client/shared/services/emision.service';
-import { isDate } from 'util';
+// import { isDate } from 'util';
+import { isDate } from '@shared/helpers/utils';
 import { UtilsService } from '@shared/services/utils/utils.service';
 
 // Validacion de Fecha Minima

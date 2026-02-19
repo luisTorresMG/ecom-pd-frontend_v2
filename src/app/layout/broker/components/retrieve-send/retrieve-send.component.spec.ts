@@ -1,24 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RetrieveSendComponent } from './retrieve-send.component';
+// import { RetrieveSendComponent } from './retrieve-send.component';
 
-xdescribe('RetrieveSendComponent', () => {
-  let component: RetrieveSendComponent;
-  let fixture: ComponentFixture<RetrieveSendComponent>;
+// xdescribe('RetrieveSendComponent', () => {
+//   let component: RetrieveSendComponent;
+//   let fixture: ComponentFixture<RetrieveSendComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [RetrieveSendComponent]
-    }).compileComponents();
-  }));
+//   beforeEach(async(() => {
+//     TestBed.configureTestingModule({
+//       declarations: [RetrieveSendComponent]
+//     }).compileComponents();
+//   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(RetrieveSendComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+//   beforeEach(() => {
+//     fixture = TestBed.createComponent(RetrieveSendComponent);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+//   it('should create', () => {
+//     expect(component).toBeTruthy();
+//   });
+// });

@@ -9,7 +9,8 @@ import { ListaTipoCliente } from '../../models/cliente/listatipocliente';
 import { Step03Service } from '../../services/step03/step03.service';
 import { ListaTipoDocumento } from '../../models/documento/listatipodocumento';
 import { Auto } from '../../models/auto/auto.model';
-import { isNullOrUndefined } from 'util';
+// import { isNullOrUndefined } from 'util';
+import { isNullOrUndefined  } from '@shared/helpers/null-check';
 import { Province } from '../../../../shared/models/province/province';
 import { District } from '../../../../shared/models/district/district';
 import { Municipality } from '../../../../shared/models/municipality/municipality';
@@ -17,7 +18,7 @@ import { UbigeoService } from '../../../../shared/services/ubigeo/ubigeo.service
 
 @Component({
   selector: 'app-step03',
-  moduleId: module.id,
+  // moduleId: module.id,
   templateUrl: './step03.component.html',
   styleUrls: ['./step03.component.css']
 })

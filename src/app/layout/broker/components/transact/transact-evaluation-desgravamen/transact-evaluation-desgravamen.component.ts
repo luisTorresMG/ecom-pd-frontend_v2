@@ -8,7 +8,7 @@ import { ClientInformationService } from '../../../services/shared/client-inform
 import { TransactService } from '../../../services/transact/transact.service';
 import { CobranzasService } from '../../../services/cobranzas/cobranzas.service';
 import * as FileSaver from 'file-saver';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+// import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { DesgravamenServicePD } from '../../../../desgravamen/desgravament.service';
 
 @Component({
