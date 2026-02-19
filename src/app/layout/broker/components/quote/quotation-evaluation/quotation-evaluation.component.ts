@@ -1993,35 +1993,69 @@ export class QuotationEvaluationComponent implements OnInit {
         return this.domSanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);
     }
 
-    async downloadFile(filePath: string): Promise<any> {  // Descargar archivos de cotización
-        this.othersService.downloadFile(filePath).subscribe(
-            res => {
-                if (res.StatusCode == 1) {
-                    swal.fire('Información', this.listToString(res.ErrorMessageList), 'error');
-                } else {
-                    const newBlob = new Blob([res], { type: 'application/pdf' });
-                    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-                        window.navigator.msSaveOrOpenBlob(newBlob);
-                        return;
-                    }
-                    const data = window.URL.createObjectURL(newBlob);
-                    const link = document.createElement('a');
-                    link.href = data;
-                    link.download = filePath.substring(filePath.lastIndexOf('\\') + 1);
-                    link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+    async downloadFile(filePath: string): Promise<any> {
+    this.othersService.downloadFile(filePath).subscribe(
+        (res: any) => {
+        if (res.StatusCode == 1) {
+            swal.fire('Información', this.listToString(res.ErrorMessageList), 'error');
+        } else {
+            const newBlob = new Blob([res], { type: 'application/pdf' });
 
-                    setTimeout(function () {
-                        window.URL.revokeObjectURL(data);
-                        link.remove();
-                    }, 100);
-                }
-
-            },
-            err => {
-                swal.fire('Información', 'Error inesperado, por favor contáctese con soporte.', 'error');
+            const nav: any = window.navigator; // 👈 evita error TS
+            if (nav && nav.msSaveOrOpenBlob) {
+            nav.msSaveOrOpenBlob(newBlob);
+            return;
             }
-        );
+
+            const data = window.URL.createObjectURL(newBlob);
+            const link = document.createElement('a');
+            link.href = data;
+            link.download = filePath.substring(filePath.lastIndexOf('\\') + 1);
+            link.dispatchEvent(
+            new MouseEvent('click', { bubbles: true, cancelable: true, view: window })
+            );
+
+            setTimeout(() => {
+            window.URL.revokeObjectURL(data);
+            link.remove();
+            }, 100);
+        }
+        },
+        () => {
+        swal.fire('Información', 'Error inesperado, por favor contáctese con soporte.', 'error');
+        }
+    );
     }
+
+    // async downloadFile(filePath: string): Promise<any> {  // Descargar archivos de cotización
+    //     this.othersService.downloadFile(filePath).subscribe(
+    //         res => {
+    //             if (res.StatusCode == 1) {
+    //                 swal.fire('Información', this.listToString(res.ErrorMessageList), 'error');
+    //             } else {
+    //                 const newBlob = new Blob([res], { type: 'application/pdf' });
+    //                 if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+    //                     window.navigator.msSaveOrOpenBlob(newBlob);
+    //                     return;
+    //                 }
+    //                 const data = window.URL.createObjectURL(newBlob);
+    //                 const link = document.createElement('a');
+    //                 link.href = data;
+    //                 link.download = filePath.substring(filePath.lastIndexOf('\\') + 1);
+    //                 link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+
+    //                 setTimeout(function () {
+    //                     window.URL.revokeObjectURL(data);
+    //                     link.remove();
+    //                 }, 100);
+    //             }
+
+    //         },
+    //         err => {
+    //             swal.fire('Información', 'Error inesperado, por favor contáctese con soporte.', 'error');
+    //         }
+    //     );
+    // }
 
     /**Obtiene el IGV para Salud y el IGV x Derecho de emisión para Pensión */
     async getIGVData() {

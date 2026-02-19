@@ -164,11 +164,11 @@ export class MonitoreoProviCommisionComponent implements OnInit {
       //Validacion Fechas
       if (new Date(this.bsValueIni) > new Date(this.bsValueFin)) {
         this.NameMessage = "La fecha inicial no debe ser mayor a la fecha final";
-      }
+      }      
       swal.fire({
         title: 'Información',
         text: this.NameMessage,
-        type: 'info',
+        // type: 'info',
         confirmButtonText: 'Continuar',
         allowOutsideClick: false
 
@@ -190,7 +190,7 @@ export class MonitoreoProviCommisionComponent implements OnInit {
       swal.fire({
         title: 'Información',
         text: this.NameMessage,
-        type: 'info',
+        // type: 'info',
         confirmButtonText: 'Continuar',
         allowOutsideClick: false
 
@@ -252,7 +252,7 @@ export class MonitoreoProviCommisionComponent implements OnInit {
             swal.fire({
               title: 'Información',
               text: 'No se encontraron registros con los parámetros ingresados.',
-              type: 'error',
+              // type: 'error',
               confirmButtonText: 'Aceptar',
               allowOutsideClick: false
             })
@@ -290,7 +290,7 @@ export class MonitoreoProviCommisionComponent implements OnInit {
             swal.fire({
               title: 'Información',
               text: 'El reporte no se encuentra disponible en este momento.',
-              type: 'error',
+              // type: 'error',
               confirmButtonText: 'Continuar',
               allowOutsideClick: false
             })

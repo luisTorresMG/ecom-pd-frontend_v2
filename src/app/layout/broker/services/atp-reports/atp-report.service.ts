@@ -26,6 +26,9 @@ export class AtpReportService {
 
     constructor(private http: HttpClient) { }
     // Procesar Reportes
+    ProcessReportsProviComisiones(data: any) {
+    return this.http.post<any>(this.Url, data); // <-- return del Observable
+    }
     public ProcessReports(data: any): Observable<any> {
         const Json = {
             dStart_Date: data.dStart_Date,

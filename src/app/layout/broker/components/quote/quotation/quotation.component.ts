@@ -6315,37 +6315,72 @@ export class QuotationComponent implements OnInit {
 
     }
 
-    async downloadFile(filePath: string): Promise<any> {  //Descargar archivos de cotización
-        return this.othersService.downloadFile(filePath).toPromise().then(
-            res => {
-                if (res.StatusCode == 1) {
-                    swal.fire('Información', this.listToString(res.ErrorMessageList), 'error');
-                } else {
-                    var newBlob = new Blob([res], { type: 'application/pdf' });
-                    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-                        window.navigator.msSaveOrOpenBlob(newBlob);
-                        return;
-                    }
-                    const data = window.URL.createObjectURL(newBlob);
+    // async downloadFile(filePath: string): Promise<any> {  //Descargar archivos de cotización
+    //     return this.othersService.downloadFile(filePath).toPromise().then(
+    //         res => {
+    //             if (res.StatusCode == 1) {
+    //                 swal.fire('Información', this.listToString(res.ErrorMessageList), 'error');
+    //             } else {
+    //                 var newBlob = new Blob([res], { type: 'application/pdf' });
+    //                 if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+    //                     window.navigator.msSaveOrOpenBlob(newBlob);
+    //                     return;
+    //                 }
+    //                 const data = window.URL.createObjectURL(newBlob);
 
-                    var link = document.createElement('a');
-                    link.href = data;
+    //                 var link = document.createElement('a');
+    //                 link.href = data;
 
-                    link.download = filePath.substring(filePath.lastIndexOf('\\') + 1);
-                    link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+    //                 link.download = filePath.substring(filePath.lastIndexOf('\\') + 1);
+    //                 link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
 
-                    setTimeout(function () {
-                        window.URL.revokeObjectURL(data);
-                        link.remove();
-                    }, 100);
-                }
+    //                 setTimeout(function () {
+    //                     window.URL.revokeObjectURL(data);
+    //                     link.remove();
+    //                 }, 100);
+    //             }
 
-            },
-            err => {
-                swal.fire('Información', 'Error inesperado, por favor contáctese con soporte.', 'error');
-            }
+    //         },
+    //         err => {
+    //             swal.fire('Información', 'Error inesperado, por favor contáctese con soporte.', 'error');
+    //         }
+    //     );
+    // }
+    async downloadFile(filePath: string): Promise<any> {
+  return this.othersService.downloadFile(filePath).toPromise().then(
+    (res) => {
+      if (res.StatusCode == 1) {
+        swal.fire('Información', this.listToString(res.ErrorMessageList), 'error');
+      } else {
+        const newBlob = new Blob([res], { type: 'application/pdf' });
+
+        const nav: any = window.navigator; 
+        if (nav && nav.msSaveOrOpenBlob) {
+          nav.msSaveOrOpenBlob(newBlob);
+          return;
+        }
+
+        const data = window.URL.createObjectURL(newBlob);
+
+        const link = document.createElement('a');
+        link.href = data;
+
+        link.download = filePath.substring(filePath.lastIndexOf('\\') + 1);
+        link.dispatchEvent(
+          new MouseEvent('click', { bubbles: true, cancelable: true, view: window })
         );
+
+        setTimeout(() => {
+          window.URL.revokeObjectURL(data);
+          link.remove();
+        }, 100);
+      }
+    },
+    (err) => {
+      swal.fire('Información', 'Error inesperado, por favor contáctese con soporte.', 'error');
     }
+  );
+}
 
     openModal(modalName: String) {
         let modalRef: NgbModalRef;
