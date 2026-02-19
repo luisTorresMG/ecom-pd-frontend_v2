@@ -7,7 +7,7 @@ import { AppConfig } from '../../../../app.config';
 import * as XLSX from 'xlsx';
 import * as FileSaver from 'file-saver';
 import 'rxjs/add/operator/catch';
-import { isNullOrUndefined } from 'util';
+// import { isNullOrUndefined } from 'util';
 import { SessionStorageService } from '../../../../shared/services/storage/storage-service';
 import { DischargeReport } from '../../models/dischargereport/dischargereport';
 import {
