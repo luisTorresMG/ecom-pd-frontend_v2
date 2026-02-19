@@ -8,7 +8,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { CommonMethods } from '../../common-methods';
 import { EmisionService } from '../../../../client/shared/services/emision.service';
 import { QuotationService } from './../../../services/quotation/quotation.service';
-import { isNullOrUndefined } from 'util';
+import { isNullOrUndefined } from '@shared/helpers/null-check';
 import { AccPersonalesService } from '../../quote/acc-personales/acc-personales.service';
 import { AdjuntoInterface, AdjuntoResponse } from '../../../interfaces/Adjunto.Interface';
 @Component({
@@ -29,7 +29,8 @@ export class PolicyResultComponent implements OnInit {
   enableSubscription = false;
   currentUser = JSON.parse(localStorage.getItem('currentUser'));
   policyData = JSON.parse(localStorage.getItem('policydata'));
-  pdf = this.sanitizer.bypassSecurityTrustResourceUrl('about:blank');
+  pdf!: any;
+  
   codProducto = JSON.parse(localStorage.getItem('codProducto'))['productId'];
   pensionNumber: number;
   saludNumber: number;
@@ -61,7 +62,9 @@ export class PolicyResultComponent implements OnInit {
     private readonly modalService: BsModalService,
     private quotationService: QuotationService,
     private accPersonalesService: AccPersonalesService,
-    private policyemit: PolicyemitService) { }
+    private policyemit: PolicyemitService) {
+      this.sanitizer.bypassSecurityTrustResourceUrl('about:blank');
+     }
 
   async ngOnInit() {
     const transactionKey = this.route.snapshot.paramMap.get('key') || '';

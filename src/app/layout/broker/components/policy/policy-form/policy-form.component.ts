@@ -1954,10 +1954,15 @@ export class PolicyFormComponent implements OnInit {
           );
         } else {
           var newBlob = new Blob([res], { type: 'application/pdf' });
-          if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-            window.navigator.msSaveOrOpenBlob(newBlob);
+            const nav: any = window.navigator;
+           if (nav && nav.msSaveOrOpenBlob) {
+            nav.msSaveOrOpenBlob(newBlob);
             return;
           }
+          // if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+          //   window.navigator.msSaveOrOpenBlob(newBlob);
+          //   return;
+          // }
           const data = window.URL.createObjectURL(newBlob);
           var link = document.createElement('a');
           link.href = data;
