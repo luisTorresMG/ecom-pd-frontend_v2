@@ -25,10 +25,11 @@ export class InformacionSiniestrosComponent implements OnInit {
     bsFechaDocumentoCompleto: Date = new Date();
 
     mostrarData: boolean = false;
-    FechaOcurrencia: FormControl = this.formBuilder.control(this.bsFechaOcurrencia);
-    FechaDenuncia: FormControl = this.formBuilder.control(this.bsFechaDenuncia);
-    FechaDocumentoCompleto: FormControl = this.formBuilder.control(this.bsFechaDocumentoCompleto);
-    FechaAprobacion: FormControl = this.formBuilder.control(this.bsFechaAprobacion);
+    FechaOcurrencia!: FormControl;
+    FechaDenuncia!: FormControl;
+    FechaDocumentoCompleto!: FormControl;
+    FechaAprobacion!: FormControl;
+    
     resultadosBusqueda: any;
     haveBillsData: boolean = true;
     dataRecuperada: any;
@@ -43,6 +44,10 @@ export class InformacionSiniestrosComponent implements OnInit {
         private spinner: NgxSpinnerService,
         private formBuilder: FormBuilder,
         private aviso: SwalComponentComponent) {
+        this.FechaOcurrencia = this.formBuilder.control(this.bsFechaOcurrencia);
+        this.FechaDenuncia = this.formBuilder.control(this.bsFechaDenuncia);
+        this.FechaDocumentoCompleto = this.formBuilder.control(this.bsFechaDocumentoCompleto);
+        this.FechaAprobacion = this.formBuilder.control(this.bsFechaAprobacion);    
         this.bsConfig = Object.assign(
             {},
             {

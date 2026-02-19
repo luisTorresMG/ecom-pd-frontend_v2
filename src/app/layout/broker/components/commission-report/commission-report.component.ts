@@ -42,7 +42,20 @@ export class CommissionReportComponent implements OnInit {
   // PAGINADO
   currentPage = 0;
 
-  formFilters: FormGroup = this.builder.group({
+  formFilters!: FormGroup;
+ 
+
+  @ViewChild('modalMessageInfo', { static: true })
+  modalMessageInfo: TemplateRef<ElementRef>;
+
+  constructor(
+    private readonly commisionCoService: CommisionCoService,
+    private readonly builder: FormBuilder,
+    private readonly spinner: NgxSpinnerService,
+    private readonly utilsService: UtilsService,
+    private readonly vc: ViewContainerRef,
+  ) {
+     this.formFilters = this.builder.group({
     channel: ['', Validators.required],
     branch: [''],
     product: [''],
@@ -55,17 +68,6 @@ export class CommissionReportComponent implements OnInit {
     availability: [''],
     lotStatus: [''],
   });
-
-  @ViewChild('modalMessageInfo', { static: true })
-  modalMessageInfo: TemplateRef<ElementRef>;
-
-  constructor(
-    private readonly commisionCoService: CommisionCoService,
-    private readonly builder: FormBuilder,
-    private readonly spinner: NgxSpinnerService,
-    private readonly utilsService: UtilsService,
-    private readonly vc: ViewContainerRef,
-  ) {
     this.bsConfig = Object.assign(
       {},
       {

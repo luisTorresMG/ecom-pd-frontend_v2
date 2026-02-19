@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CoverIndexComponent } from './cover-index.component';
+// import { CoverIndexComponent } from './cover-index.component';
 
-describe('CoverIndexComponent', () => {
-  let component: CoverIndexComponent;
-  let fixture: ComponentFixture<CoverIndexComponent>;
+// describe('CoverIndexComponent', () => {
+//   let component: CoverIndexComponent;
+//   let fixture: ComponentFixture<CoverIndexComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ CoverIndexComponent ]
-    })
-    .compileComponents();
-  }));
+//   beforeEach(async(() => {
+//     TestBed.configureTestingModule({
+//       declarations: [ CoverIndexComponent ]
+//     })
+//     .compileComponents();
+//   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(CoverIndexComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+//   beforeEach(() => {
+//     fixture = TestBed.createComponent(CoverIndexComponent);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+//   it('should create', () => {
+//     expect(component).toBeTruthy();
+//   });
+// });

@@ -64,57 +64,9 @@ export class CommissionLotAddComponent implements OnInit, OnDestroy {
 
   // *Refactoring variables
   subscription: Subscription = new Subscription();
+  formFilters!: FormGroup;
+  formInvoice!: FormGroup;
 
-  formFilters: FormGroup = this.builder.group({
-    salesChannel: [null],
-    pointSale: [null],
-    branch: [null],
-    product: [null],
-    startDate: [null],
-    endDate: [null],
-    currency: [null]
-  });
-
-  formInvoice: FormGroup = this.builder.group({
-    generals: this.builder.group({
-      emmissionDate: [null],
-      voucherType: [null],
-      serialNumber: ['', Validators.pattern(RegularExpressions.numbers)],
-      invoiceNumber: ['', Validators.pattern(RegularExpressions.numbers)],
-      ruc: [
-        '',
-        Validators.compose([
-          Validators.pattern(RegularExpressions.numbers),
-          Validators.minLength(11),
-          Validators.maxLength(11)
-        ])
-      ]
-    }),
-    bank: this.builder.group({
-      typeBank: [null],
-      accountType: [null],
-      accountNumber: [
-        '',
-        Validators.compose([
-          Validators.pattern(RegularExpressions.numbers),
-          Validators.minLength(5),
-          Validators.maxLength(30)
-        ])
-      ],
-      cci: [
-        '',
-        Validators.compose([
-          Validators.pattern(RegularExpressions.numbers),
-          Validators.minLength(5),
-          Validators.maxLength(30)
-        ])
-      ],
-      entityName: [''],
-      foreignEntity: [null]
-    }),
-    fileType: [null],
-    file: [null]
-  });
 
   attachments: any[] = [];
   messageInfoAttachments = '';
@@ -235,6 +187,57 @@ export class CommissionLotAddComponent implements OnInit, OnDestroy {
     private readonly vc: ViewContainerRef,
     private readonly cd: ChangeDetectorRef
   ) {
+      this.formFilters = this.builder.group({
+    salesChannel: [null],
+    pointSale: [null],
+    branch: [null],
+    product: [null],
+    startDate: [null],
+    endDate: [null],
+    currency: [null]
+  });
+
+  this.formInvoice = this.builder.group({
+    generals: this.builder.group({
+      emmissionDate: [null],
+      voucherType: [null],
+      serialNumber: ['', Validators.pattern(RegularExpressions.numbers)],
+      invoiceNumber: ['', Validators.pattern(RegularExpressions.numbers)],
+      ruc: [
+        '',
+        Validators.compose([
+          Validators.pattern(RegularExpressions.numbers),
+          Validators.minLength(11),
+          Validators.maxLength(11)
+        ])
+      ]
+    }),
+    bank: this.builder.group({
+      typeBank: [null],
+      accountType: [null],
+      accountNumber: [
+        '',
+        Validators.compose([
+          Validators.pattern(RegularExpressions.numbers),
+          Validators.minLength(5),
+          Validators.maxLength(30)
+        ])
+      ],
+      cci: [
+        '',
+        Validators.compose([
+          Validators.pattern(RegularExpressions.numbers),
+          Validators.minLength(5),
+          Validators.maxLength(30)
+        ])
+      ],
+      entityName: [''],
+      foreignEntity: [null]
+    }),
+    fileType: [null],
+    file: [null]
+  });
+
   }
 
   ngOnInit() {
@@ -1626,8 +1629,11 @@ export class CommissionLotAddComponent implements OnInit, OnDestroy {
     );
 
     const salesChannel = +this.formFilterControl['salesChannel'].value;
-    const find =
-      +this.ListChannelSales.find((x) => +x.nchannel == salesChannel)?.ntypechannel ?? null;
+    const raw = this.ListChannelSales.find(x => +x.nchannel === salesChannel)?.ntypechannel ?? null;
+    const find = raw === null ? null : +raw;
+
+    // const find =
+    //   +this.ListChannelSales.find((x) => +x.nchannel == salesChannel)?.ntypechannel ?? null;
 
     const idEditMode: boolean = !!this.params?.lotId;
 

@@ -42,7 +42,7 @@ import { EventStrings } from '../../shared/events/events';
 import { Currency } from '../../models/currency/currency';
 import { ChannelSalesService } from '@shared/services/channelsales/channelsales.service';
 import { ChannelSales } from '@shared/models/channelsales/channelsales';
-import { isNullOrUndefined } from 'util';
+// import { isNullOrUndefined } from 'util';
 import { UtilsService } from '@shared/services/utils/utils.service';
 import { datePickerConfig } from '@shared/config/config';
 import moment from 'moment';
@@ -229,18 +229,8 @@ export class CommissLotComponent implements OnInit {
 
   // *Remake frontend
 
-  formFilters: FormGroup = this.builder.group({
-    branch: [''],
-    product: [''],
-    salesChannel: [''],
-    startDate: [new Date(new Date().setMonth(new Date().getMonth() - 6))],
-    endDate: [new Date()],
-    lot: ['', Validators.pattern(RegularExpressions.numbers)],
-    policy: ['', Validators.pattern(RegularExpressions.numbers)],
-    state: [''],
-    payroll: ['', Validators.pattern(RegularExpressions.numbers)],
-    currency: [''],
-  });
+  formFilters!: FormGroup;
+  
 
   commissionLotList: any = {};
 
@@ -303,6 +293,18 @@ export class CommissLotComponent implements OnInit {
     this.paginacion.npage = this.npage;
     this.nLote = '';
     this.bopacitysave = false;
+    this.formFilters = this.builder.group({
+    branch: [''],
+    product: [''],
+    salesChannel: [''],
+    startDate: [new Date(new Date().setMonth(new Date().getMonth() - 6))],
+    endDate: [new Date()],
+    lot: ['', Validators.pattern(RegularExpressions.numbers)],
+    policy: ['', Validators.pattern(RegularExpressions.numbers)],
+    state: [''],
+    payroll: ['', Validators.pattern(RegularExpressions.numbers)],
+    currency: [''],
+  });
   }
 
   ngOnInit() {
@@ -1062,9 +1064,11 @@ export class CommissLotComponent implements OnInit {
       if (RegularExpressions.email.test(this.mailOld.toString())) {
         this.messageErrorMail = '';
         if (this.mailOld !== this.emailbroker) {
-          if (!isNullOrUndefined(this.mailOld) && this.mailOld !== '') {
+          // 
+          if (this.mailOld?.trim()) {
             this.updMailFacturacion();
-          } else {
+          }
+          else {
             this.mailOld = this.emailbroker;
           }
         }

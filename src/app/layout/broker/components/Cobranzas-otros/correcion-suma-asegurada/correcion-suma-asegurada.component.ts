@@ -31,7 +31,8 @@ export class CorrecionSumaAseguradaComponent implements OnInit {
     bsConfig: Partial<BsDatepickerConfig>;
     currentDate: Date = new Date();
     bsFechaOcurrencia: Date = null;
-    FechaOcurrencia: FormControl = this.formBuilder.control(this.bsFechaOcurrencia);
+    FechaOcurrencia: FormControl
+    
     RamasDisponibles: any;
     CodigoCobertura: any;
     montoInicial: any;
@@ -46,6 +47,7 @@ export class CorrecionSumaAseguradaComponent implements OnInit {
         private formBuilder: FormBuilder,
         private aviso: SwalComponentComponent,
     ) {
+        this.FechaOcurrencia = this.formBuilder.control(this.bsFechaOcurrencia);
         this.recuperarRamos();
 
         this.bsConfig = Object.assign(

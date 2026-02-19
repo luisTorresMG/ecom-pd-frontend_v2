@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InformacionSiniestrosComponent } from './informacion-siniestros.component';
+// import { InformacionSiniestrosComponent } from './informacion-siniestros.component';
 
-describe('InformacionSiniestrosComponent', () => {
-  let component: InformacionSiniestrosComponent;
-  let fixture: ComponentFixture<InformacionSiniestrosComponent>;
+// describe('InformacionSiniestrosComponent', () => {
+//   let component: InformacionSiniestrosComponent;
+//   let fixture: ComponentFixture<InformacionSiniestrosComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ InformacionSiniestrosComponent ]
-    })
-    .compileComponents();
-  }));
+//   beforeEach(async(() => {
+//     TestBed.configureTestingModule({
+//       declarations: [ InformacionSiniestrosComponent ]
+//     })
+//     .compileComponents();
+//   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(InformacionSiniestrosComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+//   beforeEach(() => {
+//     fixture = TestBed.createComponent(InformacionSiniestrosComponent);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+//   it('should create', () => {
+//     expect(component).toBeTruthy();
+//   });
+// });

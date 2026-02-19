@@ -173,15 +173,8 @@ export class CommissionAuthComponent implements OnInit {
   detailIdJob: number;
 
   // *Remake
-  formFilters: FormGroup = this.builder.group({
-    startDate: [null],
-    endDate: [null],
-    salesChannel: [null],
-    policy: [null, Validators.pattern(RegularExpressions.numbers)],
-    payroll: [null, Validators.pattern(RegularExpressions.numbers)],
-    state: [null],
-    approval: [null],
-  });
+  formFilters!: FormGroup;
+ 
 
   message$: {
     showImage: boolean;
@@ -224,6 +217,15 @@ export class CommissionAuthComponent implements OnInit {
     this.bloqueoBuscar = false;
     this.idDetailChannel = 0;
     this.stateDetail = 'false';
+    this.formFilters = this.builder.group({
+      startDate: [null],
+      endDate: [null],
+      salesChannel: [null],
+      policy: [null, Validators.pattern(RegularExpressions.numbers)],
+      payroll: [null, Validators.pattern(RegularExpressions.numbers)],
+      state: [null],
+      approval: [null],
+    });
   }
 
   ngOnInit() {

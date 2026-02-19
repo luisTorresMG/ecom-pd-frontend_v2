@@ -72,10 +72,9 @@ export class ComprobantesComponent implements OnInit {
   showDescarga = false;
   IS_ADMIN: number;
   formSearch: FormGroup;
-  startDateControl: FormControl = this.formBuilder.control(this.bsStartValue);
-  endDateControl: FormControl = this.formBuilder.control(this.bsEndValue);
-
-
+  startDateControl!: FormControl;
+  endDateControl!: FormControl;
+  
   constructor(
     private spinner: NgxSpinnerService,
     private emissionService: EmisionService,
@@ -83,6 +82,9 @@ export class ComprobantesComponent implements OnInit {
     private channelService: ChannelSalesService,
     private formBuilder: FormBuilder
   ) {
+    this.startDateControl = this.formBuilder.control(this.bsStartValue);
+    this.endDateControl = this.formBuilder.control(this.bsEndValue);
+
     this.bsConfig = Object.assign(
       {},
       {
