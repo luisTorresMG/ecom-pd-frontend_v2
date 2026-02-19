@@ -12,7 +12,7 @@ import {
   IEnviarResponse,
 } from '../../../models/transferencia-apeseg/transferencia-apeseg.model';
 import moment from 'moment';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+// import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 @Component({
   selector: 'app-transferencia-apeseg',
   templateUrl: './transferencia-apeseg.component.html',

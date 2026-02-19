@@ -26,8 +26,8 @@ import {
   EnviarRequest,
   IMarcaResponde,
 } from '../../../models/soat/envio-certificado.model';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { viewClassName } from '@angular/compiler';
+// import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+// import { viewClassName } from '@angular/compiler';
 
 @Component({
   selector: 'app-envio-certificado',

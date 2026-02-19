@@ -9,7 +9,7 @@ import { GenerarStockService } from '../../../services/transaccion/generar-stock
 import { ParseDateService } from '../../../services/transaccion/shared/parse-date.service';
 import { AppConfig } from '../../../../../app.config';
 import moment from 'moment';
-import { NAMED_ENTITIES } from '@angular/compiler';
+// import { NAMED_ENTITIES } from '@angular/compiler';
 @Component({
   selector: 'app-generar-stock',
   templateUrl: './generar-stock.component.html',

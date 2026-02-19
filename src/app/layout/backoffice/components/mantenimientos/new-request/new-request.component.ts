@@ -6,8 +6,7 @@ import { Router } from '@angular/router';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { RecaptchaComponent } from 'ng-recaptcha';
-import * as moment from 'moment';
-
+import moment from 'moment';
 import { UtilsService } from '@shared/services/utils/utils.service';
 import { NewRequestService } from '../shared/services/new-request.service';
 import {
@@ -128,70 +127,22 @@ export class NewRequestComponent implements OnInit {
     Validators.minLength(11),
     Validators.maxLength(11)
   ];
-
-  readonly startValidityConfig: Partial<BsDatepickerConfig> = {
-    ...this.utilsService.datepickerConfig,
-    minDate: new Date()
-  };
-  readonly endValidityConfig: Partial<BsDatepickerConfig> = {
-    ...this.utilsService.datepickerConfig,
-    minDate: new Date(),
-    maxDate: moment(new Date()).add(10, 'years').toDate()
-  };
-
-  requestTypeControl: FormControl = this.builder.control('', Validators.required);
-  basicDataForm: FormGroup = this.builder.group({
-    documentType: [{ value: this.DOCUMENT_TYPE.RUC, disabled: true }, Validators.required],
-    documentNumber: ['', [
-      Validators.required,
-      ...this.RUC_VALIDATORS
-    ]],
-    legalName: ['', Validators.required],
-    names: [''],
-    paternalSurname: [''],
-    maternalSurname: [''],
-    department: ['', Validators.required],
-    province: ['', Validators.required],
-    district: ['', Validators.required],
-    phoneNumber: ['', [
-      Validators.required,
-      ...this.PHONE_NUMBER_VALIDATORS
-    ]],
-    address: ['', [
-      Validators.required,
-      Validators.maxLength(80)
-    ]],
-    contact: ['', Validators.required],
-    email: ['', [
-      Validators.required,
-      Validators.pattern(RegularExpressions.email)
-    ]],
-    channelType: ['', Validators.required],
-    associatedChannel: [''],
-    detail: ['']
-  });
-  supplementaryDataForm: FormGroup = this.builder.group({
-    startValidity: [new Date(), Validators.required],
-    endValidity: [moment(new Date()).add(1, 'years').toDate(), Validators.required],
-    stockProvider: ['', Validators.required],
-    distributionType: [this.DISTRIBUTION_TYPE.POINT_SALE, Validators.required]
-  });
-  attachedDataListForm: FormArray = this.builder.array([]);
+  readonly startValidityConfig: Partial<BsDatepickerConfig>;
+  readonly endValidityConfig: Partial<BsDatepickerConfig>;
+ 
+  requestTypeControl!: FormControl;
+  basicDataForm!: FormGroup;
+  supplementaryDataForm!: FormGroup;
+  attachedDataListForm!: FormArray;
+  
   attachedFileList: FileInfo[] = [];
-  creditLineDataListForm: FormArray = this.builder.array([]);
-  branchListForm: FormArray = this.builder.array([]);
+  creditLineDataListForm!: FormArray;
 
-  formSubChannel: FormGroup = this.builder.group({
-    searchType: [this.SEARCH_TYPES.DOCUMENT],
-    documentType: [{ value: '1', disabled: true }],
-    documentNumber: ['', [
-      Validators.pattern(RegularExpressions.numbers),
-      Validators.minLength(11),
-      Validators.maxLength(11)]],
-    legalName: ['', Validators.maxLength(60)],
-  });
-  clientCodeSubChannelControl: FormControl = this.builder.control('');
-
+  branchListForm!: FormArray;
+  formSubChannel!: FormGroup;
+  clientCodeSubChannelControl!: FormControl;
+  
+ 
   branches$: Branch[] = [];
 
   fileTypeList$: Item[] = [];
@@ -207,14 +158,8 @@ export class NewRequestComponent implements OnInit {
 
   response: Response;
 
-  searchChannelForm: FormGroup = this.builder.group({
-    documentType: [{ value: this.DOCUMENT_TYPE.RUC, disabled: true }, Validators.required],
-    documentNumber: ['', [
-      Validators.required,
-      ...this.RUC_VALIDATORS
-    ]],
-    legalName: ['', Validators.maxLength(this.MAX_LENGTH_ALLOWED.LEGAL_NAME)]
-  });
+  searchChannelForm!: FormGroup;
+  
   searchChannelList$: SearchChannelInfo[] = [];
   searchChannelTotalItems: number = 0;
   searchChannelCurrentPage: number = 1;
@@ -253,6 +198,76 @@ export class NewRequestComponent implements OnInit {
     private readonly utilsService: UtilsService,
     private readonly newRequestService: NewRequestService
   ) {
+     this.startValidityConfig = {
+      ...this.utilsService.datepickerConfig,
+      minDate: new Date(),
+    };
+
+    this.endValidityConfig = {
+      ...this.utilsService.datepickerConfig,
+      minDate: new Date(),
+      maxDate: moment(new Date()).add(10, 'years').toDate(),
+    };
+    this.requestTypeControl = this.builder.control('', Validators.required);
+    this.basicDataForm = this.builder.group({
+      documentType: [{ value: this.DOCUMENT_TYPE.RUC, disabled: true }, Validators.required],
+      documentNumber: ['', [
+        Validators.required,
+        ...this.RUC_VALIDATORS
+      ]],
+      legalName: ['', Validators.required],
+      names: [''],
+      paternalSurname: [''],
+      maternalSurname: [''],
+      department: ['', Validators.required],
+      province: ['', Validators.required],
+      district: ['', Validators.required],
+      phoneNumber: ['', [
+        Validators.required,
+        ...this.PHONE_NUMBER_VALIDATORS
+      ]],
+      address: ['', [
+        Validators.required,
+        Validators.maxLength(80)
+      ]],
+      contact: ['', Validators.required],
+      email: ['', [
+        Validators.required,
+        Validators.pattern(RegularExpressions.email)
+      ]],
+      channelType: ['', Validators.required],
+      associatedChannel: [''],
+      detail: ['']
+    });
+    this.supplementaryDataForm = this.builder.group({
+      startValidity: [new Date(), Validators.required],
+      endValidity: [moment(new Date()).add(1, 'years').toDate(), Validators.required],
+      stockProvider: ['', Validators.required],
+      distributionType: [this.DISTRIBUTION_TYPE.POINT_SALE, Validators.required]
+    });
+    this.attachedDataListForm = this.builder.array([]);
+    this.creditLineDataListForm = this.builder.array([]);
+    this.branchListForm = this.builder.array([]);
+
+    this.formSubChannel = this.builder.group({
+      searchType: [this.SEARCH_TYPES.DOCUMENT],
+      documentType: [{ value: '1', disabled: true }],
+      documentNumber: ['', [
+        Validators.pattern(RegularExpressions.numbers),
+        Validators.minLength(11),
+        Validators.maxLength(11)]],
+      legalName: ['', Validators.maxLength(60)],
+    });
+    this.clientCodeSubChannelControl = this.builder.control('');
+    this.searchChannelForm = this.builder.group({
+      documentType: [{ value: this.DOCUMENT_TYPE.RUC, disabled: true }, Validators.required],
+      documentNumber: ['', [
+        Validators.required,
+        ...this.RUC_VALIDATORS
+      ]],
+      legalName: ['', Validators.maxLength(this.MAX_LENGTH_ALLOWED.LEGAL_NAME)]
+    });
+
   }
 
   ngOnInit(): void {

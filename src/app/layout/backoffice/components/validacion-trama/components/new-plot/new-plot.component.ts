@@ -35,20 +35,12 @@ import moment from 'moment';
   animations: [fadeAnimation],
 })
 export class NewPlotComponent implements OnInit {
-  bsConfig: Partial<BsDatepickerConfig> = {
-    ...this.utilsService.datepickerConfig,
-    minDate: new Date('2022-01-02'),
-    maxDate: new Date(),
-  };
+  bsConfig!: Partial<BsDatepickerConfig>;
 
-  form: FormGroup = this.builder.group({
-    channelSale: ['', Validators.required],
-    branch: [0],
-    product: [0],
-    structureType: ['', Validators.required],
-    emailChannel: ['', Validators.pattern(RegularExpressions.email)],
-    arguments: this.builder.array([]),
-  });
+
+  form!: FormGroup;
+
+ 
 
   attachedFile: File;
 
@@ -71,7 +63,22 @@ export class NewPlotComponent implements OnInit {
     private readonly utilsService: UtilsService,
     private readonly validacionTramaService: ValidacionTramaService,
     private readonly newPlotService: NewPlotService
-  ) {}
+  ) {
+
+    this.form = this.builder.group({
+      channelSale: ['', Validators.required],
+      branch: [0],
+      product: [0],
+      structureType: ['', Validators.required],
+      emailChannel: ['', Validators.pattern(RegularExpressions.email)],
+      arguments: this.builder.array([]),
+    });
+        this.bsConfig = {
+      ...this.utilsService.datepickerConfig,
+      minDate: new Date('2022-01-02'),
+      maxDate: new Date(),
+    };
+  }
 
   ngOnInit(): void {
     this.formValueChanges();

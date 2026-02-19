@@ -32,29 +32,12 @@ import * as CDto from '../CargaMasiva-List/DTOs/CargaMasiva.dto';
   styleUrls: ['./CargaMasiva-State.component.sass'],
 })
 export class CargaMasivaStateComponent implements OnInit {
-  formFilter: FormGroup = this.builder.group({
-    channel: [''],
-    contractor: [''],
-    idProcess: ['', Validators.pattern(RegularExpressions.numbers)],
-    tdr: [''],
-    state: [''],
-    initialDate: [''],
-    loadDate: [''],
-  });
+  formFilter!: FormGroup;
+  formLoad!: FormGroup;
+  formInvoice!: any;
 
-  formLoad: FormGroup = this.builder.group({
-    channelLoad: ['', Validators.required],
-    pointSales: ['', Validators.required],
-    contractorLoad: ['', Validators.required],
-    tdrLoad: ['', Validators.required],
-    file: ['', Validators.required],
-  });
 
-  formInvoice = this.builder.group({
-    idInvoice: ['', Validators.required],
-    typeInvoice: ['', Validators.required],
-  });
-
+  
   private pageTableStateLoad: number = 1;
 
   numberContractors: number = 0;
@@ -117,6 +100,29 @@ export class CargaMasivaStateComponent implements OnInit {
     private readonly vc: ViewContainerRef,
     private readonly channelPointService: ChannelPointService
   ) {
+    this.formFilter = this.builder.group({
+      channel: [''],
+      contractor: [''],
+      idProcess: ['', Validators.pattern(RegularExpressions.numbers)],
+      tdr: [''],
+      state: [''],
+      initialDate: [''],
+      loadDate: [''],
+    });
+
+    this.formLoad = this.builder.group({
+      channelLoad: ['', Validators.required],
+      pointSales: ['', Validators.required],
+      contractorLoad: ['', Validators.required],
+      tdrLoad: ['', Validators.required],
+      file: ['', Validators.required],
+    });
+
+    this.formInvoice = this.builder.group({
+      idInvoice: ['', Validators.required],
+      typeInvoice: ['', Validators.required],
+    });
+
     this.datePickerConfig = Object.assign(
       {},
       {

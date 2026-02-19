@@ -32,24 +32,13 @@ export class ValidacionComponent implements OnInit {
   bsValueIni: Date = new Date('2022-01-02');
   bsValueFin: Date = new Date();
 
-  bsDatePickerConfig: Partial<BsDatepickerConfig> = {
-    ...this.utilsService.datepickerConfig,
-    minDate: this.bsValueIni,
-    maxDate: this.bsValueFin,
-  };
-
+  bsDatePickerConfig!: Partial<BsDatepickerConfig>;
+  
   arrayBuffer: any;
   file: File;
 
-  formFilter: FormGroup = this._builder.group({
-    validator: ['', Validators.pattern(RegularExpressions.numbers)],
-    channelSale: [0],
-    branch: [0],
-    product: [0],
-    structure: [''],
-    startDate: [this.bsValueIni],
-    endDate: [this.bsValueFin],
-  });
+  formFilter!: FormGroup;
+  
 
   proceduresData$: any = null;
   entrydata$: Array<any>;
@@ -76,7 +65,23 @@ export class ValidacionComponent implements OnInit {
     private readonly router: Router,
     private readonly spinner: NgxSpinnerService,
     private readonly validationPlotService: ValidacionTramaService
-  ) {}
+  ) {
+     this.bsDatePickerConfig = {
+      ...this.utilsService.datepickerConfig,
+      minDate: this.bsValueIni,
+      maxDate: this.bsValueFin,
+    };
+
+    this.formFilter = this._builder.group({
+      validator: ['', Validators.pattern(RegularExpressions.numbers)],
+      channelSale: [0],
+      branch: [0],
+      product: [0],
+      structure: [''],
+      startDate: [this.bsValueIni],
+      endDate: [this.bsValueFin],
+    });
+  }
 
   ngOnInit(): void {
     this.formFilterValueChanges();

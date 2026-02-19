@@ -7,7 +7,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AppConfig } from '../../../../../app.config';
 import { ExcelService } from '../../../../../shared/services/excel/excel.service';
-import { async } from '@angular/core/testing';
+// import { async } from '@angular/core/testing';
 import {
     BsDatepickerConfig,
     BsDatepickerModule,

@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { GestionDeRegistrosService } from '../../../../services/mantenimientos/gestion-de-registros.service';
 import { IArchivoResponse } from '../../../../models/mantenimientos/gestion-de-registros/gestion-de-registros.model';
-import { analyzeAndValidateNgModules } from '@angular/compiler';
+// import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { AppConfig } from '../../../../../../app.config';
 import { UtilsService } from '../../../../../../shared/services/utils/utils.service';
 import {

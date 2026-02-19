@@ -29,38 +29,10 @@ import { fadeAnimation } from '@shared/animations/animations';
   animations: [fadeAnimation],
 })
 export class ConfigurationPlotComponent implements OnInit {
-  formPlot: FormGroup = this.builder.group({
-    structure: this.builder.group({
-      description: [
-        '',
-        Validators.compose([Validators.required, Validators.maxLength(100)]),
-      ],
-      branch: ['', Validators.required],
-      product: ['', Validators.required],
-      fileType: [{ value: 1, disabled: true }, Validators.required],
-      startRow: [
-        1,
-        Validators.compose([Validators.required, Validators.min(1)]),
-      ],
-      startColumn: [
-        1,
-        Validators.compose([Validators.required, Validators.min(1)]),
-      ],
-      reniecApply: [0, Validators.required],
-      hasHeader: [1, Validators.required],
-      tabIndex: [0, Validators.required],
-      dateFormat: ['yyyyMMdd', Validators.required],
-      separator: [',', Validators.required],
-    }),
-    arguments: this.builder.array([]),
-    fields: this.builder.array([]),
-    outputFields: this.builder.array([]),
-  });
+  formPlot!: FormGroup;
+  formFormula!: FormGroup;
 
-  formFormula: FormGroup = this.builder.group({
-    formula: [null],
-  });
-
+ 
   formulaInfo: { form: FormGroup; controlName: string } = null;
 
   // *Variable para el tab seleccionado (Argumentos | Lectura | Salida)
@@ -100,7 +72,39 @@ export class ConfigurationPlotComponent implements OnInit {
     private readonly router: Router,
     private readonly utilsService: UtilsService,
     private readonly plotConfigurationService: PlotConfigurationService
-  ) {}
+  ) {
+    this.formPlot = this.builder.group({
+      structure: this.builder.group({
+        description: [
+          '',
+          Validators.compose([Validators.required, Validators.maxLength(100)]),
+        ],
+        branch: ['', Validators.required],
+        product: ['', Validators.required],
+        fileType: [{ value: 1, disabled: true }, Validators.required],
+        startRow: [
+          1,
+          Validators.compose([Validators.required, Validators.min(1)]),
+        ],
+        startColumn: [
+          1,
+          Validators.compose([Validators.required, Validators.min(1)]),
+        ],
+        reniecApply: [0, Validators.required],
+        hasHeader: [1, Validators.required],
+        tabIndex: [0, Validators.required],
+        dateFormat: ['yyyyMMdd', Validators.required],
+        separator: [',', Validators.required],
+      }),
+      arguments: this.builder.array([]),
+      fields: this.builder.array([]),
+      outputFields: this.builder.array([]),
+    });
+
+    this.formFormula = this.builder.group({
+      formula: [null],
+    });
+  }
 
   ngOnInit(): void {
     this.addRowField();

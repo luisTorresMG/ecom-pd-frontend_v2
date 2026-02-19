@@ -31,13 +31,8 @@ export class BandejaTramaComponent implements OnInit {
   fechaInicioConfig;
   fechaFinConfig;
 
-  formFilters: FormGroup = this.builder.group({
-    idEstructura: [null, Validators.pattern(RegularExpressions.numbers)],
-    tipoArchivo: [null],
-    fechaInicio: [null],
-    fechaFin: [null],
-    estado: [null],
-  });
+  formFilters!: FormGroup;
+  
 
   selectedStructure: any = {};
 
@@ -69,7 +64,16 @@ export class BandejaTramaComponent implements OnInit {
     private readonly vc: ViewContainerRef,
     private readonly utilsService: UtilsService,
     private readonly bandejaTramaService: BandejaTramaService
-  ) {}
+  ) {
+    this.formFilters = this.builder.group({
+    idEstructura: [null, Validators.pattern(RegularExpressions.numbers)],
+    tipoArchivo: [null],
+    fechaInicio: [null],
+    fechaFin: [null],
+    estado: [null],
+  });
+
+  }
 
   ngOnInit(): void {
     this.setFechasConfig();

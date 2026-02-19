@@ -46,21 +46,8 @@ export class PaymentMaintenanceComponent implements OnInit {
   page: number = 1;
   pageHistory: number = 1;
 
-  formFilter: FormGroup = this.builder.group({
-    application: ['', Validators.required],
-    branch: ['', Validators.required],
-    product: ['', Validators.required],
-    channel: ['', Validators.required],
-  });
-
-  formEdit: FormGroup = this.builder.group({
-    cardNiubiz: ['', Validators.required],
-    cashPayment: ['', Validators.required],
-    cardKushki: ['', Validators.required],
-    cashKushki: ['', Validators.required],
-    transferKushki: ['', Validators.required],
-    yapeNiubiz: ['', Validators.required],
-  });
+  formFilter!: FormGroup;
+  formEdit!: FormGroup;
 
   @ViewChild('modalEdit', { static: true, read: TemplateRef })
   modalEdit: TemplateRef<ElementRef>;
@@ -86,7 +73,22 @@ export class PaymentMaintenanceComponent implements OnInit {
     private readonly vc: ViewContainerRef,
     private readonly lineaCreditoService: LineaCreditoGeneralService
 
-  ) {}
+  ) {
+    this.formFilter = this.builder.group({
+      application: ['', Validators.required],
+      branch: ['', Validators.required],
+      product: ['', Validators.required],
+      channel: ['', Validators.required],
+    });
+    this.formEdit = this.builder.group({
+      cardNiubiz: ['', Validators.required],
+      cashPayment: ['', Validators.required],
+      cardKushki: ['', Validators.required],
+      cashKushki: ['', Validators.required],
+      transferKushki: ['', Validators.required],
+      yapeNiubiz: ['', Validators.required],
+    });
+  }
 
   ngOnInit() {
     this.getStatusAuthorized();

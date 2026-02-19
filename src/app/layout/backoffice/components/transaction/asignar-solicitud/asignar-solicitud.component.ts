@@ -36,22 +36,8 @@ export class AsignarSolicitudComponent implements OnInit {
   bsValueFin: Date = new Date();
   formAsignarSolicitud: FormGroup;
   formSearchPoliza: FormGroup;
-  formRange: FormGroup = this.builder.group({
-    ini: [
-      null,
-      Validators.compose([
-        Validators.pattern(RegularExpressions.numbers),
-        Validators.required,
-      ]),
-    ],
-    fin: [
-      null,
-      Validators.compose([
-        Validators.pattern(RegularExpressions.numbers),
-        Validators.required,
-      ]),
-    ],
-  });
+  formRange!: FormGroup;
+  
 
   urlApi: string;
 
@@ -90,6 +76,22 @@ export class AsignarSolicitudComponent implements OnInit {
       P_DFCREABEGIN: [this.bsValueIni],
       P_DFCREAEND: [this.bsValueFin],
     });
+    this.formRange = this.builder.group({
+    ini: [
+      null,
+      Validators.compose([
+        Validators.pattern(RegularExpressions.numbers),
+        Validators.required,
+      ]),
+    ],
+    fin: [
+      null,
+      Validators.compose([
+        Validators.pattern(RegularExpressions.numbers),
+        Validators.required,
+      ]),
+    ],
+  });
     this.datosLote = {
       canalVenta: '',
       cantidad: '',

@@ -15,7 +15,8 @@ const SOAT_PRODUCT_ID: number = 1;
 })
 export class ProductListComponent implements OnInit {
 
-  branchListForm: FormArray = this.builder.array([]);
+  branchListForm!: FormArray;
+  
 
   branches$: Branch[] = [];
 
@@ -53,6 +54,7 @@ export class ProductListComponent implements OnInit {
     private readonly builder: FormBuilder,
     private readonly newRequestService: NewRequestService
   ) {
+    this.branchListForm = this.builder.array([]);
   }
 
   ngOnInit(): void {

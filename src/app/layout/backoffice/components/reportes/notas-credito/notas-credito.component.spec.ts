@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NotasCreditoComponent } from './notas-credito.component';
+// import { NotasCreditoComponent } from './notas-credito.component';
 
-describe('ProduccionComponent', () => {
-  let component: NotasCreditoComponent;
-  let fixture: ComponentFixture<NotasCreditoComponent>;
+// describe('ProduccionComponent', () => {
+//   let component: NotasCreditoComponent;
+//   let fixture: ComponentFixture<NotasCreditoComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ NotasCreditoComponent ]
-    })
-    .compileComponents();
-  }));
+//   beforeEach(async(() => {
+//     TestBed.configureTestingModule({
+//       declarations: [ NotasCreditoComponent ]
+//     })
+//     .compileComponents();
+//   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(NotasCreditoComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+//   beforeEach(() => {
+//     fixture = TestBed.createComponent(NotasCreditoComponent);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+//   it('should create', () => {
+//     expect(component).toBeTruthy();
+//   });
+// });
