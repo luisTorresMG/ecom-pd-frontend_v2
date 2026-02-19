@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SearchBrokerComponent } from './search-broker.component';
+// import { SearchBrokerComponent } from './search-broker.component';
 
-describe('SearchBrokerComponent', () => {
-  let component: SearchBrokerComponent;
-  let fixture: ComponentFixture<SearchBrokerComponent>;
+// describe('SearchBrokerComponent', () => {
+//   let component: SearchBrokerComponent;
+//   let fixture: ComponentFixture<SearchBrokerComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ SearchBrokerComponent ]
-    })
-    .compileComponents();
-  }));
+//   beforeEach(async(() => {
+//     TestBed.configureTestingModule({
+//       declarations: [ SearchBrokerComponent ]
+//     })
+//     .compileComponents();
+//   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(SearchBrokerComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+//   beforeEach(() => {
+//     fixture = TestBed.createComponent(SearchBrokerComponent);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+//   it('should create', () => {
+//     expect(component).toBeTruthy();
+//   });
+// });

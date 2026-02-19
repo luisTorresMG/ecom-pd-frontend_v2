@@ -17,38 +17,78 @@ export class FilePickerComponent implements OnInit {
 
     ngOnInit() {
     }
-    
-    downloadFile(filePath: string) { 
-        this.othersService.downloadFile(filePath).subscribe(
-            res => {
-                if (res.StatusCode == 1) {
-                    swal.fire('Información', CommonMethods.listToString(res.ErrorMessageList), 'error');
-                } else {
-                    var newBlob = new Blob([res], { type: "application/pdf" });
-                    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-                        window.navigator.msSaveOrOpenBlob(newBlob);
-                        return;
-                    }
-                    const data = window.URL.createObjectURL(newBlob);
 
-                    var link = document.createElement('a');
-                    link.href = data;
+    downloadFile(filePath: string): void {
+    this.othersService.downloadFile(filePath).subscribe(
+      (res: any) => {
+        if (res?.StatusCode === 1) {
+          swal.fire(
+            'Información',
+            CommonMethods.listToString(res?.ErrorMessageList),
+            'error'
+          );
+          return;
+        }
 
-                    link.download = filePath.substring(filePath.lastIndexOf("\\") + 1);
-                    link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+        const newBlob = new Blob([res], { type: 'application/pdf' });
+        const data = window.URL.createObjectURL(newBlob);
 
-                    setTimeout(function () {
-                        window.URL.revokeObjectURL(data);
-                        link.remove();
-                    }, 100);
-                }
+        const link = document.createElement('a');
+        link.href = data;
+        link.download = filePath.substring(filePath.lastIndexOf('\\') + 1);
 
-            },
-            err => {
-                swal.fire('Información', 'Error inesperado, por favor contáctese con soporte.', 'error');
-                console.log(err);
-            }
+        link.dispatchEvent(
+          new MouseEvent('click', { bubbles: true, cancelable: true, view: window })
         );
-    }
+
+        setTimeout(() => {
+          window.URL.revokeObjectURL(data);
+          link.remove();
+        }, 100);
+      },
+      (err) => {
+        swal.fire(
+          'Información',
+          'Error inesperado, por favor contáctese con soporte.',
+          'error'
+        );
+        console.log(err);
+      }
+    );
+  }
+        
+    // downloadFile(filePath: string) { 
+    //     this.othersService.downloadFile(filePath).subscribe(
+    //         res => {
+    //             if (res.StatusCode == 1) {
+    //                 swal.fire('Información', CommonMethods.listToString(res.ErrorMessageList), 'error');
+    //             } else {
+    //                 var newBlob = new Blob([res], { type: "application/pdf" });
+    //                 if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+    //                     window.navigator.msSaveOrOpenBlob(newBlob);
+    //                     return;
+    //                 }
+                    
+    //                 const data = window.URL.createObjectURL(newBlob);
+
+    //                 var link = document.createElement('a');
+    //                 link.href = data;
+
+    //                 link.download = filePath.substring(filePath.lastIndexOf("\\") + 1);
+    //                 link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, view: window }));
+
+    //                 setTimeout(function () {
+    //                     window.URL.revokeObjectURL(data);
+    //                     link.remove();
+    //                 }, 100);
+    //             }
+
+    //         },
+    //         err => {
+    //             swal.fire('Información', 'Error inesperado, por favor contáctese con soporte.', 'error');
+    //             console.log(err);
+    //         }
+    //     );
+    // }
 
 }

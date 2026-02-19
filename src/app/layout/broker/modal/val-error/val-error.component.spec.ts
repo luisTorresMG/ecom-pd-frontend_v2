@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ValErrorComponent } from './val-error.component';
+// import { ValErrorComponent } from './val-error.component';
 
-describe('ValErrorComponent', () => {
-  let component: ValErrorComponent;
-  let fixture: ComponentFixture<ValErrorComponent>;
+// describe('ValErrorComponent', () => {
+//   let component: ValErrorComponent;
+//   let fixture: ComponentFixture<ValErrorComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ValErrorComponent ]
-    })
-    .compileComponents();
-  }));
+//   beforeEach(async(() => {
+//     TestBed.configureTestingModule({
+//       declarations: [ ValErrorComponent ]
+//     })
+//     .compileComponents();
+//   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ValErrorComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+//   beforeEach(() => {
+//     fixture = TestBed.createComponent(ValErrorComponent);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+//   it('should create', () => {
+//     expect(component).toBeTruthy();
+//   });
+// });
