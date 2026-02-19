@@ -26,7 +26,8 @@ export class NGSidebarComponent implements OnInit {
   showNavBar = false;
   featureList: Observable<Features[]>;
   menu = null;
-  rutaBase = this.config.apiUrl;
+  rutaBase!: any;
+  
   nombre = '';
   ApellidoPat = '';
   lNombre = '';
@@ -78,6 +79,8 @@ export class NGSidebarComponent implements OnInit {
       this.showNavBar = false;
       this.featureList = null;
     });
+
+    this.rutaBase = this.config.apiUrl;
 
     this.getObtenerNombres();
     this.getObtenerIniciales();
