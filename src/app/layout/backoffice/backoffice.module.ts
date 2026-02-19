@@ -362,9 +362,9 @@ import { FormButtonModule } from '../vida-inversion/components/form-button/form-
         NewRequestComponent,
         ProductListComponent,
     ],
-    entryComponents: [
-        EstructuraComercialModalComponent
-    ],
+    // entryComponents: [
+    //     EstructuraComercialModalComponent
+    // ],
     providers: [
         BsModalService,
         AuthenticationService,

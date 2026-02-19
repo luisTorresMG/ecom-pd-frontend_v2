@@ -30,23 +30,13 @@ import { fadeAnimation } from '@shared/animations/animations';
 export class StructureConfigurationRegisterComponent implements OnInit {
   @Output() dataEmitter: EventEmitter<any> = new EventEmitter();
 
-  clients: FormArray = this.builder.array([]);
-  certificates: FormArray = this.builder.array([]);
-  roles: FormArray = this.builder.array([]);
-  policies: FormArray = this.builder.array([]);
-  credits: FormArray = this.builder.array([]);
+  clients!: FormArray;
+  certificates!: FormArray;
+  roles!: FormArray;
+  policies!: FormArray;
+  credits!: FormArray;
   readFields: Array<any> = [];
-
-  form: FormGroup = this.builder.group({
-    entities: this.builder.group({
-      clients: this.clients,
-      certificates: this.certificates,
-      roles: this.roles,
-      policies: this.policies,
-      credits: this.credits,
-    }),
-  });
-
+  form!: FormGroup;
   entityNames: Array<string> = [
     'clients',
     'certificates',
@@ -54,10 +44,8 @@ export class StructureConfigurationRegisterComponent implements OnInit {
     'policies',
     'credits',
   ];
-
   entitiesWithValue = [];
-
-  equivalenceForm: FormArray = this.builder.array([]);
+  equivalenceForm!: FormArray;
   entitySelected: any = {};
 
   tabSelected: 'entities' = 'entities';
@@ -68,7 +56,7 @@ export class StructureConfigurationRegisterComponent implements OnInit {
     | 'entity:policy'
     | 'entity:credit';
 
-  storage = this.desgravamenService.storage;
+  storage: any;
 
   @ViewChild('modalEquivalence', { static: true, read: TemplateRef })
   modalEquivalence: TemplateRef<ElementRef>;
@@ -80,6 +68,24 @@ export class StructureConfigurationRegisterComponent implements OnInit {
     private readonly desgravamenService: DesgravamenService,
     private readonly configurationService: ConfigurationService
   ) {
+      this.clients = this.builder.array([]);
+      this.certificates = this.builder.array([]);
+      this.roles = this.builder.array([]);
+      this.policies = this.builder.array([]);
+      this.credits = this.builder.array([]);
+
+      this.form = this.builder.group({
+        entities: this.builder.group({
+          clients: this.clients,
+          certificates: this.certificates,
+          roles: this.roles,
+          policies: this.policies,
+          credits: this.credits,
+        })
+      });
+
+      this.equivalenceForm = this.builder.array([]);
+      this.storage = this.desgravamenService.storage;
   }
 
   ngOnInit(): void {
@@ -104,37 +110,53 @@ export class StructureConfigurationRegisterComponent implements OnInit {
 
       this.readFields = value.payload;
 
-      /* Getting all the formGroups from the formArrays and putting them in a new formArray. */
-      const entities = this.builder.array(
-        [].concat(
-          this.clients.controls.map((formg) => formg),
-          this.certificates.controls.map((formg) => formg),
-          this.roles.controls.map((formg) => formg),
-          this.policies.controls.map((formg) => formg),
-          this.credits.controls.map((formg) => formg)
-        )
-      );
+      // /* Getting all the formGroups from the formArrays and putting them in a new formArray. */
+      // const entities = this.builder.array(
+      //   [].concat(
+      //     this.clients.controls.map((formg) => formg),
+      //     this.certificates.controls.map((formg) => formg),
+      //     this.roles.controls.map((formg) => formg),
+      //     this.policies.controls.map((formg) => formg),
+      //     this.credits.controls.map((formg) => formg)
+      //   )
+      // );
 
+      // let hasChange = false;
+
+      // /* Checking if the value of the form is in the readFields array. If it is not, it is setting
+      // the value to an empty string. */
+      // entities.controls.forEach((form: FormGroup) => {
+      //   const control = form.controls;
+
+      //   if (
+      //     !control['value'].value ||
+      //     this.readFields.includes(control['value'].value)
+      //   ) {
+      //     return;
+      //   }
+
+      //   hasChange = true;
+      //   control['value'].setValue('');
+      // });
+
+      const entitiesControls = [
+        ...(this.clients.controls as FormGroup[]),
+        ...(this.certificates.controls as FormGroup[]),
+        ...(this.roles.controls as FormGroup[]),
+        ...(this.policies.controls as FormGroup[]),
+        ...(this.credits.controls as FormGroup[]),
+      ];
       let hasChange = false;
-
-      /* Checking if the value of the form is in the readFields array. If it is not, it is setting
-      the value to an empty string. */
-      entities.controls.forEach((form: FormGroup) => {
-        const control = form.controls;
-
-        if (
-          !control['value'].value ||
-          this.readFields.includes(control['value'].value)
-        ) {
-          return;
-        }
-
+      entitiesControls.forEach((form) => {
+        const valueCtrl = form.get('value'); // mejor que form.controls['value']
+        if (!valueCtrl) return;
+        const val = valueCtrl.value as string;
+        if (!val || this.readFields.includes(val)) return;
         hasChange = true;
-        control['value'].setValue('');
+        valueCtrl.setValue('');
       });
 
       this.setEntitiesWithValue();
-
       if (!hasChange) {
         return;
       }

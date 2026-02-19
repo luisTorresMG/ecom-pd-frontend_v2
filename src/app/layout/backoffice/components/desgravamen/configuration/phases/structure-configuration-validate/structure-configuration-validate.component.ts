@@ -30,12 +30,8 @@ export class StructureConfigurationValidateComponent implements OnInit {
   @Output() dataEmitter: EventEmitter<any> = new EventEmitter();
   notificationValidateValues: any = {};
 
-  formFilters: FormGroup = this.builder.group({
-    policy: [''],
-    contractor: [''],
-    salesChannel: [0],
-    createdAt: [null],
-  });
+  formFilters!: FormGroup;
+
 
   tabSelected: 'rules' | 'notifications' = 'rules';
   dropdownList: any = {
@@ -102,6 +98,12 @@ export class StructureConfigurationValidateComponent implements OnInit {
     private readonly desgravamenService: DesgravamenService,
     private readonly configurationService: ConfigurationService
   ) {
+    this.formFilters = this.builder.group({
+    policy: [''],
+    contractor: [''],
+    salesChannel: [0],
+    createdAt: [null],
+  });
   }
 
   ngOnInit(): void {

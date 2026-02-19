@@ -25,23 +25,10 @@ interface IResponse {
 })
 export class InternalRecipientsComponent implements OnInit {
 
-  recipientForm: FormGroup = this.builder.group({
-    names: ['', [
-      Validators.required,
-      Validators.pattern(RegularExpressions.text)
-    ]],
-    email: ['', [
-      Validators.pattern(RegularExpressions.email),
-      Validators.required
-    ]],
-    cellPhone: ['', [
-      Validators.pattern(RegularExpressions.numbers),
-      Validators.required,
-      Validators.minLength(9),
-      Validators.maxLength(9)
-    ]]
-  });
-  searchFilterControl: FormControl = this.builder.control('');
+  recipientForm!: FormGroup;
+  searchFilterControl!: FormControl;
+  
+  
 
   recipients$: IRecipient[] = [];
   recipientFiltering$: IRecipient[] = [];
@@ -65,6 +52,23 @@ export class InternalRecipientsComponent implements OnInit {
     private readonly vcr: ViewContainerRef,
     private readonly emailConfigurationService: EmailConfigurationService,
   ) {
+    this.recipientForm = this.builder.group({
+      names: ['', [
+        Validators.required,
+        Validators.pattern(RegularExpressions.text)
+      ]],
+      email: ['', [
+        Validators.pattern(RegularExpressions.email),
+        Validators.required
+      ]],
+      cellPhone: ['', [
+        Validators.pattern(RegularExpressions.numbers),
+        Validators.required,
+        Validators.minLength(9),
+        Validators.maxLength(9)
+      ]]
+    });
+    this.searchFilterControl = this.builder.control('');
   }
 
   ngOnInit(): void {

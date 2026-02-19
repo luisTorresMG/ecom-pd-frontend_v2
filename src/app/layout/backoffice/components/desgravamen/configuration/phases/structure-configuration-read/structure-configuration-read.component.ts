@@ -19,16 +19,10 @@ import { debounceTime } from 'rxjs/operators';
 export class StructureConfigurationReadComponent implements OnInit {
   @Output() dataEmitter: EventEmitter<any> = new EventEmitter();
   notificationReadValues: any = {};
-
-  storage = this.desgravamenService.storage;
-
-  transactions: FormArray = this.builder.array([]);
-  notifications: FormArray = this.builder.array([]);
-
-  form: FormGroup = this.builder.group({
-    transactions: this.transactions,
-    notifications: this.notifications,
-  });
+  storage: any;
+  transactions!: FormArray;
+  notifications!: FormArray;
+  form: FormGroup;
 
   tabSelected: 'transaction' | 'notification' = 'transaction';
   dropdownSelected: 'transaction' | 'notification' = 'transaction';
@@ -39,7 +33,15 @@ export class StructureConfigurationReadComponent implements OnInit {
     private readonly builder: FormBuilder,
     private readonly desgravamenService: DesgravamenService,
     private readonly configurationService: ConfigurationService
-  ) {}
+  ) {
+      this.storage = this.desgravamenService.storage;
+      this.transactions = this.builder.array([]);
+      this.notifications = this.builder.array([]);
+      this.form = this.builder.group({
+        transactions: this.transactions,
+        notifications: this.notifications,
+      });
+  }
 
   ngOnInit(): void {
     this.getParameters();

@@ -26,55 +26,11 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
   proSelectComponentConfig = {
     checkboxColor: 'orange',
   };
+  form!: FormGroup;
 
-  form: FormGroup = this.builder.group({
-    transaction: [
-      {
-        value: 'VENTA',
-        disabled: true,
-      },
-      Validators.required,
-    ],
-    branch: [
-      {
-        value: 'DESGRAVAMEN',
-        disabled: true,
-      },
-      Validators.required,
-    ],
-    headerData: [
-      {
-        value: 'Nombre del archivo',
-        disabled: true,
-      },
-      Validators.required,
-    ],
-    containsCertificateByRol: [
-      {
-        value: 'SÍ',
-        disabled: true,
-      },
-      Validators.required,
-    ],
-    containsRowsSortedByRole: ['', Validators.required],
-    fileFormat: [
-      {
-        value: 'xlsx',
-        disabled: true,
-      },
-      Validators.required,
-    ],
-    dateFormat: ['', Validators.required],
-  });
-
-  controlFilterPolicies: FormControl = this.builder.control('');
-
-  formFilters: FormGroup = this.builder.group({
-    product: [''],
-    policy: [''],
-    salesChannel: [''],
-    currency: [''],
-  });
+  
+  controlFilterPolicies!: FormControl;
+  formFilters: FormGroup;
 
   phasesWithNotifications: string[] = ['read', 'validate', 'migrate', 'billing'];
   phasesIncluded: Array<string> = ['read', 'register', 'validate', 'migrate', 'billing'];
@@ -142,7 +98,55 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     private readonly configurationService: ConfigurationService,
     private readonly utilsService: UtilsService,
     private modalService: NgbModal //INI <RQ2024-57 - 03/04/2024> 
-  ) {}
+  ) {
+    this.form = this.builder.group({
+    transaction: [
+      {
+        value: 'VENTA',
+        disabled: true,
+      },
+      Validators.required,
+    ],
+    branch: [
+      {
+        value: 'DESGRAVAMEN',
+        disabled: true,
+      },
+      Validators.required,
+    ],
+    headerData: [
+      {
+        value: 'Nombre del archivo',
+        disabled: true,
+      },
+      Validators.required,
+    ],
+    containsCertificateByRol: [
+      {
+        value: 'SÍ',
+        disabled: true,
+      },
+      Validators.required,
+    ],
+    containsRowsSortedByRole: ['', Validators.required],
+    fileFormat: [
+      {
+        value: 'xlsx',
+        disabled: true,
+      },
+      Validators.required,
+    ],
+    dateFormat: ['', Validators.required],
+  });
+
+    this.controlFilterPolicies = this.builder.control('');
+    this.formFilters = this.builder.group({
+    product: [''],
+    policy: [''],
+    salesChannel: [''],
+    currency: [''],
+  });
+  }
 
   ngOnInit(): void {
     this.getBranches();

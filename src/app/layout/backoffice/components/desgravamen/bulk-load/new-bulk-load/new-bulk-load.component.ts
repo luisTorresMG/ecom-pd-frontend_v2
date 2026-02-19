@@ -41,31 +41,9 @@ export class NewBulkLoadComponent implements OnInit {
     dateInputFormat: 'MM/YYYY',
     minMode: 'month',
   };
+  form!: FormGroup;
 
-  form: FormGroup = this.builder.group({
-    type: ['', Validators.required],
-    ruc: [
-      '',
-      [
-        Validators.pattern(RegularExpressions.numbers),
-        Validators.required,
-        Validators.minLength(11),
-        Validators.maxLength(11),
-      ],
-    ],
-    policy: [
-      '',
-      [Validators.pattern(RegularExpressions.numbers), Validators.required],
-    ],
-    contractor: ['', Validators.required],
-    product: ['', Validators.required],
-    salesChannel: ['', Validators.required],
-    transaction: ['', Validators.required],
-    declarationPeriod: [null, Validators.required],
-    read: [{ value: true, disabled: true }, Validators.requiredTrue],
-    migration: [false, Validators.required],
-    billing: [false, Validators.required],
-  });
+ 
 
   tabKeys: { 1: string; 2: string; 3: string } = {
     1: 'policy',
@@ -115,6 +93,31 @@ export class NewBulkLoadComponent implements OnInit {
     private readonly configurationService: ConfigurationService,
     private modalService: NgbModal
   ) {
+
+     this.form = this.builder.group({
+    type: ['', Validators.required],
+    ruc: [
+      '',
+      [
+        Validators.pattern(RegularExpressions.numbers),
+        Validators.required,
+        Validators.minLength(11),
+        Validators.maxLength(11),
+      ],
+    ],
+    policy: [
+      '',
+      [Validators.pattern(RegularExpressions.numbers), Validators.required],
+    ],
+    contractor: ['', Validators.required],
+    product: ['', Validators.required],
+    salesChannel: ['', Validators.required],
+    transaction: ['', Validators.required],
+    declarationPeriod: [null, Validators.required],
+    read: [{ value: true, disabled: true }, Validators.requiredTrue],
+    migration: [false, Validators.required],
+    billing: [false, Validators.required],
+  });
   }
 
   ngOnInit(): void {

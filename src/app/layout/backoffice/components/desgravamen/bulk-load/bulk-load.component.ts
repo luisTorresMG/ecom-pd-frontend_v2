@@ -42,30 +42,16 @@ export class BulkLoadComponent implements OnInit {
     maxDate: new Date(),
   };
 
-  controlSearch: FormControl = this.builder.control('');
+  controlSearch!: FormControl;
+ 
+  formFilters!: FormGroup;
 
-  formFilters: FormGroup = this.builder.group({
-    salesChannel: [''],
-    processId: ['', Validators.pattern(RegularExpressions.numbers)],
-    product: [''],
-    contractor: [''],
-    state: [''],
-    policy: [''],
-    transaction: [''],
-    paymentPeriod: [''],
-    startDate: [null],
-    endDate: [null],
-  });
 
   showAdvancedFilters: boolean = true;
   showBillingFilters: boolean = false;
   showButtonBillingFilter: boolean = true;
-  billingFiltersForm: FormGroup = this.builder.group({
-    state: [''],
-    period: [''],
-    policy: ['']
-  });
-
+  billingFiltersForm!: FormGroup;
+ 
   listStates$: {
     id: string,
     estado: string
@@ -124,6 +110,25 @@ export class BulkLoadComponent implements OnInit {
     private readonly spinner: NgxSpinnerService,
     private readonly bulkLoadService: BulkLoadService
   ) {
+    this.controlSearch = this.builder.control('');
+    this.formFilters = this.builder.group({
+      salesChannel: [''],
+      processId: ['', Validators.pattern(RegularExpressions.numbers)],
+      product: [''],
+      contractor: [''],
+      state: [''],
+      policy: [''],
+      transaction: [''],
+      paymentPeriod: [''],
+      startDate: [null],
+      endDate: [null],
+    });
+    this.billingFiltersForm = this.builder.group({
+      state: [''],
+      period: [''],
+      policy: ['']
+    });
+
   }
 
   ngOnInit(): void {
