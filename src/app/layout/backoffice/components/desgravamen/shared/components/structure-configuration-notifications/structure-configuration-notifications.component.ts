@@ -25,7 +25,7 @@ export class StructureConfigurationNotificationsComponent implements AfterViewIn
   @Output() values: EventEmitter<any> = new EventEmitter();
   @Input() phaseType: 'read' | 'validate' | 'migration' | 'billing';
 
-  structureDetail = this.desgravamenService?.storage?.params ?? {};
+  structureDetail: any = {}; 
 
   policieCollection: any[] = [];
 
@@ -43,12 +43,10 @@ export class StructureConfigurationNotificationsComponent implements AfterViewIn
     'Facturación de recibos'
   ];
 
-  policyForm: FormArray = this.builder.array([]);
-  controlMailDestinationType: FormControl = this.builder.control({
-    value: 'internal',
-    disabled: this.structureDetail.action == 'detalle'
-  }, Validators.required);
-  controlMailDestinationTypeValue: FormControl = this.builder.control('', Validators.required);
+  policyForm!: FormArray;
+  controlMailDestinationType!: FormControl;
+  controlMailDestinationTypeValue!: FormControl;
+  
   modalTypeEmailSelected: 'to' | 'cc' | 'cco';
   formIndexSelected: number;
 
@@ -62,6 +60,14 @@ export class StructureConfigurationNotificationsComponent implements AfterViewIn
     private readonly configurationService: ConfigurationService,
     private readonly desgravamenService: DesgravamenService
   ) {
+    this.structureDetail = this.desgravamenService.storage?.params ?? {};
+    this.policyForm = this.builder.array([]);
+    this.controlMailDestinationType = this.builder.control({
+      value: 'internal',
+      disabled: this.structureDetail.action == 'detalle'
+    }, Validators.required);
+    this.controlMailDestinationTypeValue = this.builder.control('', Validators.required);
+    
   }
 
   ngAfterViewInit(): void {

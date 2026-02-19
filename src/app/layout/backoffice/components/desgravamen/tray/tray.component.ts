@@ -36,13 +36,10 @@ export class TrayComponent implements OnInit {
     maxDate: new Date(),
   };
 
-  controlSearch: FormControl = this.builder.control('');
-  formFilters: FormGroup = this.builder.group({
-    policy: [''],
-    contractor: [''],
-    salesChannel: [''],
-    createdAt: [null],
-  });
+  controlSearch!: FormControl;
+  formFilters!: FormGroup;
+  
+  
 
   currentPage = 1;
   structures$: Array<any> = [];
@@ -85,8 +82,16 @@ export class TrayComponent implements OnInit {
     private readonly configurationService: ConfigurationService,
     
   ) {
+    this.controlSearch = this.builder.control('');
+    this.formFilters = this.builder.group({
+      policy: [''],
+      contractor: [''],
+      salesChannel: [''],
+      createdAt: [null],
+    });
     config.backdrop = 'static';
     config.keyboard = false;
+    
   }
 
   ngOnInit(): void {

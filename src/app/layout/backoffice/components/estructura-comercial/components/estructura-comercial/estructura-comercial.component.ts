@@ -24,13 +24,8 @@ import { EstructuraComercialService } from '../../../../../broker/services/estru
 })
 export class EstructuraComercialComponent implements OnInit {
     
-    formFilter: FormGroup = this._builder.group({
-        validator: ['', Validators.pattern(RegularExpressions.numbers)],
-        channelSale: [0],
-        branch: [0],
-        product: [0],
-        structure: [''],
-    });
+    formFilter!: FormGroup;
+  
 
     list: any[] = []; // LISTA DE ESTRUCTURA COMERCIAL
 
@@ -53,7 +48,15 @@ export class EstructuraComercialComponent implements OnInit {
         private modalService: NgbModal,
         private readonly spinner: NgxSpinnerService,
         private readonly estructuraComercialService: EstructuraComercialService
-    ) { }
+    ) {
+        this.formFilter = this._builder.group({
+            validator: ['', Validators.pattern(RegularExpressions.numbers)],
+            channelSale: [0],
+            branch: [0],
+            product: [0],
+            structure: [''],
+        });
+     }
 
     async ngOnInit() {
         this.spinner.show();
