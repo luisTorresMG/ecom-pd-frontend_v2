@@ -189,10 +189,10 @@ export class VdpDailyResumeReportComponent implements OnInit {
                     ) {
                       this.totalItems = res.totalRowNumber;
                       if (
-                        (this.foundResults.reportDaily =
+                        (this.foundResults.reportDaily ==
                           null && this.foundResults.reportDaily.length == 0)
                       )
-                        this.foundResults.reportDailyTotal =
+                        this.foundResults.reportDailyTotal ==
                           null &&
                           this.foundResults.reportDailyTotal.length == 0;
                       {

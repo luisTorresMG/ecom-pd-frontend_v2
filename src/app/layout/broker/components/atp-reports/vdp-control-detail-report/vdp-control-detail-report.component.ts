@@ -77,11 +77,11 @@ export class VdpControlDetailReportComponent implements OnInit {
                 ) {
                   this.totalItems = res.totalRowNumber;
                   if (
-                    (this.foundResults.reportPoliciesDetail =
+                    (this.foundResults.reportPoliciesDetail ==
                       null &&
                       this.foundResults.reportPoliciesDetail.length == 0)
                   )
-                    this.foundResults.reportPoliciesDetailTotal =
+                    this.foundResults.reportPoliciesDetailTotal ==
                       null &&
                       this.foundResults.reportPoliciesDetailTotal.length == 0;
                   {

@@ -10,9 +10,9 @@ import { CtasXcobrarService } from '../../../services/report/ctas-xcobrar.servic
 import { GlobalValidators } from '../../global-validators';
 import { ModuleConfig } from '../../module.config';
 import { DatePipe } from '@angular/common';
-import { ConsoleService } from '@ng-select/ng-select/lib/console.service';
+// import { ConsoleService } from '@ng-select/ng-select/lib/console.service';
 import { Console } from 'console';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+// import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { holdReady } from 'jquery';
 
 export interface FiltroBusqueda {

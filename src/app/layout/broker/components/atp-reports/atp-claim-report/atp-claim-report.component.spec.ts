@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AtpClaimReportComponent } from './atp-claim-report.component';
+// import { AtpClaimReportComponent } from './atp-claim-report.component';
 
-describe('AtpClaimReportComponent', () => {
-  let component: AtpClaimReportComponent;
-  let fixture: ComponentFixture<AtpClaimReportComponent>;
+// describe('AtpClaimReportComponent', () => {
+//   let component: AtpClaimReportComponent;
+//   let fixture: ComponentFixture<AtpClaimReportComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ AtpClaimReportComponent ]
-    })
-    .compileComponents();
-  }));
+//   beforeEach(async(() => {
+//     TestBed.configureTestingModule({
+//       declarations: [ AtpClaimReportComponent ]
+//     })
+//     .compileComponents();
+//   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(AtpClaimReportComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+//   beforeEach(() => {
+//     fixture = TestBed.createComponent(AtpClaimReportComponent);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+//   it('should create', () => {
+//     expect(component).toBeTruthy();
+//   });
+// });

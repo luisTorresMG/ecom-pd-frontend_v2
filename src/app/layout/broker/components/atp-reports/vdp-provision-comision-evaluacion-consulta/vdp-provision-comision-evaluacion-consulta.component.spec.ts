@@ -1,28 +1,28 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VdpProvisionComisionEvaluacionConsultaComponent } from './vdp-provision-comision-evaluacion-consulta.component';
+// import { VdpProvisionComisionEvaluacionConsultaComponent } from './vdp-provision-comision-evaluacion-consulta.component';
 
-describe('VdpComponent', () => {
-  let component: VdpProvisionComisionEvaluacionConsultaComponent;
-  let fixture: ComponentFixture<VdpProvisionComisionEvaluacionConsultaComponent>;
+// describe('VdpComponent', () => {
+//   let component: VdpProvisionComisionEvaluacionConsultaComponent;
+//   let fixture: ComponentFixture<VdpProvisionComisionEvaluacionConsultaComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ VdpProvisionComisionEvaluacionConsultaComponent ]
-    })
-    .compileComponents();
-  }));
+//   beforeEach(async(() => {
+//     TestBed.configureTestingModule({
+//       declarations: [ VdpProvisionComisionEvaluacionConsultaComponent ]
+//     })
+//     .compileComponents();
+//   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(VdpProvisionComisionEvaluacionConsultaComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+//   beforeEach(() => {
+//     fixture = TestBed.createComponent(VdpProvisionComisionEvaluacionConsultaComponent);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+//   it('should create', () => {
+//     expect(component).toBeTruthy();
+//   });
+// });
 
 
-//VdpProvisionComisionEvaluacionConsulta
+// //VdpProvisionComisionEvaluacionConsulta

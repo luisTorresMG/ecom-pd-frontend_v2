@@ -160,43 +160,66 @@ export class VdpAnualResumeReportComponent implements OnInit {
                   data.dStart_Date = null;
                   data.dExpir_Dat = null;
                 }
-                this.AtpReportService.ProcessReportControlYear(data).subscribe(
-                  (res) => {
-                    this.foundResults = res.genericResponse;
-                    if (
-                      this.foundResults.reportYear == 0 &&
-                      this.foundResults.reportYearTotal == 0
-                    ) {
-                      this.totalItems = res.totalRowNumber;
-                      if (
-                        (this.foundResults.reportYear =
-                          null && this.foundResults.reportYear.length == 0)
-                      )
-                        this.foundResults.reportYearTotal =
-                          null && this.foundResults.reportYearTotal.length == 0;
-                      {
-                        this.totalItems = 0;
-                        swal.fire(
-                          'Información',
-                          this.notfoundMessage,
-                          'warning'
-                        );
-                      }
-                    } else {
-                      this.excelService.generateResumenAnualPolizasVDPExcel(
-                        this.foundResults,
-                        'ResumenAnual_VDP_'
-                      );
-                    }
-                    this.isLoading = false;
-                  },
-                  (error) => {
-                    this.foundResults = [];
+                // this.AtpReportService.ProcessReportControlYear(data).subscribe(
+                //   (res) => {
+                //     this.foundResults = res.genericResponse;
+                //     if (
+                //       this.foundResults.reportYear == 0 &&
+                //       this.foundResults.reportYearTotal == 0
+                //     ) {
+                //       this.totalItems = res.totalRowNumber;
+                //       if (
+                //         (this.foundResults.reportYear =
+                //           null && this.foundResults.reportYear.length == 0)
+                //       )
+                //         this.foundResults.reportYearTotal =
+                //           null && this.foundResults.reportYearTotal.length == 0;
+                //       {
+                //         this.totalItems = 0;
+                //         swal.fire(
+                //           'Información',
+                //           this.notfoundMessage,
+                //           'warning'
+                //         );
+                //       }
+                //     } else {
+                //       this.excelService.generateResumenAnualPolizasVDPExcel(
+                //         this.foundResults,
+                //         'ResumenAnual_VDP_'
+                //       );
+                //     }
+                //     this.isLoading = false;
+                //   },
+                //   (error) => {
+                //     this.foundResults = [];
+                //     this.totalItems = 0;
+                //     this.isLoading = false;
+                //     swal.fire('Información', this.genericErrorMessage, 'error');
+                //   }
+                // );
+                this.AtpReportService.ProcessReportControlYear(data).subscribe((res) => {
+                  this.foundResults = res.genericResponse;
+                  this.totalItems = res.totalRowNumber;
+                  this.isLoading = false;
+
+                  const yearEmpty =
+                    !Array.isArray(this.foundResults?.reportYear) || this.foundResults.reportYear.length === 0;
+
+                  const totalEmpty =
+                    !Array.isArray(this.foundResults?.reportYearTotal) || this.foundResults.reportYearTotal.length === 0;
+
+                  if (yearEmpty && totalEmpty) {
                     this.totalItems = 0;
-                    this.isLoading = false;
-                    swal.fire('Información', this.genericErrorMessage, 'error');
+                    swal.fire('Información', this.notfoundMessage, 'warning');
+                    return;
                   }
-                );
+
+                  this.excelService.generateResumenAnualPolizasVDPExcel(
+                    this.foundResults,
+                    'ResumenAnual_VDP_'
+                  );
+                });
+
               }
             });
         }

@@ -194,10 +194,10 @@ export class VdpMonthResumeReportComponent implements OnInit {
                     ) {
                       this.totalItems = res.totalRowNumber;
                       if (
-                        (this.foundResults.reportMonth =
+                        (this.foundResults.reportMonth ==
                           null && this.foundResults.reportMonth.length == 0)
                       )
-                        this.foundResults.reportMonthTotal =
+                        this.foundResults.reportMonthTotal ==
                           null &&
                           this.foundResults.reportMonthTotal.length == 0;
                       {

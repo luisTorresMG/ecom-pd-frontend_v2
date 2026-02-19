@@ -36,11 +36,12 @@ export class CampaignAddComponent implements OnInit {
   campaignRenov = new CampaignRenov(0, 0, 0, '', '', '1', 0, '', false);
   ListaRenovacion: any[] = [];
   ListaCampaign: any = {};
-  campaignAll = new CampaignAll(
-    this.campaign,
-    this.campaignPlan,
-    this.ListaRenovacion
-  );
+  campaignAll!: CampaignAll;
+  // campaignAll = new CampaignAll(
+  //   this.campaign,
+  //   this.campaignPlan,
+  //   this.ListaRenovacion
+  // );
   lengthDocument: number = 8;
   public bsConfig: Partial<BsDatepickerConfig>;
   tipoDocumento: string;
@@ -68,6 +69,11 @@ export class CampaignAddComponent implements OnInit {
     public utilityService: UtilityService,
     private route: ActivatedRoute
   ) {
+     this.campaignAll = new CampaignAll(
+      this.campaign,
+      this.campaignPlan,
+      this.ListaRenovacion
+    );
     this.bsConfig = Object.assign(
       {},
       {
@@ -273,7 +279,7 @@ export class CampaignAddComponent implements OnInit {
     return Rpta;
   }
 
-  addCampaignRenov(tipoDoc: Number, numeroDoc: string, placa: string, origin) {
+  addCampaignRenov(tipoDoc: number, numeroDoc: string, placa: string, origin) {
     placa = placa.toUpperCase();
     if (
       tipoDoc <= 0 ||

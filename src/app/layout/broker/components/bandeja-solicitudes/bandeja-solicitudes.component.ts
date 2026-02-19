@@ -6,7 +6,7 @@ import { EmisionService } from '@root/layout/client/shared/services/emision.serv
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import * as moment from 'moment';
+import  moment from 'moment';
 
 import { BandejaSolicitudesService } from './shared/services/bandeja-solicitudes.service';
 import { ChannelSalesModel } from '@shared/models/channel-point-sales/channel-point-sale.model';
@@ -32,28 +32,13 @@ export class BandejaSolicitudesComponent implements OnInit {
       dateInputFormat: 'DD/MM/YYYY',
     }
   );
+  form!: FormGroup;
+  formMotiveReject!: FormGroup;
+  formAuto!: FormGroup;
+  authTechniqueCheckControl!: FormControl
 
-  form: FormGroup = this.builder.group({
-    request: ['', Validators.pattern(this.utilsService.onlyNumbers)],
-    channel: [0],
-    startDate: [new Date('01-01-2023')],
-    endDate: [new Date()],
-    licensePlate: ['', Validators.pattern(this.utilsService.alphaNumeric)],
-    state: [0],
-  });
 
-  formMotiveReject: FormGroup = this.builder.group({
-    motive: [null, Validators.required],
-    observation: ['', Validators.required],
-  });
-
-  formAuto: FormGroup = this.builder.group({
-    class: [{ value: '', disabled: true }, Validators.required],
-    brand: ['', Validators.required],
-    model: [{ value: '', disabled: true }, Validators.required],
-    version: [{ value: '', disabled: true }, Validators.required]
-  });
-  authTechniqueCheckControl: FormControl = this.builder.control(false, Validators.requiredTrue);
+ 
 
   listBrands$: any[] = [];
   listModels$: any[] = [];
@@ -121,6 +106,27 @@ export class BandejaSolicitudesComponent implements OnInit {
     private readonly emissionService: EmisionService,
     private readonly bandejaSolicitudesService: BandejaSolicitudesService,
   ) {
+     this.form = this.builder.group({
+    request: ['', Validators.pattern(this.utilsService.onlyNumbers)],
+    channel: [0],
+    startDate: [new Date('01-01-2023')],
+    endDate: [new Date()],
+    licensePlate: ['', Validators.pattern(this.utilsService.alphaNumeric)],
+    state: [0],
+  });
+
+  this.formMotiveReject = this.builder.group({
+    motive: [null, Validators.required],
+    observation: ['', Validators.required],
+  });
+
+  this.formAuto = this.builder.group({
+    class: [{ value: '', disabled: true }, Validators.required],
+    brand: ['', Validators.required],
+    model: [{ value: '', disabled: true }, Validators.required],
+    version: [{ value: '', disabled: true }, Validators.required]
+  });
+  this.authTechniqueCheckControl = this.builder.control(false, Validators.requiredTrue);
   }
 
   ngOnInit(): void {
