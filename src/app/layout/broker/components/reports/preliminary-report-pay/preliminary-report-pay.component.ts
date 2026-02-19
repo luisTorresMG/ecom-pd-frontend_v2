@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { PreliminaryReportService } from '../../../services/report/preliminary-report.service';
 import { ModuleConfig } from './../../module.config';
 import { GlobalValidators } from '../../global-validators';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+// import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-preliminary-report-pay',
