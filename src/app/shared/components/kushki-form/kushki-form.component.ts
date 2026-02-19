@@ -67,55 +67,17 @@ export class KushkiFormComponent implements OnInit {
   cardType: 'visa' | 'mastercard' | 'diners' | 'amex';
 
   currencies: Record<'PEN' | 'USD', string> = String.currencies;
+  paymentInfo!: KushkiModel;
 
-  paymentInfo: KushkiModel = new KushkiModel(this.kushkiService.getPaymentInfo());
+  // paymentInfo: KushkiModel = new KushkiModel(this.kushkiService.getPaymentInfo());
   paymentMethod: 'card' | 'cash' | 'transfer' = this.paymentInfo.payment.allowedMethods[0];
   idTokenSesion: number = 0;
 
-  formCardPayment: FormGroup = this.builder.group({
-    names: [],
-    legalName: [],
-    email: [
-      '',
-      [Validators.required, Validators.pattern(RegularExpressions.email)],
-    ],
-    cardNumber: [
-      '',
-      [
-        Validators.required,
-        Validators.pattern(RegularExpressions.numbers),
-        Validators.minLength(16),
-        Validators.maxLength(16),
-      ],
-    ],
-    cvv: [
-      '',
-      [Validators.required, Validators.minLength(3), Validators.maxLength(4)],
-    ],
-    dueDate: [
-      '',
-      [
-        Validators.pattern('^(0[1-9]|1[0-2])/(0[1-9]|[1-2][0-9]|3[0-1])$'),
-        Validators.maxLength(5),
-      ],
-    ],
-  });
-
-  formCashPayment: FormGroup = this.builder.group({
-    names: [],
-    surnames: [],
-    legalName: [],
-    documentType: [],
-    documentNumber: [],
-    email: ['', [Validators.required, Validators.pattern(RegularExpressions.email)]],
-  });
-
-  formPaymentTransfer: FormGroup = this.builder.group({
-    documentType: [],
-    documentNumber: [],
-    email: ['', [Validators.required, Validators.pattern(RegularExpressions.email)]],
-  });
-
+  formCardPayment!: FormGroup;
+  formCashPayment!: FormGroup;
+  formPaymentTransfer!: FormGroup
+  
+ 
   messageInfo: string = '';
 
   constructor(
@@ -123,9 +85,53 @@ export class KushkiFormComponent implements OnInit {
     private readonly kushkiService: KushkiService,
     private readonly screenSplash: ScreenSplashService
   ) {
+      this.formCardPayment = this.builder.group({
+        names: [],
+        legalName: [],
+        email: [
+          '',
+          [Validators.required, Validators.pattern(RegularExpressions.email)],
+        ],
+        cardNumber: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern(RegularExpressions.numbers),
+            Validators.minLength(16),
+            Validators.maxLength(16),
+          ],
+        ],
+        cvv: [
+          '',
+          [Validators.required, Validators.minLength(3), Validators.maxLength(4)],
+        ],
+        dueDate: [
+          '',
+          [
+            Validators.pattern('^(0[1-9]|1[0-2])/(0[1-9]|[1-2][0-9]|3[0-1])$'),
+            Validators.maxLength(5),
+          ],
+        ],
+      });
+
+      this.formCashPayment = this.builder.group({
+        names: [],
+        surnames: [],
+        legalName: [],
+        documentType: [],
+        documentNumber: [],
+        email: ['', [Validators.required, Validators.pattern(RegularExpressions.email)]],
+      });
+       
+      this.formPaymentTransfer = this.builder.group({
+        documentType: [],
+        documentNumber: [],
+        email: ['', [Validators.required, Validators.pattern(RegularExpressions.email)]],
+      });
   }
 
   ngOnInit(): void {
+    this.paymentInfo = new KushkiModel(this.kushkiService.getPaymentInfo());
     this.formValueChanges();
     this.initFormValues();
     this.getCredentials();

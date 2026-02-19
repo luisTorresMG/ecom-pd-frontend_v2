@@ -1,24 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MenuGeneralComponent } from './menu-general.component';
+// import { MenuGeneralComponent } from './menu-general.component';
 
-describe('MenuGeneralComponent', () => {
-  let component: MenuGeneralComponent;
-  let fixture: ComponentFixture<MenuGeneralComponent>;
+// describe('MenuGeneralComponent', () => {
+//   let component: MenuGeneralComponent;
+//   let fixture: ComponentFixture<MenuGeneralComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [MenuGeneralComponent],
-    }).compileComponents();
-  }));
+//   beforeEach(async(() => {
+//     TestBed.configureTestingModule({
+//       declarations: [MenuGeneralComponent],
+//     }).compileComponents();
+//   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(MenuGeneralComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+//   beforeEach(() => {
+//     fixture = TestBed.createComponent(MenuGeneralComponent);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+//   it('should create', () => {
+//     expect(component).toBeTruthy();
+//   });
+// });

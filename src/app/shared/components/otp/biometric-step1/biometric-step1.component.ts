@@ -29,10 +29,9 @@ import { BiometricService } from '@shared/services/biometric/biometric.service';
   ],
 })
 export class BiometricStep1Component implements OnInit {
-  formBiometric: FormGroup = this.builder.group({
-    img: [null],
-    file: [null, Validators.required],
-  });
+  formBiometric!: FormGroup;
+
+ 
 
   currentStep = 1;
 
@@ -60,6 +59,10 @@ export class BiometricStep1Component implements OnInit {
     private readonly biometricService: BiometricService,
     private readonly builder: FormBuilder
   ) {
+     this.formBiometric = this.builder.group({
+      img: [null],
+      file: [null, Validators.required],
+    });
   }
 
   ngOnInit(): void {

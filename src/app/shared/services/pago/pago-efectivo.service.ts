@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../api.service';
 import { HttpParams } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
-import { isNullOrUndefined } from 'util';
+// import { isNullOrUndefined } from 'util';
 @Injectable()
 export class PagoEfectivoService {
   endpoint = 'pago';
@@ -53,7 +53,8 @@ export class PagoEfectivoService {
     const action = 'pagoefectivo/generarcip';
     const url = `${this.endpoint}/${action}`;
 
-    correo = isNullOrUndefined(correo) ? 'no@posee.com' : correo;
+    // correo = isNullOrUndefined(correo) ? 'no@posee.com' : correo;
+    correo = correo == null ? 'no@posee.com' : correo;
     const data = {
       tipoSolicitud: 3,
       monto: monto,
@@ -91,7 +92,8 @@ export class PagoEfectivoService {
     const action = 'pagoefectivo/generarcip';
     const url = `${this.endpoint}/${action}`;
 
-    correo = isNullOrUndefined(correo) ? 'no@posee.com' : correo;
+    // correo = isNullOrUndefined(correo) ? 'no@posee.com' : correo;
+    correo = correo == null ? 'no@posee.com' : correo;
     const data = {
       idProcess,
       tipoSolicitud,

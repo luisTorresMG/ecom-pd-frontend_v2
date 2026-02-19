@@ -58,10 +58,8 @@ export class ProSelectComponent
 
   private initValue = null;
 
-  form: FormGroup = this.builder.group({
-    label: [''],
-    itemSelectedLabel: [''],
-  });
+  form!: FormGroup;
+ 
 
   onChange: Function;
   showList = false;
@@ -73,6 +71,10 @@ export class ProSelectComponent
   private inputSelect: ElementRef;
 
   constructor(private readonly builder: FormBuilder) {
+    this.form = this.builder.group({
+    label: [''],
+    itemSelectedLabel: [''],
+  });
     this.onChange = (_: any) => {
     };
   }

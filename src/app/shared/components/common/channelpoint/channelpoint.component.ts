@@ -3,7 +3,7 @@ import { ChannelPointService } from '../../../services/channelpoint/channelpoint
 import { ChannelSalesService } from '../../../services/channelsales/channelsales.service';
 import { ChannelPoint } from '../../../models/channelpoint/channelpoint';
 import { ChannelSales } from '../../../models/channelsales/channelsales';
-import { isNullOrUndefined } from 'util';
+// import { isNullOrUndefined } from 'util';
 import { AppConfig } from '../../../../app.config';
 @Component({
   selector: 'app-channelpoint',
@@ -90,7 +90,10 @@ export class ChannelpointComponent implements OnInit {
                   sdescript: 'TODOS'
                 };
                 this.ListChannelPoint = [all].concat(this.ListChannelPoint);
-                if (!isNullOrUndefined(this.myInput) && this.myInput) {
+                // if (!isNullOrUndefined(this.myInput) && this.myInput) {
+                //   this.salesPointIdSelected = this.ListChannelPoint[0].nnumpoint;
+                // }
+                if (this.myInput != null && this.myInput) {
                   this.salesPointIdSelected = this.ListChannelPoint[0].nnumpoint;
                 }
               }

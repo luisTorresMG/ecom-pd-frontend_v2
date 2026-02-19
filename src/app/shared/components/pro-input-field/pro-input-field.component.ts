@@ -32,14 +32,16 @@ export class ProInputFieldComponent implements OnInit, ControlValueAccessor {
 
   controlValue = new FormControl('');
 
-  form: FormGroup = this.builder.group({
-    value: this.controlValue,
-  });
+  form!: FormGroup;
+ 
 
   onChange: Function;
   onTouched: Function;
 
   constructor(private readonly builder: FormBuilder) {
+    this.form = this.builder.group({
+    value: this.controlValue,
+  });
     this.onChange = (_: any) => {};
     this.onTouched = (_: any) => {};
   }

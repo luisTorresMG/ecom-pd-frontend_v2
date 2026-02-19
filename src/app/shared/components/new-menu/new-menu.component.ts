@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HeaderService } from '../header/header.service';
 import { SessionStorageService } from '../../services/storage/storage-service';
 import { SafeResourceUrl } from '@angular/platform-browser';
-import { isNullOrUndefined } from 'util';
+// import { isNullOrUndefined } from 'util';
 import { environment } from './../../../../environments/environment';
 import { AppConfig } from '../../../app.config';
 import { Router } from '@angular/router';
@@ -300,9 +300,13 @@ export class NewMenuComponent implements OnInit {
     this.showLogo = false;
     const logoBroker = sessionStorage.getItem('canalVentaCliente');
     const logoClient = JSON.parse(sessionStorage.getItem('selling')) || '{}';
-    this.canal = isNullOrUndefined(logoBroker)
-      ? logoClient.sellingChannel
-      : logoBroker;
+    // this.canal = isNullOrUndefined(logoBroker)
+    //   ? logoClient.sellingChannel
+    //   : logoBroker;
+      this.canal = (logoBroker == null || logoBroker === '')
+    ? logoClient?.sellingChannel
+    : logoBroker;
+
     if (Number(environment.canaldeventadefault) !== Number(this.canal)) {
       if (this.canal != null) {
         this.showLogo = true;

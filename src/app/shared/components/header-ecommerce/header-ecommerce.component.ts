@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { isNullOrUndefined } from 'util';
+// import { isNullOrUndefined } from 'util';
 import { environment } from './../../../../environments/environment';
 import { SessionStorageService } from '../../services/storage/storage-service';
 import { HeaderService } from '../header/header.service';
@@ -77,9 +77,9 @@ export class HeaderEcommerceComponent implements OnInit {
     this.showLogo = false;
     const logoBroker = sessionStorage.getItem('canalVentaCliente');
     const logoClient = JSON.parse(sessionStorage.getItem('selling')) || '{}';
-    this.canal = isNullOrUndefined(logoBroker)
-      ? logoClient.sellingChannel
-      : logoBroker;
+    this.canal = logoBroker == null || logoBroker === ''
+    ? logoClient?.sellingChannel
+    : logoBroker;
     if (Number(environment.canaldeventadefault) !== Number(this.canal)) {
       if (this.canal != null) {
         this.showLogo = true;

@@ -117,14 +117,14 @@ import { OtpAuthAwsComponent } from '../components/otp-auth-aws/otp-auth-aws.com
     OtpTokenComponent,
     OtpAuthAwsComponent,
   ],
-  entryComponents: [
-    ButtonVisaComponent,
-    ButtonTelepagoComponent,
-    FrameComponent,
-    PixelGoogleAnalyticsComponent,
-    PixelGoogleTagManagerComponent,
-    PixelDigilantComponent,
-  ],
+  // entryComponents: [
+  //   ButtonVisaComponent,
+  //   ButtonTelepagoComponent,
+  //   FrameComponent,
+  //   PixelGoogleAnalyticsComponent,
+  //   PixelGoogleTagManagerComponent,
+  //   PixelDigilantComponent,
+  // ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SharedComponentsModule {}

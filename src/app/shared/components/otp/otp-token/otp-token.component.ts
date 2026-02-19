@@ -27,7 +27,44 @@ import { OtpAuthService } from '@shared/services/otp-auth/otp-auth.service';
   styleUrls: ['./otp-token.component.sass'],
 })
 export class OtpTokenComponent implements OnInit {
-  form: FormGroup = this.builder.group({
+  form!: FormGroup;
+  
+  tokenExpirationTime: number;
+  secondstokenExpirationTime: number;
+
+  tryAgainTime: number;
+  secondsTryAgainTime: number;
+
+  payloadOtp: IOtp;
+
+  responseOtp: any;
+
+  intervals: Array<any>;
+
+  @Input() set data(payload: IOtp) {
+    this.payloadOtp = payload;
+    this.registerOtp();
+  }
+
+  @Output() close: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() result: EventEmitter<IOtpResult> = new EventEmitter<IOtpResult>();
+
+  @ViewChild('c1', { static: false, read: ElementRef }) code1: ElementRef;
+  @ViewChild('c2', { static: false, read: ElementRef }) code2: ElementRef;
+  @ViewChild('c3', { static: false, read: ElementRef }) code3: ElementRef;
+  @ViewChild('c4', { static: false, read: ElementRef }) code4: ElementRef;
+  @ViewChild('c5', { static: false, read: ElementRef }) code5: ElementRef;
+  @ViewChild('c6', { static: false, read: ElementRef }) code6: ElementRef;
+
+  @ViewChild('messageInfo', { static: false, read: ElementRef })
+  messageInfo: ElementRef;
+
+  constructor(
+    private readonly builder: FormBuilder,
+    private readonly spinner: NgxSpinnerService,
+    private readonly otpAuthService: OtpAuthService,
+  ) {
+    this.form = this.builder.group({
     code1: [
       null,
       [
@@ -96,41 +133,6 @@ export class OtpTokenComponent implements OnInit {
     ],
   });
 
-  tokenExpirationTime: number;
-  secondstokenExpirationTime: number;
-
-  tryAgainTime: number;
-  secondsTryAgainTime: number;
-
-  payloadOtp: IOtp;
-
-  responseOtp: any;
-
-  intervals: Array<any>;
-
-  @Input() set data(payload: IOtp) {
-    this.payloadOtp = payload;
-    this.registerOtp();
-  }
-
-  @Output() close: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() result: EventEmitter<IOtpResult> = new EventEmitter<IOtpResult>();
-
-  @ViewChild('c1', { static: false, read: ElementRef }) code1: ElementRef;
-  @ViewChild('c2', { static: false, read: ElementRef }) code2: ElementRef;
-  @ViewChild('c3', { static: false, read: ElementRef }) code3: ElementRef;
-  @ViewChild('c4', { static: false, read: ElementRef }) code4: ElementRef;
-  @ViewChild('c5', { static: false, read: ElementRef }) code5: ElementRef;
-  @ViewChild('c6', { static: false, read: ElementRef }) code6: ElementRef;
-
-  @ViewChild('messageInfo', { static: false, read: ElementRef })
-  messageInfo: ElementRef;
-
-  constructor(
-    private readonly builder: FormBuilder,
-    private readonly spinner: NgxSpinnerService,
-    private readonly otpAuthService: OtpAuthService,
-  ) {
     this.intervals = new Array();
     this.tokenExpirationTime = 300;
     this.tryAgainTime = 60;
