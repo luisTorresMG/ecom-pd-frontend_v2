@@ -925,67 +925,67 @@ import { InterfazDemandaComponent } from './components/Cobranzas-otros/interfaz-
         VdpIngresosMonitoreoComponent,
         InterfazDemandaComponent
     ],
-    entryComponents: [
-        ResVaucherComponent,
-        PayrollResultadoVisaComponent,
-        FilePickerComponent, // Kuntur 20190812
-        CreditQualificationRecordComponent, // Kuntur 20190812
-        ContractorViewComponent, // Kuntur 20190812
-        ContractorLocationFormComponent, // Kuntur 20190812
-        ContractorLocationContactComponent, // Kuntur 20190812
-        PolicyMovementDetailsComponent, // Kuntur 20190812
-        PolicyFormComponent, // Kuntur 20190812
-        AddTelephoneComponent, // Kuntur 20190812
-        AddEmailComponent, // Kuntur 20190812
-        AddAddressComponent, // Kuntur 20190812
-        AddContactComponent, // Kuntur 20190812
-        AgencyFormComponent, // Kuntur 20190812
-        BrokerSearchBynameComponent, // Kuntur 20190812
-        QuotationTrackingComponent, // Kuntur 20190812
-        SearchContractingComponent, // Kuntur 20190812
-        SearchBrokerComponent, // Kuntur 20190812
-        SearchSchoolComponent,
-        ListadoModalComponent,//Rentas
-        ConfirmModalComponent,//Rentas
-        EjecutivoModalComponent,//Rentas
-        ComentarioModalComponent,//Rentas
-        DocumentoModalComponent,//Rentas
-        ClientModalComponent, //Rentas
-        NewDocumentModalComponent,//Rentas
-        RegistroBeneficiarioModalComponent,//Rentas
-        ValErrorComponent, // Kuntur 20190812
-        PolicyDocumentsComponent, // Kuntur 20190812
-        AddCiiuComponent, // Kuntur 20190812
-        AnulMovComponent, // Kuntur 20190919
-        MethodsPaymentComponent, // Kuntur 2019103
-        MonitoringViewComponent, // Kuntur 20190917
-        PolicyMovementDetailsAllComponent,
-        ViewCouponComponent,
-        PolicyDocumentsAllComponent,
-        PolicyMovementDetailsCreditComponent,
-        RequestProformaPolicyViewComponent, // Kuntur 20200515
-        CreditViewComponent,
-        PaymentClentViewComponent,
-        BillReportReceiptComponent,
-        BillReportReceiptColumnDialogComponent,
-        MaximumInsurableRemunerationDialogComponent,
-        CombinationActivitiesDialogComponent,
-        RetroactivityDialogComponent,
-        QuotationCoverComponent, // Kuntur 20200822
-        SearchEndoserComponent, // desgravament
-        ReassingTransactComponent,
-        SucaveViewComponent,
-        ReporteInconsistenciasSanitasViewComponent,
-        MantenimientoPlanAsistModalConfigComponent,
-        ConfigCommissionComponent,
-        ConfigCommissionComponentRecord,
-        EditPorcentajeComponent,
-        HistorialPorcentajeRmvComponent,
-        PolicyChangeUserComponent,
-        PolicyListInsuredComponent,
-        PolicyCreateInsuredComponent,
-        PolicyReportInsuredComponent
-    ],
+    // entryComponents: [
+    //     ResVaucherComponent,
+    //     PayrollResultadoVisaComponent,
+    //     FilePickerComponent, // Kuntur 20190812
+    //     CreditQualificationRecordComponent, // Kuntur 20190812
+    //     ContractorViewComponent, // Kuntur 20190812
+    //     ContractorLocationFormComponent, // Kuntur 20190812
+    //     ContractorLocationContactComponent, // Kuntur 20190812
+    //     PolicyMovementDetailsComponent, // Kuntur 20190812
+    //     PolicyFormComponent, // Kuntur 20190812
+    //     AddTelephoneComponent, // Kuntur 20190812
+    //     AddEmailComponent, // Kuntur 20190812
+    //     AddAddressComponent, // Kuntur 20190812
+    //     AddContactComponent, // Kuntur 20190812
+    //     AgencyFormComponent, // Kuntur 20190812
+    //     BrokerSearchBynameComponent, // Kuntur 20190812
+    //     QuotationTrackingComponent, // Kuntur 20190812
+    //     SearchContractingComponent, // Kuntur 20190812
+    //     SearchBrokerComponent, // Kuntur 20190812
+    //     SearchSchoolComponent,
+    //     ListadoModalComponent,//Rentas
+    //     ConfirmModalComponent,//Rentas
+    //     EjecutivoModalComponent,//Rentas
+    //     ComentarioModalComponent,//Rentas
+    //     DocumentoModalComponent,//Rentas
+    //     ClientModalComponent, //Rentas
+    //     NewDocumentModalComponent,//Rentas
+    //     RegistroBeneficiarioModalComponent,//Rentas
+    //     ValErrorComponent, // Kuntur 20190812
+    //     PolicyDocumentsComponent, // Kuntur 20190812
+    //     AddCiiuComponent, // Kuntur 20190812
+    //     AnulMovComponent, // Kuntur 20190919
+    //     MethodsPaymentComponent, // Kuntur 2019103
+    //     MonitoringViewComponent, // Kuntur 20190917
+    //     PolicyMovementDetailsAllComponent,
+    //     ViewCouponComponent,
+    //     PolicyDocumentsAllComponent,
+    //     PolicyMovementDetailsCreditComponent,
+    //     RequestProformaPolicyViewComponent, // Kuntur 20200515
+    //     CreditViewComponent,
+    //     PaymentClentViewComponent,
+    //     BillReportReceiptComponent,
+    //     BillReportReceiptColumnDialogComponent,
+    //     MaximumInsurableRemunerationDialogComponent,
+    //     CombinationActivitiesDialogComponent,
+    //     RetroactivityDialogComponent,
+    //     QuotationCoverComponent, // Kuntur 20200822
+    //     SearchEndoserComponent, // desgravament
+    //     ReassingTransactComponent,
+    //     SucaveViewComponent,
+    //     ReporteInconsistenciasSanitasViewComponent,
+    //     MantenimientoPlanAsistModalConfigComponent,
+    //     ConfigCommissionComponent,
+    //     ConfigCommissionComponentRecord,
+    //     EditPorcentajeComponent,
+    //     HistorialPorcentajeRmvComponent,
+    //     PolicyChangeUserComponent,
+    //     PolicyListInsuredComponent,
+    //     PolicyCreateInsuredComponent,
+    //     PolicyReportInsuredComponent
+    // ],
 
     schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
     providers: [

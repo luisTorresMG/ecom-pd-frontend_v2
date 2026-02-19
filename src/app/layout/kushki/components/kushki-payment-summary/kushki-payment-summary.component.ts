@@ -25,15 +25,17 @@ export class KushkiPaymentSummaryComponent implements OnInit {
       prefix: 'USD',
     },
   };
-
-  payload: IKushki = this.kushkiService.getPaymentInfo();
-
-  paymentTypeControl: FormControl = this.builder.control('');
+    payload!: IKushki;
+   paymentTypeControl!: FormControl;
+ 
 
   constructor(
     private readonly builder: FormBuilder,
     private readonly kushkiService: KushkiService
-  ) {}
+  ) {
+      this.payload = this.kushkiService.getPaymentInfo();
+      this.paymentTypeControl = this.builder.control('');
+  }
 
   ngOnInit(): void {
     this.paymentTypeControl.setValue(this.payload.payment.allowedMethods[0]);
