@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Vidaley } from '../../shared/models/vidaley';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
-import * as moment from 'moment';
+import  moment from 'moment';
 import { VidaleyService } from '../../shared/services/vidaley.service';
 import { finalize } from 'rxjs/operators';
 import { GoogleTagManagerService } from '../../shared/services/google-tag-manager.service';

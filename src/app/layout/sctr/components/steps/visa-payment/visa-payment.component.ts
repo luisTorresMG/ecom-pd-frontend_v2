@@ -26,8 +26,7 @@ export class VisaPaymentComponent implements OnInit, OnDestroy {
 
   visaToken: string;
   visaSession: any;
-
-  pdf = this.sanitizer.bypassSecurityTrustResourceUrl('about:blank');
+  pdf!: any;
 
   successfullPayment = false;
   valid = false;
@@ -52,7 +51,10 @@ export class VisaPaymentComponent implements OnInit, OnDestroy {
     private readonly vidaleyService: VidaleyService,
     private readonly googleService: GoogleTagManagerService,
     private spinner: NgxSpinnerService
-  ) {}
+  ) {
+      this.pdf = this.sanitizer.bypassSecurityTrustResourceUrl('about:blank');
+
+  }
 
   ngOnInit() {
     this.vidaleyUser = JSON.parse(sessionStorage.getItem('sctr')) || {};

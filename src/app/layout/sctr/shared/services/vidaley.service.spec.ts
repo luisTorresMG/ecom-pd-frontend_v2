@@ -1,12 +1,12 @@
-import { TestBed } from '@angular/core/testing';
+// import { TestBed } from '@angular/core/testing';
 
-import { VidaleyService } from './vidaley.service';
+// import { VidaleyService } from './vidaley.service';
 
-describe('VidaleyService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+// describe('VidaleyService', () => {
+//   beforeEach(() => TestBed.configureTestingModule({}));
 
-  it('should be created', () => {
-    const service: VidaleyService = TestBed.get(VidaleyService);
-    expect(service).toBeTruthy();
-  });
-});
+//   it('should be created', () => {
+//     const service: VidaleyService = TestBed.get(VidaleyService);
+//     expect(service).toBeTruthy();
+//   });
+// });

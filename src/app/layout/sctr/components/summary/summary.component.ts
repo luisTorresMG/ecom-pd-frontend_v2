@@ -7,7 +7,7 @@ import {
   ViewChild,
   ElementRef,
 } from '@angular/core';
-import * as moment from 'moment';
+import  moment from 'moment';
 import { Vidaley } from '../../shared/models/vidaley';
 import { VidaleyService } from '../../shared/services/vidaley.service';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -50,15 +50,16 @@ export class SummaryComponent implements OnInit {
 
   file: File;
   fileName = '';
-
-  validateForm = this.fb.group({
-    file: [null, [Validators.required]],
-  });
-
+  validateForm!: any;
+ 
   constructor(
     private readonly fb: FormBuilder,
     private readonly googleService: GoogleTagManagerService
-  ) { }
+  ) { 
+      this.validateForm = this.fb.group({
+    file: [null, [Validators.required]],
+  });
+  }
 
   ngOnInit() {
     this.dates.startDate = moment(this.user.startValidity).format('DD/MM/YYYY');

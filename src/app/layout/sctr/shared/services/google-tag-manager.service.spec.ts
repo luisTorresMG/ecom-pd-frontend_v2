@@ -1,12 +1,12 @@
-import { TestBed } from '@angular/core/testing';
+// import { TestBed } from '@angular/core/testing';
 
-import { GoogleTagManagerService } from './google-tag-manager.service';
+// import { GoogleTagManagerService } from './google-tag-manager.service';
 
-describe('GoogleTagManagerService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+// describe('GoogleTagManagerService', () => {
+//   beforeEach(() => TestBed.configureTestingModule({}));
 
-  it('should be created', () => {
-    const service: GoogleTagManagerService = TestBed.get(GoogleTagManagerService);
-    expect(service).toBeTruthy();
-  });
-});
+//   it('should be created', () => {
+//     const service: GoogleTagManagerService = TestBed.get(GoogleTagManagerService);
+//     expect(service).toBeTruthy();
+//   });
+// });

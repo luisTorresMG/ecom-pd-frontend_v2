@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { filter, finalize, map } from 'rxjs/operators';
-import { isNullOrUndefined } from 'util';
+// import { isNullOrUndefined } from 'util';
 import { EmisionService } from '../../../client/shared/services/emision.service';
 import { SessionService } from '../../../soat/shared/services/session.service';
 import { Vidaley } from '../../shared/models/vidaley';
@@ -191,7 +191,8 @@ export class EmployeeInfoComponent implements OnInit {
           (val) =>
             Array.isArray(val) &&
             val.length > 0 &&
-            !isNullOrUndefined(val[0].p_SDOCUMENT)
+            val[0]?.p_SDOCUMENT != null &&              
+            String(val[0].p_SDOCUMENT).trim() !== '' 
         ),
         map((response: Array<any>) => response.pop()),
         finalize(() => (this.loaders.userInfo = false))

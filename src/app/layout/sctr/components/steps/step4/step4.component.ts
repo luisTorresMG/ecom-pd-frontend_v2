@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import * as moment from 'moment';
+import  moment from 'moment';
 
 import { VidaleyService } from '../../../shared/services/vidaley.service';
 import { SessionService } from '../../../../soat/shared/services/session.service';

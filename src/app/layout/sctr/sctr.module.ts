@@ -76,7 +76,7 @@ registerLocaleData(localeEs, 'es');
     BannerComponent,
     EmployeeInfoComponent,
   ],
-  entryComponents: [SctrComponent],
+  // entryComponents: [SctrComponent],
   imports: [
     CommonModule,
     SctrRoutingModule,

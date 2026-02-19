@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as moment from 'moment';
+import  moment from 'moment';
 import { Vidaley, getQuoteParams } from '../../../shared/models/vidaley';
 import { Router } from '@angular/router';
 import { VidaleyService } from '../../../shared/services/vidaley.service';

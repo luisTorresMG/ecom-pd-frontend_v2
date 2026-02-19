@@ -8,7 +8,7 @@ import { Contratante } from '../../../../client/shared/models/contratante.model'
 import { SessionService } from '../../../../soat/shared/services/session.service';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { isNullOrUndefined } from 'util';
+// import { isNullOrUndefined } from 'util';
 import { GoogleTagManagerService } from '../../../shared/services/google-tag-manager.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { VidaleyService } from '../../../../sctr/shared/services/vidaley.service';
