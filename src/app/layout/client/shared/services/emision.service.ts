@@ -6,7 +6,7 @@ import { ApiService } from '@shared/services/api.service';
 import { Contratante } from '../models/contratante.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/environment';
-import { isNullOrUndefined } from 'util';
+// import { isNullOrUndefined } from 'util';
 import { PdfDigitalReenvio } from '../../../broker/models/historial/pdfdigitalreenvio';
 import { MigrationRequest, MigrationResponse } from '../models/migration.model';
 import { Observable } from 'rxjs/Observable';
@@ -146,7 +146,9 @@ export class EmisionService {
   }
 
   generarVoucherDigitalPdf(auth: any) {
-    const producto = isNullOrUndefined(auth.producto) ? '' : auth.producto;
+    // const producto = isNullOrUndefined(auth.producto) ? '' : auth.producto;
+    const producto = auth.producto == null ? '' : auth.producto;
+
 
     const body = {
       email: auth.email,

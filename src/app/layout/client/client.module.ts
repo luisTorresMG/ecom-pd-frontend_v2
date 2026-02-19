@@ -45,7 +45,7 @@ import { CommonComponentsModule } from '@shared/modules/common-components.module
     CommonComponentsModule,
   ],
   declarations: [ClientComponent],
-  entryComponents: [],
+  // entryComponents: [],
   providers: [
     ApiService,
     ConfigService,
