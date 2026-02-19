@@ -75,11 +75,13 @@ export class DataProductComponent implements OnInit {
   chrono: boolean;
   message: string;
 
-  tariff = this.vidaDevolucionService.storage?.buyInsurance || {};
-  contractor = this.vidaDevolucionService.storage?.contractor || {};
-  idecon = this.vidaDevolucionService.storage?.idecon || {};
-  worldCheck = this.vidaDevolucionService.storage?.worldCheck || {};
-  scoring = this.vidaDevolucionService.storage?.scoring;
+  tariff!: any;
+  contractor!: any;
+  idecon!: any;
+  worldCheck!: any;
+  scoring!: any;
+
+  
   get estadoProspecto(): any {
     return this.vidaDevolucionService.storage?.estado || {};
   }
@@ -126,6 +128,11 @@ export class DataProductComponent implements OnInit {
     private readonly spinner: NgxSpinnerService,
     private readonly router: Router
   ) {
+    this.tariff = this.vidaDevolucionService.storage?.buyInsurance || {};
+    this.contractor = this.vidaDevolucionService.storage?.contractor || {};
+    this.idecon = this.vidaDevolucionService.storage?.idecon || {};
+    this.worldCheck = this.vidaDevolucionService.storage?.worldCheck || {};
+    this.scoring = this.vidaDevolucionService.storage?.scoring;
     this.form = builder.group({
       link: [null],
     });
@@ -750,30 +757,28 @@ export class DataProductComponent implements OnInit {
       idDepartamento: formContractor.departamento,
       idProvincia: formContractor.provincia,
       idDistrito: formContractor.distrito,
-      beneficiarios: this.beneficiarie.map(
-        (value: any) =>
-          ({
-            idTipoPersona: 1,
-            idTipoDocumento: value.idTipoDocumento,
-            numeroDocumento: value.numeroDocumento,
-            nombres: value.nombres,
-            apellidoPaterno: value.apellidoPaterno,
-            apellidoMaterno: value.apellidoMaterno,
-            idNacionalidad: value.idNacionalidad,
-            fechaNacimiento:
-              (value.fechaNacimiento || '').toString()?.indexOf('/') == -1
-                ? moment(value.fechaNacimiento).format('DD/MM/YYYY')
-                : value.fechaNacimiento,
-            idSexo: value.idSexo,
-            relacion: {
-              id: value.idParentesco,
-              descripcion: value.parentesco,
-            },
-            porcentajeParticipacion: value.porcentajeParticipacion,
-            estado: value.estado || null,
-          } || [])
-      ),
+      beneficiarios: (this.beneficiarie ?? []).map((value: any) => ({
+        idTipoPersona: 1,
+        idTipoDocumento: value.idTipoDocumento,
+        numeroDocumento: value.numeroDocumento,
+        nombres: value.nombres,
+        apellidoPaterno: value.apellidoPaterno,
+        apellidoMaterno: value.apellidoMaterno,
+        idNacionalidad: value.idNacionalidad,
+        fechaNacimiento:
+          (value.fechaNacimiento || '').toString().indexOf('/') === -1
+            ? moment(value.fechaNacimiento).format('DD/MM/YYYY')
+            : value.fechaNacimiento,
+        idSexo: value.idSexo,
+        relacion: {
+          id: value.idParentesco,
+          descripcion: value.parentesco,
+        },
+        porcentajeParticipacion: value.porcentajeParticipacion,
+        estado: value.estado ?? null,
+      })),
     };
+
     if (this.beneficiariesSelectedQuotation$.length != 0) {
       if (this.sumPercentagesBeneficiaries == 100) {
         this.blockEmail = true;

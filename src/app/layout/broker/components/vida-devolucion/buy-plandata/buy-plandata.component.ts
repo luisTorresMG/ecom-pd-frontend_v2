@@ -771,29 +771,26 @@ export class BuyPlanDataComponent implements OnInit {
                 ?.obligacionFiscalcontratante,
             }
             : null,
-        aseguradoContratante: this.typeClients == 1 ? true : false,
-        beneficiarioLegal:
-          +storage.buyInsurance?.typeBeneficiaries == 1 ? '1' : '0',
-        idTarifario: +storage.buyInsurance?.idTarif,
-        beneficiarios: this.fb.getRawValue().map(
-          (value: any) =>
-            ({
-              idTipoPersona: 1,
-              idTipoDocumento: value.documentType,
-              numeroDocumento: value.documentNumber,
-              nombres: value.names,
-              apellidoPaterno: value.lastName,
-              apellidoMaterno: value.lastName2,
-              idNacionalidad: value.nationality,
-              fechaNacimiento:
-                (value.birthdate || '').toString()?.indexOf('/') == -1
-                  ? moment(value.birthdate).format('DD/MM/YYYY')
-                  : value.birthdate,
-              idSexo: value.sex,
-              relacion: this.getJsonRelationship(value.relationship),
-              porcentajeParticipacion: value.assignment,
-            } || [])
-        ),
+              aseguradoContratante: this.typeClients == 1 ? true : false,
+              beneficiarioLegal:
+                +storage.buyInsurance?.typeBeneficiaries == 1 ? '1' : '0',
+              idTarifario: +storage.buyInsurance?.idTarif,
+            beneficiarios: (this.fb.getRawValue() ?? []).map((value: any) => ({
+            idTipoPersona: 1,
+            idTipoDocumento: value.documentType,
+            numeroDocumento: value.documentNumber,
+            nombres: value.names,
+            apellidoPaterno: value.lastName,
+            apellidoMaterno: value.lastName2,
+            idNacionalidad: value.nationality,
+            fechaNacimiento:
+              (value.birthdate || '').toString().indexOf('/') === -1
+                ? moment(value.birthdate).format('DD/MM/YYYY')
+                : value.birthdate,
+            idSexo: value.sex,
+            relacion: this.getJsonRelationship(value.relationship),
+            porcentajeParticipacion: value.assignment,
+          })),
       };
 
       this._spinner.show();

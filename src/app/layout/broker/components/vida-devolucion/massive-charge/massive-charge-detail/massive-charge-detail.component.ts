@@ -53,7 +53,10 @@ export class MassiveChargeDetailComponent implements OnInit {
 
   // *CARGAR DATOS DE API DETALLE O DE VALIDACIONES DE TRAMA
   initComponent(): void {
-    this.processId = +this.activatedRoute.snapshot.paramMap.get('id') ?? null;
+    // this.processId = +this.activatedRoute.snapshot.paramMap.get('id') ?? null;
+    const idStr = this.activatedRoute.snapshot.paramMap.get('id');
+    this.processId = idStr == null ? null : +idStr;
+
     if (!this.processId) {
       const data = JSON.parse(
         sessionStorage.getItem('vdp-massive-charge-detail')

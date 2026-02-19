@@ -74,7 +74,28 @@ export class ContratanteFormComponent implements OnInit {
     max: 8,
   };
 
-  form: FormGroup = this.builder.group({
+  form!: FormGroup;
+
+
+  documentInformation$: any;
+  riskClientInfo$: any;
+  isValidFechaNacimiento: boolean;
+  siteKey = AppConfig.CAPTCHA_KEY;
+
+  isLoadedAllServices!: any;
+  
+
+  @ViewChild('recaptchaRef', { static: true }) recaptcha: RecaptchaComponent;
+
+  constructor(
+    private readonly builder: FormBuilder,
+    private readonly spinner: NgxSpinnerService,
+    private readonly utilService: UtilsService,
+    private readonly vidaDevolucionService: VidaDevolucionService,
+    private readonly newClientService: NewClientService
+  ) {
+    this.isLoadedAllServices = this.vidaDevolucionService.storage?.isLoadedAllServices || false;
+      this.form = this.builder.group({
     documentType: [{ value: 2, disabled: true }],
     documentNumber: [
       null,
@@ -104,23 +125,6 @@ export class ContratanteFormComponent implements OnInit {
     birthdate: [null, Validators.required],
   });
 
-  documentInformation$: any;
-  riskClientInfo$: any;
-  isValidFechaNacimiento: boolean;
-  siteKey = AppConfig.CAPTCHA_KEY;
-
-  isLoadedAllServices =
-    this.vidaDevolucionService.storage?.isLoadedAllServices || false;
-
-  @ViewChild('recaptchaRef', { static: true }) recaptcha: RecaptchaComponent;
-
-  constructor(
-    private readonly builder: FormBuilder,
-    private readonly spinner: NgxSpinnerService,
-    private readonly utilService: UtilsService,
-    private readonly vidaDevolucionService: VidaDevolucionService,
-    private readonly newClientService: NewClientService
-  ) {
     this.isValidFechaNacimiento = true;
     this.limitDate = new Date(
       new Date().setFullYear(Number(new Date().getFullYear()) - 18)

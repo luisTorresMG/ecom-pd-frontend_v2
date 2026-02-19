@@ -132,9 +132,8 @@ export class ViewQuotationComponent implements OnInit {
   dpsSummary: any = {};
   codAsesor: number;
   validarspanhover: any = false;
-  formComment = this.builder.group({
-    comment: [null, Validators.required],
-  });
+  formComment!: any;
+ 
 
   listComments: [] = [];
   listAssesors: Array<any> = [];
@@ -231,6 +230,9 @@ export class ViewQuotationComponent implements OnInit {
     private readonly api: ApiService,
     private readonly _mainService: MainService
   ) {
+     this.formComment = this.builder.group({
+    comment: [null, Validators.required],
+  });
     this.isValidFechaNacimiento = true;
     this.limitDate = new Date(
       new Date().setFullYear(Number(new Date().getFullYear()) - 18)
@@ -743,30 +745,60 @@ export class ViewQuotationComponent implements OnInit {
       idDepartamento: formContractor.departamento,
       idProvincia: formContractor.provincia,
       idDistrito: formContractor.distrito,
-      beneficiarios: this.beneficiarie.map(
-        (value: any) =>
-          ({
-            idTipoPersona: 1,
-            idTipoDocumento: value.idTipoDocumento,
-            numeroDocumento: value.numeroDocumento,
-            nombres: value.nombres,
-            apellidoPaterno: value.apellidoPaterno,
-            apellidoMaterno: value.apellidoMaterno,
-            idNacionalidad: value.idNacionalidad,
-            fechaNacimiento:
-              (value.fechaNacimiento || '').toString()?.indexOf('/') == -1
-                ? moment(value.fechaNacimiento).format('DD/MM/YYYY')
-                : value.fechaNacimiento,
-            idSexo: value.idSexo,
-            relacion: {
-              id: value.idParentesco,
-              descripcion: value.parentesco,
-            },
-            porcentajeParticipacion: value.porcentajeParticipacion,
-            estado: value.estado || null,
-          } || [])
-      ),
+      beneficiarios: (this.beneficiarie ?? []).map((value: any) => ({
+        idTipoPersona: 1,
+        idTipoDocumento: value.idTipoDocumento,
+        numeroDocumento: value.numeroDocumento,
+        nombres: value.nombres,
+        apellidoPaterno: value.apellidoPaterno,
+        apellidoMaterno: value.apellidoMaterno,
+        idNacionalidad: value.idNacionalidad,
+        fechaNacimiento:
+          (value.fechaNacimiento || '').toString().indexOf('/') === -1
+            ? moment(value.fechaNacimiento).format('DD/MM/YYYY')
+            : value.fechaNacimiento,
+        idSexo: value.idSexo,
+        relacion: {
+          id: value.idParentesco,
+          descripcion: value.parentesco,
+        },
+        porcentajeParticipacion: value.porcentajeParticipacion,
+        estado: value.estado ?? null,
+      })),
     };
+
+    // const beneRequest: any = {
+    //   idProcess: +this.storage.summaryQuotationSelected.idProceso,
+    //   telefono: contractor.telefono,
+    //   correo: formContractor.email,
+    //   direccion: formContractor.direccion,
+    //   idDepartamento: formContractor.departamento,
+    //   idProvincia: formContractor.provincia,
+    //   idDistrito: formContractor.distrito,
+    //   beneficiarios: this.beneficiarie.map(
+    //     (value: any) =>
+    //       ({
+    //         idTipoPersona: 1,
+    //         idTipoDocumento: value.idTipoDocumento,
+    //         numeroDocumento: value.numeroDocumento,
+    //         nombres: value.nombres,
+    //         apellidoPaterno: value.apellidoPaterno,
+    //         apellidoMaterno: value.apellidoMaterno,
+    //         idNacionalidad: value.idNacionalidad,
+    //         fechaNacimiento:
+    //           (value.fechaNacimiento || '').toString()?.indexOf('/') == -1
+    //             ? moment(value.fechaNacimiento).format('DD/MM/YYYY')
+    //             : value.fechaNacimiento,
+    //         idSexo: value.idSexo,
+    //         relacion: {
+    //           id: value.idParentesco,
+    //           descripcion: value.parentesco,
+    //         },
+    //         porcentajeParticipacion: value.porcentajeParticipacion,
+    //         estado: value.estado || null,
+    //       } || [])
+    //   ),
+    // };
     if (this.showbeneficiariesSelectedQuotation$.length != 0) {
       if (this.sumPercentagesBeneficiaries == 100) {
         this.summaryService.sendBeneficiaries(beneRequest).subscribe();

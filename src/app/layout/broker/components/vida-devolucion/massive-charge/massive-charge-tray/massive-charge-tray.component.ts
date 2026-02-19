@@ -42,18 +42,10 @@ export class MassiveChargeTrayComponent implements OnInit {
 
   startDateConfig: Partial<BsDatepickerConfig>;
   endDateConfig: Partial<BsDatepickerConfig>;
+   formFilters!: FormGroup;
+   formMassiveCharge!: FormGroup;
 
-  formFilters: FormGroup = this.builder.group({
-    salesChannel: [null, Validators.min(0)],
-    pointSale: [null, Validators.min(0)],
-    startDate: [null],
-    endDate: [null],
-    processId: [null, Validators.pattern(RegularExpressions.numbers)],
-  }); // *FORMULARIO DE FILTROS
-
-  formMassiveCharge: FormGroup = this.builder.group({
-    file: [null, Validators.required],
-  }); // *FORMULARIO DE NUEVA CARGA MASIVA
+ 
 
   private allowedExtensions: Array<string> = String.allowedExtensions; // *EXTENSIONES PERMITIDAS
 
@@ -85,7 +77,19 @@ export class MassiveChargeTrayComponent implements OnInit {
     private readonly spinner: NgxSpinnerService,
     private readonly utilsService: UtilsService,
     private readonly massiveChargeService: MassiveChargeService
-  ) { }
+  ) { 
+     this.formFilters = this.builder.group({
+    salesChannel: [null, Validators.min(0)],
+    pointSale: [null, Validators.min(0)],
+    startDate: [null],
+    endDate: [null],
+    processId: [null, Validators.pattern(RegularExpressions.numbers)],
+  }); // *FORMULARIO DE FILTROS
+
+  this.formMassiveCharge = this.builder.group({
+    file: [null, Validators.required],
+  }); // *FORMULARIO DE NUEVA CARGA MASIVA
+  }
 
   ngOnInit(): void {
     this.datePickerConfiguration();

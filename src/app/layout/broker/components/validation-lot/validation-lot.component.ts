@@ -26,17 +26,8 @@ import { ValidateLotService } from '../../services/validate-lot/validate-lot.ser
   styleUrls: ['./validation-lot.component.sass'],
 })
 export class ValidationLotComponent implements OnInit {
-  formFilter: FormGroup = this.builder.group({
-    channel: [''],
-    branch: [''],
-    product: [''],
-    idPolicy: ['', Validators.pattern(RegularExpressions.numbers)],
-    state: [''],
-    idLot: ['', Validators.pattern(RegularExpressions.numbers)],
-    currency: [''],
-    initialDate: [''],
-    finalDate: [''],
-  });
+  formFilter!: FormGroup;
+
 
   page: number = 1;
   datePickerConfig: Partial<BsDatepickerConfig>;
@@ -72,6 +63,17 @@ export class ValidationLotComponent implements OnInit {
     private readonly vc: ViewContainerRef,
     private readonly utilsService: UtilsService
   ) {
+      this.formFilter = this.builder.group({
+    channel: [''],
+    branch: [''],
+    product: [''],
+    idPolicy: ['', Validators.pattern(RegularExpressions.numbers)],
+    state: [''],
+    idLot: ['', Validators.pattern(RegularExpressions.numbers)],
+    currency: [''],
+    initialDate: [''],
+    finalDate: [''],
+  });
     this.datePickerConfig = Object.assign(
       {},
       {

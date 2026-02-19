@@ -7,7 +7,7 @@ import { UtilsService } from '@shared/services/utils/utils.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DataProductService } from '@root/layout/broker/services/vida-devolucion/data-product/data-product.service';
-import { isNullOrUndefined } from 'util';
+// import { isNullOrUndefined } from 'util';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import moment from 'moment';
 @Component({
@@ -160,7 +160,7 @@ export class QuoteAsignComponent implements OnInit {
   }
   onVotedResultFileUpload(fileupload: FileList) {
     // console.log(fileupload);
-    if (!isNullOrUndefined(fileupload) && fileupload.length > 0) {
+    if (fileupload?.length) {
       this.fileUpload = fileupload[0];
       this.snameFile = fileupload[0].name.toString();
       this.AdjuntarDocumentos();
@@ -185,7 +185,7 @@ export class QuoteAsignComponent implements OnInit {
   async AdjuntarDocumentos() {
     this.filesComm = [];
     this.snameFile = '';
-    if (!isNullOrUndefined(this.fileUpload.name)) {
+    if (this.fileUpload?.name != null) {
       const extensions = ['xlsx'];
       const fileExt = this.fileUpload.name.split('.').pop();
       this.snameFile = this.fileUpload.name;
