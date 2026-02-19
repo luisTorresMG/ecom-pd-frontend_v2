@@ -8,7 +8,7 @@ import { AddAddressComponent } from '../../modal/add-address/add-address.compone
 // Importacion de servicios
 import { RebillService } from '../../services/rebill/rebill.service';
 import { ClientInformationService } from '../../services/shared/client-information.service';
-import { ConsoleService } from '@ng-select/ng-select/lib/console.service';
+// import { ConsoleService } from '@ng-select/ng-select/lib/console.service';
 
 // Util
 import { DatePipe } from '@angular/common';

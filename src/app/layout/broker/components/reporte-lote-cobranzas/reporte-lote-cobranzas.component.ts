@@ -25,16 +25,9 @@ import { ReporteLoteCobranzasService } from '../../services/reporte-lote-cobranz
   styleUrls: ['./reporte-lote-cobranzas.component.sass'],
 })
 export class ReporteLoteCobranzasComponent implements OnInit {
-  formReport: FormGroup = this.builder.group({
-    startDate: [''],
-    endDate: [''],
-    branch: ['', Validators.required],
-  });
-
-  formFilter: FormGroup = this.builder.group({
-    startDate: [''],
-    endDate: [''],
-  });
+  formReport!: FormGroup;
+  formFilter!: FormGroup;
+ 
 
   private pageTableLotReport: number = 1;
 
@@ -67,6 +60,16 @@ export class ReporteLoteCobranzasComponent implements OnInit {
     private readonly spinner: NgxSpinnerService,
     private readonly reporteService: ReporteLoteCobranzasService
   ) {
+     this.formReport = this.builder.group({
+    startDate: [''],
+    endDate: [''],
+    branch: ['', Validators.required],
+  });
+
+  this.formFilter = this.builder.group({
+    startDate: [''],
+    endDate: [''],
+  });
     this.datePickerConfig = Object.assign(
       {},
       {

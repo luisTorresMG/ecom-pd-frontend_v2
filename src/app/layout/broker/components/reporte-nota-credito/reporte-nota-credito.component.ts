@@ -26,10 +26,9 @@ import { ReporteNotaCreditoService } from '../../services/reporte-nota-credito/r
 import { FormControl, FormGroup, Validator } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
-import { element } from 'protractor';
+// import { element } from 'protractor';
 import { Payroll } from '../../models/payroll/payroll';
-import { NULL_EXPR, THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { CallTracker } from 'assert';
+// import { NULL_EXPR, THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ExcelService } from '../../../../shared/services/excel/excel.service';
 import moment from 'moment';

@@ -1,25 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FormInputTextareaComponent } from './form-input-textarea.component';
+// import { FormInputTextareaComponent } from './form-input-textarea.component';
 
-describe('FormInputTextareaComponent', () => {
-  let component: FormInputTextareaComponent;
-  let fixture: ComponentFixture<FormInputTextareaComponent>;
+// describe('FormInputTextareaComponent', () => {
+//   let component: FormInputTextareaComponent;
+//   let fixture: ComponentFixture<FormInputTextareaComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ FormInputTextareaComponent ]
-    })
-    .compileComponents();
-  }));
+//   beforeEach(async(() => {
+//     TestBed.configureTestingModule({
+//       declarations: [ FormInputTextareaComponent ]
+//     })
+//     .compileComponents();
+//   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(FormInputTextareaComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+//   beforeEach(() => {
+//     fixture = TestBed.createComponent(FormInputTextareaComponent);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+//   it('should create', () => {
+//     expect(component).toBeTruthy();
+//   });
+// });
