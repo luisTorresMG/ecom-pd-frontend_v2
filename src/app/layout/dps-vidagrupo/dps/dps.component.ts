@@ -16,8 +16,11 @@ export class DpsComponent implements OnInit {
   @Input() set dpsData(dpsData: any) {
     this.form.patchValue(dpsData);
   }
+  form!: FormGroup;
+  
 
-  form: FormGroup = this.builder.group({
+  constructor(private readonly builder: FormBuilder) {
+    this.form = this.builder.group({
     q1: ['', [
       Validators.pattern(RegularExpressions.decimal),
       Validators.required,
@@ -72,8 +75,6 @@ export class DpsComponent implements OnInit {
     }),
     declareValidInfo: [false, Validators.requiredTrue]
   });
-
-  constructor(private readonly builder: FormBuilder) {
   }
 
   ngOnInit(): void {

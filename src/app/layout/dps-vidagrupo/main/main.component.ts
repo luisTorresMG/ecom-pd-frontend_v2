@@ -14,8 +14,8 @@ import { DpsModel } from '@root/layout/dps-vidagrupo/shared/models/dps.model';
   styleUrls: ['./main.component.sass']
 })
 export class MainComponent implements OnInit {
-
-  insuranceInfo: IInsuranceInfo = this.route.snapshot.data['insuranceInfo'];
+  insuranceInfo!: IInsuranceInfo;
+  
 
   currentStep: 'dps' | 'auth' | 'success' | 'error' | 'expired' | 'canceled' | 'declined' = 'dps';
   otpPayload: IOtp = {
@@ -37,6 +37,7 @@ export class MainComponent implements OnInit {
     private readonly screenSplash: ScreenSplashService,
     private readonly dpsVidaGrupoService: DpsVidagrupoService
   ) {
+    this.insuranceInfo = this.route.snapshot.data['insuranceInfo'];
   }
 
   ngOnInit(): void {
