@@ -20,6 +20,7 @@ import moment from "moment";
 import { QuotationDocumentsComponent } from "../../components/quotation-documents/quotation-documents.component";
 
 @Component({
+    standalone: false, 
     selector: 'app-new-subscription-request.component',
     templateUrl: './new-subscription-request.component.html',
     styleUrls: ['./new-subscription-request.component.css']

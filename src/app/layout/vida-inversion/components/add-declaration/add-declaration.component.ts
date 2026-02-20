@@ -1,4 +1,4 @@
-import { isNull } from '@angular/compiler/src/output/output_ast';
+// import { isNull } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import Swal from 'sweetalert2';
 import { VidaInversionService } from '../../services/vida-inversion.service';
@@ -6,6 +6,7 @@ import { VidaInversionConstants } from '../../vida-inversion.constants';
 import { ParameterSettingsService } from '../../../broker/services/maintenance/parameter-settings.service';
 
 @Component({
+  standalone: false,
   selector: 'app-add-declaration',
   templateUrl: './add-declaration.component.html',
   styleUrls: ['./add-declaration.component.scss']

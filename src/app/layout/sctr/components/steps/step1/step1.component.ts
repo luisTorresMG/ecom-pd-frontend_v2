@@ -14,6 +14,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { VidaleyService } from '../../../../sctr/shared/services/vidaley.service';
 
 @Component({
+  standalone: false,
   selector: 'app-step1',
   templateUrl: './step1.component.html',
   styleUrls: ['./step1.component.css'],

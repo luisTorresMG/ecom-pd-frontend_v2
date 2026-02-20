@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-endoso-modal',
   templateUrl: './endoso-modal.component.html',
   styleUrls: ['./endoso-modal.component.scss']

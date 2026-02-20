@@ -7,6 +7,7 @@ import * as FileSaver from 'file-saver';
 import moment from 'moment';
 
 @Component({
+    standalone: false,
     selector: 'app-reporte-facturacion',
     templateUrl: './reporte-facturacion.component.html',
     styleUrls: ['./reporte-facturacion.component.scss']

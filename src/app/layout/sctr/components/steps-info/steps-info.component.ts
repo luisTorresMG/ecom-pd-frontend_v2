@@ -4,6 +4,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { GoogleTagManagerService } from '../../shared/services/google-tag-manager.service';
 
 @Component({
+  standalone: false,
   selector: 'app-steps-info-sctr',
   templateUrl: './steps-info.component.html',
   styleUrls: ['./steps-info.component.css'],

@@ -5,6 +5,7 @@ import { VidaInversionConstants } from '../../vida-inversion.constants';
 import moment from 'moment';
 
 @Component({
+  standalone: false,
   selector: 'app-reporte-operaciones',
   templateUrl: './reporte-operaciones.component.html',
   styleUrls: ['./reporte-operaciones.component.scss']

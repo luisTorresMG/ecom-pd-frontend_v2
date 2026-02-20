@@ -5,6 +5,7 @@ import { VidaInversionConstants } from '../../vida-inversion.constants';
 import * as FileSaver from 'file-saver';
 
 @Component({
+    standalone: false,
     selector: 'app-reportes-monitoreo',
     templateUrl: './reportes-monitoreo.component.html',
     styleUrls: ['./reportes-monitoreo.component.scss']

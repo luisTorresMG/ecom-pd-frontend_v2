@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } 
 import { UtilService } from '../../../../layout/broker/components/quote/acc-personales/core/services/util.service';
 
 @Component({
+  standalone: false,
   selector: 'form-input-select',
   templateUrl: './form-input-select.component.html',
   styleUrls: ['./form-input-select.component.css']

@@ -5,6 +5,7 @@ import { NgbPaginationNumber } from '@ng-bootstrap/ng-bootstrap';
 import { QuotationService } from '../../../broker/services/quotation/quotation.service';
 
 @Component({
+    standalone: false,
     selector: 'app-quotation-documents',
     templateUrl: './quotation-documents.component.html',
     styleUrls: ['./quotation-documents.component.css']
@@ -64,10 +65,15 @@ export class QuotationDocumentsComponent implements OnInit {
                         swal.fire('Información', this.listToString(res.ErrorMessageList), 'error');
                     } else {
                         var newBlob = new Blob([res], { type: "application/pdf" });
-                        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-                            window.navigator.msSaveOrOpenBlob(newBlob);
-                            return;
-                        }
+                          const nav: any = window.navigator;
+                            if (nav && nav.msSaveOrOpenBlob) {
+                                nav.msSaveOrOpenBlob(newBlob);
+                                return;
+                            }
+                        // if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                        //     window.navigator.msSaveOrOpenBlob(newBlob);
+                        //     return;
+                        // }
                         const data = window.URL.createObjectURL(newBlob);
 
                         var link = document.createElement('a');

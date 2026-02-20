@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { VidaInversionService } from '../../services/vida-inversion.service';
 
 @Component({
+  standalone: false,
   selector: 'app-scoring-calculation',
   templateUrl: './calculate-scoring.component.html',
   styleUrls: ['./calculate-scoring.component.scss']

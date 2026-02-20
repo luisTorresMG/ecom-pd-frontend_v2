@@ -47,13 +47,19 @@ export class RouteValidationGuard implements CanActivate {
         return true;
     }
   }
-
   redirectToStep1() {
     console.log('redirect');
     this.router.navigate(['/soat/step1'], {
-      preserveQueryParams: true
+      queryParamsHandling: 'preserve'
     });
   }
+
+  // redirectToStep1() {
+  //   console.log('redirect');
+  //   this.router.navigate(['/soat/step1'], {
+  //     preserveQueryParams: true
+  //   });
+  // }
 
   validate(val: string, skip = false): boolean {
 
@@ -65,9 +71,15 @@ export class RouteValidationGuard implements CanActivate {
     if (this.resume === '1' && !skip) {
       sessionStorage.clear();
       this.router.navigate(['/soat/step1'], {
-        preserveQueryParams: true
+        queryParamsHandling: 'preserve'
       });
     }
+    // if (this.resume === '1' && !skip) {
+    //   sessionStorage.clear();
+    //   this.router.navigate(['/soat/step1'], {
+    //     preserveQueryParams: true
+    //   });
+    // }
 
     return !!val;
   }

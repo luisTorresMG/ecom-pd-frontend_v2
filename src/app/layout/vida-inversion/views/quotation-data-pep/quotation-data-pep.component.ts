@@ -29,6 +29,7 @@ import { AddSocietarioComponent } from '../../components/add-societario/add-soci
 import { OthersService } from '../../../broker/services/shared/others.service';
 
 @Component({
+    standalone: false,
     templateUrl: './quotation-data-pep.component.html',
     styleUrls: ['./quotation-data-pep.component.scss']
 })

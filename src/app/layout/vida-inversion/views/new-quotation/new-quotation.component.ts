@@ -19,6 +19,7 @@ import * as FileSaver from 'file-saver';
 import { AddSocietarioComponent } from '../../components/add-societario/add-societario.component';
 
 @Component({
+    standalone: false,
     templateUrl: './new-quotation.component.html',
     styleUrls: ['./new-quotation.component.scss']
 })

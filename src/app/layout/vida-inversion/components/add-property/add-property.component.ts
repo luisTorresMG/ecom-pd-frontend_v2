@@ -5,6 +5,7 @@ import { VidaInversionConstants } from '../../vida-inversion.constants';
 import { ParameterSettingsService } from '../../../broker/services/maintenance/parameter-settings.service';
 
 @Component({
+    standalone: false,
     selector: 'app-add-property',
     templateUrl: './add-property.component.html',
     styleUrls: ['./add-property.component.scss']

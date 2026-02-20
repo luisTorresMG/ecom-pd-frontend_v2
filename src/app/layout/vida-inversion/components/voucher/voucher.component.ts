@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { VidaInversionConstants } from '../../vida-inversion.constants';
 import { VidaInversionService } from '../../services/vida-inversion.service';
 @Component({
+    standalone: false,
     selector: 'app-voucher',
     templateUrl: './voucher.component.html',
     styleUrls: ['./voucher.component.scss'],

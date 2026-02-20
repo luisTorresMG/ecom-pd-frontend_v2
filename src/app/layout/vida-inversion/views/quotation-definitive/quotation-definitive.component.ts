@@ -38,6 +38,7 @@ type Beneficiary = {
 };
 
 @Component({
+    standalone: false,
     templateUrl: './quotation-definitive.component.html',
     styleUrls: ['./quotation-definitive.component.scss']
 })

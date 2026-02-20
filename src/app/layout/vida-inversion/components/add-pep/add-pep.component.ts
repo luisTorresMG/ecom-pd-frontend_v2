@@ -10,6 +10,7 @@ import { ParameterSettingsService } from '../../../broker/services/maintenance/p
 import { VidaInversionService } from '../../services/vida-inversion.service';
 
 @Component({
+    standalone: false,
     selector: 'app-add-pep',
     templateUrl: './add-pep.component.html',
     styleUrls: ['./add-pep.component.scss']

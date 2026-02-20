@@ -14,6 +14,7 @@ interface ISocietario {
 }
 
 @Component({
+    standalone: false,
     selector: 'app-add-societario',
     templateUrl: './add-societario.component.html',
     styleUrls: ['./add-societario.component.scss']

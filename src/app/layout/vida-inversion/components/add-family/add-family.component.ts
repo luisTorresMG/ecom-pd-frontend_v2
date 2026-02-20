@@ -7,9 +7,10 @@ import Swal from 'sweetalert2';
 import moment from 'moment';
 import { padLeft } from '../../../../shared/helpers/utils';
 import { ParameterSettingsService } from '../../../broker/services/maintenance/parameter-settings.service';
-import { element } from 'protractor';
+// import { element } from 'protractor';
 
 @Component({
+    standalone: false,
     selector: 'app-add-family',
     templateUrl: './add-family.component.html',
     styleUrls: ['./add-family.component.scss']

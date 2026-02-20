@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { VidaInversionService } from "../../services/vida-inversion.service";
 
 @Component({
+    standalone: false, 
     selector: 'app-subscription-request-consultation.component',
     templateUrl: './subscription-request-consultation.component.html',
     styleUrls: ['./subscription-request-consultation.component.css']

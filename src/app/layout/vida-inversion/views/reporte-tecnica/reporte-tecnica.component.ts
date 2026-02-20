@@ -3,6 +3,7 @@ import { AtpReportService } from '../../../broker/services/atp-reports/atp-repor
 import Swal from 'sweetalert2';
 
 @Component({
+    standalone: false,
     selector: 'app-reporte-tecnica',
     templateUrl: './reporte-tecnica.component.html',
     styleUrls: ['./reporte-tecnica.component.scss']

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'index-steps',
   templateUrl: './index-steps.component.html',
   styleUrls: ['./index-steps.component.scss']

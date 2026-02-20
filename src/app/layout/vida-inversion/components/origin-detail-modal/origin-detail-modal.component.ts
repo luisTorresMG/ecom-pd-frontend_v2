@@ -6,6 +6,7 @@ import { VidaInversionService } from '../../services/vida-inversion.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
+    standalone: false,
     selector: 'app-origin-detail-modal',
     templateUrl: './origin-detail-modal.component.html',
     styleUrls: ['./origin-detail-modal.component.scss']

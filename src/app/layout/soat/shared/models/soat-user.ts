@@ -2,7 +2,7 @@ import { PrimaFilter } from '../../../client/shared/models/prima.model';
 import { Selling } from '../interfaces/selling.interface';
 import { Certificado } from '../../../client/shared/models/certificado.model';
 import Rate from './rate';
-import { isNullOrUndefined } from 'util';
+import { isNullOrUndefined } from '@shared/helpers/null-check';
 
 export default class SoatUser {
   private _license: string;

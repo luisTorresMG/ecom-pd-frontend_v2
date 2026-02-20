@@ -14,6 +14,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { GoogleTagManagerService } from '../../shared/services/google-tag-manager.service';
 
 @Component({
+  standalone: false,
   selector: 'app-summary',
   templateUrl: './summary.component.html',
   styleUrls: ['./summary.component.css'],

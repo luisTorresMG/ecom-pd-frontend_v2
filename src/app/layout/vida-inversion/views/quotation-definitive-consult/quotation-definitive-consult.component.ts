@@ -8,6 +8,7 @@ import { ParameterSettingsService } from '../../../broker/services/maintenance/p
 import { VidaInversionService } from '../../services/vida-inversion.service';
 
 @Component({
+    standalone: false,
     selector: 'app-quotation-definitive-consult',
     templateUrl: './quotation-definitive-consult.component.html',
     styleUrls: ['./quotation-definitive-consult.component.scss']

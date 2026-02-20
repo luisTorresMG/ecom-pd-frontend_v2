@@ -3,9 +3,10 @@ import { VidaInversionService } from '../../services/vida-inversion.service';
 import Swal from 'sweetalert2';
 
 @Component({
+    standalone: false,
     selector: 'app-add-file',
     templateUrl: './add-file.component.html',
-    styleUrls: ['./add-file.component.scss']
+    styleUrls: ['./add-file.component.css']
 })
 
 export class AddFileComponent implements OnInit {

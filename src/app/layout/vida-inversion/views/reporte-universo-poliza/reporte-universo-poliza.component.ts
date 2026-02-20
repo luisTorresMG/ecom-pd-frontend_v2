@@ -7,6 +7,7 @@ import moment from 'moment';
 import * as FileSaver from 'file-saver';
 
 @Component({
+    standalone: false,
     selector: 'app-reporte-universo-poliza',
     templateUrl: './reporte-universo-poliza.component.html',
     styleUrls: ['./reporte-universo-poliza.component.scss']

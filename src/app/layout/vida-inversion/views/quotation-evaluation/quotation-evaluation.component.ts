@@ -16,6 +16,7 @@ import { subtractWithPrecision } from '../../../../shared/helpers/utils';
 import { OthersService } from '../../../broker/services/shared/others.service';
 
 @Component({
+    standalone: false,
     selector: 'app-quotation-evaluation',
     templateUrl: './quotation-evaluation.component.html',
     styleUrls: ['./quotation-evaluation.component.scss']

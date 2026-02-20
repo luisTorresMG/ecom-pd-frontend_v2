@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AccPersonalesConstants } from '@root/layout/broker/components/quote/acc-personales/core/constants/acc-personales.constants';
 
 @Component({
+  standalone: false,
   selector: 'form-input-text',
   templateUrl: './form-input-text.component.html',
   styleUrls: ['./form-input-text.component.css'],

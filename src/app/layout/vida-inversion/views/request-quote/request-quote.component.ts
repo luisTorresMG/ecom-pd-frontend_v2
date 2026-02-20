@@ -13,6 +13,7 @@ import * as FileSaver from 'file-saver';
 import { SearchParamsQuotation } from '../../models/SearchParamsQuotation';
 
 @Component({
+    standalone: false,
     templateUrl: './request-quote.component.html',
     styleUrls: ['./request-quote.component.scss']
 })

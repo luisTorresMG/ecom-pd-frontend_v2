@@ -8,11 +8,11 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/internal/observable/of';
 import SoatUser from '../models/soat-user';
 import Rate from '../models/rate';
-import { isNullOrUndefined } from 'util';
+import { isNullOrUndefined } from '@shared/helpers/null-check';
 import { SessionStorageService } from '../../../../shared/services/storage/storage-service';
 import { Autorizacion } from '../../../client/shared/models/autorizacion.model';
 import { ApiService } from '../../../../shared/services/api.service';
-import { ConsoleService } from '@ng-select/ng-select/lib/console.service';
+// import { ConsoleService } from '@ng-select/ng-select/lib/console.service';
 import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({

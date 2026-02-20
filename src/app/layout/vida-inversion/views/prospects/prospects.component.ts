@@ -13,6 +13,7 @@ import { ApproveNegativeRecordComponent } from '../../components/approve-negativ
 import { SearchParamsProspect } from '../../models/SearchParamsProspect';
 
 @Component({
+    standalone: false,
     templateUrl: './prospects.component.html',
     styleUrls: ['./prospects.component.scss']
 

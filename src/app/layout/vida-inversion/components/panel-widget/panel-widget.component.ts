@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { UtilService } from '@root/layout/broker/components/quote/acc-personales/core/services/util.service';
 
 @Component({
+  standalone: false,
   selector: 'panel-widget',
   templateUrl: './panel-widget.component.html',
   styleUrls: ['./panel-widget.component.css']

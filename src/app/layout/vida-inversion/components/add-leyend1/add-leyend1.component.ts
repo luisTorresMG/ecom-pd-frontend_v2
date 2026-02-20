@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 
 @Component({
+  standalone: false,
   selector: 'app-add-leyend1',
   templateUrl: './add-leyend1.component.html',
   styleUrls: ['./add-leyend1.component.scss']

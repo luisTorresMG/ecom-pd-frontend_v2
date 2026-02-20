@@ -14,6 +14,7 @@ import { PolicyemitService } from '../../../broker/services/policy/policyemit.se
 import { Console } from 'console';
 
 @Component({
+    standalone: false,
     selector: 'panel-endoso',
     templateUrl: './panel-endoso.component.html',
     styleUrls: ['./panel-endoso.component.css'],

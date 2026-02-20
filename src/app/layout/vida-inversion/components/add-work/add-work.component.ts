@@ -9,6 +9,7 @@ import { ParameterSettingsService } from '../../../broker/services/maintenance/p
 import { filter } from 'rxjs/operators';
 
 @Component({
+    standalone: false,
     selector: 'app-add-work',
     templateUrl: './add-work.component.html',
     styleUrls: ['./add-work.component.scss']

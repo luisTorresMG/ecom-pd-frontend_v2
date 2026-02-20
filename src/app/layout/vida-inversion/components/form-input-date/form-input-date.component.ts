@@ -4,6 +4,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 
 @Component({
+    standalone: false,
     changeDetection: ChangeDetectionStrategy.OnPush, // revisar
     selector: 'form-input-date',
     templateUrl: './form-input-date.component.html',

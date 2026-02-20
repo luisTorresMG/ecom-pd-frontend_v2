@@ -11,6 +11,7 @@ import { AccPersonalesService } from "../../../broker/components/quote/acc-perso
 import { Router } from "@angular/router";
 
 @Component({
+    standalone: false,
     selector: 'app-policy-subscription.component',
     templateUrl: './policy-subscription.component.html',
     styleUrls: ['./policy-subscription.component.scss']

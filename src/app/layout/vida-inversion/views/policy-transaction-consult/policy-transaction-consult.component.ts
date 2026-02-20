@@ -12,6 +12,7 @@ import { PanelEndosoComponent } from '../../components/panel-endoso/panel-endoso
 import { PolicyMovementDetailsAllComponent } from '../../../broker/components/policy-all/policy-movement-details-all/policy-movement-details-all.component';
 
 @Component({
+    standalone: false,
     selector: 'app-policy-transaction-consult',
     templateUrl: './policy-transaction-consult.component.html',
     styleUrls: ['./policy-transaction-consult.component.scss']

@@ -15,6 +15,7 @@ import { PolicyemitService } from '../../../broker/services/policy/policyemit.se
 import { OthersService } from '../../../broker/services/shared/others.service';
 
 @Component({
+    standalone: false,
     selector: 'app-policy',
     templateUrl: './policy.component.html',
     styleUrls: ['./policy.component.scss']

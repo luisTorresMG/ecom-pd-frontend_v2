@@ -4,6 +4,7 @@ import { VidaInversionService } from '../../services/vida-inversion.service';
 
 
 @Component({    
+    standalone: false,
     selector: 'app-approve-negative-record',
     templateUrl: './approve-negative-record.component.html',
     styleUrls: ['./approve-negative-record.component.scss']

@@ -12,6 +12,7 @@ import { QuotationService } from '../../../../layout/broker/services/quotation/q
 
 
 @Component({
+    standalone: false,
     selector: 'app-new-prospects',
     templateUrl: './new-prospects.component.html',
     styleUrls: ['./new-prospects.component.scss']

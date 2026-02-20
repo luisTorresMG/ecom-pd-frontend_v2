@@ -7,6 +7,7 @@ import { ParameterSettingsService } from "../../../broker/services/maintenance/p
 import { VidaInversionService } from "../../services/vida-inversion.service";
 
 @Component({
+    standalone: false,
     selector: 'app-subscription-request.component',
     templateUrl: './subscription-request.component.html',
     styleUrls: ['./subscription-request.component.scss']

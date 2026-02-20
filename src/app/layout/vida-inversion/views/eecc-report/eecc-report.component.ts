@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
 
 @Component({
+    standalone: false,
     selector: 'app-eecc-report',
     templateUrl: './eecc-report.component.html',
     styleUrls: ['./eecc-report.component.scss']

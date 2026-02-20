@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-input-number',
   templateUrl: './input-number.component.html',
   styleUrls: ['./input-number.component.scss']

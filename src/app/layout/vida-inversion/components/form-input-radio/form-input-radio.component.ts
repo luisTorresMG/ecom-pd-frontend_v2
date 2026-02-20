@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UtilService } from '@root/layout/broker/components/quote/acc-personales/core/services/util.service';
 
 @Component({
+  standalone: false,
   selector: 'form-input-radio',
   templateUrl: './form-input-radio.component.html',
   styleUrls: ['./form-input-radio.component.css']

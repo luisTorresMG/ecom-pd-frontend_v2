@@ -8,6 +8,7 @@ import { VidaInversionService } from '../../services/vida-inversion.service';
 import { QuotationService } from '../../../../layout/broker/services/quotation/quotation.service';
 
 @Component({
+    standalone: false,
     selector: 'app-add-beneficiary',
     templateUrl: './add-beneficiary.component.html',
     styleUrls: ['./add-beneficiary.component.scss']
