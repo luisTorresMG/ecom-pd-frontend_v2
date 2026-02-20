@@ -240,7 +240,7 @@ select.in,
 
 /* BACKGROUND */
 .bc-1 {
-  background-image: url("assets/vidaindividual/resources/Elementos-03.png");
+  background-image: url("/assets/vidaindividual/resources/Elementos-03.png");
   position: absolute;
   left: 0%;
   top: 263px;

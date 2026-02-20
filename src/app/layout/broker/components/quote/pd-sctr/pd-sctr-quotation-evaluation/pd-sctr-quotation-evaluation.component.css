@@ -785,15 +785,15 @@ textarea {
 }
 
 .imagen-estado-vencido {
-    content: url('assets/icons/vencido_sabsa.png');
+    content: url('/assets/icons/vencido_sabsa.png');
   }
 
 .imagen-estado-pendiente {
-  content: url('assets/icons/cip_pendiente.png');
+  content: url('/assets/icons/cip_pendiente.png');
 }
 
 .imagen-estado-pagado {
-  content: url('assets/icons/cip_pagado.png');
+  content: url('/assets/icons/cip_pagado.png');
 }
 
 .parrafo-estado {

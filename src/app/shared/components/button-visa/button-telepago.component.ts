@@ -146,7 +146,7 @@ export class ButtonTelepagoComponent implements OnInit, AfterViewInit, OnDestroy
                 const actual = btn[0].getAttribute('style');
                 if (actual !== null) {
                   if (actual.indexOf('vnforapps') > -1) {
-                    // btn[0].attributes[2].value = 'background: url("assets/logos/pagaconvisa.png");';
+                    // btn[0].attributes[2].value = 'background: url("/assets/logos/pagaconvisa.png");';
                     clearInterval(this.interval);
                   }
                 }

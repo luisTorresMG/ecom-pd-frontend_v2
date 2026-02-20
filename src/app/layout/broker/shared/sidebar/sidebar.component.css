@@ -39,7 +39,7 @@
 }
 
 .container-left .row-02 ul {
-  list-style: url("assets/icons/benefits.png") square;
+  list-style: url("/assets/icons/benefits.png") square;
 }
 
 .container-left .row-02 li {

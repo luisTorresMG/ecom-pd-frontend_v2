@@ -342,7 +342,7 @@
 
 .search {
   padding-left: 24px; /* Ajusta este valor según sea necesario para que la imagen no se solape con el texto */
-  background-image: url("assets/rentas/search_24dp_FILL0_wght400_GRAD0_opsz24.svg");
+  background-image: url("/assets/rentas/search_24dp_FILL0_wght400_GRAD0_opsz24.svg");
   background-size: 20px; /* Ajusta el tamaño de la imagen según sea necesario */
   background-repeat: no-repeat;
   background-position: 4px center; /* Ajusta la posición de la imagen */

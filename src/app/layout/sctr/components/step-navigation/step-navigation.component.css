@@ -44,32 +44,32 @@
 }
 
 .container-miga .steps .step01 {
-  background: url("assets/icons/step1.svg") no-repeat top center;
+  background: url("/assets/icons/step1.svg") no-repeat top center;
   background-size: 60px 60px;
 }
 
 .container-miga .steps .step02 {
-  background: url("assets/icons/step2.svg") no-repeat top center;
+  background: url("/assets/icons/step2.svg") no-repeat top center;
   background-size: 60px 60px;
 }
 
 .container-miga .steps .step03 {
-  background: url("assets/icons/step3.svg") no-repeat top center;
+  background: url("/assets/icons/step3.svg") no-repeat top center;
   background-size: 60px 60px;
 }
 
 .container-miga .steps .step04 {
-  background: url("assets/icons/step4.svg") no-repeat top center;
+  background: url("/assets/icons/step4.svg") no-repeat top center;
   background-size: 60px 60px;
 }
 
 .container-miga .steps .step05 {
-  background: url("assets/icons/step5.svg") no-repeat top center;
+  background: url("/assets/icons/step5.svg") no-repeat top center;
   background-size: 60px 60px;
 }
 
 .container-miga .steps .step-done {
-  background: url("assets/icons/validacion.svg") no-repeat top center;
+  background: url("/assets/icons/validacion.svg") no-repeat top center;
   background-size: 60px 60px;
 }
 

@@ -153,7 +153,7 @@ export class ButtonVisaComponent implements OnInit, AfterViewInit, OnDestroy {
                         if (actual.indexOf('vnforapps') > -1) {
                             btn[0].attributes[2].value =
                                 this.canalId === 'web' ?
-                                    'background: url("assets/logos/pagaconvisa.png");' : 'background: url("assets/logos/pagacontelepago.png");';
+                                    'background: url("/assets/logos/pagaconvisa.png");' : 'background: url("/assets/logos/pagacontelepago.png");';
                             clearInterval(this.interval);
                         }
                     }
