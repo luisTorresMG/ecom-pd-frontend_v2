@@ -3,7 +3,8 @@ import { BrowserModule } from "@angular/platform-browser";
 import { RegistSiniestroSoatComponent } from '../component/regist-siniestro-soat/regist-siniestro-soat.component';
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { AppRoutingModule } from "../../app-routing-module";
+import { AppRoutingModule } from "@root/app-routing.module";
+// import { AppRoutingModule } from "@root/app-routing-module";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';

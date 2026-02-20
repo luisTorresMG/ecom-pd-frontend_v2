@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { SidebarService } from '../../services/sidebar/sidebar.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { SessionStorageService } from '../../services/storage/storage-service';
-import { isNullOrUndefined } from 'util';
+import { isNullOrUndefined } from '@shared/helpers/null-check';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { HeaderService } from './header.service';
 @Component({
