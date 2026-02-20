@@ -22,6 +22,7 @@ import { ChannelSalesService } from '../../../../shared/services/channelsales/ch
 defineLocale('es', esLocale);
 
 @Component({
+  standalone: false,
   selector: 'app-payroll-kuntur',
   templateUrl: './payroll-kuntur.component.html',
   styleUrls: ['./payroll-kuntur.component.css']

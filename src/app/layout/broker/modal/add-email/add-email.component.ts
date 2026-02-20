@@ -11,6 +11,7 @@ import swal from 'sweetalert2';
 import { CommonMethods } from '../../components/common-methods';
 
 @Component({
+  standalone: false,
   selector: 'app-add-email',
   templateUrl: './add-email.component.html',
   styleUrls: ['./add-email.component.css']

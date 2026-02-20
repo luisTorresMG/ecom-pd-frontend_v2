@@ -8,6 +8,7 @@ import { conditionalRequired } from '../../shared/validators/requiredIfValidator
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
+  standalone: false,
   selector: 'app-questionnaire',
   templateUrl: './questionnaire.component.html',
   styleUrls: ['./questionnaire.component.scss'],

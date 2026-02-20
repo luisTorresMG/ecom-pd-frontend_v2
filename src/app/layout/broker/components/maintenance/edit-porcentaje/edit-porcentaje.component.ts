@@ -8,6 +8,7 @@ import { ParameterSettingsService } from '@root/layout/broker/services/maintenan
 import Swal from 'sweetalert2';
 
 @Component({
+  standalone: false,
   selector: 'app-edit-porcentaje',
   templateUrl: './edit-porcentaje.component.html',
   styleUrls: ['./edit-porcentaje.component.css'],

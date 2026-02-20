@@ -8,6 +8,7 @@ import { SearchBrokerComponent } from '../../../../../layout/broker/modal/search
 import { DesgravamentConstants } from '../../core/desgravament.constants';
 
 @Component({
+  standalone: false,
   selector: 'panel-info-brokers',
   templateUrl: './panel-info-brokers.component.html',
   styleUrls: ['./panel-info-brokers.component.css'],

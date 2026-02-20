@@ -15,6 +15,7 @@ import { CommissionService } from '../../../services/maintenance/commision/commi
 import { CommonMethods } from '../../common-methods';
 
 @Component({
+  standalone: false,
   selector: 'app-commission',
   templateUrl: './commission.component.html',
   styleUrls: ['./commission.component.css'],

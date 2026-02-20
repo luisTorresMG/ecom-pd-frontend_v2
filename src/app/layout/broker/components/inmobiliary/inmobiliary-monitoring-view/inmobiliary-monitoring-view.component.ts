@@ -15,6 +15,7 @@ import swal from 'sweetalert2';
 import * as fileSaver from 'file-saver';
 
 @Component({
+  standalone: false,
   selector: 'app-inmobiliary-monitoring-view',
   templateUrl: './inmobiliary-monitoring-view.component.html',
   styleUrls: ['./inmobiliary-monitoring-view.component.css'],

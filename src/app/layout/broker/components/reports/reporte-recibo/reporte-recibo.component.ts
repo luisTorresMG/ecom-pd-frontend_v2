@@ -17,6 +17,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { DatePipe } from '@angular/common';
 
 @Component({
+  standalone: false,
   selector: 'app-reporte-recibo',
   templateUrl: './reporte-recibo.component.html',
   styleUrls: ['./reporte-recibo.component.sass']

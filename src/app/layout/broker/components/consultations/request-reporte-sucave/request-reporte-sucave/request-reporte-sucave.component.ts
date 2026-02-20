@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import swal from 'sweetalert2';
 @Component({
+  standalone: false,
   selector: 'app-request-reporte-sucave',
   templateUrl: './request-reporte-sucave.component.html',
   styleUrls: ['./request-reporte-sucave.component.css'],

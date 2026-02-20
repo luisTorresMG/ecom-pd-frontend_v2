@@ -3,6 +3,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 
 @Component({
+  standalone: false,
   selector: 'form-button',
   templateUrl: './form-button.component.html',
   styleUrls: ['./form-button.component.css']

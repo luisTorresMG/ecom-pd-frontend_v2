@@ -28,6 +28,7 @@ import { TrackingService } from '@root/layout/vidaindividual-latest/services/tra
 import { maskEmail } from '../../../insurance/shared/utils/maskDataClient';
 
 @Component({
+  standalone: false,
   selector: 'app-otp-auth',
   templateUrl: './otp-auth.component.html',
   styleUrls: ['./otp-auth.component.scss'],

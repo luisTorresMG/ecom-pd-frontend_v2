@@ -33,6 +33,7 @@ import { UtilsService } from '../../../../shared/services/utils/utils.service';
 import { RecaptchaComponent } from 'ng-recaptcha';
 
 @Component({
+  standalone: false,
   selector: 'app-historial',
   // moduleId: module.id,
   templateUrl: 'historial.component.html',

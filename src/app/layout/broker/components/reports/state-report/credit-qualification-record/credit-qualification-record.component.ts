@@ -16,6 +16,7 @@ import { AccessFilter } from './../../../access-filter';
 import { ModuleConfig } from './../../../module.config';
 import { ContractorForTable } from '../../../../models/maintenance/contractor-location/contractor-for-table';
 @Component({
+  standalone: false,
   selector: 'app-credit-qualification-record',
   templateUrl: './credit-qualification-record.component.html',
   styleUrls: ['./credit-qualification-record.component.css'],

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-steps-generic',
   templateUrl: './steps-generic.component.html',
   styleUrls: ['./steps-generic.component.css']

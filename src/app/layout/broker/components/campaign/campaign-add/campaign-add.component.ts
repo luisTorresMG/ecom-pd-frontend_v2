@@ -18,6 +18,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 defineLocale('es', esLocale);
 @Component({
+  standalone: false,
   selector: 'app-campaign-add',
   templateUrl: './campaign-add.component.html',
   styleUrls: ['./campaign-add.component.css']

@@ -11,6 +11,7 @@ import { PasswordService } from '../../services/password/password.service';
 import { AppConfig } from '../../../../app.config';
 
 @Component({
+  standalone: false,
   selector: 'app-retrieve-password',
   templateUrl: './retrieve-password.component.html',
   styleUrls: ['./retrieve-password.component.css'],

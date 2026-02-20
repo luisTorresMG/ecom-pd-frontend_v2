@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
+  standalone: false,
   selector: 'app-vidaindividual-latest',
   templateUrl: './vidaindividual-latest.component.html',
   styleUrls: ['./vidaindividual-latest.component.scss'],

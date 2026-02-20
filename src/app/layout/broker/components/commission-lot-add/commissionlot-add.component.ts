@@ -48,6 +48,7 @@ interface IFile {
 }
 
 @Component({
+  standalone: false,
   selector: 'app-commissionlot-add',
   templateUrl: './commissionlot-add.component.html',
   styleUrls: ['./commissionlot-add.component.scss']

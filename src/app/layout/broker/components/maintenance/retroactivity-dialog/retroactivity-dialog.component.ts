@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 
 import { ToastrService } from 'ngx-toastr';
 @Component({
+  standalone: false,
   selector: 'app-retroactivity-dialog',
   templateUrl: './retroactivity-dialog.component.html',
   styleUrls: ['./retroactivity-dialog.component.css'],

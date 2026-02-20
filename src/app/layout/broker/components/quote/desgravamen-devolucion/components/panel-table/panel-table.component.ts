@@ -7,6 +7,7 @@ import { ModuleConfig } from '../../../../module.config';
 import { UtilService } from '../../core/services/util.service';
 
 @Component({
+  standalone: false,
   selector: 'panel-table',
   templateUrl: './panel-table.component.html',
   styleUrls: ['./panel-table.component.css'],

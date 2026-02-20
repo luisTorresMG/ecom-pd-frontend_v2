@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DatosContratanteDto } from './DTOs/datos-contratante.dto';
 @Component({
+  standalone: false,
   selector: 'app-datos-contratante',
   templateUrl: './datos-contratante.component.html',
   styleUrls: ['./datos-contratante.component.css']

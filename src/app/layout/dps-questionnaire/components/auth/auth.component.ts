@@ -8,6 +8,7 @@ import { DpsService } from '../../shared/services/dps.service';
 import { IOtp, IOtpResult } from '@shared/interfaces/otp.interface';
 
 @Component({
+  standalone: false,
   selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.sass'],

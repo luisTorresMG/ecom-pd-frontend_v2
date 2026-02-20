@@ -10,6 +10,7 @@ import { AuthenticationService } from '../../../../broker/services/authenticatio
 import swal from 'sweetalert2';
 
 @Component({
+  standalone: false,
   selector: 'app-transact-access-desgravamen',
   templateUrl: './transact-access-desgravamen.component.html',
   styleUrls: ['./transact-access-desgravamen.component.css']

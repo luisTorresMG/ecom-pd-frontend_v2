@@ -5,6 +5,7 @@ import { LoadMassiveService } from '../../../services/LoadMassive/load-massive.s
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import swal from 'sweetalert2';
 @Component({
+  standalone: false,
   selector: 'app-monitoring',
   templateUrl: './monitoring.component.html',
   styleUrls: ['./monitoring.component.css'],

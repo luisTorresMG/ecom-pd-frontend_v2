@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnDestroy, AfterViewInit } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-pixel-facebook',
   templateUrl: './pixel-facebook.component.html',
   styleUrls: ['./pixel-facebook.component.css']

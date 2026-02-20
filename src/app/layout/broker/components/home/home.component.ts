@@ -6,6 +6,7 @@ import { EmisionService } from '../../../client/shared/services/emision.service'
 import { EventStrings } from '../../shared/events/events';
 import { ClientInformationService } from '../../services/shared/client-information.service';
 @Component({
+  standalone: false,
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']

@@ -11,6 +11,7 @@ import { AppConfig } from "../../../../app.config";
 import { SidebarService } from "../../../../shared/services/sidebar/sidebar.service";
 
 @Component({
+  standalone: false,
   selector: 'navmenusctr',
   templateUrl: './navmenusctr.component.html',
   styleUrls: ['./navmenusctr.component.css']

@@ -3,6 +3,7 @@ import { Vidaley } from '../../shared/models/vidaley';
 
 
 @Component({
+  standalone: false,
   selector: 'app-privacyvidaley',
   templateUrl: './privacy.component.html',
   styleUrls: ['./privacy.component.css'],

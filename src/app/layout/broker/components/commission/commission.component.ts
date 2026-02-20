@@ -24,6 +24,7 @@ import { CommissionLotService } from '../../services/commisslot/comissionlot.ser
 
 defineLocale('es', esLocale);
 @Component({
+  standalone: false,
   selector: 'app-commission',
   templateUrl: './commission.component.html',
   styleUrls: ['./commission.component.css']

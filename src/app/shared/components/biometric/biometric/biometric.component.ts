@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AppConfig } from '@root/app.config';
 declare var $: any;
 @Component({
+  standalone: false,
   selector: 'app-biometric',
   templateUrl: './biometric.component.html',
   styleUrls: ['./biometric.component.css']

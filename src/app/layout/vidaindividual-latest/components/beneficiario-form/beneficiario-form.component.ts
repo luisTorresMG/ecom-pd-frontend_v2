@@ -15,6 +15,7 @@ import { DocumentInfoResponseModel } from '@shared/models/document-information/d
 import { RecaptchaComponent } from 'ng-recaptcha';
 
 @Component({
+  standalone: false,
   selector: 'app-beneficiario-form',
   templateUrl: './beneficiario-form.component.html',
   styleUrls: ['./beneficiario-form.component.css']

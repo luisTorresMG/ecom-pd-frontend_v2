@@ -7,6 +7,7 @@ import { ClientInformationService } from '../../../../../layout/broker/services/
 import swal from 'sweetalert2';
 
 @Component({
+  standalone: false,
   selector: 'panel-info-contactos',
   templateUrl: './panel-info-contactos.component.html',
   styleUrls: ['./panel-info-contactos.component.css'],

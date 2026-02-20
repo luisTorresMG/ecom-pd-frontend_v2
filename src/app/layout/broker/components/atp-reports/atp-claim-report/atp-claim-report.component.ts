@@ -4,6 +4,7 @@ import { AtpReportService } from '../../../services/atp-reports/atp-report.servi
 import { ExcelService } from '../../../services/shared/excel.service';
 
 @Component({
+  standalone: false,
   selector: 'app-atp-claim-report',
   templateUrl: './atp-claim-report.component.html',
   styleUrls: ['./atp-claim-report.component.css'],

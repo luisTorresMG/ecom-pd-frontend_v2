@@ -4,6 +4,7 @@ import { AccPersonalesConstants } from '../../core/constants/acc-personales.cons
 import { UtilService } from '../../core/services/util.service';
 
 @Component({
+  standalone: false,
   selector: 'form-input-textarea',
   templateUrl: './form-input-textarea.component.html',
   styleUrls: ['./form-input-textarea.component.css']

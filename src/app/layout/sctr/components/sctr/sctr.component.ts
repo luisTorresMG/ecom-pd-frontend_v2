@@ -3,6 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { GoogleTagManagerService } from '../../shared/services/google-tag-manager.service';
 
 @Component({
+  standalone: false,
   selector: 'app-sctr',
   templateUrl: './sctr.component.html',
   styleUrls: ['./sctr.component.css'],

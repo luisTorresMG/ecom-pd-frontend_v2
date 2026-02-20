@@ -51,6 +51,7 @@ import { ValidateDebtRequest } from '../../../models/collection/validate-debt.re
 import { ValidateDebtReponse } from '../../../interfaces/validate-debt-response';
 import { CobranzasService } from '../../../services/cobranzas/cobranzas.service';
 @Component({
+  standalone: false,
   selector: 'app-policy-form',
   templateUrl: './policy-form.component.html',
   styleUrls: ['./policy-form.component.css'],

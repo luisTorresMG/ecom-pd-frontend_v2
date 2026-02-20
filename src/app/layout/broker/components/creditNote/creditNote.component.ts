@@ -75,6 +75,7 @@ export class listPremiumResults {
 
 }
 @Component({
+  standalone: false,
   selector: 'app-creditNote',
   templateUrl: './creditNote.component.html',
   styleUrls: ['./creditNote.component.css'],

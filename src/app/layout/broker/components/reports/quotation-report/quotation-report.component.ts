@@ -23,6 +23,7 @@ import { GlobalValidators } from './../../global-validators';
 import { isNumeric } from 'rxjs/internal-compatibility';
 
 @Component({
+  standalone: false,
   selector: 'app-quotation-report',
   templateUrl: './quotation-report.component.html',
   styleUrls: ['./quotation-report.component.css']

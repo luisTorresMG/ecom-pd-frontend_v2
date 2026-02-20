@@ -11,6 +11,7 @@ import { CommissionLotService } from '../../services/commisslot/comissionlot.ser
 import { LogsService } from '../../services/logs/logs.service';
 
 @Component({
+  standalone: false,
   selector: 'app-logs-usuarios',
   templateUrl: './logs-usuarios.component.html',
   styleUrls: ['./logs-usuarios.component.css']

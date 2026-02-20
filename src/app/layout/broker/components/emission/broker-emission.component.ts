@@ -67,6 +67,7 @@ import { ZonaRegistral } from '../../../client/shared/models/zona-registral.mode
 import moment from 'moment';
 
 @Component({
+  standalone: false,
   selector: 'app-broker-emission',
   templateUrl: './broker-emission.component.html',
   styleUrls: ['./broker-emission.component.scss'],

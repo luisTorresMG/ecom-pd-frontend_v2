@@ -14,6 +14,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { CargaMasivaEstadoService } from '../../../../../services/transaccion/carga-masiva/carga-masiva-estado.service';
 import { CargaMasivaService } from '../../../../../services/transaccion/carga-masiva/carga-masiva.service';
 @Component({
+  standalone: false,
   selector: 'app-CargaMasivaAddState',
   templateUrl: './CargaMasivaAddState.component.html',
   styleUrls: ['./CargaMasivaAddState.component.css'],

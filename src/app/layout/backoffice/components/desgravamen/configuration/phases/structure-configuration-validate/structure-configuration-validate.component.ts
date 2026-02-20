@@ -18,6 +18,7 @@ import { DesgravamenService } from '../../../shared/services/desgravamen/desgrav
 import { ConfigurationService } from '../../../shared/services/configuration/configuration.service';
 
 @Component({
+  standalone: false,
   selector: 'app-structure-configuration-validate',
   templateUrl: './structure-configuration-validate.component.html',
   styleUrls: [

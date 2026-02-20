@@ -9,6 +9,7 @@ import { GlobalValidators } from '../../global-validators';
 // import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
+  standalone: false,
   selector: 'app-preliminary-report-pay',
   templateUrl: './preliminary-report-pay.component.html',
   styleUrls: ['./preliminary-report-pay.component.css']

@@ -4,6 +4,7 @@ import { ClientInformationService } from '../../../../../layout/broker/services/
 
 
 @Component({
+  standalone: false,
   selector: 'form-search-client',
   templateUrl: './form-search-client.component.html',
   styleUrls: ['./form-search-client.component.css']

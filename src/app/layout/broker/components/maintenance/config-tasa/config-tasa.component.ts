@@ -6,6 +6,7 @@ import { ParameterSettingsService } from '../../../services/maintenance/paramete
 import Swal from 'sweetalert2';
 
 @Component({
+  standalone: false,
   selector: 'app-config-tasa',
   templateUrl: './config-tasa.component.html',
   styleUrls: ['./config-tasa.component.css'],

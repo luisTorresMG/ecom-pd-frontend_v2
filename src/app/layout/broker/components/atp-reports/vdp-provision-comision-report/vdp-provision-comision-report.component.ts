@@ -7,6 +7,7 @@ import { ExcelService } from '../../../services/shared/excel.service';
 //VdpComisionReportComponent
 //vdp-provision-comision-report
 @Component({
+  standalone: false,
   selector: 'app-vdp-comision-report',
   templateUrl: './vdp-provision-comision-report.component.html',
   styleUrls: ['./vdp-provision-comision-report.component.css'],

@@ -66,6 +66,7 @@ export interface ActionConfig {
 }
 
 @Component({
+  standalone: false,
   selector: 'app-reporte-nota-credito',
   templateUrl: './reporte-nota-credito.component.html',
   styleUrls: ['./reporte-nota-credito.component.css'],

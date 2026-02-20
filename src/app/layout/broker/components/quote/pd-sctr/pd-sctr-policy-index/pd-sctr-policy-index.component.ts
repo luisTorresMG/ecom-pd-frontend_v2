@@ -18,6 +18,7 @@ import { ParameterSettingsService } from '../../../../services/maintenance/param
 import { PolicyReportInsuredComponent } from '../../../policy/policy-report-insured/policy-report-insured.component';
 
 @Component({
+  standalone: false,
   selector: 'app-pd-sctr-policy-index',
   templateUrl: './pd-sctr-policy-index.component.html',
   styleUrls: ['./pd-sctr-policy-index.component.css']

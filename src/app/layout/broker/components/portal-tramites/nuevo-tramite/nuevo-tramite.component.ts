@@ -42,6 +42,7 @@ import {
 } from '../../../interfaces/auto.interface';
 
 @Component({
+  standalone: false,
   selector: 'app-nuevo-tramite',
   templateUrl: './nuevo-tramite.component.html',
   styleUrls: ['./nuevo-tramite.component.scss'],

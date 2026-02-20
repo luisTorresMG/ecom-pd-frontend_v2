@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from
 import Swal from 'sweetalert2';
 
 @Component({
+  standalone: false,
   selector: 'app-search-contracting',
   templateUrl: './search-contracting.component.html',
   styleUrls: ['./search-contracting.component.css']

@@ -15,6 +15,7 @@ import { SessionStorageService } from '@shared/services/storage/storage-service'
 import { PasswordService } from '../../services/password/password.service';
 import { SecurityCookieService } from '../../services/cookie/SecurityCookie.service';
 @Component({
+  standalone: false,
   selector: 'app-login',
   templateUrl: 'login.component.html',
   styleUrls: ['login.component.css'],

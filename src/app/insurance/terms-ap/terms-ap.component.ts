@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-terms-ap',
   templateUrl: './terms-ap.component.html',
   styleUrls: ['./terms-ap.component.scss']

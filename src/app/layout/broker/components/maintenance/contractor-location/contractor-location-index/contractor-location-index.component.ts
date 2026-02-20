@@ -40,6 +40,7 @@ import { AppConfig } from '../../../../../../app.config';
 import { ButtonVisaComponent } from '../../../../../../shared/components/button-visa/button-visa.component';
 import { Certificado } from '../../../../models/certificado/certificado';
 @Component({
+  standalone: false,
   selector: 'app-contractor-location-index',
   templateUrl: './contractor-location-index.component.html',
   styleUrls: ['./contractor-location-index.component.css'],

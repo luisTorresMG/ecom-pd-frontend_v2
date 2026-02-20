@@ -9,6 +9,7 @@ import { ParametersResponse, IDepartamentoModel, IDistritoModel, IProvinciaModel
 import { BeneficiarioModel } from '../../../shared/models/beneficiario.model';
 
 @Component({
+  standalone: false,
   selector: 'app-step5',
   templateUrl: './step5.component.html',
   styleUrls: ['./step5.component.scss'],

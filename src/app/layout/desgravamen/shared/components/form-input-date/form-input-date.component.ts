@@ -6,6 +6,7 @@ import { UtilService } from '../../../../../layout/broker/components/quote/acc-p
 
 
 @Component({
+  standalone: false,
   selector: 'form-input-date',
   templateUrl: './form-input-date.component.html',
   styleUrls: ['./form-input-date.component.css']

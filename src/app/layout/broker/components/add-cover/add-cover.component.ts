@@ -11,6 +11,7 @@ import { CoverService } from '../../services/maintenance/cover/cover.service';
 import { CommonMethods } from '../common-methods';
 
 @Component({
+  standalone: false,
   selector: 'app-add-cover',
   templateUrl: './add-cover.component.html',
   styleUrls: ['./add-cover.component.css'],

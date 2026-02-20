@@ -29,6 +29,7 @@ import { CommonMethods } from '../common-methods';
 import { isNumeric } from 'rxjs/internal-compatibility';
 
 @Component({
+  standalone: false,
   selector: 'app-add-module',
   templateUrl: './add-module.component.html',
   styleUrls: ['./add-module.component.css'],

@@ -3,6 +3,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { QuotationService } from '../../services/quotation/quotation.service';
 // GCAA INICIO 06022024
 @Component({
+  standalone: false,
   selector: 'app-view-coupon',
   templateUrl: './view-coupon.component.html',
   styleUrls: ['./view-coupon.component.scss'],

@@ -31,6 +31,7 @@ import { RecaptchaComponent } from 'ng-recaptcha';
 import { TrackingService } from '@root/layout/vidaindividual-latest/services/tracking/tracking.service';
 
 @Component({
+  standalone: false,
   selector: 'app-step1',
   templateUrl: './step1.component.html',
   styleUrls: ['./step1.component.scss'],

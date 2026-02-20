@@ -10,6 +10,7 @@ import swal from 'sweetalert2';
 import { ConfigCommissionComponentRecord } from '../config-commission-record/config-commission-record.component';
 
 @Component({
+  standalone: false,
   selector: 'app-config-commission',
   templateUrl: './config-commission.component.html',
   styleUrls: ['./config-commission.component.css']

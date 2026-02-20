@@ -15,6 +15,7 @@ import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component'
 import { Subscription } from 'rxjs';
 
 @Component({
+  standalone: false,
   selector: 'app-documento-modal',
   templateUrl: './documento-modal.component.html',
   styleUrls: ['./documento-modal.component.css'],

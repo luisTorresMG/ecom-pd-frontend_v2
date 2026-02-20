@@ -26,6 +26,7 @@ import { datePickerConfig } from '@shared/config/config';
 import { RegularExpressions } from '@shared/regexp/regexp';
 
 @Component({
+  standalone: false,
   selector: 'app-bulk-load',
   templateUrl: './bulk-load.component.html',
   styleUrls: ['./bulk-load.component.sass'],

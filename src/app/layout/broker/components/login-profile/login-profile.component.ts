@@ -16,6 +16,7 @@ import { ExcelService } from '@shared/services/excel/excel.service';
 import { UtilsService } from '@shared/services/utils/utils.service';
 
 @Component({
+  standalone: false,
   selector: 'app-login-profile',
   templateUrl: './login-profile.component.html',
   styleUrls: ['./login-profile.component.css']

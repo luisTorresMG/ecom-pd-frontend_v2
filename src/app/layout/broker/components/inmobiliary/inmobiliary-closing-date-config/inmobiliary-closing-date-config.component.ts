@@ -50,6 +50,7 @@ export interface GrillaConfig {
 }
 
 @Component({
+  standalone: false,
   selector: 'app-inmobiliary-closing-date-config',
   templateUrl: './inmobiliary-closing-date-config.component.html',
   styleUrls: ['./inmobiliary-closing-date-config.component.scss']

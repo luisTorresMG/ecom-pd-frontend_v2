@@ -6,6 +6,7 @@ import { AccPersonalesConstants } from '../../../../../layout/broker/components/
 
 
 @Component({
+  standalone: false,
   selector: 'panel-info-exclusion',
   templateUrl: './panel-info-exclusion.component.html',
   styleUrls: ['./panel-info-exclusion.component.css']

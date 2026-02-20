@@ -4,6 +4,7 @@ import {
 } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-broker',
   templateUrl: './broker.component.html',
   styleUrls: ['./broker.component.css']

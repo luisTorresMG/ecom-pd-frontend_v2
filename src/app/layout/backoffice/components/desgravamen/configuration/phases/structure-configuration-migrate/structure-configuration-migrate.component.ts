@@ -2,6 +2,7 @@ import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {fadeAnimation} from 'app/shared/animations/animations';
 
 @Component({
+  standalone: false,
   selector: 'app-structure-configuration-migrate',
   templateUrl: './structure-configuration-migrate.component.html',
   styleUrls: [

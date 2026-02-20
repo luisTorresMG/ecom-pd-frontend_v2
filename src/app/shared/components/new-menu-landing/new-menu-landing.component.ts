@@ -5,6 +5,7 @@ import { SafeResourceUrl } from '@angular/platform-browser';
 // import { isNullOrUndefined } from 'util';
 import { environment } from './../../../../environments/environment';
 @Component({
+  standalone: false,
   selector: 'app-new-menu-landing',
   templateUrl: './new-menu-landing.component.html',
   styleUrls: ['./new-menu-landing.component.css']

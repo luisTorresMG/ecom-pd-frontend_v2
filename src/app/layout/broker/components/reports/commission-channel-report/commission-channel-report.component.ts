@@ -16,6 +16,7 @@ import { SalesChannelReportService } from '../../../services/report/sales-channe
 import { CommonMethods } from '../../common-methods';
 
 @Component({
+  standalone: false,
   selector: 'app-commission-channel-report',
   templateUrl: './commission-channel-report.component.html',
   styleUrls: ['./commission-channel-report.component.css']

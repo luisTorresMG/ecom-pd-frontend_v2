@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { RequestProformaPolicyViewComponent } from '../request-proforma-policy-view/request-proforma-policy-view.component';
 
 @Component({
+  standalone: false,
   selector: 'app-request-proforma-policy',
   templateUrl: './request-proforma-policy.component.html',
   styleUrls: ['./request-proforma-policy.component.css'],

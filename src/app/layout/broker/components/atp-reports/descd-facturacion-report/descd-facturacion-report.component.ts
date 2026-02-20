@@ -5,6 +5,7 @@ import { AtpReportService } from '../../../services/atp-reports/atp-report.servi
 import { ExcelService } from '../../../services/shared/excel.service';
 
 @Component({
+  standalone: false,
   selector: 'app-descd-facturacion-report',
   templateUrl: './descd-facturacion-report.component.html',
   styleUrls: ['./descd-facturacion-report.component.css'],

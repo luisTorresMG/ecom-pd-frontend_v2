@@ -17,6 +17,7 @@ import { AppConfig } from '@root/app.config';
 import { TrackingService } from '@root/layout/vidaindividual-latest/services/tracking/tracking.service';
 
 @Component({
+  standalone: false,
   selector: 'app-auth-method',
   templateUrl: './auth-method.component.html',
   styleUrls: ['./auth-method.component.scss']

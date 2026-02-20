@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DpsService } from '../../shared/services/dps.service';
 
 @Component({
+  standalone: false,
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],

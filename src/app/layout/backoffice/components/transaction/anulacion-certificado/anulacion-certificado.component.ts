@@ -18,6 +18,7 @@ import {
 // import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import moment from 'moment';
 @Component({
+  standalone: false,
   selector: 'app-anulacion-certificado',
   templateUrl: './anulacion-certificado.component.html',
   styleUrls: ['./anulacion-certificado.component.css'],

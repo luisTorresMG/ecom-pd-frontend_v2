@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, OnDestroy } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-plan-detail',
   templateUrl: './plan-detail.component.html',
   styleUrls: ['./plan-detail.component.scss']

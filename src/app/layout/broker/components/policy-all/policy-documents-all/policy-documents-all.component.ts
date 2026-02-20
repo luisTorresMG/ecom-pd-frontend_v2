@@ -3,6 +3,7 @@ import { OthersService } from '../../../services/shared/others.service';
 import swal from 'sweetalert2';
 
 @Component({
+  standalone: false,
   selector: 'app-policy-documents-all',
   templateUrl: './policy-documents-all.component.html',
   styleUrls: ['./policy-documents-all.component.css']

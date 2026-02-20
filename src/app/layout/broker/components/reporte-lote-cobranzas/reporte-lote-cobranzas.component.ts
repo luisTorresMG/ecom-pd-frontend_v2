@@ -20,6 +20,7 @@ import { UtilsService } from '../../../../shared/services/utils/utils.service';
 import { ReporteLoteCobranzasService } from '../../services/reporte-lote-cobranzas/reporte-lote-cobranzas.service';
 
 @Component({
+  standalone: false,
   selector: 'app-reporte-lote-cobranzas',
   templateUrl: './reporte-lote-cobranzas.component.html',
   styleUrls: ['./reporte-lote-cobranzas.component.sass'],

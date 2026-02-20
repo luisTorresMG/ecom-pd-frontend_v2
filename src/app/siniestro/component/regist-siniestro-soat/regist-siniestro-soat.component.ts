@@ -19,6 +19,7 @@ import { fromEvent } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'app-regist-siniestro-soat',
   templateUrl: './regist-siniestro-soat.component.html',
   styleUrls: ['./regist-siniestro-soat.component.sass','./regist-siniestro-soat.component.css']

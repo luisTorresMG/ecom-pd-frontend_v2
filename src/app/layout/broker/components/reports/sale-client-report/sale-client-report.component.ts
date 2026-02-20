@@ -13,6 +13,7 @@ import swal from 'sweetalert2';
 import { CommonMethods } from '../../common-methods';
 
 @Component({
+  standalone: false,
   selector: 'app-sale-client-report',
   templateUrl: './sale-client-report.component.html',
   styleUrls: ['./sale-client-report.component.css']

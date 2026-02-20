@@ -3,6 +3,7 @@ import { VidaleyService } from '../../shared/services/vidaley.service';
 import { GoogleTagManagerService } from '../../shared/services/google-tag-manager.service';
 
 @Component({
+  standalone: false,
   selector: 'app-error-message',
   templateUrl: './error-message.component.html',
   styleUrls: ['./error-message.component.css'],

@@ -6,6 +6,7 @@ import { SessionToken } from '../../../client/shared/models/session-token.model'
 import { PasswordStrengthValidator } from '../../../../shared/helpers/password-strength-validator';
 
 @Component({
+  standalone: false,
   selector: 'app-renew-password',
   templateUrl: './renew-password.component.html',
   styleUrls: ['./renew-password.component.css'],

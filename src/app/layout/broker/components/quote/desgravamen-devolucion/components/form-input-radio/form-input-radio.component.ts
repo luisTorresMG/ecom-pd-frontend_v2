@@ -3,6 +3,7 @@ import { Component, Input, Output, EventEmitter, OnInit, OnChanges } from '@angu
 import { UtilService } from '../../core/services/util.service';
 
 @Component({
+  standalone: false,
   selector: 'form-input-radio',
   templateUrl: './form-input-radio.component.html',
   styleUrls: ['./form-input-radio.component.css']

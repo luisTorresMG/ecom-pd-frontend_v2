@@ -19,6 +19,7 @@ import { UtilsService } from '@shared/services/utils/utils.service';
 import { TrackingService } from '@root/layout/vidaindividual-latest/services/tracking/tracking.service';
 
 @Component({
+  standalone: false,
   selector: 'app-step3',
   templateUrl: './step3.component.html',
   styleUrls: ['./step3.component.css'],

@@ -3,6 +3,7 @@ import { UsoService } from '../../../services/uso/uso.service';
 import { Uso } from '../../../models/use/use';
 
 @Component({
+  standalone: false,
   selector: 'app-uso',
   templateUrl: './uso.component.html',
   styleUrls: ['./uso.component.css']

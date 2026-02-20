@@ -132,6 +132,7 @@ export interface FiltroDetalleOperacion {
 }
 
 @Component({
+  standalone: false,
   selector: 'app-inmobiliary-consulta-control-bancario',
   templateUrl: './inmobiliary-consulta-control-bancario.component.html',
   styleUrls: ['./inmobiliary-consulta-control-bancario.component.css']

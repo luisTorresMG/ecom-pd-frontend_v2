@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-process-log',
   templateUrl: './process-log.component.html',
   styleUrls: ['./process-log.component.sass']

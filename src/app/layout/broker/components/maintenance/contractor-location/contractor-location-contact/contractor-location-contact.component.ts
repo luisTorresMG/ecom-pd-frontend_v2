@@ -10,6 +10,7 @@ import { ContractorLocationContact } from '../../../../models/maintenance/contra
 //Directivas personalizadas
 
 @Component({
+  standalone: false,
   selector: 'app-contractor-location-contact',
   templateUrl: './contractor-location-contact.component.html',
   styleUrls: ['./contractor-location-contact.component.css']

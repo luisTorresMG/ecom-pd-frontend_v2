@@ -11,6 +11,7 @@ import { DesgravamenDevolucionConstants } from '../../core/constants/desgravamen
 import { UtilService } from '../../core/services/util.service';
 
 @Component({
+  standalone: false,
   selector: 'form-input-text',
   templateUrl: './form-input-text.component.html',
   styleUrls: ['./form-input-text.component.css'],

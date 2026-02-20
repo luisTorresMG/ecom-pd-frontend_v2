@@ -9,6 +9,7 @@ export class Select {
   descript: string;
 }
 @Component({
+  standalone: false,
   selector: 'app-vdp-provision-comision-autorizar-consulta',
   templateUrl: './vdp-provision-comision-autorizar-consulta.component.html',
   styleUrls: ['./vdp-provision-comision-autorizar-consulta.component.css']

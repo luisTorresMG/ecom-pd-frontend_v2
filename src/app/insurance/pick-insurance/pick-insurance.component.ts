@@ -24,6 +24,7 @@ import { ClientInfoService } from '../shared/services/client-info.service';
 import { GoogleTagService } from '../shared/services/google-tag-service';
 
 @Component({
+  standalone: false,
   selector: 'app-pick-insurance',
   templateUrl: './pick-insurance.component.html',
   styleUrls: ['./pick-insurance.component.scss'],

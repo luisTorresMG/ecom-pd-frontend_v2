@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { UtilsService } from '../../../../shared/services/utils/utils.service';
 
 @Component({
+  standalone: false,
   selector: 'app-proof-consultation',
   templateUrl: './proof-consultation.component.html',
   styleUrls: ['./proof-consultation.component.css', './proof-consultation-theme.component.css']

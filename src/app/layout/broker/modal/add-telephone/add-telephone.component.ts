@@ -13,6 +13,7 @@ import swal from 'sweetalert2';
 import { CommonMethods } from '../../components/common-methods';
 
 @Component({
+  standalone: false,
   selector: 'app-add-telephone',
   templateUrl: './add-telephone.component.html',
   styleUrls: ['./add-telephone.component.css']

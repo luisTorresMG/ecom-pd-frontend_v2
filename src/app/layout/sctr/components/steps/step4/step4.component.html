@@ -9,16 +9,16 @@
       Cod. transacción <span>{{ vidaleyUser.idProcess }}</span>
     </h6>
 
-    <app-summary
+    <!-- <app-summary
       [user]="vidaleyUser"
       (formSubmitted)="onSubmit($event)"
-    ></app-summary>
+    ></app-summary> -->
   </div>
 
   <h6 class="ref">*Valor referencial, puede variar según planilla</h6>
 </div>
 
-<app-error-message
+<!-- <app-error-message
   *ngIf="!vidaleyUser.insurance && !businessRules"
   moreInfo="true"
   step="3"
@@ -27,7 +27,7 @@
 <app-error-message
   *ngIf="businessRules"
   moreInfo="true"
-  step="4"
+  step="4" -->
 ></app-error-message>
 
 <ng-template #errorModal>

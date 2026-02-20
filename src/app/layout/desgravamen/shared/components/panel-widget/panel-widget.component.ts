@@ -4,6 +4,7 @@ import { UtilService } from '../../../../../layout/broker/components/quote/acc-p
 
 
 @Component({
+  standalone: false,
   selector: 'panel-widget',
   templateUrl: './panel-widget.component.html',
   styleUrls: ['./panel-widget.component.css']

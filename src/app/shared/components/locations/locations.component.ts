@@ -11,6 +11,7 @@ type TLocations = {
   district
 };
 @Component({
+  standalone: false,
   selector: 'app-locations',
   standalone: false, 
   templateUrl: './locations.component.html',

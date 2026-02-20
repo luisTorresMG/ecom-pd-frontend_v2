@@ -21,6 +21,7 @@ import { UtilsService } from '../../../../shared/services/utils/utils.service';
 import { ValidateLotService } from '../../services/validate-lot/validate-lot.service';
 
 @Component({
+  standalone: false,
   selector: 'app-validation-lot',
   templateUrl: './validation-lot.component.html',
   styleUrls: ['./validation-lot.component.sass'],

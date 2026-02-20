@@ -4,6 +4,7 @@ import { ClientInformationService } from '../../../../../services/shared/client-
 import { DesgravamenDevolucionConstants } from '../../core/constants/desgravamen-devolucion.constants';
 
 @Component({
+  standalone: false,
   selector: 'form-search-client',
   templateUrl: './form-search-client.component.html',
   styleUrls: ['./form-search-client.component.css']

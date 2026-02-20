@@ -11,6 +11,7 @@ import swal from 'sweetalert2';
 import { CommonMethods } from '../../common-methods';
 import { ParameterSettingsService } from '../../../services/maintenance/parameter-settings.service';
 @Component({
+  standalone: false,
   selector: 'app-bandeja',
   templateUrl: './bandeja.component.html',
   styleUrls: ['./bandeja.component.css']

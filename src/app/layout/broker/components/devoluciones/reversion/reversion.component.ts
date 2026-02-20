@@ -103,6 +103,7 @@ export class listPremiumResults {
 
 
 @Component({
+  standalone: false,
   selector: 'app-reversion',
   templateUrl: './reversion.component.html',
   styleUrls: ['./reversion.component.css'],

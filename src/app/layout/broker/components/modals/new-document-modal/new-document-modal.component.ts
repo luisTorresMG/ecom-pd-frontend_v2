@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-new-document-modal',
   templateUrl: './new-document-modal.component.html',
   styleUrls: ['./new-document-modal.component.css'],

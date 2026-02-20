@@ -7,6 +7,7 @@ import { ShopService } from '../services/shop.service';
 import { Autorizacion } from '../../layout/client/shared/models/autorizacion.model';
 import { AppConfig } from '@root/app.config';
 @Component({
+  standalone: false,
   selector: 'app-visa-payment',
   templateUrl: './visa-payment.component.html',
   styleUrls: ['./visa-payment.component.css'],

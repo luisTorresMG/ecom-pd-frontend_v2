@@ -28,6 +28,7 @@ import { AccessFilter } from './../../../access-filter';
 import { AccountTransaction } from '../../../../models/report/state-report/response/account-transaction';
 import { ClientEnablement } from '../../../../models/report/state-report/request/client-enablement';
 @Component({
+  standalone: false,
   selector: 'app-contractor-state',
   templateUrl: './contractor-state.component.html',
   styleUrls: ['./contractor-state.component.css'],

@@ -37,6 +37,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { IDocumentInfoClientRequest } from '../../../../shared/interfaces/document-information.interface';
 
 @Component({
+  standalone: false,
   selector: 'app-contrantante',
   templateUrl: './contratante.component.html',
   styleUrls: ['./contratante.component.css'],

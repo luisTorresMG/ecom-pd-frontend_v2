@@ -7,6 +7,7 @@ import { GoogleAnalyticsService } from '@shared/services/google-analytics/google
 import { UtilsService } from '@shared/services/utils/utils.service';
 
 @Component({
+  standalone: false,
   selector: 'app-compare-plan',
   templateUrl: './compare-plan.component.html',
   styleUrls: ['./compare-plan.component.css'],

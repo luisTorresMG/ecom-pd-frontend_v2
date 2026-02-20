@@ -19,6 +19,7 @@ import { ConfigurationService } from '../../../shared/services/configuration/con
 import { fadeAnimation } from '@shared/animations/animations';
 
 @Component({
+  standalone: false,
   selector: 'app-structure-configuration-register',
   templateUrl: './structure-configuration-register.component.html',
   styleUrls: [

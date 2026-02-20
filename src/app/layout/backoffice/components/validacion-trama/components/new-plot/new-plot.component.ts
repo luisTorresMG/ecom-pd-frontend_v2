@@ -29,6 +29,7 @@ import { fadeAnimation } from '@shared/animations/animations';
 import moment from 'moment';
 
 @Component({
+  standalone: false,
   selector: 'app-new-plot',
   templateUrl: './new-plot.component.html',
   styleUrls: ['./new-plot.component.sass'],

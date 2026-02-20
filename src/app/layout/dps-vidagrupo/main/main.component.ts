@@ -9,6 +9,7 @@ import { IOtp } from '@shared/interfaces/otp.interface';
 import { DpsModel } from '@root/layout/dps-vidagrupo/shared/models/dps.model';
 
 @Component({
+  standalone: false,
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.sass']

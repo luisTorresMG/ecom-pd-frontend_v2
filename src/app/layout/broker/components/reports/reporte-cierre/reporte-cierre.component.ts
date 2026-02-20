@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { DatePipe } from '@angular/common';
 
 @Component({
+  standalone: false,
   selector: 'app-reporte-cierre',
   templateUrl: './reporte-cierre.component.html',
   styleUrls: ['./reporte-cierre.component.css'],

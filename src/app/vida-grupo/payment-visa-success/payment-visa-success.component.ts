@@ -11,6 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
+  standalone: false,
   selector: 'app-payment-visa-success',
   templateUrl: './payment-visa-success.component.html',
   styleUrls: ['./payment-visa-success.component.scss'],

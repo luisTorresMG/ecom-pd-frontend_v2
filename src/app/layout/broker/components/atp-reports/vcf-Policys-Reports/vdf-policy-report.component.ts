@@ -5,6 +5,7 @@ import { AtpReportService } from '../../../services/atp-reports/atp-report.servi
 import { ExcelService } from '../../../services/shared/excel.service';
 
 @Component({
+  standalone: false,
   selector: 'app-vdf-policy-report',
   templateUrl: './vdf-policy-report.component.html',
   styleUrls: ['./vdf-policy-report.component.css'],

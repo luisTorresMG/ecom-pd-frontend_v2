@@ -8,6 +8,7 @@ import { ValidatorService } from '../../../../../shared/services/general/validat
 import { DatePipe } from '@angular/common';
 
 @Component({
+  standalone: false,
   selector: 'app-reportcomisspro',
   templateUrl: './reportcomisspro.component.html',
   styleUrls: ['./reportcomisspro.component.css']

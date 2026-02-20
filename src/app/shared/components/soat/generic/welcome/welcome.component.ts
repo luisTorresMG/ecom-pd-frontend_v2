@@ -2,6 +2,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 // tslint:disable-next-line:max-line-length
 import { Component, OnInit, OnChanges, ViewChild, ViewContainerRef, TemplateRef, ChangeDetectorRef, ChangeDetectionStrategy, AfterViewChecked, AfterViewInit, ElementRef, SimpleChanges } from '@angular/core';
 @Component({
+  standalone: false,
   selector: 'app-welcome',
   templateUrl: './welcome.component.html',
   styleUrls: ['./welcome.component.scss'],

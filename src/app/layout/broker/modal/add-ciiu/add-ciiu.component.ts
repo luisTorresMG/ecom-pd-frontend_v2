@@ -8,6 +8,7 @@ import swal from 'sweetalert2';
 import { CommonMethods } from '../../components/common-methods';
 
 @Component({
+  standalone: false,
   selector: 'app-add-ciiu',
   templateUrl: './add-ciiu.component.html',
   styleUrls: ['./add-ciiu.component.css']

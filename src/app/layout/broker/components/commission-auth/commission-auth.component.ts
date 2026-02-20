@@ -38,6 +38,7 @@ import { RegularExpressions } from '@shared/regexp/regexp';
 defineLocale('es', esLocale);
 
 @Component({
+  standalone: false,
   selector: 'app-commission-auth',
   templateUrl: './commission-auth.component.html',
   styleUrls: ['./commission-auth.component.sass'],

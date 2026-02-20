@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { AccPersonalesConstants } from '../../quote/acc-personales/core/constants/acc-personales.constants';
 
 @Component({
+  standalone: false,
   selector: 'app-client-modal',
   templateUrl: './client-modal.component.html',
   styleUrls: ['./client-modal.component.css'],

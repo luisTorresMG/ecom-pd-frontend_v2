@@ -7,6 +7,7 @@ import { ShopService } from '../services/shop.service';
 import { AppConfig } from '../../app.config';
 
 @Component({
+  standalone: false,
   selector: 'app-pago-efectivo-payment',
   templateUrl: './pago-efectivo-payment.component.html',
   styleUrls: ['./pago-efectivo-payment.component.css'],

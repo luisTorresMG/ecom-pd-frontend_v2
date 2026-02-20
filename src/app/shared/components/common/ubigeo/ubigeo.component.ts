@@ -5,6 +5,7 @@ import { Province } from '../../../models/province/province';
 import { Municipality } from '../../../models/municipality/municipality';
 
 @Component({
+  standalone: false,
   selector: 'app-ubigeo',
   templateUrl: './ubigeo.component.html',
   styleUrls: ['./ubigeo.component.css']

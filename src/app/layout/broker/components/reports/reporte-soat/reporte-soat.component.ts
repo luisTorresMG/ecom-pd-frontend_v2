@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 import { ReporteSoatService } from '../../../services/report/reporte-soat.service';
 
 @Component({
+  standalone: false,
   selector: 'app-reporte-soat',
   templateUrl: './reporte-soat.component.html',
   styleUrls: ['./reporte-soat.component.css'],

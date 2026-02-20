@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-step3-select-plan',
   templateUrl: './step3-select-plan.component.html',
   styleUrls: ['./step3-select-plan.component.css']

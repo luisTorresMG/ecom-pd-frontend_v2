@@ -11,6 +11,7 @@ import { DataProductService } from '@root/layout/broker/services/vida-devolucion
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import moment from 'moment';
 @Component({
+  standalone: false,
   selector: 'app-quote-asign',
   templateUrl: './quote-asign.component.html',
   styleUrls: ['./quote-asign.component.scss']

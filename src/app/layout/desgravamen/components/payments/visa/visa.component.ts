@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-visa',
   templateUrl: './visa.component.html',
   styleUrls: ['./visa.component.scss']

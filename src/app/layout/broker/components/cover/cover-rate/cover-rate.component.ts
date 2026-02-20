@@ -8,6 +8,7 @@ import { CoverRateBM } from '../../../models/maintenance/cover/request/cover-rat
 import { CommonMethods } from '../../common-methods';
 import { PolicyemitService } from '../../../services/policy/policyemit.service';
 @Component({
+  standalone: false,
   selector: 'app-cover-rate',
   templateUrl: './cover-rate.component.html',
   styleUrls: ['./cover-rate.component.css'],

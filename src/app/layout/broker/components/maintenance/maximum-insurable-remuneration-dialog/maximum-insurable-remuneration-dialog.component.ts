@@ -9,6 +9,7 @@ import { ParameterSettingsService } from '../../../services/maintenance/paramete
 import Swal from 'sweetalert2';
 
 @Component({
+  standalone: false,
   selector: 'app-maximum-insurable-remuneration-dialog',
   templateUrl: './maximum-insurable-remuneration-dialog.component.html',
   styleUrls: ['./maximum-insurable-remuneration-dialog.component.css'],

@@ -31,6 +31,7 @@ import { AppConfig } from '@root/app.config';
 import moment from 'moment';
 
 @Component({
+  standalone: false,
   selector: 'app-bandeja-tramites',
   templateUrl: './bandeja-tramites.component.html',
   styleUrls: ['./bandeja-tramites.component.scss'],

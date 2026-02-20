@@ -39,6 +39,7 @@ import { HttpParams } from '@angular/common/http';
 import { UtilsService } from '@shared/services/utils/utils.service';
 defineLocale('es', esLocale);
 @Component({
+  standalone: false,
   selector: 'app-asignados-reasignados',
   templateUrl: './asignados-reasignados.component.html',
   styleUrls: ['./asignados-reasignados.component.scss'],

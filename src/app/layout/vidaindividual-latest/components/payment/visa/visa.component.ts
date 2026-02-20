@@ -23,6 +23,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { TrackingService } from '@root/layout/vidaindividual-latest/services/tracking/tracking.service';
 
 @Component({
+  standalone: false,
   selector: 'app-visa',
   templateUrl: './visa.component.html',
   styleUrls: ['./visa.component.css'],

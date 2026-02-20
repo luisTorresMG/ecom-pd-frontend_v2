@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CommonMethods } from '../../../../common-methods';
 
 @Component({
+  standalone: false,
   selector: 'panel-header-producto',
   templateUrl: './panel-header-producto.component.html',
   styleUrls: ['./panel-header-producto.component.css']

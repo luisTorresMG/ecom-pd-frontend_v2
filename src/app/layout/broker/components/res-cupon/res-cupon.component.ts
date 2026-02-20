@@ -3,6 +3,7 @@ import { Cliente } from '../../../broker/models/cliente/cliente';
 import { Router } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'app-res-cupon',
   templateUrl: './res-cupon.component.html',
   styleUrls: ['./res-cupon.component.css'],

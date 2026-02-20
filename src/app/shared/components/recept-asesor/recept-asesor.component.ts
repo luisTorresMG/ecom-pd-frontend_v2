@@ -1,6 +1,7 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 @Component({
+  standalone: false,
   selector: 'app-recept-asesor',
   templateUrl: './recept-asesor.component.html',
   styleUrls: ['./recept-asesor.component.css'],

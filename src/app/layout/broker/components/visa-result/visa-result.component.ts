@@ -7,6 +7,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from '../../../../../environments/environment';
 
 @Component({
+  standalone: false,
   selector: 'app-visa-result',
   templateUrl: './visa-result.component.html',
   styleUrls: ['./visa-result.component.css']

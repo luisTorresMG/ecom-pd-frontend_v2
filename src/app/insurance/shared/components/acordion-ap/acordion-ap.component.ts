@@ -3,6 +3,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { IAcordion } from '../../interfaces/acordion.interface';
 
 @Component({
+  standalone: false,
   selector: 'app-acordion-ap',
   templateUrl: './acordion-ap.component.html',
   styleUrls: ['./acordion-ap.component.sass'],

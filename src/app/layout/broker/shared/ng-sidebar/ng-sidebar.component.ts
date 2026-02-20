@@ -16,6 +16,7 @@ import { AppConfig } from '../../../../app.config';
 import { SidebarService } from '../../../../shared/services/sidebar/sidebar.service';
 
 @Component({
+  standalone: false,
   selector: 'app-ng-sidebar',
   templateUrl: './ng-sidebar.component.html',
   styleUrls: ['./ng-sidebar.component.scss'],

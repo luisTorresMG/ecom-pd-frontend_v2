@@ -26,6 +26,7 @@ export interface FiltroInterfaz {
 }
 
 @Component({
+  standalone: false,
   selector: 'app-inmobiliary-module-reports-operaciones',
   templateUrl: './inmobiliary-module-reports-operaciones.component.html',
   styleUrls: ['./inmobiliary-module-reports-operaciones.component.css']

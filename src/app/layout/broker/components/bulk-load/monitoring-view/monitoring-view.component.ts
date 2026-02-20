@@ -7,6 +7,7 @@ import swal from 'sweetalert2';
 import * as fileSaver from 'file-saver';
 
 @Component({
+  standalone: false,
   selector: 'app-monitoring-view',
   templateUrl: './monitoring-view.component.html',
   styleUrls: ['./monitoring-view.component.css'],

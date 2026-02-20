@@ -25,6 +25,7 @@ import { ConfigurationService } from '@root/layout/backoffice/components/desgrav
 import { NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
+  standalone: false,
   selector: 'app-tray',
   templateUrl: './tray.component.html',
   styleUrls: ['./tray.component.sass'],

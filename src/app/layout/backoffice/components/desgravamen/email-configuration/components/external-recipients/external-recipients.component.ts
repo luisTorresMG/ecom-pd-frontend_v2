@@ -19,6 +19,7 @@ interface IResponse {
 }
 
 @Component({
+  standalone: false,
   selector: 'app-external-recipients',
   templateUrl: './external-recipients.component.html',
   styleUrls: ['./external-recipients.component.sass']

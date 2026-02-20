@@ -24,6 +24,7 @@ import { SessionService } from '../../../soat/shared/services/session.service';
 import { GoogleTagManagerService } from '../../shared/services/google-tag-manager.service';
 
 @Component({
+  standalone: false,
   selector: 'app-contractor',
   templateUrl: './contractor.component.html',
   styleUrls: ['./contractor.component.css'],

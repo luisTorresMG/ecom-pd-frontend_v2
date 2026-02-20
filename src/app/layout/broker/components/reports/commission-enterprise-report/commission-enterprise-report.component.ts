@@ -16,6 +16,7 @@ import swal from 'sweetalert2';
 import { CommonMethods } from '../../common-methods';
 
 @Component({
+  standalone: false,
   selector: 'app-commission-enterprise-report',
   templateUrl: './commission-enterprise-report.component.html',
   styleUrls: ['./commission-enterprise-report.component.css']

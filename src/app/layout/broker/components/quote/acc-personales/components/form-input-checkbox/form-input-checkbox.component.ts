@@ -3,6 +3,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { UtilService } from '../../core/services/util.service';
 
 @Component({
+  standalone: false,
   selector: 'form-input-checkbox',
   templateUrl: './form-input-checkbox.component.html',
   styleUrls: ['./form-input-checkbox.component.css']

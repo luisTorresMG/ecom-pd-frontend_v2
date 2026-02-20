@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import swal from 'sweetalert2';
 import { PolicyemitService } from '../../../services/policy/policyemit.service';
 @Component({
+  standalone: false,
   selector: 'app-policy-movement-cancel',
   templateUrl: './policy-movement-cancel.component.html',
   styleUrls: ['./policy-movement-cancel.component.css']

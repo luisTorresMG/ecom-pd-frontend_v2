@@ -12,6 +12,7 @@ import { Subject } from 'rxjs/Subject';
 import Swal from 'sweetalert2';
 
 @Component({
+  standalone: false,
   selector: 'app-premium-report-tracking',
   templateUrl: './premium-report-tracking.component.html',
   styleUrls: ['./premium-report-tracking.component.css'],

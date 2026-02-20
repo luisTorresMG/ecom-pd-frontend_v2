@@ -15,6 +15,7 @@ import { MethodsPaymentComponent } from '../../../../modal/methods-payment/metho
 import swal from 'sweetalert2';
 
 @Component({
+  standalone: false,
   selector: 'app-quotation-covid',
   templateUrl: './quotation-covid.component.html',
   styleUrls: ['./quotation-covid.component.css'],

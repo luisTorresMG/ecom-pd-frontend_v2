@@ -7,6 +7,7 @@ import { AppConfig } from '../../../app.config';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SessionService } from '@root/layout/soat/shared/services/session.service';
 @Component({
+  standalone: false,
   selector: 'app-header-ecommerce',
   templateUrl: './header-ecommerce.component.html',
   styleUrls: ['./header-ecommerce.component.css'],

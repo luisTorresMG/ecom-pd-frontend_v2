@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-step3-detail',
   templateUrl: './step3-detail.component.html',
   styleUrls: ['./step3-detail.component.css']

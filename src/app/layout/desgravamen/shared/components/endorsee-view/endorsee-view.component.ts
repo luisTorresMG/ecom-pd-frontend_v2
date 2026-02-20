@@ -30,6 +30,7 @@ import { ClientInformationService } from '../../../../broker/services/shared/cli
 // import { ModuleConfig } from '../../../../broker/components/module.config';
 
 @Component({
+  standalone: false,
   selector: 'app-endorsee-view',
   templateUrl: './endorsee-view.component.html',
   styleUrls: ['./endorsee-view.component.css'],

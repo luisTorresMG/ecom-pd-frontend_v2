@@ -7,6 +7,7 @@ import swal from 'sweetalert2';
 
 
 @Component({
+  standalone: false,
   selector: 'panel-table',
   templateUrl: './panel-table.component.html',
   styleUrls: ['./panel-table.component.css'],

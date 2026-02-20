@@ -8,6 +8,7 @@ import { PaymentsService } from '../../../services/payments.service';
 declare var VisanetCheckout: any;
 
 @Component({
+  standalone: false,
   selector: 'app-visa-test',
   templateUrl: './visa-test.component.html',
   styleUrls: ['./visa-test.component.css']

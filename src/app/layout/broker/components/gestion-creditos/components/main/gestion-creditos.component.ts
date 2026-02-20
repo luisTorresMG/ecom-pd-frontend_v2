@@ -6,6 +6,7 @@ import { EventStrings } from '../../../../shared/events/events';
 import { LineaCreditoGeneralService } from '../../shared/services/linea-credito-general.service';
 
 @Component({
+  standalone: false,
   selector: 'app-creditos',
   // moduleId: module.id,
   templateUrl: 'gestion-creditos.component.html',

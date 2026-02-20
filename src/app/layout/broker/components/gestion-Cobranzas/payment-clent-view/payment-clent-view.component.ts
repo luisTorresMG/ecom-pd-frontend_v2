@@ -8,6 +8,7 @@ import { CobranzasService } from '../../../services/cobranzas/cobranzas.service'
 import  moment from 'moment';
 
 @Component({
+  standalone: false,
   selector: 'app-payment-clent-view',
   templateUrl: './payment-clent-view.component.html',
   styleUrls: ['./payment-clent-view.component.css'],

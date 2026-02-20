@@ -4,6 +4,7 @@ import { AccountBankService } from '../../../services/accountbank/accountbank.se
 import { AcountBank } from '../../../models/accountbank/accountbank';
 
 @Component({
+  standalone: false,
   selector: 'app-bank',
   templateUrl: './bank.component.html',
   styleUrls: ['./bank.component.css']

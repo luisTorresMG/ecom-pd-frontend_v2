@@ -26,6 +26,7 @@ import { GoogleTagService } from '../../services/google-tag-service';
 import { maskEmail, maskPhone, maskName } from '../../utils/maskDataClient';
 
 @Component({
+  standalone: false,
   selector: 'app-contact-us',
   templateUrl: './contact-us.component.html',
   styleUrls: ['./contact-us.component.scss'],

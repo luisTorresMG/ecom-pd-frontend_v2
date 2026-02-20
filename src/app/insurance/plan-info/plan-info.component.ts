@@ -25,6 +25,7 @@ import { UtilsService } from '@shared/services/utils/utils.service';
 import { GoogleTagService } from '../shared/services/google-tag-service';
 
 @Component({
+  standalone: false,
   selector: 'app-plan-info',
   templateUrl: './plan-info.component.html',
   styleUrls: ['./plan-info.component.scss'],

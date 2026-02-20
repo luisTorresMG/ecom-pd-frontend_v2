@@ -28,6 +28,7 @@ import { RecaptchaComponent } from 'ng-recaptcha';
 import { DocumentInfoResponseModel } from '../../../../../../shared/models/document-information/document-information.model';
 
 @Component({
+  standalone: false,
   selector: 'app-carga-masiva',
   templateUrl: './CargaMasiva.component.html',
   styleUrls: ['./CargaMasiva.component.css'],

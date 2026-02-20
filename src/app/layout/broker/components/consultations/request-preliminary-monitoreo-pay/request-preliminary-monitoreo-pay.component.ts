@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common';
 import * as FileSaver from 'file-saver';
 
 @Component({
+  standalone: false,
   selector: 'app-request-preliminary-monitoreo-pay',
   templateUrl: './request-preliminary-monitoreo-pay.component.html',
   styleUrls: ['./request-preliminary-monitoreo-pay.component.css'],

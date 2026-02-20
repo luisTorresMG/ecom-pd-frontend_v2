@@ -6,6 +6,7 @@ import { PolicyemitService } from '../../../services/policy/policyemit.service';
 import { CommonMethods } from '../../common-methods';
 
 @Component({
+  standalone: false,
   selector: 'app-process-viewer',
   templateUrl: './process-viewer.component.html',
   styleUrls: ['./process-viewer.component.css'],

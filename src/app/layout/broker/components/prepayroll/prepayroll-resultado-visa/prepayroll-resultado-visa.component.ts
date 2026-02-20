@@ -15,6 +15,7 @@ import { Prepayroll } from '../../../models/prepayroll/prepayroll.model';
 import { PrepayrollPayment } from '../../../models/prepayroll/prepayroll-payment.model';
 
 @Component({
+  standalone: false,
   selector: 'app-prepayroll-resultado-visa',
   templateUrl: './prepayroll-resultado-visa.component.html',
   styleUrls: ['./prepayroll-resultado-visa.component.css'],

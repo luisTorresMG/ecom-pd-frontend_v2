@@ -24,6 +24,7 @@ import moment from 'moment';
 import { UtilsService } from '@root/shared/services/utils/utils.service';
 import { ParametersResponse } from '../../../../../shared/models/ubigeo/parameters.model';
 @Component({
+  standalone: false,
   selector: 'app-endodos-general',
   templateUrl: './endosos-general.component.html',
   styleUrls: ['./endosos-general.component.scss'],

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, V
 import { UtilService } from '../../core/services/util.service';
 
 @Component({
+  standalone: false,
   selector: 'form-input-ng-select',
   templateUrl: './form-input-ng-select.component.html',
   styleUrls: ['./form-input-ng-select.component.css']

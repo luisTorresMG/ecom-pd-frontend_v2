@@ -9,6 +9,7 @@ import { DpsService } from '../../shared/services/dps.service';
 const TITLE = 'Ha sobrepasado el número de intentos.';
 const MESSAGE = 'Un asesor se comunicará en breve con usted.';
 @Component({
+  standalone: false,
   selector: 'app-biometric-container',
   templateUrl: './biometric.component.html',
   styleUrls: ['./biometric.component.scss'],

@@ -28,6 +28,7 @@ import { ReassingTransactComponent } from '../reassing-transact/reassing-transac
 import { ParameterSettingsService } from '../../../services/maintenance/parameter-settings.service';
 
 @Component({
+  standalone: false,
   selector: 'app-tray-transact',
   templateUrl: './tray-transact.component.html',
   styleUrls: ['./tray-transact.component.css']

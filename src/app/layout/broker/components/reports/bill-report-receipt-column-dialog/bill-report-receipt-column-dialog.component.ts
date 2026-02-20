@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
+  standalone: false,
   selector: 'app-bill-report-receipt-column-dialog',
   templateUrl: './bill-report-receipt-column-dialog.component.html',
   styleUrls: ['./bill-report-receipt-column-dialog.component.css']

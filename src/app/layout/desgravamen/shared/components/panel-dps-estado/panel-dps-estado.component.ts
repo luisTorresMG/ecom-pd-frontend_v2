@@ -21,6 +21,7 @@ import { QuotationService } from '../../../../../layout/broker/services/quotatio
 import { Router } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'panel-dps-estado',
   templateUrl: './panel-dps-estado.component.html',
   styleUrls: ['./panel-dps-estado.component.css'],

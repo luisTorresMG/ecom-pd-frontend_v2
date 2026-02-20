@@ -13,6 +13,7 @@ import { DatePipe } from '@angular/common';
 import { switchMap, tap } from 'rxjs/operators';
 
 @Component({
+  standalone: false,
   selector: 'app-devoluciones-odinarias-rentas-detalle',
   templateUrl: './devoluciones-odinarias-rentas-detalle.component.html',
   styleUrls: ['./devoluciones-odinarias-rentas-detalle.component.css'],

@@ -20,6 +20,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
+  standalone: false,
   selector: 'app-seleccion-poliza',
   templateUrl: './seleccion-poliza.component.html',
   styleUrls: ['./seleccion-poliza.component.scss'],

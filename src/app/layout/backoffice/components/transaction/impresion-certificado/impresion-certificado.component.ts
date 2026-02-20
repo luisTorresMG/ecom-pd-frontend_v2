@@ -18,6 +18,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { url } from 'inspector';
 import { AppConfig } from '../../../../../app.config';
 @Component({
+  standalone: false,
   selector: 'app-impresion-certificado',
   templateUrl: './impresion-certificado.component.html',
   styleUrls: ['./impresion-certificado.component.scss'],

@@ -19,6 +19,7 @@ import { RegularExpressions } from '@shared/regexp/regexp';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
+  standalone: false,
   selector: 'app-commission-report',
   templateUrl: './commission-report.component.html',
   styleUrls: ['./commission-report.component.scss'],

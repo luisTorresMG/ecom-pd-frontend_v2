@@ -21,6 +21,7 @@ import { RegularExpressions } from '@shared/regexp/regexp';
 import { OtpAuthService } from '@shared/services/otp-auth/otp-auth.service';
 
 @Component({
+  standalone: false,
   // tslint:disable-next-line:component-selector
   selector: 'protecta-otp-token',
   templateUrl: './otp-token.component.html',

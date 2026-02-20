@@ -5,6 +5,7 @@ import { MonitoringViewComponent } from '../monitoring-view/monitoring-view.comp
 import swal from 'sweetalert2';
 
 @Component({
+  standalone: false,
   selector: 'app-plot',
   templateUrl: './plot.component.html',
   styleUrls: ['./plot.component.css'],

@@ -5,6 +5,7 @@ import { FileUploadService } from '../../services/fileupload/fileupload.service'
 const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
 
 @Component({
+  standalone: false,
   selector: 'app-fileupload',
   templateUrl: './fileupload.component.html',
   styleUrls: ['./fileupload.component.css']

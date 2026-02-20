@@ -17,6 +17,7 @@ import swal from 'sweetalert2';
 
 
 @Component({
+  standalone: false,
   selector: 'app-policy-covid',
   templateUrl: './policy-covid.component.html',
   styleUrls: ['./policy-covid.component.css']

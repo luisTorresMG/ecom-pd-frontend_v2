@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-minimum-premium',
   templateUrl: './minimum-premium.component.html',
   styleUrls: ['./minimum-premium.component.css']

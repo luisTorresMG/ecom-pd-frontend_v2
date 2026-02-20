@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'app-redirect-url',
   templateUrl: './redirect-url.component.html',
   styleUrls: ['./redirect-url.component.sass'],

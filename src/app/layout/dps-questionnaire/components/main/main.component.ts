@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DpsService } from '../../shared/services/dps.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
+  standalone: false,
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],

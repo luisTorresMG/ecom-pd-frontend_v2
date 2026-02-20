@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 
 
 @Component({
+  standalone: false,
   selector: 'app-monitoreo-provi-commision',
   templateUrl: './monitoreo-provi-commision.component.html',
   styleUrls: ['./monitoreo-provi-commision.component.css']

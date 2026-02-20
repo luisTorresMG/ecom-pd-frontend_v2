@@ -35,6 +35,7 @@ import { SalesHistoryService } from '../../../services/vida-devolucion/sales-his
 import { IReactivarAnulado } from '@root/layout/broker/interfaces/vida-devolucion/reactivar.interface';
 
 @Component({
+  standalone: false,
   selector: 'app-quote-tray',
   templateUrl: './quote-tray.component.html',
   styleUrls: ['./quote-tray.component.scss'],

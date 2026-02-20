@@ -7,6 +7,7 @@ import { QuotationService } from '../../../services/quotation/quotation.service'
 import Swal from 'sweetalert2';
 
 @Component({
+  standalone: false,
   selector: 'app-quotation-tracking',
   templateUrl: './quotation-tracking.component.html',
   styleUrls: ['./quotation-tracking.component.css']

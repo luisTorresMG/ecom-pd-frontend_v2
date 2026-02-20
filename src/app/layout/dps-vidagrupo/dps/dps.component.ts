@@ -5,6 +5,7 @@ import { RegularExpressions } from '@shared/regexp/regexp';
 import { fadeAnimation } from '@shared/animations/animations';
 
 @Component({
+  standalone: false,
   selector: 'app-dps',
   templateUrl: './dps.component.html',
   styleUrls: ['./dps.component.sass'],

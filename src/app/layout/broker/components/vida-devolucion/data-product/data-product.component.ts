@@ -34,6 +34,7 @@ import { DocumentInformationModel } from '../../../../../shared/models/document-
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
+  standalone: false,
   selector: 'app-data-product',
   templateUrl: './data-product.component.html',
   styleUrls: ['./data-product.component.scss'],

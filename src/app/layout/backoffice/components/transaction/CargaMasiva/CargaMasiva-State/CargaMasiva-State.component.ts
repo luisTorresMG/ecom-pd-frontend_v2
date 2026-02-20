@@ -27,6 +27,7 @@ import * as SDto from '../../../../services/transaccion/carga-masiva/DTOs/carga-
 import * as CDto from '../CargaMasiva-List/DTOs/CargaMasiva.dto';
 
 @Component({
+  standalone: false,
   selector: 'app-CargaMasiva-State',
   templateUrl: './CargaMasiva-State.component.html',
   styleUrls: ['./CargaMasiva-State.component.sass'],

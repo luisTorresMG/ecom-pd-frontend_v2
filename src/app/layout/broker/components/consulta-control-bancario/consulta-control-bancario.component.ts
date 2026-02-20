@@ -131,6 +131,7 @@ export interface FiltroDetalleOperacion {
 }
 
 @Component({
+  standalone: false,
   selector: 'app-consulta-control-bancario',
   templateUrl: './consulta-control-bancario.component.html',
   styleUrls: ['./consulta-control-bancario.component.css']

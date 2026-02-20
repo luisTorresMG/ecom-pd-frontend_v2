@@ -12,6 +12,7 @@ import { isNullOrUndefined } from '@shared/helpers/null-check';
 import { AccPersonalesService } from '../../quote/acc-personales/acc-personales.service';
 import { AdjuntoInterface, AdjuntoResponse } from '../../../interfaces/Adjunto.Interface';
 @Component({
+  standalone: false,
   selector: 'app-policy-result',
   templateUrl: './policy-result.component.html',
   styleUrls: ['./policy-result.component.css']

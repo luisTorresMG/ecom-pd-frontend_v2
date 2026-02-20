@@ -7,6 +7,7 @@ import { AccPersonalesConstants } from '../../../../../layout/broker/components/
 
 
 @Component({
+  standalone: false,
   selector: 'panel-modal',
   templateUrl: './panel-modal.component.html',
   styleUrls: ['./panel-modal.component.css'],

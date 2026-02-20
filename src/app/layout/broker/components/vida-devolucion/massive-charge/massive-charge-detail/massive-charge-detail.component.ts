@@ -17,6 +17,7 @@ import { MassiveChargeService } from '@root/layout/broker/services/vida-devoluci
 import { UtilsService } from '@shared/services/utils/utils.service';
 
 @Component({
+  standalone: false,
   selector: 'app-massive-charge-detail',
   templateUrl: './massive-charge-detail.component.html',
   styleUrls: ['./massive-charge-detail.component.sass'],

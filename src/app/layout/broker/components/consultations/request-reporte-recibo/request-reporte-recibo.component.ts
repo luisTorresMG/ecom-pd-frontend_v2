@@ -9,6 +9,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-request-reporte-recibo',
   templateUrl: './request-reporte-recibo.component.html',
   styleUrls: ['./request-reporte-recibo.component.sass']

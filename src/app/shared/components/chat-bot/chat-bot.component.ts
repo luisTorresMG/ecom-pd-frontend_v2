@@ -8,6 +8,7 @@ import { SessionService } from '@root/layout/soat/shared/services/session.servic
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
+  standalone: false,
   selector: 'app-chat-bot',
   templateUrl: './chat-bot.component.html',
   styleUrls: ['./chat-bot.component.css'],

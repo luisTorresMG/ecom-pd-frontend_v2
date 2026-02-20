@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { PolicyemitService } from '../../services/policy/policyemit.service';
 
 @Component({
+  standalone: false,
   selector: 'app-anul-mov',
   templateUrl: './anul-mov.component.html',
   styleUrls: ['./anul-mov.component.css']

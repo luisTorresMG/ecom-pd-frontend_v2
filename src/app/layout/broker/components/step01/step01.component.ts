@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { EmisionService } from '../../../client/shared/services/emision.service';
 
 @Component({
+  standalone: false,
   selector: 'app-step01',
   templateUrl: './step01.component.html',
   styleUrls: ['./step01.component.css']

@@ -4,6 +4,7 @@ import { UtilService } from '../../../../../layout/broker/components/quote/acc-p
 
 
 @Component({
+  standalone: false,
   selector: 'form-input-multi-select-re',
   templateUrl: './form-input-multi-select-re.component.html',
   styleUrls: ['./form-input-multi-select-re.component.css']

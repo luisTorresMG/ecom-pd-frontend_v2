@@ -15,6 +15,7 @@ import swal from 'sweetalert2'; //INI <RQ2024-57 - 03/04/2024>
 import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap'; //INI <RQ2024-57 - 03/04/2024> 
 import { Console } from 'console';
 @Component({
+  standalone: false,
   selector: 'app-configuration',
   templateUrl: './configuration.component.html',
   styleUrls: ['./configuration.component.sass'],

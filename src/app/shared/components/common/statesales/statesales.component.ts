@@ -3,6 +3,7 @@ import { StateSalesService } from '../../../services/statesales/statesales.servi
 import { StateSales } from '../../../models/statesales/statesales';
 
 @Component({
+  standalone: false,
   selector: 'app-statesales',
   templateUrl: './statesales.component.html',
   styleUrls: ['./statesales.component.css']

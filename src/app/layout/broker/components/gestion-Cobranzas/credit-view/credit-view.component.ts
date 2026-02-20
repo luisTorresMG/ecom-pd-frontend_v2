@@ -8,6 +8,7 @@ import { CobranzasService } from '../../../services/cobranzas/cobranzas.service'
 import * as moment from 'moment';
 
 @Component({
+  standalone: false,
   selector: 'app-credit-view',
   templateUrl: './credit-view.component.html',
   styleUrls: ['./credit-view.component.css'],

@@ -16,6 +16,7 @@ import { EmisionService } from '../../../client/shared/services/emision.service'
 import { KushkiService } from '../../../../shared/services/kushki/kushki.service';
 
 @Component({
+  standalone: false,
   selector: 'app-payroll-resultado-visa',
   templateUrl: './payroll-resultado-visa.component.html',
   styleUrls: ['./payroll-resultado-visa.component.css'],

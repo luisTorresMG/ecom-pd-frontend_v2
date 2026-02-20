@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ClientInformationService } from '../../services/shared/client-information.service';
 
 @Component({
+  standalone: false,
   selector: 'app-panel',
   templateUrl: './panel.component.html',
   styleUrls: ['./panel.component.css']

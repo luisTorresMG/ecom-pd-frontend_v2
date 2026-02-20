@@ -10,6 +10,7 @@ import swal from 'sweetalert2';
 import { Router } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'app-policyholder-inquiries',
   templateUrl: './policyholder-inquiries.component.html',
   styleUrls: ['./policyholder-inquiries.component.css', './policyholder-inquiries-theme.component.css']

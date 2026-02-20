@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DatosVehiculoDto } from './DTOs/datos-vehiculo.dto';
 @Component({
+  standalone: false,
   selector: 'app-datos-vehiculo',
   templateUrl: './datos-vehiculo.component.html',
   styleUrls: ['./datos-vehiculo.component.css']

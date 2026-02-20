@@ -3,6 +3,7 @@ import { RentasService } from '../../../../backoffice/services/rentas/rentas.ser
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 @Component({
+  standalone: false,
   selector: 'app-registro-benficiaro-modal',
   templateUrl: './registro-benficiaro-modal.component.html',
   styleUrls: ['./registro-benficiaro-modal.component.css'],

@@ -5,6 +5,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { ReportIngresosService, ReportCabIngresosBM } from '../../../services/report-ingresos/report-ingresos.service';
 
 @Component({
+  standalone: false,
   selector: 'app-vdp-ingresos-report',
   templateUrl: './vdp-ingresos-report.component.html',
   styleUrls: ['./vdp-ingresos-report.component.css']

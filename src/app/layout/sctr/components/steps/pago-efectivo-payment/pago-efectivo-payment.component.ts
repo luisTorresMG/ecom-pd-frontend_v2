@@ -12,6 +12,7 @@ import { EmisionService } from '../../../../client/shared/services/emision.servi
 import { GoogleTagManagerService } from '../../../shared/services/google-tag-manager.service';
 
 @Component({
+  standalone: false,
   selector: 'app-pago-efectivo-payment',
   templateUrl: './pago-efectivo-payment.component.html',
   styleUrls: ['./pago-efectivo-payment.component.css'],

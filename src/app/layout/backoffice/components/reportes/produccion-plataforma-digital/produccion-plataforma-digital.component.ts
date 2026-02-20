@@ -29,6 +29,7 @@ import { UtilsService } from '@shared/services/utils/utils.service';
 
 defineLocale('es', esLocale);
 @Component({
+  standalone: false,
   selector: 'app-produccion-plataforma-digital',
   templateUrl: './produccion-plataforma-digital.component.html',
   styleUrls: ['./produccion-plataforma-digital.component.css'],

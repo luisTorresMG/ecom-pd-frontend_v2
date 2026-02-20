@@ -46,6 +46,7 @@ import {RecaptchaComponent} from 'ng-recaptcha';
 import {AppConfig} from '../../../../../app.config';
 
 @Component({
+  standalone: false,
   selector: 'app-buy-plandata',
   templateUrl: './buy-plandata.component.html',
   styleUrls: ['./buy-plandata.component.scss', '../shared/styles/_style.sass'],

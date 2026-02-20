@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 import { UtilService } from '../../core/services/util.service';
 
 @Component({
+  standalone: false,
   selector: 'panel-widget',
   templateUrl: './panel-widget.component.html',
   styleUrls: ['./panel-widget.component.css']

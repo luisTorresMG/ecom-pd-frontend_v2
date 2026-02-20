@@ -12,6 +12,7 @@ import {
 } from '../../../models/transaccion/consulta-certificados/consulta-certificados.model';
 import { AppConfig } from '../../../../../app.config';
 @Component({
+  standalone: false,
   selector: 'app-consulta-certificado',
   templateUrl: './consulta-certificado.component.html',
   styleUrls: ['./consulta-certificado.component.scss'],

@@ -4,6 +4,7 @@ import { RentasService } from '../../../../backoffice/services/rentas/rentas.ser
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
+  standalone: false,
   selector: 'app-confirm-modal',
   templateUrl: './confirm-modal.component.html',
   styleUrls: ['./confirm-modal.component.css'],

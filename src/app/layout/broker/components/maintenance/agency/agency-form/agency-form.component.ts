@@ -33,6 +33,7 @@ import { ModuleConfig } from './../../../module.config';
 import { CommonMethods } from '../../../common-methods';
 
 @Component({
+  standalone: false,
   selector: 'app-agency-form',
   templateUrl: './agency-form.component.html',
   styleUrls: ['./agency-form.component.css']

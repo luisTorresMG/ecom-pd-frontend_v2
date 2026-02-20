@@ -17,6 +17,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { UnassignedQuotesService } from '../../../services/vida-devolucion/unassigned-quotes/unassigned-quotes.service';
 
 @Component({
+  standalone: false,
   selector: 'app-unassigned-quotes',
   templateUrl: './unassigned-quotes.component.html',
   styleUrls: ['./unassigned-quotes.component.scss'],

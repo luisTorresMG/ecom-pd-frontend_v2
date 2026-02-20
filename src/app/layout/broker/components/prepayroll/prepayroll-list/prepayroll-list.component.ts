@@ -22,6 +22,7 @@ import { PrepayrollDetail } from '../../../models/prepayroll/prepayroll-detail.m
 defineLocale('es', esLocale);
 
 @Component({
+  standalone: false,
   selector: 'app-prepayroll-list',
   templateUrl: './prepayroll-list.component.html',
   styleUrls: ['./prepayroll-list.component.css']

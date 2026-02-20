@@ -93,6 +93,7 @@ export class listPremiumResults {
 }
 
 @Component({
+  standalone: false,
   selector: 'app-correo',
   templateUrl: './correo.component.html',
   styleUrls: ['./correo.component.css'],

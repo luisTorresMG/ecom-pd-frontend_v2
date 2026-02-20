@@ -10,6 +10,7 @@ import swal from 'sweetalert2';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 
 @Component({
+  standalone: false,
   selector: 'app-devoluciones-provision-automatica',
   templateUrl: './devoluciones-provision-automatica.component.html',
   styleUrls: ['./devoluciones-provision-automatica.component.scss'],

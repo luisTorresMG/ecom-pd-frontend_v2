@@ -17,6 +17,7 @@ import { CommonMethods } from '../../components/common-methods';
 import { DatePipe } from '@angular/common';
 
 @Component({
+  standalone: false,
   selector: 'app-add-address',
   templateUrl: './add-address.component.html',
   styleUrls: ['./add-address.component.css']

@@ -6,6 +6,7 @@ import { AccPersonalesConstants } from '../../core/constants/acc-personales.cons
 import { AppConfig } from './../../../../../../../app.config';
 
 @Component({
+  standalone: false,
   selector: 'panel-modal',
   templateUrl: './panel-modal.component.html',
   styleUrls: ['./panel-modal.component.css'],

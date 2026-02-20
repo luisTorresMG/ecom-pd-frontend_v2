@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, OnChanges, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 @Component({
+  standalone: false,
   selector: 'app-modal-message',
   templateUrl: './modal-message.component.html',
   styleUrls: ['./modal-message.component.css']

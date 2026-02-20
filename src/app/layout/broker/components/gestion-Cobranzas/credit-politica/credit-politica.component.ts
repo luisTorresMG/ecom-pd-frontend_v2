@@ -7,6 +7,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import  moment from 'moment';
 import swal from 'sweetalert2';
 @Component({
+  standalone: false,
   selector: 'app-credit-politica',
   templateUrl: './credit-politica.component.html',
   styleUrls: ['./credit-politica.component.css'],

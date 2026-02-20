@@ -15,6 +15,7 @@ import { IOtp, IOtpResult } from '@shared/interfaces/otp.interface';
 import { BiometricService } from '@shared/services/biometric/biometric.service';
 
 @Component({
+  standalone: false,
   // tslint:disable-next-line:component-selector
   selector: 'protecta-biometric-step1',
   templateUrl: './biometric-step1.component.html',

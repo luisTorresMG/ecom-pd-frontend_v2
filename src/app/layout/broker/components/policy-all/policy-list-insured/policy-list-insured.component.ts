@@ -7,6 +7,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { PolicyChangeUserComponent } from '../policy-change-user/policy-change-user.component';
 
 @Component({
+  standalone: false,
   selector: 'app-policy-list-insured',
   templateUrl: './policy-list-insured.component.html',
   styleUrls: ['./policy-list-insured.component.css']

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-generacion-qr-add',
   templateUrl: './generacion-qr-add.component.html',
   styleUrls: ['./generacion-qr-add.component.css'],

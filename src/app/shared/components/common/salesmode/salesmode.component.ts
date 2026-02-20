@@ -3,6 +3,7 @@ import { SalesModeService } from '../../../services/salesmode/salesmode.service'
 import { SalesMode } from '../../../models/salesmode/salesmode';
 
 @Component({
+  standalone: false,
   selector: 'app-salesmode',
   templateUrl: './salesmode.component.html',
   styleUrls: ['./salesmode.component.css']

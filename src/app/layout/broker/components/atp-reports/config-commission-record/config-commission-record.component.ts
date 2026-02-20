@@ -9,6 +9,7 @@ import * as FileSaver from 'file-saver';
 import { ExcelService } from '@root/layout/broker/services/shared/excel.service';
 
 @Component({
+  standalone: false,
   selector: 'app-config-commission-record',
   templateUrl: './config-commission-record.component.html',
   styleUrls: ['./config-commission-record.component.css']

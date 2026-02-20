@@ -17,6 +17,7 @@ import { fadeAnimation } from '@shared/animations/animations';
 
 
 @Component({
+  standalone: false,
   selector: 'app-bandeja-solicitudes',
   templateUrl: './bandeja-solicitudes.component.html',
   styleUrls: ['./bandeja-solicitudes.component.scss'],

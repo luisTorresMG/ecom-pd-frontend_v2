@@ -10,6 +10,7 @@ import swal from 'sweetalert2';
 import Swal from 'sweetalert2';
 
 @Component({
+  standalone: false,
   selector: 'app-request-proforma-policy-view',
   templateUrl: './request-proforma-policy-view.component.html',
   styleUrls: ['./request-proforma-policy-view.component.css'],

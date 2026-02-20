@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FormaDePagoPlanillaDto, PlanillaVentaDto } from './DTOs/planillaVenta.dto';
 @Component({
+  standalone: false,
   selector: 'app-planilla-venta',
   templateUrl: './planilla-venta.component.html',
   styleUrls: ['./planilla-venta.component.css']

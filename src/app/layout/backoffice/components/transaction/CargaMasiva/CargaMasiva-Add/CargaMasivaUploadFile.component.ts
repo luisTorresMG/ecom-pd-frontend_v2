@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { CargaMasivaService } from '../../../../services/transaccion/carga-masiva/carga-masiva.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
+  standalone: false,
   selector: 'app-carga-masiva-upload-file',
   templateUrl: './CargaMasivaUploadFile.component.html',
   styleUrls: ['./CargaMasivaUploadFile.component.css'],

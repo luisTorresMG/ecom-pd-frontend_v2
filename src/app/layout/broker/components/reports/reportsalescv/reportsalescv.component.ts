@@ -7,6 +7,7 @@ import { ValidatorService } from '../../../../../shared/services/general/validat
 import { DatePipe } from '@angular/common';
 
 @Component({
+  standalone: false,
   selector: 'app-reportsalescv',
   templateUrl: './reportsalescv.component.html',
   styleUrls: ['./reportsalescv.component.css']

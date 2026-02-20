@@ -4,6 +4,7 @@ import { CommonMethods } from '../../../../../layout/broker/components/common-me
 
 
 @Component({
+  standalone: false,
   selector: 'panel-header-producto',
   templateUrl: './panel-header-producto.component.html',
   styleUrls: ['./panel-header-producto.component.css']

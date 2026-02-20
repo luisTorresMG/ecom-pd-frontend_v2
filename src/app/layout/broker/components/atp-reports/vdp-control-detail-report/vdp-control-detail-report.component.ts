@@ -7,6 +7,7 @@ import { ExcelService } from '../../../services/shared/excel.service';
 import { ResultadoComponent } from '../../resultado/resultado.component';
 
 @Component({
+  standalone: false,
   selector: 'app-vdp-control-detail-report.component',
   templateUrl: './vdp-control-detail-report.component.html',
   styleUrls: ['./vdp-control-detail-report.component.css'],

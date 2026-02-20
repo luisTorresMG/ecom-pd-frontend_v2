@@ -7,6 +7,7 @@ import { ValidatorService } from '../../../../../shared/services/general/validat
 import { DatePipe } from '@angular/common';
 
 @Component({
+  standalone: false,
   selector: 'app-rptventascertif',
   templateUrl: './reportcertif.component.html',
   styleUrls: ['./reportcertif.component.css']

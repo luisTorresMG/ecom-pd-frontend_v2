@@ -3,6 +3,7 @@ import { FlowTypeService } from '../../../services/flowtype/flowtype.service';
 import { FlowType } from '../../../models/flowtype/flowtype';
 
 @Component({
+  standalone: false,
   selector: 'app-flowtype',
   templateUrl: './flowtype.component.html',
   styleUrls: ['./flowtype.component.css']

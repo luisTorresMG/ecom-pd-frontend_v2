@@ -8,6 +8,7 @@ import { UbigeoComponent } from '../../../../../shared/components/common/ubigeo/
 import { DatePipe } from '@angular/common';
 
 @Component({
+  standalone: false,
   selector: 'app-reportsalescf',
   templateUrl: './reportsalescf.component.html',
   styleUrls: ['./reportsalescf.component.css']

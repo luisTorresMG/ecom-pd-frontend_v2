@@ -7,6 +7,7 @@ import swal from 'sweetalert2';
 import { CommonMethods } from '../../components/common-methods';
 
 @Component({
+  standalone: false,
   selector: 'app-search-broker',
   templateUrl: './search-broker.component.html',
   styleUrls: ['./search-broker.component.css'],

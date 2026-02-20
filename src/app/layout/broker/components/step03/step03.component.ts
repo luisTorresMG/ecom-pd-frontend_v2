@@ -17,6 +17,7 @@ import { Municipality } from '../../../../shared/models/municipality/municipalit
 import { UbigeoService } from '../../../../shared/services/ubigeo/ubigeo.service';
 
 @Component({
+  standalone: false,
   selector: 'app-step03',
   // moduleId: module.id,
   templateUrl: './step03.component.html',

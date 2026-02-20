@@ -41,6 +41,7 @@ import { AppConfig } from '../../../../../app.config';
 import { forkJoin } from 'rxjs';
 
 @Component({
+  standalone: false,
   selector: 'app-contratante-form',
   templateUrl: './contratante-form.component.html',
   styleUrls: ['./contratante-form.component.scss'],

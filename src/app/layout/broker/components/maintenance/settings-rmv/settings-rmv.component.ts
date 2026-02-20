@@ -7,6 +7,7 @@ import { EditPorcentajeComponent } from '../edit-porcentaje/edit-porcentaje.comp
 import { HistorialPorcentajeRmvComponent } from '../historial-porcentaje-rmv/historial-porcentaje-rmv.component';
 
 @Component({
+  standalone: false,
   selector: 'app-settings-rmv',
   templateUrl: './settings-rmv.component.html',
   styleUrls: ['./settings-rmv.component.css'],

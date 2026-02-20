@@ -24,6 +24,7 @@ import { GlobalValidators } from './../../global-validators';
 import { isNumeric } from 'rxjs/internal-compatibility';
 
 @Component({
+  standalone: false,
   selector: 'app-report-indicators',
   templateUrl: './report-indicators.component.html',
   styleUrls: ['./report-indicators.component.css']

@@ -14,6 +14,7 @@ import swal from 'sweetalert2';
 import { CommonMethods } from '../../common-methods';
 
 @Component({
+  standalone: false,
   selector: 'app-sale-channel-report',
   templateUrl: './sale-channel-report.component.html',
   styleUrls: ['./sale-channel-report.component.css']

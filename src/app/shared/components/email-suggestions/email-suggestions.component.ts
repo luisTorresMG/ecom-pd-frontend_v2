@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 
 @Component({
+  standalone: false,
   selector: 'app-email-suggestions',
   templateUrl: './email-suggestions.component.html',
   styleUrls: ['./email-suggestions.component.scss'],

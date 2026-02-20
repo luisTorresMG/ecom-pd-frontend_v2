@@ -28,6 +28,7 @@ import { ResourcesModel } from '../../../models/seguridad/profiles/resources.mod
 import { SecurityService } from '../../../services/seguridad/security.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 @Component({
+  standalone: false,
   selector: 'app-mantenimiento-perfiles',
   templateUrl: './mantenimiento-perfiles.component.html',
   styleUrls: ['./mantenimiento-perfiles.component.scss'],

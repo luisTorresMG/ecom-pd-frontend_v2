@@ -3,6 +3,7 @@ import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, OnChanges } 
 import { UtilService } from '../../core/services/util.service';
 
 @Component({
+  standalone: false,
   selector: 'form-input-file',
   templateUrl: './form-input-file.component.html',
   styleUrls: ['./form-input-file.component.css']

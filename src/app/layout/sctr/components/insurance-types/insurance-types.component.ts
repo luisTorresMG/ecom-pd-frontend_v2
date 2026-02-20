@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Vidaley } from '../../shared/models/vidaley';
 
 @Component({
+  standalone: false,
   selector: 'app-insurance-types',
   templateUrl: './insurance-types.component.html',
   styleUrls: ['./insurance-types.component.css'],

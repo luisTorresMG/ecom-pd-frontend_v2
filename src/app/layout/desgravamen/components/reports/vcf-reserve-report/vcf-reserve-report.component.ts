@@ -5,6 +5,7 @@ import { VcfReportService } from '../../../shared/services/vcf-report/vcf-report
 import { ExcelService } from '../../../shared/services/excel.service';
 
 @Component({
+  standalone: false,
   selector: 'app-vcf-reserve-report',
   templateUrl: './vcf-reserve-report.component.html',
   styleUrls: ['./vcf-reserve-report.component.css'],

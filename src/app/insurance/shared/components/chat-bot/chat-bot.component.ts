@@ -10,6 +10,7 @@ import { RegularExpressions } from '@shared/regexp/regexp';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
+  standalone: false,
   selector: 'app-chat-bot',
   templateUrl: './chat-bot.component.html',
   styleUrls: ['./chat-bot.component.scss'],

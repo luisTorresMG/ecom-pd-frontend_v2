@@ -59,6 +59,7 @@ function ValidateMinDate(control: AbstractControl) {
 }
 
 @Component({
+  standalone: false,
   selector: 'app-step04',
   templateUrl: './step04.component.html',
   styleUrls: ['./step04.component.css'],

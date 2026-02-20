@@ -29,6 +29,7 @@ import { BrokerProduct } from '../../../models/quotation/request/broker-product'
 import { AuthorizedRate } from '../../../models/quotation/request/authorized-rate';
 
 @Component({
+  standalone: false,
   selector: 'app-policy-evaluation',
   templateUrl: './policy-evaluation.component.html',
   styleUrls: ['./policy-evaluation.component.css']

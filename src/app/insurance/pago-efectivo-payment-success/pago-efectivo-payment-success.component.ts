@@ -5,6 +5,7 @@ import { GoogleAnalyticsService } from '../../shared/services/google-analytics/g
 import { GoogleTagService } from '../shared/services/google-tag-service';
 
 @Component({
+  standalone: false,
   selector: 'app-pago-efectivo-payment-success',
   templateUrl: './pago-efectivo-payment-success.component.html',
   styleUrls: ['./pago-efectivo-payment-success.component.scss']

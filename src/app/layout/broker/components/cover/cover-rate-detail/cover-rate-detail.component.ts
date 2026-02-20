@@ -8,6 +8,7 @@ import { EventEmitter } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 @Component({
+  standalone: false,
   selector: 'app-cover-rate-detail',
   templateUrl: './cover-rate-detail.component.html',
   styleUrls: ['./cover-rate-detail.component.css'],

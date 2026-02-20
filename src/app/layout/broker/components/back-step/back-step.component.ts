@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-back-step',
   templateUrl: './back-step.component.html',
   styleUrls: ['./back-step.component.css']

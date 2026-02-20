@@ -12,6 +12,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { UtilService } from '../../../../../layout/broker/components/quote/acc-personales/core/services/util.service';
 
 @Component({
+  standalone: false,
   selector: 'form-input-date-re',
   templateUrl: './form-input-date-re.component.html',
   styleUrls: ['./form-input-date-re.component.css'],

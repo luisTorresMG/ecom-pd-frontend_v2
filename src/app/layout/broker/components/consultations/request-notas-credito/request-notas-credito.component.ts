@@ -10,6 +10,7 @@ import * as FileSaver from 'file-saver';
 import { NotasCreditoService } from '../../../services/report/notas-credito.service';
 
 @Component({
+  standalone: false,
   selector: 'app-request-notas-cradito',
   templateUrl: './request-notas-credito.component.html',
   styleUrls: ['./request-notas-credito.component.css'],

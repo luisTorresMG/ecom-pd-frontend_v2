@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DataPolizaDto } from './DTOs/datos-poliza.dto';
 @Component({
+  standalone: false,
   selector: 'app-datos-poliza',
   templateUrl: './datos-poliza.component.html',
   styleUrls: ['./datos-poliza.component.css']

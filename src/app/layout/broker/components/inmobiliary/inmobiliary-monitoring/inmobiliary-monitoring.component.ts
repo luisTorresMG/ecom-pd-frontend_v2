@@ -5,6 +5,7 @@ import { InmobiliaryLoadMassiveService } from '../../../services/inmobiliaryLoad
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import swal from 'sweetalert2';
 @Component({
+  standalone: false,
   selector: 'app-inmobiliary-monitoring',
   templateUrl: './inmobiliary-monitoring.component.html',
   styleUrls: ['./inmobiliary-monitoring.component.css'],

@@ -23,6 +23,7 @@ import { PlotConfigurationService } from '../../shared/services/plot-configurati
 import { fadeAnimation } from '@shared/animations/animations';
 
 @Component({
+  standalone: false,
   selector: 'app-configuration-plot',
   templateUrl: './configuration-plot.component.html',
   styleUrls: ['./configuration-plot.component.sass'],

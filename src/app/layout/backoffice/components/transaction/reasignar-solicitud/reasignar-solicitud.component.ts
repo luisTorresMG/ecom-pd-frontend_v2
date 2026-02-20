@@ -22,6 +22,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { AppConfig } from '../../../../../app.config';
 import moment from 'moment';
 @Component({
+  standalone: false,
   selector: 'app-reasignar-solicitud',
   templateUrl: './reasignar-solicitud.component.html',
   styleUrls: ['./reasignar-solicitud.component.scss'],

@@ -26,6 +26,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { RegularExpressions } from '@shared/regexp/regexp';
 
 @Component({
+  standalone: false,
   selector: 'app-insurance-info',
   templateUrl: './insurance-info.component.html',
   styleUrls: ['./insurance-info.component.scss'],

@@ -5,6 +5,7 @@ import { QuotationService } from '../../../services/quotation/quotation.service'
 import Swal from 'sweetalert2';
 
 @Component({
+  standalone: false,
   selector: 'app-quotation-cover',
   templateUrl: './quotation-cover.component.html',
   styleUrls: ['./quotation-cover.component.css']

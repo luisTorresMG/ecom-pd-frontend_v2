@@ -7,6 +7,7 @@ import { environment } from './../../../../environments/environment';
 import { AppConfig } from '../../../app.config';
 import { Router } from '@angular/router';
 @Component({
+  standalone: false,
   selector: 'app-new-menu',
   templateUrl: './new-menu.component.html',
   styleUrls: ['./new-menu.component.css']

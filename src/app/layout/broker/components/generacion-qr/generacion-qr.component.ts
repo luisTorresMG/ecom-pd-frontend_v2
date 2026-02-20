@@ -26,6 +26,7 @@ import {
 } from '../../models/generacion-qr/generacion-qr.model';
 import { GeneracionQrService } from '../../services/generacion-qr/generacion-qr.service';
 @Component({
+  standalone: false,
   selector: 'app-generacion-qr',
   templateUrl: './generacion-qr.component.html',
   styleUrls: ['./generacion-qr.component.css'],

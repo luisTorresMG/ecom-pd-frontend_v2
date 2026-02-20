@@ -14,6 +14,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 
 defineLocale('es', esLocale);
 @Component({
+  standalone: false,
   selector: 'app-campaign-list',
   templateUrl: './campaign-list.component.html',
   styleUrls: ['./campaign-list.component.css']

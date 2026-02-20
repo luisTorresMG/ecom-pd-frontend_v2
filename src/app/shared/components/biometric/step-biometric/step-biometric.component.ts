@@ -20,6 +20,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { GoogleAnalyticsService } from '@shared/services/google-analytics/google-analytics.service';
 @Component({
+  standalone: false,
   selector: 'app-step-biometric',
   templateUrl: './step-biometric.component.html',
   styleUrls: ['./step-biometric.component.css'],

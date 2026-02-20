@@ -12,6 +12,7 @@ import { Modelo } from '../../../client/shared/models/modelo.model';
 import { ZonaCirculacion } from '../../../client/shared/models/zona-circulacion.model';
 
 @Component({
+  standalone: false,
   selector: 'app-step02',
   templateUrl: './step02.component.html',
   styleUrls: ['./step02.component.css']

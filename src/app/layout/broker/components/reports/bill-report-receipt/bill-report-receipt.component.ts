@@ -21,6 +21,7 @@ import { PolicyMovementDetailsAllComponent } from '../../policy-all/policy-movem
 import { BillReportReceiptColumnDialogComponent } from '../bill-report-receipt-column-dialog/bill-report-receipt-column-dialog.component';
 
 @Component({
+  standalone: false,
   selector: 'app-bill-report-receipt',
   templateUrl: './bill-report-receipt.component.html',
   styleUrls: ['./bill-report-receipt.component.css'],

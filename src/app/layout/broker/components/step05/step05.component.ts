@@ -64,6 +64,7 @@ const DocumentType = {
 };
 
 @Component({
+  standalone: false,
   selector: 'app-step05',
   templateUrl: './step05.component.html',
   styleUrls: ['./step05.component.scss'],

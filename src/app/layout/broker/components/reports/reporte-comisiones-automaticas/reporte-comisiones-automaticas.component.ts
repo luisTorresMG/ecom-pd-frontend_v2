@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common';
 import { ReporteComisionesAutomaticasService } from '../../../services/report/reporte-comisiones-automaticas.service';
 
 @Component({
+  standalone: false,
   selector: 'app-reporte-comisiones-automaticas',
   templateUrl: './reporte-comisiones-automaticas.component.html',
   styleUrls: ['./reporte-comisiones-automaticas.component.css'],

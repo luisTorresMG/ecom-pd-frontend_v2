@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-status-indicator',
   templateUrl: './status-indicator.component.html',
   styleUrls: ['./status-indicator.component.css'],

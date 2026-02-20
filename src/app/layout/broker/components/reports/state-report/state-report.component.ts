@@ -14,6 +14,7 @@ import { StateReportService } from '../../../services/report/state-report.servic
 //Configuración
 import { GlobalValidators } from './../../global-validators';
 @Component({
+  standalone: false,
   selector: 'app-state-report',
   templateUrl: './state-report.component.html',
   styleUrls: ['./state-report.component.css']

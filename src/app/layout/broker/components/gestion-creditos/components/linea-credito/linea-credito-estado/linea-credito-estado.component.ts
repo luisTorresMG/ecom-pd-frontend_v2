@@ -22,6 +22,7 @@ import { UtilsService } from '@shared/services/utils/utils.service';
 import { LineaCreditoEstadoService } from '../../../shared/services/linea-credito-estado.service';
 
 @Component({
+  standalone: false,
   selector: 'app-linea-credito-estado',
   templateUrl: './linea-credito-estado.component.html',
   styleUrls: ['./linea-credito-estado.component.sass'],

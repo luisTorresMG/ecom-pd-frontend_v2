@@ -8,6 +8,7 @@ import { ReportIngresosService, ReportStatusIngresosBM, FileReportIngresosBM } f
 import { Subject } from 'rxjs/Subject';
 
 @Component({
+  standalone: false,
   selector: 'app-vdp-ingresos-monitoreo',
   templateUrl: './vdp-ingresos-monitoreo.component.html',
   styleUrls: ['./vdp-ingresos-monitoreo.component.css']

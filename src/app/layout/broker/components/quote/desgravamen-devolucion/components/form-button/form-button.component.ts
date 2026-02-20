@@ -3,6 +3,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { UtilService } from '../../core/services/util.service';
 
 @Component({
+  standalone: false,
   selector: 'form-button',
   templateUrl: './form-button.component.html',
   styleUrls: ['./form-button.component.css']

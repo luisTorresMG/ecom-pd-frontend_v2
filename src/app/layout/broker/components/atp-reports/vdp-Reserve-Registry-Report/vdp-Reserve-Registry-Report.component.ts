@@ -6,6 +6,7 @@ import { ExcelService } from '../../../services/shared/excel.service';
 import { ResultadoComponent } from '../../resultado/resultado.component';
 
 @Component({
+  standalone: false,
   selector: 'app-vdp-Reserve-Registry-Report.component',
   templateUrl: './vdp-Reserve-Registry-Report.component.html',
   styleUrls: ['./vdp-Reserve-Registry-Report.component.css'],

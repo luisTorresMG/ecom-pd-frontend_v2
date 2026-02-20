@@ -14,6 +14,7 @@ import swal from 'sweetalert2';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
+  standalone: false,
   selector: 'panel-info-pago',
   templateUrl: './panel-info-pago.component.html',
   styleUrls: ['./panel-info-pago.component.css']

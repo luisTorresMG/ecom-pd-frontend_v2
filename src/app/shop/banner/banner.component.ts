@@ -1,5 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 @Component({
+  standalone: false,
   selector: 'app-banner',
   templateUrl: './banner.component.html',
   styleUrls: ['./banner.component.css'],

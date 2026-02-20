@@ -16,6 +16,7 @@ import { Step05Service } from '../../services/step05/step05.service';
 import { RecordService } from '../../services/report/record.service';
 
 @Component({
+  standalone: false,
   selector: 'app-record',
   templateUrl: './record.component.html',
   styleUrls: ['./record.component.css']

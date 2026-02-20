@@ -13,6 +13,7 @@ import { FileService } from '../../core/services/file.service';
 import { DesgravamenDevolucionConstants } from '../../core/constants/desgravamen-devolucion.constants';
 
 @Component({
+  standalone: false,
   selector: 'panel-info-exclusion',
   templateUrl: './panel-info-exclusion.component.html',
   styleUrls: ['./panel-info-exclusion.component.css']

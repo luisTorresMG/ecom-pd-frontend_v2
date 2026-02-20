@@ -9,6 +9,7 @@ import { AppConfig } from '../../../../../../../app/app.config';
 import { ExcelService } from '../../../../services/shared/excel.service';
 
 @Component({
+  standalone: false,
   selector: 'app-request-reporte-sucave-view',
   templateUrl: './request-reporte-sucave-view.component.html',
   styleUrls: ['./request-reporte-sucave-view.component.css'],

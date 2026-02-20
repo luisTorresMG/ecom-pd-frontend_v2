@@ -24,6 +24,7 @@ import { IClienteRiesgoRequest } from '../../../../../shared/interfaces/cliente-
 import { UtilsService } from '@shared/services/utils/utils.service';
 
 @Component({
+  standalone: false,
   selector: 'app-nuevo-cliente',
   templateUrl: './nuevo-cliente.component.html',
   styleUrls: ['./nuevo-cliente.component.scss'],

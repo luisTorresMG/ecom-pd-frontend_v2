@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-slider',
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.scss'],

@@ -52,6 +52,7 @@ import { RegularExpressions } from '@shared/regexp/regexp';
 
 defineLocale('es', esLocale);
 @Component({
+  standalone: false,
   selector: 'app-commissionlot',
   templateUrl: './commissionlot.component.html',
   styleUrls: ['./commissionlot.component.sass'],

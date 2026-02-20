@@ -3,6 +3,7 @@ import { Component, Input, Output, EventEmitter, OnInit, OnChanges, OnDestroy } 
 import { UtilService } from '../../core/services/util.service';
 
 @Component({
+  standalone: false,
   selector: 'form-input-select',
   templateUrl: './form-input-select.component.html',
   styleUrls: ['./form-input-select.component.css']

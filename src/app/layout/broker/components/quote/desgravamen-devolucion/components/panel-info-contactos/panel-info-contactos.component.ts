@@ -8,6 +8,7 @@ import { UtilService } from '../../core/services/util.service';
 import { DesgravamenDevolucionConstants } from '../../core/constants/desgravamen-devolucion.constants';
 
 @Component({
+  standalone: false,
   selector: 'panel-info-contactos',
   templateUrl: './panel-info-contactos.component.html',
   styleUrls: ['./panel-info-contactos.component.css'],

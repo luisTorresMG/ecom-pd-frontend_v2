@@ -4,6 +4,7 @@ import { UtilService } from '../../../../../layout/broker/components/quote/acc-p
 
 
 @Component({
+  standalone: false,
   selector: 'form-input-checkbox',
   templateUrl: './form-input-checkbox.component.html',
   styleUrls: ['./form-input-checkbox.component.css']

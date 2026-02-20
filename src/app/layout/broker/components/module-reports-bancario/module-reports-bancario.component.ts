@@ -14,6 +14,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 
 @Component({
+  standalone: false,
   selector: 'app-module-reports-bancario',
   templateUrl: './module-reports-bancario.component.html',
   styleUrls: ['./module-reports-bancario.component.css']

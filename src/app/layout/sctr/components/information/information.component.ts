@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 
 
 @Component({
+  standalone: false,
   selector: 'app-information-sctr',
   templateUrl: './information.component.html',
   styleUrls: ['./information.component.css'],

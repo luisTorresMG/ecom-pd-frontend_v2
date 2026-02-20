@@ -7,6 +7,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { DesgravamenService } from '../../../shared/services/desgravamen.service';
 
 @Component({
+  standalone: false,
   selector: 'app-step2',
   templateUrl: './step2.component.html',
   styleUrls: ['./step2.component.scss']

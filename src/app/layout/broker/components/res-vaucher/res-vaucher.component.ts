@@ -8,6 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { UtilsService } from '@shared/services/utils/utils.service';
 
 @Component({
+  standalone: false,
   selector: 'app-res-vaucher',
   templateUrl: './res-vaucher.component.html',
   styleUrls: ['./res-vaucher.component.css'],

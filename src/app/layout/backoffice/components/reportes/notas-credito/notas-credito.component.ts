@@ -30,6 +30,7 @@ import { UtilsService } from '@shared/services/utils/utils.service';
 
 defineLocale('es', esLocale);
 @Component({
+  standalone: false,
   selector: 'app-notas-credito',
   templateUrl: './notas-credito.component.html',
   styleUrls: ['./notas-credito.component.css'],

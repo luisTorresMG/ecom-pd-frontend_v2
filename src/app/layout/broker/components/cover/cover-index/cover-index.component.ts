@@ -5,6 +5,7 @@ import { CoverService } from '../../../services/maintenance/cover/cover.service'
 import swal from 'sweetalert2';
 
 @Component({
+  standalone: false,
   selector: 'app-cover-index',
   templateUrl: './cover-index.component.html',
   styleUrls: ['./cover-index.component.css'],

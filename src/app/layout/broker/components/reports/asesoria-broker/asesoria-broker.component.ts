@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { DatePipe } from '@angular/common';
 
 @Component({
+  standalone: false,
   selector: 'app-asesoria-broker',
   templateUrl: './asesoria-broker.component.html',
   styleUrls: ['./asesoria-broker.component.css'],

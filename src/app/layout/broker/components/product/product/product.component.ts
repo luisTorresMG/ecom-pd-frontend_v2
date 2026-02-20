@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { CommonMethods } from '../../common-methods';
 
 @Component({
+  standalone: false,
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']

@@ -77,6 +77,7 @@ import {
 import { Branch, ChannelInfo } from '../shared/interfaces/new-request.interface';
 
 @Component({
+  standalone: false,
   selector: 'app-gestion-de-registros',
   templateUrl: './gestion-de-registros.component.html',
   styleUrls: ['./gestion-de-registros.component.scss'],

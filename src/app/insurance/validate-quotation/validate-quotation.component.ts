@@ -43,6 +43,7 @@ import { IDocumentInfoGestionRequest } from '../../shared/interfaces/document-in
 import { maskAddress, maskDocument, maskEmail, maskName, maskPhone } from '../shared/utils/maskDataClient';
 
 @Component({
+  standalone: false,
   selector: 'app-validate-quotation',
   templateUrl: './validate-quotation.component.html',
   styleUrls: ['./validate-quotation.component.scss'],

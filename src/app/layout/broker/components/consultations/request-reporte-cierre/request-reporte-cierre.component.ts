@@ -10,6 +10,7 @@ import * as FileSaver from 'file-saver';
 import { ReporteCierreService } from '../../../services/report/reporte-cierre.service';
 
 @Component({
+  standalone: false,
   selector: 'app-request-reporte-cierre',
   templateUrl: './request-reporte-cierre.component.html',
   styleUrls: ['./request-reporte-cierre.component.css'],

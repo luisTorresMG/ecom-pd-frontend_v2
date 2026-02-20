@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import swal from 'sweetalert2';
 
 @Component({
+  standalone: false,
   selector: 'app-interface-crossing',
   templateUrl: './interface-crossing.component.html',
   styleUrls: ['./interface-crossing.component.css'],

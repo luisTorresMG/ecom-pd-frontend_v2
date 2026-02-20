@@ -14,6 +14,7 @@ import { QuotationService } from '../../../../../layout/broker/services/quotatio
 
 
 @Component({
+  standalone: false,
   selector: 'panel-info-evaluacion',
   templateUrl: './panel-info-evaluacion.component.html',
   styleUrls: ['./panel-info-evaluacion.component.css']

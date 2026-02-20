@@ -23,6 +23,7 @@ import { MessageString } from '@shared/constants/string';
 import moment from 'moment';
 
 @Component({
+  standalone: false,
   selector: 'app-linea-credito-general',
   templateUrl: './linea-credito-general.component.html',
   styleUrls: ['./linea-credito-general.component.sass'],

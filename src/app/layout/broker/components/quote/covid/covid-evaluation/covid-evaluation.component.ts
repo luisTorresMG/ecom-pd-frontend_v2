@@ -14,6 +14,7 @@ import { FilePickerComponent } from '../../../../modal/file-picker/file-picker.c
 import swal from 'sweetalert2';
 
 @Component({
+  standalone: false,
   selector: 'app-covid-evaluation',
   templateUrl: './covid-evaluation.component.html',
   styleUrls: ['./covid-evaluation.component.css'],

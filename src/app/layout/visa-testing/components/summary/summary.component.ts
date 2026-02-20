@@ -6,6 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { VisaTestingService } from '../../shared/services/visa-testing.service';
 
 @Component({
+  standalone: false,
   selector: 'app-summary',
   templateUrl: './summary.component.html',
   styleUrls: ['./summary.component.sass'],

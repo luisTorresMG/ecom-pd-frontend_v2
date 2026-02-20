@@ -11,6 +11,7 @@ import { TransactService } from '../../../services/transact/transact.service';
 import { Title } from '@angular/platform-browser';
 
 @Component({
+  standalone: false,
   selector: 'app-reassing-transact',
   templateUrl: './reassing-transact.component.html',
   styleUrls: ['./reassing-transact.component.css'],

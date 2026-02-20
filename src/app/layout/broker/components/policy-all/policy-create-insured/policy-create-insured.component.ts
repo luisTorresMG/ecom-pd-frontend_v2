@@ -7,6 +7,7 @@ import { ClientInformationService } from '../../../services/shared/client-inform
 import { DatePipe } from '@angular/common';
 
 @Component({
+  standalone: false,
   selector: 'app-policy-create-insured',
   templateUrl: './policy-create-insured.component.html',
   styleUrls: ['./policy-create-insured.component.css']

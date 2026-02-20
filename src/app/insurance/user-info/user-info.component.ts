@@ -40,6 +40,7 @@ import moment from 'moment';
 import { maskAddress, maskDocument, maskName, maskPhone } from '../shared/utils/maskDataClient';
 
 @Component({
+  standalone: false,
   selector: 'app-user-info',
   templateUrl: './user-info.component.html',
   styleUrls: ['./user-info.component.scss'],

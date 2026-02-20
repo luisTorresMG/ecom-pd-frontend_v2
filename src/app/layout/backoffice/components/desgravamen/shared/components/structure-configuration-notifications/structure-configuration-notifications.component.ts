@@ -16,6 +16,7 @@ import { ConfigurationService } from '../../services/configuration/configuration
 import { DesgravamenService } from '../../services/desgravamen/desgravamen.service';
 
 @Component({
+  standalone: false,
   selector: 'app-structure-configuration-notifications',
   templateUrl: './structure-configuration-notifications.component.html',
   styleUrls: ['./structure-configuration-notifications.component.sass', '../../styles/style.sass'],

@@ -12,6 +12,7 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import swal from 'sweetalert2';
 
 @Component({
+  standalone: false,
   selector: 'app-methods-payment',
   templateUrl: './methods-payment.component.html',
   styleUrls: ['./methods-payment.component.css']

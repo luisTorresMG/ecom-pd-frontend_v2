@@ -3,6 +3,7 @@ import { ChannelSalesService } from '../../../services/channelsales/channelsales
 import { ChannelSales } from '../../../models/channelsales/channelsales';
 
 @Component({
+  standalone: false,
   selector: 'app-channelsales',
   templateUrl: './channelsales.component.html',
   styleUrls: ['./channelsales.component.css']

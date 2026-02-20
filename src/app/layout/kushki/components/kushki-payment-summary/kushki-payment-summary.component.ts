@@ -9,6 +9,7 @@ interface ICurrency {
 }
 
 @Component({
+  standalone: false,
   selector: 'app-kushki-payment-summary',
   templateUrl: './kushki-payment-summary.component.html',
   styleUrls: ['./kushki-payment-summary.component.sass'],

@@ -47,6 +47,7 @@ import { GoogleTagService } from '../shared/services/google-tag-service';
 import { maskDocument, maskEmail } from '../shared/utils/maskDataClient'
 
 @Component({
+  standalone: false,
   selector: 'app-user-document',
   templateUrl: './user-document.component.html',
   styleUrls: ['./user-document.component.scss'],

@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import swal from 'sweetalert2';
 
 @Component({
+  standalone: false,
   selector: 'app-currently-insured',
   templateUrl: './currently-insured.component.html',
   styleUrls: ['./currently-insured.component.css'],

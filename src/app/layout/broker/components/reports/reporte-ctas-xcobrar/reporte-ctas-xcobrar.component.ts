@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { DatePipe } from '@angular/common';
 
 @Component({
+  standalone: false,
   selector: 'app-reporte-ctas-xcobrar',
   templateUrl: './reporte-ctas-xcobrar.component.html',
   styleUrls: ['./reporte-ctas-xcobrar.component.css'],

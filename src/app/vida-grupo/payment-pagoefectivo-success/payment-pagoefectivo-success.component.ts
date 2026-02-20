@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 @Component({
+  standalone: false,
   selector: 'app-payment-pagoefectivo-success',
   templateUrl: './payment-pagoefectivo-success.component.html',
   styleUrls: ['./payment-pagoefectivo-success.component.scss'],

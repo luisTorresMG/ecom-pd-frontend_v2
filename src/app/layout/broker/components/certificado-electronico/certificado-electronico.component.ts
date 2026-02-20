@@ -14,6 +14,7 @@ import { sortArray } from '../../../../shared/helpers/utils';
 import { SessionStorageService } from '../../../../shared/services/storage/storage-service';
 import { PasswordService } from '../../services/password/password.service';
 @Component({
+  standalone: false,
   selector: 'app-certificado-electronico',
   templateUrl: 'certificado-electronico.component.html',
   styleUrls: ['certificado-electronico.component.css']

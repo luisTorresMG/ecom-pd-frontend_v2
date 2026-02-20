@@ -8,6 +8,7 @@ import { ConfigurationService } from '../../../shared/services/configuration/con
 import { debounceTime } from 'rxjs/operators';
 
 @Component({
+  standalone: false,
   selector: 'app-structure-configuration-read',
   templateUrl: './structure-configuration-read.component.html',
   styleUrls: [

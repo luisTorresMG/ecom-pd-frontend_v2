@@ -30,6 +30,7 @@ import { GlobalValidators } from './../../global-validators';
 import { ParameterSettingsService } from '../../../services/maintenance/parameter-settings.service';
 
 @Component({
+  standalone: false,
   selector: 'app-policy-transactions-all',
   templateUrl: './policy-transactions-all.component.html',
   styleUrls: ['./policy-transactions-all.component.css'],

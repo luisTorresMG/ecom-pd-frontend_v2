@@ -17,6 +17,7 @@ import { VidaInversionConstants } from '../../../../vida-inversion/vida-inversio
 import { VidaInversionService } from '../../../../vida-inversion/services/vida-inversion.service';
 
 @Component({
+  standalone: false,
   selector: 'app-policy-movement-details-all',
   templateUrl: './policy-movement-details-all.component.html',
   styleUrls: ['./policy-movement-details-all.component.css'],

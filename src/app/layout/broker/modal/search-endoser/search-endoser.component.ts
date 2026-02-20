@@ -7,6 +7,7 @@ import swal from 'sweetalert2';
 import { CommonMethods } from '../../components/common-methods';
 
 @Component({
+  standalone: false,
   selector: 'app-search-endoser',
   templateUrl: './search-endoser.component.html',
   styleUrls: ['./search-endoser.component.css'],

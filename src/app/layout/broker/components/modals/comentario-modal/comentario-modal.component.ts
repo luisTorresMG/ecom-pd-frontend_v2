@@ -14,6 +14,7 @@ import { DocumentoModalComponent } from '../documento-modal/documento-modal.comp
 import { Subscription } from 'rxjs';
 
 @Component({
+  standalone: false,
   selector: 'app-comentario-modal',
   templateUrl: './comentario-modal.component.html',
   styleUrls: ['./comentario-modal.component.css'],

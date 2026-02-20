@@ -9,6 +9,7 @@ import { ParameterSettingsService } from '../../../services/maintenance/paramete
 import Swal from 'sweetalert2';
 
 @Component({
+  standalone: false,
   selector: 'app-combination-activities-dialog',
   templateUrl: './combination-activities-dialog.component.html',
   styleUrls: ['./combination-activities-dialog.component.css'],

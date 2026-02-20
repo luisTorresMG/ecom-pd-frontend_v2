@@ -3,6 +3,7 @@ import { Component, OnInit, Input, AfterContentInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
+  standalone: false,
   selector: 'app-listado-modal',
   templateUrl: './listado-modal.component.html',
   styleUrls: ['./listado-modal.component.css'],

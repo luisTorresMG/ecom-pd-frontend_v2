@@ -9,6 +9,7 @@ const SOAT_BRANCH_ID: number = 66;
 const SOAT_PRODUCT_ID: number = 1;
 
 @Component({
+  standalone: false,
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.scss']

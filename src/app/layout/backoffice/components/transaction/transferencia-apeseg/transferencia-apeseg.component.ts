@@ -14,6 +14,7 @@ import {
 import moment from 'moment';
 // import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 @Component({
+  standalone: false,
   selector: 'app-transferencia-apeseg',
   templateUrl: './transferencia-apeseg.component.html',
   styleUrls: ['./transferencia-apeseg.component.css'],

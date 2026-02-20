@@ -8,6 +8,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
 
 @Component({
+  standalone: false,
   selector: 'app-ejecutivo-modal',
   templateUrl: './ejecutivo-modal.component.html',
   styleUrls: ['./ejecutivo-modal.component.css'],

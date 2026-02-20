@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { String } from './constants/string';
 
 @Component({
+  standalone: false,
   selector: 'app-photocheck',
   templateUrl: './photocheck.component.html',
   styleUrls: ['./photocheck.component.sass'],

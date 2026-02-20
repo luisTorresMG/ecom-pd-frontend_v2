@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
+  standalone: false,
   // tslint:disable-next-line:component-selector
   selector: 'protecta-biometric-step2',
   templateUrl: './biometric-step2.component.html',

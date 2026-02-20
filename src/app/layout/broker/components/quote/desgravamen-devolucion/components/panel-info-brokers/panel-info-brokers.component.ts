@@ -12,6 +12,7 @@ import { data } from 'jquery';
 import { ServicebrokerService } from '../../core/services/servicebroker.service';
 
 @Component({
+  standalone: false,
   selector: 'panel-info-brokers',
   templateUrl: './panel-info-brokers.component.html',
   styleUrls: ['./panel-info-brokers.component.css'],

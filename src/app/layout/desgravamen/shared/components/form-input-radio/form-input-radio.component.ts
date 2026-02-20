@@ -3,6 +3,7 @@ import { UtilService } from '../../../../../layout/broker/components/quote/acc-p
 
 
 @Component({
+  standalone: false,
   selector: 'form-input-radio',
   templateUrl: './form-input-radio.component.html',
   styleUrls: ['./form-input-radio.component.css']

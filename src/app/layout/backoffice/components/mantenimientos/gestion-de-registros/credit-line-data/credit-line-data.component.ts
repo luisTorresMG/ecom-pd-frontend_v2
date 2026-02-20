@@ -11,6 +11,7 @@ import { GestionDeRegistrosService } from '../../../../services/mantenimientos/g
 import { CertificadoResponse } from '../../../../models/mantenimientos/gestion-de-registros/gestion-de-registros.model';
 
 @Component({
+  standalone: false,
   selector: 'app-credit-line-data',
   templateUrl: './credit-line-data.component.html',
   styleUrls: ['./credit-line-data.component.scss'],

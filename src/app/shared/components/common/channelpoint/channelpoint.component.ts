@@ -6,6 +6,7 @@ import { ChannelSales } from '../../../models/channelsales/channelsales';
 // import { isNullOrUndefined } from 'util';
 import { AppConfig } from '../../../../app.config';
 @Component({
+  standalone: false,
   selector: 'app-channelpoint',
   templateUrl: './channelpoint.component.html',
   styleUrls: ['./channelpoint.component.css']

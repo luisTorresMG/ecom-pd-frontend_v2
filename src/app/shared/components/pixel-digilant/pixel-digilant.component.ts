@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, Input, AfterViewInit } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-pixel-digilant',
   templateUrl: './pixel-digilant.component.html',
   styleUrls: ['./pixel-digilant.component.css']

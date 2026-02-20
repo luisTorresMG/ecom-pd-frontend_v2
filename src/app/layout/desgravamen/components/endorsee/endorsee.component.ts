@@ -36,6 +36,7 @@ import { AccessFilter } from '../../../broker/components/access-filter';
 import { EndorseeViewComponent } from '../../shared/components/endorsee-view/endorsee-view.component';
 
 @Component({
+  standalone: false,
   selector: 'app-endorsee',
   templateUrl: './endorsee.component.html',
   styleUrls: ['./endorsee.component.css'],

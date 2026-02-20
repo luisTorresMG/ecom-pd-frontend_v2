@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { DpsService } from '../../shared/services/dps.service';
 @Component({
+  standalone: false,
   selector: 'app-summary',
   templateUrl: './summary.component.html',
   styleUrls: ['./summary.component.sass'],

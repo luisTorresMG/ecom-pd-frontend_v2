@@ -7,6 +7,7 @@ import { isNullOrUndefined } from '@shared/helpers/null-check';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { HeaderService } from './header.service';
 @Component({
+  standalone: false,
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],

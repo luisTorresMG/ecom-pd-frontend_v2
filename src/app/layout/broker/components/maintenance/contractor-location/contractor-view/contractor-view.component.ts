@@ -16,6 +16,7 @@ import { ContractorForTable } from '../../../../models/maintenance/contractor-lo
 import { CommonMethods } from './../../../common-methods';
 
 @Component({
+  standalone: false,
   selector: 'app-contractor-view',
   templateUrl: './contractor-view.component.html',
   styleUrls: ['./contractor-view.component.css'],

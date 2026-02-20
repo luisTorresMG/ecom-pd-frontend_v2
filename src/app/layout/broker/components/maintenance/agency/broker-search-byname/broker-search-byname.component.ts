@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, FormControl, Validators, AbstractControl } from
 import Swal from 'sweetalert2';
 
 @Component({
+  standalone: false,
   selector: 'app-broker-search-byname',
   templateUrl: './broker-search-byname.component.html',
   styleUrls: ['./broker-search-byname.component.css']

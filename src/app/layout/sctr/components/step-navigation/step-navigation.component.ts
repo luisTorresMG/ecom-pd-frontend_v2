@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'app-step-navigation',
   templateUrl: './step-navigation.component.html',
   styleUrls: ['./step-navigation.component.css'],

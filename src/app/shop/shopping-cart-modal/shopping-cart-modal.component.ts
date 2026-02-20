@@ -5,6 +5,7 @@ import SoatUser from '../../layout/soat/shared/models/soat-user';
 import { AppConfig } from '../../app.config';
 
 @Component({
+  standalone: false,
   selector: 'app-shopping-cart-modal',
   templateUrl: './shopping-cart-modal.component.html',
   styleUrls: ['./shopping-cart-modal.component.css'],

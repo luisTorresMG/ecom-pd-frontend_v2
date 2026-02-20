@@ -11,6 +11,7 @@ import { AppConfig } from '../../../../../app.config';
 import moment from 'moment';
 // import { NAMED_ENTITIES } from '@angular/compiler';
 @Component({
+  standalone: false,
   selector: 'app-generar-stock',
   templateUrl: './generar-stock.component.html',
   styleUrls: ['./generar-stock.component.css'],

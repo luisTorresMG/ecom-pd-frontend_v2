@@ -41,6 +41,7 @@ interface ProductAssistance {
 }
 
 @Component({
+  standalone: false,
   selector: 'app-insurance-comparison',
   templateUrl: './insurance-comparison.component.html',
   styleUrls: ['./insurance-comparison.component.scss'],

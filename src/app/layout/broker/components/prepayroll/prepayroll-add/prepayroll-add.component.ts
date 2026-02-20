@@ -31,6 +31,7 @@ import { EspecieValoradaDetalle } from '../../../models/prepayroll/especie-valor
 
 
 @Component({
+  standalone: false,
   selector: 'app-prepayroll-add',
   templateUrl: './prepayroll-add.component.html',
   styleUrls: ['./prepayroll-add.component.css']

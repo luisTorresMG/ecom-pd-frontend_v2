@@ -37,6 +37,7 @@ import { frecuencyPayDto } from '../../models/frecuencyPay.model';
 import { TrackingService } from '@root/layout/vidaindividual-latest/services/tracking/tracking.service';
 
 @Component({
+  standalone: false,
   selector: 'app-step2',
   templateUrl: './step2.component.html',
   styleUrls: ['./step2.component.css'],

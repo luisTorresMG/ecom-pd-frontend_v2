@@ -27,6 +27,7 @@ import { CommonMethods } from '../../common-methods';
 import { ParameterSettingsService } from '../../../services/maintenance/parameter-settings.service';
 
 @Component({
+  standalone: false,
   selector: 'app-request-status',
   templateUrl: './request-status.component.html',
   styleUrls: ['./request-status.component.css']

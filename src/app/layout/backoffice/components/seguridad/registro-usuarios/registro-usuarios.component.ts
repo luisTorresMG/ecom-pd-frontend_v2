@@ -37,6 +37,7 @@ import { data } from 'jquery';
 import { UsuariosPro } from '../../../models/seguridad/list-userpro.model';
 import { ProductProfileList } from '../../../models/seguridad/profile-product-list-model';
 @Component({
+  standalone: false,
   selector: 'app-registro-usuarios',
   templateUrl: './registro-usuarios.component.html',
   styleUrls: ['./registro-usuarios.component.scss'],

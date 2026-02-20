@@ -4,6 +4,7 @@ import { UtilService } from '../../../../../layout/broker/components/quote/acc-p
 
 
 @Component({
+  standalone: false,
   selector: 'form-input-file',
   templateUrl: './form-input-file.component.html',
   styleUrls: ['./form-input-file.component.css']

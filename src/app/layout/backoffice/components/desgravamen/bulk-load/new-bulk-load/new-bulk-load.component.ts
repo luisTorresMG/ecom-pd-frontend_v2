@@ -28,6 +28,7 @@ import Swal from 'sweetalert2'; //INI <RQ2024-57 - 03/04/2024>
 import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap'; //INI <RQ2024-57 - 03/04/2024> 
 
 @Component({
+  standalone: false,
   selector: 'app-new-bulk-load',
   templateUrl: './new-bulk-load.component.html',
   styleUrls: ['./new-bulk-load.component.sass'],

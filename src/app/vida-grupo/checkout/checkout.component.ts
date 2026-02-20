@@ -34,6 +34,7 @@ import { v4 as uuid } from 'uuid';
 declare var VisanetCheckout: any;
 
 @Component({
+  standalone: false,
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss'],

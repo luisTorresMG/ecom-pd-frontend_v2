@@ -3,6 +3,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 import { Router } from '@angular/router';
 import { GoogleAnalyticsService } from '@shared/services/google-analytics/google-analytics.service';
 @Component({
+  standalone: false,
   selector: 'app-questions',
   templateUrl: './questions.component.html',
   styleUrls: ['./questions.component.css'],

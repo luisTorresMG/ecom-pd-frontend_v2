@@ -16,6 +16,7 @@ import { RecaptchaComponent } from 'ng-recaptcha';
 import { UtilsService } from '../../../../../shared/services/utils/utils.service';
 
 @Component({
+  standalone: false,
   selector: 'app-step1',
   templateUrl: './step1.component.html',
   styleUrls: ['./step1.component.scss'],

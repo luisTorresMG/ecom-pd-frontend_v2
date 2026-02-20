@@ -3,6 +3,7 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ParameterSettingsService } from '@root/layout/broker/services/maintenance/parameter-settings.service';
 
 @Component({
+  standalone: false,
   selector: 'app-historial-porcentaje-rmv',
   templateUrl: './historial-porcentaje-rmv.component.html',
   styleUrls: ['./historial-porcentaje-rmv.component.css'],

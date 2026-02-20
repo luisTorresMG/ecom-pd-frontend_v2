@@ -14,6 +14,7 @@ import { CryptoService } from '../../../../../services/crypto.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
+  standalone: false,
   selector: 'app-policy-link',
   templateUrl: './policy-link.component.html',
   styleUrls: ['./policy-link.component.css']

@@ -10,6 +10,7 @@ import { AccPersonalesConstants } from '../../../../../layout/broker/components/
 import { UtilService } from '../../../../../layout/broker/components/quote/acc-personales/core/services/util.service';
 
 @Component({
+  standalone: false,
   selector: 'form-input-textarea-re',
   templateUrl: './form-input-textarea-re.component.html',
   styleUrls: ['./form-input-textarea-re.component.css'],

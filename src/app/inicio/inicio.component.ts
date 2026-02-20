@@ -5,6 +5,7 @@ import { AppConfig } from '../app.config';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
+  standalone: false,
   selector: 'app-inicio',
   templateUrl: './inicio.component.html',
   styleUrls: ['./inicio.component.css', './inicio.component.mobile.css']

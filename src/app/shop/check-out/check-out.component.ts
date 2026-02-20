@@ -8,6 +8,7 @@ import { HeaderService } from '../../shared/components/header/header.service';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
+  standalone: false,
   selector: 'app-check-out',
   templateUrl: './check-out.component.html',
   styleUrls: ['./check-out.component.css'],

@@ -9,6 +9,7 @@ import { RentasService } from '../../../services/rentas/rentas.service';
 import * as FileSaver from 'file-saver';
 
 @Component({
+  standalone: false,
   selector: 'app-reporte-renta-total',
   templateUrl: './reporte-renta-total.component.html',
   styleUrls: ['./reporte-renta-total.component.css'],

@@ -14,6 +14,7 @@ import { GoogleTagManagerService } from '../../../shared/services/google-tag-man
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
+  standalone: false,
   selector: 'app-visa-payment',
   templateUrl: './visa-payment.component.html',
   styleUrls: ['./visa-payment.component.css'],

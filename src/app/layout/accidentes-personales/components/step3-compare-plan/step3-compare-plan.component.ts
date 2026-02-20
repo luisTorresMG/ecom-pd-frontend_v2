@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-step3-compare-plan',
   templateUrl: './step3-compare-plan.component.html',
   styleUrls: ['./step3-compare-plan.component.css']

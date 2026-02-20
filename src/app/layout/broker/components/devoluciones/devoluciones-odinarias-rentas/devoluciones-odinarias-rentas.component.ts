@@ -12,6 +12,7 @@ import { ConfirmModalComponent } from '../../modals/confirm-modal/confirm-modal.
 import { AccPersonalesConstants } from '../../quote/acc-personales/core/constants/acc-personales.constants';
 
 @Component({
+  standalone: false,
   selector: 'app-devoluciones-odinarias-rentas',
   templateUrl: './devoluciones-odinarias-rentas.component.html',
   styleUrls: ['./devoluciones-odinarias-rentas.component.css'],

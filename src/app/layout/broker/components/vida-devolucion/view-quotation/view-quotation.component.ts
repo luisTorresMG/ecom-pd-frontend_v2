@@ -53,6 +53,7 @@ import {
 import {RecaptchaComponent} from 'ng-recaptcha';
 
 @Component({
+  standalone: false,
   selector: 'app-view-quotation',
   templateUrl: './view-quotation.component.html',
   styleUrls: [

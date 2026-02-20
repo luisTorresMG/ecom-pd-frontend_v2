@@ -30,6 +30,7 @@ import {
 // import { viewClassName } from '@angular/compiler';
 
 @Component({
+  standalone: false,
   selector: 'app-envio-certificado',
   templateUrl: './envio-certificado.component.html',
   styleUrls: ['./envio-certificado.component.scss'],

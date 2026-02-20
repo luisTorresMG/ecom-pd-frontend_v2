@@ -12,6 +12,7 @@ import { CommonMethods } from '../../common-methods';
 import { ParameterSettingsService } from '../../../services/maintenance/parameter-settings.service';
 
 @Component({
+  standalone: false,
   selector: 'app-policy-movement-details',
   templateUrl: './policy-movement-details.component.html',
   styleUrls: ['./policy-movement-details.component.css']

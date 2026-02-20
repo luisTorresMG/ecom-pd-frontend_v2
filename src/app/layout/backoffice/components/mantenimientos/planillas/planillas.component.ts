@@ -21,6 +21,7 @@ import {
 } from '../../../models/mantenimientos/planillas/planillas.model';
 import moment from 'moment';
 @Component({
+  standalone: false,
   selector: 'app-planillas',
   templateUrl: './planillas.component.html',
   styleUrls: ['./planillas.component.scss'],

@@ -24,6 +24,7 @@ import { v4 as uuid } from 'uuid';
 import { IParamaters } from '../../shared/interfaces/parameters.interface';
 
 @Component({
+  standalone: false,
   selector: 'app-visa-testing',
   templateUrl: './visa-testing.component.html',
   styleUrls: ['./visa-testing.component.sass'],

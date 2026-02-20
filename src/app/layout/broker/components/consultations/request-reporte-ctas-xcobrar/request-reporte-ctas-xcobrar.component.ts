@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common';
 import * as FileSaver from 'file-saver';
 
 @Component({
+  standalone: false,
   selector: 'app-request-reporte-ctas-xcobrar',
   templateUrl: './request-reporte-ctas-xcobrar.component.html',
   styleUrls: ['./request-reporte-ctas-xcobrar.component.css'],

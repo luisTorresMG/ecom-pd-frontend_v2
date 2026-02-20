@@ -23,6 +23,7 @@ import { IExportExcel } from '../../../../../shared/interfaces/export-excel.inte
 import moment from 'moment';
 
 @Component({
+  standalone: false,
   selector: 'app-marca-modelo',
   templateUrl: './marca-modelo.component.html',
   styleUrls: ['./marca-modelo.component.scss'],

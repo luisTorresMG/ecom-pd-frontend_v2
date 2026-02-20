@@ -28,6 +28,7 @@ export interface ListarCenCosPoliza {
 }
 
 @Component({
+  standalone: false,
   selector: 'app-module-cost-center',
   templateUrl: './module-cost-center.component.html',
   styleUrls: ['./module-cost-center.component.css'],

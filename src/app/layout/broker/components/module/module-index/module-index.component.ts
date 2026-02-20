@@ -10,6 +10,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { CommonMethods } from '../../common-methods';
 
 @Component({
+  standalone: false,
   selector: 'app-module-index',
   templateUrl: './module-index.component.html',
   styleUrls: ['./module-index.component.css'],

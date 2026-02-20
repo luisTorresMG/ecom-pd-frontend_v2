@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { DesgravamenService } from '../../../../shared/services/desgravamen.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
+  standalone: false,
   selector: 'app-step3',
   templateUrl: './step3.component.html',
   styleUrls: ['./step3.component.scss']

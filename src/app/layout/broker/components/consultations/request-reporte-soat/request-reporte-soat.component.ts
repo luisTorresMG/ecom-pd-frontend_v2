@@ -11,6 +11,7 @@ import { ReporteCierreService } from '../../../services/report/reporte-cierre.se
 import { ReporteSoatService } from '../../../services/report/reporte-soat.service';
 
 @Component({
+  standalone: false,
   selector: 'app-request-reporte-soat',
   templateUrl: './request-reporte-soat.component.html',
   styleUrls: ['./request-reporte-soat.component.css'],

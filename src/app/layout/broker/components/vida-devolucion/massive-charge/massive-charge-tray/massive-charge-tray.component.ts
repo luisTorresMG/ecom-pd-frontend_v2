@@ -31,6 +31,7 @@ import { UtilsService } from '@shared/services/utils/utils.service';
 import { MassiveChargeService } from '@root/layout/broker/services/vida-devolucion/massive-charge/massive-charge.service';
 
 @Component({
+  standalone: false,
   selector: 'app-massive-charge-tray',
   templateUrl: './massive-charge-tray.component.html',
   styleUrls: ['./massive-charge-tray.component.sass'],

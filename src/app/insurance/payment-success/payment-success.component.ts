@@ -15,6 +15,7 @@ import { ClientInfoService } from '../shared/services/client-info.service';
 import { GoogleTagService } from '../shared/services/google-tag-service';
 
 @Component({
+  standalone: false,
   selector: 'app-payment-success',
   templateUrl: './payment-success.component.html',
   styleUrls: ['./payment-success.component.css'],

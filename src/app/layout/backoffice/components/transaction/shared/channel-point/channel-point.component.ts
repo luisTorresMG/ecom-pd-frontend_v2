@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { UtilsService } from '@shared/services/utils/utils.service';
 @Component({
+  standalone: false,
   selector: 'app-channel-point',
   templateUrl: './channel-point.component.html',
   styleUrls: ['./channel-point.component.css']

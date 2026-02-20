@@ -24,6 +24,7 @@ import { IItemApplication, IItemBranch, IItemChannel, IItemHistory, IItemProduct
 import { LineaCreditoGeneralService } from '../../../../broker/components/gestion-creditos/shared/services/linea-credito-general.service';
 
 @Component({
+  standalone: false,
   selector: 'app-payment-maintenance',
   templateUrl: './payment-maintenance.component.html',
   styleUrls: ['./payment-maintenance.component.sass'],

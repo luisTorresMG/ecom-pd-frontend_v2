@@ -14,6 +14,7 @@ import { DesgravamentConstants } from '../../core/desgravament.constants';
 import { SearchEndoserComponent } from '../../../../../layout/broker/modal/search-endoser/search-endoser.component';
 
 @Component({
+  standalone: false,
   selector: 'panel-info-endosatarios',
   templateUrl: './panel-info-endosatarios.component.html',
   styleUrls: ['./panel-info-endosatarios.component.css'],

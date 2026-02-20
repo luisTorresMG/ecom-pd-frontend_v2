@@ -6,6 +6,7 @@ import { DemandProcessService } from '../../../services/demand-process/demand-pr
 import swal from 'sweetalert2';
 
 @Component({
+  standalone: false,
   selector: 'app-process-demand-index',
   templateUrl: './process-demand-index.component.html',
   styleUrls: ['./process-demand-index.component.css'],

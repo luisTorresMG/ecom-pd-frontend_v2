@@ -23,6 +23,7 @@ import { UtilsService } from '@shared/services/utils/utils.service';
 import { BandejaTramaService } from '../../shared/services/bandeja-trama.service';
 
 @Component({
+  standalone: false,
   selector: 'app-bandeja-trama',
   templateUrl: './bandeja-trama.component.html',
   styleUrls: ['./bandeja-trama.component.sass'],

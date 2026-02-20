@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-send-mail',
   templateUrl: './send-mail.component.html',
-  styleUrls: ['./send-mail.component.sass']
+  styleUrls: ['./send-mail.component.scss']
 })
 export class SendMailComponent implements OnInit {
 

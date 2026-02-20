@@ -70,6 +70,7 @@ import { IDocumentInfoClientRequest } from '@shared/interfaces/document-informat
 defineLocale('es', esLocale);
 
 @Component({
+  standalone: false,
   selector: 'app-payroll-add',
   templateUrl: './payroll-add.component.html',
   styleUrls: ['./payroll-add.component.scss']

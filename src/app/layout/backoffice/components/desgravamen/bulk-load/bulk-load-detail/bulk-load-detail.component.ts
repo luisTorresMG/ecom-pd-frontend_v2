@@ -13,6 +13,7 @@ import { BulkLoadService } from '../../shared/services/bulk-load/bulk-load.servi
 import { ConfigurationService } from '../../shared/services/configuration/configuration.service';
 
 @Component({
+  standalone: false,
   selector: 'app-bulk-load-detail',
   templateUrl: './bulk-load-detail.component.html',
   styleUrls: ['./bulk-load-detail.component.sass'],

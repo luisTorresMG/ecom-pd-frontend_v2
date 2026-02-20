@@ -14,6 +14,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { IGetLotsPayload, IGetLotsResponse } from '@root/layout/backoffice/interfaces/descargo-certificado.interface';
 
 @Component({
+  standalone: false,
   selector: 'app-descargar-certificado',
   templateUrl: './descargar-certificado.component.html',
   styleUrls: ['./descargar-certificado.component.css'],

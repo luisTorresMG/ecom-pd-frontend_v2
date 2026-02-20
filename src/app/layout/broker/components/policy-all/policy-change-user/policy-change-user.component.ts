@@ -10,6 +10,7 @@ import { PolicyemitService } from '../../../services/policy/policyemit.service';
 import { PolicyCreateInsuredComponent } from '../policy-create-insured/policy-create-insured.component';
 
 @Component({
+  standalone: false,
   selector: 'app-policy-change-user',
   templateUrl: './policy-change-user.component.html',
   styleUrls: ['./policy-change-user.component.css']

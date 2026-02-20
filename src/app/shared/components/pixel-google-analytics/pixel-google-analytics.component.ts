@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-pixel-google-analytics',
   templateUrl: './pixel-google-analytics.component.html',
   styleUrls: ['./pixel-google-analytics.component.css']

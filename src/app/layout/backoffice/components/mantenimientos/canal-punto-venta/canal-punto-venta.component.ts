@@ -19,6 +19,7 @@ import { catchError, debounceTime, map } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
 @Component({
+  standalone: false,
   selector: 'app-canal-punto-venta',
   templateUrl: './canal-punto-venta.component.html',
   styleUrls: ['./canal-punto-venta.component.scss'],

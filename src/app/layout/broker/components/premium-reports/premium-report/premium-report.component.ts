@@ -9,6 +9,7 @@ import swal from 'sweetalert2';
 import { PremiumReportService } from '../../../services/premiumReports/premium-report.service';
 
 @Component({
+  standalone: false,
   selector: 'app-premium-report',
   templateUrl: './premium-report.component.html',
   styleUrls: ['./premium-report.component.css'],

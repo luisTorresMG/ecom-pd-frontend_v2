@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-reporte-renta-vitalicia',
   templateUrl: './reporte-renta-vitalicia.component.html',
   styleUrls: ['./reporte-renta-vitalicia.component.css']

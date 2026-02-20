@@ -10,6 +10,7 @@ import {
 import { Output, EventEmitter } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-terminos-condiciones',
   templateUrl: './terminos-condiciones.component.html',
   styleUrls: ['./terminos-condiciones.component.css']

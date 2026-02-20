@@ -5,6 +5,7 @@ import { AtpReportService } from '../../../services/atp-reports/atp-report.servi
 import { ExcelService } from '../../../services/shared/excel.service';
 
 @Component({
+  standalone: false,
   selector: 'app-atp-report',
   templateUrl: './vdp-renovacion-report.component.html',
   styleUrls: ['./vdp-renovacion-report.component.css'],

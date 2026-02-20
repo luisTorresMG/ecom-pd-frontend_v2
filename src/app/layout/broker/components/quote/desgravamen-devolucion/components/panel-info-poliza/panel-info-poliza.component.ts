@@ -14,6 +14,7 @@ import swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
+  standalone: false,
   selector: 'panel-info-poliza',
   templateUrl: './panel-info-poliza.component.html',
   styleUrls: ['./panel-info-poliza.component.css'],

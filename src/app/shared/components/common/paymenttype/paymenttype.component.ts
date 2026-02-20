@@ -3,6 +3,7 @@ import { PaymentTypeService } from '../../../services/paymenttype/paymenttype.se
 import { PaymentType } from '../../../models/paymenttype/paymenttype';
 
 @Component({
+  standalone: false,
   selector: 'app-paymenttype',
   templateUrl: './paymenttype.component.html',
   styleUrls: ['./paymenttype.component.css']

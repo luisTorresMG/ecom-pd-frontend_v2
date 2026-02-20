@@ -3,6 +3,7 @@ import { UtilService } from '../../../../../layout/broker/components/quote/acc-p
 
 
 @Component({
+  standalone: false,
   selector: 'form-input-select',
   templateUrl: './form-input-select.component.html',
   styleUrls: ['./form-input-select.component.css']

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-restablecer-contrasenia',
   templateUrl: './restablecer-contrasenia.component.html',
   styleUrls: ['./restablecer-contrasenia.component.css']

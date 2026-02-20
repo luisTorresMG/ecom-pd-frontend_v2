@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-pixel-google-tag-manager',
   templateUrl: './pixel-google-tag-manager.component.html',
   styleUrls: ['./pixel-google-tag-manager.component.css']

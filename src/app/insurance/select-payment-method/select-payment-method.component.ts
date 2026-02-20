@@ -44,6 +44,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { maskAddress, maskEmail, maskName, maskPhone } from '../shared/utils/maskDataClient';
 
 @Component({
+  standalone: false,
   selector: 'app-select-payment-method',
   templateUrl: './select-payment-method.component.html',
   styleUrls: ['./select-payment-method.component.css'],

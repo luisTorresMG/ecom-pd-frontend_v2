@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { fadeAnimation } from '@shared/animations/animations';
 
 @Component({
+  standalone: false,
   selector: 'app-structure-configuration-billing',
   templateUrl: './structure-configuration-billing.component.html',
   styleUrls: [

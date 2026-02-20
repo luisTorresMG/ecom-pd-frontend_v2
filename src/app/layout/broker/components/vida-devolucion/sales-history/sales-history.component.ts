@@ -25,6 +25,7 @@ import {
 import { AppConfig } from '@root/app.config';
 
 @Component({
+  standalone: false,
   selector: 'app-sales-history',
   templateUrl: './sales-history.component.html',
   styleUrls: ['./sales-history.component.scss'],

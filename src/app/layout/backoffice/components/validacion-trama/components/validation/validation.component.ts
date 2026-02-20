@@ -23,6 +23,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { RegularExpressions } from '@shared/regexp/regexp';
 
 @Component({
+  standalone: false,
   selector: 'app-validation',
   templateUrl: './validation.component.html',
   styleUrls: ['./validation.component.scss'],

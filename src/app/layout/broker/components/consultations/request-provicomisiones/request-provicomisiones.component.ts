@@ -12,6 +12,7 @@ import { LoadMassiveService } from '../../../services/LoadMassive/load-massive.s
 import { ProviComisionesService } from '../../../services/report/reporte-proviComisiones.service';
 
 @Component({
+  standalone: false,
   selector: 'app-request-provicomisiones',
   templateUrl: './request-provicomisiones.component.html',
   styleUrls: ['./request-provicomisiones.component.css']

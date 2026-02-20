@@ -18,6 +18,7 @@ import { IDebtReport } from '../../interfaces/debt-report.interface';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
+  standalone: false,
   selector: 'app-sale-panel',
   templateUrl: './salepanel.component.html',
   styleUrls: [

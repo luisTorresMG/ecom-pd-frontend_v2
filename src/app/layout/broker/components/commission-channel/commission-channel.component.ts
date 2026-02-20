@@ -27,6 +27,7 @@ import { UtilsService } from '@shared/services/utils/utils.service';
 import { IExportExcel } from '../../../../shared/interfaces/export-excel.interface';
 
 @Component({
+  standalone: false,
   selector: 'app-commission-channel',
   templateUrl: './commission-channel.component.html',
   styleUrls: ['./commission-channel.component.scss'],

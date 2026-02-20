@@ -10,6 +10,7 @@ export class Select {
   descript: string;
 }
 @Component({
+  standalone: false,
   selector: 'app-vdp-provision-comision-evaluacion-consulta',
   templateUrl: './vdp-provision-comision-evaluacion-consulta.component.html',
   styleUrls: ['./vdp-provision-comision-evaluacion-consulta.component.css']

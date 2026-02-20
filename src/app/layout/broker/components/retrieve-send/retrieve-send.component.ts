@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { PasswordService } from '../../services/password/password.service';
 
 @Component({
+  standalone: false,
   selector: 'app-retrieve-send',
   templateUrl: './retrieve-send.component.html',
   styleUrls: ['./retrieve-send.component.css']

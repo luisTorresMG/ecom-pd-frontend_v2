@@ -3,6 +3,7 @@ import { Component, OnInit, Input, AfterViewInit, OnDestroy } from '@angular/cor
 import { AppConfig } from '../../../app.config';
 
 @Component({
+  standalone: false,
   selector: 'app-frame',
   templateUrl: './frame.component.html',
   styleUrls: ['./frame.component.css']

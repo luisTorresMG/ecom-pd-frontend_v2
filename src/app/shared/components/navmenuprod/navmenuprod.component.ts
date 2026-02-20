@@ -15,6 +15,7 @@ import { Observable, Subscription } from 'rxjs';
 import { String } from './contants/string';
 
 @Component({
+  standalone: false,
   // tslint:disable-next-line:component-selector
   selector: 'app-nav-menuprod',
   // moduleId: module.id,

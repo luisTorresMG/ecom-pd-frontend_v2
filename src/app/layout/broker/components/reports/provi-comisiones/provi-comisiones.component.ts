@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 import { ProviComisionesService } from '../../../services/report/reporte-proviComisiones.service';
 
 @Component({
+  standalone: false,
   selector: 'app-reporte-proviComisiones',
   templateUrl: './reporte-proviComisiones.component.html',
   styleUrls: ['./reporte-proviComisiones.component.css']

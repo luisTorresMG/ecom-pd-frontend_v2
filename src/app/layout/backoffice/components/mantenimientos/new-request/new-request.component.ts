@@ -80,6 +80,7 @@ const SOAT_BRANCH_ID: number = 66;
 const SOAT_PRODUCT_ID: number = 1;
 
 @Component({
+  standalone: false,
   selector: 'app-new-request',
   templateUrl: './new-request.component.html',
   styleUrls: ['./new-request.component.scss']

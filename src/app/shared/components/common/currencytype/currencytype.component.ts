@@ -3,6 +3,7 @@ import { CurrencyTypeService } from '../../../services/currencytype/currencytype
 import { TipoCurrency } from '../../../models/currencytype/currencytype';
 
 @Component({
+  standalone: false,
   selector: 'app-currencytype',
   templateUrl: './currencytype.component.html',
   styleUrls: ['./currencytype.component.css']

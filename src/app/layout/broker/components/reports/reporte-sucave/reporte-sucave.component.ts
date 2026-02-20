@@ -11,6 +11,7 @@ import { runInThisContext } from 'vm';
 import { Branch } from '../../../models/branch/branch.model';
 
 @Component({
+  standalone: false,
   selector: 'app-reporte-sucave',
   templateUrl: './reporte-sucave.component.html',
   styleUrls: ['./reporte-sucave.component.css'],

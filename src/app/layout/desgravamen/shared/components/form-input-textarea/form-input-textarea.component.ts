@@ -4,6 +4,7 @@ import { UtilService } from '../../../../../layout/broker/components/quote/acc-p
 
 
 @Component({
+  standalone: false,
   selector: 'form-input-textarea',
   templateUrl: './form-input-textarea.component.html',
   styleUrls: ['./form-input-textarea.component.css']

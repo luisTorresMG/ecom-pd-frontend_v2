@@ -23,6 +23,7 @@ import { base64ToArrayBuffer } from '../../../../../../shared/helpers/utils';
 import * as FileSaver from 'file-saver';
 
 @Component({
+  standalone: false,
   selector: 'app-attachments',
   templateUrl: './attachments.component.html',
   styleUrls: ['./attachments.component.scss'],

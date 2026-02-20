@@ -18,6 +18,7 @@ import swal from 'sweetalert2';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { CommonMethods } from '../../common-methods';
 @Component({
+  standalone: false,
   selector: 'app-commission-modal',
   templateUrl: './commission-modal.component.html',
   styleUrls: ['./commission-modal.component.css'],

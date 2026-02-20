@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, OnDestroy, Output, ViewChild, V
 import { IMoreInfo } from '../../interfaces/more-info.interface';
 import { Router } from '@angular/router';
 @Component({
+  standalone: false,
   selector: 'app-more-info',
   templateUrl: './more-info.component.html',
   styleUrls: ['./more-info.component.scss']

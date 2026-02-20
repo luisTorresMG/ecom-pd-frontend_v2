@@ -10,6 +10,7 @@ import { ParameterSettingsService } from '../../../services/maintenance/paramete
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 @Component({
+  standalone: false,
   selector: 'app-parameter-settings',
   templateUrl: './parameter-settings.component.html',
   styleUrls: ['./parameter-settings.component.css']

@@ -10,6 +10,7 @@ import swal from 'sweetalert2';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 
 @Component({
+  standalone: false,
   selector: 'app-devoluciones-report-cierre',
   templateUrl: './devoluciones-report-cierre.component.html',
   styleUrls: ['./devoluciones-report-cierre.component.css'],

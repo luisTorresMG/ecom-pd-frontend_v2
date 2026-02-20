@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-title-step',
   templateUrl: './title-step.component.html',
   styleUrls: ['./title-step.component.css']

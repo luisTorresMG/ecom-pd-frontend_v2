@@ -74,6 +74,7 @@ export interface FiltroConfig {
 }
 
 @Component({
+  standalone: false,
   selector: 'app-accounting-entries-config',
   templateUrl: './accounting-entries-config.component.html',
   styleUrls: ['./accounting-entries-config.component.css'],

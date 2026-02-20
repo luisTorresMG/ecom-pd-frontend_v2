@@ -25,6 +25,7 @@ import moment from 'moment';
 import { AppConfig } from '../../../../../app.config';
 import { RegularExpressions } from '@shared/regexp/regexp';
 @Component({
+  standalone: false,
   selector: 'app-asignar-solicitud',
   templateUrl: './asignar-solicitud.component.html',
   styleUrls: ['./asignar-solicitud.component.scss'],

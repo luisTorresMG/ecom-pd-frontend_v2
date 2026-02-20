@@ -12,6 +12,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { GoogleTagManagerService } from '../../../shared/services/google-tag-manager.service';
 
 @Component({
+  standalone: false,
   selector: 'app-step5',
   templateUrl: './step5.component.html',
   styleUrls: ['./step5.component.css'],

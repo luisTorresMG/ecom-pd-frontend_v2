@@ -10,6 +10,7 @@ import {
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
+  standalone: false,
   selector: 'app-dps',
   templateUrl: './dps.component.html',
   styleUrls: ['./dps.component.scss'],

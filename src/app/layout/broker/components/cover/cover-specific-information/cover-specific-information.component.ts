@@ -11,6 +11,7 @@ import { ModuleService } from '../../../services/maintenance/module/module.servi
 import { CommonMethods } from '../../common-methods';
 
 @Component({
+  standalone: false,
   selector: 'app-cover-specific-information',
   templateUrl: './cover-specific-information.component.html',
   styleUrls: ['./cover-specific-information.component.css']

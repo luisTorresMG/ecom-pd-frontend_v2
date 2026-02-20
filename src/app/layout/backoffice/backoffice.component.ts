@@ -4,6 +4,7 @@ import {
 } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-backoffice',
   templateUrl: './backoffice.component.html',
   styleUrls: ['./backoffice.component.css']

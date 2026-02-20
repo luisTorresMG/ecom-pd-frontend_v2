@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 
 
 @Component({
+  standalone: false,
   selector: 'app-termsvidaley',
   templateUrl: './terms.component.html',
   styleUrls: ['./terms.component.css'],

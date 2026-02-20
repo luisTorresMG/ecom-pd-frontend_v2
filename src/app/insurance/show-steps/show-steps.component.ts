@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-show-steps',
   templateUrl: './show-steps.component.html',
   styleUrls: ['./show-steps.component.css']

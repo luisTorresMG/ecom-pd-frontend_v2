@@ -50,6 +50,7 @@ import { String } from '@shared/components/kushki-form/constants/constants';
 declare var VisanetCheckout: any;
 
 @Component({
+  standalone: false,
   selector: 'app-step4',
   templateUrl: './step4.component.html',
   styleUrls: ['./step4.component.scss'],

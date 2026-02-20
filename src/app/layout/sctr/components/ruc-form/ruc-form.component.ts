@@ -14,6 +14,7 @@ import { AppConfig } from '../../../../app.config';
 import { UtilsService } from '@shared/services/utils/utils.service';
 
 @Component({
+  standalone: false,
   selector: 'app-ruc-form',
   templateUrl: './ruc-form.component.html',
   styleUrls: ['./ruc-form.component.css'],

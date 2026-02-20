@@ -16,6 +16,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { AppConfig } from '@root/app.config';
 
 @Component({
+  standalone: false,
   selector: 'app-form-beneficiario',
   templateUrl: './form-beneficiario.component.html',
   styleUrls: ['./form-beneficiario.component.scss']

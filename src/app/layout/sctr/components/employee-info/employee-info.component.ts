@@ -8,6 +8,7 @@ import { SessionService } from '../../../soat/shared/services/session.service';
 import { Vidaley } from '../../shared/models/vidaley';
 
 @Component({
+  standalone: false,
   selector: 'app-employee-info',
   templateUrl: './employee-info.component.html',
   styleUrls: ['./employee-info.component.css'],

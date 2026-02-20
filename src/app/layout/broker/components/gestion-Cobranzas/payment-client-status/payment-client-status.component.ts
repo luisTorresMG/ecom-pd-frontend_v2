@@ -9,6 +9,7 @@ import swal from 'sweetalert2';
 import { CommonMethods } from './../../common-methods';
 
 @Component({
+  standalone: false,
   selector: 'app-payment-client-status',
   templateUrl: './payment-client-status.component.html',
   styleUrls: ['./payment-client-status.component.css'],

@@ -30,6 +30,7 @@ import { CommonMethods } from '../common-methods';
 
 
 @Component({
+  standalone: false,
   selector: 'app-add-contracting',
   templateUrl: './add-contracting.component.html',
   styleUrls: ['./add-contracting.component.css']

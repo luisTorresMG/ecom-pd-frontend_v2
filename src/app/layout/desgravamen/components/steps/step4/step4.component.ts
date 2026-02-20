@@ -17,6 +17,7 @@ import {
 import { UtilsService } from '@root/shared/services/utils/utils.service';
 
 @Component({
+  standalone: false,
   selector: 'app-step4',
   templateUrl: './step4.component.html',
   styleUrls: ['./step4.component.scss']

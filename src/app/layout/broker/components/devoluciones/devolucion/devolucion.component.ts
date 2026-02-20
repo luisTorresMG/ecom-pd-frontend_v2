@@ -66,6 +66,7 @@ export interface EnviarExactus {
 // }
 
 @Component({
+  standalone: false,
   selector: 'app-devolucion',
   templateUrl: './devolucion.component.html',
   styleUrls: ['./devolucion.component.css'],

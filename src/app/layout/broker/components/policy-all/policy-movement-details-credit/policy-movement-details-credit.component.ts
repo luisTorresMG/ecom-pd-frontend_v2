@@ -21,6 +21,7 @@ import { ParameterSettingsService } from '../../../services/maintenance/paramete
 import { Router } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'app-policy-movement-details-credit',
   templateUrl: './policy-movement-details-credit.component.html',
   styleUrls: ['./policy-movement-details-credit.component.css'],

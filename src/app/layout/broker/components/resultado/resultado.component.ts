@@ -14,6 +14,7 @@ import { KushkiService } from '../../../../shared/services/kushki/kushki.service
 import moment from 'moment';
 
 @Component({
+  standalone: false,
   selector: 'app-resultado',
   templateUrl: './resultado.component.html',
   styleUrls: ['./resultado.component.css'],

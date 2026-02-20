@@ -18,6 +18,7 @@ import { DesgravamenDevolucionConstants } from '../../core/constants/desgravamen
 import swal from 'sweetalert2';
 
 @Component({
+  standalone: false,
   selector: 'panel-info-cotizador',
   templateUrl: './panel-info-cotizador.component.html',
   styleUrls: ['./panel-info-cotizador.component.css'],

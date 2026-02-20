@@ -166,6 +166,7 @@ export interface FiltroProc {
 }
 
 @Component({
+  standalone: false,
   selector: 'app-inmobiliary-interface-monitoring',
   templateUrl: './inmobiliary-interface-monitoring.component.html',
   styleUrls: ['./inmobiliary-interface-monitoring.component.css']

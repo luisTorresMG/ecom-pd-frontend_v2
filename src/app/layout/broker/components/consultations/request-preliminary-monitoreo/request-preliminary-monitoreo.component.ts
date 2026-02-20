@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import * as FileSaver from 'file-saver';
 
 @Component({
+  standalone: false,
   selector: 'app-request-preliminary-monitoreo',
   templateUrl: './request-preliminary-monitoreo.component.html',
   styleUrls: ['./request-preliminary-monitoreo.component.css']

@@ -21,6 +21,7 @@ import { CommonMethods } from '../../common-methods';
 import { ParameterSettingsService } from '../../../services/maintenance/parameter-settings.service';
 
 @Component({
+  standalone: false,
   selector: 'app-policy-index',
   templateUrl: './policy-index.component.html',
   styleUrls: ['./policy-index.component.css'],

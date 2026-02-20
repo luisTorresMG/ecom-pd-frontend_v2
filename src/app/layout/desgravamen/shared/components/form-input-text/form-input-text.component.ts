@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
+  standalone: false,
   selector: 'form-input-text',
   templateUrl: './form-input-text.component.html',
   styleUrls: ['./form-input-text.component.css'],

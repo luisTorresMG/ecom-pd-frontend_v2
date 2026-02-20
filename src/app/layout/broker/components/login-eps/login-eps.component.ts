@@ -14,6 +14,7 @@ import { AppConfig } from '@root/app.config';
 const transitionTime: number = 500;
 
 @Component({
+  standalone: false,
   selector: 'app-login-eps',
   templateUrl: './login-eps.component.html',
   styleUrls: ['./login-eps.component.sass'],

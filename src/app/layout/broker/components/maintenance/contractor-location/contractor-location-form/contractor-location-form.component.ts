@@ -28,6 +28,7 @@ import { ContractorLocationContactComponent } from '../contractor-location-conta
 import { GlobalValidators } from '../../../global-validators';
 
 @Component({
+  standalone: false,
   selector: 'app-contractor-location-form',
   templateUrl: './contractor-location-form.component.html',
   styleUrls: ['./contractor-location-form.component.css'],

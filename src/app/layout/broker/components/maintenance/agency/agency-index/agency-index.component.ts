@@ -24,6 +24,7 @@ import { AccessFilter } from './../../../access-filter'
 import { CommonMethods } from '../../../common-methods';
 
 @Component({
+  standalone: false,
   selector: 'app-agency-index',
   templateUrl: './agency-index.component.html',
   styleUrls: ['./agency-index.component.css']

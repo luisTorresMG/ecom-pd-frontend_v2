@@ -16,6 +16,7 @@ import { isNumeric } from 'rxjs/internal-compatibility';
 import swal from 'sweetalert2';
 
 @Component({
+  standalone: false,
   selector: 'app-request-covid',
   templateUrl: './request-covid.component.html',
   styleUrls: ['./request-covid.component.css'],

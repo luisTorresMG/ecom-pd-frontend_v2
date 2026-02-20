@@ -27,6 +27,7 @@ export interface ConsultaBusqueda {
 }
 
 @Component({
+  standalone: false,
   selector: 'app-vdp-persist-report',
   templateUrl: './vdp-persist-report.component.html',
   styleUrls: ['./vdp-persist-report.component.css'],

@@ -10,6 +10,7 @@ import * as FileSaver from 'file-saver';
 import { base64ToArrayBuffer } from '../../../../../shared/helpers/utils';
 
 @Component({
+  standalone: false,
   selector: 'app-reporte-rentas-vitalicias',
   templateUrl: './reporte-rentas-vitalicias.component.html',
   styleUrls: ['./reporte-rentas-vitalicias.component.css'],

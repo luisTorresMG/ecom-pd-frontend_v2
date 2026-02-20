@@ -11,6 +11,7 @@ import { Title, Meta } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 
 @Component({
+  standalone: false,
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css'],

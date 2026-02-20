@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 import { ReporteInconsistenciasSanitasViewComponent } from './reporte-inconsistencias-sanitas-view/reporte-inconsistencias-sanitas-view.component';
 
 @Component({
+  standalone: false,
   selector: 'app-reporte-inconsistencias-sanitas',
   templateUrl: './reporte-inconsistencias-sanitas.component.html',
   styleUrls: ['./reporte-inconsistencias-sanitas.component.css'],

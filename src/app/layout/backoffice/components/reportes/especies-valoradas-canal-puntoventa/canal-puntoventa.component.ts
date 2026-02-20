@@ -39,6 +39,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 defineLocale('es', esLocale);
 import { UtilsService } from '@shared/services/utils/utils.service';
 @Component({
+  standalone: false,
   selector: 'app-canal-puntoventa',
   templateUrl: './canal-puntoventa.component.html',
   styleUrls: ['./canal-puntoventa.component.scss'],
