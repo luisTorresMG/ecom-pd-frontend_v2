@@ -1,5 +1,5 @@
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
-@import '~@fortawesome/fontawesome-free/css/all.css';
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+@import '@fortawesome/fontawesome-free/css/all.css';
 .img-logo {
     min-height: 44px !important;
     min-width: 254px !important;

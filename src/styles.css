@@ -1,10 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "~bootstrap/dist/css/bootstrap.min.css";
-@import "~ngx-bootstrap/datepicker/bs-datepicker.css";
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "ngx-bootstrap/datepicker/bs-datepicker.css";
 @import url("./assets/fonts/fontawesome/css/font-awesome.min.css");
-@import "~@ng-select/ng-select/themes/default.theme.css";
-@import "~ngx-toastr/toastr";
+@import "@ng-select/ng-select/themes/default.theme.css";
+@import "ngx-toastr/toastr";
 @import "./app/layout/soat/soat.css";
 
 @font-face {
