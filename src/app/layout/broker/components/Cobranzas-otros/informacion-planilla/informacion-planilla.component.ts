@@ -61,21 +61,21 @@ export class InformacionPlanillaComponent implements OnInit {
 
     async descargarExcel() {
         this.spinner.show();
-        await this.servicioInforme.getExcelInformacionPlanilla(this.resultadosBusqueda).toPromise()
-            .then((res: any) => {
-                this.spinner.hide();
-                const blob = this.b64toBlob(res.resultado);
-                const blobUrl = URL.createObjectURL(blob);
-                let a = document.createElement("a")
-                a.href = blobUrl
-                a.download = "Reporte_Informacion_Planilla.xlsx"
-                a.click()
+        // await this.servicioInforme.getExcelInformacionPlanilla(this.resultadosBusqueda).toPromise()
+        //     .then((res: any) => {
+        //         this.spinner.hide();
+        //         const blob = this.b64toBlob(res.resultado);
+        //         const blobUrl = URL.createObjectURL(blob);
+        //         let a = document.createElement("a")
+        //         a.href = blobUrl
+        //         a.download = "Reporte_Informacion_Planilla.xlsx"
+        //         a.click()
 
-            },
-                err => {
-                    this.spinner.hide();
-                    this.aviso.swalError("Error al descargar Excel: " + err);
-                });
+        //     },
+        //         err => {
+        //             this.spinner.hide();
+        //             this.aviso.swalError("Error al descargar Excel: " + err);
+        //         });
     }
 
     b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
@@ -148,8 +148,8 @@ export class InformacionPlanillaComponent implements OnInit {
         this.resultadosBusqueda = null;
         try {
             this.spinner.show();
-            const res = await this.servicioInforme.getInformacionPlanilla(data).toPromise();
-            resultado = res;
+            // const res = await this.servicioInforme.getInformacionPlanilla(data).toPromise();
+            //resultado = res;
         } catch (error) {
             this.aviso.swalError("Ocurrió un error realizando la consulta : " + error);
         } finally {

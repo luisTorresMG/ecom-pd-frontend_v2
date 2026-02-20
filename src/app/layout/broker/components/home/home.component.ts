@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../services';
-import { isNullOrUndefined } from 'util';
+import { isNullOrUndefined } from '@shared/helpers/null-check';
 import { EmisionService } from '../../../client/shared/services/emision.service';
 import { EventStrings } from '../../shared/events/events';
 import { ClientInformationService } from '../../services/shared/client-information.service';

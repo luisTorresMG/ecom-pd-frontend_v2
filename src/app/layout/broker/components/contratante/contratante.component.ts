@@ -24,7 +24,7 @@ import {
 import { Cliente } from '../../models/cliente/cliente';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
-// import { isNullOrUndefined } from 'util';
+import { isNullOrUndefined } from '@shared/helpers/null-check';
 import { District } from '@shared/models/district/district';
 import { UbigeoService } from '@shared/services/ubigeo/ubigeo.service';
 import { Province } from '@shared/models/province/province';

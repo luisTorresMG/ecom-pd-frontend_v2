@@ -26,10 +26,10 @@ import { CreditNoteService } from '../../services/creditNote/creditNote.service'
 import { FormControl, FormGroup, Validator } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
-import { element } from 'protractor';
+// import { element } from 'protractor';
 import { Payroll } from '../../models/payroll/payroll';
-import { NULL_EXPR, THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { CallTracker } from 'assert';
+// import { NULL_EXPR, THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+// import { CallTracker } from 'assert';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Validacion } from '../../models/generacion-qr/generacion-qr.model';
 import swal from 'sweetalert2';
@@ -80,7 +80,7 @@ export class listPremiumResults {
   styleUrls: ['./creditNote.component.css'],
 })
 export class CreditNoteComponent implements OnInit {
-    filterForm = new FormGroup({
+    filterForm  = new FormGroup({
         idBranch: new FormControl(''),
         Parameter: new FormControl(''),
         idProduct: new FormControl(''),
@@ -94,6 +94,7 @@ export class CreditNoteComponent implements OnInit {
         endDate: new FormControl(''),
         VALIDADOR: new FormControl(''),
     });
+
     detRecibForm: FormGroup;
     detCargaMas: FormGroup; //migrantes 12/09/2023
     botonDeshabilitado = false;//migrantes 12/09/2023
@@ -226,23 +227,23 @@ export class CreditNoteComponent implements OnInit {
             P_NFLAG_ANUL: 0,
             P_CHECKANU: [false]
         });
-        this.filterForm = this.formBuilder.group({
-            // idBranch: [null, [Validators.required]],
-            idBranch: [null],
-            Parameter: [null],
-            // idProduct: [null, [Validators.required]],
-            idProduct: [null],
-            // NPOLICY: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
-            NPOLICY: ['', [Validators.pattern(/^[0-9]*$/)]],
-            certificado: ['', [Validators.pattern(/^[0-9]*$/)]],
-            idDocumento: [null],
-            documento: ['', [Validators.pattern(/^[0-9]*$/)]],
-            idTipCompro: [null],
-            comprobante: [''],
-            startDate: [this.diaActual, [Validators.required, GlobalValidators.notValidDate, GlobalValidators.tooOldDateValidator]],
-            endDate: [this.diaActual, [Validators.required, GlobalValidators.notValidDate, GlobalValidators.tooOldDateValidator]],
-            VALIDADOR: ['']
-        });
+        // this.filterForm = this.formBuilder.group({
+        //     // idBranch: [null, [Validators.required]],
+        //     idBranch: [null],
+        //     Parameter: [null],
+        //     // idProduct: [null, [Validators.required]],
+        //     idProduct: [null],
+        //     // NPOLICY: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+        //     NPOLICY: ['', [Validators.pattern(/^[0-9]*$/)]],
+        //     certificado: ['', [Validators.pattern(/^[0-9]*$/)]],
+        //     idDocumento: [null],
+        //     documento: ['', [Validators.pattern(/^[0-9]*$/)]],
+        //     idTipCompro: [null],
+        //     comprobante: [''],
+        //     startDate: [this.diaActual, [Validators.required, GlobalValidators.notValidDate, GlobalValidators.tooOldDateValidator]],
+        //     endDate: [this.diaActual, [Validators.required, GlobalValidators.notValidDate, GlobalValidators.tooOldDateValidator]],
+        //     VALIDADOR: ['']
+        // });
     }
     private initializeForm(): void {
         //this.filterForm.controls.NPOLICY.setValue('');
@@ -370,7 +371,7 @@ export class CreditNoteComponent implements OnInit {
     SelectParemeter() {
         this.filterForm.controls.NPOLICY.setValue('');
         this.selectedBoton = 'predefined'; //oculta el boton para carga masiva
-        this.filterForm.controls.idProduct.setValue(0);
+        this.filterForm.controls.idProduct.setValue('0');
         const data = { NPARAMETER: this.filterForm.value.Parameter };
         //// console.log (this.filterForm.value.Parameter);
         this.CreditNoteService.GetParameter(data).subscribe(
@@ -473,7 +474,7 @@ export class CreditNoteComponent implements OnInit {
             //CASO DOS CUANDO SELECCIONE ALGUN RAMO O MASIVO O TIPO PRODUCTO O POLIZA ,SE TIENEN QUE LLENAR LOS 4
             if (
                 this.filterForm.value.idBranch == null ||
-                this.filterForm.value.idBranch == 0
+                this.filterForm.value.idBranch == '0'
             ) {
                 this.msgAlert('Debe selecionar el ramo.');
                 return false;
@@ -481,19 +482,19 @@ export class CreditNoteComponent implements OnInit {
                 //CASO CUANDO SELECCIONAS DENTRO DE RAMO ALGUN MASIVO
                 if (this.filterForm.value.idBranch == '999') {
                     if (
-                        this.filterForm.value.Parameter == null || this.filterForm.value.Parameter == 0
+                        this.filterForm.value.Parameter == null || this.filterForm.value.Parameter == '0'
                     ) {
                         this.msgAlert('Debe selecionar el masivo.');
                         return false;
                     } else {
                         if (
-                            this.filterForm.value.idProduct == null || this.filterForm.value.idProduct == 0
+                            this.filterForm.value.idProduct == null || this.filterForm.value.idProduct == '0'
                         ) {
                             this.msgAlert('Debe selecionar el producto.');
                             return false;
                         } else {
                             if (
-                                this.filterForm.value.NPOLICY == null || this.filterForm.value.NPOLICY == 0
+                                this.filterForm.value.NPOLICY == null || this.filterForm.value.NPOLICY == '0'
                             ) {
                                 this.msgAlert('Debe ingresar la póliza.');
                                 return false;
@@ -503,12 +504,12 @@ export class CreditNoteComponent implements OnInit {
                         }
                     }
                 } else {
-                    if (this.filterForm.value.idProduct == null || this.filterForm.value.idProduct == 0) {
+                    if (this.filterForm.value.idProduct == null || this.filterForm.value.idProduct == '0') {
                         this.msgAlert('Debe selecionar el producto.');
                         return false;
                     }
                     else {
-                        if (this.filterForm.value.NPOLICY == null || this.filterForm.value.NPOLICY == 0) {
+                        if (this.filterForm.value.NPOLICY == null || this.filterForm.value.NPOLICY == '0') {
                             this.msgAlert('Debe ingresar la póliza.');
                             return false;
                         } else {
@@ -519,7 +520,7 @@ export class CreditNoteComponent implements OnInit {
             }
         }
         if (this.filterForm.value.idDocumento !== null && this.filterForm.value.idTipCompro !== null) {
-            this.filterForm.controls.idBranch.value == false;
+            this.filterForm.controls.idBranch.value == 'false';
             this.submitted = false;
             if (this.filterForm.value.idDocumento !== 0 && this.filterForm.value.documento == '') {
                 this.msgAlert('Debe ingresar el número del documento.');
@@ -554,7 +555,7 @@ export class CreditNoteComponent implements OnInit {
             }
         }
         if (this.filterForm.value.idDocumento !== null) {
-            this.filterForm.controls.idBranch.value == false;
+            this.filterForm.controls.idBranch.value == 'false';
             this.submitted = false;
             if (this.filterForm.value.idDocumento !== 0 && this.filterForm.value.documento == '') {
                 this.msgAlert('Debe ingresar el número del documento.');
@@ -563,7 +564,7 @@ export class CreditNoteComponent implements OnInit {
             return true;
         }
         if (this.filterForm.value.idTipCompro !== null) {
-            this.filterForm.controls.idBranch.value == false;
+            this.filterForm.controls.idBranch.value == 'false';
             this.submitted = false;
             if (
                 this.filterForm.value.idTipCompro !== 0 && this.filterForm.value.comprobante == '') {
@@ -634,7 +635,7 @@ export class CreditNoteComponent implements OnInit {
     } else {
       data.SCLINUMDOCU = this.filterForm.value.documento;
     }
-    if (this.filterForm.value.idTipCompro == '') {
+    if (this.filterForm.value.idTipCompro == 0) {
       data.idTipCompro = '';
     } else {
       data.idTipCompro = this.filterForm.value.idTipCompro;
@@ -1075,7 +1076,7 @@ export class CreditNoteComponent implements OnInit {
         if (
             this.filterForm.value.idDocumento == null ||
             this.filterForm.value.idDocumento == undefined ||
-            this.filterForm.value.idDocumento == ''
+            this.filterForm.value.idDocumento == 0
         ) {
             this.msgError('Seleccione un tipo de documento.');
             return false;
@@ -1124,7 +1125,7 @@ export class CreditNoteComponent implements OnInit {
         if (
             this.filterForm.value.idTipCompro == null ||
             this.filterForm.value.idTipCompro == undefined ||
-            this.filterForm.value.idTipCompro == ''
+            this.filterForm.value.idTipCompro == 0
         ) {
             this.msgError('Seleccione un tipo de comprobante.');
             return false;
@@ -1184,19 +1185,19 @@ export class CreditNoteComponent implements OnInit {
         this.ListParameter = 0;
         this.selectedType = 'predefined';
 
-        this.filterForm = new FormGroup({
-            idBranch: new FormControl(''),
-            Parameter: new FormControl(''),
-            idProduct: new FormControl(''),
-            NPOLICY: new FormControl(''),
-            certificado: new FormControl(''),
-            idDocumento: new FormControl(''),
-            documento: new FormControl(''),
-            idTipCompro: new FormControl(''),
-            comprobante: new FormControl(''),
-            startDate: new FormControl(''),
-            endDate: new FormControl(''),
-        });
+        // this.filterForm = new FormGroup({
+        //     idBranch: new FormControl(''),
+        //     Parameter: new FormControl(''),
+        //     idProduct: new FormControl(''),
+        //     NPOLICY: new FormControl(''),
+        //     certificado: new FormControl(''),
+        //     idDocumento: new FormControl(''),
+        //     documento: new FormControl(''),
+        //     idTipCompro: new FormControl(''),
+        //     comprobante: new FormControl(''),
+        //     startDate: new FormControl(''),
+        //     endDate: new FormControl(''),
+        // });
         this.ngOnInit();
     }
 

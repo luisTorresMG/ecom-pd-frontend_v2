@@ -30,7 +30,7 @@ import {
 } from '@angular/forms';
 import { Cliente } from '../../models/cliente/cliente';
 import { Step03Service } from '../../services/step03/step03.service';
-// import { isNullOrUndefined } from 'util';
+import { isNullOrUndefined } from '@shared/helpers/null-check';
 import { Province } from '@shared/models/province/province';
 import { District } from '@shared/models/district/district';
 import { Municipality } from '@shared/models/municipality/municipality';
@@ -184,14 +184,8 @@ export class BrokerEmissionComponent implements OnInit, AfterViewChecked {
     /^([a-zA-Z]{3}[0-9]{3}|[a-zA-Z]{3}[0-9]{1}[a-zA-Z]{2}|[a-zA-Z]{3}[0-9]{2}[a-zA-Z]{1}|[a-zA-Z]{3}[0-9]{1}[a-zA-Z]{2}|[a-zA-Z]{3}[0-9]{1}[a-zA-Z]{1}[0-9]{1}|[a-zA-Z]{4}[0-9]{2}|[a-zA-Z]{4}[0-9]{1}[a-zA-Z]{1}|[a-zA-Z]{5}[0-9]{1}|[a-zA-Z]{6}|[a-zA-Z]{1}[0-9]{4}[a-zA-Z]{1}|[a-zA-Z]{1}[0-9]{3}[a-zA-Z]{1}[0-9]{1}|[a-zA-Z]{1}[0-9]{2}[a-zA-Z]{1}[0-9]{2}|[a-zA-Z]{1}[0-9]{1}[a-zA-Z]{1}[0-9]{3}|[a-zA-Z]{1}[0-9]{1}[a-zA-Z]{4}|[a-zA-Z]{1}[0-9]{2}[a-zA-Z]{3}|[a-zA-Z]{1}[0-9]{3}[a-zA-Z]{2}|[a-zA-Z]{1}[0-9]{2}[a-zA-Z]{2}[0-9]{1}|[a-zA-Z]{1}[0-9]{1}[a-zA-Z]{1}[0-9]{1}[a-zA-Z]{1}[0-9]{1}|[a-zA-Z]{1}[0-9]{1}[a-zA-Z]{2}[0-9]{2}|[a-zA-Z]{1}[0-9]{1}[a-zA-Z]{2}[0-9]{1}[a-zA-Z]{1}|[a-zA-Z]{1}[0-9]{1}[a-zA-Z]{3}[0-9]{1}|[a-zA-Z]{1}[0-9]{1}[a-zA-Z]{1}[0-9]{2}[a-zA-Z]{1}|[a-zA-Z]{1}[0-9]{1}[a-zA-Z]{1}[0-9]{1}[a-zA-Z]{2}|[a-zA-Z]{1}[0-9]{2}[a-zA-Z]{1}[0-9]{1}[a-zA-Z]{1}|[a-zA-Z]{2}[0-9]{1}[a-zA-Z]{3}|[a-zA-Z]{2}[0-9]{2}[a-zA-Z]{2}|[a-zA-Z]{2}[0-9]{3}[a-zA-Z]{1}|[a-zA-Z]{2}[0-9]{1}[a-zA-Z]{1}[0-9]{1}[a-zA-Z]{1}|[a-zA-Z]{2}[0-9]{1}[a-zA-Z]{2}[0-9]{1}|[a-zA-Z]{2}[0-9]{1}[a-zA-Z]{1}[0-9]{2}|[a-zA-Z]{2}[0-9]{2}[a-zA-Z]{1}[0-9]{1})+$/
   );
 
-  formUpdateInfoAuto: FormGroup = this.builder.group({
-    brand: ['', Validators.maxLength(20)],
-    model: ['', Validators.maxLength(20)],
-    version: ['', Validators.maxLength(20)],
-    class: ['', Validators.maxLength(20)],
-    comment: [''],
-    documents: this.builder.array([], Validators.required),
-  });
+  formUpdateInfoAuto!: FormGroup;
+ 
 
   attachedFiles: File[] = [];
 
@@ -258,6 +252,14 @@ export class BrokerEmissionComponent implements OnInit, AfterViewChecked {
     private readonly utilsService: UtilsService,
     private readonly bandejaSolicitudesService: BandejaSolicitudesService
   ) {
+     this.formUpdateInfoAuto = this.builder.group({
+    brand: ['', Validators.maxLength(20)],
+    model: ['', Validators.maxLength(20)],
+    version: ['', Validators.maxLength(20)],
+    class: ['', Validators.maxLength(20)],
+    comment: [''],
+    documents: this.builder.array([], Validators.required),
+  });
     this.formTerms = this.builder.group({
       aceptTerms: [true],
       aceptPrivacy: [false],

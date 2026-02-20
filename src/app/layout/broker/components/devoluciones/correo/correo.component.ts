@@ -21,10 +21,10 @@ import { FormControl, FormGroup, Validator } from '@angular/forms';
 import Swal from 'sweetalert2';
 import moment from 'moment';
 import { NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
-import { element } from 'protractor';
-import { Payroll } from '../../../models/payroll/payroll';
-import { NULL_EXPR, THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { CallTracker } from 'assert';
+// import { element } from 'protractor';
+// import { Payroll } from '../../../models/payroll/payroll';
+// import { NULL_EXPR, THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+// import { CallTracker } from 'assert';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DevolucionesService } from '@root/layout/broker/services/devoluciones/devoluciones.service';
 import { GlobalValidators } from '../../global-validators';
@@ -492,12 +492,12 @@ export class CorreoComponent implements OnInit {
     //CASO UNO CUANDO SELECCIONA ALGUN TIPO DE DOCUMENTO ,TIENE QUE DIGITAR EL DOCUMENTO SELECCIONADO
     if (
       this.filterForm.value.idDocumento == null ||
-      this.filterForm.value.idDocumento == 0
+      this.filterForm.value.idDocumento == '0'
     ) {
       //CASO DOS CUANDO SELECCIONE ALGUN RAMO O MASIVO O TIPO PRODUCTO O POLIZA ,SE TIENEN QUE LLENAR LOS 4
       if (
         this.filterForm.value.idBranch == null ||
-        this.filterForm.value.idBranch == 0
+        this.filterForm.value.idBranch == '0'
       ) {
         this.msgError('Debe de ingresar el Ramo');
         return false;
@@ -506,21 +506,21 @@ export class CorreoComponent implements OnInit {
         if (this.filterForm.value.idBranch == '999') {
           if (
             this.filterForm.value.Parameter == null ||
-            this.filterForm.value.Parameter == 0
+            this.filterForm.value.Parameter == '0'
           ) {
             this.msgError('Debe de ingresar el Masivo');
             return false;
           } else {
             if (
               this.filterForm.value.idProduct == null ||
-              this.filterForm.value.idProduct == 0
+              this.filterForm.value.idProduct == '0'
             ) {
               this.msgError('Debe de ingresar el Producto');
               return false;
             } else {
               if (
                 this.filterForm.value.NPOLICY == null ||
-                this.filterForm.value.NPOLICY == 0
+                this.filterForm.value.NPOLICY == '0'
               ) {
                 this.msgError('Debe de ingresar la Póliza');
                 return false;
@@ -532,14 +532,14 @@ export class CorreoComponent implements OnInit {
         } else {
           if (
             this.filterForm.value.idProduct == null ||
-            this.filterForm.value.idProduct == 0
+            this.filterForm.value.idProduct == '0'
           ) {
             this.msgError('Debe de ingresar el Producto');
             return false;
           } else {
             if (
               this.filterForm.value.NPOLICY == null ||
-              this.filterForm.value.NPOLICY == 0
+              this.filterForm.value.NPOLICY == '0'
             ) {
               this.msgError('Debe de ingresar la Póliza');
               return false;
@@ -552,7 +552,7 @@ export class CorreoComponent implements OnInit {
     } else {
       if (
         this.filterForm.value.documento == null ||
-        this.filterForm.value.documento == 0
+        this.filterForm.value.documento == '0'
       ) {
         this.msgError('Debe de ingresar el numero del Documento');
         return false;
@@ -915,7 +915,7 @@ export class CorreoComponent implements OnInit {
         return true;
       } else if (code >= 48 && code <= 57) {
         // es un numero?
-        if (this.filterForm.value.idDocumento == 1) {
+        if (this.filterForm.value.idDocumento == '1') {
           if (this.filterForm.value.documento.length == 0) {
             if (evt.key == 1 || evt.key == 2) {
               return true;
@@ -931,7 +931,7 @@ export class CorreoComponent implements OnInit {
             }
           }
         } else {
-          if (this.filterForm.value.idDocumento == 2) {
+          if (this.filterForm.value.idDocumento == '2') {
             if (this.filterForm.value.documento.length < 8) {
               return true;
             } else {

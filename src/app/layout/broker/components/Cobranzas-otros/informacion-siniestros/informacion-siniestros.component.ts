@@ -172,8 +172,8 @@ export class InformacionSiniestrosComponent implements OnInit {
         //this.resultadosBusqueda = null;
         try {
             this.spinner.show();
-            const res = await this.servicioInforme.updateFechaSiniestro(data).toPromise();
-            resultado = res;
+            // const res = await this.servicioInforme.updateFechaSiniestro(data).toPromise();
+            // resultado = res;
         } catch (error) {
             this.aviso.swalError("Ocurrió un error realizando la consulta : " + error);
         } finally {
@@ -202,8 +202,8 @@ export class InformacionSiniestrosComponent implements OnInit {
             if (noSpinner == 0) {
                 this.spinner.show();
             }
-            const res = await this.servicioInforme.getSiniestroById(data).toPromise();
-            resultado = res;
+            // const res = await this.servicioInforme.getSiniestroById(data).toPromise();
+            // resultado = res;
         } catch (error) {
             this.aviso.swalError("Ocurrió un error realizando la consulta : " + error);
         } finally {

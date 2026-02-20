@@ -9,7 +9,7 @@ import { PdfDigitalReenvio } from './../../models/historial/pdfdigitalreenvio';
 import { Component, ElementRef, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
-import { isNullOrUndefined } from 'util';
+import { isNullOrUndefined } from '@shared/helpers/null-check';
 import { HistorialService } from '../../services/historial/historial.service';
 import { Historial } from '../../models/historial';
 import { UtilityService } from '../../../../shared/services/general/utility.service';
@@ -34,7 +34,7 @@ import { RecaptchaComponent } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-historial',
-  moduleId: module.id,
+  // moduleId: module.id,
   templateUrl: 'historial.component.html',
   styleUrls: ['historial.component.scss'],
 })
@@ -144,31 +144,17 @@ export class HistorialComponent implements OnInit {
     maxLength: 8
   };
 
-  formContractor: FormGroup = this.fb.group({
-    searchType: [this.SEARCHTYPES.document],
-    personType: [this.PERSONTYPES.natural],
-    documentType: ['2', [Validators.required]],
-    documentNumber: ['', [
-      Validators.pattern(RegularExpressions.numbers),
-      Validators.minLength(
-        this.documentNumberContractorValidations.minLength
-      ),
-      Validators.maxLength(
-        this.documentNumberContractorValidations.maxLength
-    )]],
-    legalName: [''],
-    names: [''],
-    apePat: [''],
-    apeMat: ['']
-  });
+  formContractor!: FormGroup;
+ 
 
   listContractors$: any[] = [];
   contractorSelected: any = {};
   currentPageListContractors: number = 1;
-  clientCodeContractorControl: FormControl = this.fb.control('');
-  contractorControl: FormControl = this.fb.control('');
-  plateControl: FormControl = this.fb.control('', [Validators.pattern(RegularExpressions.alphaNumeric)]);
-  policyControl: FormControl = this.fb.control('', [Validators.pattern(RegularExpressions.numbers)]);
+  clientCodeContractorControl!: FormControl;
+  contractorControl!: FormControl;
+  plateControl!: FormControl;
+  policyControl!: FormControl;
+  
 
   siteKey = AppConfig.CAPTCHA_KEY;
 
@@ -192,6 +178,27 @@ export class HistorialComponent implements OnInit {
     private readonly vcr: ViewContainerRef,
     private readonly utilsService: UtilsService
   ) {
+     this.formContractor = this.fb.group({
+    searchType: [this.SEARCHTYPES.document],
+    personType: [this.PERSONTYPES.natural],
+    documentType: ['2', [Validators.required]],
+    documentNumber: ['', [
+      Validators.pattern(RegularExpressions.numbers),
+      Validators.minLength(
+        this.documentNumberContractorValidations.minLength
+      ),
+      Validators.maxLength(
+        this.documentNumberContractorValidations.maxLength
+    )]],
+    legalName: [''],
+    names: [''],
+    apePat: [''],
+    apeMat: ['']
+  });
+    this.clientCodeContractorControl = this.fb.control('');
+    this.contractorControl = this.fb.control('');
+    this.plateControl = this.fb.control('', [Validators.pattern(RegularExpressions.alphaNumeric)]);
+    this.policyControl = this.fb.control('', [Validators.pattern(RegularExpressions.numbers)]);
     this.filter.StatePolicy = '';
     this.filter.TypePolicy = '';
     this.bsValueIni.setMonth(0, 1);

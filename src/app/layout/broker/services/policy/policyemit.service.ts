@@ -24,6 +24,23 @@ export class PolicyemitService {
     private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
     constructor(private http: HttpClient) { }
+      
+    public getAllBranch(data: any): Observable<any> {
+        return this.http.post<any>(`/api/branch/all`, data);
+    }
+    public   getCoberturasById(data: any): Observable<any> {
+        return this.http.post<any>(`/api/policy/coberturas`, data);
+    }
+
+    public  validarPolizaColectiva(data: any): Observable<{ polizaIndividual: number }> {
+        return this.http.post<{ polizaIndividual: number }>(
+        `/api/policyemit/validar-poliza-colectiva`,
+        data
+        );
+    }
+
+
+
 
     public ValidatePolicyRenov(data: any): Observable<any> {
         const body = JSON.stringify(data);

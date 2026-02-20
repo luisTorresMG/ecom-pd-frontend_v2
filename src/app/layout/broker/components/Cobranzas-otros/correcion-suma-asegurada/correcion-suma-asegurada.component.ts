@@ -257,7 +257,7 @@ export class CorrecionSumaAseguradaComponent implements OnInit {
         this.spinner.show();
         console.log(data);
         try {
-            res = await this.servicioInforme.updateSumaAsegurada(data).toPromise();
+            // res = await this.servicioInforme.updateSumaAsegurada(data).toPromise();
         } catch (error) {
             this.spinner.hide();
             this.aviso.swalError("Ocurrio un error realizando la consulta: " + error);
