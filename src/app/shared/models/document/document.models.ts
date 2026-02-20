@@ -104,7 +104,8 @@ export class DocumentFormatResponse {
     this.phone = payload?.p_SPHONE ? Number(payload.p_SPHONE) : null;
     this.birthDate = payload?.p_DBIRTHDAT ? payload.p_DBIRTHDAT : null;
     this.sex = payload?.p_SSEXCLIEN ? Number(payload.p_SSEXCLIEN) : null;
-    this.civilStatus = +payload?.p_NCIVILSTA ?? null;
+    // this.civilStatus = +payload?.p_NCIVILSTA ?? null;
+    this.civilStatus = payload?.p_NCIVILSTA != null ? +payload.p_NCIVILSTA : null;
     this.avatar = payload?.p_SFOTO || null;
   }
 }
