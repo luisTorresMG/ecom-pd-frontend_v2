@@ -5,6 +5,11 @@
     "packageManager": "npm",
     "analytics": false
   },
+  "schematics": {
+    "@schematics/angular:component": { "standalone": false, "style": "scss" },
+    "@schematics/angular:directive": { "standalone": false },
+    "@schematics/angular:pipe": { "standalone": false }
+  },
   "newProjectRoot": "projects",
   "projects": {
     "ecom-pd-frontend_v2": {
@@ -79,7 +84,7 @@
               "sourceMap": true
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "development"
         },
         "serve": {
           "builder": "@angular/build:dev-server",
