@@ -17,6 +17,7 @@ import {
 
 @Component({
     selector: 'app-input-date',
+    standalone: false, 
     host: {
         '(document:click)': 'handleOutsideClick($event)'
     },

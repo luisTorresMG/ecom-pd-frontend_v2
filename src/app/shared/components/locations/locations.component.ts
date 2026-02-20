@@ -12,6 +12,7 @@ type TLocations = {
 };
 @Component({
   selector: 'app-locations',
+  standalone: false, 
   templateUrl: './locations.component.html',
   styleUrls: ['./locations.component.scss']
 })
@@ -28,7 +29,7 @@ export class LocationsComponent implements OnInit {
   @Input() data: any;
   @Output() locations: EventEmitter<TLocations>;
 
-  form: FormGroup;
+  form!: FormGroup;
 
   countries$: Array<INacionalidadModel>;
   departments$: Array<IDepartamentoModel>;

@@ -8,6 +8,7 @@ import { AuthenticationService } from '../../../layout/broker/services/authentic
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'app-nav-menu',
+  standalone: false, 
   // moduleId: module.id,
   templateUrl: 'navmenu.component.html',
   styleUrls: ['./navmenu.component.css', './navmenu.component.mobile.css']

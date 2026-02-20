@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-modal',
+  standalone: false, 
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.css']
 })

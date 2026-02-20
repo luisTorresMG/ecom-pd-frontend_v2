@@ -19,6 +19,7 @@ import { RegularExpressions } from '@shared/regexp/regexp';
 import { ProductService } from '../../../layout/broker/services/product/panel/product.service';
 
 @Component({
+  standalone: false,
   selector: 'app-otp-auth-aws',
   templateUrl: './otp-auth-aws.component.html',
   styleUrls: ['./otp-auth-aws.component.scss'],
