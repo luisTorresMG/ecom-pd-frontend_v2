@@ -18,7 +18,7 @@
           <div class="col-lg-3 filter-row-cell">
             <span>CANAL</span>
             <select id="ChannelSalesSelect"
-                    (change)="onSelectChannelSales($event.target.value)"
+                    (change)="onSelectChannelSales($any($event.target).value)"
                     [disabled]="showfilterChannel">
               <option *ngFor="let channelsales of ListChannelSales"
                       [selected]="channelsales.nchannel == canalHist"
@@ -28,7 +28,7 @@
           </div>
           <div class="col-lg-3 filter-row-cell">
             <span>USUARIO</span>
-            <select (change)="onSelectUser($event.target.value)">
+            <select (change)="onSelectUser($any($event.target).value)">
               <option value="0"
                       selected>Todos</option>
               <option *ngFor="let Item of  ListUsers"
@@ -41,7 +41,7 @@
           </div>
           <div class="col-lg-3 filter-row-cell">
             <span>PAGINA</span>
-            <select (change)="onSelectPage($event.target.value)">
+            <select (change)="onSelectPage($any($event.target).value)">
               <option value="0"
                       selected>Todos</option>
               <option *ngFor="let Item of ListPages"
@@ -352,7 +352,7 @@
               <label for=""
                      class="col-lg-3 label-datos-liquidacion dato-estado">POR ESTADO:</label>
               <div class="col-lg-8">
-                <select (change)="onSelectState($event.target.value)"
+                <select (change)="onSelectState($any($event.target).value)"
                         [(ngModel)]="nidStateApprob">
                   <option value="0"
                           selected>--SELECCIONE--</option>

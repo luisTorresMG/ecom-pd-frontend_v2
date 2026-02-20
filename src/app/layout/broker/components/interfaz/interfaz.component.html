@@ -390,7 +390,7 @@
                     </select>
 
                     <span class="mt-3 mb-3">TIPO DE ASIENTO</span>
-                    <input class="form-control" type="text" maxlength="2" #input (input)="input.value=$event.target.value.toUpperCase()" formControlName="mct_ctipreg" placeholder="INGRESAR TIPO DE ASIENTO" [ngClass]="{ 'is-invalid': submitted && controlMovimientoRegister.mct_ctipreg.errors }">
+                    <input class="form-control" type="text" maxlength="2" #input (input)="input.value=$any($event.target).value.toUpperCase()" formControlName="mct_ctipreg" placeholder="INGRESAR TIPO DE ASIENTO" [ngClass]="{ 'is-invalid': submitted && controlMovimientoRegister.mct_ctipreg.errors }">
                     <div *ngIf="submitted && controlMovimientoRegister.mct_ctipreg.errors" class="invalid-feedback">
                         <div *ngIf="controlMovimientoRegister.mct_ctipreg.errors.required">El tipo de asiento es requerido.</div>
                     </div>
@@ -479,7 +479,7 @@
                     </select>
 
                     <span class="mt-3 mb-3">TIPO DE ASIENTO</span>
-                    <input class="form-control" type="text" maxlength="2" #input (input)="input.value=$event.target.value.toUpperCase()" formControlName="mct_ctipreg" placeholder="INGRESAR TIPO DE ASIENTO" [ngClass]="{ 'is-invalid': submitted && controlMovimientoEdit.mct_ctipreg.errors }">
+                    <input class="form-control" type="text" maxlength="2" #input (input)="input.value=$any($event.target).value.toUpperCase()" formControlName="mct_ctipreg" placeholder="INGRESAR TIPO DE ASIENTO" [ngClass]="{ 'is-invalid': submitted && controlMovimientoEdit.mct_ctipreg.errors }">
                     <div *ngIf="submitted && controlMovimientoEdit.mct_ctipreg.errors" class="invalid-feedback">
                         <div *ngIf="controlMovimientoEdit.mct_ctipreg.errors.required">El tipo de asiento es requerido.</div>
                     </div>

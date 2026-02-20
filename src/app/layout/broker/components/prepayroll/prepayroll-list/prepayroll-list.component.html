@@ -50,7 +50,7 @@
             <div class="col-lg-2 filter-row-cell">
               <span>POR ESTADO:</span>
               <select
-                (change)="onChangeEstado($event.target.value)"
+                (change)="onChangeEstado($any($event.target).value)"
                 [(ngModel)]="filtrosBus.Estado"
               >
                 <option value="0" selected>Todos</option>
@@ -72,7 +72,7 @@
             </div>
             <div class="col-lg-4 filter-row-cell">
               <span>POR CANAL:</span>
-              <select (change)="onChangeCanal($event.target.value)">
+              <select (change)="onChangeCanal($any($event.target).value)">
                 <!--[(ngModel)]="filtrosBus.CodigoCanalConcatenado"-->
                 <option value="0">Todos</option>
                 <option

@@ -90,7 +90,7 @@
                        placeholder="INGRESAR N° RUC"
                        formControlName="P_SCLINUMDOCU"
                        (keypress)="soloNumeros($event)"
-                       (keyup)="enabledRuc($event.target.value)"
+                       (keyup)="enabledRuc($any($event.target).value)"
                        maxlength="11" />
                 <ng-container [ngSwitch]="true"
                               *ngIf="submitted && (!filterForm.controls.P_SCLINUMDOCU.valid || filterForm.hasError('pattern')) && !filterForm.valid">
@@ -111,7 +111,7 @@
                        placeholder="INGRESAR N° PÓLIZA"
                        formControlName="P_NPOLICY"
                        (keypress)="soloNumeros($event)"
-                       (keyup)="enabledPolicy($event.target.value)"
+                       (keyup)="enabledPolicy($any($event.target).value)"
                        maxlength="10" />
                 <ng-container [ngSwitch]="true"
                               *ngIf="submitted && (!filterForm.controls.P_NPOLICY.valid || filterForm.hasError('pattern')) && !filterForm.valid">
@@ -184,7 +184,7 @@
                        placeholder="INGRESAR N° RECIBO"
                        formControlName="P_NRECEIPT"
                        (keypress)="soloNumeros($event)"
-                       (keyup)="enabledReceipt($event.target.value)"
+                       (keyup)="enabledReceipt($any($event.target).value)"
                        maxlength="10" />
                 <ng-container [ngSwitch]="true"
                               *ngIf="submitted && (!filterForm.controls.P_NRECEIPT.valid || filterForm.hasError('pattern')) && !filterForm.valid">
@@ -207,7 +207,7 @@
                                placeholder="TIPO"
                                formControlName="TIPO"
                                (keypress)="soloNumeros($event)"
-                               (keyup)="enabledVoucherTipo($event.target.value)"
+                               (keyup)="enabledVoucherTipo($any($event.target).value)"
                                maxlength="1" />
                         <ng-container [ngSwitch]="true"
                                       *ngIf="submitted && (!filterForm.controls.TIPO.valid || filterForm.hasError('pattern')) && !filterForm.valid">
@@ -223,7 +223,7 @@
                                placeholder="SERIE"
                                formControlName="SERIE"
                                (keypress)="soloNumeros($event)"
-                               (keyup)="enabledVoucherSerie($event.target.value)"
+                               (keyup)="enabledVoucherSerie($any($event.target).value)"
                                maxlength="5" />
                         <ng-container [ngSwitch]="true"
                                       *ngIf="submitted && (!filterForm.controls.SERIE.valid || filterForm.hasError('pattern')) && !filterForm.valid">
@@ -239,7 +239,7 @@
                                placeholder="DOCUMENTO"
                                formControlName="DOCUMENTO"
                                (keypress)="soloNumeros($event)"
-                               (keyup)="enabledVoucherDocumento($event.target.value)"
+                               (keyup)="enabledVoucherDocumento($any($event.target).value)"
                                maxlength="10" />
                         <ng-container [ngSwitch]="true"
                                       *ngIf="submitted && (!filterForm.controls.DOCUMENTO.valid || filterForm.hasError('pattern')) && !filterForm.valid">

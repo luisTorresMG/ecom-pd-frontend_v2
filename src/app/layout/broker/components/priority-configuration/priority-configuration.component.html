@@ -22,7 +22,7 @@
         <div class="row" [formGroup]="filterForm">
             <div class="col-sm-3">
                 <span>ORIGEN</span>
-                <select class="form-control" (change)="seleccionarOrigen($event.target.value)" formControlName="NNUMORI">
+                <select class="form-control" (change)="seleccionarOrigen($any($event.target).value)" formControlName="NNUMORI">
                     <option *ngFor="let x of origen" value="{{ x.mvt_nnumori }}">{{ x.mvt_cdescri }}</option>
                 </select>
             </div>

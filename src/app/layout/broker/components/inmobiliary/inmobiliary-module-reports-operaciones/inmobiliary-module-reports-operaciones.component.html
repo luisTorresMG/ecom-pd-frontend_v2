@@ -22,7 +22,7 @@
         <div class="row" [formGroup]="filterForm">
             <div class="col-sm-3">
                 <span>ORIGEN</span>
-                <select class="form-control" (change)="selectOrigen($event.target.value)" formControlName="P_NNUMORI"
+                <select class="form-control" (change)="selectOrigen($any($event.target).value)" formControlName="P_NNUMORI"
                     [ngClass]="{'error-validate': submitted && (!filterForm.controls.P_NNUMORI.valid || filterForm.hasError('required'))}">
                     <option *ngFor="let x of origen" value="{{ x.mvt_nnumori }}">{{ x.mvt_cdescri }}</option>
                 </select>
@@ -34,7 +34,7 @@
             </div>
             <div class="col-sm-3">
                 <span>INTERFAZ (*)</span>
-                <select class="form-control" (change)="selectInterfaz($event.target.value)" formControlName="P_NCODGRU"
+                <select class="form-control" (change)="selectInterfaz($any($event.target).value)" formControlName="P_NCODGRU"
                     [ngClass]="{'error-validate': submitted && (!filterForm.controls.P_NCODGRU.valid || filterForm.hasError('required'))}">
                     <option value="" disabled selected>SELECCIONE INTERFAZ</option>
                     <option *ngFor="let x of interfaces" value="{{ x.mvt_ncodgru }}">{{ x.mvt_cdescri }}</option>
@@ -79,7 +79,7 @@
             </div>
             <div class="col-sm-3">
                 <span>SERVICIO (*)</span>
-                <select class="form-control" (change)="selectRamo($event.target.value)" formControlName="P_NBRANCH"
+                <select class="form-control" (change)="selectRamo($any($event.target).value)" formControlName="P_NBRANCH"
                     [ngClass]="{'error-validate': submitted && (!filterForm.controls.P_NBRANCH.valid || filterForm.hasError('required')) && !filterForm.controls.P_NBRANCH.disabled}">
                     <option value="" disabled selected>SELECCIONE RAMO</option>
                     <option *ngFor="let x of ramos" value="{{ x.NBRANCH }}">{{ x.SBRANCH_DESC }}</option>

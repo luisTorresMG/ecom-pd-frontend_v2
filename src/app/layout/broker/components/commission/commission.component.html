@@ -64,7 +64,7 @@
             </div>
             <!-- <div class="col-lg-2 filter-row-cell">
               <span class="filter-text">ESTADO:</span>
-              <select (change)="onSelectState($event.target.value)">
+              <select (change)="onSelectState($any($event.target).value)">
                 <option value="0"
                         selected>Todos</option>
                 <option *ngFor="let Item of lstStateChannel"
@@ -91,7 +91,7 @@
               <select *ngIf="isAdmin"
                       class="cboCanal"
                       id="ChannelSalesSelect"
-                      (change)="onSelectChannel($event.target.value)">
+                      (change)="onSelectChannel($any($event.target).value)">
                 <option value="0">Todos</option>
                 <option *ngFor="let channelsales of lstCanales"
                         value="{{ channelsales.nchannel }}">
@@ -100,7 +100,7 @@
             </div>
             <div class="col-lg-2 filter-row-cell">
               <span class="filter-text">POR ESTADO:</span>
-              <select (change)="seleccionEstado($event.target.value)">
+              <select (change)="seleccionEstado($any($event.target).value)">
                 <option value="0"
                         selected>Todos</option>
                 <option *ngFor="let Item of lstEstadoComision"

@@ -1,4 +1,4 @@
-<select id="UseSelect" (change)="onSelectUso($event.target.value)">
+<select id="UseSelect" (change)="onSelectUso($any($event.target).value)">
   <option value="0" selected>Seleccionar</option>
   <option *ngFor="let uso of usos" value="{{ uso.niduso }}">{{
     uso.sdescript

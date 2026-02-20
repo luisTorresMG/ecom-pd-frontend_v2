@@ -1246,10 +1246,15 @@ export class QuotationEvaluationComponent implements OnInit {
                     Swal.fire('Información', this.listToString(res.ErrorMessageList), 'error');
                 } else {
                     var newBlob = new Blob([res], { type: "application/pdf" });
-                    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-                        window.navigator.msSaveOrOpenBlob(newBlob);
-                        return;
-                    }
+                      const nav: any = window.navigator;
+                        if (nav && nav.msSaveOrOpenBlob) {
+                            nav.msSaveOrOpenBlob(newBlob);
+                            return;
+                        }
+                    // if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                    //     window.navigator.msSaveOrOpenBlob(newBlob);
+                    //     return;
+                    // }
                     const data = window.URL.createObjectURL(newBlob);
 
                     var link = document.createElement('a');

@@ -1336,7 +1336,7 @@
                          aria-label="Departamento (*)">
                     <select id="mbcr_department"
                             class="input-u"
-                            (change)="changeValueDepartamento($event.target.value)"
+                            (change)="changeValueDepartamento($any($event.target).value)"
                             formControlName="department">
                       <option value="null"
                               disabled
@@ -1360,7 +1360,7 @@
                          aria-label="Provincia (*)">
                     <select id="mbcr_province"
                             class="input-u"
-                            (change)="changeValueProvincia($event.target.value)"
+                            (change)="changeValueProvincia($any($event.target).value)"
                             formControlName="province">
                       <option value="null"
                               disabled
@@ -1647,7 +1647,7 @@
                          aria-label="Departamento">
                     <select id="mbcr_department"
                             class="input-u"
-                            (change)="changeValueDepartamentoPV($event.target.value)"
+                            (change)="changeValueDepartamentoPV($any($event.target).value)"
                             formControlName="departmentPV">
                       <option value="null"
                               disabled
@@ -1669,7 +1669,7 @@
                          aria-label="Provincia">
                     <select id="mbcr_province"
                             class="input-u"
-                            (change)="changeValueProvinciaPV($event.target.value)"
+                            (change)="changeValueProvinciaPV($any($event.target).value)"
                             formControlName="provincePV">
                       <option value="null"
                               disabled
@@ -2083,7 +2083,7 @@
                        aria-label="Departamento">
                   <select id="mbcr_department"
                           class="input-u"
-                          (change)="changeValueDepartamentoPV($event.target.value)"
+                          (change)="changeValueDepartamentoPV($any($event.target).value)"
                           formControlName="departmentPV">
                     <option value="null"
                             disabled
@@ -2105,7 +2105,7 @@
                        aria-label="Provincia">
                   <select id="mbcr_province"
                           class="input-u"
-                          (change)="changeValueProvinciaPV($event.target.value)"
+                          (change)="changeValueProvinciaPV($any($event.target).value)"
                           formControlName="provincePV">
                     <option value="null"
                             disabled
@@ -2477,7 +2477,7 @@
                        aria-label="Departamento">
                   <select id="mbcr_department"
                           class="input-u"
-                          (change)="changeValueDepartamentoEPV($event.target.value)"
+                          (change)="changeValueDepartamentoEPV($any($event.target).value)"
                           formControlName="departmentPV">
                     <option value="null"
                             disabled
@@ -2499,7 +2499,7 @@
                        aria-label="Provincia">
                   <select id="mbcr_province"
                           class="input-u"
-                          (change)="changeValueProvinciaEPV($event.target.value)"
+                          (change)="changeValueProvinciaEPV($any($event.target).value)"
                           formControlName="provincePV">
                     <option value="null"
                             disabled

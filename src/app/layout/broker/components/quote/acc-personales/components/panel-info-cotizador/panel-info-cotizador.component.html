@@ -348,7 +348,7 @@
                                                      [onlyInput]="true"
                                                      [patternPrevent]="CONSTANTS.REGEX.NUMBER"
                                                      placeholder="0"
-                                                     (change)="inputValorOri = ['1001', '1002', '1003'].includes(item.codCobertura) ? $event.target.value : null; clickCalcularPrima($event, 'recoberturas', item.codCobertura);"
+                                                     (change)="inputValorOri = ['1001', '1002', '1003'].includes(item.codCobertura) ? $any($event.target).value : null; clickCalcularPrima($event, 'recoberturas', item.codCobertura);"
                                                      maxCaracter="6"></form-input-text>-->
                                     <!-- GCAA 20032024-->
                                     <form-input-text [(value)]="item.valor_prop"

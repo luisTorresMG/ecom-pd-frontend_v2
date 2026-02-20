@@ -24,7 +24,7 @@
             <div class="col-sm-3">
                 <span>ORIGEN DE DATOS</span>
                 <select class="form-control"
-                        (change)="seleccionarOrigen($event.target.value)"
+                        (change)="seleccionarOrigen($any($event.target).value)"
                         formControlName="AST_NNUMORI">
                     <option *ngFor="let x of origen"
                             value="{{ x.mvt_nnumori }}">{{ x.mvt_cdescri }}</option>

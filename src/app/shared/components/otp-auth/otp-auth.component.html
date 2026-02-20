@@ -10,7 +10,7 @@
         <h5 class="motp__title">Verificar token enviado</h5>
         <p class="motp__desc">{{ otpDescription }}</p>
         <span class="motp__desc">Ingresa el token</span>
-        <form class="motp__verification" [formGroup]="form">
+        <!-- <form class="motp__verification" [formGroup]="form">
           <input
             type="text"
             tabindex="1"
@@ -70,7 +70,7 @@
             (focusin)="code6Focus()"
             #c6
           />
-        </form>
+        </form> -->
         <span class="motp__desc"
           >Su token vencerá en <b>{{ tokenTime }}</b></span
         >

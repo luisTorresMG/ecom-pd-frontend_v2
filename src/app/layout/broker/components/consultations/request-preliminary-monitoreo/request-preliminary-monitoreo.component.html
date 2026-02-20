@@ -17,7 +17,7 @@
             <div class="row">
               <div [ngClass]="productBool ? 'col-sm-3' : 'col-sm-4'">
                 <span>RAMO</span>
-                <select formControlName="branch" class="minimal" (change)="onSelectedBranch($event.target.value)">
+                <select formControlName="branch" class="minimal" (change)="onSelectedBranch($any($event.target).value)">
                   <option value="0">TODOS</option>
                   <option *ngFor="let item of branchTypeList" value="{{ item.Id }}">
                     {{ item.Description }}

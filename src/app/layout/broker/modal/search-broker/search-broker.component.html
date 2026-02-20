@@ -23,7 +23,7 @@
             <div class="row">
               <div *ngIf="blockSearch" class="col-sm-4">
                 <span>TIPO DOCUMENTO (*)</span>
-                <select (change)="onSelectTypeDocument($event.target.value)" [(ngModel)]="InputsBroker.P_NIDDOC_TYPE"
+                <select (change)="onSelectTypeDocument($any($event.target).value)" [(ngModel)]="InputsBroker.P_NIDDOC_TYPE"
                   class="minimal">
                   <option value="-1" selected>Seleccionar</option>
                   <option *ngFor="let documenttype of documentTypeList" value="{{documenttype.Id}}">
@@ -32,7 +32,7 @@
               </div>
               <div *ngIf="!blockSearch" class="col-sm-4">
                 <span>TIPO DE PERSONA (*)</span>
-                <select (change)="onSelectTypePerson($event.target.value)" [(ngModel)]="InputsBroker.P_PERSON_TYPE"
+                <select (change)="onSelectTypePerson($any($event.target).value)" [(ngModel)]="InputsBroker.P_PERSON_TYPE"
                   class="minimal">
                   <option value="1" selected>Persona Natural</option>
                   <option value="2">Persona Jurídica</option>

@@ -65,7 +65,7 @@
               <select
                 id="filter-sales-channels"
                 class="field-container__input"
-                (change)="onSelectChannelSales($event.target.value)"
+                (change)="onSelectChannelSales($any($event.target).value)"
                 [disabled]="lockfilter"
               >
                 <option
@@ -88,7 +88,7 @@
               <select
                 class="field-container__input"
                 id="point-sale-filter"
-                (change)="onSelectChannelPoint($event.target.value)"
+                (change)="onSelectChannelPoint($any($event.target).value)"
                 [(ngModel)]="salesPointIdSelected"
                 [disabled]="blockfilter"
               >
@@ -111,7 +111,7 @@
               <select
                 id="branch-filter"
                 class="field-container__input"
-                (change)="onSelectBranch($event.target.value, true)"
+                (change)="onSelectBranch($any($event.target).value, true)"
                 [disabled]="lockfilter"
               >
                 <option
@@ -134,7 +134,7 @@
               <select
                 id="product-filter"
                 class="field-container__input"
-                (change)="onSelectProduct($event.target.value)"
+                (change)="onSelectProduct($any($event.target).value)"
                 [disabled]="lockfilter"
               >
                 <option
@@ -157,7 +157,7 @@
               <select
                 id="currency-filter"
                 class="field-container__input"
-                (change)="onSelectCurrency($event.target.value)"
+                (change)="onSelectCurrency($any($event.target).value)"
                 [disabled]="lockfilter"
               >
                 <option
@@ -878,7 +878,7 @@
                   >POR ESTADO:</label
                   >
                   <div class="col-lg-8">
-                    <select (change)="onSelectState($event.target.value)">
+                    <select (change)="onSelectState($any($event.target).value)">
                       <option value="0"
                               selected>--SELECCIONE--
                       </option>

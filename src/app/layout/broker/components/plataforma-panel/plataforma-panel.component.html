@@ -30,7 +30,7 @@
                    class="label-formulario">CANAL DE VENTAS
             </label>
             <select id="ChannelSalesSelect"
-                    (change)="onSelectChannelSales($event.target.value)"
+                    (change)="onSelectChannelSales($any($event.target).value)"
                     class="form-control">
               <option value="0"
                       selected>Seleccionar</option>

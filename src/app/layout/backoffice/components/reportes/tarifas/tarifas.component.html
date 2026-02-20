@@ -50,7 +50,7 @@
             <div class="col-lg-6 filter-row-cell">
                 <span class="filter-text">CANAL DE VENTA:</span>
                   <select class="form-control date-search input-date"
-                    (change)="onChangeCanal($event.target.value)"
+                    (change)="onChangeCanal($any($event.target).value)"
                     [(ngModel)]="canalSelected"
                   >
                     <option value="0">--SELECCIONAR--</option>

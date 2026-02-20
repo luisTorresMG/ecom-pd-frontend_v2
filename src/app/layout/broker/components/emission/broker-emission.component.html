@@ -138,7 +138,7 @@
                         "
                         class="form-control select-formulario"
                         [(ngModel)]="auto.p_NVEHBRAND"
-                        (change)="setMarca($event.target.value)"
+                        (change)="setMarca($any($event.target).value)"
                         [ngClass]="{
                           'error-validate':
                             vehiculoForm.get('marcacodigo').invalid &&
@@ -180,7 +180,7 @@
                         "
                         class="form-control select-formulario"
                         [(ngModel)]="auto.p_SNAME_VEHMODEL"
-                        (change)="setModelo($event.target.value)"
+                        (change)="setModelo($any($event.target).value)"
                         [ngClass]="{
                           'error-validate':
                             vehiculoForm.get('modelo').invalid &&
@@ -222,7 +222,7 @@
                         [ngClass]="{ deshabilitado: bLock02 }"
                         class="form-control select-formulario"
                         [(ngModel)]="auto.p_NIDCLASE"
-                        (change)="setClase($event.target.value)"
+                        (change)="setClase($any($event.target).value)"
                         [ngClass]="{
                           'error-validate':
                             !vehiculoForm.get('clasecodigo').valid &&
@@ -264,7 +264,7 @@
                         [ngClass]="{ deshabilitado: bLock02 }"
                         class="form-control select-formulario"
                         [(ngModel)]="auto.p_NIDUSO"
-                        (change)="setUso($event.target.value)"
+                        (change)="setUso($any($event.target).value)"
                         [ngClass]="{
                           'error-validate':
                             !vehiculoForm.get('uso').valid &&
@@ -410,7 +410,7 @@
                         [ngClass]="{ deshabilitado: bLock02 }"
                         class="form-control select-formulario"
                         [(ngModel)]="auto.p_SEATNUMBER"
-                        (change)="setAsientos($event.target.value)"
+                        (change)="setAsientos($any($event.target).value)"
                         [ngClass]="{
                           'error-validate':
                             !vehiculoForm.get('asientos').valid &&
@@ -532,7 +532,7 @@
                         class="form-control select-formulario"
                         [ngClass]="{ deshabilitado: bLock03 }"
                         formControlName="zonaCirculacion"
-                        (change)="changeZonaCirculacion($event.target.value)"
+                        (change)="changeZonaCirculacion($any($event.target).value)"
                       >
                         <option value="undefined" disabled selected>
                           Seleccione el departamento
@@ -749,7 +749,7 @@
                         [ngClass]="{ deshabilitado: bLock04 }"
                         formControlName="plan"
                         [(ngModel)]="Certificado.P_IDTARIFARIO"
-                        (change)="setTarifario($event.target.value)"
+                        (change)="setTarifario($any($event.target).value)"
                       >
                         <option value="undefined" disabled selected>
                           Seleccione su tarifario
@@ -911,7 +911,7 @@
                         [ngClass]="{ deshabilitado: !deshabilitarNuevoSoat }"
                         formControlName="turnoentrega"
                         [(ngModel)]="Certificado.P_STURNOENTREGADELIVERY"
-                        (change)="setTurnoEntrega($event.target.value)"
+                        (change)="setTurnoEntrega($any($event.target).value)"
                       >
                         <option value="undefined" disabled selected>
                           Seleccione su turno de entrega
@@ -945,7 +945,7 @@
                         [disabled]="!deshabilitarNuevoSoat"
                         formControlName="formapago"
                         [(ngModel)]="Certificado.P_SFORMAPAGODELIVERY"
-                        (change)="setFormaPago($event.target.value)"
+                        (change)="setFormaPago($any($event.target).value)"
                       >
                         <option value="undefined" disabled selected>
                           Seleccione la forma de pago
@@ -1041,7 +1041,7 @@
                         [(ngModel)]="Certificado.P_NPROVINCEDELIVERY"
                         (change)="
                           listarProvinciasDelivery(
-                            $event.target.value,
+                            $any($event.target).value,
                             null,
                             null
                           )
@@ -1086,7 +1086,7 @@
                         formControlName="provinciaentrega"
                         [(ngModel)]="Certificado.P_NLOCATDELIVERY"
                         (change)="
-                          listarDistritosDelivery($event.target.value, null)
+                          listarDistritosDelivery($any($event.target).value, null)
                         "
                         [ngClass]="{
                           'error-validate':
@@ -1243,7 +1243,7 @@
           type="text"
           class="input-search"
           placeholder="Busca el número del certificado SOAT..."
-          (input)="searchCertificado($event.target.value)"
+          (input)="searchCertificado($any($event.target).value)"
           (keypress)="soloNumeros($event)"
         />
       </div>

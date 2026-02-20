@@ -22,7 +22,7 @@
               <select
                 [(ngModel)]="cboPuntoVenta"
                 class="form-control select-formulario"
-                (change)="setPuntoVenta($event.target.value)"
+                (change)="setPuntoVenta($any($event.target).value)"
               >
                 <option value="undefined" disabled selected>
                   Seleccione punto de venta
@@ -201,7 +201,7 @@
               >
                 <select
                   class="form-control select-formulario mt-4"
-                  (change)="setItemState($event.target.value)"
+                  (change)="setItemState($any($event.target).value)"
                 >
                   <option
                     value="{{ itemStateSelected.idLineaCredito }}"
@@ -260,7 +260,7 @@
           <select
             [(ngModel)]="anioSelected"
             class="form-control select-formulario select-year-graph"
-            (change)="prepareData($event.target.value)"
+            (change)="prepareData($any($event.target).value)"
           >
             <option value="undefined" disabled selected>
               Seleccione un año
@@ -343,7 +343,7 @@
           <select
             [(ngModel)]="anioSelected"
             class="form-control select-formulario select-formulario-graph select-year-graph"
-            (change)="prepareData($event.target.value)"
+            (change)="prepareData($any($event.target).value)"
           >
             <option value="undefined" disabled selected>
               Seleccione un año

@@ -27,7 +27,7 @@
                id="herederos-legales-chk"
                value="1"
                [checked]="tipoCotizacion == 1"
-               (change)="changeTypeCotizacion($event.target.value)">
+               (change)="changeTypeCotizacion($any($event.target).value)">
         <label for="herederos-legales-chk"
                class="lbl-chk">
           <span>Mis beneficiarios serán mis herederos legales</span>
@@ -39,7 +39,7 @@
                id="select-benef-chk"
                value="2"
                [checked]="tipoCotizacion == 2"
-               (change)="changeTypeCotizacion($event.target.value)">
+               (change)="changeTypeCotizacion($any($event.target).value)">
         <label for="select-benef-chk"
                class="lbl-chk">
           <span>Deseo elegir a mis beneficiarios</span>

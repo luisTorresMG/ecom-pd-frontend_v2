@@ -84,7 +84,7 @@
                   <div *ngIf="!blockSearch" class="col-sm-3">
                     <span>TIPO DE PERSONA (*)</span>
                     <select
-                      (change)="onSelectTypePerson($event.target.value)"
+                      (change)="onSelectTypePerson($any($event.target).value)"
                       [(ngModel)]="inputsQuotation.P_PERSON_TYPE"
                       class="minimal"
                     >
@@ -582,7 +582,7 @@
                   <div class="col-sm-3">
                     <span>PRODUCTOS (*)</span>
                     <select
-                      (change)="onSelectProducto($event.target.value)"
+                      (change)="onSelectProducto($any($event.target).value)"
                       [(ngModel)]="inputsQuotation.P_NPRODUCT"
                       (click)="clearValidate(11)"
                       [ngClass]="{ 'error-validate': inputsValidate[11] }"
@@ -836,7 +836,7 @@
                   <div class="col-sm-3">
                     <span>PRODUCTOS (*)</span>
                     <select
-                      (change)="onSelectProducto($event.target.value)"
+                      (change)="onSelectProducto($any($event.target).value)"
                       [(ngModel)]="inputsQuotation.P_NPRODUCT"
                       [disabled]="
                         typeTran === 'Renovación' ||
@@ -1256,7 +1256,7 @@
                 <div class="col-sm-3" *ngIf="template.ins_comision">
                   <label class="mb-0"><span>TARIFA (*)</span></label>
                   <!--<select
-                    (change)="onSelectComision($event.target.value)"
+                    (change)="onSelectComision($any($event.target).value)"
                     [(ngModel)]="inputsQuotation.P_COMISION"
                     (click)="clearValidate(16)"
                     [ngClass]="{ 'error-validate': inputsValidate[16] }"
@@ -1366,7 +1366,7 @@
                 <div class="col-sm-3" *ngIf="template.ins_comision">
                   <label class="mb-0"><span>TARIFA (*)</span></label>
                   <!-- <select
-                    (change)="onSelectComision($event.target.value)"
+                    (change)="onSelectComision($any($event.target).value)"
                     [(ngModel)]="inputsQuotation.P_COMISION"
                     (click)="clearValidate(16)"
                     [ngClass]="{ 'error-validate': inputsValidate[16] }"
@@ -3283,7 +3283,7 @@
                 <div class="col-sm-3" *ngIf="flagPolizaMat == true">
                   <label class="mb-0"><span>TARIFA (*)</span></label>
                   <!--<select
-                    (change)="onSelectComision($event.target.value)"
+                    (change)="onSelectComision($any($event.target).value)"
                     [(ngModel)]="inputsQuotation.P_COMISION"
                     (click)="clearValidate(16)"
                     [ngClass]="{ 'error-validate': inputsValidate[16] }"

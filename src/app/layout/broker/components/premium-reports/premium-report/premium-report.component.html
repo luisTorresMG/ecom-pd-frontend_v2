@@ -20,7 +20,7 @@
                                 <div class="col-sm-3">
                                     <span>RAMO(*)</span>
                                     <select [(ngModel)]="IdBranch"
-                                            (change)="desactivateHeader($event.target.value)"
+                                            (change)="desactivateHeader($any($event.target).value)"
                                             name="IdRamo"
                                             class="minimal">
                                         <option value="0"

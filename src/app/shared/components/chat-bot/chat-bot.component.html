@@ -3,7 +3,7 @@
   *ngIf="!isVidaDevolucion && showChat && !isAccidentesPersonales"
 >
   <div class="fab-form" [@fadein]="true" *ngIf="showForm">
-    <form action="" [formGroup]="frmChat" (ngSubmit)="onSubmit()">
+    <!-- <form action="" [formGroup]="frmChat" (ngSubmit)="onSubmit()">
       <div class="title">
         <h2 class="main-title">¡Hola no soy un robot!</h2>
         <h4 class="sub-title">
@@ -44,7 +44,7 @@
         <i class="fa fa-comments-o"></i>
         Conversemos
       </button>
-    </form>
+    </form> -->
   </div>
   <div class="pull-right">
     <button
@@ -53,20 +53,20 @@
       aria-label="button comment"
       (click)="showFormClick()"
     >
-      <i
+      <!-- <i
         class="fa"
         [ngClass]="{
           'fa-comments-o': !showForm,
           'fa-close': showForm
         }"
-      ></i>
+      ></i> -->
     </button>
   </div>
 </div>
 
 <!--  *ROBOT VIDAINDIVIDUAL-->
 <div class="fab-container" *ngIf="isVidaDevolucion">
-  <div class="fab-form" *ngIf="showForm">
+  <!-- <div class="fab-form" *ngIf="showForm">
     <form
       action=""
       *ngIf="!modalSucess"
@@ -173,7 +173,7 @@
         </button>
       </div>
     </ng-container>
-  </div>
+  </div> -->
   <div class="pull-right">
     <button
       *ngIf="showButtonChat"
@@ -182,13 +182,13 @@
       aria-label="button comment"
       (click)="showFormClick()"
     >
-      <i
+      <!-- <i
         class="fa"
         [ngClass]="{
           'fa-comments-o': !showForm,
           'fa-close': showForm
         }"
-      ></i>
+      ></i> -->
     </button>
   </div>
 </div>

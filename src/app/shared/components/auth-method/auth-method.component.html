@@ -52,17 +52,17 @@
   </div>
 </ng-template>
 <ng-template #modalBiometricAuth>
-  <app-step-biometric
+  <!-- <app-step-biometric
     [insurance]="biometricData"
     (uploadFileBiometricResult)="uploadFileBiometric($event)"
     (modalBiometric)="selectAuthMethod(0, false)"
     (biometricResult)="biometricResponse($event)"
-  ></app-step-biometric>
+  ></app-step-biometric> -->
 </ng-template>
 <ng-template #modalOtpAuth>
-  <app-otp-auth
+  <!-- <app-otp-auth
     [data]="data"
     (showOtpAuth)="selectAuthMethod(0)"
     (resultOtp)="otpResponse($event)"
-  ></app-otp-auth>
+  ></app-otp-auth> -->
 </ng-template>

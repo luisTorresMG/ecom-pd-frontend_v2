@@ -43,7 +43,7 @@
                 </div>
                 <div *ngIf="!blockSearch" class="col-sm-3">
                   <span>TIPO DE PERSONA (*)</span>
-                  <select (change)="onSelectTypePerson($event.target.value)" [(ngModel)]="inputsCovid.P_PERSON_TYPE"
+                  <select (change)="onSelectTypePerson($any($event.target).value)" [(ngModel)]="inputsCovid.P_PERSON_TYPE"
                     class="minimal">
                     <option value="1" selected>Persona Natural</option>
                     <option value="2">Persona Jurídica</option>
@@ -250,7 +250,7 @@
               <div class="row">
                 <div class="col-sm-3">
                   <span>PRODUCTOS (*)</span>
-                  <select (change)="onSelectProducto($event.target.value)" [(ngModel)]="inputsCovid.P_NPRODUCT"
+                  <select (change)="onSelectProducto($any($event.target).value)" [(ngModel)]="inputsCovid.P_NPRODUCT"
                     (click)="clearValidate(11)" [ngClass]="{'error-validate': inputsValidate[11]}" class="minimal">
                     <option disabled value="-1">SELECCIONE</option>
                     <option value="0" *ngIf="productList.length > 1">Ambos productos</option>

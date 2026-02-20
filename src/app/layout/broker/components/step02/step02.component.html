@@ -42,7 +42,7 @@
             <select formControlName="clasecodigo"
                     class="form-control select-formulario"
                     [(ngModel)]="auto.p_NIDCLASE"
-                    (change)="setClase($event.target.value)"
+                    (change)="setClase($any($event.target).value)"
                     [ngClass]="{'error-validate': !vehiculoForm.get('clasecodigo').valid  && vehiculoForm.get('clasecodigo').touched}">
               <option value="undefined"
                       disabled
@@ -57,7 +57,7 @@
             <select formControlName="uso"
                     class="form-control select-formulario"
                     [(ngModel)]="auto.p_NIDUSO"
-                    (change)="setUso($event.target.value)"
+                    (change)="setUso($any($event.target).value)"
                     [ngClass]="{'error-validate': !vehiculoForm.get('uso').valid  && vehiculoForm.get('uso').touched}">
               <option value="undefined"
                       disabled
@@ -72,7 +72,7 @@
             <select formControlName="marcacodigo"
                     class="form-control select-formulario"
                     [(ngModel)]="auto.p_NVEHBRAND"
-                    (change)="setMarca($event.target.value)"
+                    (change)="setMarca($any($event.target).value)"
                     [ngClass]="{'error-validate': !vehiculoForm.get('marcacodigo').valid  && vehiculoForm.get('marcacodigo').touched}">
               <option value="undefined"
                       disabled
@@ -89,7 +89,7 @@
             <select formControlName="modelo"
                     class="form-control select-formulario"
                     [(ngModel)]="auto.p_NVEHMODEL"
-                    (change)="setModelo($event.target.value)"
+                    (change)="setModelo($any($event.target).value)"
                     [ngClass]="{'error-validate': !vehiculoForm.get('modelo').valid  && vehiculoForm.get('modelo').touched}">
               <option value="undefined"
                       disabled
@@ -147,7 +147,7 @@
             <select class="form-control select-formulario"
                     [(ngModel)]="auto.p_NAUTOZONE"
                     formControlName="zona"
-                    (change)="setZona($event.target.value)"
+                    (change)="setZona($any($event.target).value)"
                     [ngClass]="{'error-validate': !vehiculoForm.get('zona').valid  && vehiculoForm.get('zona').touched}">
               <option value="undefined"
                       disabled

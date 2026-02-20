@@ -52,7 +52,7 @@
             <div class="col-lg-3">
               <label for="" class="label-datos-liquidacion">CANAL</label>
               <select
-                (change)="onChangeCanal($event.target.value)"
+                (change)="onChangeCanal($any($event.target).value)"
                 [(ngModel)]="canalSelected"
               >
                 <option value="0">--SELECCIONAR--</option>
@@ -68,7 +68,7 @@
                 >PUNTO DE VENTA</label
               >
               <select
-                (change)="onChangePuntoVenta($event.target.value)"
+                (change)="onChangePuntoVenta($any($event.target).value)"
                 [(ngModel)]="puntoVentaSelected"
               >
                 <option value="0" selected>--SELECCIONAR--</option>

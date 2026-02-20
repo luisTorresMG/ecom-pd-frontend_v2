@@ -63,7 +63,7 @@
             <span>POR ESTADO:</span>
             <select
               id="StateSelect"
-              (change)="onSelectState($event.target.value)"
+              (change)="onSelectState($any($event.target).value)"
             >
               <option value="0">Todos</option>
               <option value="1">Activo</option>
@@ -85,7 +85,7 @@
             <span>POR CANAL:</span>
             <select
               id="ChannelSalesSelect"
-              (change)="onSelectChannel($event.target.value)"
+              (change)="onSelectChannel($any($event.target).value)"
             >
               <option value="0">Todos</option>
               <option

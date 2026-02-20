@@ -322,7 +322,7 @@
                   [(ngModel)]="cliente.p_NPROVINCE"
                   (change)="
                     listarProvinciasPorDepartamento(
-                      $event.target.value,
+                      $any($event.target).value,
                       null,
                       null
                     )
@@ -368,7 +368,7 @@
                   formControlName="provincia"
                   [(ngModel)]="cliente.p_NLOCAT"
                   (change)="
-                    listarDistritosPorProvincia($event.target.value, null)
+                    listarDistritosPorProvincia($any($event.target).value, null)
                   "
                   [ngClass]="{
                     'error-validate':

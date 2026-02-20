@@ -22,7 +22,7 @@
         <div class="row">
             <div class="col-sm-3">
                 <span>ORIGEN DE DATOS</span>
-                <select [(ngModel)]="filtroConfig.NNUMORI" class="form-control" (change)="seleccionarOrigen($event.target.value)">
+                <select [(ngModel)]="filtroConfig.NNUMORI" class="form-control" (change)="seleccionarOrigen($any($event.target).value)">
                     <option *ngFor="let x of origen" value="{{ x.mvt_nnumori }}">{{ x.mvt_cdescri }}</option>
                 </select>
             </div>
@@ -191,7 +191,7 @@
                 </div>
                 <div class="col-sm-6">
                     <span>MES</span>
-                    <select class="form-control" formControlName="NMES" [ngClass]="{ 'is-invalid': submitted && controlRegister.NMES.errors }" (change)="getMonth($event.target.value)">
+                    <select class="form-control" formControlName="NMES" [ngClass]="{ 'is-invalid': submitted && controlRegister.NMES.errors }" (change)="getMonth($any($event.target).value)">
                         <option *ngFor="let x of meses" value="{{ x.NROMES }}">{{ x.MES }}</option>
                     </select>
                     <div *ngIf="submitted && controlRegister.NMES.errors" class="invalid-feedback">
@@ -203,7 +203,7 @@
                 </div>
                 <div class="col-sm-6">
                     <span>AÑO (*)</span>
-                    <input class="form-control" type="number" formControlName="NANIO" [ngClass]="{ 'is-invalid': submitted && controlRegister.NANIO.errors }" (change)="getYear($event.target.value)" />
+                    <input class="form-control" type="number" formControlName="NANIO" [ngClass]="{ 'is-invalid': submitted && controlRegister.NANIO.errors }" (change)="getYear($any($event.target).value)" />
                     <div *ngIf="submitted && controlRegister.NANIO.errors" class="invalid-feedback">
                         <div *ngIf="controlRegister.NANIO.errors.required">El año es requerido.</div>
                     </div>
@@ -312,7 +312,7 @@
                 </div>
                 <div class="col-sm-6">
                     <span>MES</span>
-                    <select class="form-control" formControlName="NMES" [ngClass]="{ 'is-invalid': submitted && controlEdit.NMES.errors }" (change)="getMonthEdit($event.target.value)">
+                    <select class="form-control" formControlName="NMES" [ngClass]="{ 'is-invalid': submitted && controlEdit.NMES.errors }" (change)="getMonthEdit($any($event.target).value)">
                         <option *ngFor="let x of meses" value="{{ x.NROMES }}">{{ x.MES }}</option>
                     </select>
                     <div *ngIf="submitted && controlEdit.NMES.errors" class="invalid-feedback">
@@ -324,7 +324,7 @@
                 </div>
                 <div class="col-sm-6">
                     <span>AÑO (*)</span>
-                    <input class="form-control" type="number" formControlName="NANIO" [ngClass]="{ 'is-invalid': submitted && controlEdit.NANIO.errors }" (change)="getYearEdit($event.target.value)" />
+                    <input class="form-control" type="number" formControlName="NANIO" [ngClass]="{ 'is-invalid': submitted && controlEdit.NANIO.errors }" (change)="getYearEdit($any($event.target).value)" />
                     <div *ngIf="submitted && controlEdit.NANIO.errors" class="invalid-feedback">
                         <div *ngIf="controlEdit.NANIO.errors.required">El año es requerido.</div>
                     </div>

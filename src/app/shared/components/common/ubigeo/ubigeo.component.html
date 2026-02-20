@@ -4,7 +4,7 @@
     <select
       name="depName"
       id="DepSelect"
-      (change)="onSelectDepartment($event.target.value)"
+      (change)="onSelectDepartment($any($event.target).value)"
     >
       <option value="0" selected>Seleccionar</option>
       <option
@@ -19,7 +19,7 @@
     <select
       name="proName"
       id="ProSelect"
-      (change)="onSelectProvince($event.target.value)"
+      (change)="onSelectProvince($any($event.target).value)"
     >
       <option value="0" selected>Seleccionar</option>
       <option
@@ -34,7 +34,7 @@
     <select
       name="disName"
       id="DisSelect"
-      (change)="onSelectDistrict($event.target.value)"
+      (change)="onSelectDistrict($any($event.target).value)"
     >
       <option value="0" selected>Seleccionar</option>
       <option

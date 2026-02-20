@@ -7,9 +7,9 @@
       </button>
     </div>
     <div class="body-modal-biom">
-      <ng-container *ngIf="stepBiom == 1" [@fade]="fade">
+      <!-- <ng-container *ngIf="stepBiom == 1" [@fade]="fade">
         <div class="step1-biom">
-          <form [formGroup]="formBiometric" class="form-file-biom">
+           <form [formGroup]="formBiometric" class="form-file-biom">
             <h2 class="title-bio">Validación biométrica</h2>
             <p class="description-biom">
               {{ descriptionBiometric }}
@@ -38,12 +38,12 @@
               derechos establecidos en ella, tu DNI deberá encontrarse
               vigente.</small
             >
-          </form>
+          </form> 
         </div>
-      </ng-container>
-      <ng-container *ngIf="stepBiom == 2" [@fade]="fade">
+      </ng-container> -->
+      <!-- <ng-container *ngIf="stepBiom == 2" [@fade]="fade">
         <app-biometric (estado)="changeStateBiometric($event)"> </app-biometric>
-      </ng-container>
+      </ng-container> -->
     </div>
   </div>
 </section>

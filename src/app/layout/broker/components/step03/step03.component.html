@@ -46,7 +46,7 @@
               <select formControlName="tipopersona"
                       class="form-control select-formulario"
                       [(ngModel)]="Cliente.p_NPERSON_TYP"
-                      (change)="callTypePerson($event.target.value)"
+                      (change)="callTypePerson($any($event.target).value)"
                       [ngClass]="{
                   'error-validate':
                     !contratanteForm.get('tipopersona').valid &&
@@ -65,7 +65,7 @@
               <select formControlName="tipodocumento"
                       class="form-control select-formulario"
                       [(ngModel)]="Cliente.p_NDOCUMENT_TYP"
-                      (change)="callTypeDocument($event.target.value)"
+                      (change)="callTypeDocument($any($event.target).value)"
                       [ngClass]="{
                   'error-validate':
                     !contratanteForm.get('tipodocumento').valid &&
@@ -181,7 +181,7 @@
               <select class="form-control select-formulario"
                       formControlName="departamento"
                       [(ngModel)]="Cliente.p_NPROVINCE"
-                      (change)="listarProvinciasPorDepartamento($event.target.value)"
+                      (change)="listarProvinciasPorDepartamento($any($event.target).value)"
                       [ngClass]="{
                   'error-validate':
                     !contratanteForm.get('departamento').valid &&
@@ -200,7 +200,7 @@
               <select class="form-control select-formulario"
                       formControlName="provincia"
                       [(ngModel)]="Cliente.p_NLOCAT"
-                      (change)="listarDistritosPorProvincia($event.target.value)"
+                      (change)="listarDistritosPorProvincia($any($event.target).value)"
                       [ngClass]="{
                   'error-validate':
                     !contratanteForm.get('provincia').valid &&

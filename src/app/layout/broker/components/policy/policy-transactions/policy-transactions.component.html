@@ -1522,7 +1522,7 @@
                     <label class="mb-0"><span>TARIFA (*)</span></label>
                     <!--<select
                       [(ngModel)]="polizaEmitCab.P_COMISION"
-                      (change)="seleccionExcel('1'); onSelectComision($event.target.value)"
+                      (change)="seleccionExcel('1'); onSelectComision($any($event.target).value)"
                       name="P_COMISION"
                       [ngClass]="{ 'error-validate': camposValidar[1] != '' }"
                       class="minimal"
@@ -3871,7 +3871,7 @@
                   <div class="col-sm-3">
                     <label class="mb-0"><span>TARIFA (*)</span></label>
                     <!--<select
-                      (change)="onSelectComision($event.target.value)"
+                      (change)="onSelectComision($any($event.target).value)"
                       [(ngModel)]="polizaEmitCab.P_COMISION"
                       class="minimal"
                     >
@@ -3884,7 +3884,7 @@
                       </option>
                     </select>-->
                     <select
-                    (change)="onSelectComision($event.target.value)"
+                    (change)="onSelectComision($any($event.target).value)"
                     [(ngModel)]= "ComisionObjeto"
                     class="minimal"
                   >

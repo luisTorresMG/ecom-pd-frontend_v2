@@ -1,4 +1,4 @@
-<select id="FlowTypeSelect" (change)="onSelectFlowType($event.target.value)">
+<select id="FlowTypeSelect" (change)="onSelectFlowType($any($event.target).value)">
   <option value="0" selected>Seleccionar</option>
   <option
     *ngFor="let flowtype of ListFlowType"

@@ -3,7 +3,7 @@
     <span>POR CANAL DE VENTA:</span>
     <select
       id="ChannelSalesSelect"
-      (change)="onSelectChannelSales($event.target.value)"
+      (change)="onSelectChannelSales($any($event.target).value)"
     >
       <option value="0" selected>--SELECCIONAR--</option>
       <option

@@ -35,7 +35,7 @@
                      type="numeric"
                      currencyMask
                      [options]="currencyConfiguration"
-                     (blur)="onInputChange(insurance.plan.coberturas[i], $event.target.value, i)"/>
+                     (blur)="onInputChange(insurance.plan.coberturas[i], $any($event.target).value, i)"/>
               <button type="button"
                       (click)="onIncrease(insurance.plan.coberturas[i], i)">
                 <i class="fa fa-plus"

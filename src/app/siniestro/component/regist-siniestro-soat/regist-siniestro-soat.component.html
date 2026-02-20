@@ -110,7 +110,7 @@
                                             <label for="apellidosssolicitante">Apellidos</label>
                                         </div>
                                         <div class="col-md-8">
-                                            <input type="text" class="form-control" formControlName="apellidosssolicitante" (paste)="noPermitirPegar($event)" (keypress)="soloLetras($event)" (ngModelChange)="validarText2($event)" style="text-transform: uppercase;">
+                                            <!-- <input type="text" class="form-control" formControlName="apellidosssolicitante" (paste)="noPermitirPegar($event)" (keypress)="soloLetras($event)" (ngModelChange)="validarText2($event)" style="text-transform: uppercase;"> -->
                                             <span [style.color]="txtvalidacolorapellidos" style="color:#dc3545; font-size: 12px; margin-left: 13px;" *ngIf="txtvalidaapellidsol && txtvalidaapellidsol !=='Correcto'">{{txtvalidaapellidsol}} <i class="fa fa-exclamation-circle" aria-hidden="true"></i></span>
                                             <span style="color:#448051; font-size: 12px; margin-left: 13px;" *ngIf="txtvalidaapellidsol ==='Correcto'">{{txtvalidaapellidsol}} <i class="fa fa-check" aria-hidden="true"></i></span>
                                           </div>
@@ -194,7 +194,7 @@
                                             <label for="nombresagraviado">Nombres</label>
                                         </div>
                                         <div class="col-md-8">
-                                            <input type="text" class="form-control"  formControlName="nombresagraviado" [readonly]="disableagraviado" (paste)="noPermitirPegar($event)" (keypress)="soloLetras($event)" style="text-transform: uppercase;" (ngModelChange)="validarTextoagra($event)">
+                                            <!-- <input type="text" class="form-control"  formControlName="nombresagraviado" [readonly]="disableagraviado" (paste)="noPermitirPegar($event)" (keypress)="soloLetras($event)" style="text-transform: uppercase;" (ngModelChange)="validarTextoagra($event)"> -->
                                             <span [style.color]="colornombreagrav" style="color:#dc3545; font-size: 12px; margin-left: 13px;" *ngIf="txtvalidanombresagra && txtvalidanombresagra !=='Correcto'">{{txtvalidanombresagra}} <i class="fa fa-exclamation-circle" aria-hidden="true"></i></span>
                                             <span style="color:#448051; font-size: 12px;  margin-left: 13px;" *ngIf="txtvalidanombresagra ==='Correcto'">{{txtvalidanombresagra}} <i class="fa fa-check" aria-hidden="true"></i></span>
 
@@ -323,9 +323,9 @@
                                     </div>
                                     <div class="row mt-3 justify-content-center" *ngIf="slecentidadbancaria.value == 'OTRO' && slectmetodopago.value == '16174'">
                                         <div class="col-md-2"> <label for="nameentidad">Nombre de entidad</label></div>
-                                        <div class="col-md-8">
+                                        <!-- <div class="col-md-8">
                                             <input type="text" class="form-control" formControlName="nameentidad" (paste)="noPermitirPegar($event)" (keypress)="soloLetras($event)" (ngModelChange)="validarnombreEB($event)" style="text-transform: uppercase;">
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div class="row mt-3 justify-content-center" *ngIf="(slecentidadbancaria.value != '100') && slectmetodopago.value == '16174'">
                                         <div class="col-md-2"> <label for="nrocuenta">Nro. Cuenta</label></div>
@@ -516,12 +516,12 @@
                                     </div>
                                         <br>
                                         <br>
-                                       
+<!--                                        
                                         <div class="row justify-content-center mt-3">
                                             <div class="col-md-10 text-center" style="display: flex; justify-content: center;">
                                               <ngx-recaptcha2 #captchaElem [siteKey]="sitekey" formControlName="recaptcha"></ngx-recaptcha2>
                                             </div>
-                                          </div>
+                                          </div> -->
                                     
                                        
                                        

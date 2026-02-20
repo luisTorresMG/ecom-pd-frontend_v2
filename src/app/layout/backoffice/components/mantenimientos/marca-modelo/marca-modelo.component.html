@@ -679,7 +679,7 @@
             type="text"
             id="mark-desc"
             class="input-u"
-            (input)="filterMark($event.target.value)"
+            (input)="filterMark($any($event.target).value)"
             [maxLength]="30"
             formControlName="description"
           />
@@ -747,7 +747,7 @@
             type="text"
             id="model-auto"
             class="input-u"
-            (input)="filterModel($event.target.value)"
+            (input)="filterModel($any($event.target).value)"
             [maxLength]="30"
             formControlName="description"
           />
@@ -834,7 +834,7 @@
               type="text"
               id="version-auto"
               class="input-u"
-              (input)="filterVersion($event.target.value)"
+              (input)="filterVersion($any($event.target).value)"
               [maxLength]="30"
               formControlName="description"
             />

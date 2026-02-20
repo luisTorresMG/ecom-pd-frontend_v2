@@ -74,7 +74,7 @@
                      [id]="'iconsubmenu'+submenu.nidresource"></i>
                 </div>
               </a>
-              <a role="button"
+              <!-- <a role="button"
                  class="menu-item menu-item-father"
                  [title]="submenu.sdescription"
                  [routerLink]="['/'+submenu.stag]"
@@ -86,13 +86,13 @@
                 <span class="li-span">
                   {{ submenu.sname }}
                 </span>
-              </a>
+              </a> -->
               <ul class="nav navbar-nav menu-ul menu-child-child"
                   [id]="'submenu'+submenu.nidresource"
                   hidden="true">
                 <li class="nav_menu"
                     *ngFor="let children of submenu.children">
-                  <a class="menu-item"
+                  <!-- <a class="menu-item"
                      [routerLink]="['/'+children.stag]"
                      [title]="children.sdescription">
                     <div class="icon-left">
@@ -102,7 +102,7 @@
                     <span class="li-span">
                       {{ children.sname }}
                     </span>
-                  </a>
+                  </a> -->
                 </li>
               </ul>
             </li>

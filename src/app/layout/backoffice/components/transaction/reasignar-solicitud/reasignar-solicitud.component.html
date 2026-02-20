@@ -281,7 +281,7 @@
               <select class="in-action"
                       formControlName="canalDestino"
                       id="chanel-destino-modal-form"
-                      (change)="changeCanal($event.target.value)">
+                      (change)="changeCanal($any($event.target).value)">
                 <option [value]="0"
                         selected
                         disabled>SELECCIONE</option>

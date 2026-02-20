@@ -35,7 +35,7 @@
                      class="lbl-in filter-text">TIPO DE DOCUMENTO:</label>
               <select class="in-action"
                       formControlName="tipoDocumento"
-                      (change)="changeValueTipoDocumento($event.target.value)">
+                      (change)="changeValueTipoDocumento($any($event.target).value)">
                 <option [value]="0"
                         selected
                         disabled>SELECCIONE</option>

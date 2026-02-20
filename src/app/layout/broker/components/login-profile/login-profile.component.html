@@ -56,7 +56,7 @@
                        name="prima"
                        id="prima"
                        [(ngModel)]="searchtext"
-                       (keyup)="search($event.target.value)" />
+                       (keyup)="search($any($event.target).value)" />
 
               </div>
               <!-- <div class="col-sm-3 ">

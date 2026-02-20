@@ -32,7 +32,7 @@
         <div class="row" [formGroup]="filterForm">
             <div class="col-sm-3">
                 <span>ORIGEN</span>
-                <select class="form-control" (change)="seleccionarOrigen($event.target.value)" formControlName="NNUMORI">
+                <select class="form-control" (change)="seleccionarOrigen($any($event.target).value)" formControlName="NNUMORI">
                     <option *ngFor="let x of origen" value="{{ x.mvt_nnumori }}">{{ x.mvt_cdescri }}</option>
                 </select>
             </div>
@@ -219,7 +219,7 @@
                 </div>
                 <div class="col-sm-3">
                     <span>ESTADO</span>
-                    <select class="form-control" [(ngModel)]="filtroInterfaceDetalle.NSTATUS" (change)="seleccionarEstadoDetalle($event.target.value)" disabled *ngIf="this.loading">
+                    <select class="form-control" [(ngModel)]="filtroInterfaceDetalle.NSTATUS" (change)="seleccionarEstadoDetalle($any($event.target).value)" disabled *ngIf="this.loading">
                         <option value="null">TODOS</option>
                         <option *ngFor="let x of estados" value="{{ x.NESTADO }}">{{ x.SESTADO_DES }}</option>
                     </select>
@@ -229,7 +229,7 @@
             <div class="row m-2">
                 <div class="col-sm-3">
                     <span>BUSCAR POR</span>
-                    <select class="form-control" [(ngModel)]="filtroInterfaceDetalle.NTIPO" (change)="seleccionarTipoBusqueda($event.target.value)" *ngIf="this.loading">
+                    <select class="form-control" [(ngModel)]="filtroInterfaceDetalle.NTIPO" (change)="seleccionarTipoBusqueda($any($event.target).value)" *ngIf="this.loading">
                         <option *ngFor="let x of tipoBusquedas" value="{{ x.CODIGO }}">{{ x.DESCRIPCION }}</option>
                     </select>
                     <input class="form-control" type="text" value="Cargando..." disabled *ngIf="!this.loading" id="loadingStyle" />
@@ -570,7 +570,7 @@
                 </div>
                 <div class="col-sm-3">
                     <span>ESTADO</span>
-                    <select class="form-control" [(ngModel)]="filtroInterfaceDetalleAsientosContables.NSTATUS" (change)="seleccionarEstadoDetalleAsientosContables($event.target.value)" *ngIf="this.loadingAsiento">
+                    <select class="form-control" [(ngModel)]="filtroInterfaceDetalleAsientosContables.NSTATUS" (change)="seleccionarEstadoDetalleAsientosContables($any($event.target).value)" *ngIf="this.loadingAsiento">
                         <option value="null">TODOS</option>
                         <option *ngFor="let x of estados" value="{{ x.NESTADO }}">{{ x.SESTADO_DES }}</option>
                     </select>
@@ -886,7 +886,7 @@
                 </div>
                 <div class="col-sm-3">
                     <span>ESTADO</span>
-                    <select class="form-control" [(ngModel)]="filtroInterfaceDetalleExactus.NSTATUS" (change)="seleccionarEstadoDetalleExactus($event.target.value)" *ngIf="this.loadingExactus">
+                    <select class="form-control" [(ngModel)]="filtroInterfaceDetalleExactus.NSTATUS" (change)="seleccionarEstadoDetalleExactus($any($event.target).value)" *ngIf="this.loadingExactus">
                         <option value="null">TODOS</option>
                         <option *ngFor="let x of estados" value="{{ x.NESTADO }}">{{ x.SESTADO_DES }}</option>
                     </select>

@@ -39,7 +39,7 @@
               <div class="col-sm-3"></div>
               <div class="col-sm-3">
                 <label for="proceso">PROCESO</label>
-                <select id="proceso" name="proceso" (change)="onProcesoChange($event.target.value)"
+                <select id="proceso" name="proceso" (change)="onProcesoChange($any($event.target).value)"
                   [(ngModel)]="selectedProceso">
                   <option *ngFor="let option of comboOptions" [value]="option.cod_type_proceso">
                     {{ option.name_type_proceso }}

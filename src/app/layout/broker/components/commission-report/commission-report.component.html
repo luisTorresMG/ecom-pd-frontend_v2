@@ -37,7 +37,7 @@
               <select
                 class="filter"
                 formControlName="branch"
-                (change)="onSelectBranch($event.target.value)"
+                (change)="onSelectBranch($any($event.target).value)"
               >
                 <option value="0" selected>TODOS</option>
                 <option *ngFor="let data of listBranch" [value]="data.nid">
@@ -134,7 +134,7 @@
               <select
                 class="filter"
                 formControlName="commissionStatus"
-                (change)="changeValueEstado($event.target.value)"
+                (change)="changeValueEstado($any($event.target).value)"
               >
                 <option value="0" selected>TODOS</option>
                 <option *ngFor="let data of listCommissionStatus" [value]="data.nidstate">

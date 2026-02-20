@@ -514,7 +514,7 @@
               <select id="newChannel_channelType"
                       class="input-u"
                       formControlName="tipoCanal"
-                      (change)="changeChannel($event.target.value)">
+                      (change)="changeChannel($any($event.target).value)">
 
                 <ng-container *ngIf="!channelTypes$?.items?.length">
                   <option [value]="null"

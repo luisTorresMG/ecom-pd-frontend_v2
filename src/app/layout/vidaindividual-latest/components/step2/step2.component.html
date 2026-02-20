@@ -79,7 +79,7 @@
           <div class="content-btns">
             <select class="btn-plan select-plan"
                     formControlName="idFrecuencia"
-                    (change)="changeFrecuency($event.target.value)">
+                    (change)="changeFrecuency($any($event.target).value)">
               <option *ngFor="let percent of FRECUENCIA$"
                       [value]="percent.idFrecuencia">
                 {{ percent.frecuencia }}

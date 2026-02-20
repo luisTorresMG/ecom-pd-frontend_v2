@@ -40,7 +40,7 @@
                 (evResultChannelPoint)="onVotedParentChannelPoint($event)"></app-channelpoint>
               <span *ngIf="isAdmin" class="filter-text">CANAL:</span>
               <select *ngIf="isAdmin" class="cboCanal" id="ChannelSalesSelect"
-                (change)="onSelectChannel($event.target.value)" [(ngModel)]="channelSelected">
+                (change)="onSelectChannel($any($event.target).value)" [(ngModel)]="channelSelected">
                 <option value="0">Todos</option>
                 <option *ngFor="let channelsales of ListChannelSales" value="{{ channelsales.nchannel }}">
                   {{ channelsales.sdescript }}
@@ -49,7 +49,7 @@
             </div>
             <div class="col-lg-2 filter-row-cell">
               <span for="" class="filter-text">POR RAMO*:</span>
-              <select (change)="onSelectBranch($event.target.value)">
+              <select (change)="onSelectBranch($any($event.target).value)">
                 <option value="0">Todos</option>
                 <option *ngFor="let Item of lstBranch" [selected]="Item.nid == InputsFilter.P_NBRANCH"
                   value="{{ Item.nid }}">
@@ -59,7 +59,7 @@
             </div>
             <div class="col-lg-3 filter-row-cell pr-0">
               <span class="filter-text">POR PRODUCTO*:</span>
-              <select (change)="onSelectProduct($event.target.value)">
+              <select (change)="onSelectProduct($any($event.target).value)">
                 <option value="0">Todos</option>
                 <option *ngFor="let Item of lstProduct" [selected]="Item.nid == InputsFilter.P_NPRODUCT"
                   value="{{ Item.nid }}">
@@ -86,7 +86,7 @@
             </div>
             <div class="col-lg-2 filter-row-cell pt-0 pb-0 ml-2">
               <span class="filter-text">ESTADO:</span>
-              <select (change)="onSelectState($event.target.value)" [(ngModel)]="stateSelected">
+              <select (change)="onSelectState($any($event.target).value)" [(ngModel)]="stateSelected">
                 <option value="0" selected>Todos</option>
                 <option *ngFor="let Item of lstStateChannel" value="{{ Item.nidstate }}">
                   {{ Item.sdescription }}
@@ -101,7 +101,7 @@
             </div>
             <div class="col-lg-2 filter-row-cell pt-0 pb-0 ml-2">
               <span for="" class="filter-text">POR MONEDA*:</span>
-              <select (change)="onSelectCurrency($event.target.value)">
+              <select (change)="onSelectCurrency($any($event.target).value)">
                 <option *ngFor="let currency of lstCurrency"
                   [selected]="currency.nidcurrency == InputsFilter.P_NCURRENCY" value="{{ currency.nidcurrency }}">
                   {{ currency.sdescript }}

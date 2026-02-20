@@ -37,7 +37,7 @@
                 formControlName="tipoDoc"
                 id="documentType"
                 class="input-u"
-                (change)="changeValueTipoDocumento($event.target.value)"
+                (change)="changeValueTipoDocumento($any($event.target).value)"
               >
                 <option value="0" disabled>SELECCIONE</option>
                 <option value="2">DNI</option>
@@ -203,7 +203,7 @@
                   bsDatepicker
                   readonly
                   formControlName="iniVigencia"
-                  (change)="changeFechaInicio($event.target.value)"
+                  (change)="changeFechaInicio($any($event.target).value)"
                 />
               </div>
               <div class="col-md-2 pl-0 d-flex flex-column">
@@ -259,7 +259,7 @@
                 <select
                   class="in-action"
                   formControlName="marcaAuto"
-                  (change)="changeMarcaAuto($event.target.value)"
+                  (change)="changeMarcaAuto($any($event.target).value)"
                 >
                   <option [value]="0" disabled selected>SELECCIONE</option>
                   <option
@@ -275,7 +275,7 @@
                 <select
                   class="in-action"
                   formControlName="versionAuto"
-                  (change)="changeVersionAuto($event.target.value)"
+                  (change)="changeVersionAuto($any($event.target).value)"
                 >
                   <option [value]="0" disabled selected>SELECCIONE</option>
                   <option
@@ -291,7 +291,7 @@
                 <select
                   class="in-action"
                   formControlName="claseAuto"
-                  (change)="changeClaseAuto($event.target.value)"
+                  (change)="changeClaseAuto($any($event.target).value)"
                 >
                   <option [value]="0" disabled selected>SELECCIONE</option>
                   <option

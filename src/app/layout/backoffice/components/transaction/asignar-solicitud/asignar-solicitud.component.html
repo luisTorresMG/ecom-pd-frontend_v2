@@ -310,7 +310,7 @@
                 class="in-action"
                 id="chanel-modal-form"
                 formControlName="P_NIDPOLICY"
-                (change)="changeCanalVentaData($event.target.value)"
+                (change)="changeCanalVentaData($any($event.target).value)"
               >
                 <option [value]="0" selected disabled>SELECCIONE</option>
                 <option

@@ -57,7 +57,7 @@
                 <div class="col-sm-12 col-lg-4 filter-row-cell">
                     <span>POR CANAL:</span>
         
-                    <select (change)="onSelectChannelSales($event.target.value)"
+                    <select (change)="onSelectChannelSales($any($event.target).value)"
                             class="form-control"
                             id="ChannelSalesSelect">
                       <option *ngFor="let channelsales of channelList"
@@ -218,7 +218,7 @@
         <div class="d-flex flex-row filter-table">
             <div class="content-lef col-lg-3 filter-row-cell">
                 <span>ENVIADO:</span>
-                <select (change)="onSelectEnviado($event.target.value)"
+                <select (change)="onSelectEnviado($any($event.target).value)"
                         class="form-control"
                         [(ngModel)]="searchcheck"
                         id="cboenviado">

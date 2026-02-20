@@ -51,13 +51,13 @@ export class DecimalDirective implements OnInit {
       this._oldvalue = value;
     }
   }
-  @HostListener("focus", ["$event.target.value"])
+  @HostListener("focus", ["$any($event.target).value"])
   onFocus() {
     if (this.formato)
     this.el.value = this._oldvalue;
   }
 
-  @HostListener("blur", ["$event.target.value"])
+  @HostListener("blur", ["$any($event.target).value"])
   onBlur(value: any) {
     if (this.formato)
     this.transform(value);

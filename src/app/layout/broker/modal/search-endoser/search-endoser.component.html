@@ -32,7 +32,7 @@
               </div>
               <div *ngIf="!blockSearch" class="col-sm-4">
                 <span>TIPO DE PERSONA (*)</span>
-                <select (change)="onSelectTypePerson($event.target.value)" [(ngModel)]="Inputs.P_PERSON_TYPE"
+                <select (change)="onSelectTypePerson($any($event.target).value)" [(ngModel)]="Inputs.P_PERSON_TYPE"
                   class="minimal">
                   
                   <option value="2" selected>Persona Jurídica</option>

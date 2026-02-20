@@ -96,6 +96,7 @@ export class VidaDevolucionModel {
     nTc: number,
     sExceedsCumulus: string,
   };
+  
   constructor(payload?: VidaDevolucionModel) {
     this.idProcess = payload?.idProcess || 0;
     this.isResumen = payload?.isResumen || false;
@@ -130,7 +131,7 @@ export class VidaDevolucionModel {
       contraSegurado: payload?.contratante?.contraSegurado || true,
       privacidad: payload?.contratante?.privacidad || '0',
       obligacionesFiscales: payload?.contratante?.obligacionesFiscales || null,
-    } || null;
+    } ;
     this.plan = {
       anios: Number(payload?.plan?.anios) || null,
       beneficiarioLegal: payload?.plan?.beneficiarioLegal || null,
@@ -147,7 +148,7 @@ export class VidaDevolucionModel {
       fechaInicioVigencia: payload?.plan?.fechaInicioVigencia || null,
       fechaFinVigencia: payload?.plan?.fechaFinVigencia || null,
       terminos: payload?.plan?.terminos || false
-    } || null;
+    } ;
     this.dps = {
       cancer: payload?.dps?.cancer || null,
       covid: payload?.dps?.covid || null,
@@ -164,7 +165,7 @@ export class VidaDevolucionModel {
       presion_resp: payload?.dps?.presion_resp || null,
       talla: payload?.dps?.talla || null,
       viaja: payload?.dps?.viaja || null,
-    } || null;
+    } ;
     this.tarifario = {
       isFamPep: payload?.tarifario?.isFamPep || null,
       isIdNumber: payload?.tarifario?.isIdNumber || null,
@@ -175,12 +176,12 @@ export class VidaDevolucionModel {
       saltarExperian: payload?.tarifario?.saltarExperian || false,
       saltarIdecon: payload?.tarifario?.saltarIdecon || false,
       saltarWorldCheck: payload?.tarifario?.saltarWorldCheck || false,
-    } || null;
+    } ;
     this.cumulus = {
       nCountPolicy: Number(payload?.cumulus?.nCountPolicy) || null,
       nCumulusAvailable: Number(payload?.cumulus?.nCumulusAvailable) || null,
       nTc: Number(payload?.cumulus?.nTc) || null,
       sExceedsCumulus: payload?.cumulus?.sExceedsCumulus,
-    } || null;
+    } ;
   }
 }

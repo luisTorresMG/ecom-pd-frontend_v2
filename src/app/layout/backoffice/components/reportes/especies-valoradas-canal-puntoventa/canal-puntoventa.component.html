@@ -28,7 +28,7 @@
                    style="padding-right: 0px">
                 <label for=""
                        class="lbl-in filter-text">CANAL DE VENTA</label>
-                <select (change)="onChangeCanal($event.target.value)"
+                <select (change)="onChangeCanal($any($event.target).value)"
                         [(ngModel)]="canalSelected"
                         class="in-action"
                         formControlName="canal">
@@ -53,7 +53,7 @@
                         [disabled]="blockfilter"
                         class="in-action"
                         formControlName="puntov"
-                        (change)="onChangePuntoVenta($event.target.value)">
+                        (change)="onChangePuntoVenta($any($event.target).value)">
                   <option value="null"
                           selected
                           disabled>SELECCIONE</option>
@@ -70,7 +70,7 @@
               </div>
               <div class="col-lg-2 filter-row-cell">
                 <span class="lbl-in filter-text">ESTADO</span>
-                <select (change)="onSelectState($event.target.value)"
+                <select (change)="onSelectState($any($event.target).value)"
                         class="in-action"
                         formControlName="estado">
                   <option value="null"

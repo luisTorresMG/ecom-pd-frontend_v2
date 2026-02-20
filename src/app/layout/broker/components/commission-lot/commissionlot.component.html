@@ -592,7 +592,7 @@
           aria-placeholder="Por estado:"
         >
           <select
-            (change)="onSelectState($event.target.value)"
+            (change)="onSelectState($any($event.target).value)"
             [(ngModel)]="nidStateApprob"
           >
             <option value="0" selected disabled>SELECCIONE</option>

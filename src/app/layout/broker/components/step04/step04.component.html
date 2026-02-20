@@ -43,7 +43,7 @@
             <label for="disabledTextInput" class="label-formulario"
               >FECHA DE INICIO DE VIGENCIA*</label
             >
-            <!-- <input type="date" class="form-control input-text-formulario" formControlName="fechavigencia" (blur)="ValidaFecha($event.target.value)"
+            <!-- <input type="date" class="form-control input-text-formulario" formControlName="fechavigencia" (blur)="ValidaFecha($any($event.target).value)"
               [(ngModel)]="Certificado.P_DSTARTDATE" value="2017/01/01" placeholder="Selecciona fecha" name="fecha" /> -->
 
             <app-input-date
@@ -104,7 +104,7 @@
               [attr.disabled]="truefalsePlan ? '' : null"
               formControlName="plan"
               [(ngModel)]="Certificado.P_NPLAN"
-              (change)="setPlan($event.target.value)"
+              (change)="setPlan($any($event.target).value)"
             >
               <option value="undefined" disabled selected
                 >Seleccione el plan</option
@@ -209,7 +209,7 @@
           type="text"
           class="input-search"
           placeholder="Busca el numero del certificado SOAT..."
-          (input)="searchCertificado($event.target.value)"
+          (input)="searchCertificado($any($event.target).value)"
           (keypress)="soloNumeros($event)"
         />
       </div>

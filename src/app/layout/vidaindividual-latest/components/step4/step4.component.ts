@@ -145,20 +145,9 @@ export class Step4Component
 
   private kushki: Kushki;
   cardType: string = '';
-  kushkiForm: FormGroup = this._BUILDER.group({
-    cardNumber: ['', [
-      Validators.required,
-      Validators.pattern(RegularExpressions.numbers),
-      Validators.minLength(14),
-      Validators.maxLength(16),
-    ]],
-    dueDate: ['', [
-      Validators.pattern('^(0[1-9]|1[0-2])/(0[1-9]|[1-2][0-9]|3[0-1])$'),
-      Validators.required,
-      Validators.maxLength(5),
-    ]],
-    cvv: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(4)]]
-  });
+  kushkiForm!: FormGroup;
+
+ 
   messageInfoKushki: string = '';
 
   @ViewChild('modalObligaciones', { static: true, read: TemplateRef })
@@ -203,6 +192,7 @@ export class Step4Component
     private readonly kushkiService: KushkiService,
     private readonly trackingService: TrackingService
   ) {
+   
     this.valContractor = '';
     this.IS_COMPLETE_PAY = true;
     this.fullasecuName = '';
@@ -361,6 +351,20 @@ export class Step4Component
       this.f['obligaciones'].disable();
       this.f['estadoCivil'].disable();
     }
+      this.kushkiForm = this._BUILDER.group({
+    cardNumber: ['', [
+      Validators.required,
+      Validators.pattern(RegularExpressions.numbers),
+      Validators.minLength(14),
+      Validators.maxLength(16),
+    ]],
+    dueDate: ['', [
+      Validators.pattern('^(0[1-9]|1[0-2])/(0[1-9]|[1-2][0-9]|3[0-1])$'),
+      Validators.required,
+      Validators.maxLength(5),
+    ]],
+    cvv: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(4)]]
+  });
   }
 
   get currentUser(): any {
@@ -897,7 +901,10 @@ export class Step4Component
       this.fc['district'].setValue(Number(resumen.contratanteInfo.idDistrito));
       this.fc['direccion'].setValue(resumen.contratanteInfo.direccion);
       this.fc['phone'].setValue(resumen.contratanteInfo.telefono);
-      this.f['parentesco'].setValue(+sessionStorage.getItem('id_relationship') ?? resumen.contratanteInfo.idParentesco ?? 0);
+      this.f['parentesco'].setValue(
+        Number(sessionStorage.getItem('id_relationship') ?? resumen?.contratanteInfo?.idParentesco ?? 0)
+      );
+      // this.f['parentesco'].setValue(+sessionStorage.getItem('id_relationship') ?? resumen.contratanteInfo.idParentesco ?? 0);
       this.fc['estadoCivil'].setValue(resumen.contratanteInfo.idEstadoCivil);
       this.fc['ocupacion'].setValue(resumen.contratanteInfo.idOcupacion);
       this.fc['obligacion'].setValue(
@@ -1414,7 +1421,7 @@ export class Step4Component
   }
 
   get infoDocument(): any {
-    return JSON.parse(sessionStorage.getItem('info-document' || '{}'));
+    return JSON.parse(sessionStorage.getItem('info-document' ));
   }
 
   get actualDate(): string {
